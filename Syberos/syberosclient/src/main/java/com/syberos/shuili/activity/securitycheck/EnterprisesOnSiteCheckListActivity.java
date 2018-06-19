@@ -22,6 +22,7 @@ import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.PullRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,15 +37,15 @@ import okhttp3.Call;
  * 根据部署信息 8.2.2.9	安全检查方案（BIS_SINS_SCHE）
  */
 public class EnterprisesOnSiteCheckListActivity extends BaseActivity
-        implements CommonAdapter.OnItemClickListener {
+        implements CommonAdapter.OnItemClickListener,PullRecyclerView.OnPullRefreshListener {
 
     public static final String SEND_BUNDLE_KEY = "EnterprisesOnSiteCheckInfo";
 
     private List<EnterprisesOnSiteCheckInfo> infoList = null;
     private ListAdapter adapter;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.pullRecyclerView)
+    PullRecyclerView pullRecyclerView;
     ObjSins objSins = null;
     BisSinsSche bisSinsSche = null;
     private HashMap<String,BisSinsSche> map = new HashMap<>();
@@ -54,19 +55,30 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        clear();
+    }
+
+    private void clear(){
+        iFailedCount = 0;
+        iSucessCount = 0;
+        map.clear();
+    }
+    @Override
     public int getLayoutId() {
         return R.layout.activity_enterprises_on_site_check_list;
     }
 
     @Override
     public void initListener() {
+        pullRecyclerView.setOnPullRefreshListener(this);
+        pullRecyclerView.setHasMore(false);
 
     }
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
-        getObjSins();
 
     }
 
@@ -76,12 +88,14 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
-        recyclerView.setLayoutManager(layoutManager);
+        pullRecyclerView.setLayoutManager(layoutManager);
         adapter = new ListAdapter(this,
                 R.layout.activity_enterprises_on_site_check_list_item);
         adapter.setOnItemClickListener(this);
 
-        recyclerView.setAdapter(adapter);
+        pullRecyclerView.setAdapter(adapter);
+        showDataLoadingDialog();
+        getObjSins();
 
     }
 
@@ -114,11 +128,13 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
                 }else {
                     closeDataDialog();
+                    pullRecyclerView.refreshOrLoadComplete();
                 }
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
+                pullRecyclerView.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
@@ -144,6 +160,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                     ++iSucessCount;
                     if(iSucessCount == size){
                         closeDataDialog();
+                        pullRecyclerView.refreshOrLoadComplete();
                         refreshUI();
                     }
                 }
@@ -152,6 +169,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     ++iFailedCount  ;
                     closeDataDialog();
+                    pullRecyclerView.refreshOrLoadComplete();
                     ToastUtils.show(errorInfo.getMessage());
                 }
 
@@ -163,6 +181,18 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         adapter.setData(objSins.dataSource);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onRefresh() {
+        clear();
+        getObjSins();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
     private class ListAdapter extends CommonAdapter<ObjSins> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
@@ -191,7 +221,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                     bundle.putSerializable("objSins",information);
                     bundle.putSerializable("bisSche",bisSinsSche);
                     intentActivity((Activity) mContext, SecurityCheckMapTrailsActivity.class,
-                            false, true);
+                            false, bundle);
                 }
             });
         }

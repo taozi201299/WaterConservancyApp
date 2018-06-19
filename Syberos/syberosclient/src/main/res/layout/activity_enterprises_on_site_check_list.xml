@@ -8,10 +8,10 @@
         android:id="@+id/layout_bar"
         layout="@layout/action_bar2_layout" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.syberos.shuili.view.PullRecyclerView
+        android:id="@+id/pullRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.syberos.shuili.view.PullRecyclerView>
 </LinearLayout>

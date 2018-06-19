@@ -176,7 +176,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     private void initData(){
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         objSins = (ObjSins) bundle.getSerializable("objSins");
-        bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSinsSche");
+        bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSche");
         if(objSins == null || bisSinsSche == null){
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             finish();
