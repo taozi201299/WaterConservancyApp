@@ -49,6 +49,9 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     BisSinsSche bisSinsSche = null;
     private HashMap<String,BisSinsSche> map = new HashMap<>();
 
+    int iSucessCount = 0;
+    int iFailedCount = 0;
+
 
     @Override
     public int getLayoutId() {
@@ -86,8 +89,9 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         ObjSins item = objSins.dataSource.get(position);
-        BisSinsSche bisSinsSche = map.get(item.getGuid());
-        bundle.putSerializable("bisSinsSche", item);
+        BisSinsSche bisSinsSche = map.get(item.getGuid()).dataSource.get(0);
+        bundle.putSerializable("objSins",item);
+        bundle.putSerializable("bisSinsSche", bisSinsSche);
         intentActivity((Activity) mContext, EnterprisesOnSiteCheckDetailActivity.class,
                 false, bundle);
     }
@@ -124,11 +128,11 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String> params = new HashMap<>();
-        int size =infos.size();
-        for(int i = 0; i < size ;i ++){
+        final int size =infos.size();
+        for(int i = 0; i < size ; i ++){
+            if(iFailedCount != 0) break;
             final ObjSins item = infos.get(i);
             params.put("sinsGuid",item.getGuid());
-            final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
@@ -137,7 +141,8 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                     if(bisSinsSche != null){
                         map.put(item.getGuid(),bisSinsSche);
                     }
-                    if(finalI == infos.size()){
+                    ++iSucessCount;
+                    if(iSucessCount == size){
                         closeDataDialog();
                         refreshUI();
                     }
@@ -145,15 +150,13 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    ++iFailedCount  ;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
-                    if(finalI == infos.size() -1){
-                        closeDataDialog();
-                        refreshUI();
-                    }
                 }
 
             });
+
         }
     }
     private void refreshUI(){
@@ -167,8 +170,13 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
         @Override
         public void convert(ViewHolder holder, final ObjSins information) {
-
-            final BisSinsSche bisSinsSche = map.get(information.getGuid());
+            final BisSinsSche bisSinsSche ;
+            ArrayList<BisSinsSche>data = (ArrayList<BisSinsSche>) map.get(information.getGuid()).dataSource;
+            if(data != null && data.size() > 0){
+                bisSinsSche = data.get(0);
+            }else {
+                return;
+            }
             ((TextView) (holder.getView(R.id.tv_time))).setText(String.format("%s-%s",
                     bisSinsSche.getScheStartTime(), bisSinsSche.getScheCompTime()));
             ((TextView) (holder.getView(R.id.tv_content))).setText(bisSinsSche.getScheCont());
@@ -180,6 +188,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                 public void onClick(View view) {
                     // 开始检查
                     Bundle bundle =new Bundle();
+                    bundle.putSerializable("objSins",information);
                     bundle.putSerializable("bisSche",bisSinsSche);
                     intentActivity((Activity) mContext, SecurityCheckMapTrailsActivity.class,
                             false, true);

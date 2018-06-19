@@ -1,5 +1,6 @@
 package com.syberos.shuili.amap;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +10,10 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -44,9 +47,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressLint("MissingPermission")
-public class SecurityCheckMapTrailsActivity extends Activity {
+public class SecurityCheckMapTrailsActivity extends Activity implements EasyPermissions.PermissionCallbacks {
 
     private final static String TAG = SecurityCheckMapTrailsActivity.class.getSimpleName();
     private final static boolean USE_GAO_DE_SDK_API = true;
@@ -69,6 +73,12 @@ public class SecurityCheckMapTrailsActivity extends Activity {
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
     public AMapLocationClientOption mLocationOption = null;
+    private  final int RC_PERM = 110;
+    public static final String[] requestPermissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+    };
 
     // ========== gao de api end ============
 
@@ -123,8 +133,12 @@ public class SecurityCheckMapTrailsActivity extends Activity {
         ButterKnife.bind(this);
 
         btn_start_check.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestMulti();
+        }else{
+            webMap();
+        }
 
-        webMap();
     }
 
     @Override
@@ -332,7 +346,34 @@ public class SecurityCheckMapTrailsActivity extends Activity {
 
         webView.loadUrl("javascript:updateCurrentLine(" + sb.toString() + ")");
     }
+    /**
+     * 请求多个权限
+     *
+     */
+    public void requestMulti() {
+        EasyPermissions.requestPermissions(this, "需要申请功能",
+                RC_PERM, requestPermissions);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 将结果转发到EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+            webMap();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+        }
+    }
     public class Person {
         private String name;
         private String age;

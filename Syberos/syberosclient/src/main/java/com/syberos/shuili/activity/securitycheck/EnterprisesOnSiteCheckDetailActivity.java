@@ -16,6 +16,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
+import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.HashMap;
@@ -28,7 +29,14 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
 
     public static final String DEFAULT_BUNDLE_NAME = "bundle";
 
+    /**
+     *检查方案对象
+     */
     BisSinsSche info;
+    /**
+     * 安全检查对象
+     */
+    ObjSins objSins;
 
     @BindView(R.id.tv_start_time)
     TextView tv_start_time;
@@ -68,9 +76,9 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     public void initView() {
         setActionBarTitle("现场检查");
         setActionBarRightVisible(View.INVISIBLE);
-
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         info = (BisSinsSche) bundle.getSerializable("bisSinsSche");
+        objSins = (ObjSins)bundle.getSerializable("objSina");
         if (null != info) {
             tv_start_time.setText(info.getScheStartTime());
             tv_end_time.setText(info.getScheCompTime());

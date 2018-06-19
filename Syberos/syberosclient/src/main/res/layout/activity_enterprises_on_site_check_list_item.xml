@@ -39,8 +39,11 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="北京朝阳区水务局"
-                    android:textColor="@color/gray_bb" />
+                    android:text=""
+                    android:textColor="@color/gray_bb"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -61,8 +64,10 @@
                     android:id="@+id/tv_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="北京朝阳区水务局"
-                    android:textColor="@color/gray_bb" />
+                    android:text=""
+                    android:textColor="@color/gray_bb"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
             </LinearLayout>
         </LinearLayout>
 

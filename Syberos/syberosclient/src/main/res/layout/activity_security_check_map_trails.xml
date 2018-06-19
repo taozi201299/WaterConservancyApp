@@ -40,6 +40,7 @@
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="40dp"
         android:text="@string/stop_check"
+        android:background="@drawable/bg_security_check_btn"
         android:visibility="gone"
         />
 
@@ -51,6 +52,7 @@
         android:layout_toEndOf="@+id/anchors"
         android:layout_marginStart="6dp"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_security_check_btn"
         android:text="@string/add_problem"
         android:visibility="gone"
         />
@@ -62,6 +64,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_security_check_btn"
         android:text="@string/start_check"
         />
 

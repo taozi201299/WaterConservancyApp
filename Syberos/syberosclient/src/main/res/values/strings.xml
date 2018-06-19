@@ -213,9 +213,9 @@
     <string name="review_level_1">二级</string>
     <string name="review_level_2">三级</string>
     <string name="review_level_3">不达标</string>
-    <string name="stop_check">stop check</string>
-    <string name="add_problem">add problem</string>
-    <string name="start_check">start check</string>
+    <string name="stop_check">停止检查</string>
+    <string name="add_problem">新建隐患</string>
+    <string name="start_check">开始检查</string>
 
     <array name="enterprises_element_check_level">
         <item>一般隐患</item>

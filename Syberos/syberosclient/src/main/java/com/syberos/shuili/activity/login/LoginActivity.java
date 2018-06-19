@@ -161,6 +161,9 @@ public class LoginActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
+        accountEdit.setText("235407195106112745");
+        passwordEdit.setText("112745");
+        updateLoginButtonEnabledStatus();
     }
 
     @Override

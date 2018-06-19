@@ -33,6 +33,7 @@ import com.syberos.shuili.activity.reports.EnterprisesRatingReportActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
+import com.syberos.shuili.activity.securitycheck.SecurityCheckMapTrailsActivity;
 import com.syberos.shuili.activity.work.NotificationCenterActivity;
 import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -283,7 +284,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchayuansu))) {
                 intentActivity((Activity) mContext, EnterprisesElementCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))) {
-                intentActivity((Activity) mContext, EnterprisesOnSiteCheckListActivity.class, false, true);
+                intentActivity((Activity) mContext,EnterprisesOnSiteCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_paicha))) {
                 Bundle bundle = new Bundle();
                 bundle.putString("type",strResource.getString(R.string.module_child_yinhuan_paicha));
