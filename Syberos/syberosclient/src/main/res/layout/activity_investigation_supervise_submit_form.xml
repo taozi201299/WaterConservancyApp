@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:AudioEditView="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout">
+
+    </include>
+    <LinearLayout
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/padding_3"
+        android:layout_marginLeft="@dimen/padding_3"
+        android:layout_marginTop="@dimen/padding_2"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_supervise_code"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:layout_height="@dimen/_50dp">
+            <TextView
+                android:id="@+id/tv_supervise_code_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="督办文号"/>
+
+            <EditText
+                android:id="@+id/tv_supervise_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_supervise_code_label"
+                android:layout_marginLeft="@dimen/_5dp"
+                android:background="@null"
+                android:hint="请输入"
+                android:layout_centerVertical="true"
+                android:text="" />
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/gray_bb"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_marginRight="@dimen/_5dp"
+            android:layout_below="@+id/ll_accept_member"
+            android:layout_marginTop="@dimen/_2dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rl_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp">
+
+            <TextView
+                android:id="@+id/tv_time_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="整改期限" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/padding_20"
+                android:layout_marginEnd="@dimen/padding_20"
+                android:layout_toEndOf="@+id/tv_time_label"
+                android:layout_toStartOf="@+id/iv_arrow_right"
+                android:gravity="center_vertical|end"
+                android:hint="必填" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_5dp"
+                android:src="@mipmap/icon_label_next" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:background="@color/gray_bb" />
+        <RelativeLayout
+            android:id="@+id/rl_supervice_listing"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:paddingStart="@dimen/_5dp">
+
+            <TextView
+                android:id="@+id/tv_supervice_listing_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="是否挂牌督办" />
+
+
+            <RadioGroup
+                android:id="@+id/rg_supervice_listing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_supervice_listing_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="是" />
+
+                <RadioButton
+                    android:id="@+id/rb_supervice_listing_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="否" />
+            </RadioGroup>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:background="@color/gray_bb" />
+        <com.syberos.shuili.view.AudioEditView
+            android:id="@+id/et_supervise_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_15dp"
+            android:minHeight="@dimen/_50dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            AudioEditView:view_label ="督办意见"
+            android:layout_marginRight="@dimen/_10dp">
+        </com.syberos.shuili.view.AudioEditView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:background="@color/gray_bb"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_RejectBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_40dp"
+            android:background="@drawable/button_login_pressed"
+            android:text="不通过"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+        <TextView
+            android:id="@+id/tv_commitBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_40dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:background="@drawable/button_login_normal"
+            android:text="提交"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
+        android:layout_below="@+id/layout_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_50dp"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_express_accident"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="@dimen/_300dp"
+        android:layout_height="@dimen/_40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:id="@+id/tv_new_accident"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="新增事故"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>

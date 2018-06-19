@@ -1,0 +1,187 @@
+package com.syberos.shuili.activity.dangermanagement;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.App;
+import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.hidden.ObjHidden;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
+import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.MultimediaView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
+
+import butterknife.BindView;
+
+import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
+
+/**
+ * Created by jidan on 18-3-23.
+ */
+
+public class InvestigationAcceptFormActivity extends BaseActivity implements View.OnClickListener{
+    @BindView(R.id.ll_multimedia)
+    MultimediaView ll_multimedia;
+    @BindView(R.id.tv_accept_person)
+    TextView tv_accept_person;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
+    @BindView(R.id.tv_RejectBtn)
+    TextView tv_RejectBtn;
+    @BindView(R.id.tv_commitBtn)
+    TextView tv_commitBtn;
+    @BindView(R.id.rl_time)
+    RelativeLayout rl_time;
+    @BindView(R.id.et_accept_desc)
+    AudioEditView et_accept_desc;
+    ObjHidden investigationInfo;
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_investigation_accept_form;
+    }
+
+    @Override
+    public void initListener() {
+        tv_commitBtn.setOnClickListener(this);
+        tv_RejectBtn.setOnClickListener(this);
+        rl_time.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void initData() {
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        investigationInfo = (ObjHidden) bundle.getSerializable("data");
+        UserExtendInfo userExtendInfo = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        if(userExtendInfo != null){
+            tv_accept_person.setText(userExtendInfo.getPersName());
+        }
+    }
+
+    @Override
+    public void initView() {
+        showTitle(InvestigationAccepTaskActivity.Title);
+        setActionBarRightVisible(View.INVISIBLE);
+        tv_time.setText(CommonUtils.getCurrentDate());
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ll_multimedia.onActivityResult(requestCode,requestCode,data);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_time:
+                setTime();
+                break;
+            case R.id.tv_RejectBtn:
+                submit(0);
+                break;
+            case R.id.tv_commitBtn:
+                submit(1);
+                break;
+        }
+    }
+    private void setTime(){
+        //时间选择器
+        boolean[] type = {true, true, true, true, true, true};
+
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                if (date.getTime() > System.currentTimeMillis()) {
+                    ToastUtils.show("提示：所选时间不应大于系统当前时间");
+                    return;
+                }
+                tv_time.setText(Strings.formatDatetime(date));
+            }
+        })
+                .isDialog(true)
+                .setType(type)
+                .build();
+        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.show();
+    }
+
+    /**
+     * 0 通过 1 不通过
+     * @param type
+     */
+    private void submit(int type){
+        String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcce/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
+        params.put("requCompDate",""); //治理完成日期
+        params.put("accepLegPers","");// 验收责任人
+        params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
+        params.put("accepDate",tv_time.getText().toString()); // 验收时间
+        params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
+        params.put("note","");  //备注
+        params.put("collTime",""); //采集时间
+        params.put("updTime",""); // 更新时间
+        params.put("recPers",""); // 记录人员
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
+
+        if(list != null){
+            for(MultimediaView.LocalAttachment item :list){
+                AttachMentInfoEntity info = new AttachMentInfoEntity();
+                info.medName = item.localFile.getName();
+                info.medPath = item.localFile.getPath();
+                info.url = "http://" + App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.bisTableName = "BIS_HIDD_RECT_ACCE";
+                info.bisGuid = investigationInfo.getGuid();
+                info.localStatus = "1";
+                if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
+                    info.medType = "0";
+                }else {
+                    info.medType = "1";
+                }
+                info.seriesKey = localCacheEntity.seriesKey;
+                attachMentInfoEntities.add(info);
+            }
+        }
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
+}

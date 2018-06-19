@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10dp"
+        android:text="请选择排查工程"
+        android:layout_below="@id/layout_bar"
+        />
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10dp"
+        android:layout_below="@id/tv_title"/>
+    <com.andview.refreshview.XRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/xRefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:background="#fff"
+        android:orientation="vertical"
+        xrefreshview:isHeightMatchParent="true"
+        xrefreshview:isWidthMatchParent="true">
+        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/stickListHeadersListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10dp"
+            android:dividerHeight="@dimen/_5dp"
+
+            android:divider="@color/write"
+            />
+    </com.andview.refreshview.XRefreshView>
+
+</RelativeLayout>

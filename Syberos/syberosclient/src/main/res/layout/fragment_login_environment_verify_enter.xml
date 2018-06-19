@@ -1,0 +1,133 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/ve_smsCodeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/text_edit_horizontal_margin"
+            android:layout_marginStart="@dimen/text_edit_horizontal_margin"
+            android:background="@drawable/edit_text_border_background"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ve_phoneNumberEditLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_edit_height">
+
+                <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                    android:id="@+id/ve_phoneNumberEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/text_edit_icon_border_margin"
+                    android:layout_marginStart="@dimen/text_edit_icon_border_margin"
+                    android:layout_toStartOf="@+id/iv_ve_phoneNumberMore"
+                    android:background="#00000000"
+                    android:drawableLeft="@mipmap/login_person"
+                    android:drawableRight="@mipmap/me_close"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_edit_text_size"
+                    android:maxLength="16"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_ve_phoneNumberMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/text_edit_icon_border_margin"
+                    android:src="@drawable/button_more_account"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/text_edit_icon_border_margin"
+                android:layout_marginStart="@dimen/text_edit_icon_border_margin"
+                android:layout_marginTop="2dp"
+                android:background="@color/border_color" />
+
+            <RelativeLayout
+                android:id="@+id/ve_smsCodeEditLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_edit_height">
+
+                <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                    android:id="@+id/ve_smsCodeEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/text_edit_icon_border_margin"
+                    android:layout_marginStart="@dimen/text_edit_icon_border_margin"
+                    android:layout_toStartOf="@+id/btn_ve_send_sms_code"
+                    android:background="#00000000"
+                    android:drawableLeft="@mipmap/login_clock"
+                    android:drawableRight="@mipmap/me_close"
+                    android:hint="@string/verify_code"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_edit_text_size"
+                    android:maxLength="6"
+                    />
+
+                <Button
+                    android:id="@+id/btn_ve_send_sms_code"
+                    android:layout_width="120dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/text_edit_icon_border_margin"
+                    android:gravity="center"
+                    android:text="@string/getSmsCode" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ve_send_sms_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/text_edit_horizontal_margin"
+            android:layout_marginStart="@dimen/text_edit_horizontal_margin"
+            android:layout_above="@+id/ve_smsCodeLayout"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_edit_text_size"
+            android:layout_marginBottom="30dp"
+            android:text="@string/ve_send_sms_tip" />
+
+        <TextView
+            android:id="@+id/tv_ve_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_edit_height"
+            android:layout_marginEnd="@dimen/text_edit_horizontal_margin"
+            android:layout_marginStart="@dimen/text_edit_horizontal_margin"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ve_smsCodeLayout"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+
+    </RelativeLayout>
+
+</ScrollView>

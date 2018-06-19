@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tables name="UserInfo">
+    <Table name="UserInfo_Table" description="用户表">
+        <Field name="userId" type="char(36)" length="36" isKey="true" enableNull="false"/>
+        <Field name="name" type="char(36)" length="36" isKey="false" enableNull="false"/>
+        <Field name="birthday" type="char(36)" length="36" isKey="false" enableNull="false"/>
+        <Field name="unitName" type="varchar(255)" length="255" isKey="false" enableNull="false"/>
+        <Field name="department" type="varchar(255)" length="255" isKey="false" enableNull="false"/>
+        <Field name="position" type="varchar(255)" length="255" isKey="false" enableNull="true"/>
+        <Field name="iconUrl" type="varchar(255)" length="255" isKey="false" enableNull="false"/>
+        <Field name="phoneNum" type="char(36)" length="36" isKey="false" enableNull="false"/>
+        <Field name="email" type="varchar(255)" length="255" isKey="false" enableNull="false"/>
+        <Field name="sex" type="char(36)" length="36" isKey="false" enableNull="false"/>
+        <Field name="workAddress" type="varchar(255)" length="255" isKey="false" enableNull="true"/>
+    </Table>
+</Tables>

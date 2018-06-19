@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_6dp"
+        android:background="@color/gray_bb"
+        android:text="危险源"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6dp"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_project_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/_5dp"
+            android:paddingStart="@dimen/_5dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_unit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <TextView
+                    android:id="@+id/tv_unit_label"
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="所属单位" />
+
+                <TextView
+                    android:id="@+id/tv_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:layout_toEndOf="@+id/tv_unit_label"
+                    android:text="朝阳区双桥水利所" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <RelativeLayout
+                android:id="@+id/rl_identify_describe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <com.syberos.shuili.view.AudioEditView
+                    android:id="@+id/ae_describe_audio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_50dp"
+                    android:paddingTop="@dimen/_15dp"
+                    app:view_label="危险源描述"
+                    app:view_labelWidth="@dimen/_60dp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <RelativeLayout
+                android:id="@+id/rl_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <TextView
+                    android:id="@+id/tv_date_label"
+                    android:layout_width="@dimen/_60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="上报时间" />
+
+                <TextView
+                    android:id="@+id/tv_date_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:layout_toEndOf="@+id/tv_date_label"
+                    android:text="2017-06-21 18:21" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_look_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9dp"
+                android:gravity="end"
+                android:text="查看详情"
+                android:textColor="@color/login_page_link_text_color" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_6dp"
+        android:background="@color/gray_bb"
+        android:text="发现问题"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/_6dp"
+        android:padding="@dimen/_6dp"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_record_review"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>

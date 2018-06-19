@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/ll_content"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/ll_project_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/_10dp"
+    android:layout_marginRight="@dimen/_10dp"
+    android:paddingLeft="@dimen/_5dp"
+    android:paddingRight="@dimen/_5dp"
+    android:background="@drawable/dialog_bg_shape">
+    <RelativeLayout
+        android:id="@+id/ll_name"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="所属工程"/>
+
+        <TextView
+            android:id="@+id/tv_projectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_name_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text="小月河水利工程" />
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5dp"
+            android:src="@mipmap/ic_me_location"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_name"
+        android:layout_marginTop="@dimen/_2dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/ll_level"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <TextView
+            android:id="@+id/tv_level_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="隐患级别"/>
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_level_label"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:text= "一般隐患" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_level"
+        android:layout_marginTop="@dimen/_2dp"/>
+
+    <RelativeLayout
+        android:id="@+id/ll_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <TextView
+            android:id="@+id/tv_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="隐患分类"/>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_type_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "水利工程建设" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_type"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_location"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <TextView
+            android:id="@+id/tv_location_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="隐患部位"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_location_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "工程水坝中端" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_location"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <com.syberos.shuili.view.AudioEditView
+            android:id="@+id/ev_des_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_15dp"
+            android:minHeight="@dimen/_50dp">
+        </com.syberos.shuili.view.AudioEditView>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_describe"
+        android:layout_marginTop="@dimen/_2dp"/>
+
+    <RelativeLayout
+        android:id="@+id/ll_attachment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+
+        <TextView
+            android:id="@+id/tv_attach_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="现场情况" />
+
+        <com.syberos.shuili.view.MultimediaView
+            android:id="@+id/ll_multimedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_attach_title"
+            android:layout_marginTop="@dimen/_5dp"
+            android:minHeight="@dimen/_40dp"></com.syberos.shuili.view.MultimediaView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_below="@+id/ll_multimedia"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@color/gray_bb" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_measure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_40dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <TextView
+            android:id="@+id/tv_measure_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="整改措施"/>
+
+        <TextView
+            android:id="@+id/tv_measure_info"
+            android:layout_width="@dimen/_200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_measure_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text= "工程水坝中端工程水坝中端工程水坝中端工程水坝中端工程水坝中端工程水坝中端工程水坝中端工程水坝中端" />
+    </RelativeLayout>
+
+</LinearLayout>
+<LinearLayout
+    android:id="@+id/ll_other_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/_10dp"
+    android:layout_marginLeft="@dimen/_10dp"
+    android:layout_marginRight="@dimen/_10dp"
+    android:paddingLeft="@dimen/_5dp"
+    android:paddingRight="@dimen/_5dp"
+    android:background="@drawable/dialog_bg_shape">
+
+    <RelativeLayout
+        android:id="@+id/ll_other_1"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/_5dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_other1_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="排查组长"/>
+
+        <TextView
+            android:id="@+id/tv_other1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_other1_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "李白" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_other_1"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_other_2"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/_5dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_other2_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="排查成员"/>
+
+        <TextView
+            android:id="@+id/tv_other2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_other2_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "李白 李白 李白" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_other_2"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_other_3"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/_5dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_other3_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="排查单位"/>
+
+        <TextView
+            android:id="@+id/tv_other3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_other3_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "北京市水利局" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_other_3"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_other_4"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/_5dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_other4_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="上报人员"/>
+
+        <TextView
+            android:id="@+id/tv_other4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_other4_label"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:layout_centerVertical="true"
+            android:text= "李白" />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/gray_bb"
+        android:layout_below="@+id/ll_other_4"
+        android:layout_marginTop="@dimen/_2dp"/>
+    <RelativeLayout
+        android:id="@+id/ll_other_5"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/_5dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:layout_height="@dimen/_40dp">
+        <TextView
+            android:id="@+id/tv_other5_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="上报时间"/>
+
+        <TextView
+            android:id="@+id/tv_other5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_other5_label"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:text= "2018-3-21" />
+    </RelativeLayout>
+</LinearLayout>
+</LinearLayout>

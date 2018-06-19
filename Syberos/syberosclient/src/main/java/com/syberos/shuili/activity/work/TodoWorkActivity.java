@@ -1,0 +1,143 @@
+package com.syberos.shuili.activity.work;
+
+import android.content.Context;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.adapter.CommonAdapter;
+import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.TodoWorkInfo;
+import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.CustomDialog;
+import com.syberos.shuili.view.PullRecyclerView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+
+/**
+ * Created by Administrator on 2018/4/4.
+ */
+
+public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.OnPullRefreshListener,CommonAdapter.OnItemClickListener{
+
+    private final String TAG = TodoWorkActivity.class.getSimpleName();
+    private final String Title = "代办工作";
+    @BindView(R.id.pullRecylerView)
+    PullRecyclerView pullRecyclerView;
+    private TodoWorkAdapter adapter;
+    List<TodoWorkInfo> datas = new ArrayList<>();
+
+    private int pageIndex = 1;
+
+    @Override
+    public int getLayoutId() {
+       return R.layout.activity_todo_work;
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void initData() {
+         getData();
+    }
+
+    private void getData(){
+        String url = "http://192.168.1.110:8080/pprty/WSRest/service/backlog/pagelist";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
+        params.put("page",String.valueOf(pageIndex));
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                datas.clear();
+                pullRecyclerView.refreshOrLoadComplete();
+                pageIndex ++ ;
+                Gson gson = new Gson();
+                TodoWorkInfo todoWorkInfo = gson.fromJson(result, TodoWorkInfo.class);
+                if(todoWorkInfo.dataSource.list!=null) {
+                    datas = todoWorkInfo.dataSource.list;
+                }
+                adapter.setData(datas);
+                adapter.notifyDataSetChanged();
+                pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore=="true");
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    @Override
+    public void initView() {
+        showTitle(Title);
+        setActionBarRightVisible(View.INVISIBLE);
+        adapter = new TodoWorkAdapter(mContext,R.layout.layout_todo_work_item,datas);
+        pullRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
+        pullRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        pullRecyclerView.setAdapter(adapter);
+        pullRecyclerView.setOnPullRefreshListener(this);
+        adapter.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        final CustomDialog customDialog = new CustomDialog(TodoWorkActivity.this);
+        customDialog.setDialogMessage(Title, "", null);
+        customDialog.setMessage("请在电脑端进行处理");
+                customDialog.setDialogOneBtn();
+
+        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+            }
+        });
+        customDialog.show();
+    }
+
+    @Override
+    public void onRefresh() {
+        pageIndex = 0;
+        getData();
+
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        getData();
+
+    }
+
+    private class TodoWorkAdapter extends CommonAdapter<TodoWorkInfo> {
+
+    public TodoWorkAdapter(Context context, int layoutId, List<TodoWorkInfo> datas) {
+        super(context, layoutId, datas);
+    }
+
+    @Override
+    public void convert(ViewHolder holder, TodoWorkInfo todoWorkInfo) {
+        ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(todoWorkInfo.getFromDate());
+        ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(todoWorkInfo.getBusiName());
+
+
+
+    }
+}
+}

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <com.syberos.shuili.view.CustomScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/padding_5"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:layout_marginTop="@dimen/padding_5"
+        android:scrollbars="none"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="案件名称"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/padding_10"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_40dp"
+                    android:text="河山墩水库工程项目" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <LinearLayout
+                android:id="@+id/ll_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_ripple_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="当事人"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_litigant"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/padding_10"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_40dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <LinearLayout
+                android:id="@+id/ll_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_ripple_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="立案时间"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/padding_10"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_40dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <LinearLayout
+                android:id="@+id/ll_severity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_ripple_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="承办人员"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sp" />
+
+                <TextView
+                    android:id="@+id/tv_undertaker"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/padding_10"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_40dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
+
+            <RelativeLayout
+                android:id="@+id/rl_describe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <com.syberos.shuili.view.AudioEditView
+                    android:id="@+id/ae_describe_audio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_50dp"
+                    android:paddingTop="@dimen/_15dp"
+                    app:view_label="案件基本情况"
+                    app:view_labelWidth="@dimen/_60dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/transparent_border_shape"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6dp"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/ll_plan_title"
+                        android:layout_width="@dimen/_3dp"
+                        android:layout_height="@dimen/_15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/button_login_normal"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2dp"
+                        android:layout_toEndOf="@+id/ll_plan_title"
+                        android:text="现场执法证据"
+                        android:textColor="@color/button_login_normal" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:id="@+id/ll_evidences"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/div_shape"
+                    android:orientation="vertical"
+                    android:showDividers="none">
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.syberos.shuili.view.CustomScrollView>
+
+
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_commit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_marginBottom="@dimen/_10dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_new_evidence"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_38dp"-->
+            <!--android:layout_marginStart="@dimen/_20dp"-->
+            <!--android:layout_marginEnd="@dimen/_20dp"-->
+            <!--android:background="@drawable/button_login_normal"-->
+            <!--android:gravity="center"-->
+            <!--android:text="新增执法证据"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/text_edit_text_size" />-->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

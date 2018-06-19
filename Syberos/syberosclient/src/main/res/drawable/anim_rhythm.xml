@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@mipmap/ic_rhythm_0"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_2"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_4"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_6"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_8"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_10"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_12"
+        android:duration="150"></item>
+    <item
+        android:drawable="@mipmap/ic_rhythm_14"
+        android:duration="150"></item>
+
+
+</animation-list>

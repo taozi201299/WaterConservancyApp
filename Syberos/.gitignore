@@ -1,0 +1,13 @@
+*.iml
+.gradle
+.idea
+.DS_Store
+build
+captures
+.externalNativeBuild
+gen
+target
+maven-repository
+local.properties
+mvn-clone
+*.keystore

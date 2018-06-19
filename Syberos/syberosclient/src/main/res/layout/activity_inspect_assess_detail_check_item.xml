@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/_6dp"
+    android:background="@drawable/white_ripple_bg"
+    >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/tv_item_name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="被检对象名称"
+        android:layout_marginEnd="@dimen/_2dp"/>
+
+    <TextView
+        android:layout_width="@dimen/_120dp"
+        android:layout_height="@dimen/_30dp"
+        android:id="@+id/iv_arrow_right"
+        android:background="@drawable/button_login_normal"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/_6dp"
+        android:gravity="center"
+        android:text="考前摸底"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sp" />
+
+</LinearLayout>

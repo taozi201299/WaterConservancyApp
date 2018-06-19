@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
+        android:layout_above="@+id/ll_commit"
+        android:layout_margin="@dimen/_6dp"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+
+        <com.syberos.shuili.view.CustomScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_margin="@dimen/_6dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_project_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_unit_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="所属单位" />
+
+                    <TextView
+                        android:id="@+id/tv_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_toEndOf="@+id/tv_unit_label"
+                        android:text="朝阳双桥水利所" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <com.syberos.shuili.view.AudioEditView
+                        android:id="@+id/ae_describe_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_50dp"
+                        android:paddingTop="@dimen/_15dp"
+                        app:view_label="事故描述"
+                        app:view_labelWidth="@dimen/_60dp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_maybe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_maybe_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="可能的危害" />
+
+                    <TextView
+                        android:id="@+id/tv_maybe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_toEndOf="@+id/tv_maybe_label"
+                        android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_controls_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="控制措施" />
+
+                    <TextView
+                        android:id="@+id/tv_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_toEndOf="@+id/tv_controls_label"
+                        android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/ll_attachment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <com.syberos.shuili.view.MultimediaView
+                        android:id="@+id/mv_multimedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:minHeight="@dimen/_50dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_time_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="上报时间" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_toEndOf="@+id/tv_time_label"
+                        android:text="2017-07-21 18:21" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_identify_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <com.syberos.shuili.view.AudioEditView
+                        android:id="@+id/ae_identify_describe_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_50dp"
+                        android:paddingTop="@dimen/_15dp"
+                        app:view_label="辨识评价描述"
+                        app:view_labelWidth="@dimen/_60dp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_record_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="备案记录" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_5dp"
+                        android:src="@mipmap/icon_label_next" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_patrol"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_patrol_label"
+                        android:layout_width="@dimen/_60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="巡查记录" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_5dp"
+                        android:src="@mipmap/icon_label_next" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+
+            </LinearLayout>
+        </com.syberos.shuili.view.CustomScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tv_rejected"
+            android:layout_width="@dimen/_140dp"
+            android:layout_height="@dimen/_30dp"
+            android:background="@drawable/cancel_button_selector"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_50dp"
+            android:text="驳回"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+
+        <TextView
+            android:id="@+id/tv_passed"
+            android:layout_width="@dimen/_140dp"
+            android:layout_height="@dimen/_30dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="通过"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>

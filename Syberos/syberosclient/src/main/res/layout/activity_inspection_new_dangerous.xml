@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
+        android:layout_above="@+id/ll_commit"
+        android:layout_margin="@dimen/_6dp"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+
+        <com.syberos.shuili.view.CustomScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_margin="@dimen/_6dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_project_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_problem"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+                    <com.syberos.shuili.view.AudioEditView
+                        android:id="@+id/ae_describe_problem_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_50dp"
+                        android:paddingTop="@dimen/_15dp"
+                        app:view_label="发现问题"
+                        app:view_labelWidth="@dimen/_60dp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <com.syberos.shuili.view.AudioEditView
+                        android:id="@+id/ae_describe_controls_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_50dp"
+                        android:paddingTop="@dimen/_15dp"
+                        app:view_label="处理措施"
+                        app:view_labelWidth="@dimen/_60dp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_identify_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <com.syberos.shuili.view.MultimediaView
+                        android:id="@+id/ll_multimedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_40dp"
+                        android:paddingTop="@dimen/_15dp"
+                        android:layout_marginBottom="@dimen/_2dp"
+                        android:paddingEnd="@dimen/_5dp"
+                        android:paddingStart="@dimen/_5dp"
+                        app:mv_label="现场情况"
+                        >
+                    </com.syberos.shuili.view.MultimediaView>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+
+            </LinearLayout>
+        </com.syberos.shuili.view.CustomScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/tv_rejected"
+            android:layout_width="@dimen/_140dp"
+            android:layout_height="@dimen/_30dp"
+            android:background="@drawable/cancel_button_selector"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_50dp"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+
+        <TextView
+            android:id="@+id/tv_passed"
+            android:layout_width="@dimen/_140dp"
+            android:layout_height="@dimen/_30dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>

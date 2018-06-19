@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_below="@+id/ll_title"
+    >
+<LinearLayout
+    android:id="@+id/ll_module_name"
+    android:layout_width="@dimen/_50dp"
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:background="@drawable/module_item_left_shape"
+    >
+    <TextView
+        android:id="@+id/tv_module_name"
+        android:layout_width="wrap_content"
+        android:ems="1"
+        android:layout_height="wrap_content"
+        android:text="报表管理"/>
+</LinearLayout>
+<HorizontalScrollView
+    android:id="@+id/scrollModule"
+    android:layout_toRightOf="@+id/ll_module_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none">
+    <LinearLayout
+        android:id="@+id/ll_module_child"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100dp"
+        android:background="@drawable/module_item_right_shape"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"></LinearLayout>
+</HorizontalScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5dp"
+        android:layout_below="@id/scrollModule"
+        android:background="@color/transparent"/>
+</RelativeLayout>

@@ -1,0 +1,377 @@
+package com.syberos.shuili.activity.accident;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.App;
+import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.accident.ObjAcci;
+import com.syberos.shuili.entity.common.DicInfo;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
+import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
+import com.syberos.shuili.view.CustomDialog;
+import com.syberos.shuili.view.EnumView;
+import com.syberos.shuili.view.MultimediaView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.DIC_ACCIDENT_KEY;
+import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.DIC_UNIT_KEY;
+
+public class EnterprisesNewAccidentActivity extends BaseActivity implements BaseActivity.IDialogInterface {
+
+    private final String TAG = EnterprisesNewAccidentActivity.class.getSimpleName();
+
+    @BindView(R.id.ll_multimedia)
+    MultimediaView ll_multimedia;
+
+    @BindView(R.id.tv_time)
+    TextView tv_time;
+
+    @BindView(R.id.ev_unit_type)
+    EnumView ev_unit_type;
+
+    @BindView(R.id.ev_type)
+    EnumView ev_type;
+
+    @BindView(R.id.ll_enum_level)
+    EnumView ll_enum_level;
+    @BindView(R.id.ce_accident_unit)
+    ClearableEditText ce_accident_unit;
+
+    @BindView(R.id.ce_accident_name)
+    ClearableEditText ce_accident_name;
+    @BindView(R.id.ce_occo_loc)
+    ClearableEditText ce_occo_loc;
+
+    @BindView(R.id.ce_serious_injuries_count)
+    ClearableEditText ce_serious_injuries_count;
+
+    @BindView(R.id.ce_death_count)
+    ClearableEditText ce_death_count;
+
+    @BindView(R.id.ce_direct_economic_loss)
+    ClearableEditText ce_direct_economic_loss;
+
+    @BindView(R.id.aev_accident_description)
+    AudioEditView aev_accident_description;
+
+    @BindView(R.id.rg_accident_liability)
+    RadioGroup rg_accident_liability;
+
+    @BindView(R.id.rg_accident_phone_report)
+    RadioGroup rg_accident_phone_report;
+
+    private DicInfo m_dicUnitType;
+    private DicInfo m_dicAccidentType;
+    private HashMap<String,String> m_unitMap;
+    private HashMap<String,String> m_acciTypeMap;
+    private HashMap<Integer,String>m_acciGradeMap;
+    private ObjAcci objAcci = null;
+    private int type ;
+
+    @OnClick(R.id.tv_accident_report_quick)
+    void onAccidentReportQuickClicked() {
+        commit();
+    }
+
+    @OnClick(R.id.rl_time)
+    void onSetAccidentTimeClicked() {
+        //时间选择器
+        boolean[] type = {true, true, true, true, true, true};
+
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                if (date.getTime() > System.currentTimeMillis()) {
+                    ToastUtils.show("提示：所选时间不应大于系统当前时间");
+                    return;
+                }
+                tv_time.setText(Strings.formatDatetime(date));
+            }
+        })
+                .isDialog(true)
+                .setType(type)
+                .build();
+        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.show();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_enterprises_new_accident;
+    }
+
+    @Override
+    public void initListener() {
+        setDialogInterface(this);
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    @Override
+    public void initView() {
+        String strTitleName = "新建事故";
+        if(m_dicUnitType == null || m_dicAccidentType == null) {
+            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+            m_dicUnitType = (DicInfo) bundle.getSerializable(DIC_UNIT_KEY);
+            m_dicAccidentType = (DicInfo) bundle.getSerializable(DIC_ACCIDENT_KEY);
+            tv_time.setText(CommonUtils.getCurrentDate());
+            type = bundle.getInt("type");
+            initViewData();
+            switch (type) {
+                case ObjAcci.REPORT_AFTER:
+                case ObjAcci.REPORT_QUICK:
+                    objAcci = (ObjAcci) bundle.getSerializable(SEND_BUNDLE_KEY);
+                    if(objAcci == null){
+                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+                        finish();
+                        return;
+                    }
+                    if(objAcci.REPORT_QUICK == type){
+                        strTitleName = "事故快报";
+                    }else if(objAcci.REPORT_AFTER == type){
+                        strTitleName = "事故补报";
+                    }
+                    ce_accident_unit.setText(objAcci.getAccidentUnitName());
+                    ce_accident_name.setText(getAcciTypeName(objAcci.getAcciCate()));
+                    ce_occo_loc.setText(objAcci.getOccuLoc());
+                    if(objAcci.getAcciGrad() != null) {
+                        ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(objAcci.getAcciGrad()));
+                    }
+                    ce_serious_injuries_count.setText(objAcci.getSerInjNum());
+                    ce_death_count.setText(objAcci.getCasNum());
+                    ce_direct_economic_loss.setText(objAcci.getEconLoss());
+                    tv_time.setText(objAcci.getOccuTime());
+                    aev_accident_description.setEditText(objAcci.getAcciSitu());
+                    if("1".equals(objAcci.getIfRespAcci())){
+                        rg_accident_liability.check(R.id.rb_accident_liability_yes);
+                    }else {
+                        rg_accident_liability.check(R.id.rb_accident_liability_no);
+                    }
+                    if("1".equals(objAcci.getIfPhoRep())){
+                        rg_accident_phone_report.check(R.id.rb_accident_phone_report_yes);
+                    }else {
+                        rg_accident_phone_report.check(R.id.rb_accident_phone_report_no);
+                    }
+                    if(objAcci.getAcciWiunType() != null) {
+                        ev_unit_type.setCurrentDetailText(getAcciUnitTypeName(objAcci.getAcciWiunType()));
+                    }
+                    if(objAcci.getAcciCate() != null){
+                        ev_type.setCurrentDetailText(getAcciTypeName(objAcci.getAcciCate()));
+                    }
+                    break;
+                case ObjAcci.NEW_ACCI:
+                    break;
+                default:
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+                    finish();
+                    break;
+            }
+        }
+        setActionBarTitle(strTitleName);
+        setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
+    }
+    private void initViewData(){
+        m_acciTypeMap = new HashMap<>();
+        m_unitMap = new HashMap<>();
+        m_acciGradeMap = new HashMap<>();
+        HashMap<Integer, String> unitTypeMap = new HashMap<>();
+        HashMap<Integer, String> accidentTypeMap = new HashMap<>();
+        if (m_dicUnitType != null && m_dicUnitType.dataSource.size() > 0) {
+            int size = m_dicUnitType.dataSource.size();
+            for (int i = 0; i < size; i++) {
+                DicInfo item = m_dicUnitType.dataSource.get(i);
+                unitTypeMap.put(i, item.getDcItemName());
+                m_unitMap.put(item.getDcItemName(),item.getDcItemCode());
+            }
+            ev_unit_type.setEntries(unitTypeMap);
+        }
+        if (m_dicAccidentType != null && m_dicUnitType.dataSource.size() > 0) {
+            int size = m_dicAccidentType.dataSource.size();
+            for (int i = 0; i < size; i++) {
+                DicInfo item = m_dicAccidentType.dataSource.get(i);
+                accidentTypeMap.put(i, item.getDcItemName());
+                m_acciTypeMap.put(item.getDcItemName(),item.getDcItemCode());
+            }
+            ev_type.setEntries(accidentTypeMap);
+        }
+        String [] acciGrade = getResources().getStringArray(R.array.accident_type);
+        if(acciGrade != null){
+            for(int i  = 0; i < acciGrade.length;i ++){
+                m_acciGradeMap.put(i,acciGrade[i]);
+            }
+            ll_enum_level.setEntries(m_acciGradeMap);
+        }
+    }
+    private String  getAcciTypeName(String code){
+        for(String key:m_acciTypeMap.keySet()){
+            if(m_acciTypeMap.get(key).equals(code)){
+                return key;
+            }
+        }
+        return "";
+    }
+    private String getAcciUnitTypeName(String code){
+        for(String key:m_unitMap.keySet()){
+            if(m_unitMap.get(key).equals(code)){
+                return key;
+            }
+        }
+        return "";
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ll_multimedia.onActivityResult(requestCode, requestCode, data);
+    }
+    private void commit() {
+        String message = "确认提交数据?";
+        showCommitDialog(message,0);
+    }
+
+    /**
+     * 0 保存在本地 1 提交
+     * @param type
+     */
+    private void accidentReport(int type) {
+        String url = "http://" + App.strIP + "/wcsps-supervision/v1/bis/obj/objAcci/";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
+        params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
+        params.put("occuTime", tv_time.getText().toString()); // 发生时间
+        params.put("occuLoc", ce_occo_loc.getText().toString()); // 事故地点
+        params.put("serInjNum", ce_serious_injuries_count.getText().toString()); // 重伤人数
+        params.put("casNum", ce_death_count.getText().toString()); // 死亡人数
+        params.put("econLoss", ce_direct_economic_loss.getText().toString()); // 直接经济损失
+        params.put("acciSitu", aev_accident_description.getEditText()); // 事故简要情况
+        params.put("note", "移动端接口测试");
+        params.put("recPers", "");
+        params.put("acciGrad", String.valueOf(ll_enum_level.getCurrentIndex()));
+        switch (type){
+            case ObjAcci.NEW_ACCI:
+                params.put("repStat", "2");
+                params.put("acciWiunGuid", "6EA3DB09FF964094A816246703CE7649");
+                break;
+            case ObjAcci.REPORT_AFTER:
+                params.put("repStat", "1");
+                params.put("pGuid",objAcci.getId());
+                params.put("acciWiunGuid", "6EA3DB09FF964094A816246703CE7649");
+                break;
+            case ObjAcci.REPORT_QUICK:
+                url += objAcci.getId() +"/"+"?";
+                for(String key :params.keySet()){
+                    url += key;
+                    url +="=";
+                    url += params.get(key);
+                    url += "&";
+                }
+                url = url.substring(0,url.length() -1);
+                params.put("repStat", "1");
+                break;
+        }
+
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        localCacheEntity.type = type;
+        localCacheEntity.attachType = 0;
+        localCacheEntity.params = params;
+        ArrayList<AttachMentInfoEntity>attachments = new ArrayList<>();
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
+
+        if(list != null){
+            for(MultimediaView.LocalAttachment item :list){
+                AttachMentInfoEntity info = new AttachMentInfoEntity();
+                info.medName = item.localFile.getName();
+                info.medPath = item.localFile.getPath();
+                info.url = "http://" + App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.bisTableName = "OBJ_ACCI";
+                info.bisGuid = "";
+                info.localStatus = "0";
+                if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
+                    info.medType = "0";
+                }else {
+                    info.medType = "1";
+                }
+                info.seriesKey = localCacheEntity.seriesKey;
+                attachments.add(info);
+            }
+        }
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,attachments, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                finish();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    EnterprisesNewAccidentActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前新增事故内容未保存，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void dialogClick() {
+        accidentReport(1);
+    }
+
+    @Override
+    public void dialogCancel() {
+
+    }
+}

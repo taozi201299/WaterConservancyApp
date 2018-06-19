@@ -1,0 +1,309 @@
+package com.syberos.shuili.activity.securitycheck;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActivity;
+import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
+import com.syberos.shuili.entity.hidden.ObjHidden;
+import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
+import com.syberos.shuili.entity.securitycheck.ObjExpert;
+import com.syberos.shuili.entity.securitycheck.RelSinsGroupExpert;
+import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
+import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.CustomScrollView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import butterknife.BindView;
+
+import static com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity.SEND_BUNDLE_KEY;
+
+/**
+ * Created by jidan on 18-4-6.
+ * 检查方案 + 被检对象+  隐患
+ * 被检对象为工程ID 或者单位ID
+ * 根据组ID 从检查小组与检查对象关系表中找到所有的检查对象ID 根据ID从工程对象表和机构对象表中查找对应的信息
+ */
+
+public class SecurityCheckFormActivity extends BaseActivity {
+
+    private HiddenInvestigationTaskInfo information;
+    /**
+     * 检查组信息
+     */
+    private BisSinsScheGroup bisSinsScheGroup;
+    /**
+     * 检查组和专家关系信息
+     */
+    private RelSinsGroupExpert relSinsGroupExpert;
+    /**
+     * 专家信息
+     */
+    private ObjExpert objExpert;
+    /**
+     * 检查组和检查对象关系信息
+     */
+    private RelSinsGroupWiun relSinsGroupWiun;
+
+    /**
+     * 隐患信息表
+     */
+    private ObjHidden objHidden;
+    @BindView(R.id.tv_check_plan)
+    TextView tv_check_plan;
+
+    @BindView(R.id.tv_check_time)
+    TextView tv_check_time;
+
+    @BindView(R.id.tv_check_content)
+    TextView tv_check_content;
+
+    @BindView(R.id.tv_group_leader)
+    TextView tv_group_leader;
+
+    @BindView(R.id.tv_group_unit)
+    TextView tv_group_unit;
+
+    @BindView(R.id.tv_member_unit)
+    TextView tv_member_unit;
+
+    @BindView(R.id.tv_check_person)
+    TextView tv_check_person;
+
+    @BindView(R.id.ll_check_object_container)
+    LinearLayout ll_check_object_container;
+    @BindView(R.id.ll_hidden_object_container)
+    LinearLayout ll_hidden_object_container;
+    @BindView(R.id.customScrollView)
+    CustomScrollView  customScrollView;
+
+    @Override  public int getLayoutId() {
+        return R.layout.activity_security_check_form_layout;
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void initData() {
+        if(bisSinsScheGroup == null){
+            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+            bisSinsScheGroup = (BisSinsScheGroup) bundle.getSerializable(SEND_BUNDLE_KEY);
+        }
+        if(bisSinsScheGroup == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            return;
+        }
+        showDataLoadingDialog();
+        showTitle(bisSinsScheGroup.getGroupName());
+        getExpertGuid();
+
+    }
+
+    /**
+     * 获取专家信息 从检查小组和专家关系表中获取专家GUID，在从专家信息表中获取专家详细信息
+     */
+    private void getExpertGuid(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/rel/sins/group/expe/relSinsGroupExpes/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("groupGuid",bisSinsScheGroup.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                relSinsGroupExpert = (RelSinsGroupExpert)gson.fromJson(result,RelSinsGroupExpert.class);
+                if(relSinsGroupExpert != null){
+                    getExpertInfo();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void getExpertInfo(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/expert/objExperts/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                objExpert = (ObjExpert)gson.fromJson(result,ObjExpert.class);
+                if(objExpert != null && objExpert.dataSource != null){
+                    getCheckObject();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 获取被检对象
+     */
+    private void getCheckObject(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/rel/sins/group/wiun/selectCheckOnline/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisSinsScheGroup.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                relSinsGroupWiun = (RelSinsGroupWiun)gson.fromJson(result,RelSinsGroupWiun.class);
+                if(relSinsGroupWiun != null && relSinsGroupWiun.dataSource != null){
+                    getCheckObjectInfo();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void getCheckObjectInfo(){
+        getHiddenInfo();
+    }
+    private void getHiddenInfo(){
+        // 1 根据方案ID 获取该检查方案下的所有隐患，再根据engguid获取对应的检查组，从而获取该检查组下的所有检查方案
+
+        getAllhiddenByPlanId();
+
+    }
+    private void getAllhiddenByPlanId(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/selectCheckPlansHiddInfo/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("sinsGuid",bisSinsScheGroup.getScheGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                objHidden = gson.fromJson(result,ObjHidden.class);
+                if(objHidden == null || objHidden.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-2).getMessage());
+                }else {
+                    parseHiddenList();
+                    refreshUI();
+                }
+            }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void parseHiddenList(){
+        for(ObjHidden item : objHidden.dataSource){
+            item.setbExist(getEngGuid(item));
+        }
+
+
+    }
+    boolean getEngGuid(ObjHidden objHidden){
+        for(RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
+            if(item.getGuid().equals(objHidden.getEngGuid())){
+                objHidden.setEngName(item.getEngName());
+                return true;
+            }
+        }
+        return false;
+    }
+    private void refreshUI(){
+        customScrollView.setVisibility(View.VISIBLE);
+        // 检查方案名称
+        tv_check_plan.setText(bisSinsScheGroup.getScheName());
+        // 检查时间
+        tv_check_time.setText(bisSinsScheGroup.getScheStartTime() +"-- " +bisSinsScheGroup.getScheCompTime());
+        // 检查内容
+        tv_check_content.setText(bisSinsScheGroup.getScheCont());
+        // 组长名称
+        tv_group_leader.setText(bisSinsScheGroup.getGroupLeader());
+        // 组长单位
+        tv_group_unit.setText(bisSinsScheGroup.getGroupLeaderWiun());
+        // 专家姓名
+        tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
+        // 被检对象
+        final ArrayList<RelSinsGroupWiun>infos = (ArrayList<RelSinsGroupWiun>) relSinsGroupWiun.dataSource;
+        final int size = infos.size();
+        for (int i = 0; i < size; i++) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.view_with_right_arrow, null);
+            TextView tv_item_name = (TextView)view.findViewById(R.id.tv_item_name);
+            tv_item_name.setText(infos.get(i).getEngName());
+            ll_check_object_container.addView(view);
+            final int finalI = i;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("checkItem",infos.get(finalI));
+                    intentActivity(SecurityCheckFormActivity.this, SecurityCheckItemFormActivity.class,
+                            false, bundle);
+                }
+            });
+        }
+
+        // 隐患类别
+        for(final ObjHidden item:objHidden.dataSource){
+            if(!item.isbExist()) continue;
+            View view = LayoutInflater.from(mContext).inflate(R.layout.activity_investigation_task_item,null);
+            TextView tv_type = (TextView)view.findViewById(R.id.tv_type);
+            TextView tv_title = (TextView)view.findViewById(R.id.tv_title);
+            TextView tv_time = (TextView)view.findViewById(R.id.tv_time);
+            TextView tv_name = (TextView)view.findViewById(R.id.tv_name);
+            TextView tv_content = (TextView)view.findViewById(R.id.tv_content);
+            LinearLayout ll_type = (LinearLayout)view.findViewById(R.id.ll_type);
+            if(item.getHiddGrad().equals("0")){
+                tv_type.setText(getResources().getString(R.string.normal));
+                ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
+            }else if(item.getHiddGrad().equals("1")){
+                tv_type.setText(getResources().getString(R.string.danger));
+                ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
+            }
+            tv_title.setText(item.getHiddName());
+            tv_time.setText(item.getCollTime());
+            tv_name.setText(item.getEngName());
+            tv_content.setText(item.getHiddDesc());
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("data",item);
+                    intentActivity(SecurityCheckFormActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
+                }
+            });
+        }
+
+    }
+    @Override
+    public void initView() {
+        customScrollView.setVisibility(View.GONE);
+      setActionBarRightVisible(View.INVISIBLE);
+    }
+
+
+}

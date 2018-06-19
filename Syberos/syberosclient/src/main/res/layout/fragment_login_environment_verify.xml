@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp"
+        app:srcCompat="@drawable/label_warning" />
+
+    <TextView
+        android:id="@+id/tv_login_environment_verify_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_environment_verify_title"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_login_environment_verify_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/text_edit_horizontal_margin"
+        android:layout_marginStart="@dimen/text_edit_horizontal_margin"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_login_environment_verify_title"
+        android:layout_marginTop="12dp"
+        android:textSize="@dimen/text_edit_text_size"
+        android:text="@string/new_phone_verify_context" />
+
+    <TextView
+        android:id="@+id/tv_start_login_environment_verify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_edit_height"
+        android:layout_below="@+id/tv_login_environment_verify_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="@dimen/text_edit_horizontal_margin"
+        android:layout_marginStart="@dimen/text_edit_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_login_normal"
+        android:gravity="center"
+        android:onClick="doClick"
+        android:text="@string/start_login_environment_verify"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_edit_text_size" />
+
+
+</RelativeLayout>

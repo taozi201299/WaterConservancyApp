@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <com.syberos.shuili.view.PullRecyclerView
+        android:id="@+id/recyclerView_investigation"
+        android:layout_below="@+id/layout_bar"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.syberos.shuili.view.PullRecyclerView>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_commitBtn"
+            android:layout_width="@dimen/_300dp"
+            android:layout_height="@dimen/_40dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="新建隐患"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>

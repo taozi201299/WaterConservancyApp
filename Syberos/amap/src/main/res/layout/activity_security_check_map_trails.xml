@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.syberos.amap.com.syberos.shuili.amap.SecurityCheckMapTrailsActivity" >
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
+    <ImageButton
+        android:id="@+id/center_on_current_point"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="80dp"
+        android:visibility="gone"
+        />
+
+    <View
+        android:id="@+id/anchors"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:background="@android:color/transparent"
+        />
+
+    <Button
+        android:id="@+id/stop_check"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/anchors"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/stop_check"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/add_problem"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/anchors"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/add_problem"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/start_check"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="@string/start_check"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,372 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_login_normal"
+        android:padding="@dimen/padding_10">
+
+        <ImageView
+            android:id="@+id/iv_action_bar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/padding_10"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/tv_action_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="稽察详情"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <com.syberos.shuili.view.CustomScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginTop="@dimen/padding_2"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_base_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_10dp"
+                android:layout_marginTop="@dimen/padding_5"
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_10dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_plan_title"
+                        android:layout_width="@dimen/_3dp"
+                        android:layout_height="@dimen/_15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/button_login_normal"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2dp"
+                        android:layout_toEndOf="@+id/ll_plan_title"
+                        android:text="稽察方案"
+                        android:textColor="@color/button_login_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/_10dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="稽查批次"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_batch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="2017年度第三批稽察" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="稽查时间"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="2017-07-21 —— 2017-08-21" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_hiddlen_object_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_10dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_hiddlen_object_title"
+                        android:layout_width="@dimen/_3dp"
+                        android:layout_height="@dimen/_15dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/button_login_normal"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2dp"
+                        android:layout_toEndOf="@+id/ll_hiddlen_object_title"
+                        android:text="检查分组"
+                        android:textColor="@color/button_login_normal" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:id="@+id/ll_groups"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/div_shape"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="特派员"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_special"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="杜甫" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="特派员助理"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_assistant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="苏轼" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="稽察专家"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_experts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="欧阳修、欧阳询" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="稽察项目"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="对象工程1，对象工程2" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:background="@color/gray_bb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="问题数量"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_problemCount"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/_40dp"
+                        android:text="4" />
+
+                    <TextView
+                        android:id="@+id/tv_detail"
+                        android:layout_width="@dimen/_80dp"
+                        android:layout_height="@dimen/_38dp"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:background="@drawable/button_login_normal"
+                        android:gravity="center"
+                        android:text="详情"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_edit_text_size" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.syberos.shuili.view.CustomScrollView>
+</RelativeLayout>

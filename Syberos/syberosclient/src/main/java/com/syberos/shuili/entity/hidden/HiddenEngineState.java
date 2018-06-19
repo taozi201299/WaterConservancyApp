@@ -1,0 +1,19 @@
+package com.syberos.shuili.entity.hidden;
+
+import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+
+/**
+ * Created by Administrator on 2018/4/24.
+ */
+
+public class HiddenEngineState extends HttpHiddenBaseResponse<HiddenEngineState> {
+    String engStat;
+
+    public String getEngStat() {
+        return engStat;
+    }
+
+    public void setEngStat(String engStat) {
+        this.engStat = engStat;
+    }
+}

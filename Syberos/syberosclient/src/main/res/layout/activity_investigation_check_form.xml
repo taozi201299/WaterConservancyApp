@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout">
+
+    </include>
+    <LinearLayout
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/padding_3"
+        android:layout_marginLeft="@dimen/padding_3"
+        android:layout_marginTop="@dimen/padding_2"
+        android:background="@drawable/dialog_bg_shape"
+        android:orientation="vertical">
+
+        <com.syberos.shuili.view.EnumView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            app:entries="@array/hidden_troubles_type"
+            app:enum_title="核实结论"
+            app:enum_detail="@string/normal"
+            >
+        </com.syberos.shuili.view.EnumView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:background="@color/gray_bb" />
+        <com.syberos.shuili.view.AudioEditView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_15dp"
+            android:minHeight="@dimen/_50dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp">
+        </com.syberos.shuili.view.AudioEditView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:background="@color/gray_bb"
+        />
+
+        <com.syberos.shuili.view.MultimediaView
+            android:id="@+id/ll_multimedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:layout_marginBottom="@dimen/_2dp">
+
+        </com.syberos.shuili.view.MultimediaView>
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_commitBtn"
+            android:layout_width="@dimen/_300dp"
+            android:layout_height="@dimen/_40dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+</RelativeLayout>

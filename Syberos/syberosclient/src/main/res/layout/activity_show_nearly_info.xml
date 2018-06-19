@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".amap.ShowNearlyInfoActivity" >
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
+    <Button
+        android:id="@+id/center_on_current_point"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="80dp"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/change_show_range"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_below="@+id/center_on_current_point"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        />
+
+
+</RelativeLayout>

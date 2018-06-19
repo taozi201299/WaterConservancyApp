@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout"></include>
+    <com.syberos.shuili.view.CustomScrollView
+        android:id="@+id/customScrollView"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_50dp"
+        android:layout_marginTop="@dimen/padding_2"
+        >
+        <include android:id="@+id/ll_investigation_check_detail"
+            layout="@layout/activity_investigation_check_item"/>
+    </com.syberos.shuili.view.CustomScrollView>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_commitBtn"
+            android:layout_width="@dimen/_300dp"
+            android:layout_height="@dimen/_30dp"
+            android:background="@drawable/button_login_normal"
+            android:gravity="center"
+            android:text="核实"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_edit_text_size" />
+    </LinearLayout>
+
+
+</RelativeLayout>

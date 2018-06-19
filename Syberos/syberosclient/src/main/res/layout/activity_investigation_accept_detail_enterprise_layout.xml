@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout"></include>
+    <com.syberos.shuili.view.CustomScrollView
+        android:id="@+id/customScrollView"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:layout_marginTop="@dimen/padding_2"
+        >
+        <include layout="@layout/activity_investigation_accept_detail_item"
+            android:id="@+id/rl_accept_detail"/>
+    </com.syberos.shuili.view.CustomScrollView>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_commit"
+            android:layout_width="@dimen/_120dp"
+            android:layout_height="@dimen/_40dp"
+            android:background="@drawable/button_login_normal"
+            android:text="提交验收"
+            />
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_width="@dimen/_120dp"
+            android:layout_height="@dimen/_40dp"
+            android:background="@drawable/button_login_normal"
+            android:text="新建整改"
+            />
+    </LinearLayout>
+</RelativeLayout>

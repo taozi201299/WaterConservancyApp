@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#007AD7</color>
+
+    <color name="write">#ffffffff</color>
+    <color name="main_color">#00affe</color>
+    <color name="text_color_ct1">#333333</color>
+    <color name="C_0fccc2">#0FCCC2</color>
+
+    <color name="transparent">#0fff</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#cccccc</color>
+    <color name="gray_light">#dfdfdf</color>
+
+    <color name="drop_down_selected">#7B1FA2</color>
+    <color name="drop_down_unselected">#111111</color>
+
+    <color name="mask_color">#88888888</color>
+    <color name="check_bg">#f2f2f2</color>
+    <color name="un_press_color">#9C27B0</color>
+
+    <color name="border_color">#dfdfdf</color>
+    <color name="button_login_normal">#007AD7</color>
+    <color name="button_login_disabled">#66007AD7</color>
+    <color name="button_login_pressed">#009DF2</color>
+    <color name="text_link">#1588D5</color>
+    <color name="text_link_pressed">#11F5F5</color>
+
+    <color name="login_bg">#ECEDEF</color>
+    <color name="head_number_color">#99727272</color>
+    <color name="edit_view">#dddddd</color>
+    <color name="text_color_hint">#c2cccc</color>
+    <color name="color_text_selected">#019DD5</color>
+    <color name="text_colort_ct2">#777777</color>
+    <color name="gray_bb">#bbbbbb</color><!--灰色bb -->
+
+    <color name="black">#000000</color>
+    <color name="black_transparent_66">#66000000</color>
+    <color name="black_transparent_88">#88000000</color>
+    <color name="text_content">#818181</color>
+    <color name="duty_color">#00affe</color>
+    <color name="rb_color">#00affe</color>
+    <color name="text_color_gray">#bbbbbb</color>
+    <color name="primary_color">#9C27B0</color>
+
+    <color name="blue">#0000FF</color><!--蓝色 -->
+    <color name="blue_c3">#0064C3</color><!--灰色bb -->
+    <color name="black_33">#333333</color><!--灰色bb -->
+
+
+    <!--TextColor-->
+    <color name="div_line">#E8E8E8</color>
+    <color name="text_color_grey">#999999</color>
+    <color name="news_title_color">#333333</color>
+    <color name="dialog_cancel_button_color">#BBBBBB</color>
+    <color name="dialog_cancel_message_color">#666666</color>
+    <color name="text_color_dark_black">#666666</color>
+    <!-- 字体颜色-->
+    <color name="text_black_color">#333333</color><!--黑色 -->
+    <color name="text_gray_color">#999999</color><!--灰色 -->
+    <color name="text_white_color">#ffffff</color><!--白色 -->
+
+    <color name="div">#dddddd</color>
+    <color name="red_delete">#ff6666</color>
+    <color name="red">#FF4081</color>
+
+    <color name="dialog_bg">#33000000</color><!--录音对话框背景色 -->
+
+    <color name="color_normal">#2299DD</color>
+    <color name="color_normal_shadow">#3399DD</color>
+    <color name="color_pressed">#2288FF</color>
+    <color name="color_pressed_shadow">#1166FF</color>
+
+    <color name="grey_normal">#8A837C</color>
+
+    <color name="color_accident_type_normal">#BABABA</color>
+    <color name="color_accident_type_big">#00CBC0</color>
+    <color name="color_accident_type_bigger">#FF8D2D</color>
+    <color name="color_accident_type_large">#FF1F2D</color>
+
+    <color name="color_dangerous_type_normal">#1166FF</color>
+    <color name="color_dangerous_type_big">#FF1F2D</color>
+
+    <color name="yellow">#ffff981e</color>
+    <color name="primary">#03A9F4</color>
+    <color name="orange">#fffaaa00</color>
+
+    <color name="button_rush_normal">#24CBC0</color>
+    <color name="button_rush_disabled">#6666CBC0</color>
+    <color name="button_rush_pressed">#88CBC0</color>
+
+    <color name="button_refund_normal">#EE2B31</color>
+    <color name="button_refund_disabled">#66EE2B31</color>
+    <color name="button_refund_pressed">#EE2B88</color>
+
+    <color name="color_inspect_type_normal">#0099CC</color>
+    <color name="color_inspect_type_big">#FF8D2D</color>
+    <color name="color_inspect_type_large">#FF1F2D</color>
+    
+    <color name="checkable_button_normal">#FFFFFF</color>
+    <color name="checkable_button_checked">#24CBC0</color>
+    <color name="checkable_button_border_normal">#BBBBBB</color>
+
+    <color name="color_enterprises_element_check_level_normal">#008000</color>
+    <color name="color_enterprises_element_check_level_common">#0099CC</color>
+    <color name="color_enterprises_element_check_level_not_sure">#FF8D2D</color>
+    <color name="color_enterprises_element_check_level_large">#FF1F2D</color>
+</resources>

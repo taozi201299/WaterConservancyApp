@@ -1,0 +1,5 @@
+
+<paths>
+    <external-path path="Android/data/com/syberos/shuili/" name="files_root" />
+    <external-path path="." name="external_storage_root" />
+</paths>

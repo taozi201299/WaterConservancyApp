@@ -1,0 +1,321 @@
+package com.syberos.shuili.activity.securitycheck;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.entity.securitycheck.BisSinsSche;
+import com.syberos.shuili.entity.securitycheck.ObjSins;
+import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
+import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * 安全检查部署
+ * 安全检查对象表（OBJ_SINS）
+ */
+public class SecurityCheckQueryListActivity extends TranslucentActivity {
+
+    public static final String SEND_BUNDLE_KEY = "HiddenInvestigationTaskInfo";
+    private GroupedListAdapter groupedListAdapter;
+
+    @BindView(R.id.recyclerView_query_accident)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.tv_current_month)
+    TextView tv_current_month;
+
+    @BindView(R.id.iv_action_right)
+    LinearLayout iv_action_right;
+
+    @OnClick(R.id.tv_current_month)
+    void onCurrentMonthClicked() {
+        onSelectMonthClicked();
+    }
+
+    @OnClick(R.id.iv_action_right)
+    void onActionBarRightClicked() {
+        onSelectMonthClicked();
+    }
+
+    @OnClick(R.id.iv_action_bar_back)
+    void onBackClicked() {
+        activityFinish();
+    }
+
+    /**
+     * 安全检查对象表信息
+     */
+    private ObjSins objSins;
+    /**
+     * 安全检查方案表信息
+     */
+    private BisSinsSche bisSinsSche;
+    private HashMap<String,BisSinsSche> map = new HashMap<>();
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_security_check_query_list;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public void initListener() {
+        tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
+        iv_action_right.setOnTouchListener(new ItemClickedAlphaChangeListener());
+    }
+
+    @Override
+    public void initData() {
+        getObjSins();
+
+    }
+
+    @Override
+    public void initView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView.setLayoutManager(layoutManager);
+
+        groupedListAdapter
+                = new GroupedListAdapter(this,
+                map);
+
+        groupedListAdapter.setOnChildClickListener(
+                new GroupedRecyclerViewAdapter.OnChildClickListener() {
+                    @Override
+                    public void onChildClick(GroupedRecyclerViewAdapter adapter,
+                                             BaseViewHolder holder,
+                                             int groupPosition, int childPosition) {
+
+                        Bundle bundle = new Bundle();
+                        Object [] heads = groupedListAdapter.getHeads();
+                        List<BisSinsSche> children = map.get(heads[groupPosition]).dataSource;
+                          BisSinsSche item = children.get(childPosition);
+                        bundle.putSerializable(SEND_BUNDLE_KEY, item);
+
+                        intentActivity(SecurityCheckQueryListActivity.this,
+                                SecurityCheckQueryDetailActivity.class,
+                                false, bundle);
+                    }
+                });
+
+        recyclerView.setAdapter(groupedListAdapter);
+
+
+    }
+
+    /**
+     * 获取单位的部署通知信息
+     */
+    private void getObjSins(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/sis/objSinss/";
+        SyberosManagerImpl.getInstance().requestGet_Default(url, null, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                objSins = gson.fromJson(result,ObjSins.class);
+                if(objSins != null && objSins.dataSource != null){
+                    getPlanInfo();
+
+                }else {
+                    closeDataDialog();
+                }
+            }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void  getPlanInfo(){
+        // 外键 检查部署guid
+        final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/sins/sche/bisSinsSches/";
+        HashMap<String,String>params = new HashMap<>();
+        int size =infos.size();
+        for(int i = 0; i < size ;i ++){
+            final ObjSins item = infos.get(i);
+            params.put("sinsGuid",item.getGuid());
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    closeDataDialog();
+                    Gson gson = new Gson();
+                    bisSinsSche = gson.fromJson(result,BisSinsSche.class);
+                    if(bisSinsSche != null){
+                        map.put(item.getGuid(),bisSinsSche);
+                    }
+                    Log.d("1111111111111",String.valueOf(finalI));
+                    if(map.size() == infos.size()){
+                        refreshUI();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    closeDataDialog();
+                    ToastUtils.show(errorInfo.getMessage());
+                }
+            });
+        }
+    }
+    private String getHeaderName(String id){
+        for(ObjSins item : objSins.dataSource){
+            if(item.getGuid().equals(id)){
+                return item.getSinsDeplName();
+            }
+        }
+        return "未知";
+
+    }
+    private void refreshUI() {
+        groupedListAdapter.setData(map);
+        groupedListAdapter.notifyDataSetChanged();
+    }
+
+    private void onSelectMonthClicked() {
+        //时间选择器
+        boolean[] type = {true, true, false, false, false, false};
+
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                if (date.getTime() > System.currentTimeMillis()) {
+                    ToastUtils.show("提示：所选月份不应大于系统当前月份");
+                    return;
+                }
+                tv_current_month.setText(Strings.formatYearMonth(date));
+                // TODO: 2018/4/10 处理时间设置之后的逻辑
+            }
+        })
+                .isDialog(true)
+                .setType(type)
+                .build();
+        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.show();
+    }
+
+    private class GroupedListAdapter extends GroupedRecyclerViewAdapter {
+       private HashMap<String,BisSinsSche> mGroups;
+
+        public GroupedListAdapter(
+                Context context, HashMap groups) {
+            super(context);
+            mGroups = groups;
+        }
+
+        public void setData(HashMap groups) {
+            mGroups = groups;
+
+        }
+        private Object[]getHeads (){
+            Object[] heads = (Object[]) mGroups.keySet().toArray();
+            return heads;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return mGroups == null ? 0 : mGroups.size();
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            Object [] heads = getHeads();
+            List<BisSinsSche> children = mGroups.get(heads[groupPosition]).dataSource;
+            return children == null ? 0 : children.size();
+        }
+
+        @Override
+        public boolean hasHeader(int groupPosition) {
+            return true;
+        }
+
+        /**
+         * 返回false表示没有组尾
+         *
+         * @param groupPosition
+         * @return
+         */
+        @Override
+        public boolean hasFooter(int groupPosition) {
+            return false;
+        }
+
+        /**
+         * 当hasFooter返回false时，这个方法不会被调用。
+         *
+         * @return
+         */
+        @Override
+        public int getFooterLayout(int viewType) {
+            return 0;
+        }
+
+        /**
+         * 当hasFooter返回false时，这个方法不会被调用。
+         *
+         * @param holder
+         * @param groupPosition
+         */
+        @Override
+        public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
+
+        }
+
+        @Override
+        public int getHeaderLayout(int viewType) {
+            return R.layout.adapter_header;
+        }
+
+        @Override
+        public int getChildLayout(int viewType) {
+            return R.layout.activity_security_check_query_list_item;
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+            Object [] heads = (Object[]) mGroups.keySet().toArray();
+            holder.setText(R.id.tv_header, getHeaderName(heads[groupPosition].toString()));
+        }
+
+        @Override
+        public void onBindChildViewHolder(BaseViewHolder holder,
+                                          int groupPosition, int childPosition) {
+            Object [] heads = getHeads();
+            List<BisSinsSche> children = mGroups.get(heads[groupPosition]).dataSource;
+            if(children.size() != 0) {
+                holder.setText(R.id.tv_title, children.get(childPosition).getScheName());
+                holder.setText(R.id.tv_time, children.get(childPosition).getScheStartTime() + "--" + children.get(childPosition).getScheCompTime());
+            }
+        }
+    }
+}

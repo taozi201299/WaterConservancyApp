@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar2_layout" />
+    <com.syberos.shuili.view.CustomScrollView
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/padding_2"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_object_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10dp"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp"
+                android:layout_marginTop="@dimen/padding_5"
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/rl_hiddlen_object_1_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_10dp">
+                    <LinearLayout
+                        android:id="@+id/ll_hiddlen_object_1_title"
+                        android:layout_width="@dimen/_3dp"
+                        android:layout_height="@dimen/_15dp"
+                        android:background="@color/button_login_normal"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"/>
+                    <TextView
+                        android:layout_toEndOf="@+id/ll_hiddlen_object_1_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="稽察工作情况"
+                        android:layout_marginStart="@dimen/_2dp"
+                        android:textColor="@color/button_login_normal"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_container_0"
+                    android:divider="@drawable/div_shape"
+                    android:padding="@dimen/_6dp"
+                    android:showDividers="middle"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_object_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10dp"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp"
+                android:layout_marginTop="@dimen/padding_5"
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/rl_hiddlen_object_2_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_10dp">
+                    <LinearLayout
+                        android:id="@+id/ll_hiddlen_object_2_title"
+                        android:layout_width="@dimen/_3dp"
+                        android:layout_height="@dimen/_15dp"
+                        android:background="@color/button_login_normal"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"/>
+                    <TextView
+                        android:layout_toEndOf="@+id/ll_hiddlen_object_2_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="被稽察历史情况"
+                        android:layout_marginStart="@dimen/_2dp"
+                        android:textColor="@color/button_login_normal"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_container_1"
+                    android:divider="@drawable/div_shape"
+                    android:padding="@dimen/_6dp"
+                    android:showDividers="middle"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.syberos.shuili.view.CustomScrollView>
+</RelativeLayout>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="permissions">
+        <item>@string/permission_recode_audio_hint</item>
+        <item>@string/permission_read_phone_hint</item>
+        <item>@string/permission_read_external_hint</item>
+        <item>@string/permission_write_external_hint</item>
+        <item>@string/permission_read_contacts_hint</item>
+    </string-array>
+
+    <string-array name="module">
+        <item>@string/module_baobiao</item>
+        <item>@string/module_anquan</item>
+        <item>@string/module_yinhuan</item>
+        <item>@string/module_shigu</item>
+        <item>@string/module_weixianyuan</item>
+        <item>@string/module_biaozhunhua</item>
+        <item>@string/module_gongzuo</item>
+        <item>@string/module_anjian</item>
+        <item>@string/module_shuilijicha</item>
+    </string-array>
+    <string-array name="module_enterprise">
+        <item>@string/module_baobiao</item>
+        <item>@string/module_anquan</item>
+        <item>@string/module_yinhuan</item>
+        <item>@string/module_shigu</item>
+        <item>@string/module_weixianyuan</item>
+    </string-array>
+    
+    <string-array name="module_child_baobiao">
+        <item>@string/module_child_baobiao_yinhuan</item>
+        <item>@string/module_child_baobiao_shigu</item>
+        <item>@string/module_child_baobiao_anquan</item>
+        <item>@string/module_child_baobiao_gongzuo</item>
+    </string-array>
+
+    <string-array name="module_child_anquan">
+        <item>@string/module_child_anquan_xianchangjiancha</item>
+        <!--<item>@string/module_child_anquan_yinhuangenzong</item>-->
+        <item>@string/module_child_anquan_jianchachaxun</item>
+    </string-array>
+
+    <string-array name="module_child_yinhuan">
+        <!--<item>@string/module_child_yinhuan_heshi</item>-->
+        <item>@string/module_child_yinhuan_xiaohao</item>
+        <item>@string/module_child_yinhuan_duban</item>
+        <!--<item>@string/module_child_yinhuan_chaxun</item>-->
+    </string-array>
+
+    <string-array name="module_child_shigu">
+        <item>@string/module_child_shigu_kuaibao</item>
+        <item>@string/module_child_shigu_chaxun</item>
+    </string-array>
+
+    <string-array name="module_child_weixianyuan">
+        <item>@string/module_child_weixianyuan_beian</item>
+        <item>@string/module_child_weixianyuan_hexiao</item>
+        <!--<item>@string/module_child_weixianyuan_yibeian</item>-->
+    </string-array>
+
+    <string-array name="module_child_biaozhunhua">
+        <!--<item>@string/module_child_biaozhunhua_xianchang</item>-->
+        <!--<item>@string/module_child_biaozhunhua_zige</item>-->
+        <!--<item>@string/module_child_biaozhunhua_pingshen</item>-->
+        <!--<item>@string/module_child_biaozhunhua_shending</item>-->
+        <!--<item>@string/module_child_biaozhunhua_gongshi</item>-->
+        <!--<item>@string/module_child_biaozhunhua_gonggao</item>-->
+        <!--<item>@string/module_child_biaozhunhua_chaxun</item>-->
+
+        <item>@string/module_child_biaozhunhua_xingshichushen</item>
+        <item>@string/module_child_biaozhunhua_cailiaoshenhe</item>
+        <item>@string/module_child_biaozhunhua_xianchangfuhe</item>
+        <item>@string/module_child_biaozhunhua_shending</item>
+        <item>@string/module_child_biaozhunhua_gongshi</item>
+        <item>@string/module_child_biaozhunhua_gonggao</item>
+    </string-array>
+
+    <string-array name="module_child_gongzuokaohe">
+        <!--<item>@string/module_child_gongzuokaohe_xianchangkaohe</item>-->
+        <!--<item>@string/module_child_gongzuokaohe_yinhuangenzong</item>-->
+        <!--<item>@string/module_child_gongzuokaohe_chaxun</item>-->
+        <item>@string/module_child_gongzuokaohe_anquanshengchankaohe</item>
+        <item>@string/module_child_gongzuokaohe_shuilijichakaohe</item>
+    </string-array>
+
+    <string-array name="module_child_anjian">
+        <item>@string/module_child_anjian_zhifa</item>
+        <!--<item>@string/module_child_anjian_diaocha</item>-->
+        <!--<item>@string/module_child_anjian_fucha</item>-->
+        <item>@string/module_child_anjian_chaxun</item>
+    </string-array>
+
+    <string-array name="module_child_shuilijicha">
+        <item>@string/module_child_shuilijicha_xianchang</item>
+        <!--<item>@string/module_child_shuilijicha_wenti</item>-->
+        <item>@string/module_child_shuilijicha_chaxun</item>
+    </string-array>
+
+
+    <string-array name="module_child_enterprise_baobiao">
+        <item>@string/module_child_baobiao_yinhuan</item>
+        <item>@string/module_child_baobiao_shigu</item>
+        <item>@string/module_child_baobiao_anquan</item>
+        <item>@string/module_child_baobiao_gongzuo</item>
+    </string-array>
+
+    <string-array name="module_child_enterprise_anquan">
+        <item>@string/module_child_anquan_jianchayuansu</item>
+        <item>@string/module_child_anquan_jiancharenwu</item>
+    </string-array>
+    <string-array name="module_child_enterprise_yinhuan">
+        <item>@string/module_child_yinhuan_paicha</item>
+        <item>@string/module_child_yinhuan_zhenggai</item>
+        <item>@string/module_child_yinhuan_xiaohao</item>
+        <!--<item>@string/module_child_yinhuan_yanshou</item>-->
+        <!--<item>@string/module_child_yinhuan_chaxun</item>-->
+    </string-array>
+    <string-array name="module_child_enterprise_shigu">
+        <item>@string/module_child_shigu_kuaibao</item>
+        <item>@string/module_child_shigu_chaxun</item>
+    </string-array>
+    <string-array name="module_child_enterprise_weixianyuan">
+        <item>@string/module_child_weixianyuan_xuncha</item>
+        <item>@string/module_child_weixianyuan_weiti</item>
+    </string-array>
+
+
+    <string-array name="inspect_information_types">
+        <item>@string/inspect_information_type_0</item>
+        <item>@string/inspect_information_type_1</item>
+        <item>@string/inspect_information_type_2</item>
+        <item>@string/inspect_information_type_3</item>
+        <item>@string/inspect_information_type_4</item>
+    </string-array>
+
+    <string-array name="inspect_information_departments">
+        <item>@string/inspect_information_department_0</item>
+        <item>@string/inspect_information_department_1</item>
+        <item>@string/inspect_information_department_2</item>
+    </string-array>
+
+    <string-array name="inspect_information_severities">
+        <item>@string/severity_normal</item>
+        <item>@string/severity_big</item>
+        <item>@string/severity_large</item>
+    </string-array>
+
+    <string-array name="law_enforcement_evidence_types">
+        <item>@string/law_enforcement_evidence_type_0</item>
+        <item>@string/law_enforcement_evidence_type_1</item>
+        <item>@string/law_enforcement_evidence_type_2</item>
+        <item>@string/law_enforcement_evidence_type_3</item>
+        <item>@string/law_enforcement_evidence_type_4</item>
+        <item>@string/law_enforcement_evidence_type_5</item>
+    </string-array>
+
+    <string-array name="review_levels">
+        <item>@string/review_level_0</item>
+        <item>@string/review_level_1</item>
+        <item>@string/review_level_2</item>
+        <item>@string/review_level_3</item>
+    </string-array>
+
+    <string-array name="accident_type">
+        <item>一般事故</item>
+        <item>较大事故</item>
+        <item>重大事故</item>
+        <item>特大事故</item>
+    </string-array>
+
+
+</resources>

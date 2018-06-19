@@ -1,0 +1,227 @@
+<resources>
+    <string name="app_name">水利安监</string>
+
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+    <string name="permission_contacts_rationale">Contacts permissions are needed to demonstrate access.</string>
+    <string name="permission_read_phone_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_PHONE_STATE</string>
+    <string name="permission_read_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_EXTERNAL_STORAGE</string>
+    <string name="permission_write_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
+    <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
+    <string name="permission_read_contacts_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_CONTACTS</string>
+    <string name="torch_switch">打开闪关灯</string>
+    <string name="start_scanner">开始扫描</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="OK">确定</string>
+    <string name="login">正在登录中.....</string>
+    <string name="vertical_position">VERTICAL POSITION</string>
+    <string name="horizontal_position">HORIZONTAL POSITION</string>
+    <string name="width">WIDTH</string>
+    <string name="height">HEIGHT</string>
+    <string name="fit_in_screen">Fit In Screen</string>
+    <string name="button_text_login">登录</string>
+    <string name="button_text_logout">退出登录</string>
+    <string name="new_home">门户</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="sms_verification_code_login">短信验证码登录</string>
+    <string name="username_password_login">账号密码登录</string>
+    <string name="login_account">账户</string>
+    <string name="login_password">密码</string>
+    <string-array name="vertical_positions">
+        <item>ABOVE</item>
+        <item>ALIGN_BOTTOM</item>
+        <item>CENTER</item>
+        <item>ALIGN_TOP</item>
+        <item>BELOW</item>
+    </string-array>
+    <string-array name="horizontal_positions">
+        <item>LEFT</item>
+        <item>ALIGN_RIGHT</item>
+        <item>CENTER</item>
+        <item>ALIGN_LEFT</item>
+        <item>RIGHT</item>
+    </string-array>
+    <string-array name="width">
+        <item>WRAP_CONTENT</item>
+        <item>MATCH_PARENT</item>
+        <item>80dp</item>
+        <item>240dp</item>
+        <item>480dp</item>
+    </string-array>
+    <string-array name="height">
+        <item>WRAP_CONTENT</item>
+        <item>MATCH_PARENT</item>
+        <item>80dp</item>
+        <item>240dp</item>
+        <item>480dp</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tip">提示</string>
+    <string name="getSmsCode">获取验证码</string>
+    <string name="verify_code">验证码</string>
+    <string name="phone_number">手机号码</string>
+    <string name="address_name">单位通讯录</string>
+    <string name="start_login_environment_verify">开始验证</string>
+    <string name="login_environment_verify_title">安全验证</string>
+    <string name="new_phone_verify_context">您正在一台新设备登录系统，为了您的账号安全，请进行安全验证</string>
+    <string name="new_location_verify_context">您首次在该区域登录系统，为了您的账号安全，请进行安全验证</string>
+    <string name="ve_send_sms_tip">我们已将短信验证码发送到您的手机，请注意查收</string>
+    <string name="submit">提交</string>
+    <string name="message_notification">接收新消息通知</string>
+    <string name="change_password">修改密码</string>
+    <string name="clear_buffered_data">清空缓冲数据</string>
+    <string name="version_update">版本更新</string>
+
+    <string name="me_mark">我的标绘</string>
+    <string name="me_font_size">字体大小</string>
+    <string name="me_password">修改密码</string>
+    <string name="me_message_sound">消息声音提醒</string>
+    <string name="me_message_vibration">消息震动提醒</string>
+    <string name="me_update">检查更新</string>
+    <string name="me_logout">退出登录</string>
+    <string name="me_swipe_data">清除缓存</string>
+
+    <string name="btn_cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="invalid_phone_number">您输入的手机号码无效</string>
+    <string name="verify_success">验证成功</string>
+    <string name="verify_failed">验证失败</string>
+    <string name="delete">删除</string>
+
+    <string name="normal">一般隐患</string>
+    <string name="danger">重大隐患</string>
+
+    <string name="accident_type_normal">一般事故</string>
+    <string name="accident_type_big">较大事故</string>
+    <string name="accident_type_bigger">重大事故</string>
+    <string name="accident_type_large">特大事故</string>
+
+    <string name="menu_item_new_danger">新建隐患</string>
+    <string name="menu_item_new_accident">新建事故</string>
+    <string name="menu_item_new_risk">新建危险源</string>
+    <string name="menu_item_new_check">新建检查任务</string>
+
+    <item name="type_header" type="integer" />
+    <item name="type_footer" type="integer" />
+    <item name="type_child" type="integer" />
+
+    <array name="hidden_troubles_type">
+        <item>一般隐患</item>
+        <item>重大隐患</item>
+    </array>
+
+    <array name="accident_unit_type">
+        <item>本单位</item>
+        <item>参建单位/下级单位</item>
+    </array>
+
+
+    <string name="title_work">办公中心</string>
+    <string name="dangerous_type_normal">一般危险源</string>
+    <string name="dangerous_type_big">重大危险源</string>
+
+
+    <string name="module_baobiao">报表管理</string>
+    <string name="module_anquan">安全检查</string>
+    <string name="module_yinhuan">隐患</string>
+    <string name="module_shigu">事故</string>
+    <string name="module_weixianyuan">危险源</string>
+    <string name="module_biaozhunhua">标准化</string>
+    <string name="module_gongzuo">工作考核</string>
+    <string name="module_anjian">监督执法</string>
+    <string name="module_shuilijicha">水利稽查</string>
+
+    <string name="module_child_baobiao_yinhuan">隐患报表</string>
+    <string name="module_child_baobiao_shigu">事故报表</string>
+    <string name="module_child_baobiao_anquan">检查报表</string>
+    <string name="module_child_baobiao_gongzuo">考核报表</string>
+    <string name="module_child_anquan_jianchayuansu">元素检查</string>
+    <string name="module_child_anquan_jiancharenwu">现场检查</string>
+    <string name="module_child_anquan_xianchangjiancha">现场检查</string>
+    <string name="module_child_anquan_yinhuangenzong">隐患跟踪</string>
+    <string name="module_child_anquan_jianchachaxun">检查查询</string>
+    <string name="module_child_yinhuan_paicha">隐患排查</string>
+    <string name="module_child_yinhuan_heshi">隐患核实</string>
+    <string name="module_child_yinhuan_zhenggai">隐患整改</string>
+    <string name="module_child_yinhuan_xiaohao">隐患销号</string>
+    <string name="module_child_yinhuan_yanshou">隐患验收</string>
+    <string name="module_child_yinhuan_duban">隐患督办</string>
+    <string name="module_child_yinhuan_chaxun">隐患查询</string>
+    <string name="module_child_shigu_kuaibao">快报事故</string>
+    <string name="module_child_shigu_chaxun">事故查询</string>
+    <string name="module_child_weixianyuan_xuncha">危险源巡视</string>
+    <string name="module_child_weixianyuan_weiti">危险源查询</string>
+    <string name="module_child_weixianyuan_beian">备案审核</string>
+    <string name="module_child_weixianyuan_hexiao">核销审核</string>
+    <string name="module_child_weixianyuan_yibeian">已备案</string>
+    <string name="module_child_biaozhunhua_xianchang">现场评审</string>
+    <string name="module_child_biaozhunhua_zige">资格审核</string>
+    <string name="module_child_biaozhunhua_pingshen">评审</string>
+    <string name="module_child_biaozhunhua_xingshichushen">形式初审</string>
+    <string name="module_child_biaozhunhua_cailiaoshenhe">材料审查</string>
+    <string name="module_child_biaozhunhua_xianchangfuhe">现场复核</string>
+    <string name="module_child_biaozhunhua_shending">审定</string>
+    <string name="module_child_biaozhunhua_gongshi">公示</string>
+    <string name="module_child_biaozhunhua_gonggao">公告</string>
+    <string name="module_child_biaozhunhua_chaxun">标准化查询</string>
+    <string name="module_child_gongzuokaohe_xianchangkaohe">现场考核</string>
+    <string name="module_child_gongzuokaohe_yinhuangenzong">隐患跟踪</string>
+    <string name="module_child_gongzuokaohe_chaxun">考核查询</string>
+    <string name="module_child_gongzuokaohe_anquanshengchankaohe">安全生产</string>
+    <string name="module_child_gongzuokaohe_shuilijichakaohe">水利稽查</string>
+    <string name="module_child_anjian_zhifa">现场执法</string>
+    <string name="module_child_anjian_diaocha">现场调查</string>
+    <string name="module_child_anjian_fucha">现场复查</string>
+    <string name="module_child_anjian_chaxun">执法查询</string>
+    <string name="module_child_shuilijicha_xianchang">现场稽查</string>
+    <string name="module_child_shuilijicha_wenti">问题跟踪</string>
+    <string name="module_child_shuilijicha_chaxun">稽查查询</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="refunded"><u>被退回</u></string>
+    <string name="returned"><u>已退回</u></string>
+    <string name="severity_normal">一般</string>
+    <string name="severity_big">严重</string>
+    <string name="severity_large">非常严重</string>
+    <string name="please_select">请选择</string>
+    <string name="please_input">请填写</string>
+
+    <string name="inspect_information_type_0">前期工作</string>
+    <string name="inspect_information_type_1">计划方面</string>
+    <string name="inspect_information_type_2">建设管理</string>
+    <string name="inspect_information_type_3">财务管理</string>
+    <string name="inspect_information_type_4">质量管理</string>
+
+    <string name="inspect_information_department_0">办公厅</string>
+    <string name="inspect_information_department_1">财务司</string>
+    <string name="inspect_information_department_2">水土保持司</string>
+
+    <string name="inspect_information_severity_0">一般</string>
+    <string name="inspect_information_severity_1">严重</string>
+    <string name="inspect_information_severity_2">非常严重</string>
+
+    <string name="law_enforcement_evidence_type_0">现场处理措施决定书</string>
+    <string name="law_enforcement_evidence_type_1">责令限期整改指令书</string>
+    <string name="law_enforcement_evidence_type_2">查封扣押决定书</string>
+    <string name="law_enforcement_evidence_type_3">行政（当场）处罚决定书（单位）</string>
+    <string name="law_enforcement_evidence_type_4">行政（当场）处罚决定书（个人）</string>
+    <string name="law_enforcement_evidence_type_5">创建送达回执</string>
+
+    <string name="review_level_0">一级</string>
+    <string name="review_level_1">二级</string>
+    <string name="review_level_2">三级</string>
+    <string name="review_level_3">不达标</string>
+    <string name="stop_check">stop check</string>
+    <string name="add_problem">add problem</string>
+    <string name="start_check">start check</string>
+
+    <array name="enterprises_element_check_level">
+        <item>一般隐患</item>
+        <item>重大隐患</item>
+        <item>正常</item>
+        <item>待查</item>
+    </array>
+
+</resources>

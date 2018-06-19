@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="expandableLayout">
+        <attr name="ael_duration" format="integer" />
+        <attr name="ael_expanded" format="boolean" />
+        <attr name="ael_defaultChildIndex" format="integer" />
+        <attr name="ael_defaultPosition" format="dimension" />
+        <attr name="ael_orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="ael_interpolator" format="enum">
+            <enum name="accelerateDecelerate" value="0" />
+            <enum name="accelerate" value="1" />
+            <enum name="anticipate" value="2" />
+            <enum name="anticipateOvershoot" value="3" />
+            <enum name="bounce" value="4" />
+            <enum name="decelerate" value="5" />
+            <enum name="fastOutLinearIn" value="6" />
+            <enum name="fastOutSlowIn" value="7" />
+            <enum name="linear" value="8" />
+            <enum name="linearOutSlowIn" value="9" />
+            <enum name="overshoot" value="10" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DropDownMenu">
+        <attr name="ddunderlineColor" format="color"/>
+        <attr name="dddividerColor" format="color"/>
+        <attr name="ddtextSelectedColor" format="color"/>
+        <attr name="ddtextUnselectedColor" format="color"/>
+        <attr name="ddmenuBackgroundColor" format="color"/>
+        <attr name="ddmaskColor" format="color"/>
+        <attr name="ddmenuTextSize" format="dimension"/>
+        <attr name="ddmenuSelectedIcon" format="reference"/>
+        <attr name="ddmenuUnselectedIcon" format="reference"/>
+        <attr name="ddmenuMenuHeightPercent" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="max" format="integer" />
+        <attr name="textIsDisplayable" format="boolean" />
+        <attr name="style">
+            <enum name="STROKE" value="0" />
+            <enum name="FILL" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RippleView">
+        <attr name="rv_color" format="color" />
+        <attr name="rv_type" format="enum">
+            <enum name="simpleRipple" value="0"/>
+            <enum name="doubleRipple" value="1"/>
+            <enum name="rectangle" value="2" />
+        </attr>
+        <attr name="rv_inner_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="EnumViewButtonGroup">
+        <attr name="entries" format="reference" />
+        <attr name="enum_title" format="string" />
+        <attr name="enum_detail" format="string" />
+        <attr name="enum_detail_hint" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="AudioEditView">
+        <attr name="view_label" format="string" />
+        <attr name="view_labelWidth" format="dimension" />
+        <attr name="view_content" format="string" />
+        <attr name="view_content_hint" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MultimediaView">
+        <attr name="mv_label" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="VerticalStepsViewIndicator">
+        <attr name="barColor" format="reference"/>
+        <attr name="progressColor" format="reference"/>
+        <attr name="progressTextColor" format="reference"/>
+        <attr name="hideProgressText" format="boolean"/>
+        <attr name="circleRadius" format="float"/>
+        <attr name="progressStrokeWidth" format="float"/>
+        <attr name="stepCompleted" format="boolean"/>
+        <attr name="stepNumber" format="string"/>
+        <attr name="isCurrentStep" format="boolean"/>
+    </declare-styleable>
+</resources>

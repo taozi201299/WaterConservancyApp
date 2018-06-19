@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/button_refund_normal" android:state_focused="true" />
+    <item android:color="@color/button_refund_pressed" android:state_enabled="true" android:state_pressed="true" />
+    <item android:color="@color/button_refund_disabled" android:state_enabled="false" />
+    <item android:color="@color/button_refund_normal" />
+</selector>

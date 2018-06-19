@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg_shape"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_10"
+    android:layout_margin="@dimen/padding_5"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/white_ripple_bg"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_4"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="易燃易爆物品"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_4">
+                <TextView
+                    android:id="@+id/tv_content_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_bb"
+                    android:text="稽查时间:"
+                    />
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/gray_bb"
+                    android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。"/>
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="@dimen/padding_4">-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_name_label"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/gray_bb"-->
+                    <!--android:text="稽查批次:"-->
+                    <!--/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_batch"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/gray_bb"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:text="朝阳区双桥水利所"/>-->
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

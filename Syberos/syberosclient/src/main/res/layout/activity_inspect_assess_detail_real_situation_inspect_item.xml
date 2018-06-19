@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.syberos.shuili.view.CustomExpandableLayout
+        android:id="@+id/expand_basic_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/div_shape"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginTop="@dimen/padding_5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_expand_name"
+                android:text="安全生产管理培训"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_expand_time"
+                android:layout_toLeftOf="@+id/expandable_layout_arrow"
+                android:layout_marginRight="@dimen/_2dp"/>
+            <ImageView
+                android:id="@id/expandable_layout_arrow"
+                style="@style/arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="off"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@id/expandable_layout_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_expandable_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_5dp"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                >
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.syberos.shuili.view.CustomExpandableLayout>
+
+</LinearLayout>

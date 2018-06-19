@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_enum_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_50dp">
+
+    <TextView
+        android:id="@+id/tv_enum_title"
+        style="@style/text_form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/tv_enum_detail"
+        style="@style/text_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/iv_enum_arrow"
+        android:gravity="end" />
+
+    <ImageView
+        android:id="@+id/iv_enum_arrow"
+        style="@style/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>
