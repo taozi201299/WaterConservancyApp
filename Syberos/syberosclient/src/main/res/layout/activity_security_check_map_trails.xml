@@ -31,6 +31,31 @@
         android:background="@android:color/transparent"
         />
 
+    <LinearLayout
+        android:id="@+id/ll_checkTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_80dp"
+        android:visibility="gone"
+        >
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:textSize="@dimen/_18sp"
+            android:textStyle="bold"
+        android:text = "检查时长"/>
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:textSize="@dimen/_18sp"
+            android:textStyle="bold"
+            android:text = "00:00:00"/>
+
+    </LinearLayout>
     <Button
         android:id="@+id/stop_check"
         android:layout_width="80dp"

@@ -118,6 +118,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         HashMap<String,String> params = new HashMap<>();
        // params.put("notIssuWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("notIssuWiun", "35B00CA81E084CFBAEB22E928BDD2B01");
+        
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

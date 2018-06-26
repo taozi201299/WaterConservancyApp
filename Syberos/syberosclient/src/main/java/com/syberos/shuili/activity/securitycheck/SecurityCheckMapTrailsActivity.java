@@ -12,7 +12,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -26,6 +30,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -38,6 +44,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.amap.AMapToWGS;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -54,6 +61,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 @SuppressLint("MissingPermission")
 public class SecurityCheckMapTrailsActivity extends Activity implements EasyPermissions.PermissionCallbacks {
@@ -93,14 +102,30 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_PHONE_STATE,
     };
-
+    /**
+     * 记录时间线程
+     */
+    Thread timeThread ;
+    /**
+     * 是否开始检查
+     */
+    private boolean mWorking = false;
+    int currentSecond  = 0;
     // ========== gao de api end ============
 
     @BindView(R.id.start_check)
     Button btn_start_check;
+    @BindView(R.id.ll_checkTime)
+    LinearLayout ll_checkTime;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
 
     @OnClick(R.id.start_check)
     void onStartCheckClicked() {
+        mWorking = true;
+        ll_checkTime.setVisibility(View.VISIBLE);
+        timeThread = new Thread(new TimeRunnable());
+        timeThread.start();
         Log.d(TAG, "==================0");
         mLocationClient.startLocation();
         Log.d(TAG, "==================1");
@@ -115,6 +140,8 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
 
     @OnClick(R.id.stop_check)
     void onStopCheckClicked() {
+        mWorking = false;
+        currentSecond = 0;
         mLocationClient.stopLocation();
         // TODO: 2018/5/10 show dialog
         btn_stop_check.setVisibility(View.GONE);
@@ -130,6 +157,14 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
      */
     @OnClick(R.id.add_problem)
     void onAddProblemClicked() {
+        Bundle bundle =new Bundle();
+        bundle.putSerializable("objSins",objSins);
+        bundle.putSerializable("bisSche",bisSinsSche);
+        Intent intent = new Intent();
+        intent.putExtra(DEFAULT_BUNDLE_NAME,bundle);
+        intent.setClass(this,SecurityCreateHiddenActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_from_right, R.anim.out_from_left);
 
     }
 
@@ -142,6 +177,21 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
             webView.loadUrl("javascript:centerOnCurrentPoint()");
         }
     }
+
+    private Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    Bundle bundle = msg.getData();
+                    String time = (String) bundle.get("time");
+                    tv_time.setText(time);
+                    break;
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,13 +224,13 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     }
 
     private void initData(){
-        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        objSins = (ObjSins) bundle.getSerializable("objSins");
-        bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSche");
-        if(objSins == null || bisSinsSche == null){
-            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-            finish();
-        }
+//        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+//        objSins = (ObjSins) bundle.getSerializable("objSins");
+//        bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSche");
+//        if(objSins == null || bisSinsSche == null){
+//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+//            finish();
+//        }
     }
     public void webMap() {//地图定位
 
@@ -667,4 +717,26 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
             }
         }
     };
+    class TimeRunnable implements Runnable{
+
+        @Override
+        public void run() {
+            while (mWorking){
+                try {
+                    Thread.sleep(1000);
+                    currentSecond = currentSecond + 1000;
+                    Message message = new Message();
+                    message.what = 1;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("time",CommonUtils.getFormatHMS(currentSecond));
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+    }
 }

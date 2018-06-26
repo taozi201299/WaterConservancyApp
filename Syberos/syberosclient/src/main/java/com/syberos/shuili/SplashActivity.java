@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.LogPrinter;
 
 import com.syberos.shuili.activity.accident.EnterprisesNewAccidentActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
@@ -49,7 +50,7 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
     private void go2Activity(){
         // TODO: 2018/4/16 在本地修改此处，此处设计到用户的初始化
         if (Singleton.INSTANCE.isLogin) {
-            startActivity(new Intent(SplashActivity.this, MainEnterpriseActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         } else {
             startActivity(new Intent(SplashActivity.this,LoginActivity.class));
         }

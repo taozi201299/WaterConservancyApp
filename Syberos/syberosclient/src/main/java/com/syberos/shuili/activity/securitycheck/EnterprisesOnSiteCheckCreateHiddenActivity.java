@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 
-public class EnterprisesOnSiteCheckExecuteActivity extends BaseActivity {
+public class EnterprisesOnSiteCheckCreateHiddenActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
