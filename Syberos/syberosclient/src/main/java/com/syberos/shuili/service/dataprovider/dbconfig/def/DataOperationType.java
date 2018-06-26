@@ -10,5 +10,6 @@ public enum DataOperationType {
     USER_INFO,
     Message_Info,
     Accident_Info,
+    Map_Info,
 
 }

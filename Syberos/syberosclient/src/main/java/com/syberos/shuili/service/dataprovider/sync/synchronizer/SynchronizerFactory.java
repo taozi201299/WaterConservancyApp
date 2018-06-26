@@ -61,6 +61,8 @@ public class SynchronizerFactory {
                 }
                 synchronizer = binarySynchronizer;
                 break;
+            case Map_Info:
+                break;
             default:
                 break;
         }

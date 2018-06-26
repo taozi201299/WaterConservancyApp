@@ -36,6 +36,9 @@ public class DBConfigFactory {
             case BINARY:
                 iConfig = new BinaryCommitConfig(context);
                 break;
+            case Map_Info:
+                iConfig = new MapConfig(context);
+                break;
         }
         return iConfig;
     }
