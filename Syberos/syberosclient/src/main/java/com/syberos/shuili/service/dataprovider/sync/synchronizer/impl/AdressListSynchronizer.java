@@ -94,4 +94,9 @@ public class AdressListSynchronizer extends SynchronizerBase {
     public void setInfoStatus(Object data) {
 
     }
+
+    @Override
+    public void synsMapInfo(Object data) {
+
+    }
 }

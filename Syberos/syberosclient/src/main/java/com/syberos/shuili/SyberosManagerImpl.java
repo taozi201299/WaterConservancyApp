@@ -291,6 +291,15 @@ public class SyberosManagerImpl {
         syberosAidlClient.getOffMessageList(map,callback);
     }
 
+    //------------------------------map interface----------------------------------------------------
+    public void syncMapInfo(HashMap<String,String> map){
+        syberosAidlClient.syncMapInfo(map);
+    }
+    public String getMapUrl(String url,String serviceID){
+       String result =  syberosAidlClient.getMapUrl(url,serviceID);
+       return result;
+    }
+
     /**
      * 标记消息为已读
      * @param messageIds

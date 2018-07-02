@@ -83,6 +83,7 @@
     <string name="me_update">检查更新</string>
     <string name="me_logout">退出登录</string>
     <string name="me_swipe_data">清除缓存</string>
+    <string name = "me_map_down">离线地图</string>
 
     <string name="btn_cancel">取消</string>
     <string name="confirm">确认</string>

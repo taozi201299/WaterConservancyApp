@@ -7,8 +7,10 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
 import com.syberos.shuili.service.dataprovider.DataProvider;
+import com.syberos.shuili.service.dataprovider.dbconfig.def.DBDefinition;
 import com.syberos.shuili.utils.CrashHandler;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,11 +103,41 @@ public class SyberosService extends Service {
             dataProvider.getLocalAccidentList(params,callback);
         }
 
+        @Override
+        public void syncMapInfo(Map params) throws RemoteException {
+            dataProvider.syncMapInfo(params);
+
+        }
+
+        @Override
+        public String getMapUrl(String url, String serviceId) throws RemoteException {
+            final String[] mapUrl = {""};
+            HashMap<String,String>param = new HashMap<>();
+            param.put(DBDefinition.mapUrl,url);
+            param.put(DBDefinition.serviceID,serviceId);
+            dataProvider.getMapUrl(param, new StringCallBack() {
+                @Override
+                public void sucess(String result) {
+                    mapUrl[0] =  result;
+                }
+
+                @Override
+                public void onFailed(int code) {
+
+                }
+            });
+            return mapUrl[0];
+        }
+
         public void clearCache(){
             dataProvider.clearCache();
         }
 
     };
+  public   interface  StringCallBack{
+        void sucess(String result);
+        void onFailed(int code);
+    }
 
 
 

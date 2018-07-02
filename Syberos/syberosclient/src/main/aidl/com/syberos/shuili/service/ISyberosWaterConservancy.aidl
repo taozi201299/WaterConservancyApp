@@ -28,6 +28,8 @@ import com.syberos.shuili.service.IAccidentListCallback;
    void deleteMessage(in List<String>messageIds);
    void setMessageStatus(in List<String> messageIds);
    void getLocalAccidentList(in Map params,IAccidentListCallback callback);
+   void syncMapInfo(in Map params);
+   String getMapUrl(String url,String serviceId);
    void clearCache();
 
 

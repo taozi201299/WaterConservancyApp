@@ -7,6 +7,7 @@ import com.syberos.shuili.service.IAccidentListCallback;
 import com.syberos.shuili.service.IAddressListCallback;
 import com.syberos.shuili.service.IMessageListCallback;
 import com.syberos.shuili.service.IResultCallback;
+import com.syberos.shuili.service.SyberosService;
 import com.syberos.shuili.service.UserInformationEntity;
 import com.syberos.shuili.service.dao.DBHelper;
 import com.syberos.shuili.service.dataprovider.dbconfig.def.DataOperationType;
@@ -15,6 +16,8 @@ import com.syberos.shuili.service.dataprovider.handler.datahandler.IDataHandler;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.datatype.DatatypeFactory;
 
 public class HandlerManagerImpl implements IHandlerManager {
     private Context context;
@@ -49,6 +52,8 @@ public class HandlerManagerImpl implements IHandlerManager {
             dh = DataHandlerFactory.getDataHandler(DataOperationType.Message_Info, context);
         }else if(callback instanceof IAccidentListCallback){
             dh = DataHandlerFactory.getDataHandler(DataOperationType.Accident_Info,context);
+        }else if(callback instanceof SyberosService.StringCallBack){
+            dh = DataHandlerFactory.getDataHandler(DataOperationType.Map_Info,context);
         }
         dh.offLineRequest(params,callback);
     }

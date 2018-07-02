@@ -232,7 +232,12 @@ public class DataProvider {
        syncManager.setInfoStatus(messageIds,DataOperationType.Message_Info);
 
    }
-
+   public  void  getMapUrl(Map params,Object callback){
+        hanlerManager.offLineRequest(params,callback );
+   }
+  public void syncMapInfo(Map params){
+       syncManager.syncMapInfo(params,DataOperationType.Map_Info);
+  }
    public void setCurrentUserInfo(UserInformationEntity information){
        RuntimeContext.setCurrentUserInfo(information);
 

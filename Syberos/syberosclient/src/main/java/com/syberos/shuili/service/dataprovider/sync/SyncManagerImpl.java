@@ -95,6 +95,12 @@ public class SyncManagerImpl implements ISyncManager {
         synchronizer.deleteData(ids);
     }
 
+    @Override
+    public void syncMapInfo(Map params, DataOperationType type) {
+        ISynchronizer synchronizer  = SynchronizerFactory.getSynchronizer(type,context);
+        synchronizer.synsMapInfo(params);
+    }
+
 
 }
 

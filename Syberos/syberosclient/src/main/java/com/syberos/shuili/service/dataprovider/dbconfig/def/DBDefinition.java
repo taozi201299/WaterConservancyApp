@@ -12,6 +12,7 @@ public class DBDefinition {
     public static final String USER_TABLE = "UserInfo_Table";
     public static final String MESSAGE_TABLE = "MessageInfo_Table";
     public static final String ATTACHMENT_TABLE = "AttachMent_Table";
+    public static final String MAP_TABLE ="Map_Table";
 
     /**
      *  提交表table filed
@@ -79,5 +80,13 @@ public class DBDefinition {
     public static String LocalStatus = "LocalStatus";
     public static String localStatus = "localStatus";
     public static String seriesKey = "seriesKey";
+
+
+    /**
+     * 地图表
+     */
+    public static String mapUrl = "url";
+    public static String serviceID = "serviceID";
+    public static String mapContent = "content";
 
 }

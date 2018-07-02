@@ -106,4 +106,9 @@ public class MessageSynchronizer extends SynchronizerBase {
         }
     }
 
+    @Override
+    public void synsMapInfo(Object data) {
+
+    }
+
 }

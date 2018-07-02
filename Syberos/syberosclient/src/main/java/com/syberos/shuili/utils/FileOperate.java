@@ -22,7 +22,8 @@ public class FileOperate {
                strFolder =  "/data/data/" +  App.globalContext().getPackageName() + "/log";
                 break;
             case 1:
-                strFolder =  "/data/data/" +  App.globalContext().getPackageName() + "/databases";
+               // strFolder =  "/data/data/" +  App.globalContext().getPackageName() + "/databases";
+                strFolder = "/sdcard/";
                 break;
             case 2:
              //   strFolder =  "/data/data/" +  App.globalContext().getPackageName() + "/crash";

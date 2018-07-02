@@ -246,6 +246,23 @@ public class SyberosAidlClient {
        }
 
    }
+
+   public void syncMapInfo(HashMap<String,String> map){
+       try {
+           syberosAidlClient.ILibInterface.syncMapInfo(map);
+       } catch (RemoteException e) {
+           e.printStackTrace();
+       }
+   }
+   public String getMapUrl(String url,String serviceID){
+       String mapUrl = "";
+       try {
+           mapUrl =  syberosAidlClient.ILibInterface.getMapUrl(url,serviceID);
+       } catch (RemoteException e) {
+           e.printStackTrace();
+       }
+       return mapUrl;
+   }
    public void clearCache(){
        try {
            syberosAidlClient.ILibInterface.clearCache();

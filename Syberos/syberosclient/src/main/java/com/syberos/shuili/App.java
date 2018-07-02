@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.lzy.okhttputils.OkHttpUtils;
+import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.CrashHandler;
 
@@ -67,8 +68,8 @@ public class  App extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
 //
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init();
 
     }
 

@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -39,6 +40,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.shuili.callback.ErrorInfo;
+import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.amap.AMapToWGS;
@@ -62,6 +64,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.lzy.okhttputils.callback.FileCallback.DM_TARGET_FOLDER;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 @SuppressLint("MissingPermission")
@@ -252,7 +255,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         webView.getSettings().setGeolocationDatabasePath(dir);//数据库
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
         webView.loadUrl("file:///android_asset/mobile_security_check.html");
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
+        webView.addJavascriptInterface(new MyJavaScriptInterface(), "MapOffLine");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -325,6 +328,13 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         public String getLon() {
             return mLon;
         }
+        @JavascriptInterface
+        public String getLocalUrl(String serviceID,String url){
+            String result =  SyberosManagerImpl.getInstance().getMapUrl(url,serviceID);
+            Log.d("map map map ",result);
+
+            return Environment.getExternalStorageDirectory() + DM_TARGET_FOLDER + result;
+        }
     }
 
     private void useGaoDeApiGetInfo() {
@@ -388,6 +398,15 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         }
     }
 
+    class MyRunnable implements  Runnable{
+
+        @Override
+        public void run() {
+            String lon = "34";
+            String lan ="115";
+            webView.loadUrl("javascript:updateCurrentPoint(" + lon + "," + lan + ")");
+        }
+    }
     private void updateCurrentPoint(final String lon, final String lan) {
         Log.d(TAG, "\n==============================updateCurrentPoint=============================\n");
 
@@ -683,6 +702,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
                         center_on_current_point.setVisibility(View.VISIBLE);
                         hasShowMap = true;
                     }
+                   // new Thread(new MyRunnable()).start();
 
                     if (btn_start_check.getVisibility() == View.GONE) {
                         updateLineAddPoint(mLon, mLan);

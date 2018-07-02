@@ -6,6 +6,7 @@ import com.syberos.shuili.service.dataprovider.dbconfig.def.DataOperationType;
 import com.syberos.shuili.service.dataprovider.sync.synchronizer.impl.AdressListSynchronizer;
 import com.syberos.shuili.service.dataprovider.sync.synchronizer.impl.BinarySynchronizer;
 import com.syberos.shuili.service.dataprovider.sync.synchronizer.impl.BusinessSynchronizer;
+import com.syberos.shuili.service.dataprovider.sync.synchronizer.impl.MapSynchronizer;
 import com.syberos.shuili.service.dataprovider.sync.synchronizer.impl.MessageSynchronizer;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SynchronizerFactory {
     private static AdressListSynchronizer  adressListSynchronizer = null;
     private static MessageSynchronizer messageSynchronizer = null;
     private static BinarySynchronizer binarySynchronizer = null;
+    private static MapSynchronizer mapSynchronizer = null;
 
     /**
      * 获取业务的同步实例
@@ -62,6 +64,10 @@ public class SynchronizerFactory {
                 synchronizer = binarySynchronizer;
                 break;
             case Map_Info:
+                if(mapSynchronizer == null){
+                    mapSynchronizer = new MapSynchronizer(context);
+                }
+                synchronizer = mapSynchronizer;
                 break;
             default:
                 break;

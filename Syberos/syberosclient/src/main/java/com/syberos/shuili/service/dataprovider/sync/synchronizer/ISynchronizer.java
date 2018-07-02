@@ -32,6 +32,7 @@ public interface ISynchronizer {
 
     void deleteData(Object data);
     void setInfoStatus(Object data);
+    void synsMapInfo(Object data);
 
 
 

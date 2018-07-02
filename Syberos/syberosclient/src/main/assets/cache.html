@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="resources.title_tiandituLayer_ll"></title>
+    <script type="text/javascript" src="./ol-debug.js"></script>
+    <link rel="stylesheet" href="./ol.css">
+    <script type="text/javascript" src="./AJLib.min.js"></script>
+    <link rel="stylesheet" href="./AJLib.min.css">
+</head>
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;left: 0;right: 0;top: 0;bottom: 0;position: absolute;display: block;">
+<div id="map" style="width: 100%;height:100%"></div>
+<script type="text/javascript">
+    // 初始化全局地图变量
+    window.mapDEMO = window.mapDEMO || {};
+    debugger
+    // 初始化地图分辨率、比例尺等地图必要数据
+    mapDEMO.mapOption = mapDEMO.mapOption || {};
+    if(!mapDEMO.map){
+        mapDEMO.map = new AJMap.Map('map',{
+          BaseLayer: AJMap.BASELAYER.DMZ_TDTSL,
+            ThemeLayers: {
+                [AJMap.THEMESLAYER.DMZ_TDTSL]:false
+            },
+            defaultControl:{
+                layerswitch:false
+            },
+            annotationVisible:true,
+        });
+    }
+    function  findCache(imageTile,id,src) {
+         var result = window.DEMO.getLocalUrl(id,src);
+         imageTile.getImage().src = result
+    }
+</script>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.syberos.shuili.service.dataprovider.dbconfig.def.DataOperationType;
 import com.syberos.shuili.service.dataprovider.handler.datahandler.impl.AccidentDataHandler;
+import com.syberos.shuili.service.dataprovider.handler.datahandler.impl.MapDataHandler;
 import com.syberos.shuili.service.dataprovider.handler.datahandler.impl.MessageDataHandler;
 import com.syberos.shuili.service.dataprovider.handler.datahandler.impl.UserInfoDataHandler;
 
@@ -16,6 +17,7 @@ public class DataHandlerFactory {
     static UserInfoDataHandler userInfoDataHandler = null;
     static MessageDataHandler messageDataHandler = null;
     static AccidentDataHandler accidentDataHandler = null;
+    static MapDataHandler mapDataHandler = null;
 
 
     /**
@@ -46,6 +48,12 @@ public class DataHandlerFactory {
                     accidentDataHandler = new AccidentDataHandler(context);
                 }
                 dataHandler = accidentDataHandler;
+                break;
+            case Map_Info:
+                if(mapDataHandler == null){
+                    mapDataHandler = new MapDataHandler(context);
+                }
+                dataHandler = mapDataHandler;
                 break;
         }
         return dataHandler;

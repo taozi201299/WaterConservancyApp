@@ -9,6 +9,7 @@ import com.syberos.shuili.service.dataprovider.dbconfig.def.DataOperationType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,5 +25,6 @@ public interface ISyncManager {
      void setHandler(Handler handler);
      void deleteInfo(List<String> ids, DataOperationType type);
      void setInfoStatus(List<String> messageIds,DataOperationType type);
+     void syncMapInfo(Map params,DataOperationType type);
 }
 

@@ -45,4 +45,9 @@ public class BinarySynchronizer extends SynchronizerBase {
 
     }
 
+    @Override
+    public void synsMapInfo(Object data) {
+
+    }
+
 }

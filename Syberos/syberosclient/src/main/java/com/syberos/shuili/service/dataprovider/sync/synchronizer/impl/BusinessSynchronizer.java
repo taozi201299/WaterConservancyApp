@@ -53,4 +53,9 @@ public class BusinessSynchronizer extends SynchronizerBase {
 
     }
 
+    @Override
+    public void synsMapInfo(Object data) {
+
+    }
+
 }

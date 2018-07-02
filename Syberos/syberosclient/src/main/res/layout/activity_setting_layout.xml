@@ -163,6 +163,22 @@
                 <ImageView
                     style="@style/me_function_arrow"
                     android:src="@mipmap/me_right_arrow" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_map_down"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_50"
+                android:background="@color/white"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/me_function_text_style"
+                    android:drawableLeft="@mipmap/me_clear"
+                    android:text="@string/me_map_down" />
+
+                <ImageView
+                    style="@style/me_function_arrow"
+                    android:src="@mipmap/me_right_arrow" />
 
             </RelativeLayout>
             <View

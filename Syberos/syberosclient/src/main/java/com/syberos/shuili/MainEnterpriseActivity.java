@@ -20,6 +20,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.activity.login.LoginActivity;
 import com.syberos.shuili.activity.personalcenter.ChangePasswordActivity;
+import com.syberos.shuili.activity.personalcenter.MapManActitity;
 import com.syberos.shuili.activity.personalcenter.PersonalCenterActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
@@ -59,6 +60,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
     RelativeLayout rl_me_update;
     RelativeLayout rl_me_clear;
     RelativeLayout rl_me_logout;
+    RelativeLayout rl_map_down;
     RelativeLayout rl_me_message_ring;
     ConstraintLayout cl_me_myself;
     ImageView iv_me_red_pot;
@@ -107,6 +109,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
         rl_me_logout.setOnClickListener(this);
+        rl_map_down.setOnClickListener(this);
         rl_me_message_ring.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +157,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
         rl_me_update = (RelativeLayout) view.findViewById(R.id.rl_me_update);
         rl_me_clear = (RelativeLayout) view.findViewById(R.id.rl_me_clear);
         rl_me_logout = (RelativeLayout) view.findViewById(R.id.rl_me_logout);
+        rl_map_down = (RelativeLayout)view.findViewById(R.id.rl_map_down);
         rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
         cl_me_myself = (ConstraintLayout) view.findViewById(R.id.cl_me_myself);
         iv_me_red_pot = (ImageView)view.findViewById(R.id.iv_me_red_pot);
@@ -242,11 +246,16 @@ public class MainEnterpriseActivity extends TranslucentActivity
             case R.id.rl_me_logout:
                 logout();
                 break;
+            case R.id.rl_map_down:
+                mapDownLoad();
+                break;
         }
         v4_drawerlayout.closeDrawer(Gravity.LEFT, false);
 
     }
-
+    private void mapDownLoad(){
+        intentActivity(MainEnterpriseActivity.this,MapManActitity.class,false,true);
+    }
     private void updatePwd(){
         intentActivity(MainEnterpriseActivity.this, ChangePasswordActivity.class,
                 false, true);
