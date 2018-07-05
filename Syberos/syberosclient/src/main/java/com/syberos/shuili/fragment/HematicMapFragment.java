@@ -158,8 +158,10 @@ public class HematicMapFragment extends BaseFragment {
             fragments.add(fragment);
         }
         tabAdapter = new TabAdapter(getChildFragmentManager(), fragments, tabTitle);
+
         //给ViewPager设置适配器
         vp_content.setAdapter(tabAdapter);
+
         //将TabLayout和ViewPager关联起来。
         tl_tab.setupWithViewPager(vp_content);
         //设置可以滑动

@@ -54,6 +54,7 @@ public class MapManActitity extends BaseActivity {
 
     @Override
     public void initData() {
+        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService?templateCode=140&type=PROVINCE&name=河北&targetId=search.GetBoundsAndCenterXYLogic";
 //        showDataLoadingDialog();
 //        downLoad("","","","");
 //        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService";

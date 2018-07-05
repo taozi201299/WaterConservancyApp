@@ -1,5 +1,6 @@
 package com.syberos.shuili.amap;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +9,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -31,7 +35,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.google.gson.Gson;
 import com.syberos.shuili.R;
+import com.syberos.shuili.entity.map.NearbyEngInfoBean;
+import com.syberos.shuili.utils.ToastUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,9 +52,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressLint("MissingPermission")
-public class ShowNearlyInfoActivity extends AppCompatActivity {
+public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     private final static String TAG = ShowNearlyInfoActivity.class.getSimpleName();
 
@@ -71,11 +79,15 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
     public AMapLocationClientOption mLocationOption = null;
+    /**
+     * 工程信息
+     */
+    NearbyEngInfoBean nearbyEngInfoBean = null;
 
     // ========== gao de api end ============
 
     @BindView(R.id.center_on_current_point)
-    Button center_on_current_point;
+    LinearLayout center_on_current_point;
 
     @OnClick(R.id.center_on_current_point)
     void onCenterOnCurrentPointClicked() {
@@ -85,7 +97,7 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
     }
 
     @BindView(R.id.change_show_range)
-    Button change_show_range;
+    LinearLayout change_show_range;
 
     @OnClick(R.id.change_show_range)
     void onChangeShowRangeClicked() {
@@ -95,6 +107,13 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
     private List<String> types;
     private OptionsPickerView typePicker = null;
     private int currentShowRange = 30;
+
+    private  final int RC_PERM = 110;
+    public static final String[] requestPermissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +157,11 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
         types.add("100公里");
 
         typePicker.setPicker(types);
-
-        webMap();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestMulti();
+        }else{
+            webMap();
+        }
     }
 
     @Override
@@ -221,7 +243,34 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
 
         });
     }
+    /**
+     * 请求多个权限
+     *
+     */
+    public void requestMulti() {
+        EasyPermissions.requestPermissions(this, "需要申请功能",
+                RC_PERM, requestPermissions);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 将结果转发到EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+            webMap();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+        }
+    }
     private GetJsonDataTask getJsonDataTask = null;
 
     public class MyJavaScriptInterface {
@@ -264,15 +313,14 @@ public class ShowNearlyInfoActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(s);
-//                        Log.d(TAG, "=========" + jsonObject.getString("message"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-
                     if (null != s && !s.isEmpty()) {
                         webView.loadUrl("javascript:showNearInfo(" + s + ")");
+                        Gson gson = new Gson();
+                        nearbyEngInfoBean = gson.fromJson(s,NearbyEngInfoBean.class);
+                    }else if(s == null){
+                        ToastUtils.show("网络错误，获取工程数据失败");
+                    }else if(s.isEmpty()){
+                        ToastUtils.show("未找到工程");
                     }
                 }
             };

@@ -15,7 +15,7 @@
 function showMap(x, y) {
     window.mapDEMO = {};
     window.mapDEMO.map = new AJMap.Map('map',{
-                                           zoomLevel: 13,
+                                           zoomLevel: 5,
                                            defaultControl: {
                                                layerswitch: true
                                            },
@@ -23,14 +23,10 @@ function showMap(x, y) {
                                                centerX: x,
                                                centerY: y
                                            },
-                                           ThemeLayers: {
-                                               // 对比用专题图底
-                                               ZWW_BJFW: false,
-                                               // 集中办公点行政区划
-                                               ZWW_XZQH: false,
-                                               // 集中办公点河流湖泊
-                                               ZWW_HLHP: false
-                                           }
+                                            ThemeLayers: {
+                [AJMap.THEMESLAYER.DMZ_TDTSL]:false
+            },
+                                            annotationVisible:true,
                                        });
 
     var mouseEvent = mapDEMO.map.getMapMouseEvent();
@@ -39,8 +35,11 @@ function showMap(x, y) {
         var features = e.target.data.customFeature;
         for(var i=0;i<features.length;i++){
             var feature = features[i];
-            var id = feature.get('id');
+            var id = feature.getProperties();
+            var name = id["name"];
+            alert(name);
             if(id == undefined) return;
+            if(name == undefined) return;
             //此处应该加判断是否存在弹窗
             var overlay = mapDEMO.map.getOverlayById(id);
             if(overlay){
@@ -60,7 +59,8 @@ function showMap(x, y) {
                                           });
                 mapDEMO.map.addOverlay(overlay);
             }
-            overlay.show(feature.getGeometry().getCoordinates(),'<div>hello</div>');
+
+            overlay.show(feature.getGeometry().getCoordinates(),'<div name="'+id["name"]+'"></div>');
         }
     }
     current_point_x = x;
@@ -179,11 +179,14 @@ function showNearInfo(json_string) {
     var resultInfoList = json_string.resultInfoList;
     var Coordinates = [];
     for(var i in resultInfoList){
-        Coordinates.push( ﻿JSON.parse(resultInfoList[i].geo).coordinates );
-    }
+        Coordinates.push(JSON.parse(resultInfoList[i].geo).coordinates );
+        var obj = resultInfoList[i];
+        var str = JSON.stringify(obj);
+        var objName = JSON.parse(str).name
     var iconFeature = new ol.Feature(
                 {
-                    geometry: new ol.geom.MultiPoint(Coordinates),
+                    geometry: new ol.geom.Point(Coordinates[i]),
+                    name:objName
                 }
                 );
     var style = new ol.style.Style(
@@ -197,6 +200,7 @@ function showNearInfo(json_string) {
     iconFeature.setStyle(style);
 
     _thisElementsQueryLayer.getSource().addFeature(iconFeature);
+    }
 }
 
 ///////////////////// 查附近相关 //////////////////////

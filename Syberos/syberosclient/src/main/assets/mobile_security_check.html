@@ -23,14 +23,11 @@ function showMap(x, y) {
                                                centerX: x,
                                                centerY: y
                                            },
+                                             BaseLayer: AJMap.BASELAYER.DMZ_TDTSL,
                                            ThemeLayers: {
-                                               // 对比用专题图底
-                                               ZWW_BJFW: false,
-                                               // 集中办公点行政区划
-                                               ZWW_XZQH: false,
-                                               // 集中办公点河流湖泊
-                                               ZWW_HLHP: false
-                                           }
+                                             [AJMap.THEMESLAYER.DMZ_TDTSL]:false
+                                             },
+                                              annotationVisible:true,
                                        });
 
     var mouseEvent = mapDEMO.map.getMapMouseEvent();
@@ -39,7 +36,13 @@ function showMap(x, y) {
         var features = e.target.data.customFeature;
         for(var i=0;i<features.length;i++){
             var feature = features[i];
-            var id = feature.get('id');
+           // var id = feature.get('id');
+            var id = feature.getProperties();
+            for(var k in id){
+            alert( k + id[k]);
+            }
+            var result = JSON.stringify(id);
+            alert(result);
             if(id == undefined) return;
             //此处应该加判断是否存在弹窗
             var overlay = mapDEMO.map.getOverlayById(id);

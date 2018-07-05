@@ -14,6 +14,8 @@ import com.syberos.shuili.activity.TestActivity;
 import com.syberos.shuili.activity.accident.EnterprisesNewAccidentActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.activity.login.LoginActivity;
+import com.syberos.shuili.activity.securitycheck.SecurityCheckMapTrailsActivity;
+import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.utils.Singleton;
 
 import java.util.List;
@@ -53,7 +55,7 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
         if (Singleton.INSTANCE.isLogin) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this,ShowNearlyInfoActivity.class));
         }
         finish();
     }

@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.android.tu.loadingdialog.LoadingDialog;
 import com.syberos.shuili.R;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.SPUtils;
@@ -36,6 +37,7 @@ public abstract class BaseLazyFragment extends Fragment {
     protected Unbinder unbinder;
     protected boolean  hasStarted = false;
     protected boolean isPrepared = false;
+    private Dialog dataDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -134,7 +136,19 @@ public abstract class BaseLazyFragment extends Fragment {
     /**
      * 加载对话框
      */
-    public void showLoadingDialog(String content) {
+    public void showDataLoadingDialog(){
+        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(mContext)
+                .setMessage("加载中...")
+                .setCancelable(true)
+                .setCancelOutside(true);
+        dataDialog=loadBuilder.create();
+        dataDialog.show();
+
+    }
+    public void closeDataDialog(){
+        if (dataDialog != null && dataDialog.isShowing()) {
+            dataDialog.dismiss();
+        }
     }
     public void closeDialog(){
         if(dialog!=null&&dialog.isShowing()){

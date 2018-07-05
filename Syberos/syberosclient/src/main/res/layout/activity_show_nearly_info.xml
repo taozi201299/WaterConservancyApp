@@ -12,24 +12,40 @@
 
     </WebView>
 
-    <Button
+    <LinearLayout
         android:id="@+id/center_on_current_point"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="9dp"
         android:layout_marginTop="80dp"
+        android:background="#50ffffff"
         android:visibility="gone"
-        />
+        tools:visibility="visible"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_me_location"/>
+    </LinearLayout>/>
 
-    <Button
+    <LinearLayout
         android:id="@+id/change_show_range"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="9dp"
+        android:background="#50ffffff"
         android:layout_below="@+id/center_on_current_point"
         android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:visibility="gone"
-        />
+        tools:visibility="visible">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_search_grey600_24dp"/>
+        </LinearLayout>
 
 
 </RelativeLayout>
