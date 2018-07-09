@@ -278,15 +278,12 @@ public class RecordReviewListActivity extends BaseActivity
             ((TextView) (holder.getView(R.id.tv_type))).setText(
                     getHazsGradeName(String.valueOf(type)));
             switch (type) {
-
-                case DangerousInformation.TYPE_LOW:
                 case DangerousInformation.TYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGER:
-                case DangerousInformation.TYPE_BIGGEST:{
+                case DangerousInformation.TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 

@@ -8,10 +8,8 @@ import java.io.Serializable;
  */
 
 public class DangerousInformation implements Serializable {
-    public static final int TYPE_LOW= 1;
-    public static final int TYPE_NORMAL = 2;
-    public static final int TYPE_BIGER = 3;
-    public static final int TYPE_BIGGEST = 4;
+    public static final int TYPE_NORMAL= 1;
+    public static final int TYPE_BIGER = 2;
 
     private String dangerousId;
     private String dangerousName;

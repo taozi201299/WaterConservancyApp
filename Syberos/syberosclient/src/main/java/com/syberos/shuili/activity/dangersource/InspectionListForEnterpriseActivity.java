@@ -49,6 +49,8 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
     RecyclerView recyclerView;
     DangerousListAdapter listAdapter;
     ObjHaz inspectionList  = null;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public void onItemClick(int position) {
@@ -72,7 +74,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
         String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HAZ");
-        params.put("attColCode","HIDD_GRAD");
+        params.put("attColCode","HAZ_GRAD");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -109,64 +111,65 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-        //params.put("orgGuid",info.getOrgId());
-        params.put("orgGuid","537AD1AB8E7447AAA249AB22A5344955");
+        params.put("orgGuid",info.getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 inspectionList = (ObjHaz)gson.fromJson(result,ObjHaz.class);
                 if(inspectionList != null){
-                    for(ObjHaz item : inspectionList.dataSource){
-                        boolean bRet = getEnterPriseName(item);
-                        if(!bRet){
-                            String errMsg  = ErrorInfo.ErrorCode.valueOf(-2).getMessage();
-                            ToastUtils.show(errMsg);
-                            break;
-                        }
+                    getHazEntName();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+
+    private void getHazEntName(){
+        for(final ObjHaz item : inspectionList.dataSource){
+            if(iFailedCount != 0){
+                break;
+            }
+            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",item.getEngGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjectEngine objectEngine  = null;
+                    objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    int index = inspectionList.dataSource.indexOf(item);
+                    ObjHaz objHaz = inspectionList.dataSource.get(index);
+                    objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());
+                    if(iSucessCount ==  inspectionList.dataSource.size()) {
+                        getUnitName();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-            }
-        });
-    }
-
-    // TODO: 2018/5/14 need to modify
-    private boolean getEnterPriseName(final ObjHaz item){
-        boolean bRet = true;
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("guid",item.getEngGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                ObjectEngine objectEngine  = null;
-                objectEngine = gson.fromJson(result,ObjectEngine.class);
-                int index = inspectionList.dataSource.indexOf(item);
-                ObjHaz objHaz = inspectionList.dataSource.get(index);
-                objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());
-                if(index == inspectionList.dataSource.size() -1) {
-                    getUnitName();
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    closeDataDialog();
+                    ToastUtils.show(errorInfo.getMessage());
                 }
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-            }
-        });
-        return bRet;
+            });
+        }
     }
     private void getUnitName(){
+        iSucessCount = 0;
+        iFailedCount = 0;
         final int size = inspectionList.dataSource.size();
         for(int i = 0; i < size; i ++) {
+            if(iFailedCount != 0){
+                break;
+            }
             final ObjHaz item = inspectionList.dataSource.get(i);
             String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/base/attOrgBases/";
             HashMap<String,String>params = new HashMap<>();
@@ -174,6 +177,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
+                    iSucessCount ++;
                     Gson gson = new Gson();
                     OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
                     if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
@@ -181,17 +185,21 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
                     }else {
                         item.setOrgName("未知");
                     }
-                    if(inspectionList.dataSource.indexOf(item) == size -1){
+                    if(iSucessCount == size){
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
+
+
         }
     }
     private void refreshUI(){
@@ -203,8 +211,6 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
     @Override
     public void initData() {
         getHazsDic();
-
-
     }
 
     @Override
@@ -251,15 +257,12 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
             ((TextView) (holder.getView(R.id.tv_type))).setText(
                     getHazsGradeName(String.valueOf(type)));
             switch (type) {
-
-                case DangerousInformation.TYPE_LOW:
                     case DangerousInformation.TYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGER:
-                    case DangerousInformation.TYPE_BIGGEST:{
+                case DangerousInformation.TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 

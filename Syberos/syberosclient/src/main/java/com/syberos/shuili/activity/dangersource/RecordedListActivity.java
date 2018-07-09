@@ -96,7 +96,7 @@ public class RecordedListActivity extends BaseActivity
                     "路面坍塌范围较大，对周边道路设施有较大");
             dangerousInformation.setDangerousName("易燃易爆物品");
             dangerousInformation.setDangerousUnit("朝阳区双桥水利所");
-            dangerousInformation.setDangerousType(DangerousInformation.TYPE_BIGGEST);
+            dangerousInformation.setDangerousType(DangerousInformation.TYPE_BIGER);
             dangerousInformation.setTime("12-21");
             dangerousInformation.setDangerousId(String.valueOf(j));
             ++j;
@@ -125,7 +125,7 @@ public class RecordedListActivity extends BaseActivity
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGGEST: {
+                case DangerousInformation.TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 

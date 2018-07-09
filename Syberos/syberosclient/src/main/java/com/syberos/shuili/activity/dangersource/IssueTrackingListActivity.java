@@ -248,7 +248,7 @@ public class IssueTrackingListActivity extends BaseActivity
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGGEST: {
+                case DangerousInformation.TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 
