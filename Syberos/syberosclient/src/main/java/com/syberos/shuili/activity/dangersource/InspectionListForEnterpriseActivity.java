@@ -204,6 +204,9 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
     }
     private void refreshUI(){
         if(inspectionList != null){
+            for(ObjHaz item: inspectionList.dataSource){
+                item.setHiddGradName(getHazsGradeName(item.getHiddGrad()));
+            }
             listAdapter.setData(inspectionList.dataSource);
             listAdapter.notifyDataSetChanged();
         }
@@ -254,8 +257,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
                 }
             });
 
-            ((TextView) (holder.getView(R.id.tv_type))).setText(
-                    getHazsGradeName(String.valueOf(type)));
+            ((TextView) (holder.getView(R.id.tv_type))).setText(dangerousInformation.getHiddGradName());
             switch (type) {
                     case DangerousInformation.TYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(

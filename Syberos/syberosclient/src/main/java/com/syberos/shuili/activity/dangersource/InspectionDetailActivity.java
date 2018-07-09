@@ -74,7 +74,7 @@ public class InspectionDetailActivity extends BaseActivity
         if(information != null){
           tv_unit.setText(information.getOrgName());
           tv_project.setText(information.getEngineName());
-          tv_danger_grade.setText(information.getHiddGrad());
+          tv_danger_grade.setText((information.getHiddGradName()));
           tv_line_note.setText(information.getIfLiceNoti());
           tv_super_pers.setText(information.getSupPers());
           tv_super_pers_phone.setText(information.getOffiTel());

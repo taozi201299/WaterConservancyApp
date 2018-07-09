@@ -72,17 +72,18 @@ public class InspectionNewDangerousActivity extends BaseActivity {
         setActionBarRightVisible(View.INVISIBLE);
     }
     private void commitForm(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/bisHazPatRec/";
+       // String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/bisHazPatRec/";
+        String url = "http://192.168.1.11:9080/wcsps-api/cj/yuanXin/Danger/create";
+
+
         HashMap<String, String> params = new HashMap<>();
         params.put("hazGuid", itemInfo.getGuid());
         params.put("patTime", "");
-        params.put("patPers", "");
-        params.put("probFound", "");
-        params.put("treaMeas", "");
+        params.put("patPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserName());
+        params.put("probFound", ae_describe_problem_audio.getEditText());
+        params.put("treaMeas", ae_describe_controls_audio.getEditText());
         params.put("note", "移动端测试");
-        params.put("collTime", "2018-04-18 00:00:00");
-        params.put("updTime", "");
-        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.type = 1;

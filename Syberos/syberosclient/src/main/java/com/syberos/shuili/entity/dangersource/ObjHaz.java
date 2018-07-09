@@ -30,6 +30,7 @@ public class ObjHaz extends HttpHiddenBaseResponse<ObjHaz> {
      * 危险源等级
      */
     String hiddGrad;
+    String hiddGradName;
     String proPart;
     String partLong;
     String partLat;
@@ -275,5 +276,13 @@ public class ObjHaz extends HttpHiddenBaseResponse<ObjHaz> {
 
     public void setRecPers(String recPers) {
         this.recPers = recPers;
+    }
+
+    public String getHiddGradName() {
+        return hiddGradName;
+    }
+
+    public void setHiddGradName(String hiddGradName) {
+        this.hiddGradName = hiddGradName;
     }
 }
