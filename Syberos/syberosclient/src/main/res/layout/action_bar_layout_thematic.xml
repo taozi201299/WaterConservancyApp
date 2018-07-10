@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/button_login_normal"
+android:padding="@dimen/padding_10"
+    >
+<ImageView
+    android:id="@+id/iv_action_bar_left"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:src="@mipmap/login_person"
+    android:paddingLeft="@dimen/padding_10"/>
+<TextView
+    android:id="@+id/tv_action_bar_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:textColor="@color/white"
+    android:textSize="@dimen/font_size_13"
+    android:text="详情"/>
+<ImageView
+    android:id="@+id/iv_action_bar_right_1"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:src="@mipmap/icon_chart"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="@dimen/padding_10"/>
+</RelativeLayout>

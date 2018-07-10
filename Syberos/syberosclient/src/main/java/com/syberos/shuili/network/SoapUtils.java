@@ -142,7 +142,6 @@ public class SoapUtils {
         // 设置.net web service
         envelope.dotNet = false;
         envelope.encodingStyle = "UTF-8";
-
         // 建立webservice连接对象
         HttpTransportSE transport = new HttpTransportSE(WSDL_URL);
         transport.debug = true;// 是否是调试模式
