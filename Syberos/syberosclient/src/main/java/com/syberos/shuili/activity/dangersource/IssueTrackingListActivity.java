@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -46,6 +47,8 @@ public class IssueTrackingListActivity extends BaseActivity
     IssueTrackingListActivity.DangerousListAdapter listAdapter;
     ObjHaz inspectionList  = null;
     private DicInfo hazsGrade = null;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public void onItemClick(int position) {
@@ -65,16 +68,16 @@ public class IssueTrackingListActivity extends BaseActivity
 
     }
     private void getHazsDic(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = App.strIP + "/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HAZ");
-        params.put("attColCode","HIDD_GRAD");
+        params.put("attColCode","HAZ_GRAD");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 hazsGrade  = gson.fromJson(result,DicInfo.class);
-                if(hazsGrade == null || hazsGrade.dataSource ==null){
+                if(hazsGrade == null || hazsGrade.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
@@ -86,7 +89,6 @@ public class IssueTrackingListActivity extends BaseActivity
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
-
             }
         });
     }
@@ -103,79 +105,76 @@ public class IssueTrackingListActivity extends BaseActivity
         return dicName;
     }
     private void getHazsList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHazs/";
+        String url = App.strIP + "/wcsps-supervision/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-        //params.put("orgGuid",info.getOrgId());
-        params.put("orgGuid","537AD1AB8E7447AAA249AB22A5344955");
+        params.put("orgGuid",info.getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDataDialog();
                 Gson gson = new Gson();
                 inspectionList = (ObjHaz)gson.fromJson(result,ObjHaz.class);
                 if(inspectionList != null){
-                    for(ObjHaz item : inspectionList.dataSource){
-                        boolean bRet = getEnterPriseName(item);
-                        if(!bRet){
-                            String errMsg  = ErrorInfo.ErrorCode.valueOf(-2).getMessage();
-                            ToastUtils.show(errMsg);
-                            break;
-                        }
+                    getHazEntName();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+
+    private void getHazEntName(){
+        for(final ObjHaz item : inspectionList.dataSource){
+            if(iFailedCount != 0){
+                break;
+            }
+            String url = App.strIP + "/wcsps-supervision/v1/jck/obj/objEngs/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",item.getEngGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjectEngine objectEngine  = null;
+                    objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    int index = inspectionList.dataSource.indexOf(item);
+                    ObjHaz objHaz = inspectionList.dataSource.get(index);
+                    objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());
+                    if(iSucessCount ==  inspectionList.dataSource.size()) {
+                        getUnitName();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-
-            }
-        });
-    }
-
-    // TODO: 2018/5/14 need to modify
-    private boolean getEnterPriseName(final ObjHaz item){
-        boolean bRet = true;
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("guid",item.getEngGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                ObjectEngine objectEngine  = null;
-                objectEngine = gson.fromJson(result,ObjectEngine.class);
-                int index = inspectionList.dataSource.indexOf(item);
-                ObjHaz objHaz = inspectionList.dataSource.get(index);
-                objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());
-                if(index == inspectionList.dataSource.size() -1) {
-                    getUnitName();
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    closeDataDialog();
+                    ToastUtils.show(errorInfo.getMessage());
                 }
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-
-            }
-        });
-        return bRet;
-
-
+            });
+        }
     }
     private void getUnitName(){
+        iSucessCount = 0;
+        iFailedCount = 0;
         final int size = inspectionList.dataSource.size();
         for(int i = 0; i < size; i ++) {
+            if(iFailedCount != 0){
+                break;
+            }
             final ObjHaz item = inspectionList.dataSource.get(i);
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/base/attOrgBases/";
+            String url = App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getOrgGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
+                    iSucessCount ++;
                     Gson gson = new Gson();
                     OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
                     if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
@@ -183,21 +182,28 @@ public class IssueTrackingListActivity extends BaseActivity
                     }else {
                         item.setOrgName("未知");
                     }
-                    if(inspectionList.dataSource.indexOf(item) == size -1){
+                    if(iSucessCount == size){
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
+
+
         }
     }
     private void refreshUI(){
         if(inspectionList != null){
+            for(ObjHaz item: inspectionList.dataSource){
+                item.setHiddGradName(getHazsGradeName(item.getHiddGrad()));
+            }
             listAdapter.setData(inspectionList.dataSource);
             listAdapter.notifyDataSetChanged();
         }

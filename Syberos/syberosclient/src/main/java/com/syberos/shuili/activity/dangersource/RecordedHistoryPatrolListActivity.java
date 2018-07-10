@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -18,6 +19,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.HistoryPatrolInformation;
 import com.syberos.shuili.entity.UserExtendInfo;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
+import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.Call;
+
+import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * 巡查记录列表
@@ -44,6 +48,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
 
     HistoryPatrolListAdapter listAdapter;
     InspectionPartolInfo informationList = null;
+    private ObjHaz information = null;
 
     @Override
     public void onItemClick(int position) {
@@ -67,14 +72,13 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
 
     @Override
     public void initData() {
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/bisHazPatRecs/";
+        String url = App.strIP + "/wcsps-supervision/v1/bis/haz/bisHazPatRecs/";
         HashMap<String,String>params = new HashMap<>();
-        UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-       // params.put("hazGuid",info.getOrgId());
-        params.put("hazGuid","B28351744A0E4587AAB7E26CD2C5DE0E");
+        params.put("hazGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 informationList = (InspectionPartolInfo)gson.fromJson(result,InspectionPartolInfo.class);
                 if(informationList != null){
@@ -103,6 +107,8 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
                 R.layout.activity_history_patrol_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        information = (ObjHaz)bundle.getSerializable("data");
     }
 
     private class HistoryPatrolListAdapter

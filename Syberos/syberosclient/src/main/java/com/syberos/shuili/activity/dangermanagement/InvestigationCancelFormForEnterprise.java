@@ -94,7 +94,7 @@ public class InvestigationCancelFormForEnterprise  extends BaseActivity{
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://" + App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url = App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_ACCE";
                 info.bisGuid = this.item.getGuid();
                 info.localStatus = "1";

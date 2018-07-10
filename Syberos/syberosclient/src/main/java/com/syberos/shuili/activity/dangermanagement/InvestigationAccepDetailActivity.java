@@ -271,7 +271,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      * 排查单位名称
      */
     private void getUnitNameByOrgID(String id){
-        String url = "http://" + App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
+        String url = App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",id);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

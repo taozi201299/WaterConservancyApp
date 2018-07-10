@@ -103,7 +103,9 @@ public class InspectionDetailActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_patrol:
-                intentActivity(this,RecordedHistoryPatrolListActivity.class,false,true);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",information);
+                intentActivity(this,RecordedHistoryPatrolListActivity.class,false,bundle);
                 break;
         }
 

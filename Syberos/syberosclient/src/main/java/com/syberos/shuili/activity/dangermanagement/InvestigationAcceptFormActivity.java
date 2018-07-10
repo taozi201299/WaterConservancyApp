@@ -156,7 +156,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://" + App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url = App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_ACCE";
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";

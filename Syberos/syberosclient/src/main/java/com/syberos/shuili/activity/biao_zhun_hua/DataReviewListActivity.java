@@ -81,7 +81,7 @@ public class DataReviewListActivity extends TranslucentActivity
 
     //材料审核 对象表
     private void getobjStanRevisList() {
-        String url = "http://" + App.strIP + "/wcsps-supervision/v1/obj/stan/revi/objStanRevis/";
+        String url = App.strIP + "/wcsps-supervision/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String> param = new HashMap<>();
         param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("veriConc","1");

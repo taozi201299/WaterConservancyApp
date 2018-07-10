@@ -329,7 +329,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      * 隐患整改信息
      */
     private void getRectifyInfo(){
-        String url =  "http://"+ App.strIP +"/wcsps-supervision/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";
+        String url =  App.strIP +"/wcsps-supervision/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

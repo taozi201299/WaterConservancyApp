@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -71,7 +72,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
     }
 
     private void getHazsDic(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = App.strIP + "/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HAZ");
         params.put("attColCode","HAZ_GRAD");
@@ -108,7 +109,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
         return dicName;
     }
     private void getHazsList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHazs/";
+        String url = App.strIP + "/wcsps-supervision/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
@@ -135,7 +136,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
             if(iFailedCount != 0){
                 break;
             }
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
+            String url = App.strIP + "/wcsps-supervision/v1/jck/obj/objEngs/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getEngGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -171,7 +172,7 @@ public class InspectionListForEnterpriseActivity extends BaseActivity
                 break;
             }
             final ObjHaz item = inspectionList.dataSource.get(i);
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/base/attOrgBases/";
+            String url = App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getOrgGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

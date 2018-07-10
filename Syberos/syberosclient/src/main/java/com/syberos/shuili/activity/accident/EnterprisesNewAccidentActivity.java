@@ -264,7 +264,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
      * @param type
      */
     private void accidentReport(int type) {
-        String url = "http://" + App.strIP + "/wcsps-supervision/v1/bis/obj/objAcci/";
+        String url = App.strIP + "/wcsps-supervision/v1/bis/obj/objAcci/";
         HashMap<String, String> params = new HashMap<>();
         params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
         params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
@@ -314,7 +314,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://" + App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url =  App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_ACCI";
                 info.bisGuid = "";
                 info.localStatus = "0";

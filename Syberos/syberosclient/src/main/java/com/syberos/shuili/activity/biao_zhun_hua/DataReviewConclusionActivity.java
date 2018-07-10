@@ -108,7 +108,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(int result){
-        String url = "http://" + App.strIP +"/wcsps-supervision/v1/obj/stan/revi/bisStanReviRec/";
+        String url =  App.strIP +"/wcsps-supervision/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","2");
         params.put("confTime",tv_time.getText().toString()); //会议时间

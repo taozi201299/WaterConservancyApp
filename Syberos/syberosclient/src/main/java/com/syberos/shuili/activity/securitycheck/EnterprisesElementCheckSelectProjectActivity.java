@@ -120,30 +120,30 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         String url = "";
         for(final  ObjectEngine item : objectEngine.dataSource){
             if(item.getEngType().equals("1")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngRess/" ;
+                url = App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngRess/" ;
             }else  if(item.getEngType().equals("2")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWagas/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWagas/" ;
             }
             else if(item.getEngType().equals("3")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngPusts/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngPusts/" ;
 
             }else if(item.getEngType().equals("4")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngHysts/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngHysts/" ;
             }
             else if(item.getEngType().equals("5")){
-                url = "http:// " + App.strIP  + "wcsps-supervision/v1/jck/att/eng/attEngDikes/" ;
+                url =  App.strIP  + "wcsps-supervision/v1/jck/att/eng/attEngDikes/" ;
             }
             else if(item.getEngType().equals("6")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/attEngIrrs/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/attEngIrrs/" ;
             }else if(item.getEngType().equals("7")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWadis/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWadis/" ;
             }else if(item.getEngType().equals("8")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngSds/" ;
+                url = App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngSds/" ;
             }
             else if(item.getEngType().equals("9")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngCwss/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngCwss/" ;
             }else if(item.getEngType().equals("10")){
-                url = "http:// " + App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngOthes/" ;
+                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngOthes/" ;
             }
             getObjStatus(item,url);
         }
