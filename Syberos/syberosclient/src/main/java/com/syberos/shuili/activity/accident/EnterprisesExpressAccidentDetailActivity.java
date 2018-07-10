@@ -101,6 +101,7 @@ public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
+        showTitle("事故详情");
         setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         accidentInformation = (ObjAcci)bundle.getSerializable(
@@ -124,7 +125,7 @@ public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
         if (null != accidentInformation ) {
             setActionBarTitle(accidentInformation.getAcciCateName());
             tv_accident_unit.setText(accidentInformation.getAccidentUnitName());
-            tv_accident_name.setText(accidentInformation.getAccidentUnitName());
+            tv_accident_name.setText(accidentInformation.getAcciCateName());
             tv_serious_injuries_count.setText(
                     String.valueOf(accidentInformation.getSerInjNum())
             );

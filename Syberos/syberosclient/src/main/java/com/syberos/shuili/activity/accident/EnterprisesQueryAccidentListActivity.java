@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -189,7 +190,7 @@ public class EnterprisesQueryAccidentListActivity extends BaseActivity {
         }
     }
     private void getAccidentUnitInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/ext/attOrgExts/";
+        String url = App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : accidentInformation.dataSource){
             params.put("guid",item.getAcciWindGuid());
@@ -218,7 +219,7 @@ public class EnterprisesQueryAccidentListActivity extends BaseActivity {
         }
     }
     private OrgInfo getOrgInfo(String orgId){
-        for(OrgInfo item : orgInfo.dataSource){
+        for(OrgInfo item : orgInfos){
             if(item.getGuid().equals(orgId))
                 return item;
         }
