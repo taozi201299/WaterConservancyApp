@@ -11,7 +11,7 @@ import java.util.List;
  * @date: 2017/3/16 15:36
  */
 
-public class ProvinceJsonBean implements IPickerViewData {
+public class _ProvinceJsonBean implements IPickerViewData {
 
 
     /**

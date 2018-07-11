@@ -6,4 +6,7 @@ package com.syberos.shuili.config;
  * Package：com.syberos.shuili.config.
  */
 public class GlobleConstants {
+    public static final String ALL_CHINA = "001111";
+    public static final String ALL_PROVINCE = "001110";
+    public static final String ALL_COUNTER = "001100";
 }

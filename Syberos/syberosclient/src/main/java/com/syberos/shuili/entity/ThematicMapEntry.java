@@ -12,7 +12,11 @@ import java.util.List;
  * Package：com.syberos.shuili.entity.
  */
 public class ThematicMapEntry implements Parcelable {
+/**
 
+
+
+ */
 
     /**
      * 地图显示 各个 坐标数据信息

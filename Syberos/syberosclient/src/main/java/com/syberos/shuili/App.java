@@ -10,6 +10,7 @@ import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.CrashHandler;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -68,8 +69,8 @@ public class  App extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
 //
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init();
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init();
 
     }
 
@@ -81,6 +82,7 @@ public class  App extends Application {
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         initLog();
         OkHttpUtils.init(this);
+        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
     }
 
     public static Context globalContext() {

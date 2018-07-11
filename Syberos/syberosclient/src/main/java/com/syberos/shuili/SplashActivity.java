@@ -52,11 +52,11 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
 
     private void go2Activity(){
         // TODO: 2018/4/16 在本地修改此处，此处设计到用户的初始化
-        if (Singleton.INSTANCE.isLogin) {
+//        if (Singleton.INSTANCE.isLogin) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        } else {
-            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
-        }
+//        } else {
+//            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+//        }
         finish();
     }
     private void go2ActivityDelay(){

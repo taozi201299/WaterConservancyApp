@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.syberos.shuili.entity.ProvinceJsonBean;
+import com.syberos.shuili.listener.ProvinceCall;
+
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.R;
@@ -33,6 +36,7 @@ import com.syberos.shuili.fragment.chart.WinsChartFragment;
 import com.syberos.shuili.fragment.chart.WoasChartFragment;
 import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.listener.OpenDrawerListener;
+import com.syberos.shuili.utils.ProvinceDialog;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -66,11 +70,28 @@ public class HematicMapFragment extends BaseFragment {
 
     @BindView(R.id.iv_action_bar_right_1)
     ImageView ivRight;
+
     private OpenDrawerListener openDrawerListener = null;
     private Back2LoginActivityListener back2LoginActivityListener = null;
     private boolean isShowMap = true;
     private List<Fragment> fragments;
 
+    @OnClick(R.id.tv_action_bar_title)
+    public void titleOnClick(){
+        ProvinceDialog provinceDialog=new ProvinceDialog(mContext, new ProvinceCall() {
+            @Override
+            public void successGetAreaValue(Object s) {
+                ToastUtils.show("所选地区编号："+((ProvinceJsonBean)s).getAD_CODE());
+                tv_action_bar_title.setText(((ProvinceJsonBean)s).getAD_NAME());
+            }
+
+            @Override
+            public void failGetAreaValue() {
+
+            }
+        });
+        provinceDialog.showProvinceDialog();
+    }
     //
 //    @OnClick(R.id.iv_action_bar_right_2)
 //    void popupWindow() {
@@ -150,7 +171,7 @@ public class HematicMapFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tv_action_bar_title.setVisibility(View.INVISIBLE);
+//        tv_action_bar_title.setVisibility(View.INVISIBLE);
         fragments = new ArrayList<>();
         BaseLazyFragment fragment = null;
         for (int i = 0; i < tabTitle.length; i++) {

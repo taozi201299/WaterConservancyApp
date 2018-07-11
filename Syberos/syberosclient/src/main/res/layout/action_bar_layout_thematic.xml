@@ -18,6 +18,7 @@ android:padding="@dimen/padding_10"
     android:layout_centerInParent="true"
     android:textColor="@color/white"
     android:textSize="@dimen/font_size_13"
+    android:drawableLeft="@mipmap/icon_location"
     android:text="详情"/>
 <ImageView
     android:id="@+id/iv_action_bar_right_1"

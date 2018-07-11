@@ -5,5 +5,7 @@ package com.syberos.shuili.listener;
  * Project: Syberos.
  * Package：com.syberos.shuili.listener.
  */
-public class ProvinceCall {
+public interface ProvinceCall{
+    void successGetAreaValue(Object s);
+    void failGetAreaValue();
 }
