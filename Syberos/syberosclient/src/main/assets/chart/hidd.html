@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title data-i18n="resources.title_tiandituLayer_ll"></title>
-    <script type="text/javascript" src="./ol-debug.js"></script>
-    <link rel="stylesheet" href="./ol.css">
-    <script type="text/javascript" src="./AJLib.min.js"></script>
-    <link rel="stylesheet" href="./AJLib.min.css">
+    <script type="text/javascript" src="../ol-debug.js"></script>
+    <link rel="stylesheet" href="../ol.css">
+    <script type="text/javascript" src="../AJLib.min.js"></script>
+    <link rel="stylesheet" href="../AJLib.min.css">
 </head>
 <body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;left: 0;right: 0;top: 0;bottom: 0;position: absolute;display: block;">
 <div id="map" style="width: 100%;height:100%"></div>
@@ -55,7 +55,6 @@ alert(y);
             annotationVisible:true,
         });
         mapDEMO.map.moveToExtent([x,y,x1,y1]);
-        showMarkInfo(x,y);
     }
     }
     function  findCache(imageTile,id,src) {

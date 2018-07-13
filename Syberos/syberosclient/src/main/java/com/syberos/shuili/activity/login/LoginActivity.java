@@ -288,6 +288,8 @@ public class LoginActivity extends TranslucentActivity {
                     || roleInfo.getScode().equals("CJSG")
                     || roleInfo.getScode().equals("CJJL")){
                 App.sCode = roleInfo.getScode();
+                App.orgJurd = roleInfo.getOrgJurd();
+                App.jurdAreaType = roleInfo.getJurdAreaType();
                 bRet = true;
                 break;
             }
@@ -428,9 +430,9 @@ private void getOrgBaseInfo(){
 }
    private void go2Activity(){
        if(App.app.getUsertype() == 1 ) {
-           intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, true);
+           intentActivity(LoginActivity.this, MainActivity.class, false, true);
        }else {
-           intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
+           intentActivity(LoginActivity.this, MainActivity.class,false,false);
        }
    }
     private void showGateWayFragment() {

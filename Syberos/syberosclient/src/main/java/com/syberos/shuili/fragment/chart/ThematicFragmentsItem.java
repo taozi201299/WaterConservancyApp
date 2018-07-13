@@ -42,8 +42,6 @@ public class ThematicFragmentsItem extends BaseLazyFragment {
             transaction.show(mFragment).commit();
         }
     }
-
-
     /**
      * 修改显示的内容 不会重新加载（相当于做了缓存处理，切换时仍能有数据显示）
      **/

@@ -164,7 +164,6 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             }
         }
     }
-
     private void commitCache(){
         if(cacheList != null && !cacheList.isEmpty()) {
             final FormCacheEntity entity = (FormCacheEntity)cacheList.remove(0);
@@ -176,7 +175,6 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                 HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
                     @Override
                     public void onResponse(String result) {
-                        Log.d("22222222222222", result);
                         iSuccessCount++;
                         // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
                         if (entity.LocalStatus.equals("0")) {

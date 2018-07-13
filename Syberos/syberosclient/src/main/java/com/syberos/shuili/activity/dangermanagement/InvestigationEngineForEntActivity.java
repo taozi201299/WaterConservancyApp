@@ -79,16 +79,17 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
 
     @Override
     public void initData() {
-        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        type = bundle.getString("type");
-        showDataLoadingDialog();
-        getEngineList();
+
     }
 
     @Override
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        type = bundle.getString("type");
+        showDataLoadingDialog();
+        getEngineList();
         engineListAdapter =  new EngineListAdapter(this);
         stickyListHeadersListView.setAdapter(engineListAdapter);
         xRefreshView.setPullRefreshEnable(true);

@@ -104,6 +104,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 super.onPageFinished(view, url);
                 webView.loadUrl("javascript:showMap()");
 
+
             }
         });
 

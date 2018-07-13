@@ -1,9 +1,11 @@
 package com.syberos.shuili.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +14,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.lzy.okhttputils.cache.CacheMode;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.shuili.httputils.HttpUtils;
+import com.syberos.shuili.App;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.entity.ProvinceJsonBean;
+import com.syberos.shuili.entity.map.CityInfoBean;
+import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.listener.ProvinceCall;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -40,16 +51,18 @@ import com.syberos.shuili.utils.ProvinceDialog;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jidan on 18-3-10.
  */
 
-public class HematicMapFragment extends BaseFragment {
+public class HematicMapFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks{
     private static final String TAG = HematicMapFragment.class.getSimpleName();
     private static final String Hidden = "隐患";
     private static final String Acci = "事故";
@@ -75,7 +88,15 @@ public class HematicMapFragment extends BaseFragment {
     private Back2LoginActivityListener back2LoginActivityListener = null;
     private boolean isShowMap = true;
     private List<Fragment> fragments;
+    private  final int RC_PERM = 110;
+    public static final String[] requestPermissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+    };
 
+    private String strCityName = "";
+    MapBoundBean mapBoundBean = null;
     @OnClick(R.id.tv_action_bar_title)
     public void titleOnClick(){
         ProvinceDialog provinceDialog=new ProvinceDialog(mContext, new ProvinceCall() {
@@ -92,23 +113,6 @@ public class HematicMapFragment extends BaseFragment {
         });
         provinceDialog.showProvinceDialog();
     }
-    //
-//    @OnClick(R.id.iv_action_bar_right_2)
-//    void popupWindow() {
-//        ((TranslucentActivity) getActivity()).initShare("分享", "http://www.163.com").showShareView();
-//    }
-//
-//    @OnClick(R.id.iv_action_bar_right_1)
-//    void go2ScanActivity() {
-//        IntentIntegrator intentIntegrator =
-//                IntentIntegrator.forSupportFragment(this);
-//        intentIntegrator
-//                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
-//                .setPrompt("将二维码/条形码放入框内，即可自动扫描")//写那句提示的话
-//                .setOrientationLocked(false)//扫描方向固定
-//                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity
-//                .initiateScan(); // 初始化扫描
-//    }
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
 //        tabAdapter.getCurrentFragment();
@@ -167,17 +171,19 @@ public class HematicMapFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+
     }
 
     @Override
     protected void initView() {
 //        tv_action_bar_title.setVisibility(View.INVISIBLE);
+        requestMulti();
         fragments = new ArrayList<>();
         BaseLazyFragment fragment = null;
         for (int i = 0; i < tabTitle.length; i++) {
             switch (tabTitle[i]) {
                 case Hidden:
-                    fragment = new ThematicFragmentsItem();
+                    fragment = new HiddenChartFragment();
                     break;
                 case Acci:
                     fragment = new AccidentChartFragment();
@@ -217,5 +223,105 @@ public class HematicMapFragment extends BaseFragment {
 
     public void setOpenDrawerListener(OpenDrawerListener openDrawerListener) {
         this.openDrawerListener = openDrawerListener;
+    }
+    private void getCenterXY(){
+        String code = App.orgJurd;
+        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("templateCode","140");
+        if(App.jurdAreaType.equals("1")) {
+            params.put("type", "PROVINCE");
+        }else if(App.jurdAreaType.equals("3")){
+            params.put("type","XZBA");
+        }
+        //params.put("guid",code);
+        params.put("guid","152201");
+        params.put("name","");
+        params.put("targetId","search.GetBoundsAndCenterXYLogic");
+        HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                mapBoundBean = gson.fromJson(result,MapBoundBean.class);
+                if(mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else {
+                    tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
+                    setMapData();
+                }
+
+            }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        }, CacheMode.DEFAULT);
+    }
+    private void getCityName() {
+        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
+        HashMap<String, String> params = new HashMap<>();
+        HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
+
+            @Override
+            public void onResponse(String result) {
+                CityInfoBean cityInfoBean = new CityInfoBean();
+                Gson gson = new Gson();
+                cityInfoBean = gson.fromJson(result, CityInfoBean.class);
+                if (cityInfoBean != null && cityInfoBean.result != null && cityInfoBean.result.size() > 0) {
+                    for (CityInfoBean item : cityInfoBean.result) {
+                        if (item.level.equals("3")) {
+                            strCityName = item.name;
+                            break;
+
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        }, CacheMode.DEFAULT);
+    }
+    private void setMapData(){
+        for(Fragment item :fragments){
+            if(item instanceof HiddenChartFragment){
+                ((HiddenChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }
+        }
+    }
+
+    /**
+     * 请求多个权限
+     *
+     */
+    public void requestMulti() {
+        EasyPermissions.requestPermissions(this, "需要申请功能",
+                RC_PERM, requestPermissions);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 将结果转发到EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+            getCenterXY();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if(requestCode == RC_PERM){
+            ToastUtils.show("权限被拒绝，无法正常加载地图");
+        }
     }
 }

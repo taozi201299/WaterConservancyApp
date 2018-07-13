@@ -298,7 +298,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))) {
                 intentActivity((Activity) mContext, InvestigationQueryActivity.class, false, true);
             } else if (itemTag.equals(getResources().getString(R.string.module_child_yinhuan_xiaohao))) {
-                intentActivity((Activity) mContext, InvestigationCancelForEnterprise.class, false, true);
+                intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))) {
                 intentActivity((Activity) mContext, EnterpriseAccidentListAcitvity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))) {
