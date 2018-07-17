@@ -107,6 +107,7 @@ public class HiddenChartFragment extends BaseLazyFragment {
                 if(!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()){
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
                 }
+                addMarkInfo();
 
             }
         });
@@ -140,6 +141,10 @@ public class HiddenChartFragment extends BaseLazyFragment {
         if(bLoadFinish) {
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+            addMarkInfo();
         }
+    }
+    private void addMarkInfo(){
+        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat +")");
     }
 }
