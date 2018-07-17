@@ -10,6 +10,7 @@ import com.lzy.okhttputils.callback.StringCallback;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
+import com.syberos.shuili.App;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.IResultCallback;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -117,7 +118,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         if (submitBinaryTask.size() <= 1) {
             submitBinaryTask.add(new CommitTask(UUID.randomUUID().toString()));
         }
-        submitBinary();
+       // submitBinary();
     }
     /**
      * 从数据库读取二进制数据并提交
@@ -221,20 +222,21 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         /**
          * 新增事故返回
          */
-        if(url.equals("http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objAcci/")){
+        if(url.equals(App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/create") ||
+                url.equals(App.strCJIP +"/wcsps-api/cj/obj/hidd/addObjHidd")) {
             String selection = DBDefinition.seriesKey + "=?";
             String[] selectionArgs = {id};
-            List list  = dbHelper.query(DBDefinition.COMMIT_TABLE,null,null,null,AttachMentInfoEntity.class);
-            if(list == null || list.isEmpty()){
+            List list = dbHelper.query(DBDefinition.COMMIT_TABLE, null, null, null, AttachMentInfoEntity.class);
+            if (list == null || list.isEmpty()) {
                 return;
-            }else{
+            } else {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(DBDefinition.bisGuid,response);
-                contentValues.put(DBDefinition.localStatus,"1");
-                dbHelper.update(DBDefinition.ATTACHMENT_TABLE,contentValues,selection,selectionArgs);
-                }
-            submitLocalCache();
+                contentValues.put(DBDefinition.bisGuid, response);
+                contentValues.put(DBDefinition.localStatus, "1");
+                dbHelper.update(DBDefinition.ATTACHMENT_TABLE, contentValues, selection, selectionArgs);
             }
+            submitLocalCache();
+        }
         }
     private void resultProcess() {
         if (iSuccessCount + iFailedCount == iTotalCacheCount) {

@@ -473,7 +473,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
             }
             holder.setText(R.id.tv_title, item.getDcItemName());
             holder.setText(R.id.tv_time, accidentInformation.getOccuTime());
-            holder.setText(R.id.tv_name, accidentInformation.getAccidentUnitName());
+            holder.setText(R.id.tv_name, accidentInformation.getCollTime() + "事故");
             holder.setText(R.id.tv_content, accidentInformation.getAcciSitu());
 
             holder.get(R.id.btn_report).setOnClickListener(new View.OnClickListener() {

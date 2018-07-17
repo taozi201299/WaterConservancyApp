@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -161,10 +162,11 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     }
     private void commit(){
         if(!checkParam())return;
-        String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidd/";
+        //String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidd/";
+        String url = App.strCJIP +"/wcsps-api/cj/obj/hidd/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
-        params.put("engGuid",objectEngine.getEngId()); // 所属工程
+        params.put("engGuid",objectEngine.getId()); // 所属工程
         if(hasTend) {
             params.put("tendGuid", objectTend.getGuid()); // 所属标段
         }else {
@@ -176,7 +178,6 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
         params.put("hiddStat","1");
-        params.put("collTime", CommonUtils.getCurrentDate());
         params.put("note","移动端测试");
         params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
@@ -184,6 +185,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override

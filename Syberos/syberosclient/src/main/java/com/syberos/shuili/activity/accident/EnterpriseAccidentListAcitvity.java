@@ -74,7 +74,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
     @BindView(R.id.ll_commit)
     LinearLayout ll_commit;
 
-   public static final String SEND_BUNDLE_KEY = "objAcci";
+   public static final String SEND_BUNDLE_KEY = "ObjAcci";
    public static final String DIC_UNIT_KEY = "dicUnitKey";
    public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
 
@@ -97,6 +97,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
     @Override
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
+        showTitle(Title);
         accidentListAdapter =  new AccidentListAdapter(this);
         stickyListHeadersListView.setAdapter(accidentListAdapter);
         xRefreshView.setPullRefreshEnable(true);

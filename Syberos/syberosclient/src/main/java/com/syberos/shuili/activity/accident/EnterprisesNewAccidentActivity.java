@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -130,6 +131,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
     public void initListener() {
         setDialogInterface(this);
 
+
     }
 
     @Override
@@ -203,6 +205,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         setFinishOnBackKeyDown(false);
     }
     private void initViewData(){
+        ce_accident_unit.setText(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         m_acciTypeMap = new HashMap<>();
         m_unitMap = new HashMap<>();
         m_acciGradeMap = new HashMap<>();
@@ -258,14 +261,16 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         String message = "确认提交数据?";
         showCommitDialog(message,0);
     }
-
     /**
      * 0 保存在本地 1 提交
-     * @param type
+     * 新增事故 post  快报 put 补报 post pGuid
      */
-    private void accidentReport(int type) {
-        String url = App.strIP + "/wcsps-supervision/v1/bis/obj/objAcci/";
+    private void accidentReport() {
+        int localStatus = 0;
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        String url = App.strCJIP + "/wcsps-api/cj/yuanXin/Accident/create";
         HashMap<String, String> params = new HashMap<>();
+        params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
         params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
         params.put("occuTime", tv_time.getText().toString()); // 发生时间
@@ -275,34 +280,39 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         params.put("econLoss", ce_direct_economic_loss.getText().toString()); // 直接经济损失
         params.put("acciSitu", aev_accident_description.getEditText()); // 事故简要情况
         params.put("note", "移动端接口测试");
-        params.put("recPers", "");
+        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("acciGrad", String.valueOf(ll_enum_level.getCurrentIndex()));
-        switch (type){
+        params.put("ifRespAcci",rg_accident_liability.getCheckedRadioButtonId() == R.id.rb_accident_liability_yes ?"1":"0");
+        params.put("ifPhoRep",rg_accident_phone_report.getCheckedRadioButtonId() == R.id.rb_accident_phone_report_yes?"1":"0");
+        switch (this.type){
             case ObjAcci.NEW_ACCI:
-                params.put("repStat", "2");
-                params.put("acciWiunGuid", "6EA3DB09FF964094A816246703CE7649");
+                localStatus = 0;
+                params.put("repStat", "0");
+                localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_AFTER:
+                localStatus = 1;
                 params.put("repStat", "1");
                 params.put("pGuid",objAcci.getId());
-                params.put("acciWiunGuid", "6EA3DB09FF964094A816246703CE7649");
+                localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_QUICK:
-                url += objAcci.getId() +"/"+"?";
-                for(String key :params.keySet()){
-                    url += key;
-                    url +="=";
-                    url += params.get(key);
-                    url += "&";
-                }
-                url = url.substring(0,url.length() -1);
+                localStatus = 1;
+                localCacheEntity.commitType = 1;
+//                url += objAcci.getId() +"/"+"?";
+//                for(String key :params.keySet()){
+//                    url += key;
+//                    url +="=";
+//                    url += params.get(key);
+//                    url += "&";
+//                }
+//                url = url.substring(0,url.length() -1);
+                params.put("guid","");
                 params.put("repStat", "1");
                 break;
         }
-
-        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
-        localCacheEntity.type = type;
+        localCacheEntity.type = localStatus;
         localCacheEntity.attachType = 0;
         localCacheEntity.params = params;
         ArrayList<AttachMentInfoEntity>attachments = new ArrayList<>();
@@ -365,7 +375,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
 
     @Override
     public void dialogClick() {
-        accidentReport(1);
+        accidentReport();
     }
 
     @Override

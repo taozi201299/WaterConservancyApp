@@ -38,7 +38,7 @@
             android:layout_marginStart="@dimen/padding_4"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="北京721化学品泄漏事故"
+            android:text=""
             />
         <TextView
             android:id="@+id/tv_time"
@@ -94,7 +94,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/gray_bb"
-            android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。"/>
+            android:text=""/>
     </LinearLayout>
 
     <RelativeLayout
