@@ -19,6 +19,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.an_quan_jian_cha.EECI_HiddenItemInfo;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.utils.ToastUtils;
@@ -33,8 +34,7 @@ import okhttp3.Call;
 
 /**
  * 企事业版 安全检查 现场检查列表
- * 8.2.1.8	安全检查对象表（OBJ_SINS） 获取下发到本单位的部署信息
- * 根据部署信息 8.2.2.9	安全检查方案（BIS_SINS_SCHE）
+ * 8.2.2.11	安全检查记录（BIS_SINS_REC）
  */
 public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener,PullRecyclerView.OnPullRefreshListener {
@@ -48,6 +48,10 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     PullRecyclerView pullRecyclerView;
     ObjSins objSins = null;
     BisSinsSche bisSinsSche = null;
+    /**
+     * 安全检查记录对象
+     */
+    BisSinsRec bisSinsRec = null;
     private HashMap<String,BisSinsSche> map = new HashMap<>();
 
     int iSucessCount = 0;
@@ -95,10 +99,38 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
         pullRecyclerView.setAdapter(adapter);
         showDataLoadingDialog();
-        getObjSins();
+        getBisSinsRec();
 
     }
 
+    private void getBisSinsRec(){
+        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/sins/bisSinsRecs/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisSinsRec = gson.fromJson(result,BisSinsRec.class);
+                if(bisSinsRec != null && bisSinsRec.dataSource != null){
+                    refreshUI();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                pullRecyclerView.refreshOrLoadComplete();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+
+
+    }
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
@@ -179,14 +211,14 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         }
     }
     private void refreshUI(){
-        adapter.setData(objSins.dataSource);
+        adapter.setData(bisSinsRec.dataSource);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onRefresh() {
         clear();
-        getObjSins();
+
     }
 
     @Override
@@ -194,23 +226,16 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
     }
 
-    private class ListAdapter extends CommonAdapter<ObjSins> {
+    private class ListAdapter extends CommonAdapter<BisSinsRec> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(ViewHolder holder, final ObjSins information) {
-            final BisSinsSche bisSinsSche ;
-            ArrayList<BisSinsSche>data = (ArrayList<BisSinsSche>) map.get(information.getGuid()).dataSource;
-            if(data != null && data.size() > 0){
-                bisSinsSche = data.get(0);
-            }else {
-                return;
-            }
+        public void convert(ViewHolder holder, final BisSinsRec information) {
             ((TextView) (holder.getView(R.id.tv_time))).setText(String.format("%s-%s",
-                    bisSinsSche.getScheStartTime(), bisSinsSche.getScheCompTime()));
-            ((TextView) (holder.getView(R.id.tv_content))).setText(bisSinsSche.getScheCont());
+                    information.startDate,information.endDate));
+            ((TextView) (holder.getView(R.id.tv_content))).setText(information.inspCont);
 
             TextView tv_check = (TextView) (holder.getView(R.id.tv_check));
 
@@ -219,8 +244,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
                 public void onClick(View view) {
                     // 开始检查
                     Bundle bundle =new Bundle();
-                    bundle.putSerializable("objSins",information);
-                    bundle.putSerializable("bisSche",bisSinsSche);
+                    bundle.putSerializable("bisSinsRec",information);
                     intentActivity((Activity) mContext, SecurityCheckMapTrailsActivity.class,
                             false, bundle);
                 }

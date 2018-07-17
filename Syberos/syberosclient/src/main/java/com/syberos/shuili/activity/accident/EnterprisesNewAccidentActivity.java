@@ -291,12 +291,14 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
                 localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_AFTER:
+                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
                 localStatus = 1;
                 params.put("repStat", "1");
                 params.put("pGuid",objAcci.getId());
                 localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_QUICK:
+                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/update";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
 //                url += objAcci.getId() +"/"+"?";
@@ -307,7 +309,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
 //                    url += "&";
 //                }
 //                url = url.substring(0,url.length() -1);
-                params.put("guid","");
+                params.put("guid",objAcci.getId());
                 params.put("repStat", "1");
                 break;
         }

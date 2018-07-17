@@ -44,6 +44,7 @@ import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.amap.AMapToWGS;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.utils.CommonUtils;
@@ -86,13 +87,9 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     private boolean hasShowMap = false;
     private List<TracingPoint> lineTracingPoints;
     /**
-     * objSins
+     * 安全检查记录
      */
-    ObjSins objSins = null;
-    /**
-     * 安全检查方案对象
-     */
-    BisSinsSche bisSinsSche = null;
+    BisSinsRec bisSinsRec = null;
 
     // ========== gao de api start ============
 
@@ -161,8 +158,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     @OnClick(R.id.add_problem)
     void onAddProblemClicked() {
         Bundle bundle =new Bundle();
-        bundle.putSerializable("objSins",objSins);
-        bundle.putSerializable("bisSche",bisSinsSche);
+        bundle.putSerializable("bisSinsRec",bisSinsRec);
         Intent intent = new Intent();
         intent.putExtra(DEFAULT_BUNDLE_NAME,bundle);
         intent.setClass(this,SecurityCreateHiddenActivity.class);
@@ -227,13 +223,12 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     }
 
     private void initData(){
-//        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-//        objSins = (ObjSins) bundle.getSerializable("objSins");
-//        bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSche");
-//        if(objSins == null || bisSinsSche == null){
-//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-//            finish();
-//        }
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        bisSinsRec = (BisSinsRec) bundle.getSerializable("bisSinsRec");
+        if(bisSinsRec == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            finish();
+        }
     }
     public void webMap() {//地图定位
 
