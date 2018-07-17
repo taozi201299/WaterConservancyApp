@@ -94,16 +94,18 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
 
     }
     private void commit(){
-        String  url =  App.strIP + "/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectProg/";
+      //  String  url =  App.strIP + "/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectProg/";
+        String url = App.strCJIP +"/wcsps-api/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("rectProg",ev_rectify_des.getEditText()); //整改进度情况
-        params.put("collTime", CommonUtils.getCurrentDate());// 采集时间
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());// 上报人
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 

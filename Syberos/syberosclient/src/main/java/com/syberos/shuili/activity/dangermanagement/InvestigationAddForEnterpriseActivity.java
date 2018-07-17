@@ -184,7 +184,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {

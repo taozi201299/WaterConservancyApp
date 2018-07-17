@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -170,7 +171,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         final int size  = investigationTaskInfo.dataSource.size();
         for(int i = 0; i < size; i++) {
             final ObjHidden item = investigationTaskInfo.dataSource.get(i);
-            String url = "";
+            String url = App.strIP +"/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcces/";
             HashMap<String, String> params = new HashMap<>();
             params.put("hiddGuid", item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -188,6 +189,9 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                         item.setAccept(false);
                     }else {
                         for(HiddenAcceptInfo acceptInfo :hiddenAcceptInfo.dataSource){
+                            if(failedCount >0){
+                                break;
+                            }
                             if((acceptInfo.getRequCompDate() != null && !acceptInfo.getRequCompDate().isEmpty()) ||
                                     (acceptInfo.getAccepLegPers() != null && !acceptInfo.getAccepLegPers().isEmpty())){
                                 item.setAccept(true);
@@ -203,6 +207,11 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                         }
                     }
                     sucessCount ++;
+                    if(sucessCount == size){
+                        closeDataDialog();
+                        processResult();
+                        refreshUI();
+                    }
                 }
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
@@ -212,13 +221,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                     return;
                 }
             });
-            if(failedCount >0){
-                break;
-            }
-            if(sucessCount == size){
-                processResult();
-                refreshUI();
-            }
+
 
 
         }
@@ -254,8 +257,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
             }else {
                 project = getProjectItem(item.getEngGuid());
             }
-            String hiddenClassName = getHiddenClassName(item.getHiddClas());
-            String hiddenGradeName = getHiddenGradeName(item.getHiddGrad());
+            String hiddenClassName = getHiddenClassName(item.getHiddClas() == null ?"": item.getHiddClas());
+            String hiddenGradeName = getHiddenGradeName(item.getHiddGrad() == null ?"":item.getHiddGrad());
             if(info != null){
                 item.setEngName(info.getEngName());
             }if(project != null){
@@ -380,7 +383,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
 
         @Override
         public void convert(ViewHolder holder, final ObjHidden investigationInfo) {
-            String type = investigationInfo.getHiddGrad();
+            String type = investigationInfo.getHiddGrad() == null ?"0":investigationInfo.getHiddGrad();
             LinearLayout ll_type = null;
             ll_type = (LinearLayout)(holder.getView(R.id.ll_type));
             Button btnSupervice = (Button)holder.getView(R.id.btn_supervice);

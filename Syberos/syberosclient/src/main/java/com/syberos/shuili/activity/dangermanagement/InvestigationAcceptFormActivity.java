@@ -131,23 +131,20 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      * @param type
      */
     private void submit(int type){
-        String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcce/";
+      // String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcce/";
+        String url = App.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
-        params.put("requCompDate",""); //治理完成日期
-        params.put("accepLegPers","");// 验收责任人
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
         params.put("accepDate",tv_time.getText().toString()); // 验收时间
         params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
-        params.put("note","");  //备注
-        params.put("collTime",""); //采集时间
-        params.put("updTime",""); // 更新时间
-        params.put("recPers",""); // 记录人员
+        params.put("note","移动端接口测试");  //备注
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 

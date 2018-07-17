@@ -76,8 +76,8 @@ public class  App extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
 //
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init();
 
     }
 

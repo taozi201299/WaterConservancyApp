@@ -126,6 +126,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
+            if(iFailedCount != 0) break;
             params.put("guid",item.getEngGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -142,6 +143,11 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
                         objectEngines.add(objectEngine.dataSource.get(0));
                     }
                     iSucessCount ++;
+                    if(iSucessCount == investigationTaskInfo.dataSource.size()){
+                        closeDataDialog();
+                        merageData(1);
+                        refreshUI();
+                    }
 
                 }
 
@@ -153,13 +159,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
 
                 }
             });
-            if(iFailedCount >0){
-                break;
-            }
-            if(iSucessCount == investigationTaskInfo.dataSource.size()){
-                merageData(1);
-                refreshUI();
-            }
+
         }
     }
     private ObjectEngine getOrgInfo(String orgId){
@@ -185,8 +185,8 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
             }else {
                 project = getProjectItem(item.getEngGuid());
             }
-            String hiddenClassName = getHiddenClassName(item.getHiddClas());
-            String hiddenGradeName = getHiddenGradeName(item.getHiddGrad());
+            String hiddenClassName = getHiddenClassName(item.getHiddClas() == null ?"":item.getHiddClas());
+            String hiddenGradeName = getHiddenGradeName(item.getHiddGrad() == null?"":item.getHiddGrad());
             if(info != null){
                 item.setEngName(info.getEngName());
             }if(project != null){
@@ -313,7 +313,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
 
         @Override
         public void convert(ViewHolder holder, final ObjHidden investigationInfo) {
-            String type = investigationInfo.getHiddGrad();
+            String type = investigationInfo.getHiddGrad() == null ?"0":investigationInfo.getHiddGrad();
             LinearLayout ll_type = null;
             ll_type = (LinearLayout)(holder.getView(R.id.ll_type));
             Button btnSupervice = (Button)holder.getView(R.id.btn_supervice);
