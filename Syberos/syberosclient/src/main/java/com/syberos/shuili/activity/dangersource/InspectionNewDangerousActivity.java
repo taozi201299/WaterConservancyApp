@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -73,9 +74,7 @@ public class InspectionNewDangerousActivity extends BaseActivity {
     }
     private void commitForm(){
        // String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/bisHazPatRec/";
-        String url = "http://192.168.1.11:9080/wcsps-api/cj/yuanXin/Danger/create";
-
-
+        String url = App.strCJIP + "/wcsps-api/cj/yuanXin/Danger/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("hazGuid", itemInfo.getGuid());
         params.put("patTime", "");
@@ -87,6 +86,7 @@ public class InspectionNewDangerousActivity extends BaseActivity {
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
         localCacheEntity.attachType = 0;
         localCacheEntity.params = params;
         ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
