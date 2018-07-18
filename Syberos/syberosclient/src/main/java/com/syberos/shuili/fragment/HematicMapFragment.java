@@ -1,16 +1,11 @@
 package com.syberos.shuili.fragment;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +15,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
-import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.ThematicDetailActivity;
 import com.syberos.shuili.entity.ProvinceJsonBean;
 import com.syberos.shuili.entity.map.CityInfoBean;
 import com.syberos.shuili.entity.map.MapBoundBean;
@@ -29,20 +24,15 @@ import com.syberos.shuili.listener.ProvinceCall;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
-import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.fragment.chart.AccidentChartFragment;
-import com.syberos.shuili.fragment.chart.ChartFragment;
 import com.syberos.shuili.fragment.chart.DanagerSourceChartFragment;
 import com.syberos.shuili.fragment.chart.HiddenChartFragment;
 import com.syberos.shuili.fragment.chart.SinsChartFragment;
 import com.syberos.shuili.fragment.chart.StanChartFragment;
 import com.syberos.shuili.fragment.chart.SuenChartFragment;
-import com.syberos.shuili.fragment.chart.ThematicFragmentsItem;
 import com.syberos.shuili.fragment.chart.WinsChartFragment;
 import com.syberos.shuili.fragment.chart.WoasChartFragment;
 import com.syberos.shuili.listener.Back2LoginActivityListener;
@@ -62,7 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by jidan on 18-3-10.
  */
 
-public class HematicMapFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks{
+public class HematicMapFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = HematicMapFragment.class.getSimpleName();
     private static final String Hidden = "隐患";
     private static final String Acci = "事故";
@@ -86,24 +76,20 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     private OpenDrawerListener openDrawerListener = null;
     private Back2LoginActivityListener back2LoginActivityListener = null;
-    private boolean isShowMap = true;
     private List<Fragment> fragments;
-    private  final int RC_PERM = 110;
-    public static final String[] requestPermissions = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_PHONE_STATE,
-    };
+    private final int RC_PERM = 110;
+    public static final String[] requestPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE,};
 
     private String strCityName = "";
     MapBoundBean mapBoundBean = null;
-    @OnClick(R.id.tv_action_bar_title)
-    public void titleOnClick(){
-        ProvinceDialog provinceDialog=new ProvinceDialog(mContext, new ProvinceCall() {
+
+//    @OnClick(R.id.tv_action_bar_title)  点击 标题（地区名） 选择地区 —— 不需要该功能了
+    public void titleOnClick() {
+        ProvinceDialog provinceDialog = new ProvinceDialog(mContext, new ProvinceCall() {
             @Override
             public void successGetAreaValue(Object s) {
-                ToastUtils.show("所选地区编号："+((ProvinceJsonBean)s).getAD_CODE());
-                tv_action_bar_title.setText(((ProvinceJsonBean)s).getAD_NAME());
+                ToastUtils.show("所选地区编号：" + ((ProvinceJsonBean) s).getAD_CODE());
+                tv_action_bar_title.setText(((ProvinceJsonBean) s).getAD_NAME());
             }
 
             @Override
@@ -113,22 +99,11 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         });
         provinceDialog.showProvinceDialog();
     }
+
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
-//        tabAdapter.getCurrentFragment();
-        if (isShowMap) {
-            if (fragments != null && fragments.size() > 0) {
-                ((ThematicFragmentsItem) fragments.get(0)).switchContent(new ChartFragment());
-            }
-            ivRight.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_map));
-            isShowMap = false;
-        } else {
-            if (fragments != null && fragments.size() > 0) {
-                ((ThematicFragmentsItem) fragments.get(0)).switchContent(new HiddenChartFragment());
-            }
-            ivRight.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_chart));
-            isShowMap = true;
-        }
+//
+        startActivity(new Intent(getActivity(), ThematicDetailActivity.class));
     }
 
     @OnClick(R.id.iv_action_bar_left)
@@ -161,7 +136,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_gateway;
+        return R.layout.fragment_thematic;
     }
 
     @Override
@@ -224,39 +199,42 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     public void setOpenDrawerListener(OpenDrawerListener openDrawerListener) {
         this.openDrawerListener = openDrawerListener;
     }
-    private void getCenterXY(){
+
+    private void getCenterXY() {
         String code = App.orgJurd;
         String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("templateCode","140");
-        if(App.jurdAreaType.equals("1")) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("templateCode", "140");
+        if (App.jurdAreaType.equals("1")) {
             params.put("type", "PROVINCE");
-        }else if(App.jurdAreaType.equals("3")){
-            params.put("type","XZBA");
+        } else if (App.jurdAreaType.equals("3")) {
+            params.put("type", "XZBA");
         }
         //params.put("guid",code);
-        params.put("guid","152201");
-        params.put("name","");
-        params.put("targetId","search.GetBoundsAndCenterXYLogic");
+        params.put("guid", "152201");
+        params.put("name", "");
+        params.put("targetId", "search.GetBoundsAndCenterXYLogic");
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                mapBoundBean = gson.fromJson(result,MapBoundBean.class);
-                if(mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0){
+                mapBoundBean = gson.fromJson(result, MapBoundBean.class);
+                if (mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0) {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                }else {
+                } else {
                     tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
                     setMapData();
                 }
 
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
             }
         }, CacheMode.DEFAULT);
     }
+
     private void getCityName() {
         String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
         HashMap<String, String> params = new HashMap<>();
@@ -287,21 +265,20 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             }
         }, CacheMode.DEFAULT);
     }
-    private void setMapData(){
-        for(Fragment item :fragments){
-            if(item instanceof HiddenChartFragment){
-                ((HiddenChartFragment)item).setMapData(mapBoundBean.result.get(0));
+
+    private void setMapData() {
+        for (Fragment item : fragments) {
+            if (item instanceof HiddenChartFragment) {
+                ((HiddenChartFragment) item).setMapData(mapBoundBean.result.get(0));
             }
         }
     }
 
     /**
      * 请求多个权限
-     *
      */
     public void requestMulti() {
-        EasyPermissions.requestPermissions(this, "需要申请功能",
-                RC_PERM, requestPermissions);
+        EasyPermissions.requestPermissions(this, "需要申请功能", RC_PERM, requestPermissions);
     }
 
     @Override
@@ -313,14 +290,14 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if(requestCode == RC_PERM){
+        if (requestCode == RC_PERM) {
             getCenterXY();
         }
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if(requestCode == RC_PERM){
+        if (requestCode == RC_PERM) {
             ToastUtils.show("权限被拒绝，无法正常加载地图");
         }
     }

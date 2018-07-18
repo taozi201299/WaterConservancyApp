@@ -99,7 +99,7 @@ public class SoapUtils {
             }
         }
         // 发送请求
-        envelope.setOutputSoapObject(request);
+            envelope.setOutputSoapObject(request);
         (new MarshalBase64()).register(envelope);
         HttpTransportSE transport = new HttpTransportSE(strWsdlUrl);
         transport.debug = true;

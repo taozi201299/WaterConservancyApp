@@ -10,9 +10,8 @@ import java.util.List;
  *
  * @date: 2017/3/16 15:36
  */
-
+@Deprecated
 public class _ProvinceJsonBean implements IPickerViewData {
-
 
     /**
      * name : 省份
