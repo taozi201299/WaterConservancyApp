@@ -43,6 +43,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.amap.AMapToWGS;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
@@ -159,9 +160,10 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     void onAddProblemClicked() {
         Bundle bundle =new Bundle();
         bundle.putSerializable("bisSinsRec",bisSinsRec);
+        bundle.putString("type","check");
         Intent intent = new Intent();
         intent.putExtra(DEFAULT_BUNDLE_NAME,bundle);
-        intent.setClass(this,SecurityCreateHiddenActivity.class);
+        intent.setClass(this,InvestigationEngineForEntActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.in_from_right, R.anim.out_from_left);
 
@@ -380,14 +382,6 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
 
             updateLineAddPoint(mLon, mLan);
             updateCurrentPoint(mLon, mLan);
-
-//            String lines = load("/mnt/sdcard/lineGeoJson.json");
-//
-
-//            Log.d(TAG, "===========================================================\n");
-//            Log.d(TAG, "=====" + lines.length());
-//
-//            webView.loadUrl("javascript:showLines(" + lines + ")");
         } else {
             // TODO: 2018/5/4 显示加载中
         }

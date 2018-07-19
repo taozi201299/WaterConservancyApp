@@ -23,6 +23,7 @@ import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHi
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
      * 元素检查检查项对象
      */
    private BisSeChit bisSeChit = null;
+    /**
+     * 现场检查 安全检查记录对象
+     */
+   private BisSinsRec bisSinsRec = null;
 
    private HashMap<String,String> map = new HashMap(){
         {
@@ -103,6 +108,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
         }else if("check".equals(type)){
             // 现场检查
+            bisSinsRec = (BisSinsRec)bundle.getSerializable("bisSinsRec");
         }else {
             // 隐患模块
         }
@@ -206,7 +212,10 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             if(type.equals("element")) {
                 bundle.putSerializable("checkItem",bisSeChit);
                 intentActivity(InvestigationEngineForEntActivity.this,EnterprisesElementCheckCreateHiddenActivity.class,false,bundle);
-            }if(type.equals("check")) {
+            }else if(type.equals("check")) {
+                bundle.putSerializable("checkItem",bisSinsRec);
+                intentActivity(InvestigationEngineForEntActivity.this,EnterprisesElementCheckCreateHiddenActivity.class,false,bundle);
+            }else {
                 intentActivity(InvestigationEngineForEntActivity.this,InvestigationAddForEnterpriseActivity.class,false,bundle);
             }
 

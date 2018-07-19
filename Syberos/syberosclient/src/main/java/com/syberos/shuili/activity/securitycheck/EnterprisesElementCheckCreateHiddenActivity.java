@@ -20,6 +20,7 @@ import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.ObjSe;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -51,6 +52,10 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
      * 安全元素下的检查项信息
      */
     private BisSeChit bisSeChit = null;
+    /**
+     * 现场检查 安全检查记录对象
+     */
+    private BisSinsRec bisSinsRec = null;
     MvEngColl objectEngine = null;
     ObjectTend objectTend = null;
     boolean hasTend;
@@ -95,8 +100,14 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         hasTend = bundle.getBoolean("hasTend");
         type = bundle.getString("type");
-        if (bisSeChit == null) {
-            bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
+        if("element".equals(type)) {
+            if (bisSeChit == null) {
+                bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
+            }
+        }else if("check".equals(type)){
+            if(bisSinsRec == null){
+                bisSinsRec = (BisSinsRec)bundle.getSerializable("checkItem");
+            }
         }
         if(objectEngine == null){
             objectEngine = (MvEngColl)bundle.getSerializable("data");
@@ -173,13 +184,17 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",objectEngine.getId()); // 所属工程
         params.put("tendGuid",objectTend == null ? "":objectTend.getGuid());
-        params.put("seCheckItemGuid",bisSeChit.getGuid());
+        if("element".equals(type)) {
+            params.put("seCheckItemGuid", bisSeChit.getGuid());
+        }else if("check".equals(type)){
+            params.put("inspRecGuid",bisSinsRec.sinsGuid);
+        }
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
-        params.put("note","移动端测试");
+        params.put("note","移动端测试安全检查记录隐患");
         params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
