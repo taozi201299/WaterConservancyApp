@@ -136,10 +136,8 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        ObjSins item = objSins.dataSource.get(position);
-        BisSinsSche bisSinsSche = map.get(item.getGuid()).dataSource.get(0);
-        bundle.putSerializable("objSins",item);
-        bundle.putSerializable("bisSinsSche", bisSinsSche);
+        BisSinsRec item = bisSinsRec.dataSource.get(position);
+        bundle.putSerializable("bisSinsRec",item);
         intentActivity((Activity) mContext, EnterprisesOnSiteCheckDetailActivity.class,
                 false, bundle);
     }

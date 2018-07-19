@@ -18,6 +18,9 @@ public class AttachMentInfoEntity implements Parcelable {
     public String fromDate;
     public String localStatus;
     public String seriesKey;
+    public String medTitl;
+    public String medExt;
+    public String recPers;
 
     @Override
     public int describeContents() {
@@ -37,13 +40,17 @@ public class AttachMentInfoEntity implements Parcelable {
         dest.writeString(fromDate);
         dest.writeString(localStatus);
         dest.writeString(seriesKey);
+        dest.writeString(medTitl);
+        dest.writeString(medExt);
+        dest.writeString(recPers);
     }
     public AttachMentInfoEntity(){
 
     }
     public AttachMentInfoEntity(String url, String medName, String medType, String medPath,
                                 String collTime, String bisTableName,
-                                String bisGuid, String fromDate, String localStatus,String seriesKey){
+                                String bisGuid, String fromDate, String localStatus,String seriesKey,String medTitl,
+                                String medExt,String recPers ){
         this.url = url;
         this.medName = medName;
         this.medType = medType;
@@ -54,6 +61,10 @@ public class AttachMentInfoEntity implements Parcelable {
         this.fromDate = fromDate;
         this.localStatus = localStatus;
         this.seriesKey = seriesKey;
+        this.medTitl = medTitl;
+        this.medExt = medExt;
+        this.recPers = recPers;
+
     }
     protected AttachMentInfoEntity(Parcel in){
         this.url = in.readString();
@@ -66,6 +77,9 @@ public class AttachMentInfoEntity implements Parcelable {
         this.fromDate = in.readString();
         this.localStatus = in.readString();
         this.seriesKey = in.readString();
+        this.medTitl = in.readString();
+        this.medExt = in.readString();
+        this.recPers = in.readString();
     }
     public static final Creator<AttachMentInfoEntity>CREATOR = new Creator<AttachMentInfoEntity>() {
         @Override

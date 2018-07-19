@@ -118,7 +118,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         if (submitBinaryTask.size() <= 1) {
             submitBinaryTask.add(new CommitTask(UUID.randomUUID().toString()));
         }
-       // submitBinary();
+        submitBinary();
     }
     /**
      * 从数据库读取二进制数据并提交

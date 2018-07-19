@@ -15,6 +15,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.utils.ToastUtils;
@@ -37,6 +38,10 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
      * 安全检查对象
      */
     ObjSins objSins;
+    /**
+     * 安全检查记录对象
+     */
+    private BisSinsRec bisSinsRec;
 
     @BindView(R.id.tv_start_time)
     TextView tv_start_time;
@@ -69,6 +74,8 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getHiddenInfo();
 
     }
 
@@ -77,12 +84,11 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         setActionBarTitle("现场检查");
         setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        info = (BisSinsSche) bundle.getSerializable("bisSinsSche");
-        objSins = (ObjSins)bundle.getSerializable("objSina");
-        if (null != info) {
-            tv_start_time.setText(info.getScheStartTime());
-            tv_end_time.setText(info.getScheCompTime());
-            tv_check_content.setText(info.getScheCont());
+        bisSinsRec = (BisSinsRec) bundle.getSerializable("bisSinsRec");
+        if (null != bisSinsRec) {
+            tv_start_time.setText(bisSinsRec.startDate);
+            tv_end_time.setText(bisSinsRec.endDate);
+            tv_check_content.setText(bisSinsRec.inspCont);
 
             // ll_check_road_container init view
 
@@ -92,13 +98,12 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     private void getHiddenInfo(){
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
         HashMap<String ,String > params = new HashMap<>();
-        //  params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("orgGuid","537AD1AB8E7447AAA249AB22A5344955");
-        //   params.put("seCheckItemGuid",bisSeChit.getGuid());
-        params.put("SinsScheGuid","a1");
+        params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("inspRecGuid",bisSinsRec.sinsGuid);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 objHidden = gson.fromJson(result,ObjHidden.class);
                 if(objHidden == null || objHidden.dataSource == null){
