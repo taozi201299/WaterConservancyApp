@@ -101,7 +101,7 @@ public class HiddenDetailEntry implements Parcelable {
     }
 
     protected HiddenDetailEntry(Parcel in) {
-        this.pointEntryList = in.createTypedArrayList(PointEntry.CREATOR);
+      //  this.pointEntryList = in.createTypedArrayList(PointEntry.CREATOR);
         this.chartEntry = in.readParcelable(ChartEntry.class.getClassLoader());
         this.rankRateEntry = in.readParcelable(RankRateEntry.class.getClassLoader());
         this.normalHiddenEntry = in.readParcelable(NormalHiddenEntry.class.getClassLoader());

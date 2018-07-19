@@ -464,6 +464,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
             type = Integer.valueOf(repStatus);
           // 1 已上报 2 未上报
             switch (type) {
+                case 0:
                 case ObjAcci.REPORT_QUICK:
                     holder.setText(R.id.btn_report, "快报");
                     break;

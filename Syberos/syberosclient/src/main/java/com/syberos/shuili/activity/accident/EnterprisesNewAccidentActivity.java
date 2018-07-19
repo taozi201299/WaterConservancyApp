@@ -153,13 +153,14 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
             switch (type) {
                 case ObjAcci.REPORT_AFTER:
                 case ObjAcci.REPORT_QUICK:
+                case 0:
                     objAcci = (ObjAcci) bundle.getSerializable(SEND_BUNDLE_KEY);
                     if(objAcci == null){
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                         finish();
                         return;
                     }
-                    if(objAcci.REPORT_QUICK == type){
+                    if(objAcci.REPORT_QUICK == type || 0 == type){
                         strTitleName = "事故快报";
                     }else if(objAcci.REPORT_AFTER == type){
                         strTitleName = "事故补报";
@@ -270,7 +271,6 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         String url = App.strCJIP + "/wcsps-api/cj/yuanXin/Accident/create";
         HashMap<String, String> params = new HashMap<>();
-        params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
         params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
         params.put("occuTime", tv_time.getText().toString()); // 发生时间
@@ -286,29 +286,29 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         params.put("ifPhoRep",rg_accident_phone_report.getCheckedRadioButtonId() == R.id.rb_accident_phone_report_yes?"1":"0");
         switch (this.type){
             case ObjAcci.NEW_ACCI:
+                params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 localStatus = 0;
                 params.put("repStat", "0");
                 localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_AFTER:
-                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
-                localStatus = 1;
+                params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 params.put("repStat", "1");
                 params.put("pGuid",objAcci.getId());
+                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
+                localStatus = 1;
                 localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_QUICK:
-                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/update";
+            case 0:
+                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/fastReport";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
-//                url += objAcci.getId() +"/"+"?";
-//                for(String key :params.keySet()){
-//                    url += key;
-//                    url +="=";
-//                    url += params.get(key);
-//                    url += "&";
-//                }
-//                url = url.substring(0,url.length() -1);
+                params.put("missNum","");
+                params.put("rescTreaMeas","");
+                params.put("contaPers","");
+                params.put("offiTel","");
+                params.put("updTime","");
                 params.put("guid",objAcci.getId());
                 params.put("repStat", "1");
                 break;

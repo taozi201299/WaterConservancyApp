@@ -143,6 +143,7 @@ public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
             ae_accident_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             ae_accident_describe_audio.setEditText(accidentInformation.getAcciSitu());
             if(reportInfo != null){
+                ll_report_item.removeAllViews();
                 for(final ObjAcci item : reportInfo) {
                     if(!item.getPID().equals(accidentInformation.getId()))continue;
                     View view = LayoutInflater.from(mContext).inflate(R.layout.simple_list_row, null);

@@ -57,6 +57,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
      * accident task object
      */
    private ObjAcci objAccis;
+    ArrayList<ObjAcci>datas = new ArrayList<>();
     /**
      * unit information
      */
@@ -244,8 +245,6 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
             if(item.getPID() != null){
                 item.setRepStat("1");
                 reportInfos.add(item);
-            }else {
-                item.setRepStat("2");
             }
         }
     }
@@ -311,7 +310,13 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
         return new DicInfo();
     }
     private void refreshUI(){
-        accidentListAdapter.setData(objAccis.dataSource);
+        datas.addAll(objAccis.dataSource);
+        for(ObjAcci item : objAccis.dataSource){
+            if(item.getPID() != null){
+                datas.remove(item);
+            }
+        }
+        accidentListAdapter.setData(datas);
     }
 
     @Override
@@ -333,7 +338,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        ObjAcci item = objAccis.dataSource.get(position);
+        ObjAcci item = datas.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
         bundle.putSerializable("data",reportInfos);
         intentActivity(EnterpriseAccidentListAcitvity.this,
@@ -439,6 +444,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
             type = Integer.valueOf(repStatus);
             // 1 已上报 2 未上报
             switch (type) {
+                case 0:
                 case ObjAcci.REPORT_QUICK:
                     viewHolder.btn_report.setText("快报");
                     break;
