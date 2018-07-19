@@ -11,9 +11,11 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -49,7 +51,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
      * 安全元素下的检查项信息
      */
     private BisSeChit bisSeChit = null;
-    ObjectEngine objectEngine = null;
+    MvEngColl objectEngine = null;
     ObjectTend objectTend = null;
     boolean hasTend;
     String type;
@@ -93,25 +95,18 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         hasTend = bundle.getBoolean("hasTend");
         type = bundle.getString("type");
-        if(type.equals("element")) {
-            if (information == null) {
-                information = (ObjSe) bundle.getSerializable("element");
-            }
-        }
-        if(type.equals("check")) {
-            if (bisSeChit == null) {
-                bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
-            }
+        if (bisSeChit == null) {
+            bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
         }
         if(objectEngine == null){
-            objectEngine = (ObjectEngine)bundle.getSerializable("data");
+            objectEngine = (MvEngColl)bundle.getSerializable("data");
         }
         if(hasTend) {
             if (objectTend == null) {
                 objectTend = (ObjectTend) bundle.getSerializable("tend");
             }
         }
-        tv_project_name.setText(objectEngine.getEngName());
+        tv_project_name.setText(objectEngine.getName());
         showDataLoadingDialog();
         getHiddenDic();
 
@@ -172,13 +167,14 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
      */
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commit(){
-        String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidd/";
+        String url = App.strCJIP + "/wcsps-api/cj/obj/hiddAndSe/addObjHidd";
+        //String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidd/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
-        params.put("engGuid",objectEngine.getGuid()); // 所属工程
+        params.put("engGuid",objectEngine.getId()); // 所属工程
         params.put("tendGuid",objectTend == null ? "":objectTend.getGuid());
         params.put("seCheckItemGuid",bisSeChit.getGuid());
-        params.put("orgGuid","");
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位

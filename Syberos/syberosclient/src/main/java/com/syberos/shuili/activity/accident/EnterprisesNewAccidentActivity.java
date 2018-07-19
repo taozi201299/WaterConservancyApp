@@ -321,6 +321,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 
+
         if(list != null){
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();

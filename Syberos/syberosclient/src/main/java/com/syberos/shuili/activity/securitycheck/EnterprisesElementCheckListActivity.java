@@ -66,10 +66,6 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
 
     @Override
     public void initData() {
-        if(bisSeWiuns != null) bisSeWiuns.clear();
-        if(objSes != null) objSes.clear();
-        showDataLoadingDialog();
-        getBisSeWiunByUserId();
     }
 
     /**
@@ -78,7 +74,8 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
     private void getBisSeWiunByUserId(){
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+       // params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("legPersGuid","1eb5493bfdb74ecea7337ba73f32c92c");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -109,7 +106,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
         final int count = bisSeWiunDeco.dataSource.size();
         for( int  i = 0 ; i < count;i++) {
             BisSeWiunDeco item = bisSeWiunDeco.dataSource.get(i);
-            params.put("seGuid",item.getSeWiunGuid());
+            params.put("guid",item.getSeWiunGuid());
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -177,7 +174,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
      */
     boolean isGroup(String id){
         for(ObjSe item : objSes){
-            if(item.getpGuid().equals(id)){
+            if(item.getpGuid() != null && item.getpGuid().equals(id)){
                 return true;
             }
         }
@@ -205,6 +202,10 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
         adapter.setOnItemClickListener(this);
 
         recyclerView.setAdapter(adapter);
+        if(bisSeWiuns != null) bisSeWiuns.clear();
+        if(objSes != null) objSes.clear();
+        showDataLoadingDialog();
+        getBisSeWiunByUserId();
 
     }
 
@@ -228,7 +229,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
 
             String[] levelNames = getResources().getStringArray(
                     R.array.enterprises_element_check_level);
-            int level = Integer.valueOf(information.getSeType());
+            int level = Integer.valueOf(information.getSeType() == null ?"1":information.getSeType());
             TextView tv_type = (TextView) (holder.getView(R.id.tv_type));
             tv_type.setText(levelNames[level-1]);
 

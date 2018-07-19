@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
@@ -103,8 +104,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     private void getCheckItemsByElementId(){
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/bisSeChits/";
         HashMap<String,String>params = new HashMap<>();
-      //  params.put("seGuid",information.getGuid());
-        params.put("seGuid","B8B9E3C0294A451E8C86A82B0BEF2DE0");
+        params.put("seGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -129,10 +129,8 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         // 根据单位ID和 安全检查项ID查询检查项下隐患
         String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
         HashMap<String ,String >params = new HashMap<>();
-      //  params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("orgGuid","537AD1AB8E7447AAA249AB22A5344955");
-     //   params.put("seCheckItemGuid",bisSeChit.getGuid());
-        params.put("seCheckItemGuid","a1");
+        params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("seCheckItemGuid",bisSeChit.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -237,7 +235,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
 
         String[] levelNames = getResources().getStringArray(
                 R.array.enterprises_element_check_level);
-        int  level = Integer.valueOf(hiddenItemInfo.getHiddGrad());
+        int  level = Integer.valueOf(hiddenItemInfo.getHiddGrad() == null ? "1":hiddenItemInfo.getHiddGrad());
         TextView tv_type = (TextView) (view.findViewById(R.id.tv_type));
         tv_type.setText(levelNames[level]);
 
@@ -300,7 +298,8 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
             results.add(params);
         }
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/wiun/bisSeWiunCheck/";
+       // String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/wiun/bisSeWiunCheck/";
+        String url = App.strCJIP + "/wcsps-api/cj/bis/se/wiuncheck/addBisSeWiunCheck";
         for(final HashMap<String,String> map :results){
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;

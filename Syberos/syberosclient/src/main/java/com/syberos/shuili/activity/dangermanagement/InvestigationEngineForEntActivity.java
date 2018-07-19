@@ -19,8 +19,10 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHiddenActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
+import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -42,6 +44,11 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 public class InvestigationEngineForEntActivity extends BaseActivity implements AdapterView.OnItemClickListener {
    private final String Tag = InvestigationEngineForEntActivity.class.getSimpleName();
    private final String Title = "隐患排查";
+    /**
+     * 元素检查检查项对象
+     */
+   private BisSeChit bisSeChit = null;
+
    private HashMap<String,String> map = new HashMap(){
         {
             put("01","水库");
@@ -64,6 +71,9 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
    @BindView(R.id.stickListHeadersListView)
     StickyListHeadersListView stickyListHeadersListView;
 
+    /**
+     * 工程对象
+     */
    private MvEngColl mvEngColl = null;
    private EngineListAdapter engineListAdapter;
    private String type ;
@@ -88,6 +98,17 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         showTitle(Title);
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         type = bundle.getString("type");
+        if("element".equals(type)){
+            // 元素检查
+            bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
+        }else if("check".equals(type)){
+            // 现场检查
+        }else {
+            // 隐患模块
+        }
+        /**
+         * 根据type获取不同的参数信息
+         */
         showDataLoadingDialog();
         getEngineList();
         engineListAdapter =  new EngineListAdapter(this);
@@ -182,7 +203,13 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
                     false, bundle);
         }else {
             bundle.putBoolean("hasTend",false);
-            intentActivity(InvestigationEngineForEntActivity.this,InvestigationAddForEnterpriseActivity.class,false,bundle);
+            if(type.equals("element")) {
+                bundle.putSerializable("checkItem",bisSeChit);
+                intentActivity(InvestigationEngineForEntActivity.this,EnterprisesElementCheckCreateHiddenActivity.class,false,bundle);
+            }if(type.equals("check")) {
+                intentActivity(InvestigationEngineForEntActivity.this,InvestigationAddForEnterpriseActivity.class,false,bundle);
+            }
+
         }
     }
     public class EngineListAdapter extends BaseAdapter implements StickyListHeadersAdapter,SectionIndexer {
