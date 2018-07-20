@@ -1,8 +1,7 @@
 package com.syberos.shuili.entity.thematicchart.accident;
 
-import com.syberos.shuili.entity.thematicchart.PointEntry;
-import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +9,54 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.accident.
  */
-public class AccidentDetailEntry {
-    List<PointEntry> pointEntryList;
+public class AccidentDetailEntry implements Serializable {
+    List<AccidentPointEntry> accidentPointEntries;
     SituationEntry situationEntry;
     RankRateEntry rankRateEntry;
-    List<AccidentStatisticEntry> statisticDataLis;
-    List<ProjectEntry> projectEntryList;
+    AccidentStatisticEntry normalAccidentDataEntry;
+    AccidentStatisticEntry majorAccidentDataEntry;
+
+
+    public List<AccidentPointEntry> getAccidentPointEntries() {
+        if (accidentPointEntries == null) {
+            return new ArrayList<>();
+        }
+        return accidentPointEntries;
+    }
+
+    public void setAccidentPointEntries(List<AccidentPointEntry> accidentPointEntries) {
+        this.accidentPointEntries = accidentPointEntries;
+    }
+
+    public SituationEntry getSituationEntry() {
+        return situationEntry;
+    }
+
+    public void setSituationEntry(SituationEntry situationEntry) {
+        this.situationEntry = situationEntry;
+    }
+
+    public RankRateEntry getRankRateEntry() {
+        return rankRateEntry;
+    }
+
+    public void setRankRateEntry(RankRateEntry rankRateEntry) {
+        this.rankRateEntry = rankRateEntry;
+    }
+
+    public AccidentStatisticEntry getNormalAccidentDataEntry() {
+        return normalAccidentDataEntry;
+    }
+
+    public void setNormalAccidentDataEntry(AccidentStatisticEntry normalAccidentDataEntry) {
+        this.normalAccidentDataEntry = normalAccidentDataEntry;
+    }
+
+    public AccidentStatisticEntry getMajorAccidentDataEntry() {
+        return majorAccidentDataEntry;
+    }
+
+    public void setMajorAccidentDataEntry(AccidentStatisticEntry majorAccidentDataEntry) {
+        this.majorAccidentDataEntry = majorAccidentDataEntry;
+    }
 }

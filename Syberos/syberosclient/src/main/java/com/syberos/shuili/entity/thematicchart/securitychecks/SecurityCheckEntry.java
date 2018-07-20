@@ -3,6 +3,8 @@ package com.syberos.shuili.entity.thematicchart.securitychecks;
 import com.syberos.shuili.entity.thematicchart.PointEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,26 +13,38 @@ import java.util.Map;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.securitychecks.
  */
-public class SecurityCheckEntry {
+public class SecurityCheckEntry implements Serializable{
     //  安全检查
-    List<PointEntry> pointEntryList;
+    List<SecurityCheckPointEntry> pointEntryList;
     //部门检查情况
     SecuritySituationEntry securitySituationEntry;
     //检查完成情况统计
     SecurityRankRateEntry securityRankRateEntry;
 
-
-    //隐患数量排名(本部门)
-    List<SecurityRanking> securityRanking;
-
-    //安全情况 (直管工程\流域机构\行业监管)
-    List<ProjectEntry> projectEntryList;
-
-    private class SecurityRanking {
-        String rangeId;//   id
-        String rangeName;// 流域\监管\直管
-        List<ProjectEntry> projectEntryList;
+    public List<SecurityCheckPointEntry> getPointEntryList() {
+        if (pointEntryList == null) {
+            return new ArrayList<>();
+        }
+        return pointEntryList;
     }
 
+    public void setPointEntryList(List<SecurityCheckPointEntry> pointEntryList) {
+        this.pointEntryList = pointEntryList;
+    }
 
+    public SecuritySituationEntry getSecuritySituationEntry() {
+        return securitySituationEntry;
+    }
+
+    public void setSecuritySituationEntry(SecuritySituationEntry securitySituationEntry) {
+        this.securitySituationEntry = securitySituationEntry;
+    }
+
+    public SecurityRankRateEntry getSecurityRankRateEntry() {
+        return securityRankRateEntry;
+    }
+
+    public void setSecurityRankRateEntry(SecurityRankRateEntry securityRankRateEntry) {
+        this.securityRankRateEntry = securityRankRateEntry;
+    }
 }

@@ -15,9 +15,9 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.
  */
-public class HiddenDetailEntry implements Parcelable {
+public class HiddenDetailEntry implements Serializable {
 
-    List<PointEntry> pointEntryList;
+    List<HiddenPointEntry> pointEntryList;
     //   隐患排查单位占比图
     ChartEntry chartEntry;
     //   隐患等级占比
@@ -28,14 +28,15 @@ public class HiddenDetailEntry implements Parcelable {
     MajorHiddenEntry majorHinddenEntry;
     //    隐患 统计
     List<ProjectEntry> dataList;
-    public List<PointEntry> getPointEntryList() {
+
+    public List<HiddenPointEntry> getPointEntryList() {
         if (pointEntryList == null) {
             return new ArrayList<>();
         }
         return pointEntryList;
     }
 
-    public void setPointEntryList(List<PointEntry> pointEntryList) {
+    public void setPointEntryList(List<HiddenPointEntry> pointEntryList) {
         this.pointEntryList = pointEntryList;
     }
 
@@ -82,43 +83,4 @@ public class HiddenDetailEntry implements Parcelable {
         this.dataList = dataList;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.pointEntryList);
-        dest.writeParcelable(this.chartEntry, flags);
-        dest.writeParcelable(this.rankRateEntry, flags);
-        dest.writeParcelable(this.normalHiddenEntry, flags);
-        dest.writeParcelable(this.majorHinddenEntry, flags);
-        dest.writeList(this.dataList);
-    }
-
-    public HiddenDetailEntry() {
-    }
-
-    protected HiddenDetailEntry(Parcel in) {
-      //  this.pointEntryList = in.createTypedArrayList(PointEntry.CREATOR);
-        this.chartEntry = in.readParcelable(ChartEntry.class.getClassLoader());
-        this.rankRateEntry = in.readParcelable(RankRateEntry.class.getClassLoader());
-        this.normalHiddenEntry = in.readParcelable(NormalHiddenEntry.class.getClassLoader());
-        this.majorHinddenEntry = in.readParcelable(MajorHiddenEntry.class.getClassLoader());
-        this.dataList = new ArrayList<ProjectEntry>();
-        in.readList(this.dataList, ProjectEntry.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<HiddenDetailEntry> CREATOR = new Parcelable.Creator<HiddenDetailEntry>() {
-        @Override
-        public HiddenDetailEntry createFromParcel(Parcel source) {
-            return new HiddenDetailEntry(source);
-        }
-
-        @Override
-        public HiddenDetailEntry[] newArray(int size) {
-            return new HiddenDetailEntry[size];
-        }
-    };
 }

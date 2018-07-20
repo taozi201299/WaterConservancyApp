@@ -3,24 +3,26 @@ package com.syberos.shuili.entity.thematicchart.hidden;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by BZB on 2018/7/16.
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.hidden.
  */
-public class MajorHiddenEntry implements Parcelable {
-    int majorHiddenHadRectifiedCout;   //重大隐患   已整改数
-    int majorHiddenNotRectifiedCount;//重大隐患 未整改数
-    String majorHiddenRectifieRate; //整改率(百分值 eg:20%)
-    int lateOfMajorRetifiedCount;// 重大隐患 已逾期数
-    int hadSupervisingCount;//重大隐患 已经督办数
+public class MajorHiddenEntry  implements Serializable{
+    private int majorHiddenHadRectifiedCount;   //重大隐患   已整改数
+    private int majorHiddenNotRectifiedCount;//重大隐患 未整改数
+    private String majorHiddenRectifyRate; //整改率(百分值 eg:20%)
+    private int lateOfMajorRectifyCount;// 重大隐患 已逾期数
+    private int hadSupervisingCount;//重大隐患 已经督办数
 
-    public int getMajorHiddenHadRectifiedCout() {
-        return majorHiddenHadRectifiedCout;
+    public int getMajorHiddenHadRectifiedCount() {
+        return majorHiddenHadRectifiedCount;
     }
 
-    public void setMajorHiddenHadRectifiedCout(int majorHiddenHadRectifiedCout) {
-        this.majorHiddenHadRectifiedCout = majorHiddenHadRectifiedCout;
+    public void setMajorHiddenHadRectifiedCount(int majorHiddenHadRectifiedCount) {
+        this.majorHiddenHadRectifiedCount = majorHiddenHadRectifiedCount;
     }
 
     public int getMajorHiddenNotRectifiedCount() {
@@ -31,20 +33,20 @@ public class MajorHiddenEntry implements Parcelable {
         this.majorHiddenNotRectifiedCount = majorHiddenNotRectifiedCount;
     }
 
-    public String getMajorHiddenRectifieRate() {
-        return majorHiddenRectifieRate == null ? "" : majorHiddenRectifieRate;
+    public String getMajorHiddenRectifyRate() {
+        return majorHiddenRectifyRate == null ? "" : majorHiddenRectifyRate;
     }
 
-    public void setMajorHiddenRectifieRate(String majorHiddenRectifieRate) {
-        this.majorHiddenRectifieRate = majorHiddenRectifieRate;
+    public void setMajorHiddenRectifyRate(String majorHiddenRectifyRate) {
+        this.majorHiddenRectifyRate = majorHiddenRectifyRate;
     }
 
-    public int getLateOfMajorRetifiedCount() {
-        return lateOfMajorRetifiedCount;
+    public int getLateOfMajorRectifyCount() {
+        return lateOfMajorRectifyCount;
     }
 
-    public void setLateOfMajorRetifiedCount(int lateOfMajorRetifiedCount) {
-        this.lateOfMajorRetifiedCount = lateOfMajorRetifiedCount;
+    public void setLateOfMajorRectifyCount(int lateOfMajorRectifyCount) {
+        this.lateOfMajorRectifyCount = lateOfMajorRectifyCount;
     }
 
     public int getHadSupervisingCount() {
@@ -55,40 +57,4 @@ public class MajorHiddenEntry implements Parcelable {
         this.hadSupervisingCount = hadSupervisingCount;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.majorHiddenHadRectifiedCout);
-        dest.writeInt(this.majorHiddenNotRectifiedCount);
-        dest.writeString(this.majorHiddenRectifieRate);
-        dest.writeInt(this.lateOfMajorRetifiedCount);
-        dest.writeInt(this.hadSupervisingCount);
-    }
-
-    public MajorHiddenEntry() {
-    }
-
-    protected MajorHiddenEntry(Parcel in) {
-        this.majorHiddenHadRectifiedCout = in.readInt();
-        this.majorHiddenNotRectifiedCount = in.readInt();
-        this.majorHiddenRectifieRate = in.readString();
-        this.lateOfMajorRetifiedCount = in.readInt();
-        this.hadSupervisingCount = in.readInt();
-    }
-
-    public static final Parcelable.Creator<MajorHiddenEntry> CREATOR = new Parcelable.Creator<MajorHiddenEntry>() {
-        @Override
-        public MajorHiddenEntry createFromParcel(Parcel source) {
-            return new MajorHiddenEntry(source);
-        }
-
-        @Override
-        public MajorHiddenEntry[] newArray(int size) {
-            return new MajorHiddenEntry[size];
-        }
-    };
 }

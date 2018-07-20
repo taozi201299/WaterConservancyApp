@@ -3,6 +3,8 @@ package com.syberos.shuili.entity.thematicchart.workassessment;
 import com.syberos.shuili.entity.thematicchart.PointEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,29 +12,39 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.workassessment.
  */
-public class WorkAssessmentEntry {
+public class WorkAssessmentEntry implements Serializable {
     //    工作考核
-    List<PointEntry> pointEntryList;
+    List<WorkPointEntry> pointEntryList;
     //    xxxx年直管工程工作考核情况
     WASituationEntry waSituationEntry;
     //近5年个工作考核得分情况
     WARecentlyScoreEntry waRecentlyScoreEntry;
-    //    工作考核得分排名
-    List<ProjectEntry> projectEntryList;
 
-    public class WASituationEntry {
-        //        平均分
-        int score;
+
+    public List<WorkPointEntry> getPointEntryList() {
+        if (pointEntryList == null) {
+            return new ArrayList<>();
+        }
+        return pointEntryList;
     }
 
-    private class WARecentlyScoreEntry {
-        int totalScore;//满分
-        List<ScoreItem> dataList;
-
+    public void setPointEntryList(List<WorkPointEntry> pointEntryList) {
+        this.pointEntryList = pointEntryList;
     }
 
-    private class ScoreItem {
-        String date;//月份
-        int score;//分数
+    public WASituationEntry getWaSituationEntry() {
+        return waSituationEntry;
+    }
+
+    public void setWaSituationEntry(WASituationEntry waSituationEntry) {
+        this.waSituationEntry = waSituationEntry;
+    }
+
+    public WARecentlyScoreEntry getWaRecentlyScoreEntry() {
+        return waRecentlyScoreEntry;
+    }
+
+    public void setWaRecentlyScoreEntry(WARecentlyScoreEntry waRecentlyScoreEntry) {
+        this.waRecentlyScoreEntry = waRecentlyScoreEntry;
     }
 }

@@ -1,8 +1,9 @@
 package com.syberos.shuili.entity.thematicchart.standardization;
 
-import com.syberos.shuili.entity.thematicchart.PointEntry;
-import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.entity.thematicchart.RankRateItem;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,24 +11,62 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.
  */
-public class StandardizationEntry {
+public class StandardizationEntry implements Serializable {
     //  标准化检查
-    List<PointEntry> pointEntryList;
+    private List<StandardizationPointEntry> pointEntryList;
     //  xxxx年直管工程标准化情况
-    StandardizationSituationEntry standardizationRiskSituationEntry;//xxxx年直管工程标准化情况
+    private StandardizationSituationEntry standardizationRiskSituationEntry;//xxxx年直管工程标准化情况
     //标准化等级占比
-    StandardizationRankRateEntry standardizationRankRateEntry;//标准化等级占比
+    private List<RankRateItem> standardizationRankRateList;//标准化等级占比
     //   标准化证书情况
-    StandardizationCertificateEntry standardizationCertificateEntry;//标准化证书情况
+    private StandardizationCertificateEntry standardizationCertificateEntry;//标准化证书情况
     //    标准化考核情况
-    StandardizationAssessment standardizationAssessment;// 标准化考核
-    //    标准化情况
-    List<ProjectEntry> projectEntryList;
+    private StandardizationAssessment standardizationAssessment;// 标准化考核
 
 
+    public List<StandardizationPointEntry> getPointEntryList() {
+        if (pointEntryList == null) {
+            return new ArrayList<>();
+        }
+        return pointEntryList;
+    }
 
+    public void setPointEntryList(List<StandardizationPointEntry> pointEntryList) {
+        this.pointEntryList = pointEntryList;
+    }
 
+    public StandardizationSituationEntry getStandardizationRiskSituationEntry() {
+        return standardizationRiskSituationEntry;
+    }
 
+    public void setStandardizationRiskSituationEntry(StandardizationSituationEntry standardizationRiskSituationEntry) {
+        this.standardizationRiskSituationEntry = standardizationRiskSituationEntry;
+    }
 
+    public StandardizationCertificateEntry getStandardizationCertificateEntry() {
+        return standardizationCertificateEntry;
+    }
 
+    public void setStandardizationCertificateEntry(StandardizationCertificateEntry standardizationCertificateEntry) {
+        this.standardizationCertificateEntry = standardizationCertificateEntry;
+    }
+
+    public StandardizationAssessment getStandardizationAssessment() {
+        return standardizationAssessment;
+    }
+
+    public List<RankRateItem> getStandardizationRankRateList() {
+        if (standardizationRankRateList == null) {
+            return new ArrayList<>();
+        }
+        return standardizationRankRateList;
+    }
+
+    public void setStandardizationRankRateList(List<RankRateItem> standardizationRankRateList) {
+        this.standardizationRankRateList = standardizationRankRateList;
+    }
+
+    public void setStandardizationAssessment(StandardizationAssessment standardizationAssessment) {
+        this.standardizationAssessment = standardizationAssessment;
+    }
 }

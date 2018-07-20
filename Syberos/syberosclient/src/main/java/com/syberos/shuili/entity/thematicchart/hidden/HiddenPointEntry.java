@@ -10,7 +10,7 @@ import com.syberos.shuili.entity.thematicchart.PointEntry;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.hidden.
  */
-public class HiddenPointEntry extends PointEntry implements Parcelable {
+public class HiddenPointEntry extends PointEntry {
     HiddenPointInfoEntry hiddenPointInfoEntry;
 
     public HiddenPointInfoEntry getHiddenPointInfoEntry() {
@@ -20,35 +20,4 @@ public class HiddenPointEntry extends PointEntry implements Parcelable {
     public void setHiddenPointInfoEntry(HiddenPointInfoEntry hiddenPointInfoEntry) {
         this.hiddenPointInfoEntry = hiddenPointInfoEntry;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.hiddenPointInfoEntry, flags);
-    }
-
-    public HiddenPointEntry() {
-    }
-
-    protected HiddenPointEntry(Parcel in) {
-        super(in);
-        this.hiddenPointInfoEntry = in.readParcelable(HiddenPointInfoEntry.class.getClassLoader());
-    }
-
-    public static final Creator<HiddenPointEntry> CREATOR = new Creator<HiddenPointEntry>() {
-        @Override
-        public HiddenPointEntry createFromParcel(Parcel source) {
-            return new HiddenPointEntry(source);
-        }
-
-        @Override
-        public HiddenPointEntry[] newArray(int size) {
-            return new HiddenPointEntry[size];
-        }
-    };
 }

@@ -12,14 +12,110 @@ import java.util.List;
  * Package：com.syberos.shuili.entity.
  */
 public class ThematicMapEntry implements Parcelable {
+    public OwnerAreaData getData() {
+        return data;
+    }
 
+    public void setData(OwnerAreaData data) {
+        this.data = data;
+    }
+
+    static class PointInfo implements Parcelable {
+        //地图点的 id
+        private String pointID;
+        // 地图点的 value
+        private String pointValue;
+        // 地图点的 描述 返回 json串
+        private String pointDescrtion;
+
+        // 地图点 经度
+        private String longitude;
+        private String latitude;
+
+        public String getLongitude() {
+            return longitude == null ? "" : longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
+
+        public String getLatitude() {
+            return latitude == null ? "" : latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
+
+        public PointInfo() {
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.pointID);
+            dest.writeString(this.pointValue);
+            dest.writeString(this.pointDescrtion);
+            dest.writeString(this.longitude);
+            dest.writeString(this.latitude);
+        }
+
+        protected PointInfo(Parcel in) {
+            this.pointID = in.readString();
+            this.pointValue = in.readString();
+            this.pointDescrtion = in.readString();
+            this.longitude = in.readString();
+            this.latitude = in.readString();
+        }
+
+        public static final Creator<PointInfo> CREATOR = new Creator<PointInfo>() {
+            @Override
+            public PointInfo createFromParcel(Parcel source) {
+                return new PointInfo(source);
+            }
+
+            @Override
+            public PointInfo[] newArray(int size) {
+                return new PointInfo[size];
+            }
+        };
+
+        public String getPointID() {
+            return pointID == null ? "" : pointID;
+        }
+
+        public void setPointID(String pointID) {
+            this.pointID = pointID;
+        }
+
+        public String getPointValue() {
+            return pointValue == null ? "" : pointValue;
+        }
+
+        public void setPointValue(String pointValue) {
+            this.pointValue = pointValue;
+        }
+
+        public String getPointDescrtion() {
+            return pointDescrtion == null ? "" : pointDescrtion;
+        }
+
+        public void setPointDescrtion(String pointDescrtion) {
+            this.pointDescrtion = pointDescrtion;
+        }
+    }
 
     /**
      * 地图显示 各个 坐标数据信息
      */
     static class ProjectInfo implements Parcelable {
         /**
-         * 区域点的 id
+         * 工程名的 id
          */
         private String proID;
         /**
@@ -27,13 +123,10 @@ public class ThematicMapEntry implements Parcelable {
          */
         private String proName;
         /**
-         * 区域点的 问题数量
+         * 工程名的 问题数量
          */
         private String proCount;
-        /**
-         * 区域点的 问题描述;
-         */
-        private String proInfo;
+
 
         public String getProID() {
             return proID == null ? "" : proID;
@@ -59,13 +152,6 @@ public class ThematicMapEntry implements Parcelable {
             this.proCount = proCount;
         }
 
-        public String getProInfo() {
-            return proInfo == null ? "" : proInfo;
-        }
-
-        public void setProInfo(String proInfo) {
-            this.proInfo = proInfo;
-        }
 
         @Override
         public int describeContents() {
@@ -77,7 +163,7 @@ public class ThematicMapEntry implements Parcelable {
             dest.writeString(this.proID);
             dest.writeString(this.proName);
             dest.writeString(this.proCount);
-            dest.writeString(this.proInfo);
+
         }
 
         public ProjectInfo() {
@@ -87,10 +173,9 @@ public class ThematicMapEntry implements Parcelable {
             this.proID = in.readString();
             this.proName = in.readString();
             this.proCount = in.readString();
-            this.proInfo = in.readString();
         }
 
-        public static final Creator<ProjectInfo> CREATOR = new Creator<ProjectInfo>() {
+        public static final Parcelable.Creator<ProjectInfo> CREATOR = new Parcelable.Creator<ProjectInfo>() {
             @Override
             public ProjectInfo createFromParcel(Parcel source) {
                 return new ProjectInfo(source);
@@ -162,7 +247,7 @@ public class ThematicMapEntry implements Parcelable {
 
         }
 
-        public static final Creator<ChartData> CREATOR = new Creator<ChartData>() {
+        public static final Parcelable.Creator<ChartData> CREATOR = new Parcelable.Creator<ChartData>() {
             @Override
             public ChartData createFromParcel(Parcel source) {
                 return new ChartData(source);
@@ -191,6 +276,7 @@ public class ThematicMapEntry implements Parcelable {
          * 上报问题工程的 list
          */
         List<ProjectInfo> projectInfos;
+        List<PointInfo> pointInfos;
         /**
          * 饼状图的 id
          */
@@ -227,6 +313,17 @@ public class ThematicMapEntry implements Parcelable {
             return projectInfos;
         }
 
+        public List<PointInfo> getPointInfos() {
+            if (pointInfos == null) {
+                return new ArrayList<>();
+            }
+            return pointInfos;
+        }
+
+        public void setPointInfos(List<PointInfo> pointInfos) {
+            this.pointInfos = pointInfos;
+        }
+
         public void setProjectInfos(List<ProjectInfo> projectInfos) {
             this.projectInfos = projectInfos;
         }
@@ -258,6 +355,9 @@ public class ThematicMapEntry implements Parcelable {
             this.chartData = chartData;
         }
 
+        public OwnerAreaData() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -268,18 +368,17 @@ public class ThematicMapEntry implements Parcelable {
             dest.writeString(this.ownerTypeID);
             dest.writeString(this.ownerTypeName);
             dest.writeTypedList(this.projectInfos);
+            dest.writeTypedList(this.pointInfos);
             dest.writeString(this.charID);
             dest.writeString(this.charName);
             dest.writeTypedList(this.chartData);
-        }
-
-        public OwnerAreaData() {
         }
 
         protected OwnerAreaData(Parcel in) {
             this.ownerTypeID = in.readString();
             this.ownerTypeName = in.readString();
             this.projectInfos = in.createTypedArrayList(ProjectInfo.CREATOR);
+            this.pointInfos = in.createTypedArrayList(PointInfo.CREATOR);
             this.charID = in.readString();
             this.charName = in.readString();
             this.chartData = in.createTypedArrayList(ChartData.CREATOR);
@@ -298,16 +397,6 @@ public class ThematicMapEntry implements Parcelable {
         };
     }
 
-    public List<OwnerAreaData> getDataList() {
-        if (dataList == null) {
-            return new ArrayList<>();
-        }
-        return dataList;
-    }
-
-    public void setDataList(List<OwnerAreaData> dataList) {
-        this.dataList = dataList;
-    }
 
     public String getDataId() {
         return dataId == null ? "" : dataId;
@@ -317,39 +406,18 @@ public class ThematicMapEntry implements Parcelable {
         this.dataId = dataId;
     }
 
-    public String getDataName() {
-        return dataName == null ? "" : dataName;
-    }
-
-    public void setDataName(String dataName) {
-        this.dataName = dataName;
-    }
-
-    public String getContent() {
-        return content == null ? "" : content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     /**
      * 直管工程、流域、监管  多个区域的 所有数据
      */
-    private List<OwnerAreaData> dataList;
+    private OwnerAreaData data;
     /**
      * eg: 隐患 给个id值 知道该数据为隐患数据
      */
     private String dataId;
-    /**
-     * eg: 隐患数据
-     */
-    private String dataName;
 
-    /**
-     * 备用 暂时可以为空
-     */
-    private String content;
+    public ThematicMapEntry() {
+    }
 
     @Override
     public int describeContents() {
@@ -358,20 +426,15 @@ public class ThematicMapEntry implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.dataList);
+        dest.writeParcelable(this.data, flags);
         dest.writeString(this.dataId);
-        dest.writeString(this.dataName);
-        dest.writeString(this.content);
-    }
 
-    public ThematicMapEntry() {
     }
 
     protected ThematicMapEntry(Parcel in) {
-        this.dataList = in.createTypedArrayList(OwnerAreaData.CREATOR);
+        this.data = in.readParcelable(OwnerAreaData.class.getClassLoader());
         this.dataId = in.readString();
-        this.dataName = in.readString();
-        this.content = in.readString();
+
     }
 
     public static final Creator<ThematicMapEntry> CREATOR = new Creator<ThematicMapEntry>() {

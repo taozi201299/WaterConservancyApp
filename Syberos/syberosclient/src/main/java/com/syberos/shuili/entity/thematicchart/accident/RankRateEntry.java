@@ -1,5 +1,7 @@
 package com.syberos.shuili.entity.thematicchart.accident;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,11 +9,38 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.accident.
  */
-class RankRateEntry {
+class RankRateEntry implements Serializable {
     List<ItemEntry> dataList;
 
-    private class ItemEntry {
+    public List<ItemEntry> getDataList() {
+        if (dataList == null) {
+            return new ArrayList<>();
+        }
+        return dataList;
+    }
+
+    public void setDataList(List<ItemEntry> dataList) {
+        this.dataList = dataList;
+    }
+
+    public class ItemEntry implements Serializable {
         int itemCount;
         int itemName;
+
+        public int getItemCount() {
+            return itemCount;
+        }
+
+        public void setItemCount(int itemCount) {
+            this.itemCount = itemCount;
+        }
+
+        public int getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(int itemName) {
+            this.itemName = itemName;
+        }
     }
 }

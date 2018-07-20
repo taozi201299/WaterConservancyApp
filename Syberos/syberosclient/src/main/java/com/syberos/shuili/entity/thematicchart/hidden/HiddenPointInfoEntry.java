@@ -3,12 +3,14 @@ package com.syberos.shuili.entity.thematicchart.hidden;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by BZB on 2018/7/16.
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.hidden.
  */
-public class HiddenPointInfoEntry implements Parcelable {
+public class HiddenPointInfoEntry implements Serializable{
     String hiddenPointName; //隐患info的标题
     String hiddenRectifyRate;// 隐患整改率(百分值)
     int hiddenCount; //隐患数量
@@ -46,38 +48,5 @@ public class HiddenPointInfoEntry implements Parcelable {
         this.rectifyCount = rectifyCount;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.hiddenPointName);
-        dest.writeString(this.hiddenRectifyRate);
-        dest.writeInt(this.hiddenCount);
-        dest.writeInt(this.rectifyCount);
-    }
-
-    public HiddenPointInfoEntry() {
-    }
-
-    protected HiddenPointInfoEntry(Parcel in) {
-        this.hiddenPointName = in.readString();
-        this.hiddenRectifyRate = in.readString();
-        this.hiddenCount = in.readInt();
-        this.rectifyCount = in.readInt();
-    }
-
-    public static final Parcelable.Creator<HiddenPointInfoEntry> CREATOR = new Parcelable.Creator<HiddenPointInfoEntry>() {
-        @Override
-        public HiddenPointInfoEntry createFromParcel(Parcel source) {
-            return new HiddenPointInfoEntry(source);
-        }
-
-        @Override
-        public HiddenPointInfoEntry[] newArray(int size) {
-            return new HiddenPointInfoEntry[size];
-        }
-    };
 }

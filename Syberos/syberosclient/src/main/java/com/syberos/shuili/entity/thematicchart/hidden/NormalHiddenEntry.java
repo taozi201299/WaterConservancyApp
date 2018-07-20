@@ -1,18 +1,17 @@
 package com.syberos.shuili.entity.thematicchart.hidden;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  * Created by BZB on 2018/7/16.
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.hidden.
  */
-public class NormalHiddenEntry implements Parcelable {
-    int normalHiddenHadRectifiedCout;   //一般隐患已整改数
-    int normalHiddenNotRectifiedCount;  //一般隐患 未整改数据
-    String normalHiddenRectifieRate; //整改率(百分值 eg:20%)
-    int lateOfNormalRetifiedCount;  //一般隐患 逾期数
+public class NormalHiddenEntry implements Serializable {
+    private int normalHiddenHadRectifiedCout;   //一般隐患已整改数
+    private int normalHiddenNotRectifiedCount;  //一般隐患 未整改数据
+    private String normalHiddenRectifiedRate; //整改率(百分值 eg:20%)
+    private int lateOfNormalRectifiedCount;  //一般隐患 逾期数
 
     public int getNormalHiddenHadRectifiedCout() {
         return normalHiddenHadRectifiedCout;
@@ -30,54 +29,20 @@ public class NormalHiddenEntry implements Parcelable {
         this.normalHiddenNotRectifiedCount = normalHiddenNotRectifiedCount;
     }
 
-    public String getNormalHiddenRectifieRate() {
-        return normalHiddenRectifieRate == null ? "" : normalHiddenRectifieRate;
+    public String getNormalHiddenRectifiedRate() {
+        return normalHiddenRectifiedRate == null ? "" : normalHiddenRectifiedRate;
     }
 
-    public void setNormalHiddenRectifieRate(String normalHiddenRectifieRate) {
-        this.normalHiddenRectifieRate = normalHiddenRectifieRate;
+    public void setNormalHiddenRectifiedRate(String normalHiddenRectifiedRate) {
+        this.normalHiddenRectifiedRate = normalHiddenRectifiedRate;
     }
 
-    public int getLateOfNormalRetifiedCount() {
-        return lateOfNormalRetifiedCount;
+    public int getLateOfNormalRectifiedCount() {
+        return lateOfNormalRectifiedCount;
     }
 
-    public void setLateOfNormalRetifiedCount(int lateOfNormalRetifiedCount) {
-        this.lateOfNormalRetifiedCount = lateOfNormalRetifiedCount;
+    public void setLateOfNormalRectifiedCount(int lateOfNormalRectifiedCount) {
+        this.lateOfNormalRectifiedCount = lateOfNormalRectifiedCount;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.normalHiddenHadRectifiedCout);
-        dest.writeInt(this.normalHiddenNotRectifiedCount);
-        dest.writeString(this.normalHiddenRectifieRate);
-        dest.writeInt(this.lateOfNormalRetifiedCount);
-    }
-
-    public NormalHiddenEntry() {
-    }
-
-    protected NormalHiddenEntry(Parcel in) {
-        this.normalHiddenHadRectifiedCout = in.readInt();
-        this.normalHiddenNotRectifiedCount = in.readInt();
-        this.normalHiddenRectifieRate = in.readString();
-        this.lateOfNormalRetifiedCount = in.readInt();
-    }
-
-    public static final Parcelable.Creator<NormalHiddenEntry> CREATOR = new Parcelable.Creator<NormalHiddenEntry>() {
-        @Override
-        public NormalHiddenEntry createFromParcel(Parcel source) {
-            return new NormalHiddenEntry(source);
-        }
-
-        @Override
-        public NormalHiddenEntry[] newArray(int size) {
-            return new NormalHiddenEntry[size];
-        }
-    };
 }
