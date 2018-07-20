@@ -164,6 +164,7 @@
     <dimen name="font_size_18">18sp</dimen>
     <dimen name="font_size_20">20sp</dimen>
     <dimen name="font_size_22">22sp</dimen>
+    <dimen name="font_size_30">30sp</dimen>
 
     <dimen name="action_title_item_width">90dp</dimen>
     <dimen name="action_title_item_height">90dp</dimen>
@@ -182,4 +183,8 @@
     <dimen name="popup_button_inner_size">50.0dp</dimen>
     <dimen name="popup_button_inner_radius">30.0dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    
+    
+    <!--text size-->
+    <dimen name="text_normal"></dimen>
 </resources>

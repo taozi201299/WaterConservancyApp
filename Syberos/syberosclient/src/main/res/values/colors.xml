@@ -47,6 +47,7 @@
 
     <color name="blue">#0000FF</color><!--蓝色 -->
     <color name="blue_c3">#0064C3</color><!--灰色bb -->
+    <color name="blue_A4">#0062A4</color><!--灰色bb -->
     <color name="black_33">#333333</color><!--灰色bb -->
 
 
@@ -57,6 +58,7 @@
     <color name="dialog_cancel_button_color">#BBBBBB</color>
     <color name="dialog_cancel_message_color">#666666</color>
     <color name="text_color_dark_black">#666666</color>
+
     <!-- 字体颜色-->
     <color name="text_black_color">#333333</color><!--黑色 -->
     <color name="text_gray_color">#999999</color><!--灰色 -->
@@ -107,4 +109,6 @@
     <color name="color_enterprises_element_check_level_common">#0099CC</color>
     <color name="color_enterprises_element_check_level_not_sure">#FF8D2D</color>
     <color name="color_enterprises_element_check_level_large">#FF1F2D</color>
+
+
 </resources>

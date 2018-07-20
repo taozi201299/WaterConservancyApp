@@ -79,5 +79,6 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.contrarywind:Android-PickerView:4.1.0'
     implementation 'com.tencent.bugly:crashreport:2.6.6'
-
+//    viewpager指示器
+    implementation 'me.relex:circleindicator:1.2.2@aar'
 }
