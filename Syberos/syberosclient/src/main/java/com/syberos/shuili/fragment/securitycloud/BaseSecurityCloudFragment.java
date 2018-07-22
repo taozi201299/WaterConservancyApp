@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.view.DialPlateView;
 
 import butterknife.BindView;
 
@@ -31,8 +32,9 @@ public class BaseSecurityCloudFragment extends BaseFragment {
     TextView tvScore;
     @BindView(R.id.tv_grade_time)
     TextView tvGradeTime;
-    @BindView(R.id.view_)
-    ImageView imageView;
+    @BindView(R.id.view_dial_plate)
+//    ImageView imageView;
+    DialPlateView viewDialPlate;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_score_title)
@@ -88,6 +90,7 @@ public class BaseSecurityCloudFragment extends BaseFragment {
     @Override
     protected void initData() {
         initViewData();
+        viewDialPlate.upData(Integer.parseInt(strJsonData));
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -106,10 +109,21 @@ public class BaseSecurityCloudFragment extends BaseFragment {
 //                Log.e(TAG, "onOffsetChanged:(-verticalOffset) / (appBarLayout.getHeight() - toolbar.getHeight())" + (-verticalOffset) / (appBarLayout.getHeight() - toolbar.getHeight()));
                 tvScore.setScaleX(scale);
                 tvScore.setScaleY(scale);
-                imageView.setScaleX(scale);
-                imageView.setScaleY(scale);
+                tvScore.setAlpha(scale);
+
+                viewDialPlate.setScaleX(scale);
+                viewDialPlate.setScaleY(scale);
+                viewDialPlate.setAlpha(scale);
+
                 tvScoreTitle.setScaleX(scale);
                 tvScoreTitle.setScaleY(scale);
+                viewDialPlate.setAlpha(scale);
+
+                tvGradeTime.setScaleX(scale);
+                tvGradeTime.setScaleY(scale);
+                viewDialPlate.setAlpha(scale);
+
+
 
             }
         });

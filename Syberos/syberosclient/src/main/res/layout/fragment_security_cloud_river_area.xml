@@ -49,18 +49,28 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_collapseMode="pin"/>
-
-                <ImageView
-                    android:id="@+id/view_"
+                <com.syberos.shuili.view.DialPlateView
+                    android:id="@+id/view_dial_plate"
                     android:layout_width="@dimen/_170dp"
                     android:layout_height="@dimen/_170dp"
                     android:layout_marginBottom="@dimen/_15dp"
-                    android:layout_marginTop="@dimen/_50dp"
-                    android:src="@mipmap/icon_temp"
+                    android:layout_marginTop="@dimen/_60dp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/view_dial_plate"-->
+                    <!--android:layout_width="@dimen/_170dp"-->
+                    <!--android:layout_height="@dimen/_170dp"-->
+                    <!--android:layout_marginBottom="@dimen/_15dp"-->
+                    <!--android:layout_marginTop="@dimen/_50dp"-->
+                    <!--android:src="@mipmap/icon_temp"-->
+                    <!--app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"-->
+                    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                    <!---->
+                    <!--app:layout_constraintRight_toRightOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent" />-->
                 <TextView
                     android:id="@+id/tv_score"
                     android:layout_width="wrap_content"
@@ -71,19 +81,19 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/white"
                     android:textSize="90sp"
-                    app:layout_constraintBottom_toBottomOf="@id/view_"
-                    app:layout_constraintLeft_toLeftOf="@id/view_"
-                    app:layout_constraintRight_toRightOf="@id/view_"
-                    android:layout_marginBottom="@dimen/_10dp"
-                    app:layout_constraintTop_toTopOf="@id/view_" />
+                    app:layout_constraintBottom_toBottomOf="@id/view_dial_plate"
+                    app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
+                    app:layout_constraintRight_toRightOf="@id/view_dial_plate"
+                    android:layout_marginBottom="@dimen/_30dp"
+                    app:layout_constraintTop_toTopOf="@id/view_dial_plate" />
                 <TextView
                     android:id="@+id/tv_score_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/tv_score"
-                    app:layout_constraintLeft_toLeftOf="@id/view_"
-                    app:layout_constraintRight_toRightOf="@id/view_"
+                    app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
+                    app:layout_constraintRight_toRightOf="@id/view_dial_plate"
                     android:text="安全评分"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18sp"
