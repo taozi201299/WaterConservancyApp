@@ -13,7 +13,7 @@ public class FileConstant {
     /**
      * 根路径
      */
-    public static String rootPath = Environment.getExternalStorageDirectory() + File.separator + "ldhz";
+    public static String rootPath = Environment.getExternalStorageDirectory() + File.separator + "shuili";
     /**
      * 下载路径
      */
@@ -35,6 +35,6 @@ public class FileConstant {
      */
     public static String latestApkPath = rootPath +File.separator+ "apk";
 
-    public static String LDHZLog=rootPath+File.separator+"log";
+    public static String SHLOG=rootPath+File.separator+"log";
 }
 

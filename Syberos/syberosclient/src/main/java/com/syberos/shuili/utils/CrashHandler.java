@@ -18,6 +18,7 @@ import com.syberos.shuili.App;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -28,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.syberos.shuili.config.FileConstant.SHLOG;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,由该类来接管程序,并记录发送错误报告.
@@ -68,6 +71,46 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * 当UncaughtException发生时会转入该重写的方法来处理
      */
     public void uncaughtException(Thread thread, Throwable ex) {
+        String logPath;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            logPath = Environment.getExternalStorageDirectory()
+                    .getAbsolutePath()
+                    + File.separator
+                    + File.separator
+                    + "log";
+
+            File file = new File(SHLOG);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            try {
+                FileWriter fw = new FileWriter(SHLOG + File.separator
+                        + "errorlog"+System.currentTimeMillis()+".log", true);
+                fw.write(new Date() + "\n");
+                // 错误信息
+                // 这里还可以加上当前的系统版本，机型型号 等等信息
+                StackTraceElement[] stackTrace = ex.getStackTrace();
+                fw.write(ex.getMessage() + "\n");
+                for (int i = 0; i < stackTrace.length; i++) {
+                    fw.write("file:" + stackTrace[i].getFileName() + " class:"
+                            + stackTrace[i].getClassName() + " method:"
+                            + stackTrace[i].getMethodName() + " line:"
+                            + stackTrace[i].getLineNumber() + "\n");
+                }
+                fw.write("\n");
+                fw.close();
+                // 上传错误信息到服务器
+                // uploadToServer();
+            } catch (IOException e) {
+                Log.e("crash handler", "load file failed...", e.getCause());
+            }
+        }
+        ex.printStackTrace();
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+
+
         if (!handleException(ex) && mDefaultHandler != null) {
             // 如果自定义的没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);

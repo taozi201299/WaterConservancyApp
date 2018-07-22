@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#007AD7</color>
+    <color name="colorAccent">#0091F3</color>
 
     <color name="write">#ffffffff</color>
     <color name="main_color">#00affe</color>
@@ -22,7 +22,7 @@
     <color name="un_press_color">#9C27B0</color>
 
     <color name="border_color">#dfdfdf</color>
-    <color name="button_login_normal">#007AD7</color>
+    <color name="button_login_normal">#0091F3</color>
     <color name="button_login_disabled">#66007AD7</color>
     <color name="button_login_pressed">#009DF2</color>
     <color name="text_link">#1588D5</color>

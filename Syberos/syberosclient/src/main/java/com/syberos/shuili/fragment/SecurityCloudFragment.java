@@ -1,13 +1,9 @@
 package com.syberos.shuili.fragment;
 
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
@@ -21,11 +17,15 @@ import me.relex.circleindicator.CircleIndicator;
  */
 
 public class SecurityCloudFragment extends BaseFragment {
+    private final String TAG = SecurityCloudFragment.class.getSimpleName();
     @BindView(R.id.indicator)
     CircleIndicator circleIndicator;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
-    private final String TAG = SecurityCloudFragment.class.getSimpleName();
+    BaseSecurityCloudFragment baseFragment;//流域机构
+    BaseSecurityCloudFragment straightTubeFragment;//直管工程
+    BaseSecurityCloudFragment supervisionFragment;//行业监管
+    Fragment[] fragments;
 
     @Override
     protected int getLayoutID() {
@@ -39,10 +39,15 @@ public class SecurityCloudFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-//        MyViewPagerAdapter mPageAdapter=new MyViewPagerAdapter(getFragmentManager());
-//        viewpager.setAdapter(mPageAdapter);
-//        viewpager.setOffscreenPageLimit(3);
-//        circleIndicator.setViewPager(viewpager);
+        baseFragment = new BaseSecurityCloudFragment("流域机构","66");
+        straightTubeFragment = new BaseSecurityCloudFragment("直管工程","88");
+        supervisionFragment = new BaseSecurityCloudFragment("行业监管","56");
+        fragments = new Fragment[]{straightTubeFragment, baseFragment, supervisionFragment};
+        MyViewPagerAdapter mPageAdapter = new MyViewPagerAdapter(getChildFragmentManager());
+        viewpager.setOffscreenPageLimit(3);
+        viewpager.setAdapter(mPageAdapter);
+        circleIndicator.setViewPager(viewpager);
+        viewpager.setCurrentItem(1);
     }
 
     @Override
@@ -50,20 +55,25 @@ public class SecurityCloudFragment extends BaseFragment {
 
 
     }
+
     class MyViewPagerAdapter extends FragmentPagerAdapter {
-        Fragment[] fragments={new BaseSecurityCloudFragment(),new BaseSecurityCloudFragment(),new BaseSecurityCloudFragment()};
+
+        FragmentManager fragmentManager;
+
         public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragmentManager = fm;
         }
+
 
         @Override
         public Fragment getItem(int position) {
-            return fragments[0];
+            return fragments[position];
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return fragments.length;
         }
 
 

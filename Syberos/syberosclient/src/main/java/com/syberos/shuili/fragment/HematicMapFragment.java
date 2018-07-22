@@ -39,6 +39,7 @@ import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.listener.OpenDrawerListener;
 import com.syberos.shuili.utils.ProvinceDialog;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.ViewPagerSlide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +67,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     TabLayout tl_tab;
 
     @BindView(R.id.vp_content)
-    ViewPager vp_content;
+    ViewPagerSlide vp_content;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
