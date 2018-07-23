@@ -102,7 +102,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     }
 
     private void getCheckItemsByElementId(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/bisSeChits/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/bisSeChits/";
         HashMap<String,String>params = new HashMap<>();
         params.put("seGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -127,7 +127,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     }
     private void getAllHidden(){
         // 根据单位ID和 安全检查项ID查询检查项下隐患
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String >params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("seCheckItemGuid",bisSeChit.getGuid());
@@ -298,7 +298,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
             results.add(params);
         }
-       // String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/wiun/bisSeWiunCheck/";
+       // String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/wiun/bisSeWiunCheck/";
         String url = App.strCJIP + "/wcsps-api/cj/bis/se/wiuncheck/addBisSeWiunCheck";
         for(final HashMap<String,String> map :results){
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();

@@ -100,7 +100,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
      * 获取被检对象
      */
     private void getCheckObject(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/rel/sins/group/wiun/selectCheckOnline/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
         HashMap<String,String> params = new HashMap<>();
         // 检查小组GUID
         params.put("guid",information.getGuid());

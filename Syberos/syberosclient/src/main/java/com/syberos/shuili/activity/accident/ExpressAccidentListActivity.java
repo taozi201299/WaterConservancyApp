@@ -63,7 +63,7 @@ public class ExpressAccidentListActivity extends BaseActivity
      * 获取快报事故列表
      */
     private void getAccidentList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/getAccidentManagements/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String> param = new HashMap<>();
         param.put("acciWiunGuid","6EA3DB09FF964094A816246703CE7649");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {

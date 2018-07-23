@@ -127,7 +127,7 @@ public class FormalReviewListActivity extends TranslucentActivity
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-       String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/objStanRevis/";
+       String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String>param = new HashMap<>();
       //  param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("applOrgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
@@ -246,7 +246,7 @@ public class FormalReviewListActivity extends TranslucentActivity
      * 提交到标准化评审对象表
      */
     private void commit(int result,String opinion){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/objStanRevi/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/objStanRevi/";
         HashMap <String,String>params= new HashMap<>();
         int size = selectedReviewItemInformationList.size();
         for(ObjStanRevis item : selectedReviewItemInformationList){

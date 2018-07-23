@@ -135,7 +135,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
      * 获取单位的部署通知信息
      */
     private void getObjSins(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/sis/objSinss/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/sis/objSinss/";
         SyberosManagerImpl.getInstance().requestGet_Default(url, null, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -158,7 +158,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     private void  getPlanInfo(){
         // 外键 检查部署guid
         final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/sins/sche/bisSinsSches/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         int size =infos.size();
         for(int i = 0; i < size ;i ++){

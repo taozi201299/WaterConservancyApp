@@ -109,7 +109,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/selectPublicity/" ;
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/selectPublicity/" ;
         HashMap<String,String> param = new HashMap<>();
         param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("reviType","4");
@@ -208,7 +208,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
      * 提交到公示公告表  提交内容
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/puno/objPuno/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/puno/objPuno/";
         HashMap<String,String> params= new HashMap<>();
         params.put("titl","");    // 标题
         params.put("cont","");  //内容

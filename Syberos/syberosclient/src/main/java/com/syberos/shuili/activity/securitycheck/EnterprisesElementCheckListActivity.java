@@ -72,7 +72,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
      * 根据用户ID 从BIS_SE_WIUN_DECO表中获取元素guid
      */
     private void getBisSeWiunByUserId(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/wiun/bisSeWiunDecos/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String,String>params = new HashMap<>();
        // params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("legPersGuid","1eb5493bfdb74ecea7337ba73f32c92c");
@@ -101,7 +101,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
     }
 
     private void getSeElementByElementId(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/se/bisSeWiuns/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/bisSeWiuns/";
         HashMap<String,String>params = new HashMap<>();
         final int count = bisSeWiunDeco.dataSource.size();
         for( int  i = 0 ; i < count;i++) {
@@ -136,7 +136,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity
      * 根据元素ID 获取元素名称等详细信息
      */
     private void getSeElementInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/objSes/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/objSes/";
         HashMap<String,String>params = new HashMap<>();
         final int count = bisSeWiuns.size();
         for( int i = 0; i < count; i++){

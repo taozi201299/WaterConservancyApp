@@ -25,6 +25,7 @@ import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
+import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -33,6 +34,10 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import okhttp3.Call;
+
+import static com.syberos.shuili.config.GlobleConstants.HAZ_HTYPE_NORMAL;
+import static com.syberos.shuili.config.GlobleConstants.HAZ_TYPE_BIGER;
+import static com.syberos.shuili.config.GlobleConstants.hazGradeMap;
 
 /**
  * 行政版危险源备案审核 重大危险源备案核销表
@@ -49,16 +54,13 @@ public class RecordReviewListActivity extends BaseActivity
     @BindView(R.id.recyclerView_record_review)
     RecyclerView recyclerView;
     DangerousListAdapter listAdapter;
-    ObjHaz objHaz  = null;
-    ArrayList<ObjHaz>objHazs = new ArrayList<>();
-    private DicInfo hazsGrade = null;
-    BisHazMajRegWrit bisHazMajRegWrit = null;
+    BisHazReg bisHazReg = null;
     private ArrayList<OrgInfo>orgInfos = new ArrayList<>();
 
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        ObjHaz information = objHazs.get(position);
+        BisHazReg information = bisHazReg.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, InspectionDetailActivity.class, false, bundle);
     }
@@ -72,48 +74,22 @@ public class RecordReviewListActivity extends BaseActivity
     public void initListener() {
 
     }
-    private void getHazsDic(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+    public void getHazList(){
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("attTabCode","OBJ_HAZ");
-        params.put("attColCode","HIDD_GRAD");
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                Gson gson = new Gson();
-                hazsGrade  = gson.fromJson(result,DicInfo.class);
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-            }
-        });
-    }
-    private String getHazsGradeName(String dicCode){
-        String dicName = "";
-        if(hazsGrade != null){
-            for(DicInfo dicInfo :hazsGrade.dataSource){
-                if(dicInfo.getDcItemCode().equals(dicCode)){
-                    dicName = dicInfo.getDcItemName();
-                    break;
-                }
-            }
-        }
-        return dicName;
-    }
-    private void getHazMajRegWritList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/maj/bisHazMajRegWrits/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("hazStat","0");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
                 Gson gson  = new Gson();
-                bisHazMajRegWrit = (BisHazMajRegWrit)gson.fromJson(result,BisHazMajRegWrit.class);
-                if(bisHazMajRegWrit != null){
-                    getHazsList();
+                bisHazReg = gson.fromJson(result,BisHazReg.class);
+                if(bisHazReg == null || bisHazReg.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(bisHazReg.dataSource.size() == 0){
+                    ToastUtils.show("没有相关数据");
+                }else {
+                    refreshUI();
                 }
             }
 
@@ -123,146 +99,46 @@ public class RecordReviewListActivity extends BaseActivity
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
-    }
-    private void getHazsList(){
-        final int size = bisHazMajRegWrit.dataSource.size();
-        for(int i = 0 ; i < size; i++) {
-            BisHazMajRegWrit item = bisHazMajRegWrit.dataSource.get(i);
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHazs/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("guid", item.getHazGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    objHaz = (ObjHaz) gson.fromJson(result, ObjHaz.class);
-                    if(objHaz == null || objHaz.dataSource == null || !objHaz.code.equals("0")){
-                        String errMsg = ErrorInfo.ErrorCode.valueOf(-5).getMessage();
-                        ToastUtils.show(errMsg);
-                        return;
-                    }
-                    objHazs.add(objHaz.dataSource.get(0));
-                    if(objHazs.size() == size){
-                        getEnterPriseName();
-                    }
-                }
-
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
-    }
-    private void  getEnterPriseName(){
-        final int size = objHazs.size();
-        for(int i = 0; i < size; i ++) {
-            final ObjHaz item = objHazs.get(i);
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("guid", item.getEngGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    ObjectEngine objectEngine = null;
-                    objectEngine = gson.fromJson(result, ObjectEngine.class);
-                    if(!objectEngine.code.equals("0")){
-                        String errMsg = ErrorInfo.ErrorCode.valueOf(-5).getMessage();
-                        ToastUtils.show(errMsg);
-                        return;
-                    }
-                    if(objectEngine.dataSource.size() >0) {
-                        item.setEngineName(objectEngine.dataSource.get(0).getEngName());
-                    }else {
-                        item.setEngineName("未知");
-                    }
-                    if(objHazs.indexOf(item) == size -1){
-                        getUnitName();
-                    }
-                }
-
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-
-                }
-            });
-        }
-    }
-    private void getUnitName(){
-        final int size = objHazs.size();
-        for(int i = 0; i < size; i ++) {
-            final ObjHaz item = objHazs.get(i);
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/base/attOrgBases/";
-            HashMap<String,String>params = new HashMap<>();
-            params.put("guid",item.getOrgGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
-                    if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
-                        item.setOrgName(orgInfo.dataSource.get(0).getOrgName());
-                    }else {
-                        item.setOrgName("未知");
-                    }
-                    if(objHazs.indexOf(item) == size -1){
-                        refreshUI();
-                    }
-                }
-
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
     }
     private void refreshUI(){
-        if(objHazs != null){
-            listAdapter.setData(objHazs);
+        if(bisHazReg != null){
+            listAdapter.setData(bisHazReg.dataSource);
             listAdapter.notifyDataSetChanged();
         }
     }
     @Override
     public void initData() {
-        getHazMajRegWritList();
+        showDataLoadingDialog();
+        getHazList();
     }
 
     @Override
     public void initView() {
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
-        showDataLoadingDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new RecordReviewListActivity.DangerousListAdapter(this,
-                R.layout.activity_recorded_list_item);
+                R.layout.activity_bis_haz_reg_layout);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
 
 
     }
 
-    private class DangerousListAdapter extends CommonAdapter<ObjHaz> {
+    private class DangerousListAdapter extends CommonAdapter<BisHazReg> {
         public DangerousListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @SuppressLint("ResourceAsColor")
         @Override
-        public void convert(ViewHolder holder, final ObjHaz dangerousInformation) {
+        public void convert(ViewHolder holder, final BisHazReg dangerousInformation) {
             int type = DangerousInformation.TYPE_BIGER;
             LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
             RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.VISIBLE);
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
-            ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
             Button btn = (Button)(holder.getView(R.id.btn_text));
             btn.setText("审核");
             btn.setOnClickListener(new View.OnClickListener() {
@@ -276,14 +152,14 @@ public class RecordReviewListActivity extends BaseActivity
             });
 
             ((TextView) (holder.getView(R.id.tv_type))).setText(
-                    getHazsGradeName(String.valueOf(type)));
+                    hazGradeMap.get(String.valueOf(type)));
             switch (type) {
-                case DangerousInformation.TYPE_NORMAL:{
+                case HAZ_HTYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGER: {
+                case HAZ_TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 
@@ -293,9 +169,11 @@ public class RecordReviewListActivity extends BaseActivity
                 break;
             }
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    dangerousInformation.getHazName());
+                    dangerousInformation.hazName);
             ((TextView) (holder.getView(R.id.tv_name))).setText(
-                    dangerousInformation.getEngineName());
+                    dangerousInformation.engName);
+            ((TextView)(holder.getView(R.id.tv_content))).setText(dangerousInformation.wiunName);
+            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
         }
     }
 }

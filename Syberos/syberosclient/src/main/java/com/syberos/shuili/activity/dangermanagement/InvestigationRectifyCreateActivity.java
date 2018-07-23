@@ -94,7 +94,7 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
 
     }
     private void commit(){
-      //  String  url =  App.strIP + "/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectProg/";
+      //  String  url =  App.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectProg/";
         String url = App.strCJIP +"/wcsps-api/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
@@ -114,7 +114,7 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url =  App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url =  App.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_PROG";
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";

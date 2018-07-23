@@ -146,7 +146,7 @@ public class SceneReviewDetailActivity extends TranslucentActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/bisStanReviRec/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","3");
         if(currentLevel == ReviewItemInformation.LEVEL_3)

@@ -88,7 +88,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
 
     }
     private void getHiddenList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("hiddStat",strHiddState);
@@ -123,7 +123,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      * 根据工程GUID 获取工程名称
      */
     private void getEngineInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objEngs/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
             if(iFailedCount != 0) break;
@@ -200,7 +200,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      * 获取隐患分类类型
      */
     private void getHiddenType() {
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_CLAS");
@@ -230,7 +230,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      * 获取隐患级别
      */
     private void getHiddenGrade(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

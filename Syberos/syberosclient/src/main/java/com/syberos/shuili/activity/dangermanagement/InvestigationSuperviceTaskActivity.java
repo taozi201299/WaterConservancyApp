@@ -91,7 +91,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity implements 
     }
 
     private void getTaskList(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/selectObjHiddTodoList/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/selectObjHiddTodoList/";
         HashMap<String,String> params = new HashMap<>();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         //params.put("orgGuid",info.getOrgId());

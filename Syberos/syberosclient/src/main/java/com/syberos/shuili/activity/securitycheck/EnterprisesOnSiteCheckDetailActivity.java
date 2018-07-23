@@ -96,7 +96,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         }
     }
     private void getHiddenInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String > params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("inspRecGuid",bisSinsRec.sinsGuid);

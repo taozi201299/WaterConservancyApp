@@ -151,7 +151,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
     }
 
     private void getEngineList(){
-        String url =  App.strIP +"/wcsps-supervision/v1/mv/eng/coll/mvEngColls/";
+        String url =  App.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
         HashMap<String,String>params = new HashMap<>();
         params.put("orgguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

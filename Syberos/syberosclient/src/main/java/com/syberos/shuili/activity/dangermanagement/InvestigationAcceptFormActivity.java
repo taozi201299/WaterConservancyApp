@@ -131,7 +131,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      * @param type
      */
     private void submit(int type){
-      // String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcce/";
+      // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         String url = App.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
@@ -153,7 +153,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url = App.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_ACCE";
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";

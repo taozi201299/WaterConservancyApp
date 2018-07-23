@@ -69,7 +69,7 @@ public class InvestigationCancelFormForEnterprise  extends BaseActivity{
 
     }
     private void  commit() {
-        String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcce/";
+        String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",item.getGuid());//隐患GUID
         params.put("requCompDate",""); //治理完成日期
@@ -94,7 +94,7 @@ public class InvestigationCancelFormForEnterprise  extends BaseActivity{
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url = App.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_ACCE";
                 info.bisGuid = this.item.getGuid();
                 info.localStatus = "1";

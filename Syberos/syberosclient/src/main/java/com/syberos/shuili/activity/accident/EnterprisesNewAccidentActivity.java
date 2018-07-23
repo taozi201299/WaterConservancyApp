@@ -328,7 +328,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url =  App.strIP + "/wcsps-supervision/v1/jck/attMedBase/";
+                info.url =  App.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_ACCI";
                 info.bisGuid = "";
                 info.localStatus = "0";

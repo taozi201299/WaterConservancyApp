@@ -91,7 +91,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
     }
     private void getEngineIDSByOrgGUID(){
         String orgGuid = SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId();
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/selectOrgEngInfoByOrgGuid/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/selectOrgEngInfoByOrgGuid/";
         HashMap<String,String>params = new HashMap<>();
         // params.put("orgGuid",orgGuid);
         params.put("orgGuid","B2D68C74986E40C2B91DC2E73C39BD29");
@@ -120,30 +120,30 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         String url = "";
         for(final  ObjectEngine item : objectEngine.dataSource){
             if(item.getEngType().equals("1")){
-                url = App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngRess/" ;
+                url = App.strIP  + "/sjjk/v1/jck/att/eng/attEngRess/" ;
             }else  if(item.getEngType().equals("2")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWagas/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngWagas/" ;
             }
             else if(item.getEngType().equals("3")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngPusts/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngPusts/" ;
 
             }else if(item.getEngType().equals("4")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngHysts/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngHysts/" ;
             }
             else if(item.getEngType().equals("5")){
-                url =  App.strIP  + "wcsps-supervision/v1/jck/att/eng/attEngDikes/" ;
+                url =  App.strIP  + "sjjk/v1/jck/att/eng/attEngDikes/" ;
             }
             else if(item.getEngType().equals("6")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/attEngIrrs/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/attEngIrrs/" ;
             }else if(item.getEngType().equals("7")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngWadis/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngWadis/" ;
             }else if(item.getEngType().equals("8")){
-                url = App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngSds/" ;
+                url = App.strIP  + "/sjjk/v1/jck/att/eng/attEngSds/" ;
             }
             else if(item.getEngType().equals("9")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngCwss/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngCwss/" ;
             }else if(item.getEngType().equals("10")){
-                url =  App.strIP  + "/wcsps-supervision/v1/jck/att/eng/attEngOthes/" ;
+                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngOthes/" ;
             }
             getObjStatus(item,url);
         }
@@ -224,7 +224,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
      * 根据工程GUID 获取工程名称
      */
     private void getEngineInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objEngs/";
         HashMap<String,String>params = new HashMap<>();
         for(RelEngOrg item : relEngOrg.dataSource){
             params.put("guid",item.getEngGuid());
@@ -248,7 +248,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         }
     }
     private void getTendInfo(final ObjectEngine item){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objTends/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objTends/";
         HashMap<String,String>params = new HashMap<>();
         params.put("engGuid",item.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -280,7 +280,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         });
     }
     private void getObjectEngineTypeDic(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ENG");
         params.put("attColCode","ENG_TYPE");

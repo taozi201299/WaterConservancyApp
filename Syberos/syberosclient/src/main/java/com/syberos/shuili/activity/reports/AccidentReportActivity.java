@@ -67,7 +67,7 @@ public class  AccidentReportActivity extends BaseActivity{
         groupedReportListAdapter = new GroupedReportListAdapter(mContext,null);
     }
     private void getReportUnitID(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/base/attOrgBases/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgType","1");
@@ -91,7 +91,7 @@ public class  AccidentReportActivity extends BaseActivity{
         });
     }
     private void getReportUnitInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/att/org/ext/attOrgExts/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/att/org/ext/attOrgExts/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<AttOrgBase>list = (ArrayList<AttOrgBase>) orgBase.dataSource;
         final int size =list.size();
@@ -128,7 +128,7 @@ public class  AccidentReportActivity extends BaseActivity{
     }
     private void getUnitReportStatus(){
         // 2 未上报 1 已上报 已上报需要查看具体状态 上报后可以申请撤回
-        String url= "http://192.168.1.8:8080/wcsps-supervision/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","1");
@@ -163,7 +163,7 @@ public class  AccidentReportActivity extends BaseActivity{
         }
     }
     private void getStatusDetail(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/acci/rec/rep/hazy-bisAcciRecReps/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/acci/rec/rep/hazy-bisAcciRecReps/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<ReportForAdmin>list = (ArrayList<ReportForAdmin>) reportForAdmin.dataSource;
         final int size = list.size();

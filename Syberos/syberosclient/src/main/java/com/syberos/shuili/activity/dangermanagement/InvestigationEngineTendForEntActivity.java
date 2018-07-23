@@ -99,7 +99,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
 
     private void getTendInfo(final MvEngColl item){
             // 包含标段
-            String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objTends/";
+            String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objTends/";
             HashMap<String,String> params = new HashMap<>();
             params.put("engGuid",item.getEngId());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

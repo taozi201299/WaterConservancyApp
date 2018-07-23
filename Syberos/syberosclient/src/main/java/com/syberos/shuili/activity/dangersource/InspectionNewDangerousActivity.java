@@ -73,7 +73,7 @@ public class InspectionNewDangerousActivity extends BaseActivity {
         setActionBarRightVisible(View.INVISIBLE);
     }
     private void commitForm(){
-       // String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/bisHazPatRec/";
+       // String url = "http://192.168.1.8:8080/sjjk/v1/bis/haz/bisHazPatRec/";
         String url = App.strCJIP + "/wcsps-api/cj/yuanXin/Danger/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("hazGuid", itemInfo.getGuid());

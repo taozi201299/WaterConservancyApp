@@ -103,7 +103,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
      * 获取事故单位类型
      */
     private void getAccidentUnitType() {
-        String url = App.strIP + "/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url = App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_WIUN_TYPE");
@@ -131,7 +131,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
      * 获取事故类别
      */
     private void getAcciCate(){
-        String url = App.strIP + "/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url = App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_CATE");
@@ -161,7 +161,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
      * 获取快报事故列表
      */
     private void getAccidentList(){
-        String url =  App.strIP + "/wcsps-supervision/v1/bis/obj/getAccidentManagements/";
+        String url =  App.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
         param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
@@ -206,7 +206,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
      * 获取事故单位名称
      */
     private void getAccidentUnitInfo(){
-        String url = App.strIP + "/wcsps-supervision/v1/att/org/base/attOrgBases/";
+        String url = App.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : accidentInformation.dataSource){
             params.put("guid",item.getAcciWindGuid());

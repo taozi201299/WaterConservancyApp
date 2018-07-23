@@ -210,7 +210,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getProjectDetail(){
 
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -236,7 +236,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getInvestigationDetail(){
 
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/bisHiddInves/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/bisHiddInves/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -261,7 +261,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         });
     }
     private void getRectifyProgress(){
-       String url =  "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectProgs/";
+       String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
        HashMap<String,String>params = new HashMap<>();
        params.put("hiddGuid",investigationInfo.getHiddGuid());
        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -286,7 +286,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
        });
     }
     private void getSupserviceInfo(){
-        String url =  "http://192.168.1.8:8080/wcsps-supervision/v1/bis/maj/bisMajHiddSups/";
+        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/maj/bisMajHiddSups/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -311,7 +311,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         });
     }
     private void getRectifyInfo(){
-        String url =  "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectImpls/";
+        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectImpls/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -336,7 +336,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         });
     }
     private void getRectifyAcceptInfo(){
-        String url =  "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcces/";
+        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

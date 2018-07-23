@@ -98,7 +98,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * 获取当前组织机构下正在整改的隐患信息
      */
     private void getHiddenList(){
-        final String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        final String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
@@ -134,7 +134,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * 根据工程GUID 获取工程名称
      */
     private void getEngineInfo(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/obj/objEngs/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objEngs/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
             params.put("guid",item.getEngGuid());
@@ -171,7 +171,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         final int size  = investigationTaskInfo.dataSource.size();
         for(int i = 0; i < size; i++) {
             final ObjHidden item = investigationTaskInfo.dataSource.get(i);
-            String url = App.strIP +"/wcsps-supervision/v1/bis/hidd/rect/bisHiddRectAcces/";
+            String url = App.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
             HashMap<String, String> params = new HashMap<>();
             params.put("hiddGuid", item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -272,7 +272,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * 获取隐患分类类型
      */
     private void getHiddenType() {
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_CLAS");
@@ -302,7 +302,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * 获取隐患级别
      */
     private void getHiddenGrade(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

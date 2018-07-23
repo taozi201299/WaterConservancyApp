@@ -58,7 +58,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/selectStanrdReview/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","2");
        // param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());

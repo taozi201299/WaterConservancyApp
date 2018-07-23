@@ -116,7 +116,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         pvTime.show();
     }
     private void submit(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/maj/bisMajHiddSups/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/maj/bisMajHiddSups/";
         HashMap<String,String>params = new HashMap<>();
         // 隐患GUID
         params.put("hiddGuid",hiddenInvestigationTaskInfo.getHiddGuid());

@@ -109,7 +109,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/selectStanrdReview/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","3");
         param.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
@@ -213,7 +213,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
      * 提交到标准化评审记录表
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/obj/stan/revi/bisStanReviRec/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","4");
         // 审定意见

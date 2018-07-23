@@ -89,7 +89,7 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
      * 获取该方案下的检查组信息
      */
     private void getGroupByPlanId(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
         HashMap<String, String> params = new HashMap<>();
         params.put("scheGuid",bisSinsSche.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

@@ -138,7 +138,7 @@ public class InvestigationCheckDetailActivity extends BaseActivity implements Vi
     }
     private void getProjectDetail(){
 
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidds/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -164,7 +164,7 @@ public class InvestigationCheckDetailActivity extends BaseActivity implements Vi
     }
     private void getInvestigationDetail(){
 
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/hidd/bisHiddInves/";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/bisHiddInves/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getHiddGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

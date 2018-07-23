@@ -18,6 +18,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.HistoryPatrolInformation;
 import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
@@ -49,6 +50,8 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
     HistoryPatrolListAdapter listAdapter;
     InspectionPartolInfo informationList = null;
     private ObjHaz information = null;
+    private BisHazReg bisHazReg = null;
+    private String type = "";
 
     @Override
     public void onItemClick(int position) {
@@ -72,9 +75,13 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
 
     @Override
     public void initData() {
-        String url = App.strIP + "/wcsps-supervision/v1/bis/haz/bisHazPatRecs/";
+        String url = App.strIP + "/sjjk/v1/bis/haz/bisHazPatRecs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hazGuid",information.getGuid());
+        if("admin".equals(type)){
+            params.put("hazGuid",bisHazReg.guid);
+        }else {
+            params.put("hazGuid", information.getGuid());
+        }
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -108,7 +115,13 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        information = (ObjHaz)bundle.getSerializable("data");
+        type = bundle.getString("type");
+        if("admin".equals(type)){
+            bisHazReg = (BisHazReg)bundle.getSerializable("data");
+        }else {
+            information = (ObjHaz) bundle.getSerializable("data");
+        }
+
     }
 
     private class HistoryPatrolListAdapter

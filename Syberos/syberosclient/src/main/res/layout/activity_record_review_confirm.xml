@@ -69,7 +69,6 @@
                 <RelativeLayout
                     android:id="@+id/rl_code"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="@dimen/_40dp"
                     android:paddingEnd="@dimen/_5dp"
                     android:paddingStart="@dimen/_5dp">

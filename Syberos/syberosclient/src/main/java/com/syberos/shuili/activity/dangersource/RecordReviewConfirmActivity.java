@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.dangersource.BisHazReg;
+import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -36,12 +40,20 @@ public class RecordReviewConfirmActivity extends BaseActivity {
     TextView ce_code;
     @BindView(R.id.tv_accident_liability_label)
     TextView tv_accident_liability_label;
+    @BindView(R.id.tv_code_label)
+    TextView tv_code_label;
 
 
     @BindView(R.id.ae_describe_audio)
     AudioEditView ae_describe_audio;
 
-    private ObjHaz information = null;
+    private BisHazReg information = null;
+    private BisHazRegDetail bisHazRegDetail = null;
+    /**
+     * 0 备案 1 核销
+     */
+    int titleType;
+
 
     @OnClick(R.id.tv_passed)
     void onConfirmClicked() {
@@ -63,58 +75,100 @@ public class RecordReviewConfirmActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getBisHazRegDetail();
+
 
     }
 
+    private void getBisHazRegDetail(){
+        String url = App.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        HashMap<String,String>param = new HashMap<>();
+        param.put("guid",information.guid);
+        param.put("hazGuid",information.guid);
+        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisHazRegDetail = gson.fromJson(result,BisHazRegDetail.class);
+                if(bisHazRegDetail == null || bisHazRegDetail.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else {
+                    if(titleType == 0) {
+                        ce_code.setText("ba");
+                    }else {
+                        ce_code.setText("hx");
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
     @Override
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        information = (ObjHaz)bundle.getSerializable(
+        information = (BisHazReg)bundle.getSerializable(
                 RecordReviewListActivity.SEND_BUNDLE_KEY);
-        int titleType = bundle.getInt("title");
+        titleType = bundle.getInt("title");
         String title = "";
 
         if(titleType == 0){
             title = "备案审核";
             tv_accident_liability_label.setText("是否备案");
+            tv_code_label.setText("备案号");
         }else {
           title = "核销审核";
             tv_accident_liability_label.setText("是否核销");
+            tv_code_label.setText("核销号");
         }
         showTitle(title);
 
         if (null != information) {
-            ce_code.setText(information.getHazCode());
-            ce_unit.setText(information.getGuid());
+            ce_unit.setText(information.wiunName);
         }
 
         ae_describe_audio.setLabelText("备注");
-        ae_describe_audio.setEditText("划拨维修经费5万元，对堤坝进行修整，确保水库安全" +
-                "运行，对损坏的堤坝进行修复，加固。");
     }
     private  void commit(){
-        String url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/haz/maj/bisHazMajRegWrit/";
+        String url = App.strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrit/";
         HashMap<String,String> params= new HashMap<>();
-        params.put("hazGuid",information.getGuid()); // 危险源GUID
-        params.put("regOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId()); // 报备单位GUID
-        params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
-        params.put("regCode",""); // 备案编号
-        params.put("writeOrgGuid",""); // 核销单位GUID
-        params.put("writeCode",""); //核销号
-        params.put("writeOffTime",""); // 核销时间
-        params.put("regStat","");
-        params.put("writStat","");
+        params.put("hazGuid",information.guid); // 危险源GUID
+        params.put("regOrgGuid",bisHazRegDetail.dataSource.get(0).orgGuid); // 报备单位GUID
+        if(titleType == 0) {
+            params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
+            params.put("regCode", ce_code.getText().toString()); // 备案编号
+            params.put("hazStat", "2");
+        }
+        if(titleType == 1) {
+        params.put("writeOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId()); // 核销单位GUID
+        params.put("writeCode",ce_code.getText().toString()); //核销号
+        params.put("writeOffTime",CommonUtils.getCurrentDate()); // 核销时间
+            params.put("hazStat","4");
+        }
+
         params.put("note","移动端测试"); // 备注
-        params.put("collTime",""); // 采集时间
+        params.put("collTime",CommonUtils.getCurrentDate()); // 采集时间
         params.put("updTime",""); // 更新时间
-        params.put("recPers",""); // 记录人员
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
+        params.put("reviOpin",ae_describe_audio.getEditText());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        localCacheEntity.commitType = 0;
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

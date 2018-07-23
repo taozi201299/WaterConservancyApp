@@ -123,7 +123,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
 
     }
     private void getHiddenDic(){
-        String url  = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");
@@ -179,7 +179,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commit(){
         String url = App.strCJIP + "/wcsps-api/cj/obj/hiddAndSe/addObjHidd";
-        //String  url = "http://192.168.1.8:8080/wcsps-supervision/v1/bis/obj/objHidd/";
+        //String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",objectEngine.getId()); // 所属工程
@@ -208,7 +208,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://192.168.1.8:8080/wcsps-supervision/v1/jck/attMedBase/";
+                info.url = "http://192.168.1.8:8080/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";
                 info.localStatus = "0";
