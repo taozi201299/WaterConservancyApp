@@ -14,12 +14,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.LawQueryInformation;
+import com.syberos.shuili.entity.objCase.ObjLayer;
 import com.syberos.shuili.utils.CommonUtils;
+import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.indexListView.ClearEditText;
 
 import java.util.ArrayList;
@@ -36,38 +42,19 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
     public static final String SEND_BUNDLE_KEY = "LawQueryInformation";
 
     private ListAdapter listAdapter = null;
-    private List<LawQueryInformation> lawQueryInformationList = null;
-    private Map<String, LawQueryInformation> lawQueryInformationMap = null;
-
-    private List<String> allLawTitleList = null;
-    private List<String> searchResultList = null;
-    private SearchResultAdapter searchResultAdapter = null;
-    private List<String> searchHistoryList = null;
-    private SearchHistoryAdapter searchHistoryAdapter = null;
+    private List<ObjLayer> searchResultList = new ArrayList<>();
+    ObjLayer objLayer = null;
 
     @BindView(R.id.searchClearEditText)
     ClearEditText searchClearEditText;
 
-    @BindView(R.id.search_result_background)
-    LinearLayout search_result_background;
-
-    @BindView(R.id.search_history_background)
-    LinearLayout search_history_background;
-
     @BindView(R.id.tv_quit_search)
     TextView tv_quit_search;
 
-    @BindView(R.id.search_result_listView)
-    ListView search_result_listView;
-
-    @BindView(R.id.search_history_listView)
-    ListView search_history_listView;
-
-    @BindView(R.id.ll_normal_view)
-    LinearLayout ll_normal_view;
-
     @BindView(R.id.recyclerView_list)
     RecyclerView recyclerView;
+
+    private boolean bSearch = false;
 
     @OnClick(R.id.iv_action_bar_back)
     void onBackClicked() {
@@ -79,6 +66,8 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
     @OnClick(R.id.tv_quit_search)
     void onCancelSearchClicked() {
         searchClearEditText.clearFocus();
+        bSearch = false;
+        refreshUI();
     }
 
     @Override
@@ -93,8 +82,11 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
 
     @Override
     public void initData() {
+        bSearch = false;
         searchClearEditText.clearFocus();
-        searchHistoryAdapter.notifyDataSetChanged();
+        showDataLoadingDialog();
+        getObjLayerList();
+
     }
 
     @Override
@@ -103,22 +95,14 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ll_normal_view.setVisibility(View.GONE);
-                    if (searchClearEditText.getText().toString().isEmpty()) {
-                        search_history_background.setVisibility(View.VISIBLE);
-                    } else {
-                        search_result_background.setVisibility(View.VISIBLE);
-                    }
                     tv_quit_search.setVisibility(View.VISIBLE);
                 } else {
                     if (searchClearEditText != null) {
                         CommonUtils.hideSoftPan(searchClearEditText);
                         searchClearEditText.setText("");
                     }
-                    search_history_background.setVisibility(View.GONE);
-                    search_result_background.setVisibility(View.GONE);
+
                     tv_quit_search.setVisibility(View.GONE);
-                    ll_normal_view.setVisibility(View.VISIBLE);
                 }
 
                 if (searchClearEditText != null) {
@@ -130,14 +114,13 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
         searchClearEditText.setTextChangedListener(new ClearEditText.ITextChanged() {
             @Override
             public void onTextChanged(String s) {
+                bSearch = true;
                 if (TextUtils.isEmpty(s.trim())) {
+                    bSearch = false;
                     // 显示历史结果
-                    search_result_background.setVisibility(View.GONE);
-                    search_history_background.setVisibility(View.VISIBLE);
+                    refreshUI();
                 } else {
                     // 显示搜索结果
-                    search_history_background.setVisibility(View.GONE);
-                    search_result_background.setVisibility(View.VISIBLE);
                     filterData(s.trim());
                 }
             }
@@ -152,65 +135,81 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
         recyclerView.setAdapter(listAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         listAdapter.setOnItemClickListener(this);
-
-        if (null == lawQueryInformationMap) {
-            lawQueryInformationMap = new HashMap<>();
-        } else {
-            lawQueryInformationMap.clear();
-        }
-
-        for (int i = 1; i < 99; ++i) {
-            LawQueryInformation information = new LawQueryInformation();
-            String title = "堤防工程施工规范" + i;
-            information.setTitle(title);
-            lawQueryInformationMap.put(title, information);
-        }
-
-        // init allLawTitleList
-        allLawTitleList = new ArrayList<>();
-        allLawTitleList.addAll(lawQueryInformationMap.keySet());
-
-        listAdapter.setData(new ArrayList<>(lawQueryInformationMap.values()));
-        listAdapter.notifyDataSetChanged();
-
-        searchResultList = new ArrayList<>();
-        searchResultAdapter = new SearchResultAdapter();
-        search_result_listView.setAdapter(searchResultAdapter);
-
-        searchHistoryList = App.lawEnforcementQueryHistories();
-        searchHistoryAdapter = new SearchHistoryAdapter();
-        search_history_listView.setAdapter(searchHistoryAdapter);
     }
 
     void filterData(final String text) {
         searchResultList.clear();
-        for (String lawTitle : allLawTitleList) {
-            if (lawTitle.contains(text)) {
-                searchResultList.add(lawTitle);
+        for (ObjLayer item : objLayer.dataSource) {
+            if(item.lareName == null)continue;
+            if (item.lareName.contains(text)) {
+                searchResultList.add(item);
             }
         }
-        searchResultAdapter.notifyDataSetChanged();
+        refreshUI();
     }
 
+    private void getObjLayerList(){
+        String url = App.strIP + "/sjjk/v1/obj/lare/objLares/";
+        HashMap<String,String>params = new HashMap<>();
+      //  params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("orgGuid","5E554BC50F634822AE1308CB85947B8A");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                objLayer = gson.fromJson(result,ObjLayer.class);
+                if(objLayer == null || objLayer.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }
+                if(objLayer.dataSource.size() == 0){
+                    ToastUtils.show("无法律法规文件");
+                }
+                refreshUI();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+
+    private void refreshUI(){
+        if(bSearch){
+            listAdapter.setData(searchResultList);
+        }else {
+            listAdapter.setData(objLayer.dataSource);
+        }
+        listAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        LawQueryInformation information = new ArrayList<>(lawQueryInformationMap.values()).get(position);
+        ObjLayer information = null;
+        if(bSearch){
+            information = searchResultList.get(position);
+        }else {
+            information = objLayer.dataSource.get(position);
+        }
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this,
                 LawEnforcementQueryDetailActivity.class, false, bundle);
     }
 
-    private class ListAdapter extends CommonAdapter<LawQueryInformation> {
+    private class ListAdapter extends CommonAdapter<ObjLayer> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(ViewHolder holder, LawQueryInformation information) {
+        public void convert(ViewHolder holder, ObjLayer information) {
 
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getTitle());
+                    information.lareName == null ?"无名":information.lareName);
 
         }
     }
@@ -218,118 +217,4 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
     private static class ViewHolder{
         TextView itemText;
     }
-
-
-    private class SearchResultAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return null == searchResultList ? 0 : searchResultList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null == searchResultList ? null : searchResultList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (null == searchResultList || searchResultList.size() <= 0) {
-                return convertView;
-            }
-
-            ViewHolder holder;
-            if (null == convertView) {
-                convertView = LayoutInflater.from(LawEnforcementQueryActivity.this).inflate(
-                        R.layout.activity_law_enforcement_query_history_item, null);
-                holder = new ViewHolder();
-                holder.itemText = convertView.findViewById(R.id.tv_title);
-                convertView.setTag(holder);
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ViewHolder holder = (ViewHolder) v.getTag();
-                        String title = holder.itemText.getText().toString();
-
-                        Bundle bundle = new Bundle();
-                        LawQueryInformation information = lawQueryInformationMap.get(title);
-                        bundle.putSerializable(SEND_BUNDLE_KEY, information);
-                        intentActivity(LawEnforcementQueryActivity.this,
-                                LawEnforcementQueryDetailActivity.class, false, bundle);
-
-                        searchHistoryList.add(0, title);
-                        App.saveLawEnforcementQueryHistories(searchHistoryList);
-                    }
-                });
-
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.itemText.setText(searchResultList.get(position));
-            return convertView;
-        }
-    }
-
-    private class SearchHistoryAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return null == searchHistoryList ? 0 : searchHistoryList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null == searchHistoryList ? null : searchHistoryList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (null == searchHistoryList || searchHistoryList.size() <= 0) {
-                return convertView;
-            }
-
-            ViewHolder holder;
-            if (null == convertView) {
-                convertView = LayoutInflater.from(LawEnforcementQueryActivity.this).inflate(
-                        R.layout.activity_law_enforcement_query_history_item, null);
-                holder = new ViewHolder();
-                holder.itemText = convertView.findViewById(R.id.tv_title);
-                convertView.setTag(holder);
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ViewHolder holder = (ViewHolder) v.getTag();
-                        String title = holder.itemText.getText().toString();
-
-                        Bundle bundle = new Bundle();
-                        LawQueryInformation information = lawQueryInformationMap.get(title);
-                        bundle.putSerializable(SEND_BUNDLE_KEY, information);
-                        intentActivity(LawEnforcementQueryActivity.this,
-                                LawEnforcementQueryDetailActivity.class, false, bundle);
-
-                        // move the position to the top of searchHistoryList
-                        searchHistoryList.remove(title);
-                        searchHistoryList.add(0, title);
-                        App.saveLawEnforcementQueryHistories(searchHistoryList);
-                    }
-                });
-
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.itemText.setText(searchHistoryList.get(position));
-            return convertView;
-        }
-    }
-
 }

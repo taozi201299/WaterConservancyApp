@@ -9,5 +9,11 @@
     <include
         android:id="@+id/layout_bar"
         layout="@layout/action_bar2_layout" />
+    <TextView
+        android:id="@+id/tv_html_text"
+        android:layout_marginTop="@dimen/_5dp"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_5dp"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

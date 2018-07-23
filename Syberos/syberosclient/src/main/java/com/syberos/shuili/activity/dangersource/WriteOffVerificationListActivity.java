@@ -78,6 +78,7 @@ public class WriteOffVerificationListActivity extends BaseActivity
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
         HashMap<String,String>params = new HashMap<>();
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("hazStat","3");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
