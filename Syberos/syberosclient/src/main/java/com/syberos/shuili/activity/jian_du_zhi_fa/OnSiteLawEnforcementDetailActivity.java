@@ -4,6 +4,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.entity.LawEnforcementInformation;
+import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;
@@ -22,7 +23,7 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
 
 //    private final static int REQUEST_CODE = 1545;
 
-    private LawEnforcementInformation lawEnforcementInformation = null;
+    private ObjCase lawEnforcementInformation = null;
 
     public static final String SEND_BUNDLE_KEY = "LawEnforcementEvidenceInformation";
 
@@ -46,11 +47,6 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
 
     List<LawEnforcementEvidenceInformation> evidenceInformationList = null;
 
-//    @OnClick(R.id.tv_new_evidence)
-//    void onNewEvidenceClicked() {
-//        intentActivity(OnSiteLawEnforcementDetailActivity.this,
-//                OnSiteLawEnforcementEvidenceCreateActivity.class, false, REQUEST_CODE);
-//    }
 
     @Override
     public int getLayoutId() {
@@ -73,25 +69,32 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
         setActionBarRightVisible(View.INVISIBLE);
 
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        lawEnforcementInformation = (LawEnforcementInformation) bundle.getSerializable(
+        lawEnforcementInformation = (ObjCase) bundle.getSerializable(
                 OnSiteLawEnforcementListActivity.SEND_BUNDLE_KEY);
 
         if (null != lawEnforcementInformation) {
-            setActionBarTitle(lawEnforcementInformation.getName());
-            tv_name.setText(lawEnforcementInformation.getName());
-            tv_litigant.setText(lawEnforcementInformation.getLitigant());
-            tv_time.setText(lawEnforcementInformation.getTime());
-            tv_undertaker.setText(lawEnforcementInformation.getUndertaker());
+            String caseName =  lawEnforcementInformation.caseName;
+            String caseLitiName = lawEnforcementInformation.caseLitiName;
+            String filiTime = lawEnforcementInformation.filiTime;
+            String coltra1 = lawEnforcementInformation.contra1;
+            String coltra2 = lawEnforcementInformation.contra2;
+            setActionBarTitle(caseName == null ?"未知":caseName);
+            tv_name.setText(lawEnforcementInformation.caseName);
+            tv_litigant.setText(caseLitiName == null ?"":caseLitiName);
+            tv_time.setText(filiTime == null ?"":filiTime);
+            if(coltra1 == null) coltra1 = "";
+            if(coltra2 == null) coltra2 = "";
+            tv_undertaker.setText(lawEnforcementInformation.contra1 + "、"+ lawEnforcementInformation.contra2);
 
             ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             ae_describe_audio.setLabelText("案件基本情况");
-            ae_describe_audio.setEditText(lawEnforcementInformation.getDescription());
+            ae_describe_audio.setEditText(lawEnforcementInformation.caseSitu);
 
-            evidenceInformationList = lawEnforcementInformation.getEvidenceInformationList();
+            //evidenceInformationList = lawEnforcementInformation.getEvidenceInformationList();
 
             // 现场执法证据列表
             ll_evidences.removeAllViews();
-            addEvidenceItems(evidenceInformationList);
+         //   addEvidenceItems(evidenceInformationList);
         }
 
     }

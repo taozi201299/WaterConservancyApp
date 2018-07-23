@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.jian_du_zhi_fa;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -53,7 +54,10 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity {
         setResult(RESULT_OK, intent);
         activityFinish();
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mv_multimedia.onActivityResult(requestCode,requestCode,data);
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_on_site_law_enforcement_evidence_create;
