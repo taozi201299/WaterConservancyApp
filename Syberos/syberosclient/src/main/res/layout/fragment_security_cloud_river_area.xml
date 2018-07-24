@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_55dp"
                     android:text="评分时间：2018-01-06"
-                    android:textColor="@color/text_gray_color"
+                    android:textColor="@color/text_color_gray"
                     android:textSize="@dimen/_12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -239,7 +239,7 @@
                         android:layout_marginTop="@dimen/_10dp"
                         />
                     <com.github.mikephil.charting.charts.PieChart
-                        android:layout_margin="@dimen/_22dp"
+                        android:layout_margin="@dimen/_15dp"
                         android:id="@+id/pie_char"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_140dp"

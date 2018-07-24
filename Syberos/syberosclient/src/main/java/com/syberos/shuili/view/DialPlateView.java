@@ -4,9 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import com.syberos.shuili.R;
 
 import static com.syberos.shuili.utils.dpUtil.dp2px;
 
@@ -95,13 +100,21 @@ public class DialPlateView extends View {
         this.canvas = canvas;
         //画出最里面的弧线
 //        drawInnerLine(canvas);
-        linePaint.setColor(Color.GRAY);
+        linePaint.setColor(getResources().getColor(R.color.grey_normal));
         drawDial(startAngle, sweepAngle, totalDial, angPre, outerLineHeight, outerLineHeight / 2, innerRadius + innerPadding + outerLineHeight, canvas);
         linePaint.setColor(Color.WHITE);
         drawDial(startAngle, sweepAngle * percent / 100, totalDial * percent / 100, angPre, outerLineHeight, outerLineHeight / 2, innerRadius + innerPadding + outerLineHeight, canvas);
-        int[] pointLocation=getPointFromAngleAndRadius(sweepAngle * percent / 100,innerRadius + innerPadding + outerLineHeight);
-        linePaint.setStrokeWidth(5);
-        canvas.drawPoint(pointLocation[0],pointLocation[1],linePaint);
+
+        int[] pointLocation=getPointFromAngleAndRadius(sweepAngle * percent / 100+startAngle,innerRadius + innerPadding + outerLineHeight-25);
+        linePaint.setColor(Color.WHITE);
+        Log.e("point", "onDraw: "+pointLocation[0]+" "+pointLocation[1]);
+        RectF rect=new RectF();
+        rect.left=pointLocation[0]-6;
+        rect.right=pointLocation[0]+6;
+        rect.top=pointLocation[1]-6;
+        rect.bottom=pointLocation[1]+6;
+        linePaint.setStyle(Paint.Style.FILL);
+        canvas.drawOval(rect,linePaint);
     }
 
     public void updateData(int percent) {
