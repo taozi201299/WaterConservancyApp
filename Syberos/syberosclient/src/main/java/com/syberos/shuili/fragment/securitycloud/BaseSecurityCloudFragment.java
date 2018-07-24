@@ -124,12 +124,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
         legend.setTextSize(14);
         legend.setTextColor(getResources().getColor(R.color.text_gray_color));
-//        legend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legend.setXOffset(40);
+        legend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setXOffset(20);
         legend.setFormSize(14);
         legend.setFormToTextSpace(12);
-        legend.setYOffset(34);
+        legend.setYOffset(20);
 //        pieChart.invalidate();
 //        是否允许点击
         pieChart.setTouchEnabled(false);
@@ -141,6 +141,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        pieChart.setHoleRadius(0.8f);
         pieChart.setTransparentCircleRadius(55f);
         pieChart.setData(pieData);
+        pieChart.setExtraLeftOffset(-80);
         pieChart.setNoDataText("暂无数据");
 
     }
