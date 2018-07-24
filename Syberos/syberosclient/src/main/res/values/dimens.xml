@@ -183,8 +183,22 @@
     <dimen name="popup_button_inner_size">50.0dp</dimen>
     <dimen name="popup_button_inner_radius">30.0dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    
-    
+
+
     <!--text size-->
-    <dimen name="text_normal"></dimen>
+    <dimen name="text_big_15sp">15sp</dimen>
+    <dimen name="text_normal_14sp">14sp</dimen>
+    <dimen name="text_little_13sp">14sp</dimen>
+
+
+    <dimen name="text_title_big_15sp">18sp</dimen>
+    <dimen name="text_title_normal_14sp">17sp</dimen>
+    <dimen name="text_title_little_13sp">16sp</dimen>
+
+    <dimen name="text_sub_title_big_15sp">15sp</dimen>
+    <dimen name="text_sub_title_normal_14sp">14sp</dimen>
+    <dimen name="text_sub_title_little_13sp">13sp</dimen>
+
+    <dimen name="text_value_normal_16sp">16sp</dimen>
+    <dimen name="text_value_big_33sp">33sp</dimen>
 </resources>

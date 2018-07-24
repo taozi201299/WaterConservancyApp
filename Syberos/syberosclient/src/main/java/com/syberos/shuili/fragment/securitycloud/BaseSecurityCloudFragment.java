@@ -5,12 +5,22 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.gson.Gson;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
 import com.syberos.shuili.view.DialPlateView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -20,8 +30,9 @@ import butterknife.BindView;
  * Package：com.syberos.shuili.fragment.securitycloud.
  */
 @SuppressLint("ValidFragment")
-public class BaseSecurityCloudFragment extends BaseFragment {
+public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener {
     public static final String TAG = "BaseSecurityCloudFragment";
+    String strJsonData ;//= "{\"accidentInfoEntry\":{\"accLevelFourCount\":0,\"accLevelOneCount\":0,\"accLevelThreeCount\":0,\"accLevelTwoCount\":0,\"deathCount\":0,\"score\":0,\"totalCount\":0},\"compScoreTrend\":{\"dataList\":[{\"date\":null,\"score\":0}],\"qualifiedScore\":0},\"hiddenInfoEntry\":{\"majorHadSupervisingCount\":0,\"majorHiddenCount\":0,\"majorHiddenHadRectifyCount\":0,\"majorHiddenNoRectifyCount\":0,\"majorLateNoRectifyCount\":0,\"noRectifyCount\":0,\"normalHiddenCount\":0,\"normalHiddenHadRectifyCount\":0,\"normalHiddenNoRectifyCount\":0,\"normalLateNoRectifyCount\":0,\"score\":0,\"totalHiddenCount\":0},\"rankList\":[{\"id\":null,\"name\":null,\"score\":0}],\"riskSourceEntry\":{\"hadControl\":0,\"hadRecord\":0,\"noControl\":0,\"noRecord\":0,\"score\":0},\"straightTubeManageEntry\":{\"dataList\":[{\"partReportCount\":0,\"partUnReportCount\":0}],\"perTrainingHours\":0,\"score\":0,\"trainingPersonCount\":0},\"supervisionMangeEntry\":{\"score\":0,\"standardLevelOneCount\":0,\"standardLevelThreeCount\":0,\"standardLevelTwoCount\":0,\"workAssessmentScore\":0},\"synthesisInfoEntry\":{\"chainRatio\":null,\"sameTimeRatio\":null,\"score\":0}}";
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
     @BindView(R.id.collapse_toolbar)
@@ -34,35 +45,38 @@ public class BaseSecurityCloudFragment extends BaseFragment {
     TextView tvGradeTime;
     @BindView(R.id.view_dial_plate)
 //    ImageView imageView;
-    DialPlateView viewDialPlate;
+            DialPlateView viewDialPlate;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.pie_char)
+    PieChart pieChart;
     @BindView(R.id.tv_score_title)
     TextView tvScoreTitle;
     String title;
     String titleDetail;
-    String strJsonData;
+    SecurityCloudEntry securityCloudEntry;
 
     public void initViewData() {
-        titleDetail = new String(title);
-        if(strJsonData!=null){
-            StringBuilder sb = new StringBuilder(title);
-            sb.append("·安全评分·");
-            sb.append(strJsonData);
-            sb.append("分");
-            titleDetail = new String(sb);
-            tvScore.setText(strJsonData);
-        }else {
-            titleDetail=title;
+        Gson gson = new Gson();
+        if (strJsonData != null) {
+            securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
         }
+        int score=securityCloudEntry.getSynthesisInfoEntry().getScore();
+        titleDetail = new String(new StringBuilder(title)
+                .append("·安全评分·")
+                .append(score)
+                .append("分"));
         tvTitle.setText(title);
         collapsingToolbarLayout.setTitle(titleDetail);
+        tvScore.setText(score+"");
+        viewDialPlate.updateData(score);
 
-
+        initCharView();
     }
-    public void updataData(String title,String strJsonData){
-        this.title=title;
-        this.strJsonData=strJsonData;
+
+    public void updataData(String title, String strJsonData) {
+        this.title = title;
+        this.strJsonData = strJsonData;
         initData();
     }
 
@@ -86,47 +100,36 @@ public class BaseSecurityCloudFragment extends BaseFragment {
     protected void initListener() {
 
     }
+    private void initCharView(){
+        List<PieEntry> strings = new ArrayList<>();
+        strings.add(new PieEntry(30f,"aaa"));
+        strings.add(new PieEntry(70f,"bbb"));
+        PieDataSet dataSet = new PieDataSet(strings,"Label");
 
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        colors.add(getResources().getColor(R.color.yellow));
+        colors.add(getResources().getColor(R.color.blue));
+        dataSet.setColors(colors);
+
+        PieData pieData = new PieData(dataSet);
+        pieData.setDrawValues(true);
+        pieData.setValueFormatter(new PercentFormatter());
+        pieData.setValueTextSize(12f);
+
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+
+        Description description = new Description();
+        description.setText("description");
+        pieChart.setDescription(description);
+        pieChart.setHoleRadius(0f);
+        pieChart.setTransparentCircleRadius(0f);
+    }
     @Override
     protected void initData() {
         initViewData();
-        viewDialPlate.upData(Integer.parseInt(strJsonData));
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                scoreRate= (tvScore.getTop()-(toolbar.getHeight()-tvTitle.getHeight())/2)/(appBarLayout.getHeight()-toolbar.getHeight())*1.0f;
-//                graduationRate=(collapsingToolbarLayout.getTop()-(toolbar.getHeight()-tvTitle.getHeight())/2)/(appBarLayout.getHeight()-toolbar.getHeight())*1.0f;
-//                collapsingToolbarLayout.setTranslationY(graduationRate*verticalOffset);
-//                //得到文本框、头像缩放值 不透明 ->透明  文本框x跟y缩放
-//                float scale = 1.0f -  (-verticalOffset*4)/5  / (float)(appBarLayout.getHeight() - toolbar.getHeight());
-                float scale = 1.0f - (-verticalOffset) / (float) (appBarLayout.getHeight() - toolbar.getHeight());
-//                Log.e(TAG, "onOffsetChanged: ");
-//                Log.e(TAG, "onOffsetChanged: scale" + scale);
-//                Log.e(TAG, "onOffsetChanged:verticalOffset " + verticalOffset);
-//                Log.e(TAG, "onOffsetChanged:appBarLayout.getHeight() " + appBarLayout.getHeight());
-//                Log.e(TAG, "onOffsetChanged:toolbar.getHeight() " + toolbar.getHeight());
-//                Log.e(TAG, "onOffsetChanged: (appBarLayout.getHeight() - toolbar.getHeight())" + (appBarLayout.getHeight() - toolbar.getHeight()));
-//                Log.e(TAG, "onOffsetChanged:(-verticalOffset) / (appBarLayout.getHeight() - toolbar.getHeight())" + (-verticalOffset) / (appBarLayout.getHeight() - toolbar.getHeight()));
-                tvScore.setScaleX(scale);
-                tvScore.setScaleY(scale);
-                tvScore.setAlpha(scale);
 
-                viewDialPlate.setScaleX(scale);
-                viewDialPlate.setScaleY(scale);
-                viewDialPlate.setAlpha(scale);
-
-                tvScoreTitle.setScaleX(scale);
-                tvScoreTitle.setScaleY(scale);
-                viewDialPlate.setAlpha(scale);
-
-                tvGradeTime.setScaleX(scale);
-                tvGradeTime.setScaleY(scale);
-                viewDialPlate.setAlpha(scale);
-
-
-
-            }
-        });
+        appBarLayout.addOnOffsetChangedListener(this);
     }
 
     @Override
@@ -134,4 +137,24 @@ public class BaseSecurityCloudFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        float scale = 1.0f - (-verticalOffset) / (float) (appBarLayout.getHeight() - toolbar.getHeight());
+        tvScore.setScaleX(scale);
+        tvScore.setScaleY(scale);
+        tvScore.setAlpha(scale);
+
+        viewDialPlate.setScaleX(scale);
+        viewDialPlate.setScaleY(scale);
+        viewDialPlate.setAlpha(scale);
+
+        tvScoreTitle.setScaleX(scale);
+        tvScoreTitle.setScaleY(scale);
+        tvScoreTitle.setAlpha(scale);
+
+        tvGradeTime.setScaleX(scale);
+        tvGradeTime.setScaleY(scale);
+        tvGradeTime.setAlpha(scale);
+
+    }
 }

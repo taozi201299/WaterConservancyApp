@@ -24,7 +24,7 @@ public class DialPlateView extends View {
     //进度条的底色
     private static final int PROGRESS_COLOR = 0x55000000;
     Canvas canvas;
-    int persent = 1;
+    int percent = 1;
     //画普通的线用的笔
     private Paint linePaint;
     //画文字用的笔
@@ -71,6 +71,7 @@ public class DialPlateView extends View {
 
     public void initPaint() {
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        linePaint.setStrokeWidth(outerLineWidth);
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(Color.GRAY);
     }
@@ -97,11 +98,14 @@ public class DialPlateView extends View {
         linePaint.setColor(Color.GRAY);
         drawDial(startAngle, sweepAngle, totalDial, angPre, outerLineHeight, outerLineHeight / 2, innerRadius + innerPadding + outerLineHeight, canvas);
         linePaint.setColor(Color.WHITE);
-        drawDial(startAngle, sweepAngle* persent / 100, totalDial* persent / 100 , angPre, outerLineHeight, outerLineHeight / 2, innerRadius + innerPadding + outerLineHeight, canvas);
+        drawDial(startAngle, sweepAngle * percent / 100, totalDial * percent / 100, angPre, outerLineHeight, outerLineHeight / 2, innerRadius + innerPadding + outerLineHeight, canvas);
+        int[] pointLocation=getPointFromAngleAndRadius(sweepAngle * percent / 100,innerRadius + innerPadding + outerLineHeight);
+        linePaint.setStrokeWidth(5);
+        canvas.drawPoint(pointLocation[0],pointLocation[1],linePaint);
     }
 
-    public void upData(int percent) {
-        this.persent = percent;
+    public void updateData(int percent) {
+        this.percent = percent;
         this.postInvalidate();
     }
 
@@ -110,7 +114,7 @@ public class DialPlateView extends View {
      */
 
     private void drawDial(int startAngle, int allAngle, int dialCount, int per, int longLength, int shortLength, int radius, Canvas canvas) {
-        linePaint.setStrokeWidth(outerLineWidth);
+
         int length;
         int angle;
         //根据需要显示的刻度总个数遍历
@@ -124,16 +128,13 @@ public class DialPlateView extends View {
             //当i％per＝＝0，每一个需要显示短刻度的时候（因为设计稿第一个为短的刻度条）
             if (i % per == 0) {
                 length = longLength;
-                startP = getPointFromAngleAndRadius(angle, radius);
-                endP = getPointFromAngleAndRadius(angle, radius - length);
-
             } else {
                 //短刻度条的长度为长刻度条的一半
                 length = shortLength;
-                //获取刻度条起始点位置
-                startP = getPointFromAngleAndRadius(angle, radius);
-                endP = getPointFromAngleAndRadius(angle, radius - length);
             }
+            //获取刻度条起始点位置
+            startP = getPointFromAngleAndRadius(angle, radius);
+            endP = getPointFromAngleAndRadius(angle, radius - length);
             //画出对应的刻度条
             canvas.drawLine(startP[0], startP[1], endP[0], endP[1], linePaint);
         }

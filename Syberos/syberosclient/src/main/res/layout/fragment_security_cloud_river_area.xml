@@ -26,8 +26,7 @@
             app:expandedTitleTextAppearance="@style/Expanded.Title"
             app:layout_scrollFlags="exitUntilCollapsed|scroll"
             app:title="流域"
-            app:titleEnabled="true"
-           >
+            app:titleEnabled="true">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -36,19 +35,21 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_collapseMode="pin">
+
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="流域"
                     android:layout_marginTop="@dimen/_10dp"
+                    android:text="流域"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sp"
+                    app:layout_collapseMode="pin"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.syberos.shuili.view.DialPlateView
                     android:id="@+id/view_dial_plate"
                     android:layout_width="@dimen/_170dp"
@@ -58,46 +59,47 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
                 <!--<ImageView-->
-                    <!--android:id="@+id/view_dial_plate"-->
-                    <!--android:layout_width="@dimen/_170dp"-->
-                    <!--android:layout_height="@dimen/_170dp"-->
-                    <!--android:layout_marginBottom="@dimen/_15dp"-->
-                    <!--android:layout_marginTop="@dimen/_50dp"-->
-                    <!--android:src="@mipmap/icon_temp"-->
-                    <!--app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"-->
-                    <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                    <!---->
-                    <!--app:layout_constraintRight_toRightOf="parent"-->
-                    <!--app:layout_constraintTop_toTopOf="parent" />-->
+                <!--android:id="@+id/view_dial_plate"-->
+                <!--android:layout_width="@dimen/_170dp"-->
+                <!--android:layout_height="@dimen/_170dp"-->
+                <!--android:layout_marginBottom="@dimen/_15dp"-->
+                <!--android:layout_marginTop="@dimen/_50dp"-->
+                <!--android:src="@mipmap/icon_temp"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"-->
+                <!--app:layout_constraintLeft_toLeftOf="parent"-->
+                <!---->
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent" />-->
                 <TextView
                     android:id="@+id/tv_score"
                     android:layout_width="wrap_content"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_30dp"
                     android:layout_marginTop="@dimen/_5dp"
-                    android:text="98"
+                    android:gravity="center"
                     android:includeFontPadding="false"
+                    android:text="98"
                     android:textColor="@color/white"
                     android:textSize="90sp"
                     app:layout_constraintBottom_toBottomOf="@id/view_dial_plate"
                     app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
                     app:layout_constraintRight_toRightOf="@id/view_dial_plate"
-                    android:layout_marginBottom="@dimen/_30dp"
                     app:layout_constraintTop_toTopOf="@id/view_dial_plate" />
+
                 <TextView
                     android:id="@+id/tv_score_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
-                    app:layout_constraintTop_toBottomOf="@id/tv_score"
-                    app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
-                    app:layout_constraintRight_toRightOf="@id/view_dial_plate"
                     android:text="安全评分"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18sp"
-                    />
+                    app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
+                    app:layout_constraintRight_toRightOf="@id/view_dial_plate"
+                    app:layout_constraintTop_toBottomOf="@id/tv_score" />
+
                 <TextView
                     android:id="@+id/tv_grade_time"
                     android:layout_width="wrap_content"
@@ -126,6 +128,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -136,72 +139,113 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="111" />
+                android:layout_marginBottom="@dimen/_12dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/icon_blue_short_vertical_div"
+                android:drawablePadding="@dimen/_6dp"
+                android:text="关键指标"
+                android:textColor="@color/blue_c3"
+                android:textSize="@dimen/text_sub_title_normal_14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="111" />
+                android:layout_margin="@dimen/_5dp"
+                app:cardCornerRadius="@dimen/_10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_sub_title_acc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12dp"
+                        android:layout_marginStart="@dimen/_12dp"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:background="@mipmap/icon_subject_bg_red"
+                        android:gravity="center"
+                        android:text="事故"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_sub_title_big_15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_acc_count_title1"
+                        style="@style/TextSubTitleStyle"
+                        android:layout_marginStart="@dimen/_17dp"
+                        android:layout_marginTop="@dimen/_19dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                        android:text="数据数量"
+                        app:layout_constraintLeft_toRightOf="@+id/tv_sub_title_acc"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="spread" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_acc_count1"
+                        style="@style/TextValueStyle"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                        android:text="11"
+                        app:layout_constraintLeft_toLeftOf="@id/tv_acc_count_title1"
+                        app:layout_constraintTop_toBottomOf="@id/tv_acc_count_title1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_sub_title_death"
+                        style="@style/TextSubTitleStyle"
+                        android:text="死亡人数"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_acc_count_title1"
+                        app:layout_constraintLeft_toRightOf="@id/tv_acc_count_title1"
+                        app:layout_constraintRight_toLeftOf="@id/tv_sub_title_score"
+                        app:layout_constraintTop_toTopOf="@id/tv_acc_count_title1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_value_death"
+                        style="@style/TextValueStyle"
+                        android:text="20"
+                        app:layout_constraintLeft_toLeftOf="@id/tv_sub_title_death"
+                        app:layout_constraintTop_toBottomOf="@id/tv_sub_title_death" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:id="@+id/tv_sub_title_score"
+                        style="@style/TextSubTitleStyle"
+                        android:ems="1"
+                        android:text="评分"
+                        app:layout_constraintLeft_toRightOf="@id/tv_sub_title_death"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_sub_title_death" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="80"
+                        android:textColor="@color/text_black_color"
+                        android:textSize="@dimen/text_value_big_33sp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_sub_title_score"
+                        app:layout_constraintLeft_toRightOf="@id/tv_sub_title_score"
+                        app:layout_constraintTop_toTopOf="@id/tv_sub_title_score" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
+                    <View
+                        android:id="@+id/div1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginLeft="@dimen/_12dp"
+                        android:layout_marginRight="@dimen/_12dp"
+                        android:background="@color/div"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_sub_title_acc"
+                        android:layout_marginTop="@dimen/_10dp"
+                        />
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pie_char"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:layout_constraintTop_toBottomOf="@id/div1"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

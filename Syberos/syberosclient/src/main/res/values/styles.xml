@@ -223,4 +223,21 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextSubTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray_color</item>
+        <item name="android:textSize">@dimen/text_sub_title_little_13sp</item>
+    </style>
+
+    <style name="TextValueStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textSize">@dimen/text_value_normal_16sp</item>
+        <item name="android:textColor">@color/text_black_color</item>
+        <item name="android:layout_marginBottom">@dimen/_19dp</item>
+        <item name="android:layout_marginTop">@dimen/_4dp</item>
+    </style>
+
 </resources>

@@ -64,6 +64,23 @@
         android:onClick="btnClick"
         android:text="监督执法" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="---------------------------------" />
+
+    <Button
+        android:id="@+id/btn_security_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:text="安全云" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="---------------------------------" />
+
 
     <Button
 

@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.example.testmodule.securitycloud.SecurityCloudEntry;
+import com.example.testmodule.securitycloud.StraightTubeManageEntry;
+import com.example.testmodule.securitycloud.SupervisionMangeEntry;
 import com.example.testmodule.testrxjavaretrofit.HttpRequestResultActivity;
 
 import com.example.testmodule.thematicchart.RankRateItem;
@@ -105,10 +108,61 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn_zhi_fa:
                 covertJava2Json_zhi_fa();
                 break;
+
+            case R.id.btn_security_cloud:
+                covertJava2Json_security_cloud();
+                break;
+
+
             case R.id.btn_request_data:
                 startActivity(new Intent(this, HttpRequestResultActivity.class));
                 break;
         }
+    }
+
+    /**
+     * 安全云
+     */
+    private void covertJava2Json_security_cloud() {
+        SecurityCloudEntry.SynthesisInfoEntry synthesisInfoEntry = new SecurityCloudEntry.SynthesisInfoEntry();
+
+        SecurityCloudEntry.AccidentInfoEntry accidentInfoEntry = new SecurityCloudEntry.AccidentInfoEntry();//事故
+
+        SecurityCloudEntry.HiddenInfoEntry hiddenInfoEntry = new SecurityCloudEntry.HiddenInfoEntry();//隐患
+
+        SecurityCloudEntry.RiskSourceEntry riskSourceEntry = new SecurityCloudEntry.RiskSourceEntry();//危险源
+
+        StraightTubeManageEntry straightTubeManageEntry = new StraightTubeManageEntry();//直管的 “管理”数据
+        StraightTubeManageEntry.ReportInfoItemEntry reportInfoItemEntry = new StraightTubeManageEntry.ReportInfoItemEntry();
+        List<StraightTubeManageEntry.ReportInfoItemEntry> reportInfoItemEntryList = new ArrayList<>();
+        reportInfoItemEntryList.add(reportInfoItemEntry);
+        straightTubeManageEntry.setDataList(reportInfoItemEntryList);
+
+        SupervisionMangeEntry supervisionMangeEntry = new SupervisionMangeEntry();//监管 和 流域的 “管理”数据
+
+        SecurityCloudEntry.CompScoreTrend compScoreTrend = new SecurityCloudEntry.CompScoreTrend();  //综合得分 趋势
+        SecurityCloudEntry.SingleMonthScore singleMonthScore = new SecurityCloudEntry.SingleMonthScore();
+        List<SecurityCloudEntry.SingleMonthScore> singleMonthScoreList = new ArrayList<>();
+        singleMonthScoreList.add(singleMonthScore);
+        compScoreTrend.setDataList(singleMonthScoreList);
+
+        List<SecurityCloudEntry.AreaRank> rankList = new ArrayList<>();    //排名
+        SecurityCloudEntry.AreaRank areaRank = new SecurityCloudEntry.AreaRank();
+        rankList.add(areaRank);
+
+
+        SecurityCloudEntry securityCloudEntry = new SecurityCloudEntry();
+        securityCloudEntry.setAccidentInfoEntry(accidentInfoEntry);
+        securityCloudEntry.setCompScoreTrend(compScoreTrend);
+        securityCloudEntry.setHiddenInfoEntry(hiddenInfoEntry);
+        securityCloudEntry.setRankList(rankList);
+        securityCloudEntry.setRiskSourceEntry(riskSourceEntry);
+        securityCloudEntry.setStraightTubeManageEntry(straightTubeManageEntry);
+        securityCloudEntry.setSupervisionMangeEntry(supervisionMangeEntry);
+        securityCloudEntry.setSynthesisInfoEntry(synthesisInfoEntry);
+
+        Log.e(TAG, "安全云: " + gsonSerializeNull.toJson(securityCloudEntry));
+
     }
 
     private void covertJava2Json_zhi_fa() {
