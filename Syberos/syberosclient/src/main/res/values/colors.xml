@@ -88,6 +88,11 @@
     <color name="yellow">#ffff981e</color>
     <color name="primary">#03A9F4</color>
     <color name="orange">#fffaaa00</color>
+<!--饼状图颜色值-->
+    <color name="pie_chart_color_level_one">#ff83d3ff</color>
+    <color name="pie_chart_color_level_two">#ffffd140</color>
+    <color name="pie_chart_color_level_three">#ffffa51e</color>
+    <color name="pie_chart_color_level_four">#ffff3232</color>
 
     <color name="button_rush_normal">#24CBC0</color>
     <color name="button_rush_disabled">#6666CBC0</color>
