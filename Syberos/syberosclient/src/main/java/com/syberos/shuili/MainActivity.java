@@ -1,12 +1,15 @@
 package com.syberos.shuili;
 
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -16,8 +19,10 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
+import com.lzy.okhttputils.callback.FileCallback;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.activity.login.LoginActivity;
 import com.syberos.shuili.activity.personalcenter.ChangePasswordActivity;
 import com.syberos.shuili.activity.personalcenter.MapManActitity;
@@ -38,9 +43,14 @@ import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by jidan on 18-3-10.
@@ -58,12 +68,14 @@ public class MainActivity extends TranslucentActivity
     LinearLayout setting_menu;
     RelativeLayout rl_me_password;
     CheckBox cb_me_switcher_ring;
+    CheckBox cb_screenshot_ring;
 
     RelativeLayout rl_me_update;
     RelativeLayout rl_me_clear;
     RelativeLayout rl_me_logout;
     RelativeLayout rl_map_down;
     RelativeLayout rl_me_message_ring;
+    RelativeLayout rl_allow_screenshot;
     ConstraintLayout cl_me_myself;
     ImageView iv_me_red_pot;
 
@@ -83,7 +95,7 @@ public class MainActivity extends TranslucentActivity
             addressListFragment,
             gateWayFragment;
 
-    private final static String Msg_Recv = TAG + "MsgRecv";
+
 
     private OpenDrawerListener openDrawerListener = null;
 
@@ -107,6 +119,12 @@ public class MainActivity extends TranslucentActivity
                 Singleton.INSTANCE.messageReceiveRemindSwitch(isChecked);
             }
         });
+        cb_screenshot_ring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SPUtils.put(Allow_ScreenShot,isChecked);
+            }
+        });
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
         rl_me_logout.setOnClickListener(this);
@@ -117,6 +135,13 @@ public class MainActivity extends TranslucentActivity
                 cb_me_switcher_ring.setChecked(!cb_me_switcher_ring.isChecked());
             }
         });
+        rl_allow_screenshot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cb_screenshot_ring.setChecked(!cb_screenshot_ring.isChecked());
+            }
+        });
+
         cl_me_myself.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +160,9 @@ public class MainActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+        if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
         btn_addressListFragment_enterprises.setVisibility(View.GONE);
         btn_gateWayFragment_enterprises.setVisibility(View.GONE);
         btn_workFragment_enterprises.setVisibility(View.GONE);
@@ -152,11 +180,13 @@ public class MainActivity extends TranslucentActivity
         View view = inflater.inflate(R.layout.activity_setting_layout, null);
         rl_me_password = (RelativeLayout) view.findViewById(R.id.rl_me_password);
         cb_me_switcher_ring = (CheckBox) view.findViewById(R.id.cb_me_switcher_ring);
+        cb_screenshot_ring = (CheckBox)view.findViewById(R.id.cb_screenshot_ring);
         rl_me_update = (RelativeLayout) view.findViewById(R.id.rl_me_update);
         rl_me_clear = (RelativeLayout) view.findViewById(R.id.rl_me_clear);
         rl_me_logout = (RelativeLayout) view.findViewById(R.id.rl_me_logout);
         rl_map_down = (RelativeLayout)view.findViewById(R.id.rl_map_down);
         rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
+        rl_allow_screenshot = (RelativeLayout)view.findViewById(R.id.rl_allow_screenshot);
         cl_me_myself = (ConstraintLayout) view.findViewById(R.id.cl_me_myself);
         iv_me_red_pot = (ImageView)view.findViewById(R.id.iv_me_red_pot);
         if (Boolean.valueOf(SPUtils.get(Msg_Recv, true).toString())) {
@@ -164,6 +194,7 @@ public class MainActivity extends TranslucentActivity
         } else {
             cb_me_switcher_ring.setChecked(false);
         }
+        cb_screenshot_ring.setChecked(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString()));
         setting_menu.addView(view);
 
     }

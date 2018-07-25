@@ -21,6 +21,8 @@ public abstract class TranslucentActivity extends BaseFragmentActivity {
 
     private IbtnClicked m_btnClicked;
     private Dialog shareDialog;
+    protected final static String Msg_Recv =  "MsgRecv";
+    protected final static String Allow_ScreenShot = "AllowScreenShot";
     /**
      * 初始化分享模块
      *

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -94,7 +95,7 @@ public class OnSiteInspectListActivity extends TranslucentActivity
      * 从稽查计划对象表中获取所有稽查列表
      */
     private void getObjWinsList(){
-        String url = "";
+        String url = App.strIP + "/sjjk/v1/obj/wins/plan/objWinsPlans/";
         HashMap<String,String>params = new HashMap<>();
         params.put("planOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

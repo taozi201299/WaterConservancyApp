@@ -89,8 +89,9 @@ public class  App extends Application {
         OkHttpUtils.init(this);
 //        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init();
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init();
+
 
     }
 
@@ -164,6 +165,7 @@ public class  App extends Application {
     }
     public static int getUsertype(){
         return app.isWaterIndustry;
+      //  return 0;
     }
     public static void setOrgType(int orgType){
         app.orgType = orgType;

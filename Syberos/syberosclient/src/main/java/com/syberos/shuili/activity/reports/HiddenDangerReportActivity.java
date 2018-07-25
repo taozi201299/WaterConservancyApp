@@ -69,7 +69,8 @@ public class  HiddenDangerReportActivity extends BaseActivity{
     private void getReportUnitID(){
         String url = "http://192.168.1.8:8080/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+      //  params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("pguid","790DC1A2EAD7429292CEFC3CE10B95F7");
         params.put("orgType","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override

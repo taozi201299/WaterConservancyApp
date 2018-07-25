@@ -233,7 +233,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
             }
-        }, CacheMode.DEFAULT);
+        }, CacheMode.REQUEST_FAILED_READ_CACHE);
     }
 
     private void getCityName() {

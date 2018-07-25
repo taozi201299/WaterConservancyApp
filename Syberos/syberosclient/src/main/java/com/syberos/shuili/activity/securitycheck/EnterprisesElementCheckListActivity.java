@@ -35,7 +35,8 @@ import okhttp3.HttpUrl;
  * 1 从8.2.2.4	单位安全元素分解（BIS_SE_WIUN_DECO） 中获取检查元素GUID
  * 2 从8.2.2.2	单位安全元素（BIS_SE_WIUN）中获取元素信息，将元素进行分组
  * 3 从8.2.1.4	安全元素库对象表（OBJ_SE）中获取到元素名称
- *
+ *   * 1 大中型已建工程运行管理单位 CJYJ
+ * 2 大中型在建工程项目法人 CJFR
  *
  */
 public class EnterprisesElementCheckListActivity extends BaseActivity

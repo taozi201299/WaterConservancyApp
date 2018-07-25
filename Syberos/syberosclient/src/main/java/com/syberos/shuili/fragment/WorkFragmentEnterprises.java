@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity;
 import com.syberos.shuili.activity.accident.EnterprisesQueryAccidentListActivity;
@@ -167,6 +168,14 @@ public class WorkFragmentEnterprises extends BaseFragment {
             for (int j = 0; j < size; j++) {
                 if (childNames[j].equals(getResources().getString(R.string.module_child_yinhuan_chaxun))) {
                     continue;
+                }
+                /**
+                 * 技术服务 施工 监理单位 只有现场检查模块，项目法人和水利工程管理单位有元素检查
+                 */
+                if("CJFW".equalsIgnoreCase(App.sCode) || "CJSG".equalsIgnoreCase(App.sCode) ||"CJJL".equalsIgnoreCase(App.sCode)){
+                    if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_jianchayuansu))){
+                        continue;
+                    }
                 }
                 View childView = LayoutInflater.from(mContext).inflate(R.layout.layout_work_item_button, null);
                 childView.setTag(childNames[j]);

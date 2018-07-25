@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.syberos.shuili.MainActivity;
+import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.StatusbarUtil;
 
@@ -21,6 +23,8 @@ public abstract class BActivity extends AppCompatActivity {
     public Context mContext;
     // 是否允许全屏
     private boolean allowFullScreen = true;
+    protected final static String Msg_Recv =  "MsgRecv";
+    protected final static String Allow_ScreenShot = "AllowScreenShot";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +35,9 @@ public abstract class BActivity extends AppCompatActivity {
         }
         mContext = this;
         ScreenManager.getScreenManager().pushActivity(this);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
         setContentView(getLayoutId());
         // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         ButterKnife.bind(this);

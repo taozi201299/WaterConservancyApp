@@ -282,11 +282,11 @@ public class LoginActivity extends TranslucentActivity {
          * 5 大中型在建工程监理单位 CJJL
          */
         for(RoleBaseInfo roleInfo : roleList){
-            if(roleInfo.getScode().equals("CJYJ")
-                    || roleInfo.getScode().equals("CJFR")
-                    || roleInfo.getScode().equals("CJFW")
-                    || roleInfo.getScode().equals("CJSG")
-                    || roleInfo.getScode().equals("CJJL")){
+            if("CJYJ".equalsIgnoreCase(roleInfo.getScode())
+                    || "CJFR".equalsIgnoreCase(roleInfo.getScode())
+                    || "CJFW".equalsIgnoreCase(roleInfo.getScode())
+                    || "CJSG".equalsIgnoreCase(roleInfo.getScode())
+                    || "CJJL".equalsIgnoreCase(roleInfo.getScode())){
                 App.sCode = roleInfo.getScode();
                 App.orgJurd = roleInfo.getOrgJurd();
                 App.jurdAreaType = roleInfo.getJurdAreaType();
@@ -432,7 +432,7 @@ private void getOrgBaseInfo(){
        if(App.app.getUsertype() == 1 ) {
            intentActivity(LoginActivity.this, MainActivity.class, false, true);
        }else {
-           intentActivity(LoginActivity.this, MainActivity.class,false,false);
+           intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
        }
    }
     private void showGateWayFragment() {
