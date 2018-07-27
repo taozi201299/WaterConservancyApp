@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CardViewStyle"
+    app:cardCornerRadius="@dimen/_10dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            style="@style/SecuritySubTitleStyle"
+            android:background="@mipmap/icon_subject_bg_red"
+            android:text="事故"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_count_title1"
+            style="@style/TextSubTitleStyle"
+            android:layout_marginStart="@dimen/_17dp"
+            android:layout_marginTop="@dimen/_19dp"
+            android:text="数据数量"
+            app:layout_constraintLeft_toRightOf="@+id/tv_sub_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/tv_count_acc"
+            style="@style/TextValueStyle"
+            android:layout_marginBottom="@dimen/_19dp"
+            android:layout_marginTop="@dimen/_4dp"
+            android:text="11"
+            app:layout_constraintLeft_toLeftOf="@id/tv_count_title1"
+            app:layout_constraintTop_toBottomOf="@id/tv_count_title1" />
+
+        <TextView
+            android:id="@+id/tv_count_title2"
+            style="@style/TextSubTitleStyle"
+            android:text="死亡人数"
+            app:layout_constraintBottom_toBottomOf="@id/tv_count_title1"
+            app:layout_constraintLeft_toRightOf="@id/tv_count_title1"
+            app:layout_constraintRight_toLeftOf="@id/tv_score_title"
+            app:layout_constraintTop_toTopOf="@id/tv_count_title1" />
+
+        <TextView
+            android:id="@+id/tv_death_acc_count"
+            style="@style/TextValueStyle"
+            android:text="20"
+            android:layout_marginBottom="@dimen/_19dp"
+            android:layout_marginTop="@dimen/_4dp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_count_title2"
+            app:layout_constraintTop_toBottomOf="@id/tv_count_title2" />
+
+        <TextView
+            android:id="@+id/tv_score_title"
+            style="@style/TextSubTitleStyle"
+            android:ems="1"
+            android:text="评分"
+            app:layout_constraintLeft_toRightOf="@id/tv_count_title2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_count_title2"
+            app:layout_constraintBottom_toBottomOf="@id/tv_death_acc_count"/>
+
+        <TextView
+            android:id="@+id/tv_score_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80"
+            android:textColor="@color/text_black_color"
+            android:textSize="@dimen/text_value_big_33sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_score_title"
+            app:layout_constraintLeft_toRightOf="@id/tv_score_title"
+            app:layout_constraintTop_toTopOf="@id/tv_score_title" />
+
+        <View
+            android:id="@+id/div"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_12dp"
+            android:layout_marginRight="@dimen/_12dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@color/div"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_title" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_char_acc"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140dp"
+            android:layout_margin="@dimen/_15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

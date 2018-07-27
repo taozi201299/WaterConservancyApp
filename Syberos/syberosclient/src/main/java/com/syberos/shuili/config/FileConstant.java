@@ -36,5 +36,6 @@ public class FileConstant {
     public static String latestApkPath = rootPath +File.separator+ "apk";
 
     public static String SHLOG=rootPath+File.separator+"log";
+    public static String dbPath=rootPath+File.separator+"db";
 }
 

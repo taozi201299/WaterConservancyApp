@@ -32,24 +32,12 @@ public class DialPlateView extends View {
     int percent = 1;
     //画普通的线用的笔
     private Paint linePaint;
-    //画文字用的笔
-    private Paint textPaint;
-    //画进度条用的笔
-    private Paint progressPaint;
     //里面半圆的半径
     private int innerRadius = dp2px(68);
     //最内层的padding
     private int innerPadding = dp2px(6);
-    //外两层的padding
-    private int outerPadding = dp2px(8);
-    //进度条的宽度
-    private int progressLineW = dp2px(10);
-    //最里面跟最外面的线的宽度
-    private int innerLineWidth = dp2px(1);
-    //文字的size
-//    private float textSize = sp2px(18);
-    //单位文字的size
-//    private float textSizeUnit = sp2px(13);
+
+
     //刻度线的宽度
     private int outerLineWidth = dp2px(1);
     //刻度线的高度
@@ -82,20 +70,6 @@ public class DialPlateView extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        //最里面圆的半径计算
-//        //半径＝控件的宽度／2-最里层的padding－刻度线的高度－里第二层的padding－进度条的宽度－第二层padding－最外层线宽度
-//        innerRadius = getMeasuredWidth() / 2 - innerPadding - outerLineHeight -
-//                outerPadding - progressLineW - outerPadding - innerLineWidth;
-//        //高度＝刻度线的高度＋padding＋最里面一层的半径＋padding＋进度条宽度＋padding＋最外层线宽度
-//        int height = (outerLineHeight + innerPadding + innerRadius + outerPadding + progressLineW + outerPadding + innerLineWidth);
-//        //重新生成高度
-//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         this.canvas = canvas;
         //画出最里面的弧线
@@ -109,10 +83,10 @@ public class DialPlateView extends View {
         linePaint.setColor(Color.WHITE);
         Log.e("point", "onDraw: "+pointLocation[0]+" "+pointLocation[1]);
         RectF rect=new RectF();
-        rect.left=pointLocation[0]-6;
-        rect.right=pointLocation[0]+6;
-        rect.top=pointLocation[1]-6;
-        rect.bottom=pointLocation[1]+6;
+        rect.left=pointLocation[0]-8;
+        rect.right=pointLocation[0]+8;
+        rect.top=pointLocation[1]-8;
+        rect.bottom=pointLocation[1]+8;
         linePaint.setStyle(Paint.Style.FILL);
         canvas.drawOval(rect,linePaint);
     }

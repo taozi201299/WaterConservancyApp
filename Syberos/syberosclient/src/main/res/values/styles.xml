@@ -236,8 +236,25 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/text_value_normal_16sp</item>
         <item name="android:textColor">@color/text_black_color</item>
-        <item name="android:layout_marginBottom">@dimen/_19dp</item>
-        <item name="android:layout_marginTop">@dimen/_4dp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="SecuritySubTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/_12dp</item>
+        <item name="android:layout_marginStart">@dimen/_12dp</item>
+        <item name="android:layout_marginTop">@dimen/_12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_sub_title_big_15sp</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/_5dp</item>
     </style>
 
 </resources>

@@ -217,6 +217,7 @@
     <string name="stop_check">停止检查</string>
     <string name="add_problem">新建隐患</string>
     <string name="start_check">开始检查</string>
+    <string name="str_hidden">隐患</string>
 
     <array name="enterprises_element_check_level">
         <item>一般隐患</item>

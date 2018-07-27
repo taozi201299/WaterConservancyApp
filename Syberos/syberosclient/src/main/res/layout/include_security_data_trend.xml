@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/security_bottom_bg"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/_10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_12dp"
+        android:layout_marginRight="@dimen/_12dp"
+        android:layout_marginTop="@dimen/_45dp">
+
+        <TextView
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_6dp"
+            android:drawableLeft="@mipmap/icon_white_short_vertical_div"
+            android:text="综合得分趋势"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_sub_title_normal_14sp" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_6dp"
+            android:drawableRight="@mipmap/icon_arrow_down"
+            android:text="2018.1-2018.8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_sub_title_normal_14sp" />
+    </LinearLayout>
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.github.mikephil.charting.charts.LineChart>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_normal"
+        />
+</LinearLayout>

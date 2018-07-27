@@ -55,6 +55,16 @@ public class StraightTubeManageEntry implements Serializable {
     }
 
     public static class ReportInfoItemEntry implements Serializable {
+        String taskId;
+
+        public String getTaskId() {
+            return taskId == null ? "" : taskId;
+        }
+
+        public void setTaskId(String taskId) {
+            this.taskId = taskId;
+        }
+
         int partReportCount;
         int partUnReportCount;
 

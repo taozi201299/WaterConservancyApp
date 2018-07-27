@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_blue_0072DC"
+    android:orientation="vertical"
+    android:padding="@dimen/_12dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@mipmap/icon_white_short_vertical_div"
+        android:drawablePadding="@dimen/_6dp"
+        android:text="综合得分排行榜"
+        android:textColor="@color/white"
+        android:layout_marginBottom="12dp"
+        android:textSize="@dimen/text_sub_title_normal_14sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1dp"
+        android:background="@color/grey_normal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5dp" />
+</LinearLayout>

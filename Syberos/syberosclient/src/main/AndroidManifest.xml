@@ -32,6 +32,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -51,14 +52,17 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.TestActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ThematicDetailActivity"
+        <activity
+            android:name=".activity.TestActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.ThematicDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainEnterpriseActivity"
             android:screenOrientation="portrait"
@@ -73,9 +77,8 @@
             android:name=".activity.addresslist.OtherImformationActivity"
             android:screenOrientation="portrait" />
 
-        <service
-            android:name=".service.SyberosService"></service>
-            <!--android:process=":syberos.shuili.service" />-->
+        <service android:name=".service.SyberosService"></service>
+        <!--android:process=":syberos.shuili.service" />-->
         <service
             android:name=".service.update.UpdateService"
             android:process=":update.service" />
@@ -92,9 +95,10 @@
             android:name=".activity.work.TodoWorkActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.personalcenter.MapManActitity"
+        <activity
+            android:name=".activity.personalcenter.MapManActitity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangermanagement.InvestigationCheckTaskActivity"
             android:screenOrientation="portrait" />
@@ -135,10 +139,10 @@
             android:name=".activity.dangermanagement.InvestigationSuperviceFormActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.dangermanagement.InvestigationEngineForEntActivity"
-            android:windowSoftInputMode="adjustPan"
+        <activity
+            android:name=".activity.dangermanagement.InvestigationEngineForEntActivity"
             android:screenOrientation="portrait"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangermanagement.InvestigationAddForEnterpriseActivity"
             android:screenOrientation="portrait"
@@ -197,9 +201,10 @@
             android:name=".activity.accident.EnterprisesExpressAccidentDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.accident.EnterpriseAccidentListAcitvity"
+        <activity
+            android:name=".activity.accident.EnterpriseAccidentListAcitvity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangersource.RecordReviewListActivity"
             android:screenOrientation="portrait"
@@ -475,9 +480,10 @@
             android:name=".activity.biao_zhun_hua.SceneReviewDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.securitycheck.SecurityCheckMapTrailsActivity"
+        <activity
+            android:name=".activity.securitycheck.SecurityCheckMapTrailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.securitycheck.SecurityCheckProjectSelectActivity"
             android:screenOrientation="portrait"
@@ -577,22 +583,27 @@
         <activity android:name=".activity.reports.EnterprisesAccidentReportActivity" />
         <activity android:name=".activity.reports.EnterprisesCheckReportActivity" />
         <activity android:name=".activity.reports.EnterprisesRatingReportActivity" />
-        <activity android:name=".amap.IndexActivity"
+        <activity
+            android:name=".amap.IndexActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".amap.MapActivity"
+        <activity
+            android:name=".amap.MapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".amap.SecurityCheckMapTrailsActivity"
+        <activity
+            android:name=".amap.SecurityCheckMapTrailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".amap.ShowNearlyInfoActivity"
+        <activity
+            android:name=".amap.ShowNearlyInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="7b5095c4bb935a371cc5aa9ee6ea3e02"/>
+            android:value="7b5095c4bb935a371cc5aa9ee6ea3e02" />
     </application>
 
 </manifest>

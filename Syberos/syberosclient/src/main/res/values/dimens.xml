@@ -201,4 +201,5 @@
 
     <dimen name="text_value_normal_16sp">16sp</dimen>
     <dimen name="text_value_big_33sp">33sp</dimen>
+    <dimen name="_0dp">0dp</dimen>
 </resources>

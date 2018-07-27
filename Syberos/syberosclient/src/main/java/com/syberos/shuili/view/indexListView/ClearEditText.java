@@ -2,6 +2,7 @@ package com.syberos.shuili.view.indexListView;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -14,7 +15,7 @@ import android.widget.EditText;
 import com.syberos.shuili.R;
 
 
-public class ClearEditText extends EditText implements OnFocusChangeListener,
+public class ClearEditText extends AppCompatEditText implements OnFocusChangeListener,
         TextWatcher {
     /**
      * 删除按钮的引用
