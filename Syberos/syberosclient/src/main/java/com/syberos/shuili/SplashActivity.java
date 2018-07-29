@@ -55,7 +55,7 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
         if (Singleton.INSTANCE.isLogin) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this,MainActivity.class));
        }
         finish();
     }

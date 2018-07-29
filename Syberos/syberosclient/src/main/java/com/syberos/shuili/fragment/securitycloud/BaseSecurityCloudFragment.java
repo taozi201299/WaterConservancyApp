@@ -13,18 +13,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.andview.refreshview.recyclerview.BaseRecyclerAdapter;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
@@ -166,7 +173,18 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     String title;
     String titleDetail;
     SecurityCloudEntry securityCloudEntry;
+    RecyclerAdapter recyclerAdapter;
     private List<PieEntry> accPieEntrys;
+    private XAxis xAxis;         //X坐标轴
+    private YAxis yAxis;         //Y坐标轴
+    private LineChart lineChart;
+
+    @SuppressLint("ValidFragment")
+    public BaseSecurityCloudFragment(@Nullable String strJsonData, String type) {
+
+        this.strJsonData = strJsonData;
+        this.type = type;
+    }
 
     public void initViewData() {
         appBarLayout.addOnOffsetChangedListener(this);
@@ -189,6 +207,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         initAccView(securityCloudEntry.getAccidentInfoEntry());
         initHiddenView(securityCloudEntry.getHiddenInfoEntry());
         initRiskResource(securityCloudEntry.getRiskSourceEntry());
+        initTrendView(securityCloudEntry.getCompScoreTrend());
         initTrendView(securityCloudEntry.getCompScoreTrend());
         switch (type) {
             case "1":
@@ -217,8 +236,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         }
     }
 
-    RecyclerAdapter recyclerAdapter;
-
     /**
      * 初始化 排名
      *
@@ -239,75 +256,14 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         recyclerView.setAdapter(recyclerAdapter);
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivRank;
-        TextView tvRank;
-        TextView tvName;
-        TextView tvScore;
-
-        public RecyclerViewHolder(View itemView) {
-
-            super(itemView);
-            ivRank = itemView.findViewById(R.id.iv_rank);
-            tvRank = itemView.findViewById(R.id.tv_rank);
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvScore = itemView.findViewById(R.id.tv_score);
-        }
-    }
-
-    class RecyclerAdapter extends BaseRecyclerAdapter<RecyclerViewHolder> {
-        List<SecurityCloudEntry.AreaRank> list;
-        RecyclerViewHolder holder;
-
-        public RecyclerAdapter(List<SecurityCloudEntry.AreaRank> list) {
-            this.list = list;
-        }
-
-        @Override
-        public RecyclerViewHolder getViewHolder(View view) {
-            return holder;
-        }
-
-        @Override
-        public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_data_rank, parent, false);
-            holder = new RecyclerViewHolder(view);
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerViewHolder holder, int position, boolean isItem) {
-            if (position == 0) {
-                holder.ivRank.setVisibility(View.VISIBLE);
-                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_gold_medal));
-
-            } else if (position == 1) {
-                holder.ivRank.setVisibility(View.VISIBLE);
-                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_silver_medal));
-            } else if (position == 2) {
-                holder.ivRank.setVisibility(View.VISIBLE);
-                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_bronze_medal));
-            } else {
-                holder.ivRank.setVisibility(View.GONE);
-                holder.tvRank.setVisibility(View.VISIBLE);
-                holder.tvRank.setText(position + 1 + "");
-            }
-            holder.tvScore.setText(list.get(position).getScore() + "");
-            holder.tvName.setText(list.get(position).getName());
-        }
-
-        @Override
-        public int getAdapterItemCount() {
-            return list.size();
-        }
-    }
-
     /**
      * 初始化曲线图
      *
      * @param compScoreTrend
      */
     private void initTrendView(SecurityCloudEntry.CompScoreTrend compScoreTrend) {
+        lineChart = viewGradeTrend.findViewById(R.id.line_chart);
+        initLineCharView(lineChart, getLineData());
 
     }
 
@@ -362,10 +318,15 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
 
-            initCharView(pieCharManager, list);
+            initPieCharView(pieCharManager, list);
         }
     }
 
+    /**
+     * 初始化风险源数据
+     *
+     * @param riskSourceEntry
+     */
     private void initRiskResource(SecurityCloudEntry.RiskSourceEntry riskSourceEntry) {
         if (riskSourceEntry != null) {
             tvScoreRiskSource.setText(riskSourceEntry.getScore() + "");
@@ -379,13 +340,18 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             } else {
                 riskPieEntrys.add(new PieEntry(riskSourceEntry.getHadRecord(), "已备案 " + riskSourceEntry.getHadRecord()));
                 riskPieEntrys.add(new PieEntry(riskSourceEntry.getNoRecord(), "未备案 " + riskSourceEntry.getNoRecord()));
-                initCharView((PieChart) pieCharRisk.findViewById(R.id.pie_char_risk), riskPieEntrys);
+                initPieCharView((PieChart) pieCharRisk.findViewById(R.id.pie_char_risk), riskPieEntrys);
             }
         } else {
             ToastUtils.show("获取风险源数据错误");
         }
     }
 
+    /**
+     * 初始化隐患数据
+     *
+     * @param hiddenInfoEntry
+     */
     @SuppressLint("SetTextI18n")
     private void initHiddenView(SecurityCloudEntry.HiddenInfoEntry hiddenInfoEntry) {
         if (hiddenInfoEntry != null) {
@@ -408,6 +374,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
+    /**
+     * 初始化事故数据
+     *
+     * @param accidentInfoEntry
+     */
     private void initAccView(SecurityCloudEntry.AccidentInfoEntry accidentInfoEntry) {
         tvScoreAcc.setText(accidentInfoEntry.getScore() + "");
         tvDeathAccCount.setText(accidentInfoEntry.getDeathCount() + "");
@@ -422,7 +393,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelTwoCount(), "较大事故 " + accidentInfoEntry.getAccLevelTwoCount()));
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelThreeCount(), "重大事故 " + accidentInfoEntry.getAccLevelThreeCount()));
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelFourCount(), "特大事故 " + accidentInfoEntry.getAccLevelFourCount()));
-            initCharView((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc), accPieEntrys);
+            initPieCharView((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc), accPieEntrys);
         }
     }
 
@@ -442,15 +413,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         initData();
     }
 
-
-    @SuppressLint("ValidFragment")
-    public BaseSecurityCloudFragment(@Nullable String strJsonData, String type) {
-
-        this.strJsonData = strJsonData;
-        this.type = type;
-    }
-
-
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_security_cloud_river_area;
@@ -461,7 +423,174 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
-    private void initCharView(PieChart pieChart, List<PieEntry> strings) {
+    private void initLineCharView(LineChart lineChart, LineData lineData) {
+        xAxis = lineChart.getXAxis();
+        yAxis = lineChart.getAxisLeft();
+
+//        lineChart.setBackgroundColor(Color.argb(200, 173, 215, 210));// 设置图表背景 参数是个Color对象
+
+//        lineChart.setDescription(new Description()); //图表默认右下方的描述，参数是String对象
+//        lineChart.setDescriptionColor(Color.rgb(227, 135, 0));  //上面字的颜色，参数是Color对象
+//      lineChart.setDescriptionPosition(400f,600f);    //上面字的位置，参数是float类型，像素，从图表左上角开始计算
+//      lineChart.setDescriptionTypeface();     //上面字的字体，参数是Typeface 对象
+//        lineChart.setDescriptionTextSize(16);    //上面字的大小，float类型[6,16]
+
+        lineChart.setNoDataText("没有数据呢(⊙o⊙)");   //没有数据时显示在中央的字符串，参数是String对象
+
+        lineChart.setDrawGridBackground(false);//设置图表内格子背景是否显示，默认是false
+//        lineChart.setGridBackgroundColor(Color.rgb(250, 0, 0));//设置格子背景色,参数是Color类型对象
+
+        lineChart.setDrawBorders(true);     //设置图表内格子外的边框是否显示
+        lineChart.setBorderColor(Color.TRANSPARENT
+        );   //上面的边框颜色
+        lineChart.setBorderWidth(20);       //上面边框的宽度，float类型，dp单位
+//      lineChart.setMaxVisibleValueCount();设置图表能显示的最大值，仅当setDrawValues()属性值为true时有用
+
+
+        //Interaction with the Chart 图表的交互
+
+        //Enabling / disabling interaction
+        lineChart.setTouchEnabled(true); // 设置是否可以触摸
+        lineChart.setDragEnabled(true);// 是否可以拖拽
+
+        lineChart.setScaleEnabled(true);// 是否可以缩放 x和y轴, 默认是true
+        lineChart.setScaleXEnabled(true); //是否可以缩放 仅x轴
+        lineChart.setScaleYEnabled(true); //是否可以缩放 仅y轴
+
+        lineChart.setPinchZoom(true);  //设置x轴和y轴能否同时缩放。默认是否
+        lineChart.setDoubleTapToZoomEnabled(true);//设置是否可以通过双击屏幕放大图表。默认是true
+
+//        lineChart.setHighlightEnabled(false);  //If set to true, highlighting/selecting values via touch is possible for all underlying DataSets.
+        lineChart.setHighlightPerDragEnabled(true);//能否拖拽高亮线(数据点与坐标的提示线)，默认是true
+
+        lineChart.setAutoScaleMinMaxEnabled(false);
+
+
+        // Chart fling / deceleration
+        lineChart.setDragDecelerationEnabled(true);//拖拽滚动时，手放开是否会持续滚动，默认是true（false是拖到哪是哪，true拖拽之后还会有缓冲）
+        lineChart.setDragDecelerationFrictionCoef(0.99f);//与上面那个属性配合，持续滚动时的速度快慢，[0,1) 0代表立即停止。
+
+
+        //Highlighting programmatically
+
+//        highlightValues(Highlight[] highs)
+//               Highlights the values at the given indices in the given DataSets. Provide null or an empty array to undo all highlighting.
+//        highlightValue(int xIndex, int dataSetIndex)
+//               Highlights the value at the given x-index in the given DataSet. Provide -1 as the x-index or dataSetIndex to undo all highlighting.
+//        getHighlighted()
+//               Returns an Highlight[] array that contains information about all highlighted entries, their x-index and dataset-index.
+
+
+        //其他请参考https://github.com/PhilJay/MPAndroidChart/wiki/Interaction-with-the-Chart
+        //如手势相关方法，选择回调方法
+
+
+//        The Axis 坐标轴相关的,XY轴通用
+        xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
+        xAxis.setDrawAxisLine(true); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
+        xAxis.setDrawGridLines(true); //是否显示X坐标轴上的刻度竖线，默认是true
+        xAxis.setDrawLabels(true); //是否显示X坐标轴上的刻度，默认是true
+
+        xAxis.setTextColor(Color.rgb(145, 13, 64)); //X轴上的刻度的颜色
+        xAxis.setTextSize(5); //X轴上的刻度的字的大小 单位dp
+//      xAxis.setTypeface(Typeface tf); //X轴上的刻度的字体
+        xAxis.setGridColor(Color.rgb(145, 13, 64)); //X轴上的刻度竖线的颜色
+        xAxis.setGridLineWidth(1); //X轴上的刻度竖线的宽 float类型
+        xAxis.enableGridDashedLine(40, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
+
+
+        //可以设置一条警戒线，如下：
+        LimitLine ll = new LimitLine(10f, "警戒线");
+        ll.setLineColor(Color.RED);
+        ll.setLineWidth(4f);
+        ll.setTextColor(Color.GRAY);
+        ll.setTextSize(12f);
+        // .. and more styling options
+        xAxis.addLimitLine(ll);
+
+
+//      X轴专用
+//        xAxis.setLabelsToSkip(1);    //设置坐标相隔多少，参数是int类型
+//        xAxis.resetLabelsToSkip();   //将自动计算坐标相隔多少
+        xAxis.setAvoidFirstLastClipping(true);
+//        xAxis.setSpaceBetweenLabels(4);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);//把坐标轴放在上下 参数有：TOP, BOTTOM, BOTH_SIDED, TOP_INSIDE or BOTTOM_INSIDE.
+
+//      Y轴专用
+        yAxis.setStartAtZero(false);    //设置Y轴坐标是否从0开始
+        yAxis.setAxisMaxValue(50);    //设置Y轴坐标最大为多少
+//        yAxis.resetAxisMaxValue();    //重新设置Y轴坐标最大为多少，自动调整
+        yAxis.setAxisMinValue(10);    //设置Y轴坐标最小为多少
+//        yAxis.resetAxisMinValue();    //重新设置Y轴坐标，自动调整
+        yAxis.setInverted(false);    //Y轴坐标反转,默认是false,即下小上大
+        yAxis.setSpaceTop(0);    //Y轴坐标距顶有多少距离，即留白
+        yAxis.setSpaceBottom(0);    //Y轴坐标距底有多少距离，即留白
+//        yAxis.setShowOnlyMinMax(false);    //参数如果为true Y轴坐标只显示最大值和最小值
+        yAxis.setLabelCount(10, false);    //第一个参数是Y轴坐标的个数，第二个参数是 是否不均匀分布，true是不均匀分布
+        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  //参数是INSIDE_CHART(Y轴坐标在内部) 或 OUTSIDE_CHART(在外部（默认是这个）)
+//      yAxis.setValueFormatter(YAxisValueFormatterf);
+//              Sets a custom ValueFormatter for this axis. This interface allows to format/modify
+//              the original label text and instead return a customized text.
+
+
+        // add data
+        lineChart.setData(lineData); // 设置数据
+
+        // get the legend (only possible after setting data)
+        Legend mLegend = lineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
+
+        // modify the legend ...
+        // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
+        mLegend.setForm(Legend.LegendForm.CIRCLE);// 样式
+        mLegend.setFormSize(2f);// 字体
+        mLegend.setTextColor(Color.WHITE);// 颜色
+//      mLegend.setTypeface(mTf);// 字体
+
+        lineChart.animateX(1000); // 立即执行的动画,x轴
+    }
+
+    private LineData getLineData() {
+
+        ArrayList<Entry> valsComp1 = new ArrayList<Entry>();     //坐标点的集合
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 1); //坐标点的值，Entry(Y坐标，X坐标)；
+        valsComp1.add(c1e1);
+        Entry c1e2 = new Entry(50.000f, 2);
+        valsComp1.add(c1e2);
+
+        Entry c2e1 = new Entry(30.000f, 1); //坐标点的值，Entry(Y坐标，X坐标)；
+        valsComp2.add(c2e1);
+        Entry c2e2 = new Entry(80.000f, 3);
+        valsComp2.add(c2e2);
+
+        LineDataSet setComp1 = new LineDataSet(valsComp1, "Company");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
+        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);     //以左边坐标轴为准 还是以右边坐标轴为基准
+        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>(); //坐标线的集合。
+        dataSets.add(setComp1);
+        dataSets.add(setComp2);
+
+        ArrayList<String> xVals = new ArrayList<String>();      //X坐标轴的值的集合
+        xVals.add("1.Q");
+        xVals.add("2.Q");
+        xVals.add("3.Q");
+        xVals.add("4.Q");
+        xVals.add("1.Q");
+        xVals.add("2.Q");
+        xVals.add("3.Q");
+        xVals.add("4.Q");
+
+        LineData data = new LineData(dataSets);  //LineData(X坐标轴的集合, 坐标线的集合);
+        lineChart.setData(data);   //为图表添加 数据
+        lineChart.invalidate(); // 重新更新显示
+
+        return data;
+    }
+
+    private void initPieCharView(PieChart pieChart, List<PieEntry> strings) {
 
 
         PieDataSet dataSet = new PieDataSet(strings, "");
@@ -546,5 +675,68 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         tvGradeTime.setScaleY(scale);
         tvGradeTime.setAlpha(scale);
 
+    }
+
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        ImageView ivRank;
+        TextView tvRank;
+        TextView tvName;
+        TextView tvScore;
+
+        public RecyclerViewHolder(View itemView) {
+
+            super(itemView);
+            ivRank = itemView.findViewById(R.id.iv_rank);
+            tvRank = itemView.findViewById(R.id.tv_rank);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvScore = itemView.findViewById(R.id.tv_score);
+        }
+    }
+
+    class RecyclerAdapter extends BaseRecyclerAdapter<RecyclerViewHolder> {
+        List<SecurityCloudEntry.AreaRank> list;
+        RecyclerViewHolder holder;
+
+        public RecyclerAdapter(List<SecurityCloudEntry.AreaRank> list) {
+            this.list = list;
+        }
+
+        @Override
+        public RecyclerViewHolder getViewHolder(View view) {
+            return holder;
+        }
+
+        @Override
+        public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_data_rank, parent, false);
+            holder = new RecyclerViewHolder(view);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerViewHolder holder, int position, boolean isItem) {
+            if (position == 0) {
+                holder.ivRank.setVisibility(View.VISIBLE);
+                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_gold_medal));
+
+            } else if (position == 1) {
+                holder.ivRank.setVisibility(View.VISIBLE);
+                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_silver_medal));
+            } else if (position == 2) {
+                holder.ivRank.setVisibility(View.VISIBLE);
+                holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_bronze_medal));
+            } else {
+                holder.ivRank.setVisibility(View.GONE);
+                holder.tvRank.setVisibility(View.VISIBLE);
+                holder.tvRank.setText(position + 1 + "");
+            }
+            holder.tvScore.setText(list.get(position).getScore() + "");
+            holder.tvName.setText(list.get(position).getName());
+        }
+
+        @Override
+        public int getAdapterItemCount() {
+            return list.size();
+        }
     }
 }

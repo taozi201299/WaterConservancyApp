@@ -40,8 +40,9 @@
             android:textSize="@dimen/text_sub_title_normal_14sp" />
     </LinearLayout>
     <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.github.mikephil.charting.charts.LineChart>
+        android:layout_height="300dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
