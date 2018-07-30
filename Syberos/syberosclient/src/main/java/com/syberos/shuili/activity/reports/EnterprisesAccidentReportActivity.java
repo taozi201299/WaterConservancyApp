@@ -27,10 +27,12 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.entity.bao_biao_guan_li.BisAcciRecRep;
 import com.syberos.shuili.entity.bao_biao_guan_li.BisHiddRecRep;
 import com.syberos.shuili.entity.bao_biao_guan_li.BisOrgMonRepPeri;
 import com.syberos.shuili.entity.bao_biao_guan_li.HiddenDangerReport;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -62,7 +64,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
     private String returnedReason = ""; // 退回原因
 
     private BisOrgMonRepPeri bisOrgMonRepPeri = null;
-    private BisHiddRecRep bisHiddRecRep = null;
+    private BisAcciRecRep bisAcciRecRep = null;
 
     @BindView(R.id.recyclerView_query_accident)
     RecyclerView recyclerView;
@@ -72,6 +74,8 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
 
     @BindView(R.id.iv_action_right)
     LinearLayout iv_action_right;
+    @BindView(R.id.tv_action_bar_title)
+    TextView tv_action_bar_title;
 
     @OnClick(R.id.tv_current_month)
     void onCurrentMonthClicked() {
@@ -102,7 +106,8 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
-
+        showDataLoadingDialog();
+        getReortList();
     }
 
     /**
@@ -112,7 +117,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
         String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
         // params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
+        params.put("repOrgGuid","BF091F20ABB448369CD40454DA295D48");
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -136,7 +141,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
         });
     }
     private  void getReportItemDetail(){
-        String url = "";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/acci/rec/rep/bisAcciRecReps/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<BisOrgMonRepPeri> list = (ArrayList<BisOrgMonRepPeri>) bisOrgMonRepPeri.dataSource;
         final int size = list.size();
@@ -150,14 +155,14 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
                 @Override
                 public void onResponse(String result) {
                     Gson gson = new Gson();
-                    bisHiddRecRep = gson.fromJson(result,BisHiddRecRep.class);
-                    if(bisHiddRecRep == null || bisHiddRecRep.dataSource == null){
+                    bisAcciRecRep = gson.fromJson(result,BisAcciRecRep.class);
+                    if(bisAcciRecRep == null || bisAcciRecRep.dataSource == null){
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
-                    if(bisHiddRecRep.dataSource.size() > 0) {
-                        finalItem.setRepType(bisHiddRecRep.dataSource.get(0).getRepAct());
+                    if(bisAcciRecRep.dataSource.size() > 0) {
+                        finalItem.setRepType(bisAcciRecRep.dataSource.get(0).getRepAct());
                         finalItem.setReportFinish(true);
                     }else {
                         finalItem.setReportFinish(false);
@@ -180,6 +185,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
     }
     @Override
     public void initView() {
+        tv_action_bar_title.setText("事故报表");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
@@ -215,6 +221,9 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
                 reasonDialog.dismiss();
             }
         });
+        String currentTime = CommonUtils.getCurrentDate();
+        String[]arrTime = currentTime.split("-");
+        tv_current_month.setText(arrTime[0] +"年" +arrTime[1] +"月");
     }
 
     private class ListAdapter extends CommonAdapter<BisOrgMonRepPeri> {
@@ -228,6 +237,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
             TextView tv_refunded = (TextView) holder.getView(R.id.tv_refunded);
             TextView tv_report = (TextView) holder.getView(R.id.tv_report);
             TextView tv_recall = (TextView) holder.getView(R.id.tv_recall);
+            tv_recall.setVisibility(View.GONE);
             tv_report.setVisibility(View.GONE);
             tv_recall.setVisibility(View.GONE);
             final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
@@ -238,6 +248,7 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
                     tv_refunded.setVisibility(View.GONE);
                     tv_report.setVisibility(View.VISIBLE);
                     tv_report.setText("已上报");
+                    tv_recall.setVisibility(View.VISIBLE);
                 case HiddenDangerReport.LINK_RETURNED:
                     tv_report.setEnabled(false);
                     tv_refunded.setVisibility(View.VISIBLE);
@@ -249,23 +260,17 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
                     tv_refunded.setText("已撤销");
                     tv_report.setVisibility(View.VISIBLE);
                     tv_report.setText("重报");
-
                     break;
                 case HiddenDangerReport.LINK_REFUNDED:
-                    if(hiddenDangerReport.isReportFinish()){
-                        tv_refunded.setVisibility(View.VISIBLE);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
-                        } else {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
-                        }
-                        tv_refunded.setText("已退回");
-                    }else {
-                        tv_refunded.setVisibility(View.GONE);
-                        tv_report.setText("上报");
-
+                    tv_refunded.setVisibility(View.VISIBLE);
+                    tv_refunded.setText("已退回");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
+                    } else {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
                     }
-
+                    tv_report.setVisibility(View.VISIBLE);
+                    tv_report.setText("重报");
                     break;
             }
 
@@ -346,8 +351,11 @@ public class EnterprisesAccidentReportActivity extends TranslucentActivity {
                     ToastUtils.show("提示：所选月份不应大于系统当前月份");
                     return;
                 }
-                tv_current_month.setText(Strings.formatYearMonth(date));
+                String time = Strings.formatDate(date);
+                String[] arrayTime = time.split("-");
+                tv_current_month.setText(arrayTime[0]+"年"+arrayTime[1]+"月");
                 // TODO: 2018/4/10 处理时间设置之后的逻辑
+                getReortList();
             }
         })
                 .isDialog(true)

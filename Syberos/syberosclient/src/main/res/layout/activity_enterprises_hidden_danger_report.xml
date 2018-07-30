@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/padding_10"
-                android:text="2017.11"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 

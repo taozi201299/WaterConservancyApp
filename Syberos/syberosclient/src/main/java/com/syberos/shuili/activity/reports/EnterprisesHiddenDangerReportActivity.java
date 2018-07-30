@@ -31,6 +31,7 @@ import com.syberos.shuili.entity.bao_biao_guan_li.BisHiddRecRep;
 import com.syberos.shuili.entity.bao_biao_guan_li.BisOrgMonRepPeri;
 import com.syberos.shuili.entity.bao_biao_guan_li.HiddenDangerReport;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -113,7 +114,7 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
     private void getReortList(){
         String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+     //   params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","0");
@@ -217,6 +218,9 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
                 reasonDialog.dismiss();
             }
         });
+        String currentTime = CommonUtils.getCurrentDate();
+        String[]arrTime = currentTime.split("-");
+        tv_current_month.setText(arrTime[0] +"年" +arrTime[1] +"月");
     }
 
     private class ListAdapter extends CommonAdapter<BisOrgMonRepPeri> {
@@ -230,6 +234,7 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
             TextView tv_refunded = (TextView) holder.getView(R.id.tv_refunded);
             TextView tv_report = (TextView) holder.getView(R.id.tv_report);
             TextView tv_recall = (TextView) holder.getView(R.id.tv_recall);
+            tv_recall.setVisibility(View.GONE);
             final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
 
             // 2  未上报 本单位可以退回  1 已上报 2 被退回 3 已撤销
@@ -238,6 +243,7 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
                     tv_refunded.setVisibility(View.GONE);
                     tv_report.setVisibility(View.VISIBLE);
                     tv_report.setText("已上报");
+                    tv_recall.setVisibility(View.VISIBLE);
                 case HiddenDangerReport.LINK_RETURNED:
                     tv_report.setEnabled(true);
                     tv_refunded.setVisibility(View.VISIBLE);
@@ -252,19 +258,15 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
 
                     break;
                 case HiddenDangerReport.LINK_REFUNDED:
-                    if(hiddenDangerReport.isReportFinish()){
-                        tv_refunded.setVisibility(View.VISIBLE);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
-                        } else {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
-                        }
-                        tv_refunded.setText("已退回");
-                    }else {
-                        tv_refunded.setVisibility(View.GONE);
-                        tv_report.setText("上报");
-
+                    tv_refunded.setVisibility(View.VISIBLE);
+                    tv_refunded.setText("已退回");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
+                    } else {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
                     }
+                    tv_report.setVisibility(View.VISIBLE);
+                    tv_report.setText("重报");
 
                     break;
             }
@@ -346,8 +348,11 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
                     ToastUtils.show("提示：所选月份不应大于系统当前月份");
                     return;
                 }
-                tv_current_month.setText(Strings.formatYearMonth(date));
+                String time = Strings.formatDate(date);
+                String[] arrayTime = time.split("-");
+                tv_current_month.setText(arrayTime[0]+"年"+arrayTime[1]+"月");
                 // TODO: 2018/4/10 处理时间设置之后的逻辑
+                getReortList();
             }
         })
                 .isDialog(true)
