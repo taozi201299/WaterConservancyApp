@@ -7,15 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.util.LogPrinter;
 
-import com.syberos.shuili.activity.TestActivity;
-import com.syberos.shuili.activity.accident.EnterprisesNewAccidentActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.activity.login.LoginActivity;
-import com.syberos.shuili.activity.securitycheck.SecurityCheckMapTrailsActivity;
-import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.utils.Singleton;
 
 import java.util.List;

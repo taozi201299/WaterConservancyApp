@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -39,13 +38,13 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.SEND_BUNDLE_KEY;
-import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.DIC_ACCIDENT_KEY;
-import static com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity.DIC_UNIT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_ACCIDENT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_UNIT_KEY;
 
-public class EnterprisesNewAccidentActivity extends BaseActivity implements BaseActivity.IDialogInterface {
+public class AccidentNewFormActivity extends BaseActivity implements BaseActivity.IDialogInterface {
 
-    private final String TAG = EnterprisesNewAccidentActivity.class.getSimpleName();
+    private final String TAG = AccidentNewFormActivity.class.getSimpleName();
 
     @BindView(R.id.ll_multimedia)
     MultimediaView ll_multimedia;
@@ -360,7 +359,7 @@ public class EnterprisesNewAccidentActivity extends BaseActivity implements Base
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK) {
             final CustomDialog customDialog = new CustomDialog(
-                    EnterprisesNewAccidentActivity.this);
+                    AccidentNewFormActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
             customDialog.setMessage("当前新增事故内容未保存，确定退出？");

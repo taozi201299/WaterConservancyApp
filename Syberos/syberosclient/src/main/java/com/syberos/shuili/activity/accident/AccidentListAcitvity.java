@@ -14,10 +14,8 @@ import android.widget.TextView;
 
 import com.andview.refreshview.XRefreshView;
 import com.google.gson.Gson;
-import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
@@ -40,9 +38,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by jidan on 18-5-22.
  */
 
-public class EnterpriseAccidentListAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class AccidentListAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
-   private final String TAG = EnterpriseAccidentListAcitvity.class.getSimpleName();
+   private final String TAG = AccidentListAcitvity.class.getSimpleName();
    private final String Title = "快报事故";
     /**
      * accident unit type
@@ -332,7 +330,7 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
         bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
         bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
         bundle.putInt("type",ObjAcci.NEW_ACCI);
-        intentActivity(this, EnterprisesNewAccidentActivity.class,false,bundle);
+        intentActivity(this, AccidentNewFormActivity.class,false,bundle);
     }
 
     @Override
@@ -341,8 +339,8 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
         ObjAcci item = datas.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
         bundle.putSerializable("data",reportInfos);
-        intentActivity(EnterpriseAccidentListAcitvity.this,
-                EnterprisesExpressAccidentDetailActivity.class,
+        intentActivity(AccidentListAcitvity.this,
+                AccidentDetailActivity.class,
                 false, bundle);
     }
 
@@ -461,8 +459,8 @@ public class EnterpriseAccidentListAcitvity extends BaseActivity implements View
                     bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
                     bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
                     bundle.putInt("type",Integer.valueOf(accidentInformation.getRepStat()));
-                    intentActivity(EnterpriseAccidentListAcitvity.this,
-                            EnterprisesNewAccidentActivity.class,
+                    intentActivity(AccidentListAcitvity.this,
+                            AccidentNewFormActivity.class,
                             false, bundle);
                 }
             });

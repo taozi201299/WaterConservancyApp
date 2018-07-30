@@ -148,10 +148,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.ExpressAccidentListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangermanagement.InvestigationQueryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -188,21 +184,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.ExpressAccidentDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.accident.QueryAccidentListActivity" />
-        <activity android:name=".activity.accident.QueryAccidentDetailActivity" />
-        <activity
             android:name=".activity.accident.EnterprisesExpressAccidentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.EnterprisesExpressAccidentDetailActivity"
+            android:name=".activity.accident.AccidentDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.EnterpriseAccidentListAcitvity"
+            android:name=".activity.accident.AccidentListAcitvity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -210,19 +200,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.EnterprisesQueryAccidentListActivity"
+            android:name=".activity.accident.AccidentQueryListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.accident.EnterprisesQueryAccidentDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.accident.EnterprisesNewAccidentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.accident.EnterprisesReportAfterAccidentActivity"
+            android:name=".activity.accident.AccidentNewFormActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".media.PreviewActivity" />

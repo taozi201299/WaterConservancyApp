@@ -17,8 +17,8 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity;
-import com.syberos.shuili.activity.accident.EnterprisesQueryAccidentListActivity;
+import com.syberos.shuili.activity.accident.AccidentListAcitvity;
+import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
@@ -311,9 +311,9 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(getResources().getString(R.string.module_child_yinhuan_xiaohao))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))) {
-                intentActivity((Activity) mContext, EnterpriseAccidentListAcitvity.class, false, true);
+                intentActivity((Activity) mContext, AccidentListAcitvity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))) {
-                intentActivity((Activity) mContext, EnterprisesQueryAccidentListActivity.class, false, true);
+                intentActivity((Activity) mContext, AccidentQueryListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_xuncha))) {
                 intentActivity((Activity) mContext, HazListForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_weiti))) {

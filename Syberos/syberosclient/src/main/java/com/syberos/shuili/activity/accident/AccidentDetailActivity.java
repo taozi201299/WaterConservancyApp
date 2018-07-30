@@ -25,9 +25,9 @@ import butterknife.OnClick;
 
 import static com.syberos.shuili.activity.accident.EnterprisesExpressAccidentListActivity.SEND_BUNDLE_KEY;
 
-public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
+public class AccidentDetailActivity extends BaseActivity {
 
-    private final String TAG = EnterprisesExpressAccidentDetailActivity.class.getSimpleName();
+    private final String TAG = AccidentDetailActivity.class.getSimpleName();
     private final String Title = "快报事故详情";
     private ObjAcci accidentInformation = null;
 
@@ -67,21 +67,6 @@ public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
         ToastUtils.show("TODO 请求显示事故地点的定位地图");
     }
 
-    @OnClick(R.id.tv_accident_report_after)
-    void onAccidentReportAfterClicked() {
-        if (null != accidentInformation) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(SEND_BUNDLE_KEY,
-                    accidentInformation);
-
-            intentActivity(EnterprisesExpressAccidentDetailActivity.this,
-                    EnterprisesReportAfterAccidentActivity.class,
-                    false, bundle, REQUEST_CODE);
-        } else {
-            ToastUtils.show("Error: EnterprisesExpressAccidentDetailActivity" +
-                    " accidentInformation is null");
-        }
-    }
 
     @Override
     public int getLayoutId() {
@@ -157,7 +142,7 @@ public class EnterprisesExpressAccidentDetailActivity extends BaseActivity {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(SEND_BUNDLE_KEY, item);
                             bundle.putSerializable("data",null);
-                            intentActivity(EnterprisesExpressAccidentDetailActivity.this,EnterprisesExpressAccidentDetailActivity.class
+                            intentActivity(AccidentDetailActivity.this,AccidentDetailActivity.class
                             ,false,bundle);
                         }
                     });

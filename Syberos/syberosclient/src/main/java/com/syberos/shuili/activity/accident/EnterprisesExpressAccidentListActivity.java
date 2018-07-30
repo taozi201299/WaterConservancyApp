@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.google.gson.Gson;
-import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
@@ -74,7 +73,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
         bundle.putSerializable(DICINFO_KEY,m_unitTypeDic);
         bundle.putSerializable(DICINFO_KEY_ACCIDENT_TYPE,m_accidentTypeDic);
         bundle.putInt("type",ObjAcci.NEW_ACCI);
-        intentActivity(this, EnterprisesNewAccidentActivity.class,false,bundle);
+        intentActivity(this, AccidentNewFormActivity.class,false,bundle);
     }
 
     @Override
@@ -335,7 +334,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
 
                         bundle.putSerializable("data",reportInfos);
                         intentActivity(EnterprisesExpressAccidentListActivity.this,
-                                EnterprisesExpressAccidentDetailActivity.class,
+                                AccidentDetailActivity.class,
                                 false, bundle);
                     }
                 });
@@ -489,7 +488,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
                     bundle.putSerializable(DICINFO_KEY,m_unitTypeDic);
                     bundle.putInt("type",Integer.valueOf(accidentInformation.getRepStat()));
                     intentActivity(EnterprisesExpressAccidentListActivity.this,
-                            EnterprisesNewAccidentActivity.class,
+                            AccidentNewFormActivity.class,
                             false, bundle);
                 }
             });

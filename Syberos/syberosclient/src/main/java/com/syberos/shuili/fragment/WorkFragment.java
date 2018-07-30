@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity;
-import com.syberos.shuili.activity.accident.EnterprisesQueryAccidentListActivity;
+import com.syberos.shuili.activity.accident.AccidentListAcitvity;
+import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.DataReviewListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.NoticeListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.PublicityListActivity;
@@ -305,9 +305,9 @@ public class WorkFragment extends BaseFragment {
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
                 intentActivity((Activity)mContext, InvestigationQueryActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
-                intentActivity((Activity)mContext,EnterpriseAccidentListAcitvity.class,false,true);
+                intentActivity((Activity)mContext,AccidentListAcitvity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){
-                intentActivity((Activity)mContext,EnterprisesQueryAccidentListActivity.class,false,true);
+                intentActivity((Activity)mContext,AccidentQueryListActivity.class,false,true);
             }
             else if(itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_beian))){
                 intentActivity((Activity)mContext,RecordReviewListActivity.class,false,true);
