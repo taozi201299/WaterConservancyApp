@@ -176,6 +176,10 @@ public class WorkFragmentEnterprises extends BaseFragment {
                     if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_jianchayuansu))){
                         continue;
                     }
+                }else if("CJYJ".equalsIgnoreCase(App.sCode)|| "CJFR".equalsIgnoreCase(App.sCode)){
+                    if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_xianchangjiancha))){
+                        continue;
+                    }
                 }
                 View childView = LayoutInflater.from(mContext).inflate(R.layout.layout_work_item_button, null);
                 childView.setTag(childNames[j]);

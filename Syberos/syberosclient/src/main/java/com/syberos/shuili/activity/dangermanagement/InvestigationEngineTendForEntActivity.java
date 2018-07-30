@@ -19,6 +19,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
+import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.ObjSe;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -54,6 +55,10 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
      * 安全元素下的检查项信息
      */
     private BisSeChit bisSeChit = null;
+    /**
+     * 安全检查记录
+     */
+    private BisSinsRec bisSinsRec = null;
     @Override
     public int getLayoutId() {
         return  R.layout.activity_investigation_enterprise_task_layout;
@@ -83,11 +88,18 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
                     activityFinish();
                 }
             }
+            if(bisSeChit == null){
+                bisSeChit = (BisSeChit)bundle.getSerializable("checkItem");
+                if(bisSeChit == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+                    activityFinish();
+                }
+            }
         }
         if(type.equals("check")) {
-            if (bisSeChit == null) {
-                bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
-                if(bisSeChit == null){
+            if (bisSinsRec == null) {
+                bisSinsRec = (BisSinsRec) bundle.getSerializable("checkItem");
+                if(bisSinsRec == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                     activityFinish();
                 }
@@ -101,7 +113,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
             // 包含标段
             String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objTends/";
             HashMap<String,String> params = new HashMap<>();
-            params.put("engGuid",item.getEngId());
+            params.put("engGuid",item.getId());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
@@ -150,7 +162,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
         if(type.equals("element")) {
             bundle.putSerializable("element", information);
         }if(type.equals("check")) {
-            bundle.putSerializable("checkItem", bisSeChit);
+            bundle.putSerializable("checkItem", bisSinsRec);
         }
         if(type.equals("hidden")) {
             intentActivity(InvestigationEngineTendForEntActivity.this, InvestigationAddForEnterpriseActivity.class, false, bundle);

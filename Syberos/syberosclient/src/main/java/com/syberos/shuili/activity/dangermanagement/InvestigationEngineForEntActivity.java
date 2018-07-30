@@ -80,6 +80,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
      * 工程对象
      */
    private MvEngColl mvEngColl = null;
+   private ArrayList<MvEngColl>mvEngColls = new ArrayList<>();
    private EngineListAdapter engineListAdapter;
    private String type ;
 
@@ -180,31 +181,50 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
 
     }
     private void processResult(){
+        mvEngColls.clear();
         for(MvEngColl item : mvEngColl.dataSource){
             String typeName = map.get(item.getEngtype());
             item.setEngTypeName(typeName == null ?"未知":typeName);
+            if("CJFR".equalsIgnoreCase(App.sCode) || "CJJL".equalsIgnoreCase(App.sCode) ||"CJSG".equalsIgnoreCase(App.sCode)){
+                // 在建工程 1
+                if(!"1".equals(item.getStat())){
+                    continue;
+                }
+            }else {
+                // 已建工程 2
+                if(!"2".equals(item.getStat())){
+                    continue;
+                }
+            }
+            mvEngColls.add(item);
         }
+
     }
     private void closeLoadingDialog(){
         closeDataDialog();
         xRefreshView.stopRefresh(false);
     }
     private boolean hasTend(){
-        if(App.sCode == "CJFR" || App.sCode == "CJSG" || App.sCode == "CJJL") {
+        if("CJFR".equalsIgnoreCase(App.sCode) || "CJSG".equalsIgnoreCase(App.sCode) || "CJJL".equalsIgnoreCase(App.sCode)) {
             return true;
         }
         return false;
     }
     private void  refreshUI(){
-        engineListAdapter.setData(mvEngColl.dataSource);
+        engineListAdapter.setData(mvEngColls);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        MvEngColl item = mvEngColl.dataSource.get(position);
+        MvEngColl item = mvEngColls.get(position);
         Bundle bundle = new Bundle();
         bundle.putSerializable("data",item);
         bundle.putSerializable("type",type);
         if(hasTend()) {
+            if(type.equalsIgnoreCase("check")){
+                bundle.putSerializable("checkItem",bisSinsRec);
+            }else if(type.equalsIgnoreCase("element")){
+                bundle.putSerializable("checkItem",bisSeChit);
+            }
             intentActivity(InvestigationEngineForEntActivity.this, InvestigationEngineTendForEntActivity.class,
                     false, bundle);
         }else {

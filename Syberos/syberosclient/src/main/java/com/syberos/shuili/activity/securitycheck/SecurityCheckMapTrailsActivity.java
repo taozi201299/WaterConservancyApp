@@ -39,7 +39,9 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
@@ -48,6 +50,7 @@ import com.syberos.shuili.amap.AMapToWGS;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
+import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -59,6 +62,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -112,6 +116,9 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
      */
     private boolean mWorking = false;
     int currentSecond  = 0;
+
+    private String startTime;
+    private String endTime;
     // ========== gao de api end ============
 
     @BindView(R.id.start_check)
@@ -120,6 +127,8 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
     LinearLayout ll_checkTime;
     @BindView(R.id.tv_time)
     TextView tv_time;
+
+
 
     @OnClick(R.id.start_check)
     void onStartCheckClicked() {
@@ -134,6 +143,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         btn_add_problem.setVisibility(View.VISIBLE);
         btn_start_check.setVisibility(View.GONE);
         Log.d(TAG, "==================2");
+        startTime = CommonUtils.getCurrentDate();
     }
 
     @BindView(R.id.stop_check)
@@ -148,6 +158,8 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         btn_stop_check.setVisibility(View.GONE);
         btn_add_problem.setVisibility(View.GONE);
         btn_start_check.setVisibility(View.VISIBLE);
+        endTime = CommonUtils.getCurrentDate();
+       // commit();
     }
 
     @BindView(R.id.add_problem)
@@ -183,6 +195,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if(!mWorking) return;
             switch (msg.what){
                 case 1:
                     Bundle bundle = msg.getData();
@@ -747,5 +760,33 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
             }
 
         }
+    }
+    private void commit(){
+        String url = "";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("InspRecGuid",bisSinsRec.sinsGuid); // 安全检查记录GUID
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("startTime",startTime);
+        params.put("endTime",endTime);
+        Gson gson =new Gson();
+        String trace =gson.toJson(lineTracingPoints);
+        params.put("tracingPoint",trace);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,null, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
     }
 }
