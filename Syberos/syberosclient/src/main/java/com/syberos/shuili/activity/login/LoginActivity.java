@@ -27,6 +27,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.MainActivity;
 import com.syberos.shuili.MainEnterpriseActivity;
 import com.syberos.shuili.R;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
 import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
@@ -427,11 +428,13 @@ private void getOrgBaseInfo(){
     });
 }
    private void go2Activity(){
-       if(App.app.getUsertype() == 1 ) {
-           intentActivity(LoginActivity.this, MainActivity.class, false, true);
-       }else {
-           intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
-       }
+    if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode)
+            || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)
+            || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)){
+        intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
+    }else {
+        intentActivity(LoginActivity.this, MainActivity.class, false, true);
+    }
    }
     private void showGateWayFragment() {
         FragmentManager fm = getSupportFragmentManager();

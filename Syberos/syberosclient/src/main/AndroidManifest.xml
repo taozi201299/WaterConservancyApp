@@ -225,15 +225,7 @@
             android:name=".activity.accident.EnterprisesReportAfterAccidentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordReviewDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".media.PreviewActivity" />
-        <activity
-            android:name=".activity.dangersource.RecordReviewProcessActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.securitycheck.SecurityCheckTaskActivity"
             android:screenOrientation="portrait"
@@ -270,14 +262,6 @@
         </provider>
 
         <activity
-            android:name=".activity.dangersource.RecordReviewHistoryPatrolListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordReviewHistoryPatrolDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangersource.RecordReviewConfirmActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -286,89 +270,31 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangersource.WriteOffVerificationDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.WriteOffVerificationConfirmActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.WriteOffVerificationWriteOffProcessActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.WriteOffVerificationRecordProcessActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.WriteOffVerificationHistoryPatrolListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.WriteOffVerificationHistoryPatrolDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordedListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordedDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordedRecordProcessActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.RecordedWriteOffProcessActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangersource.RecordedHistoryPatrolListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangersource.RecordedHistoryPatrolDetailActivity"
+            android:name=".activity.dangersource.HazListForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangersource.InspectionListForEnterpriseActivity"
+            android:name=".activity.dangersource.HazDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.dangersource.HazDetailForEntActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.dangersource.HazNewDangerousForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangersource.InspectionDetailActivity"
+            android:name=".activity.dangersource.HazSearchListForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.InspectionHistoryPatrolDetailActivity"
+        <activity android:name=".activity.dangersource.RecordedHistoryPatrolDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.InspectionDangerousDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.InspectionNewDangerousActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.IssueTrackingListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.IssueTrackingDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.IssueTrackingDangerousDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangersource.IssueTrackingHistoryPatrolDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".activity.reports.HiddenDangerReportActivity"
             android:screenOrientation="portrait"

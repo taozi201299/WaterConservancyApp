@@ -17,10 +17,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity;
-import com.syberos.shuili.activity.accident.EnterprisesExpressAccidentListActivity;
 import com.syberos.shuili.activity.accident.EnterprisesQueryAccidentListActivity;
-import com.syberos.shuili.activity.accident.ExpressAccidentListActivity;
-import com.syberos.shuili.activity.accident.QueryAccidentListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.DataReviewListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.NoticeListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.PublicityListActivity;
@@ -31,11 +28,9 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationCheckTaskActivi
 import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationSuperviceTaskActivity;
 import com.syberos.shuili.activity.dangersource.RecordReviewListActivity;
-import com.syberos.shuili.activity.dangersource.RecordedListActivity;
 import com.syberos.shuili.activity.dangersource.WriteOffVerificationListActivity;
 import com.syberos.shuili.activity.gong_zuo_kao_he.InspectAssessListActivity;
 import com.syberos.shuili.activity.gong_zuo_kao_he.SafetyProductionListActivity;
-import com.syberos.shuili.activity.inspect.InspectDetailActivity;
 import com.syberos.shuili.activity.inspect.InspectQueryListActivity;
 import com.syberos.shuili.activity.inspect.OnSiteInspectListActivity;
 import com.syberos.shuili.activity.jian_du_zhi_fa.OnSiteLawEnforcementListActivity;
@@ -318,9 +313,7 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext,RecordReviewListActivity.class,false,true);
             } else if(itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_hexiao))){
                 intentActivity((Activity)mContext, WriteOffVerificationListActivity.class, false, true);
-            } else if(itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_yibeian))){
-                intentActivity((Activity)mContext, RecordedListActivity.class, false, true);
-            } else if(itemTag.equals(strResource.getString(R.string.module_child_biaozhunhua_xingshichushen))){
+            }  else if(itemTag.equals(strResource.getString(R.string.module_child_biaozhunhua_xingshichushen))){
                 intentActivity((Activity)mContext, FormalReviewListActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_biaozhunhua_cailiaoshenhe))){

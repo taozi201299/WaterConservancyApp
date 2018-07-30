@@ -46,8 +46,7 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         InspectionPartolInfo information
-                = (InspectionPartolInfo)bundle.getSerializable(
-                RecordReviewHistoryPatrolListActivity.SEND_BUNDLE_KEY);
+                = (InspectionPartolInfo)bundle.getSerializable("RecordedHistoryPatrolListActivity");
 
         if (null != information) {
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);

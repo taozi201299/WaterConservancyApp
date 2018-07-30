@@ -58,6 +58,8 @@ public class  App extends Application {
 
     public static String sCode = "";
     public static String orgJurd = "";
+
+
     /**
      * 行政区划 流域区域
      * 1行政区划 2水资源分区 3流域分区 4流域片区 5	单位 9其他

@@ -20,12 +20,11 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.EnterpriseAccidentListAcitvity;
 import com.syberos.shuili.activity.accident.EnterprisesQueryAccidentListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationCancelForEnterprise;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForEnterpriseActivity;
-import com.syberos.shuili.activity.dangersource.InspectionListForEnterpriseActivity;
-import com.syberos.shuili.activity.dangersource.IssueTrackingListActivity;
+import com.syberos.shuili.activity.dangersource.HazListForEntActivity;
+import com.syberos.shuili.activity.dangersource.HazSearchListForEntActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
 import com.syberos.shuili.activity.reports.EnterprisesAccidentReportActivity;
 import com.syberos.shuili.activity.reports.EnterprisesCheckReportActivity;
@@ -34,7 +33,6 @@ import com.syberos.shuili.activity.reports.EnterprisesRatingReportActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
-import com.syberos.shuili.activity.securitycheck.SecurityCheckMapTrailsActivity;
 import com.syberos.shuili.activity.work.NotificationCenterActivity;
 import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -317,9 +315,9 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))) {
                 intentActivity((Activity) mContext, EnterprisesQueryAccidentListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_xuncha))) {
-                intentActivity((Activity) mContext, InspectionListForEnterpriseActivity.class, false, true);
+                intentActivity((Activity) mContext, HazListForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_weiti))) {
-                intentActivity((Activity) mContext, IssueTrackingListActivity.class, false, true);
+                intentActivity((Activity) mContext, HazSearchListForEntActivity.class, false, true);
             }
 
         }

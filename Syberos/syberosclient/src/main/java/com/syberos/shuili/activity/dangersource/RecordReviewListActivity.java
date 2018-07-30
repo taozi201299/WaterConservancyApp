@@ -20,20 +20,14 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.DangerousInformation;
-import com.syberos.shuili.entity.UserExtendInfo;
-import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
-import com.syberos.shuili.entity.common.DicInfo;
-import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
-import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import okhttp3.Call;
 
 import static com.syberos.shuili.config.GlobleConstants.HAZ_HTYPE_NORMAL;
 import static com.syberos.shuili.config.GlobleConstants.HAZ_TYPE_BIGER;
@@ -62,7 +56,7 @@ public class RecordReviewListActivity extends BaseActivity
         Bundle bundle = new Bundle();
         BisHazReg information = bisHazReg.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
-        intentActivity(this, InspectionDetailActivity.class, false, bundle);
+        intentActivity(this, HazDetailActivity.class, false, bundle);
     }
 
     @Override

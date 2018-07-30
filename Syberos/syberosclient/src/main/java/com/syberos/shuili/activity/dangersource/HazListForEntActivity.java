@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,22 +32,23 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 企事业危险源查询
+ * 企事业单位功能 危险源巡视
  */
-public class IssueTrackingListActivity extends BaseActivity
+public class HazListForEntActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
-    private final String TAG = IssueTrackingListActivity.class.getSimpleName();
+    private final String TAG = HazListForEntActivity.class.getSimpleName();
 
-    private final String Title = "危险源查询";
+    private final String Title = "危险源巡查";
 
     public static final String SEND_BUNDLE_KEY = "DangerousInformation";
 
+    private DicInfo hazsGrade = null;
+
     @BindView(R.id.recyclerView_record_review)
     RecyclerView recyclerView;
-    IssueTrackingListActivity.DangerousListAdapter listAdapter;
+    DangerousListAdapter listAdapter;
     ObjHaz inspectionList  = null;
-    private DicInfo hazsGrade = null;
     private int iSucessCount = 0;
     private int iFailedCount = 0;
 
@@ -55,7 +57,7 @@ public class IssueTrackingListActivity extends BaseActivity
         Bundle bundle = new Bundle();
         ObjHaz information = inspectionList.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
-        intentActivity(this, InspectionDetailActivity.class, false, bundle);
+        intentActivity(this, HazDetailForEntActivity.class, false, bundle);
     }
 
     @Override
@@ -67,6 +69,7 @@ public class IssueTrackingListActivity extends BaseActivity
     public void initListener() {
 
     }
+
     private void getHazsDic(){
         String url  = App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
@@ -211,7 +214,6 @@ public class IssueTrackingListActivity extends BaseActivity
     @Override
     public void initData() {
         getHazsDic();
-
     }
 
     @Override
@@ -222,7 +224,7 @@ public class IssueTrackingListActivity extends BaseActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new IssueTrackingListActivity.DangerousListAdapter(this,
+        listAdapter = new DangerousListAdapter(this,
                 R.layout.activity_recorded_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
@@ -237,19 +239,27 @@ public class IssueTrackingListActivity extends BaseActivity
 
         @SuppressLint("ResourceAsColor")
         @Override
-        public void convert(ViewHolder holder, ObjHaz dangerousInformation) {
+        public void convert(ViewHolder holder, final ObjHaz dangerousInformation) {
             int type = Integer.valueOf(dangerousInformation.getHiddGrad());
             LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
             RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
-            ll_report_after.setVisibility(View.GONE);
+            ll_report_after.setVisibility(View.VISIBLE);
             ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
             ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
+            Button btn = (Button)(holder.getView(R.id.btn_text));
+            btn.setText("巡视");
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("data",dangerousInformation);
+                    intentActivity(HazListForEntActivity.this,HazNewDangerousForEntActivity.class,false,bundle);
+                }
+            });
 
+            ((TextView) (holder.getView(R.id.tv_type))).setText(dangerousInformation.getHiddGradName());
             switch (type) {
-                case DangerousInformation.TYPE_NORMAL: {
-                    ((TextView) (holder.getView(R.id.tv_type))).setText(
-                            R.string.dangerous_type_normal);
-
+                    case DangerousInformation.TYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }

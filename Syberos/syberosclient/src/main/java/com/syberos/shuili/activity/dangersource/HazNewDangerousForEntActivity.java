@@ -29,7 +29,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 /**
  * 新建巡视问题
  */
-public class InspectionNewDangerousActivity extends BaseActivity {
+public class HazNewDangerousForEntActivity extends BaseActivity {
 
     @BindView(R.id.ae_describe_controls_audio)
     AudioEditView ae_describe_controls_audio;

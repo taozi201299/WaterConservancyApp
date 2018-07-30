@@ -21,6 +21,7 @@ import com.syberos.shuili.entity.UserExtendInfo;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
+import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -57,8 +58,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         InspectionPartolInfo information = informationList.dataSource.get(position);
-        bundle.putSerializable(SEND_BUNDLE_KEY, information);
-
+        bundle.putSerializable("RecordedHistoryPatrolListActivity", information);
         intentActivity(this, RecordedHistoryPatrolDetailActivity.class,
                 false, bundle);
     }

@@ -8,13 +8,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
@@ -25,23 +23,21 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-import static com.syberos.shuili.config.GlobleConstants.HAZ_TYPE_BIGER;
 import static com.syberos.shuili.config.GlobleConstants.hazGradeMap;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
- * 危险源详情
+ * Created by Administrator on 2018/7/30.
  */
-public class InspectionDetailActivity extends BaseActivity
-        implements CommonAdapter.OnItemClickListener,View.OnClickListener {
 
-    private final String TAG = InspectionDetailActivity.class.getSimpleName();
+public class HazDetailForEntActivity extends BaseActivity  implements CommonAdapter.OnItemClickListener,View.OnClickListener {
+    private final String TAG = HazDetailActivity.class.getSimpleName();
 
     private final String Title = "巡查记录";
     private final String ActivityTitle = "危险源详情";
 
     public static final String SEND_BUNDLE_KEY = "HistoryPatrolInformation";
-    private BisHazReg information = null;
+    private ObjHaz information = null;
     private BisHazRegDetail bisHazRegDetail = null;
 
 
@@ -86,7 +82,7 @@ public class InspectionDetailActivity extends BaseActivity
     public void initData() {
         if(information == null) {
             Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-            information = (BisHazReg) bundle.getSerializable(InspectionListForEnterpriseActivity.SEND_BUNDLE_KEY);
+            information = (ObjHaz) bundle.getSerializable(HazListForEntActivity.SEND_BUNDLE_KEY);
         }
         showDataLoadingDialog();
         getBisHazRegDetail();
@@ -96,9 +92,9 @@ public class InspectionDetailActivity extends BaseActivity
 
     private void getBisHazRegDetail(){
         String url = App.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
-        HashMap<String,String>param = new HashMap<>();
-        param.put("guid",information.guid);
-        param.put("hazGuid",information.guid);
+        HashMap<String,String> param = new HashMap<>();
+        param.put("guid",information.getGuid());
+        param.put("hazGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -115,6 +111,8 @@ public class InspectionDetailActivity extends BaseActivity
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
 
             }
         });
@@ -140,7 +138,7 @@ public class InspectionDetailActivity extends BaseActivity
             case R.id.rl_patrol:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data",information);
-                bundle.putString("type","admin");
+                bundle.putString("type","ent");
                 intentActivity(this,RecordedHistoryPatrolListActivity.class,false,bundle);
                 break;
         }
@@ -165,4 +163,5 @@ public class InspectionDetailActivity extends BaseActivity
         ae_describe_audio.setEditText(item.note);
         tv_time.setText(item.regTime);
     }
+
 }
