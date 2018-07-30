@@ -53,6 +53,7 @@
 
     <!--TextColor-->
     <color name="div_line">#E8E8E8</color>
+    <color name="div_security">#0062bc</color>
     <color name="text_color_grey">#999999</color>
     <color name="news_title_color">#333333</color>
     <color name="dialog_cancel_button_color">#BBBBBB</color>
@@ -84,6 +85,7 @@
 
     <color name="color_dangerous_type_normal">#1166FF</color>
     <color name="color_blue_0072DC">#0072DC</color>
+    <color name="color_blue_004e96">#004e96</color>
     <color name="color_dangerous_type_big">#FF1F2D</color>
 
     <color name="yellow">#ffff981e</color>
@@ -96,6 +98,7 @@
     <color name="pie_chart_color_level_four">#ffff3232</color>
 
     <color name="button_rush_normal">#24CBC0</color>
+    <color name="button_rush_0bede5">#0bede5</color>
     <color name="button_rush_disabled">#6666CBC0</color>
     <color name="button_rush_pressed">#88CBC0</color>
 

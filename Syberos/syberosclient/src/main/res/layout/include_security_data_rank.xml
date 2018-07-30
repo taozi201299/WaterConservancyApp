@@ -19,7 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1dp"
-        android:background="@color/grey_normal" />
+        android:background="@color/div_security" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

@@ -42,10 +42,11 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="280dp"/>
     <View
+        android:layout_marginTop="@dimen/_10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey_normal"
+        android:background="@color/div_security"
         />
 </LinearLayout>

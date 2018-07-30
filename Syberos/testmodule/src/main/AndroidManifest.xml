@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".testrxjavaretrofit.HttpRequestResultActivity" />
+        <activity android:name=".view.WaterViewActivity" />
     </application>
 
 </manifest>

@@ -85,6 +85,6 @@
         android:layout_height="@dimen/_1dp"
         android:layout_marginLeft="@dimen/_12dp"
         android:layout_marginRight="@dimen/_12dp"
-        android:background="@color/grey_normal"
+        android:background="@color/div_security"
         app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

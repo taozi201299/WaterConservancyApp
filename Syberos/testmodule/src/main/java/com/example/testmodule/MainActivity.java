@@ -61,6 +61,7 @@ import com.example.testmodule.thematicchart.workassessment.WASituationEntry;
 import com.example.testmodule.thematicchart.workassessment.WorkAssessmentEntry;
 import com.example.testmodule.thematicchart.workassessment.WorkAssessmentInfoEntry;
 import com.example.testmodule.thematicchart.workassessment.WorkPointEntry;
+import com.example.testmodule.view.WaterViewActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -117,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btn_request_data:
                 startActivity(new Intent(this, HttpRequestResultActivity.class));
                 break;
+
+            case R.id.btn_water_view:
+                startActivity(new Intent(this, WaterViewActivity.class));
+                break;
+
+
         }
     }
 
