@@ -82,7 +82,7 @@ public class WorkFragment extends BaseFragment {
                 .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
                 .setPrompt("将二维码/条形码放入框内，即可自动扫描")//写那句提示的话
                 .setOrientationLocked(false)//扫描方向固定
-                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity
+                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity_accident_query
                 .initiateScan(); // 初始化扫描
     }
     private String[] moduleNames;

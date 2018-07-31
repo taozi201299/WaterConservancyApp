@@ -14,7 +14,7 @@ import butterknife.OnClick;
 /**
  * Created by BZB on 2018/7/13.
  * Project: Syberos.
- * Package：com.syberos.shuili.activity.
+ * Package：com.syberos.shuili.activity_accident_query.
  */
 public class ThematicDetailActivity extends BActivity {
     @BindView(R.id.ibtn_back)

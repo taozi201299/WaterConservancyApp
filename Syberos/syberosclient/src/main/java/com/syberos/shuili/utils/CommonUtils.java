@@ -2009,7 +2009,7 @@ public static boolean isSameImage(String pathUrl) {
                 }
                 /**
                  * 关闭报错，java.lang.RuntimeException:
-                 * Unable to start activity ComponentInfo
+                 * Unable to start activity_accident_query ComponentInfo
                  * {com.example.wealth/com.example.wealth.UI.main}:
                  * java.lang.RuntimeException: Assetmanager has been closed
                  */

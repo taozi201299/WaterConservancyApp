@@ -501,7 +501,7 @@
         <TextView
             android:id="@+id/tv_accident_report_quick"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_30dp"
+            android:layout_height="@dimen/_50dp"
             android:layout_weight="1"
             android:background="@drawable/button_login_normal"
             android:gravity="center"

@@ -48,7 +48,7 @@ public class AccidentQueryListActivity extends BaseActivity {
      * 事故快报列表信息
      */
     private ObjAcci accidentInformation;
-    private final String Title = "快报事故";
+    private final String Title = "事故查询";
 
     public static final String SEND_BUNDLE_KEY = "ObjAcci";
     /**
@@ -67,12 +67,9 @@ public class AccidentQueryListActivity extends BaseActivity {
     RecyclerView recyclerView;
     GroupedEnterprisesExpressAccidentListAdapter accidentInformationListAdapter;
     ArrayList<AccidentInformationGroup> accidentInformationGroups = null;
-
-    @BindView(R.id.ll_commit)
-    LinearLayout ll_commit;
     @Override
     public int getLayoutId() {
-        return R.layout.activity_enterprises_express_accident_list;
+        return R.layout.activity_accident_query;
     }
 
     @Override
@@ -183,8 +180,6 @@ public class AccidentQueryListActivity extends BaseActivity {
             if(item.getPID() != null){
                 item.setRepStat("1");
                 reportInfos.add(item);
-            }else {
-                item.setRepStat("2");
             }
         }
     }
@@ -295,7 +290,6 @@ public class AccidentQueryListActivity extends BaseActivity {
         showDataLoadingDialog();
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
-        ll_commit.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
@@ -415,9 +409,9 @@ public class AccidentQueryListActivity extends BaseActivity {
             final ObjAcci accidentInformation
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
             DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());
-            String grade = item.getDcGrad() == null ?"0":"1";
             RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
             ll_report_after.setVisibility(View.GONE);
+            String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
                 case ObjAcci.TYPE_NORMAL: {
