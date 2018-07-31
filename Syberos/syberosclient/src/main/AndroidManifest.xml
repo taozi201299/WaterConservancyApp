@@ -304,58 +304,58 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementListActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementDetailActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementEvidenceDetailActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementEvidenceDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementEvidenceCreateActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementEvidenceCreateActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.LawEnforcementQueryActivity"
+            android:name=".activity.suen.LawEnforcementQueryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.LawEnforcementQueryDetailActivity"
+            android:name=".activity.suen.LawEnforcementQueryDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.FormalReviewListActivity"
+            android:name=".activity.stan.FormalReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.DataReviewListActivity"
+            android:name=".activity.stan.DataReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.DataReviewConclusionActivity"
+            android:name=".activity.stan.DataReviewConclusionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.ReviewAndApprovalListActivity"
+            android:name=".activity.stan.ReviewAndApprovalListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.PublicityListActivity"
+            android:name=".activity.stan.PublicityListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.NoticeListActivity"
+            android:name=".activity.stan.NoticeListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.SceneReviewListActivity"
+            android:name=".activity.stan.SceneReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.SceneReviewDetailActivity"
+            android:name=".activity.stan.SceneReviewDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -407,51 +407,51 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionListActivity"
+            android:name=".activity.woas.SafetyProductionListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailActivity"
+            android:name=".activity.woas.SafetyProductionDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailRealSituationActivity"
+            android:name=".activity.woas.SafetyProductionDetailRealSituationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailDeductMarksActivity"
+            android:name=".activity.woas.SafetyProductionDetailDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionObjectSelectActivity"
+            android:name=".activity.woas.SafetyProductionObjectSelectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionNewDeductMarksActivity"
+            android:name=".activity.woas.SafetyProductionNewDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessListActivity"
+            android:name=".activity.woas.InspectAssessListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailActivity"
+            android:name=".activity.woas.InspectAssessDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailDeductMarksActivity"
+            android:name=".activity.woas.InspectAssessDetailDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessObjectSelectActivity"
+            android:name=".activity.woas.InspectAssessObjectSelectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessNewDeductMarksActivity"
+            android:name=".activity.woas.InspectAssessNewDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailRealSituationActivity"
+            android:name=".activity.woas.InspectAssessDetailRealSituationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
