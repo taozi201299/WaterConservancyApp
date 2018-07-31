@@ -53,7 +53,7 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
             tv_maybe.setText(information.getProbFound());
             tv_controls.setText(information.getTreaMeas());
             tv_time.setText(information.getCollTime());
-            tv_reporter.setText(information.getRecPers());
+            tv_reporter.setText(information.getPatPers());
         }
     }
 

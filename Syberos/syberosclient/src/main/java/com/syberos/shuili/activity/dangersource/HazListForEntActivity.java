@@ -212,6 +212,8 @@ public class HazListForEntActivity extends BaseActivity
     }
     @Override
     public void initData() {
+        iFailedCount = 0;
+        iSucessCount = 0;
         showDataLoadingDialog();
         getHazsList();
     }

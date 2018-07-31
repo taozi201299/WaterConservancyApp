@@ -83,6 +83,10 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
                 Gson gson = new Gson();
                 informationList = (InspectionPartolInfo)gson.fromJson(result,InspectionPartolInfo.class);
                 if(informationList != null){
+                    if(informationList.dataSource == null || informationList.dataSource.size() == 0){
+                        ToastUtils.show("暂时没有巡视记录");
+                        return;
+                    }
                     listAdapter.setData(informationList.dataSource);
                     listAdapter.notifyDataSetChanged();
                 }
@@ -129,7 +133,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
         public void convert(ViewHolder holder, InspectionPartolInfo information) {
             ((TextView) (holder.getView(R.id.arrhpli_tv_time))).setText(
                     information.getCollTime());
-            ((TextView) (holder.getView(R.id.arrhpli_tv_person))).setText(information.getRecPers());
+            ((TextView) (holder.getView(R.id.arrhpli_tv_person))).setText(information.getPatPers());
         }
     }
 }
