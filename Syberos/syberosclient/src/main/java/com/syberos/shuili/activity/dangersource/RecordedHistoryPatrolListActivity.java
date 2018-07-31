@@ -16,20 +16,14 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.HistoryPatrolInformation;
-import com.syberos.shuili.entity.UserExtendInfo;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
-import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
 
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 

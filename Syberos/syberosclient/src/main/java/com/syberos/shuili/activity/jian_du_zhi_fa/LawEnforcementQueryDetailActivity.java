@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.LawQueryInformation;
 import com.syberos.shuili.entity.objCase.ObjLayer;
 import com.syberos.shuili.utils.Strings;
 

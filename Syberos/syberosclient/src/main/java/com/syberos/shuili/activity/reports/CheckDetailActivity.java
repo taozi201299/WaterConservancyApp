@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.SecurityCheckInformation;
+import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomEdit;
@@ -22,10 +22,7 @@ import com.syberos.shuili.view.CustomEdit;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 工作考核报表
- */
-public class JobRatingDetailActivity extends TranslucentActivity {
+public class CheckDetailActivity extends TranslucentActivity {
 
     private String refundedReason = ""; // 被退回原因
     private String returnedReason = ""; // 退回原因
@@ -138,7 +135,7 @@ public class JobRatingDetailActivity extends TranslucentActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_job_rating_detail;
+        return R.layout.activity_security_check_detail;
     }
 
     @Override
@@ -156,7 +153,7 @@ public class JobRatingDetailActivity extends TranslucentActivity {
 
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         information = (SecurityCheckInformation)bundle.getSerializable(
-                SecurityCheckReportActivity.SEND_BUNDLE_KEY);
+                CheckReportActivity.SEND_BUNDLE_KEY);
 
         if (null != information) {
             tv_action_bar_title.setText(String.format("安全检查报表|%s", information.getTitle()));

@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * 工作考核：现场检查信息
  */
 public class OnSiteInspectionInfo
-        extends HttpHiddenBaseResponse<OnSiteInspectionInfo> {
+        extends HttpBaseResponse<OnSiteInspectionInfo> {
 
     private String name;                // 考核组名称
     private String plan;                // 所属考核方案

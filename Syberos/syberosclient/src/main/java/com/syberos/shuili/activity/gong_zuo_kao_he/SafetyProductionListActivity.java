@@ -32,6 +32,9 @@ import okhttp3.Call;
  * 工作考核 安全生产考核
  *  1 BIS_WOAS_GROP 考核组表
  *  2 8.2.1.16	工作考核对象表（OBJ_WOAS）中获取详情
+ *
+ *  1 BIS_WOAS_GROP 考核组长orgguid
+ *  2 工作考核对象
  */
 
 public class SafetyProductionListActivity extends  BaseActivity implements CommonAdapter.OnItemClickListener {
@@ -86,7 +89,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     }
 
     private void getWoasGroupList(){
-        String url = "";
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
         params.put("leadWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

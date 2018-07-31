@@ -12,15 +12,13 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.userinfo.UserInfo;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;

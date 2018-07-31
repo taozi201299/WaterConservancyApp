@@ -39,18 +39,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 // 企事业端：隐患报表
 /**
  * BIS_ORG_MON_REP_PERI 月报表上报期间表
  * 按照时间查找报表列表
  */
-public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
+public class HiddenReportForEntActivity extends TranslucentActivity {
 
     private ListAdapter listAdapter = null;
     private Dialog reasonDialog;
@@ -123,9 +121,13 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 bisOrgMonRepPeri = gson.fromJson(result,BisOrgMonRepPeri.class);
-                if(bisOrgMonRepPeri == null || bisOrgMonRepPeri.dataSource == null || bisOrgMonRepPeri.dataSource.size() == 0){
+                if(bisOrgMonRepPeri == null || bisOrgMonRepPeri.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }else if(bisOrgMonRepPeri.dataSource.size() == 0){
+                    closeDataDialog();
+                    ToastUtils.show("没有上报内容");
                     return;
                 }
                 getReportItemDetail();
@@ -297,8 +299,8 @@ public class EnterprisesHiddenDangerReportActivity extends TranslucentActivity {
                     switch (linkStatus) {
                         case HiddenDangerReport.LINK_RETURNED:
                             if(hiddenDangerReport.isReportFinish()) {
-                                confirmDialog = new Dialog(EnterprisesHiddenDangerReportActivity.this);
-                                View v1 = LayoutInflater.from(EnterprisesHiddenDangerReportActivity.this).inflate(
+                                confirmDialog = new Dialog(HiddenReportForEntActivity.this);
+                                View v1 = LayoutInflater.from(HiddenReportForEntActivity.this).inflate(
                                         R.layout.dialog_hidden_danger_report_confirm, null);
                                 tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
                                 tv_confirmDialog_title.setText("确认上报");

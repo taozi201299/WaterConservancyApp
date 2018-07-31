@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/7/17.
  */
 
-public class BisSinsRec extends HttpHiddenBaseResponse<BisSinsRec> {
+public class BisSinsRec extends HttpBaseResponse<BisSinsRec> {
    public String guid;
    public String sinsGuid;
    public String engGuid;

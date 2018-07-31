@@ -1,7 +1,7 @@
 package com.syberos.shuili.view.indexListView;
 
 
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 
 import java.util.Comparator;
 

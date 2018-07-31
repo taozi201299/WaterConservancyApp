@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/29.
  * 8.2.1.16	工作考核对象表（OBJ_WOAS）
  */
 
-public class ObjWoas extends HttpHiddenBaseResponse<ObjWoas> {
+public class ObjWoas extends HttpBaseResponse<ObjWoas> {
     String guid;
     /**
      * 考核主题

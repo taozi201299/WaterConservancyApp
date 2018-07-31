@@ -2,8 +2,7 @@ package com.syberos.shuili.activity.jian_du_zhi_fa;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.LawEnforcementEvidenceInformation;
-import com.syberos.shuili.entity.LawEnforcementInformation;
+import com.syberos.shuili.entity.objCase.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;

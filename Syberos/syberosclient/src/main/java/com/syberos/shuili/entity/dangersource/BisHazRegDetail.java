@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.dangersource;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/7/20.
  */
 
-public class BisHazRegDetail extends HttpHiddenBaseResponse<BisHazRegDetail> {
+public class BisHazRegDetail extends HttpBaseResponse<BisHazRegDetail> {
      public String moniPrec;
      public String regCode;
      public String xsMoniPrec;

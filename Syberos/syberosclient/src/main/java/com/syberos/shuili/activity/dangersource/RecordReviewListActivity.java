@@ -19,7 +19,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.DangerousInformation;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.utils.ToastUtils;
@@ -130,7 +130,7 @@ public class RecordReviewListActivity extends BaseActivity
         @SuppressLint("ResourceAsColor")
         @Override
         public void convert(ViewHolder holder, final BisHazReg dangerousInformation) {
-            int type = DangerousInformation.TYPE_BIGER;
+            int type =  GlobleConstants.HAZ_HTYPE_NORMAL;
             LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
             RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.VISIBLE);

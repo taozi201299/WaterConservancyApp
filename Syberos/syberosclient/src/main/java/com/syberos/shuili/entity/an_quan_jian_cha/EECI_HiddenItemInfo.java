@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.an_quan_jian_cha;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-20 14:06
  * email：zhaodongshuang@syberos.com
  */
 public class EECI_HiddenItemInfo
-        extends HttpHiddenBaseResponse<EECI_HiddenItemInfo> {
+        extends HttpBaseResponse<EECI_HiddenItemInfo> {
 
     private String project;         // 所属工程
     private String target;          // 所属标段

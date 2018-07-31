@@ -19,8 +19,8 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.DangerousInformation;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -32,14 +32,14 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 企事业单位功能 危险源巡视
+ * 企事业单位功能 风险源巡视
  */
 public class HazListForEntActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
     private final String TAG = HazListForEntActivity.class.getSimpleName();
 
-    private final String Title = "危险源巡查";
+    private final String Title = "风险源巡查";
 
     public static final String SEND_BUNDLE_KEY = "DangerousInformation";
 
@@ -59,7 +59,6 @@ public class HazListForEntActivity extends BaseActivity
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, HazDetailForEntActivity.class, false, bundle);
     }
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_inspection_list;
@@ -205,7 +204,7 @@ public class HazListForEntActivity extends BaseActivity
     private void refreshUI(){
         if(inspectionList != null){
             for(ObjHaz item: inspectionList.dataSource){
-                item.setHiddGradName(getHazsGradeName(item.getHiddGrad()));
+                item.setHiddGradName(GlobleConstants.hazGradeMap.get(item.getHazCode()));
             }
             listAdapter.setData(inspectionList.dataSource);
             listAdapter.notifyDataSetChanged();
@@ -213,14 +212,14 @@ public class HazListForEntActivity extends BaseActivity
     }
     @Override
     public void initData() {
-        getHazsDic();
+        showDataLoadingDialog();
+        getHazsList();
     }
 
     @Override
     public void initView() {
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
-        showDataLoadingDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
@@ -259,12 +258,12 @@ public class HazListForEntActivity extends BaseActivity
 
             ((TextView) (holder.getView(R.id.tv_type))).setText(dangerousInformation.getHiddGradName());
             switch (type) {
-                    case DangerousInformation.TYPE_NORMAL:{
+                    case GlobleConstants.HAZ_HTYPE_NORMAL:{
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGER: {
+                case GlobleConstants.HAZ_TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 

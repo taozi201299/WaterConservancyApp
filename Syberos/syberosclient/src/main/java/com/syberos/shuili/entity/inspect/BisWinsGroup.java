@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.inspect;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
  * 水利稽查组 BIS_WINS_GROUP
  */
 
-public class BisWinsGroup extends HttpHiddenBaseResponse<BisWinsGroup>{
+public class BisWinsGroup extends HttpBaseResponse<BisWinsGroup> {
     String guid;
     /**
      * 组编号

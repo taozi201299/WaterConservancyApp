@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/23.
  * 工程和行政机构关系表
  */
 
-public class RelEngOrg extends HttpHiddenBaseResponse<RelEngOrg> {
+public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     String guid;
     String engGuid;
     String orgGuid;

@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-23 17:07
  * email：zhaodongshuang@syberos.com
  */
-public class InspectAssessHistory extends HttpHiddenBaseResponse<InspectAssessHistory> {
+public class InspectAssessHistory extends HttpBaseResponse<InspectAssessHistory> {
 
     private String time;            // 时间
     private String score;           // 分数

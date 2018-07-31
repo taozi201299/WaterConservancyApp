@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-23 17:03
  * email：zhaodongshuang@syberos.com
  */
-public class InspectAssessPlanBatchInfo extends HttpHiddenBaseResponse<InspectAssessPlanBatchInfo> {
+public class InspectAssessPlanBatchInfo extends HttpBaseResponse<InspectAssessPlanBatchInfo> {
 
     private String batch;               // 稽查批次
     private String time;                // 稽察时间

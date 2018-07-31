@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.bao_biao_guan_li;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/29.
  * 8.2.2.20	月报表上报期间表 事故、隐患报表列表
  */
 
-public class BisOrgMonRepPeri extends HttpHiddenBaseResponse<BisOrgMonRepPeri> {
+public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     String guid;
     /**
      * 报表名称

@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/19.
  */
 
-public class ObjectTend extends HttpHiddenBaseResponse<ObjectTend> {
+public class ObjectTend extends HttpBaseResponse<ObjectTend> {
 
      String username;
      String timestamp;

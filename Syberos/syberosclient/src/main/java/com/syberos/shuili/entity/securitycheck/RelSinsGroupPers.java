@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/26.
  */
 
-public class RelSinsGroupPers extends HttpHiddenBaseResponse<RelSinsGroupPers> {
+public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     String guid;
     String groupGuid;
     String persGuid;

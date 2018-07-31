@@ -23,16 +23,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.BitmapEntity;
-import com.syberos.shuili.entity.SPConstant;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.view.TextDrawable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -196,7 +195,7 @@ public class BitmapUtil {
      * @return
      */
     public static TextDrawable drawableFactory(Context mContext, String name, int dp, String userId) {
-        float density = (float) SPUtils.get(SPConstant.DENSITY, 1.0f);
+        float density = (float) SPUtils.get(GlobleConstants.DENSITY, 1.0f);
         int px = (int) (dp * density);
         TextDrawable drawable = TextDrawable.builder().beginConfig().
                 useFont(Typeface.DEFAULT)
@@ -216,7 +215,7 @@ public class BitmapUtil {
      * @return
      */
     public static TextDrawable drawableFactory(Context context, String name, int dp) {
-        float density = (float) SPUtils.get( SPConstant.DENSITY, 1.0f);
+        float density = (float) SPUtils.get( GlobleConstants.DENSITY, 1.0f);
         int px = (int) (dp * density);
 
         TextDrawable drawable = TextDrawable.builder().beginConfig().
@@ -237,7 +236,7 @@ public class BitmapUtil {
      * @return
      */
     public static TextDrawable drawableFactory(Context context, UserExtendInfo userInformation, int dp) {
-        float density = (float) SPUtils.get( SPConstant.DENSITY, 1.0f);
+        float density = (float) SPUtils.get(GlobleConstants.DENSITY, 1.0f);
         int px = (int) (dp * density);
         TextDrawable drawable = TextDrawable.builder().beginConfig().
                 useFont(Typeface.DEFAULT)

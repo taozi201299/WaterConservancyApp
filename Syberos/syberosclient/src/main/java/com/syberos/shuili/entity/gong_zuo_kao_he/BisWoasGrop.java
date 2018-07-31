@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/29.
@@ -9,7 +9,7 @@ import com.syberos.shuili.entity.HttpHiddenBaseResponse;
  * 8.2.2.72	工作考核对象（BIS_WOAS_OBJ）
  */
 
-public class BisWoasGrop extends HttpHiddenBaseResponse<BisWoasGrop> {
+public class BisWoasGrop extends HttpBaseResponse<BisWoasGrop> {
     String guid;
     /**
      * 考核组名称

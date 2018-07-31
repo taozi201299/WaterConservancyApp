@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.bao_biao_guan_li;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-25 09:57
  * email：zhaodongshuang@syberos.com
  * 隐患报表
  */
-public class HiddenDangerReport extends HttpHiddenBaseResponse<HiddenDangerReport> {
+public class HiddenDangerReport extends HttpBaseResponse<HiddenDangerReport> {
 
     public final static int BUTTON_REPORT = 0;      // 上报
     public final static int BUTTON_RECALL = 1;      // 撤回

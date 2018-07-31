@@ -3,13 +3,10 @@ package com.syberos.shuili.activity.jian_du_zhi_fa;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.solver.Goal;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,15 +17,10 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.LawEnforcementEvidenceInformation;
-import com.syberos.shuili.entity.LawEnforcementInformation;
 import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.zip.GZIPOutputStream;
 
 import butterknife.BindView;
 

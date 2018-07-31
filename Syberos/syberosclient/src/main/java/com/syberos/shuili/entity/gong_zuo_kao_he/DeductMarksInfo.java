@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-23 10:27
  * email：zhaodongshuang@syberos.com
  * 工作考核：现场检查:扣分信息
  */
-public class DeductMarksInfo extends HttpHiddenBaseResponse<DeductMarksInfo> {
+public class DeductMarksInfo extends HttpBaseResponse<DeductMarksInfo> {
 
     private String unit;                // 被考核单位
     private String time;                // 扣分时间

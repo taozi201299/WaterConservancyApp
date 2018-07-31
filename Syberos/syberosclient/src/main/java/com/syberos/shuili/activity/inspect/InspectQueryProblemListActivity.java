@@ -13,7 +13,7 @@ import com.syberos.shuili.R;
 
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 
 import java.util.ArrayList;
 import java.util.List;

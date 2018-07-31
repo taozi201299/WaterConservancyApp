@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.LawEnforcementEvidenceInformation;
+import com.syberos.shuili.entity.objCase.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;

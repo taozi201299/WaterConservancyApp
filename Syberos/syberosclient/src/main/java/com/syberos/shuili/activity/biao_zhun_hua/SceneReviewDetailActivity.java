@@ -8,7 +8,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.ReviewItemInformation;
+import com.syberos.shuili.entity.standardization.ReviewItemInformation;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;

@@ -1,4 +1,4 @@
-package com.syberos.shuili.entity;
+package com.syberos.shuili.entity.inspect;
 
 import java.io.Serializable;
 

@@ -15,7 +15,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.SecurityCheckInformation;
+import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -29,12 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * 安全检查报表
- */
-public class SecurityCheckReportActivity extends TranslucentActivity
+public class WoasReportActivity extends TranslucentActivity
         implements PullRecyclerView.OnPullRefreshListener, CommonAdapter.OnItemClickListener{
-
     private int pageIndex = 1;
     private ListAdapter adapter;
     List<SecurityCheckInformation> infos = new ArrayList<>();
@@ -66,7 +62,7 @@ public class SecurityCheckReportActivity extends TranslucentActivity
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_security_check_report;
+        return R.layout.activity_job_rating_report;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -130,7 +126,7 @@ public class SecurityCheckReportActivity extends TranslucentActivity
         SecurityCheckInformation information = infos.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
 
-        intentActivity(this, SecurityCheckDetailActivity.class, false, bundle);
+        intentActivity(this, WoasDetailActivity.class, false, bundle);
     }
 
     @Override

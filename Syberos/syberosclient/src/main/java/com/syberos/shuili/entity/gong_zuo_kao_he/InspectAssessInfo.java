@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * email：zhaodongshuang@syberos.com
  * 工作考核：水利稽查考核:考前摸底信息
  */
-public class InspectAssessInfo extends HttpHiddenBaseResponse<InspectAssessInfo> {
+public class InspectAssessInfo extends HttpBaseResponse<InspectAssessInfo> {
 
     private String name;                // 被考核对象名称
 

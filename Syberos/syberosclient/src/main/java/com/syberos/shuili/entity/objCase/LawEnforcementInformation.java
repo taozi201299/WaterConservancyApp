@@ -1,4 +1,4 @@
-package com.syberos.shuili.entity;
+package com.syberos.shuili.entity.objCase;
 
 import java.io.Serializable;
 import java.util.List;

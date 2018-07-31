@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/27.
  * 8.2.2.55	线下教育培训记录
  */
 
-public class BisEutrOfflRec  extends HttpHiddenBaseResponse<BisEutrOfflRec> {
+public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
      String guid;
      String orgGuid;
     /**

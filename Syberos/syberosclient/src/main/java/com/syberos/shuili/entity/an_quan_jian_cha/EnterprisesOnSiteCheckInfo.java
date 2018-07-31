@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.an_quan_jian_cha;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @email: ZhaoDongshuang@syberos.com
  */
 public class EnterprisesOnSiteCheckInfo
-        extends HttpHiddenBaseResponse<EnterprisesOnSiteCheckInfo> {
+        extends HttpBaseResponse<EnterprisesOnSiteCheckInfo> {
 
     private String startTime;           // 开始时间
     private String endTime;             // 结束时间

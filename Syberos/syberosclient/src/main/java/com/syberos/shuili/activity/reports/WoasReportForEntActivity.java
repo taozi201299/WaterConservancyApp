@@ -38,20 +38,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
-// 企事业端：安全检查报表
+// 企事业端 考核报表
 /**
  * BIS_ORG_MON_REP_PERI 月报表上报期间表
  * 按照时间查找报表列表
  * todo 未找到数据表
  * 需要修改
  */
-public class EnterprisesCheckReportActivity extends TranslucentActivity {
+public class WoasReportForEntActivity extends TranslucentActivity {
 
     private ListAdapter listAdapter = null;
     private Dialog reasonDialog;
@@ -126,6 +124,7 @@ public class EnterprisesCheckReportActivity extends TranslucentActivity {
                 }
                 getReportInfo();
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
@@ -297,8 +296,8 @@ public class EnterprisesCheckReportActivity extends TranslucentActivity {
                     switch (linkStatus) {
                         case HiddenDangerReport.LINK_RETURNED:
                             if(hiddenDangerReport.isReportFinish()) {
-                                confirmDialog = new Dialog(EnterprisesCheckReportActivity.this);
-                                View v1 = LayoutInflater.from(EnterprisesCheckReportActivity.this).inflate(
+                                confirmDialog = new Dialog(WoasReportForEntActivity.this);
+                                View v1 = LayoutInflater.from(WoasReportForEntActivity.this).inflate(
                                         R.layout.dialog_hidden_danger_report_confirm, null);
                                 tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
                                 tv_confirmDialog_title.setText("确认上报");

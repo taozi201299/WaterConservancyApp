@@ -11,10 +11,9 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.Strings;
-import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.List;
 

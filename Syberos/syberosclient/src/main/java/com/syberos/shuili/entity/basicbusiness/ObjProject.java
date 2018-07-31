@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/23.
  */
 
-public class ObjProject extends HttpHiddenBaseResponse<ObjProject> {
+public class ObjProject extends HttpBaseResponse<ObjProject> {
     String guid;
     String projCode;
     String engName;

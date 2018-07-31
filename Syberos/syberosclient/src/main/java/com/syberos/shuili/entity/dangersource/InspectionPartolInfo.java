@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.dangersource;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/13.
  */
 
-public class InspectionPartolInfo extends HttpHiddenBaseResponse<InspectionPartolInfo> {
+public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo> {
     String username;
     String timestam;
     String nonce;

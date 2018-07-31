@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/6/6.
  */
 
-public class MvEngColl extends HttpHiddenBaseResponse<MvEngColl> {
+public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     String fromdate ;
     String engId;
     String besId;

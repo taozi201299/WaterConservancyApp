@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * created by：toby on 18-4-23 10:09
  * email：zhaodongshuang@syberos.com
  * 工作考核：现场检查:考核对象:培训信息
  */
-public class TrainingRecordInfo extends HttpHiddenBaseResponse<TrainingRecordInfo> {
+public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
 
     private String name;                // 培训名称
     private String count;               // 培训人数

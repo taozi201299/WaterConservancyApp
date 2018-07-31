@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/20.
@@ -8,7 +8,7 @@ import com.syberos.shuili.entity.HttpHiddenBaseResponse;
  *
  */
 
-public class ObjSins extends HttpHiddenBaseResponse<ObjSins> {
+public class ObjSins extends HttpBaseResponse<ObjSins> {
 
       String guid;
     /**

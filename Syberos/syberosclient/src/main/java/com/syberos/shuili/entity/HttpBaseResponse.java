@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/10.
  */
 
-public class HttpHiddenBaseResponse<T> implements Serializable {
+public class HttpBaseResponse<T> implements Serializable {
     @SerializedName("code")
     public String code;
     @SerializedName("msg")

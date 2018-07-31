@@ -25,10 +25,10 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForE
 import com.syberos.shuili.activity.dangersource.HazListForEntActivity;
 import com.syberos.shuili.activity.dangersource.HazSearchListForEntActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
-import com.syberos.shuili.activity.reports.EnterprisesAccidentReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesCheckReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesHiddenDangerReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesRatingReportActivity;
+import com.syberos.shuili.activity.reports.AccReportForEntActivity;
+import com.syberos.shuili.activity.reports.CheckReportForEntActivity;
+import com.syberos.shuili.activity.reports.HiddenReportForEntActivity;
+import com.syberos.shuili.activity.reports.WoasReportForEntActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
@@ -286,13 +286,13 @@ public class WorkFragmentEnterprises extends BaseFragment {
             String itemTag = (String) v.getTag();
             Resources strResource = getResources();
             if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_yinhuan))) {
-                intentActivity((Activity) mContext, EnterprisesHiddenDangerReportActivity.class, false, true);
+                intentActivity((Activity) mContext, HiddenReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_shigu))) {
-                intentActivity((Activity) mContext, EnterprisesAccidentReportActivity.class, false, true);
+                intentActivity((Activity) mContext, AccReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_anquan))) {
-                intentActivity((Activity) mContext, EnterprisesCheckReportActivity.class, false, true);
+                intentActivity((Activity) mContext, CheckReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_gongzuo))) {
-                intentActivity((Activity) mContext, EnterprisesRatingReportActivity.class, false, true);
+                intentActivity((Activity) mContext, WoasReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchayuansu))) {
                 intentActivity((Activity) mContext, EnterprisesElementCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))) {

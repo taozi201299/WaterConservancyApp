@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.dangersource;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/13.
  */
 
-public class ObjHaz extends HttpHiddenBaseResponse<ObjHaz> {
+public class ObjHaz extends HttpBaseResponse<ObjHaz> {
 
     String username;
     String timestamp;

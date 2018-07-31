@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.bao_biao_guan_li;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/29.
  *8.2.2.18	隐患记录上报（BIS_HIDD_REC_REP）
  */
 
-public class BisHiddRecRep extends HttpHiddenBaseResponse<BisHiddRecRep> {
+public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
 
     String guid;
     /**

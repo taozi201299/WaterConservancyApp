@@ -16,14 +16,11 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
-import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupPers;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
-import com.syberos.shuili.entity.standardization.BisStanReviRec;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -31,8 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.HttpUrl;
 
 /**
  * Created by Administrator on 2018/4/3.

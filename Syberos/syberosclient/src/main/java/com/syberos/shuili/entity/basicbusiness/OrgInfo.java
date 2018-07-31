@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/20.
  */
 
-public class OrgInfo extends HttpHiddenBaseResponse<OrgInfo> {
+public class OrgInfo extends HttpBaseResponse<OrgInfo> {
     String guid ;
     String orgName ;
 

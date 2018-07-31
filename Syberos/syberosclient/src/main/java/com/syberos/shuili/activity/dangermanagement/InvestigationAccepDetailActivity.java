@@ -221,8 +221,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 hiddenProjectInfo = (HiddenProjectInfo)gson.fromJson(result,HiddenProjectInfo.class);
-                if(hiddenProjectInfo == null || hiddenProjectInfo.dataSource == null ||
-                        hiddenProjectInfo.dataSource.size() == 0){
+                if(hiddenProjectInfo == null || hiddenProjectInfo.dataSource == null ){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else {

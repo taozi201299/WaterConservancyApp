@@ -1,9 +1,6 @@
 package com.syberos.shuili.entity.standardization;
 
-import com.syberos.shuili.entity.HttpBaseListResponse;
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
-
-import java.io.Serializable;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/18.
@@ -12,7 +9,7 @@ import java.io.Serializable;
 /**
  * 形式初审返回信息结构 类名对应数据库名
  */
-public class ObjStanRevis extends HttpHiddenBaseResponse<ObjStanRevis> {
+public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     String guid;
     /**
      * 申请单位GUID

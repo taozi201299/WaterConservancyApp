@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.inspect;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
  * 8.2.1.17	稽察计划对象表
  */
 
-public class ObjWinsPlan extends HttpHiddenBaseResponse<ObjWinsPlan> {
+public class ObjWinsPlan extends HttpBaseResponse<ObjWinsPlan> {
     String guid;
     /**
      * 稽察计划名称

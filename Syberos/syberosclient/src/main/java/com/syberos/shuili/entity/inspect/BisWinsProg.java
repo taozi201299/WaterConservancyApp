@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.inspect;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
  * 8.2.2.82	稽察方案（BIS_WINS_PROG）
  */
 
-public class BisWinsProg extends HttpHiddenBaseResponse<BisWinsProg> {
+public class BisWinsProg extends HttpBaseResponse<BisWinsProg> {
     String guid;
     /**
      * 稽察计划GUID

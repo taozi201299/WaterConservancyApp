@@ -2,7 +2,6 @@ package com.syberos.shuili.activity.jian_du_zhi_fa;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -10,7 +9,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.LawEnforcementEvidenceInformation;
+import com.syberos.shuili.entity.objCase.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;

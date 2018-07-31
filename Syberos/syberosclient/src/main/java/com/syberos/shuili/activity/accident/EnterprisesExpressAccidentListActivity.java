@@ -467,7 +467,7 @@ public class EnterprisesExpressAccidentListActivity extends BaseActivity {
                 case ObjAcci.REPORT_QUICK:
                     holder.setText(R.id.btn_report, "快报");
                     break;
-                case com.syberos.shuili.entity.AccidentInformation.REPORT_AFTER:
+                case ObjAcci.REPORT_AFTER:
                     holder.setText(R.id.btn_report, "补报");
                     break;
             }

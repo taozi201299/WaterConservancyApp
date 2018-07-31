@@ -18,8 +18,8 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.DangerousInformation;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -246,7 +246,7 @@ public class HazSearchListForEntActivity extends BaseActivity
             ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
 
             switch (type) {
-                case DangerousInformation.TYPE_NORMAL: {
+                case  GlobleConstants.HAZ_HTYPE_NORMAL: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_normal);
 
@@ -254,7 +254,7 @@ public class HazSearchListForEntActivity extends BaseActivity
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
                 break;
-                case DangerousInformation.TYPE_BIGER: {
+                case GlobleConstants.HAZ_TYPE_BIGER: {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(
                             R.string.dangerous_type_big);
 

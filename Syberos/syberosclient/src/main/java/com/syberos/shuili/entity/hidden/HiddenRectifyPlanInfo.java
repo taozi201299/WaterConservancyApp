@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/12.
  * 整改方案信息
  */
 
-public class HiddenRectifyPlanInfo extends HttpHiddenBaseResponse<HiddenRectifyPlanInfo> {
+public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInfo> {
     String guid;
     /**
      * 隐患GUID

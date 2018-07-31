@@ -1,4 +1,6 @@
-package com.syberos.shuili.entity;
+package com.syberos.shuili.entity.userinfo;
+
+import com.syberos.shuili.entity.RoleBaseInfo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

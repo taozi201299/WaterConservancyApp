@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/5/2.
  */
 
-public class AttOrgBase extends HttpHiddenBaseResponse<AttOrgBase> {
+public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     String guid;
     String pguid;
     String orgCode;

@@ -1,13 +1,12 @@
 package com.syberos.shuili.entity.bao_biao_guan_li;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
-import com.syberos.shuili.entity.basicbusiness.AttOrgExt;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/5/3.
  */
 
-public class ReportForAdmin extends HttpHiddenBaseResponse<ReportForAdmin> {
+public class ReportForAdmin extends HttpBaseResponse<ReportForAdmin> {
     String orgGuid;
     /**
      * 单位名称

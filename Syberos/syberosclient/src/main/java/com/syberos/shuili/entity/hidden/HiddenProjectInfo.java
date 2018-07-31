@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/12.
  */
 
-public class HiddenProjectInfo extends HttpHiddenBaseResponse<HiddenProjectInfo> {
+public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
 
     public final static int LEVEL_NORMAL = 0;
     public final static int LEVEL_BIG = 1;

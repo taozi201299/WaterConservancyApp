@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.accident;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/11.
  */
 
-public class ObjAcci extends HttpHiddenBaseResponse<ObjAcci> {
+public class ObjAcci extends HttpBaseResponse<ObjAcci> {
 
     public static final int TYPE_NORMAL = 0; // 一般事故
     public static final int TYPE_BIG = 1; // 较大事故

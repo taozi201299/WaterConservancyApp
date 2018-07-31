@@ -11,6 +11,7 @@ public class GlobleConstants {
     public static final String ALL_CHINA = "001111";
     public static final String ALL_PROVINCE = "001110";
     public static final String ALL_COUNTER = "001100";
+    public static final String DENSITY = "density";
     public static final int HAZ_HTYPE_NORMAL= 1;
     public static final int HAZ_TYPE_BIGER = 2;
 

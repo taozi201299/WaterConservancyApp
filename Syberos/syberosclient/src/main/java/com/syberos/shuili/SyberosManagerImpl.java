@@ -5,11 +5,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 
 import com.lzy.okhttputils.cache.CacheMode;
-import com.lzy.okhttputils.https.HttpsUtils;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.entity.MessageInfo;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.userinfo.UserInfo;
@@ -17,7 +16,6 @@ import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.service.SyberosAidlClient;
-import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.NetworkUtil;
 
 import java.io.File;

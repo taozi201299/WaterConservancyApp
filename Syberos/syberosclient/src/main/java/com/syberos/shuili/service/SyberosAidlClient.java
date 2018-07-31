@@ -13,7 +13,7 @@ import android.os.RemoteException;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.entity.MessageInfo;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.accident.ObjAcci;
 
 import java.io.File;

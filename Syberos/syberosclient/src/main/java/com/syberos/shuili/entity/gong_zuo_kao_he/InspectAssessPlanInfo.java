@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.gong_zuo_kao_he;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * created by：toby on 18-4-23 16:49
  * email：zhaodongshuang@syberos.com
  */
-public class InspectAssessPlanInfo extends HttpHiddenBaseResponse<InspectAssessPlanInfo> {
+public class InspectAssessPlanInfo extends HttpBaseResponse<InspectAssessPlanInfo> {
 
     private String name;        // 稽察计划名称
     private String time;        // 稽察时间

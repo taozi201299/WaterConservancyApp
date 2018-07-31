@@ -17,17 +17,14 @@ import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.login.SendSMSCodeCountDownTimer;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.userinfo.RoleInfo;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.userinfo.UserInfo;
 import com.syberos.shuili.listener.TextChangedListener;
-import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;

@@ -35,10 +35,10 @@ import com.syberos.shuili.activity.jian_du_zhi_fa.OnSiteLawEnforcementListActivi
 import com.syberos.shuili.activity.jian_du_zhi_fa.LawEnforcementQueryActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.FormalReviewListActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
-import com.syberos.shuili.activity.reports.AccidentReportActivity;
-import com.syberos.shuili.activity.reports.HiddenDangerReportActivity;
-import com.syberos.shuili.activity.reports.JobRatingReportActivity;
-import com.syberos.shuili.activity.reports.SecurityCheckReportActivity;
+import com.syberos.shuili.activity.reports.AcciReportActivity;
+import com.syberos.shuili.activity.reports.HiddenReportActivity;
+import com.syberos.shuili.activity.reports.WoasReportActivity;
+import com.syberos.shuili.activity.reports.CheckReportActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckQueryListActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity;
@@ -276,16 +276,16 @@ public class WorkFragment extends BaseFragment {
             String itemTag = (String)v.getTag();
             Resources strResource = getResources();
             if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_yinhuan))){
-                intentActivity((Activity)mContext, HiddenDangerReportActivity.class,
+                intentActivity((Activity)mContext, HiddenReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_shigu))){
-                intentActivity((Activity)mContext, AccidentReportActivity.class,
+                intentActivity((Activity)mContext, AcciReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_anquan))){
-                intentActivity((Activity)mContext, SecurityCheckReportActivity.class,
+                intentActivity((Activity)mContext, CheckReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_gongzuo))){
-                intentActivity((Activity)mContext, JobRatingReportActivity.class,
+                intentActivity((Activity)mContext, WoasReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))){
                 intentActivity((Activity)mContext, SecurityCheckTaskActivity.class,false,true);

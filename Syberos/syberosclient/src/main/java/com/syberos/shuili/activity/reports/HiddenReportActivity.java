@@ -11,7 +11,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.bao_biao_guan_li.BisAcciRecRep;
+import com.syberos.shuili.entity.bao_biao_guan_li.BisHiddRecRep;
 import com.syberos.shuili.entity.bao_biao_guan_li.BisOrgMonRepPeri;
 import com.syberos.shuili.entity.bao_biao_guan_li.ReportForAdmin;
 import com.syberos.shuili.entity.bao_biao_guan_li.ReportGroup;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-public class  AccidentReportActivity extends BaseActivity{
+public class HiddenReportActivity extends BaseActivity{
 
     @BindView(R.id.reportRecycleView)
     RecyclerView reportRecycleView;
@@ -33,8 +33,8 @@ public class  AccidentReportActivity extends BaseActivity{
     TextView tv_current_month;
 
 
-    final String Tag = AccidentReportActivity.class.getSimpleName();
-    final String title = "事故报表";
+    final String Tag = HiddenReportActivity.class.getSimpleName();
+    final String title = "隐患报表";
     String header[] = {"本单位","直管单位","监管单位"};
     ArrayList<ReportForAdmin>directUnit = new ArrayList<>();
     ArrayList<ReportForAdmin>supervisionUnit = new ArrayList<>();
@@ -43,7 +43,7 @@ public class  AccidentReportActivity extends BaseActivity{
     ReportForAdmin reportForAdmin;
     ArrayList<ReportForAdmin>reportForAdmins = new ArrayList<>();
     BisOrgMonRepPeri bisOrgMonRepPeri;
-    BisAcciRecRep bisAcciRecRep;
+    BisHiddRecRep bisHiddRecRep;
     AttOrgBase orgBase ;
 
     @Override
@@ -69,7 +69,8 @@ public class  AccidentReportActivity extends BaseActivity{
     private void getReportUnitID(){
         String url = "http://192.168.1.8:8080/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+      //  params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("pguid","790DC1A2EAD7429292CEFC3CE10B95F7");
         params.put("orgType","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
@@ -98,32 +99,32 @@ public class  AccidentReportActivity extends BaseActivity{
         if(size == 0){
             processResult();
         }else {
-         for( int i = 0; i< size; i++) {
-             AttOrgBase item = list.get(i);
-             params.put("orgGuid", item.getGuid());
-             final int finalI = i;
-             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                 @Override
-                 public void onResponse(String result) {
-                     Gson gson = new Gson();
-                     reportForAdmin = gson.fromJson(result, ReportForAdmin.class);
-                     if (reportForAdmin == null || reportForAdmin.dataSource == null || reportForAdmin.dataSource.size() == 0) {
-                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                         return;
-                     }else {
-                         reportForAdmins.add(reportForAdmin.dataSource.get(0));
-                     }
-                     if(finalI == size -1) {
-                         processResult();
-                     }
-                 }
-                 @Override
-                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                     closeDataDialog();
-                     ToastUtils.show(errorInfo.getMessage());
-                 }
-             });
-         }
+            for( int i = 0; i< size; i++) {
+                AttOrgBase item = list.get(i);
+                params.put("orgGuid", item.getGuid());
+                final int finalI = i;
+                SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        Gson gson = new Gson();
+                        reportForAdmin = gson.fromJson(result, ReportForAdmin.class);
+                        if (reportForAdmin == null || reportForAdmin.dataSource == null || reportForAdmin.dataSource.size() == 0) {
+                            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                            return;
+                        }else {
+                            reportForAdmins.add(reportForAdmin.dataSource.get(0));
+                        }
+                        if(finalI == size -1) {
+                            processResult();
+                        }
+                    }
+                    @Override
+                    public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                        closeDataDialog();
+                        ToastUtils.show(errorInfo.getMessage());
+                    }
+                });
+            }
         }
     }
     private void getUnitReportStatus(){
@@ -178,14 +179,14 @@ public class  AccidentReportActivity extends BaseActivity{
                 @Override
                 public void onResponse(String result) {
                     Gson gson = new Gson();
-                    bisAcciRecRep = gson.fromJson(result,BisAcciRecRep.class);
-                    if(bisAcciRecRep == null || bisAcciRecRep.dataSource == null){
+                    bisHiddRecRep = gson.fromJson(result,BisHiddRecRep.class);
+                    if(bisHiddRecRep == null || bisHiddRecRep.dataSource == null){
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
-                    if(bisAcciRecRep.dataSource.size() > 0) {
-                        finalItem.setReportStatus(bisAcciRecRep.dataSource.get(0).getRepAct());
+                    if(bisHiddRecRep.dataSource.size() > 0) {
+                        finalItem.setReportStatus(bisHiddRecRep.dataSource.get(0).getRepAct());
                     }
                     if(finalI == size -1){
                         closeDataDialog();
@@ -336,7 +337,7 @@ public class  AccidentReportActivity extends BaseActivity{
                     if(groupPosition == 0){
                         tv_repetition.setVisibility(View.VISIBLE);
                     }else {
-                       tv_rush.setVisibility(View.VISIBLE);
+                        tv_rush.setVisibility(View.VISIBLE);
                     }
                 }else{
                     // 未上报
@@ -352,7 +353,7 @@ public class  AccidentReportActivity extends BaseActivity{
                 //  已上报
             }else if(reportForAdmin.getReportStatus().equals("3")){
                 if(groupPosition == 0)
-                tv_repetition.setVisibility(View.VISIBLE);
+                    tv_repetition.setVisibility(View.VISIBLE);
                 else {
                     tv_rush.setVisibility(View.VISIBLE);
                 }
