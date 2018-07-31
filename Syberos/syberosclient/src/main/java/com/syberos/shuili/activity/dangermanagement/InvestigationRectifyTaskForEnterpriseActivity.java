@@ -146,7 +146,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
                     }
                     iSucessCount ++;
                     if(iSucessCount == investigationTaskInfo.dataSource.size()){
-                        closeDataDialog();
+                        closeLoadingDialog();
                         merageData(1);
                         refreshUI();
                     }

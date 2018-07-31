@@ -81,7 +81,7 @@
                 android:layout_toRightOf="@+id/tv_supervise_time_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
-                android:text= "2017-10-10" />
+                android:text= "" />
 
         </RelativeLayout>
     </LinearLayout>

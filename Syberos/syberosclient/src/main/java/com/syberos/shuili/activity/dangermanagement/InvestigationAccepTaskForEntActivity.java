@@ -344,6 +344,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         return "";
     }
     private void refreshUI(){
+
         investigationAdapter.setData(results);
         investigationAdapter.notifyDataSetChanged();
     }
@@ -362,7 +363,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("data",investigationTaskInfo.dataSource.get(position));
+        bundle.putSerializable("data",results.get(position));
         intentActivity(this,InvestigationAccepDetailActivity.class,false,bundle);
     }
     @Override

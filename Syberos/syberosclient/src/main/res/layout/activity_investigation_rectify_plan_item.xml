@@ -57,7 +57,7 @@
                 android:layout_toRightOf="@+id/tv_unit_name_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
-                android:text= "海淀区二李庄水利所" />
+                android:text= "" />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                 android:layout_toRightOf="@+id/tv_rect_leg_per_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
-                android:text= "海淀区二李庄水利所" />
+                android:text= "" />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:layout_toRightOf="@+id/tv_rectify_person_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
-                android:text= "2017-12-10" />
+                android:text= "" />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
