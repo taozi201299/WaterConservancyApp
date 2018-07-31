@@ -24,8 +24,6 @@ import com.syberos.shuili.activity.biao_zhun_hua.PublicityListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.ReviewAndApprovalListActivity;
 import com.syberos.shuili.activity.biao_zhun_hua.SceneReviewListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationCheckTaskActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationSuperviceTaskActivity;
 import com.syberos.shuili.activity.dangersource.RecordReviewListActivity;
 import com.syberos.shuili.activity.dangersource.WriteOffVerificationListActivity;
@@ -297,13 +295,11 @@ public class WorkFragment extends BaseFragment {
             }else if(itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchachaxun))){
                 intentActivity((Activity)mContext, SecurityCheckQueryListActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_heshi))){
-                intentActivity((Activity) mContext,InvestigationCheckTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_xiaohao))){
                 intentActivity((Activity)mContext,InvestigationAccepTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_duban))){
                 intentActivity((Activity)mContext,InvestigationSuperviceTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
-                intentActivity((Activity)mContext, InvestigationQueryActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
                 intentActivity((Activity)mContext,AccidentListAcitvity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){

@@ -21,7 +21,6 @@ import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForEnterpriseActivity;
 import com.syberos.shuili.activity.dangersource.HazListForEntActivity;
 import com.syberos.shuili.activity.dangersource.HazSearchListForEntActivity;
@@ -307,7 +306,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_yanshou))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))) {
-                intentActivity((Activity) mContext, InvestigationQueryActivity.class, false, true);
             } else if (itemTag.equals(getResources().getString(R.string.module_child_yinhuan_xiaohao))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))) {

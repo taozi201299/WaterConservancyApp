@@ -431,7 +431,7 @@ private void getOrgBaseInfo(){
     if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode)
             || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)
             || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)){
-        intentActivity(LoginActivity.this, MainActivity.class,false,false);
+        intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
     }else {
         intentActivity(LoginActivity.this, MainActivity.class, false, true);
     }

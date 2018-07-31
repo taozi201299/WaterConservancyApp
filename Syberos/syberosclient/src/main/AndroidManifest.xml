@@ -100,21 +100,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangermanagement.InvestigationCheckTaskActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCheckDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.work.NotificationDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.searchproject.ProjectDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCheckFormActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskActivity"
             android:screenOrientation="portrait"
@@ -148,14 +138,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangermanagement.InvestigationQueryActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationQueryOneActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -169,14 +151,6 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangermanagement.InvestigationRectifyCreateActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCancelForEnterprise"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCancelFormForEnterprise"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity

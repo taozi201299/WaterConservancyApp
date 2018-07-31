@@ -121,29 +121,23 @@ public class SyberosAidlClient {
 
     }
     public void addLocalCache(final LocalCacheEntity localCacheEntity, final List<AttachMentInfoEntity>attachMentInfoEntities, final RequestCallback<String> callback){
-        this.m_workHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    syberosAidlClient.ILibInterface.addLocalCacheForLocalCacheEntity(localCacheEntity,attachMentInfoEntities, new IResultCallback.Stub() {
-                        @Override
-                        public void onSuccess() throws RemoteException {
-                            callback.sendResult("");
-                        }
-
-                        @Override
-                        public void onFailed(int errorCode) throws RemoteException {
-                            callback.sendResultFailed(errorCode);
-
-
-                        }
-                    });
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+        try {
+            syberosAidlClient.ILibInterface.addLocalCacheForLocalCacheEntity(localCacheEntity,attachMentInfoEntities, new IResultCallback.Stub() {
+                @Override
+                public void onSuccess() throws RemoteException {
+                    callback.sendResult("");
                 }
 
-            }
-        });
+                @Override
+                public void onFailed(int errorCode) throws RemoteException {
+                    callback.sendResultFailed(errorCode);
+
+
+                }
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
 
     }

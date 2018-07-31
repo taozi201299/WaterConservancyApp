@@ -83,6 +83,8 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      */
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getHiddenList();
 
