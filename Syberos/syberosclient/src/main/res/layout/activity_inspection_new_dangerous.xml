@@ -24,53 +24,66 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:layout_margin="@dimen/_6dp"
             >
-
             <LinearLayout
                 android:id="@+id/ll_project_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/_5dp"
-                android:paddingStart="@dimen/_5dp">
-
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/icon_blue_short_vertical_div"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_6dp"
+                        android:textColor="@color/color_report_ent"
+                        android:text ="巡查填写"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/gray_bb"></View>
                 <RelativeLayout
                     android:id="@+id/rl_problem"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:layout_height="@dimen/_60dp">
                     <com.syberos.shuili.view.AudioEditView
                         android:id="@+id/ae_describe_problem_audio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_50dp"
-                        android:paddingTop="@dimen/_15dp"
+                        android:minHeight="@dimen/_60dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_10dp"
                         app:view_label="发现问题"
                         app:view_labelWidth="@dimen/_60dp"
                         />
                 </RelativeLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb" />
 
                 <RelativeLayout
                     android:id="@+id/rl_controls"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:layout_height="@dimen/_60dp">
 
                     <com.syberos.shuili.view.AudioEditView
                         android:id="@+id/ae_describe_controls_audio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_50dp"
-                        android:paddingTop="@dimen/_15dp"
+                        android:minHeight="@dimen/_60dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:gravity="center_vertical"
                         app:view_label="处理措施"
                         app:view_labelWidth="@dimen/_60dp"
                         />
@@ -79,36 +92,28 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb" />
 
                 <RelativeLayout
                     android:id="@+id/rl_identify_describe"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:layout_height="wrap_content">
 
                     <com.syberos.shuili.view.MultimediaView
                         android:id="@+id/ll_multimedia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_40dp"
-                        android:paddingTop="@dimen/_15dp"
-                        android:layout_marginBottom="@dimen/_2dp"
-                        android:paddingEnd="@dimen/_5dp"
-                        android:paddingStart="@dimen/_5dp"
+                        android:minHeight="@dimen/_60dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_10dp"
                         app:mv_label="现场情况"
                         >
                     </com.syberos.shuili.view.MultimediaView>
                 </RelativeLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb" />
-
 
             </LinearLayout>
         </com.syberos.shuili.view.CustomScrollView>

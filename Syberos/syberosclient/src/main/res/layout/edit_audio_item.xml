@@ -7,6 +7,8 @@
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"
         android:text="核实描述"
         />
     <com.syberos.shuili.view.indexListView.ClearEditText
@@ -14,9 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10dp"
         android:layout_width="@dimen/_200dp"
-        android:scrollbars="vertical"
+        android:scrollbars="none"
         android:layout_toEndOf="@+id/tv_label"
         android:hint="请填写详情"
+        android:layout_centerVertical="true"
         style="@style/edit_text_large"
         android:background="@null"
         />
@@ -25,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/_10dp"
         android:src="@mipmap/ic_audio"/>
     <LinearLayout

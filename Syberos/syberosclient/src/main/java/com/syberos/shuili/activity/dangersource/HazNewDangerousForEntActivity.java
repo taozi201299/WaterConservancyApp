@@ -69,7 +69,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setActionBarTitle("新建问题");
+        setActionBarTitle("新建巡查记录");
         setActionBarRightVisible(View.INVISIBLE);
     }
     private void commitForm(){
