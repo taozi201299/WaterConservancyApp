@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/23.
  */
 
-public class ObjHidden extends HttpHiddenBaseResponse<ObjHidden> {
+public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     String guid ;
      String hiddName;
      String engGuid;

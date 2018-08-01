@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/20.
  * 检查小组和专家关系表
  */
 
-public class RelSinsGroupExpert extends HttpHiddenBaseResponse<RelSinsGroupExpert> {
+public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
     String guid;
     /**
      * 检查小组GUID

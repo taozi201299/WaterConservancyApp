@@ -18,29 +18,27 @@ import com.google.zxing.integration.android.IntentResult;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.DataReviewListActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.NoticeListActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.PublicityListActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.ReviewAndApprovalListActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.SceneReviewListActivity;
+import com.syberos.shuili.activity.stan.DataReviewListActivity;
+import com.syberos.shuili.activity.stan.NoticeListActivity;
+import com.syberos.shuili.activity.stan.PublicityListActivity;
+import com.syberos.shuili.activity.stan.ReviewAndApprovalListActivity;
+import com.syberos.shuili.activity.stan.SceneReviewListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationCheckTaskActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationSuperviceTaskActivity;
 import com.syberos.shuili.activity.dangersource.RecordReviewListActivity;
 import com.syberos.shuili.activity.dangersource.WriteOffVerificationListActivity;
-import com.syberos.shuili.activity.gong_zuo_kao_he.InspectAssessListActivity;
-import com.syberos.shuili.activity.gong_zuo_kao_he.SafetyProductionListActivity;
+import com.syberos.shuili.activity.woas.InspectAssessListActivity;
+import com.syberos.shuili.activity.woas.SafetyProductionListActivity;
 import com.syberos.shuili.activity.inspect.InspectQueryListActivity;
 import com.syberos.shuili.activity.inspect.OnSiteInspectListActivity;
-import com.syberos.shuili.activity.jian_du_zhi_fa.OnSiteLawEnforcementListActivity;
-import com.syberos.shuili.activity.jian_du_zhi_fa.LawEnforcementQueryActivity;
-import com.syberos.shuili.activity.biao_zhun_hua.FormalReviewListActivity;
+import com.syberos.shuili.activity.suen.OnSiteLawEnforcementListActivity;
+import com.syberos.shuili.activity.suen.LawEnforcementQueryActivity;
+import com.syberos.shuili.activity.stan.FormalReviewListActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
-import com.syberos.shuili.activity.reports.AccidentReportActivity;
-import com.syberos.shuili.activity.reports.HiddenDangerReportActivity;
-import com.syberos.shuili.activity.reports.JobRatingReportActivity;
-import com.syberos.shuili.activity.reports.SecurityCheckReportActivity;
+import com.syberos.shuili.activity.reports.AcciReportActivity;
+import com.syberos.shuili.activity.reports.HiddenReportActivity;
+import com.syberos.shuili.activity.reports.WoasReportActivity;
+import com.syberos.shuili.activity.reports.CheckReportActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckQueryListActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity;
@@ -84,7 +82,7 @@ public class WorkFragment extends BaseFragment {
                 .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
                 .setPrompt("将二维码/条形码放入框内，即可自动扫描")//写那句提示的话
                 .setOrientationLocked(false)//扫描方向固定
-                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity
+                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity_accident_query
                 .initiateScan(); // 初始化扫描
     }
     private String[] moduleNames;
@@ -278,16 +276,16 @@ public class WorkFragment extends BaseFragment {
             String itemTag = (String)v.getTag();
             Resources strResource = getResources();
             if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_yinhuan))){
-                intentActivity((Activity)mContext, HiddenDangerReportActivity.class,
+                intentActivity((Activity)mContext, HiddenReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_shigu))){
-                intentActivity((Activity)mContext, AccidentReportActivity.class,
+                intentActivity((Activity)mContext, AcciReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_anquan))){
-                intentActivity((Activity)mContext, SecurityCheckReportActivity.class,
+                intentActivity((Activity)mContext, CheckReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_baobiao_gongzuo))){
-                intentActivity((Activity)mContext, JobRatingReportActivity.class,
+                intentActivity((Activity)mContext, WoasReportActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))){
                 intentActivity((Activity)mContext, SecurityCheckTaskActivity.class,false,true);
@@ -297,13 +295,11 @@ public class WorkFragment extends BaseFragment {
             }else if(itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchachaxun))){
                 intentActivity((Activity)mContext, SecurityCheckQueryListActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_heshi))){
-                intentActivity((Activity) mContext,InvestigationCheckTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_xiaohao))){
                 intentActivity((Activity)mContext,InvestigationAccepTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_duban))){
                 intentActivity((Activity)mContext,InvestigationSuperviceTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
-                intentActivity((Activity)mContext, InvestigationQueryActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
                 intentActivity((Activity)mContext,AccidentListAcitvity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){

@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/12.
  * 整改记录信息
  */
 
-public class HiddenRectifyProgerssInfo extends HttpHiddenBaseResponse<HiddenRectifyProgerssInfo> {
+public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyProgerssInfo> {
     String username;
     String timestamp;
     String nonce;

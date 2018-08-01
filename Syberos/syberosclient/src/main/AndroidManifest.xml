@@ -52,7 +52,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -100,21 +99,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangermanagement.InvestigationCheckTaskActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCheckDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.work.NotificationDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.searchproject.ProjectDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCheckFormActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskActivity"
             android:screenOrientation="portrait"
@@ -148,14 +137,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangermanagement.InvestigationQueryActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationQueryOneActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -172,19 +153,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.dangermanagement.InvestigationCancelForEnterprise"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.dangermanagement.InvestigationCancelFormForEnterprise"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".activity.dangermanagement.InvestigationEngineTendForEntActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.accident.EnterprisesExpressAccidentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -278,27 +247,27 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name=".activity.reports.HiddenDangerReportActivity"
+            android:name=".activity.reports.HiddenReportActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.AccidentReportActivity"
+            android:name=".activity.reports.AcciReportActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.SecurityCheckReportActivity"
+            android:name=".activity.reports.CheckReportActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.SecurityCheckDetailActivity"
+            android:name=".activity.reports.CheckDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.JobRatingReportActivity"
+            android:name=".activity.reports.WoasReportActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.JobRatingDetailActivity"
+            android:name=".activity.reports.WoasDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -334,58 +303,58 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementListActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementDetailActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementEvidenceDetailActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementEvidenceDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.OnSiteLawEnforcementEvidenceCreateActivity"
+            android:name=".activity.suen.OnSiteLawEnforcementEvidenceCreateActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.LawEnforcementQueryActivity"
+            android:name=".activity.suen.LawEnforcementQueryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.jian_du_zhi_fa.LawEnforcementQueryDetailActivity"
+            android:name=".activity.suen.LawEnforcementQueryDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.FormalReviewListActivity"
+            android:name=".activity.stan.FormalReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.DataReviewListActivity"
+            android:name=".activity.stan.DataReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.DataReviewConclusionActivity"
+            android:name=".activity.stan.DataReviewConclusionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.ReviewAndApprovalListActivity"
+            android:name=".activity.stan.ReviewAndApprovalListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.PublicityListActivity"
+            android:name=".activity.stan.PublicityListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.NoticeListActivity"
+            android:name=".activity.stan.NoticeListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.SceneReviewListActivity"
+            android:name=".activity.stan.SceneReviewListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.biao_zhun_hua.SceneReviewDetailActivity"
+            android:name=".activity.stan.SceneReviewDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -437,60 +406,60 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionListActivity"
+            android:name=".activity.woas.SafetyProductionListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailActivity"
+            android:name=".activity.woas.SafetyProductionDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailRealSituationActivity"
+            android:name=".activity.woas.SafetyProductionDetailRealSituationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionDetailDeductMarksActivity"
+            android:name=".activity.woas.SafetyProductionDetailDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionObjectSelectActivity"
+            android:name=".activity.woas.SafetyProductionObjectSelectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.SafetyProductionNewDeductMarksActivity"
+            android:name=".activity.woas.SafetyProductionNewDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessListActivity"
+            android:name=".activity.woas.InspectAssessListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailActivity"
+            android:name=".activity.woas.InspectAssessDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailDeductMarksActivity"
+            android:name=".activity.woas.InspectAssessDetailDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessObjectSelectActivity"
+            android:name=".activity.woas.InspectAssessObjectSelectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessNewDeductMarksActivity"
+            android:name=".activity.woas.InspectAssessNewDeductMarksActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.gong_zuo_kao_he.InspectAssessDetailRealSituationActivity"
+            android:name=".activity.woas.InspectAssessDetailRealSituationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.reports.EnterprisesHiddenDangerReportActivity"
+            android:name=".activity.reports.HiddenReportForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.reports.EnterprisesAccidentReportActivity" />
-        <activity android:name=".activity.reports.EnterprisesCheckReportActivity" />
-        <activity android:name=".activity.reports.EnterprisesRatingReportActivity" />
+        <activity android:name=".activity.reports.AccReportForEntActivity" />
+        <activity android:name=".activity.reports.CheckReportForEntActivity" />
+        <activity android:name=".activity.reports.WoasReportForEntActivity" />
         <activity
             android:name=".amap.IndexActivity"
             android:screenOrientation="portrait"

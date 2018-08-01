@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/19.
  * 对应数据库 检查小组与检查对象关系表（REL_SINS_GROUP_WIUN）
  */
 
-public class RelSinsGroupWiun extends HttpHiddenBaseResponse<RelSinsGroupWiun>{
+public class RelSinsGroupWiun extends HttpBaseResponse<RelSinsGroupWiun> {
    String guid;
    String engName;
 

@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.standardization;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/24.
  */
 
-public class BisStanReviRec extends HttpHiddenBaseResponse<BisStanReviRec> {
+public class BisStanReviRec extends HttpBaseResponse<BisStanReviRec> {
     String applGrade;
     String applTime;
     String guid;

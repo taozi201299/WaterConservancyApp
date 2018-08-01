@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.jian_du_zhi_fa.LawEnforcementQueryActivity">
+    tools:context=".activity.suen.LawEnforcementQueryActivity">
 
     <!-- 获取焦点 -->
     <View

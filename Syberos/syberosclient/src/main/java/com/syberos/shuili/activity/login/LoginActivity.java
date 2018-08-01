@@ -33,7 +33,7 @@ import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.fragment.GateWayFragment;
 import com.syberos.shuili.fragment.LoginEnvironmentVerifyEnterFragment;
 import com.syberos.shuili.fragment.LoginEnvironmentVerifyFragment;
@@ -41,7 +41,6 @@ import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.listener.LoginEnvironmentVerifyListener;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.service.SyberosAidlClient;
-import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
@@ -51,6 +50,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 
@@ -252,6 +253,10 @@ public class LoginActivity extends TranslucentActivity {
                     return;
                 }
                 if(checkUserPermission(userExtendInfo)) {
+                    // TODO: 2018/8/1 企事业用户需要获取功能模块权限
+                    /**
+                     * 行政用户直接进行登录
+                     */
                     SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInfo);
                     Singleton.INSTANCE.isLogin = true;
                     go2Activity();
@@ -291,6 +296,16 @@ public class LoginActivity extends TranslucentActivity {
                 App.jurdAreaType = roleInfo.getJurdAreaType();
                 bRet = true;
                 break;
+            }else if(GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) ||
+                    GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())){
+                App.sCodes.add(roleInfo.getScode());
+                bRet = true;
             }
         }
         return bRet;
@@ -431,8 +446,15 @@ private void getOrgBaseInfo(){
     if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode)
             || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)
             || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)){
-        intentActivity(LoginActivity.this, MainActivity.class,false,false);
-    }else {
+        intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
+    }else if(App.sCodes.contains(GlobleConstants.acci) ||
+            App.sCodes.contains(GlobleConstants.sins) ||
+            App.sCodes.contains(GlobleConstants.stan) ||
+            App.sCodes.contains(GlobleConstants.maha) ||
+            App.sCodes.contains(GlobleConstants.woas) ||
+            App.sCodes.contains(GlobleConstants.suen) ||
+            App.sCodes.contains(GlobleConstants.wins) ||
+            App.sCodes.contains(GlobleConstants.hidd)) {
         intentActivity(LoginActivity.this, MainActivity.class, false, true);
     }
    }

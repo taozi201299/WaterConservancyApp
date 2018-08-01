@@ -10,7 +10,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:paddingLeft="@dimen/padding_10"
-        android:src="@mipmap/login_person" />
+        android:src="@mipmap/icon_person" />
 
     <TextView
         android:id="@+id/tv_action_bar_title"
@@ -27,7 +27,7 @@
         android:layout_height="30dp"
         android:layout_marginRight="@dimen/padding_10"
         android:layout_toLeftOf="@+id/iv_action_bar_right_2"
-        android:src="@mipmap/ic_me_location" />
+        android:src="@mipmap/icon_loc" />
 
     <ImageView
         android:id="@+id/iv_action_bar_right_2"
@@ -35,5 +35,5 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/padding_10"
-        android:src="@mipmap/ic_me_location" />
+        android:src="@mipmap/icon_scan" />
 </RelativeLayout>

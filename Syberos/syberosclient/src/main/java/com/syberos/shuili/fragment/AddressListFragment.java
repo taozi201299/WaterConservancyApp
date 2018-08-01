@@ -13,17 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andview.refreshview.XRefreshView;
-import com.lzy.okhttputils.cache.CacheMode;
-import com.shuili.callback.ErrorInfo;
-import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.addresslist.MyImformationActivity;
 import com.syberos.shuili.activity.addresslist.OtherImformationActivity;
 import com.syberos.shuili.adapter.IndexListAdapter;
 import com.syberos.shuili.base.BaseFragment;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.StringUtils;

@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/27.
  */
 
-public class BisSeChit extends HttpHiddenBaseResponse<BisSeChit> {
+public class BisSeChit extends HttpBaseResponse<BisSeChit> {
 
     String guid;
     /**

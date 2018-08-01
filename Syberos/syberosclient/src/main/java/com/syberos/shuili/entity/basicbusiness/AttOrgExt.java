@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/5/2.
  * 8.1.2.15	水利机构扩展信息表
  */
 
-public class AttOrgExt extends HttpHiddenBaseResponse<AttOrgExt> {
+public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
     String orgGuid;
     /**
      * 单位名称

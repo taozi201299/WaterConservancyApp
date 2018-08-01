@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.an_quan_jian_cha;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * 企事业端：安全检查：元素检查信息
  */
 public class EnterprisesElementCheckInfo
-        extends HttpHiddenBaseResponse<EnterprisesElementCheckInfo> {
+        extends HttpBaseResponse<EnterprisesElementCheckInfo> {
 
     public final static int LEVEL_NORMAL    = 3;    // 正常
     public final static int LEVEL_COMMON    = 1;    // 一般隐患

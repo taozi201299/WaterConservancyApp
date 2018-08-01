@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/12.
  */
 
-public class HiddenInvesInfo extends HttpHiddenBaseResponse<HiddenInvesInfo> {
+public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     String username;
     String timestamp;
     String nonce;

@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.syberos.shuili.activity.accident.EnterprisesExpressAccidentListActivity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.SEND_BUNDLE_KEY;
+
 
 public class AccidentDetailActivity extends BaseActivity {
 

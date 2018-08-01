@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/19.
  * 	安全检查方案分组 类名对应数据库表名
  */
 
-public class BisSinsScheGroup extends HttpHiddenBaseResponse<BisSinsScheGroup> {
+public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     String guid;
     String scheGuid;
     String groupName;

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;

@@ -22,8 +22,8 @@
     <string-array name="module_enterprise">
         <item>@string/module_baobiao</item>
         <item>@string/module_anquan</item>
-        <item>@string/module_yinhuan</item>
         <item>@string/module_shigu</item>
+        <item>@string/module_yinhuan</item>
         <item>@string/module_weixianyuan</item>
     </string-array>
     

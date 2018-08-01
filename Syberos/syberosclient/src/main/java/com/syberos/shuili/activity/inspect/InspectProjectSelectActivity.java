@@ -6,15 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
-import com.syberos.shuili.entity.OnSiteInspectInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
+import com.syberos.shuili.entity.inspect.OnSiteInspectInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 

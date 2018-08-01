@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by jidan on 18-3-20.
  */
 
-public class HiddenInvestigationTaskInfo extends HttpHiddenBaseResponse<HiddenInvestigationTaskInfo> {
+public class HiddenInvestigationTaskInfo extends HttpBaseResponse<HiddenInvestigationTaskInfo> {
     /**
      * 隐患状态
      */

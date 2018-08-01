@@ -1,14 +1,12 @@
 package com.syberos.shuili.entity.basicbusiness;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
-
-import java.io.Serializable;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/18.
  */
 
-public class ObjectEngine extends HttpHiddenBaseResponse<ObjectEngine> {
+public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     String username;
     String timestamp;
     String nonce;

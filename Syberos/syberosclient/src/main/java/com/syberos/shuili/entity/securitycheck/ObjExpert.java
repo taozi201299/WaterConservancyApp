@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.securitycheck;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/20.
  * 专家对象表 OBJ_EXPERT
  */
 
-public class ObjExpert extends HttpHiddenBaseResponse<ObjExpert> {
+public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     String guid;
     String persGuid;
     String citNum;

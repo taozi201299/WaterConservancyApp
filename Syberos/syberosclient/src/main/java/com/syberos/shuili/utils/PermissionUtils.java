@@ -343,7 +343,7 @@ public class PermissionUtils {
      * @param requestPermission
      */
     private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission) {
-        //申请权限还是调用 ActivityCompat.requestPermissions(activity,new String[]{requestPermission},requestCode);
+        //申请权限还是调用 ActivityCompat.requestPermissions(activity_accident_query,new String[]{requestPermission},requestCode);
         showMessageOKCancel(activity, "系统部分功能需要: " + requestPermissions[requestCode] + "权限,才能正常运作,需要现在手动设置权限吗?", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.dangermanagement.InvestigationQueryOneActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
@@ -129,7 +128,6 @@ public abstract class TabLayoutFragment extends BaseLazyFragment implements Pull
 
     @Override
     public void onItemClick(int position) {
-        intentActivity((Activity)mContext, InvestigationQueryOneActivity.class,false,true);
 
     }
 

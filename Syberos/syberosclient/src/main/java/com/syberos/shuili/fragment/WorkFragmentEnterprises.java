@@ -21,15 +21,14 @@ import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
-import com.syberos.shuili.activity.dangermanagement.InvestigationQueryActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForEnterpriseActivity;
 import com.syberos.shuili.activity.dangersource.HazListForEntActivity;
 import com.syberos.shuili.activity.dangersource.HazSearchListForEntActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
-import com.syberos.shuili.activity.reports.EnterprisesAccidentReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesCheckReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesHiddenDangerReportActivity;
-import com.syberos.shuili.activity.reports.EnterprisesRatingReportActivity;
+import com.syberos.shuili.activity.reports.AccReportForEntActivity;
+import com.syberos.shuili.activity.reports.CheckReportForEntActivity;
+import com.syberos.shuili.activity.reports.HiddenReportForEntActivity;
+import com.syberos.shuili.activity.reports.WoasReportForEntActivity;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
@@ -74,14 +73,14 @@ public class WorkFragmentEnterprises extends BaseFragment {
     private String[] moduleChildAccidentNames;
     private String[] moduleChildDangerName;
 
-    private int[] moduleChildReportCheckIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildSecurityCheckIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildHiddenDangerIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildAccidentIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildDangerIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
+    private int[] moduleChildReportCheckIcon = {R.mipmap.icon_report_hidd_ent, R.mipmap.icon_report_acci_ent, R.mipmap.icon_report_check_ent, R.mipmap.icon_report_woas_ent};
+    private int[] moduleChildSecurityCheckIcon = {R.mipmap.icon_check_element_ent, R.mipmap.icon_check_onsite_ent};
+    private int[] moduleChildHiddenDangerIcon = {R.mipmap.icon_hidd_add_ent, R.mipmap.icon_hidd_rectify_ent, R.mipmap.icon_hidd_accept_ent};
+    private int[] moduleChildAccidentIcon = {R.mipmap.icon_acci_ent, R.mipmap.icon_acci_query_ent};
+    private int[] moduleChildDangerIcon = {R.mipmap.icon_haz_add_ent, R.mipmap.icon_haz_query_ent};
 
-    private int[] moduleColor = {R.color.button_login_pressed, R.color.duty_color,
-            R.color.material_yellow_100, R.color.material_blue_grey_300, R.color.duty_color};
+    private int[] moduleColor = {R.color.color_report_ent, R.color.color_check_ent,
+             R.color.color_acci_ent,R.color.color_hidd_ent, R.color.color_haz_ent};
 
 
     @OnClick(R.id.iv_action_bar_right_1)
@@ -98,7 +97,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
                 .setPrompt("将二维码/条形码放入框内，即可自动扫描")//写那句提示的话
                 .setOrientationLocked(false)//扫描方向固定
-                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity
+                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity_accident_query
                 .initiateScan(); // 初始化扫描
     }
 
@@ -287,13 +286,13 @@ public class WorkFragmentEnterprises extends BaseFragment {
             String itemTag = (String) v.getTag();
             Resources strResource = getResources();
             if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_yinhuan))) {
-                intentActivity((Activity) mContext, EnterprisesHiddenDangerReportActivity.class, false, true);
+                intentActivity((Activity) mContext, HiddenReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_shigu))) {
-                intentActivity((Activity) mContext, EnterprisesAccidentReportActivity.class, false, true);
+                intentActivity((Activity) mContext, AccReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_anquan))) {
-                intentActivity((Activity) mContext, EnterprisesCheckReportActivity.class, false, true);
+                intentActivity((Activity) mContext, CheckReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_gongzuo))) {
-                intentActivity((Activity) mContext, EnterprisesRatingReportActivity.class, false, true);
+                intentActivity((Activity) mContext, WoasReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchayuansu))) {
                 intentActivity((Activity) mContext, EnterprisesElementCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))) {
@@ -307,7 +306,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_yanshou))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))) {
-                intentActivity((Activity) mContext, InvestigationQueryActivity.class, false, true);
             } else if (itemTag.equals(getResources().getString(R.string.module_child_yinhuan_xiaohao))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))) {

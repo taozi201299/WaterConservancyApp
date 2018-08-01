@@ -93,6 +93,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
         Bundle bundle = new Bundle();
         bundle.putSerializable(SEND_BUNDLE_KEY, relSinsGroupWiun.dataSource.get(position));
         bundle.putSerializable("group",information);
+        // 判断是否存在标段
         intentActivity(this, SecurityCreateHiddenActivity.class,
                 false, bundle, REQUEST_CODE);
     }

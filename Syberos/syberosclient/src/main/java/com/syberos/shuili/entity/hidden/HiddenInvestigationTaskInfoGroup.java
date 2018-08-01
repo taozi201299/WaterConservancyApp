@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * email：zhaodongshuang@syberos.com
  */
 public class HiddenInvestigationTaskInfoGroup
-        extends HttpHiddenBaseResponse<HiddenInvestigationTaskInfoGroup> {
+        extends HttpBaseResponse<HiddenInvestigationTaskInfoGroup> {
 
     private String header;
     private List<HiddenInvestigationTaskInfo> children;

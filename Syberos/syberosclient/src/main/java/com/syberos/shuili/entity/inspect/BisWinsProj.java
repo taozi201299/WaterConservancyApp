@@ -1,12 +1,12 @@
 package com.syberos.shuili.entity.inspect;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
  */
 
-public class BisWinsProj extends HttpHiddenBaseResponse<BisWinsProj> {
+public class BisWinsProj extends HttpBaseResponse<BisWinsProj> {
     String guid;
     String projGuid;
     String winsGroupGuid;

@@ -17,7 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
@@ -83,6 +83,8 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      */
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getHiddenList();
 
@@ -144,7 +146,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
                     }
                     iSucessCount ++;
                     if(iSucessCount == investigationTaskInfo.dataSource.size()){
-                        closeDataDialog();
+                        closeLoadingDialog();
                         merageData(1);
                         refreshUI();
                     }

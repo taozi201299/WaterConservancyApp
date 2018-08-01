@@ -11,10 +11,8 @@ import android.widget.TextView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.entity.inspect.BisWinsProb;
-
-import java.util.List;
 
 import butterknife.BindView;
 

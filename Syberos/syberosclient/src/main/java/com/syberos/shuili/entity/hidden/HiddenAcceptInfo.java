@@ -1,13 +1,13 @@
 package com.syberos.shuili.entity.hidden;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/12.
  * 整改验收信息
  */
 
-public class HiddenAcceptInfo extends HttpHiddenBaseResponse<HiddenAcceptInfo>{
+public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     String username;
     String timestamp;
     String nonce;

@@ -165,7 +165,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         if(investigationInfo == null){
             return;
         }
-        getHiddenCheckDetail();
+        getInvestigationDetail();
 
     }
 
@@ -249,7 +249,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenInvesInfo = (HiddenInvesInfo)gson.fromJson(result,HiddenInvesInfo.class);
+                hiddenInvesInfo = gson.fromJson(result,HiddenInvesInfo.class);
                 if(hiddenInvesInfo == null || hiddenInvesInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -278,7 +278,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenRectifyProgerssInfo = (HiddenRectifyProgerssInfo)gson.fromJson(result,HiddenRectifyProgerssInfo.class);
+                hiddenRectifyProgerssInfo = gson.fromJson(result,HiddenRectifyProgerssInfo.class);
                 if(hiddenRectifyProgerssInfo == null || hiddenRectifyProgerssInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -307,13 +307,13 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenSupserviceInfo = (HiddenSupserviceInfo) gson.fromJson(result,HiddenSupserviceInfo.class);
+                hiddenSupserviceInfo =  gson.fromJson(result,HiddenSupserviceInfo.class);
                 if(hiddenSupserviceInfo == null || hiddenSupserviceInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                getRectifyAcceptInfo();
+                refreshUI();
             }
 
             @Override
@@ -336,7 +336,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenRectifyPlanInfo = (HiddenRectifyPlanInfo) gson.fromJson(result,HiddenRectifyPlanInfo.class);
+                hiddenRectifyPlanInfo =  gson.fromJson(result,HiddenRectifyPlanInfo.class);
                 if(hiddenRectifyPlanInfo == null || hiddenRectifyPlanInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -371,7 +371,6 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                refreshUI();
             }
 
             @Override
@@ -383,19 +382,20 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         });
     }
     private void refreshUI(){
+        closeDataDialog();
         scrollView.setVisibility(View.VISIBLE);
         // 工程基本信息
         tv_projectName.setText(investigationInfo.getEngName() == null ?"":investigationInfo.getEngName());
         tv_level.setText(investigationInfo.getHiddGradName() == null ?"":investigationInfo.getHiddGradName());
         tv_type.setText(investigationInfo.getHiddClassName() == null ?"":investigationInfo.getHiddClassName());
         tv_location.setText(investigationInfo.getProPart() == null ?"":investigationInfo.getProPart());
-        // 1 隐患核实信息
-        if("1".equals(this.hiddenProjectInfo.totalCount)) {
-            hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
-
-            tv_measure_info.setText("不存在该字段");
-            ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
-        }
+//        // 1 隐患核实信息
+//        if("1".equals(this.hiddenProjectInfo.totalCount)) {
+//            hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
+//
+//            tv_measure_info.setText("不存在该字段");
+//            ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
+//        }
         // 隐患排查
         if("1".equals(this.hiddenInvesInfo.totalCount)) {
             hiddenInvesInfo = this.hiddenInvesInfo.dataSource.get(0);
@@ -418,7 +418,6 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             }
         }
         //整改信息
-
         if(hiddenRectifyProgerssInfo.totalCount != null && Integer.valueOf(hiddenRectifyProgerssInfo.totalCount) > 0 ){
             int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
             for(int i = 0 ; i < rectifyProcessCount ; i ++){
@@ -428,13 +427,9 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                 tv_rectify_label.setText(index +"次整改");
                 tv_rectify_time.setText(hiddenRectifyProgerssInfo.getCollTime() == null ?"" :hiddenRectifyProgerssInfo.getCollTime());
                 tv_rectify_member.setText("");
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getNote() == null ?"":hiddenRectifyProgerssInfo.getNote());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getRectProg() == null ?"":hiddenRectifyProgerssInfo.getRecPers());
             }
 
-
-        }
-        // 验收信息
-        if(hiddenAcceptInfo.totalCount != null && Integer.valueOf(hiddenAcceptInfo.totalCount) > 0){
 
         }if(hiddenSupserviceInfo.totalCount != null && Integer.valueOf(this.hiddenSupserviceInfo.totalCount) > 0){
             ev_supervise_des_audio.setEditText(hiddenSupserviceInfo.getNote() == null ?"":hiddenSupserviceInfo.getNote());

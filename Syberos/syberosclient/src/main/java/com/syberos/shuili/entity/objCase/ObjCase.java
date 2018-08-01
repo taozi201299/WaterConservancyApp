@@ -1,6 +1,6 @@
 package com.syberos.shuili.entity.objCase;
 
-import com.syberos.shuili.entity.HttpHiddenBaseResponse;
+import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/7/23.
@@ -9,7 +9,7 @@ import com.syberos.shuili.entity.HttpHiddenBaseResponse;
 /**
  * 监督执法 案件信息对象
  */
-public class ObjCase extends HttpHiddenBaseResponse<ObjCase> {
+public class ObjCase extends HttpBaseResponse<ObjCase> {
     public String guid;
     public String caseName;
     /**

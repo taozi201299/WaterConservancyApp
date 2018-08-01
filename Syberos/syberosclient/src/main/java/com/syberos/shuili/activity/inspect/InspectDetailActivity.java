@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -14,8 +13,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.InspectProblemInformation;
-import com.syberos.shuili.entity.OnSiteInspectInformation;
+import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.entity.inspect.BisWinsDetail;
 import com.syberos.shuili.entity.inspect.BisWinsGroup;
 import com.syberos.shuili.entity.inspect.BisWinsProg;
@@ -31,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 /**
  * 稽查方案详情
