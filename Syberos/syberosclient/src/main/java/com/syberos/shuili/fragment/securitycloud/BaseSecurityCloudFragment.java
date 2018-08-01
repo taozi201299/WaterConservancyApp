@@ -43,6 +43,7 @@ import com.syberos.shuili.entity.securitycloud.StraightTubeManageEntry;
 import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.DialPlateView;
+import com.syberos.shuili.view.WaterView;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -175,7 +176,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     @BindView(R.id.tv_acc_no_report)
     TextView tvAccNoReport;
 
-
+    @BindView(R.id.water_view)
+    WaterView waterView;
     String type;
     String title;
     String titleDetail;
@@ -324,7 +326,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             list.add(new PieEntry(levelOne, "标准化一级" + String.format("%.1f", (levelOne * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
-
+            waterView.setProgress(60);
+//            waterView.startAnimation();
             initPieCharView(pieCharManager, list);
         }
     }

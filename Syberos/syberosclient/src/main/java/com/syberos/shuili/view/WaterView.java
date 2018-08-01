@@ -1,7 +1,6 @@
-package com.example.testmodule.view;
+package com.syberos.shuili.view;
 
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,15 +13,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import com.example.testmodule.R;
-
-import static android.content.ContentValues.TAG;
+import com.syberos.shuili.R;
 
 /**
  * Created by BZB on 2018/7/30.
@@ -37,7 +32,6 @@ public class WaterView extends View {
     Path pathW1;
     Path pathW2;
     Path pathW3;
-    Bitmap bitmap;
     Paint paintWater1;
     Paint paintWater2;
     Paint paintWater3;
@@ -74,7 +68,7 @@ public class WaterView extends View {
         paintWater3.setStyle(Paint.Style.STROKE);
         paintWater3.setStrokeWidth(2);
 
-        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.cat);
+//        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.cat);
     }
 
     public void setProgress(int progress) {
@@ -92,8 +86,6 @@ public class WaterView extends View {
 
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -195,7 +187,7 @@ public class WaterView extends View {
         paintWater1.setColor(Color.parseColor("#40AEF9"));
         paintWater1.setStyle(Paint.Style.FILL);
         canvas.drawPath(pathW1, paintWater1);
-        paint.setColor(getResources().getColor(R.color.cardview_dark_background));
+        paint.setColor(getResources().getColor(R.color.text_black_color));
         paint.setTextSize(radius);
         paint.setStyle(Paint.Style.FILL);
         canvas.drawText(progress + "", radius -getTextWidth(paint,progress+"")/2+shadowWidth, radius +shadowWidth, paint);

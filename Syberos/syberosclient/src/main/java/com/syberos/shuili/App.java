@@ -90,7 +90,7 @@ public class  App extends Application {
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         initLog();
         OkHttpUtils.init(this);
-//        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init();
