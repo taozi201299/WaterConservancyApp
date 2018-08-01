@@ -488,10 +488,10 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
         @Override
         public void convert(ViewHolder holder, final LocalAttachment localAttachment) {
             final ImageView iv_attachImage = (ImageView)holder.getView(R.id.attachment_image);
-            ViewGroup.LayoutParams params = iv_attachImage.getLayoutParams();
-            params.height=300;
-            params.width =300;
-            iv_attachImage.setLayoutParams(params);
+//            ViewGroup.LayoutParams params = iv_attachImage.getLayoutParams();
+//            params.height=200;
+//            params.width =200;
+//            iv_attachImage.setLayoutParams(params);
             ImageView iv_attachVideo = (ImageView)holder.getView(R.id.attachment_video);
             ImageView iv_delete = (ImageView)holder.getView(R.id.attachment_image_delete);
             TextView tv_attachment_text = (TextView)holder.getView(R.id.attachment_text);

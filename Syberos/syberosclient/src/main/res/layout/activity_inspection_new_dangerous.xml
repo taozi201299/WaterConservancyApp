@@ -23,6 +23,7 @@
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/_5dp"
             android:fillViewport="true"
             >
             <LinearLayout

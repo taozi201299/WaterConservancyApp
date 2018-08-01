@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/_10dp">
     <ImageView
         android:id="@+id/attachment_image"
         android:layout_width="@dimen/_50dp"
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/attachment_image"
         android:layout_marginLeft="@dimen/_5dp"
+        android:layout_marginRight="@dimen/_5dp"
         android:layout_centerVertical="true"
         android:orientation="vertical">
         <LinearLayout
