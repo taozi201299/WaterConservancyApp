@@ -29,6 +29,17 @@ public class GlobleConstants {
     public static final String CJFW = "CJFW";
     public static final String CJSG = "CJSG";
     public static final String CJJL = "CJJL";
+    /**
+     * 行政用户角色
+     */
+    public static final String acci ="acci"; // 安监-事故管理
+    public static final String sins = "sins"; // 安监-安全检查
+    public static final String stan = "stan"; // 安监-标准化评审管理
+    public static final String maha = "maha"; // 安监-风险源监管
+    public static final String woas = "woas"; // 安监-工作考核
+    public static final String suen = "suen"; // 安监-监督执法
+    public static final String wins = "wins"; // 安监-水利稽察
+    public static final String hidd = "hidd" ; // 安监-隐患监管
     public static HashMap<Integer,String>hazGradeMap = new HashMap<Integer,String>(){
 
         {

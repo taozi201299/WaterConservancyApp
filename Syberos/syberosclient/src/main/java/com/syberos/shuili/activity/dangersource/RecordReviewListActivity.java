@@ -71,7 +71,7 @@ public class RecordReviewListActivity extends BaseActivity
     public void getHazList(){
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       // params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hazStat","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override

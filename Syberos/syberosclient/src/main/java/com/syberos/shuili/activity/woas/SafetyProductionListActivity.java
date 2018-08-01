@@ -89,7 +89,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     private void getWoasGroupList(){
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("leadWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

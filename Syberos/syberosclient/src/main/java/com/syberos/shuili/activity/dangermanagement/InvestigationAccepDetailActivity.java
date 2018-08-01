@@ -452,7 +452,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
                 tv_rectify_label.setText(index +"次整改");
                 tv_rectify_time.setText(hiddenRectifyProgerssInfo.getCollTime());
                 tv_rectify_member.setText("");
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getNote());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getRectProg());
             }
 
 

@@ -57,6 +57,7 @@ public class  App extends Application {
      */
 
     public static String sCode = "";
+    public static ArrayList<String>sCodes = new ArrayList<>();
     public static String orgJurd = "";
 
 

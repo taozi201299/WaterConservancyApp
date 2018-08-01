@@ -73,14 +73,14 @@ public class WorkFragmentEnterprises extends BaseFragment {
     private String[] moduleChildAccidentNames;
     private String[] moduleChildDangerName;
 
-    private int[] moduleChildReportCheckIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildSecurityCheckIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildHiddenDangerIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildAccidentIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
-    private int[] moduleChildDangerIcon = {R.mipmap.icon_action_learn, R.mipmap.icon_action_learn, R.mipmap.icon_action_learn};
+    private int[] moduleChildReportCheckIcon = {R.mipmap.icon_report_hidd_ent, R.mipmap.icon_report_acci_ent, R.mipmap.icon_report_check_ent, R.mipmap.icon_report_woas_ent};
+    private int[] moduleChildSecurityCheckIcon = {R.mipmap.icon_check_element_ent, R.mipmap.icon_check_onsite_ent};
+    private int[] moduleChildHiddenDangerIcon = {R.mipmap.icon_hidd_add_ent, R.mipmap.icon_hidd_rectify_ent, R.mipmap.icon_hidd_accept_ent};
+    private int[] moduleChildAccidentIcon = {R.mipmap.icon_acci_ent, R.mipmap.icon_acci_query_ent};
+    private int[] moduleChildDangerIcon = {R.mipmap.icon_haz_add_ent, R.mipmap.icon_haz_query_ent};
 
-    private int[] moduleColor = {R.color.button_login_pressed, R.color.duty_color,
-            R.color.material_yellow_100, R.color.material_blue_grey_300, R.color.duty_color};
+    private int[] moduleColor = {R.color.color_report_ent, R.color.color_check_ent,
+             R.color.color_acci_ent,R.color.color_hidd_ent, R.color.color_haz_ent};
 
 
     @OnClick(R.id.iv_action_bar_right_1)

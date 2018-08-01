@@ -116,5 +116,10 @@
     <color name="color_enterprises_element_check_level_not_sure">#FF8D2D</color>
     <color name="color_enterprises_element_check_level_large">#FF1F2D</color>
 
+    <color name="color_report_ent">#188BDF</color>
+    <color name="color_check_ent">#03C5EA</color>
+    <color name="color_hidd_ent">#FF9606</color>
+    <color name="color_acci_ent">#36D0CF</color>
+    <color name="color_haz_ent">#FF5F38</color>
 
 </resources>
