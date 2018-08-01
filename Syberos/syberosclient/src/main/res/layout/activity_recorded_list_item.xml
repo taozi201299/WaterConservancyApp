@@ -107,6 +107,7 @@
             android:id="@+id/btn_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:background="@drawable/button_login_normal"
             android:text="补报"/>
     </RelativeLayout>

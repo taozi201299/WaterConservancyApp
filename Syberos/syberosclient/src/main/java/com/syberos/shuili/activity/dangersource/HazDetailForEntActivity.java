@@ -54,9 +54,9 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     @BindView(R.id.tv_super_pers_phone)
     TextView tv_super_pers_phone;
     @BindView(R.id.ae_describe_audio)
-    AudioEditView ae_describe_audio;
+    TextView ae_describe_audio;
     @BindView(R.id.ae_describe1_audio)
-    AudioEditView ae_describe1_audio;
+    TextView ae_describe1_audio;
     @BindView(R.id.tv_time)
     TextView tv_time;
     @BindView(R.id.rl_patrol)
@@ -120,10 +120,8 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     }
     @Override
     public void initView() {
-        showTitle("危险源详情");
+        showTitle("风险源详情");
         setActionBarRightVisible(View.INVISIBLE);
-        ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-        ae_describe1_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
 
     }
 
@@ -146,8 +144,10 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     }
     private void refreshUI(){
         BisHazRegDetail item = bisHazRegDetail.dataSource.get(0);
-        tv_unit.setText(item.wiunName);
-        tv_project.setText(item.engName);
+        String strUnit = item.wiunName;
+        tv_unit.setText(strUnit == null ? "":strUnit);
+        String strEngName = item.engName;
+        tv_project.setText(strEngName == null ?"":strUnit);
         int grad = Integer.valueOf(item.hiddGrad) == null? 1:Integer.valueOf(item.hiddGrad);
         tv_danger_grade.setText(hazGradeMap.get(grad));
         String strLiceNoti = item.ifLiceNoti;
@@ -158,10 +158,16 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
         }else {
             tv_line_note.setText("未知");
         }
-        tv_super_pers.setText(item.supPers);
-        tv_super_pers_phone.setText(item.offiTel);
-        ae_describe_audio.setEditText(item.note);
-        tv_time.setText(item.regTime);
+        String strSupPers = item.supPers;
+        tv_super_pers.setText(strSupPers == null ?"":strSupPers);
+        String strOffiTel = item.offiTel;
+        tv_super_pers_phone.setText(strOffiTel == null ?"":strOffiTel);
+        String strHarmRisk = information.getHarmRisk();
+        ae_describe_audio.setText(strHarmRisk == null ?"":strHarmRisk);
+        String strMoniPrec = information.getMoniPrec();
+        ae_describe1_audio.setText(strMoniPrec == null ?"":strMoniPrec);
+        String strTime = information.getCollTime();
+        tv_time.setText(strTime == null ? "":strTime);
     }
 
 }

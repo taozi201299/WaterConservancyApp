@@ -81,7 +81,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                informationList = (InspectionPartolInfo)gson.fromJson(result,InspectionPartolInfo.class);
+                informationList = gson.fromJson(result,InspectionPartolInfo.class);
                 if(informationList != null){
                     if(informationList.dataSource == null || informationList.dataSource.size() == 0){
                         ToastUtils.show("暂时没有巡视记录");

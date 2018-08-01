@@ -125,4 +125,7 @@
     <color name="color_acci_ent">#36D0CF</color>
     <color name="color_haz_ent">#FF5F38</color>
 
+    <color name="title_0">#333333</color>
+    <color name="title_1">#999999</color>
+
 </resources>

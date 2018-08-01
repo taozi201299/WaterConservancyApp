@@ -9,72 +9,93 @@
     <include
         android:id="@+id/action_bar"
         layout="@layout/action_bar2_layout" />
-
-    <LinearLayout
-        android:id="@+id/ll_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/action_bar"
-        android:layout_above="@+id/ll_commit"
-        android:layout_margin="@dimen/_6dp"
-        android:background="@drawable/dialog_bg_shape"
-        android:orientation="vertical">
-
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:layout_below="@+id/action_bar"
+            android:layout_above="@+id/ll_commit"
             android:layout_margin="@dimen/_6dp"
             >
-
             <LinearLayout
-                android:id="@+id/ll_project_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/_5dp"
-                android:paddingStart="@dimen/_5dp">
-                <RelativeLayout
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:layout_height="30dp"
+                            android:src="@mipmap/icon_blue_short_vertical_div"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_6dp"
+                            android:textColor="@color/color_report_ent"
+                            android:text ="巡查信息"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:background="@color/gray_bb"></View>
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/rl_time"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_dot_blue"/>
                     <TextView
                         android:id="@+id/tv_time_label"
                         android:layout_width="@dimen/_60dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="上报时间" />
-
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:text="巡查时间" />
                     <TextView
                         android:id="@+id/tv_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_time_label"
-                        android:text="2017-07-21 18:21" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:textColor="@color/title_0"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/rl_reporter"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
+                    android:paddingLeft="@dimen/_5dp"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_dot_blue"/>
                     <TextView
                         android:id="@+id/tv_reporter_label"
                         android:layout_width="@dimen/_60dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5dp"
                         android:layout_centerVertical="true"
                         android:text="巡视人员" />
 
@@ -83,97 +104,132 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_reporter_label"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:textColor="@color/title_0"
                         android:text="" />
 
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_maybe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_maybe_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="发现问题" />
-
-                    <TextView
-                        android:id="@+id/tv_maybe"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_maybe_label"
-                        android:text="" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_60dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_controls_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="处理措施" />
-
-                    <TextView
-                        android:id="@+id/tv_controls"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_controls_label"
-                        android:text="" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/ll_attachment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <com.syberos.shuili.view.MultimediaView
-                        android:id="@+id/mv_multimedia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:minHeight="@dimen/_50dp" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_bg_shape"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/icon_blue_short_vertical_div"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_6dp"
+                        android:textColor="@color/color_report_ent"
+                        android:text ="发现问题"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/gray_bb"></View>
+
+                <TextView
+                    android:id="@+id/tv_maybe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10dp"
+                    android:text=""
+                    android:textColor="@color/title_0"
+                    android:minHeight="@dimen/_50dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_bg_shape"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/icon_blue_short_vertical_div"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_6dp"
+                        android:textColor="@color/color_report_ent"
+                        android:text ="处理措施"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/gray_bb"></View>
+                <TextView
+                    android:id="@+id/tv_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10dp"
+                    android:text=""
+                    android:textColor="@color/title_0"
+                    android:minHeight="@dimen/_50dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_bg_shape"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/icon_blue_short_vertical_div"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_6dp"
+                        android:textColor="@color/color_report_ent"
+                        android:text ="现场附件"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/gray_bb"></View>
+
+                <com.syberos.shuili.view.MultimediaView
+                    android:id="@+id/mv_multimedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:minHeight="@dimen/_50dp" />
+            </LinearLayout>
+            </LinearLayout>
+
         </com.syberos.shuili.view.CustomScrollView>
 
-    </LinearLayout>
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_65dp"
     android:background="@drawable/dialog_bg_shape"
     android:orientation="vertical"
     android:padding="@dimen/padding_10"
@@ -9,6 +9,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/ll_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -18,19 +19,21 @@
             android:id="@+id/arrhpli_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_bb"
+            android:textColor="@color/title_0"
             android:layout_gravity="center"
+            android:textSize="@dimen/_16sp"
             android:gravity="center"
-            android:text="巡视时间"/>
+            android:text="巡视时间:"/>
 
         <TextView
             android:id="@+id/arrhpli_tv_time"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_bb"
+            android:textColor="@color/title_0"
             android:layout_gravity="center"
             android:gravity="center_vertical"
+            android:textSize="@dimen/_16sp"
             android:layout_marginLeft="@dimen/_5dp"/>
 
     </LinearLayout>
@@ -40,16 +43,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_below="@+id/ll_line"
+        android:layout_marginTop="@dimen/_10dp"
         >
 
         <TextView
             android:id="@+id/arrhpli_tv_person_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_bb"
+            android:textColor="@color/title_1"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="巡视人员"/>
+            android:textSize="@dimen/_11sp"
+            android:text="巡视人员:"/>
 
         <TextView
             android:id="@+id/arrhpli_tv_person"
@@ -58,8 +64,15 @@
             android:textColor="@color/gray_bb"
             android:layout_gravity="center"
             android:gravity="center_vertical"
+            android:textSize="@dimen/_11sp"
             android:layout_marginLeft="@dimen/_5dp"/>
-
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_10dp"
+        android:src="@mipmap/icon_right"
+        android:layout_centerVertical="true"/>
 
-</LinearLayout>
+</RelativeLayout>

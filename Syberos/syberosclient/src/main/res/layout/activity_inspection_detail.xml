@@ -5,286 +5,336 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/transparent"
     android:orientation="vertical">
-
     <include
         android:id="@+id/action_bar"
         layout="@layout/action_bar2_layout" />
-
-    <LinearLayout
-        android:id="@+id/ll_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/action_bar"
-        android:layout_above="@+id/ll_commit"
-        android:layout_margin="@dimen/_6dp"
-        android:background="@drawable/dialog_bg_shape"
-        android:orientation="vertical">
-
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:layout_below="@+id/action_bar"
+            android:layout_above="@+id/ll_commit"
             android:layout_margin="@dimen/_6dp"
             >
             <LinearLayout
-                android:id="@+id/ll_project_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/_5dp"
-                android:paddingStart="@dimen/_5dp">
-
-                <RelativeLayout
-                    android:id="@+id/rl_unit"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_unit_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="所属单位" />
-
-                    <TextView
-                        android:id="@+id/tv_unit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_unit_label"
-                        android:text="朝阳双桥水利所" />
-
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_project"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_project_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="所属工程" />
-
-                    <TextView
-                        android:id="@+id/tv_project"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_project_label"
-                        android:text="朝阳双桥水利所" />
-
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_danger_grade"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_danger_grade_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="危险源等级" />
-
-                    <TextView
-                        android:id="@+id/tv_danger_grade"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_danger_grade_label"
-                        android:text="朝阳双桥水利所" />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_lince_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_lince_note_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="是否已立牌并公告" />
-
-                    <TextView
-                        android:id="@+id/tv_lince_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_lince_note_label"
-                        android:text="朝阳双桥水利所" />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_super_pers"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_super_pers_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="监管责任人" />
-
-                    <TextView
-                        android:id="@+id/tv_super_pers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_super_pers_label"
-                        android:text="朝阳双桥水利所" />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_super_pers_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_super_pers_phone_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="监管责任人" />
-
-                    <TextView
-                        android:id="@+id/tv_super_pers_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_super_pers_phone_label"
-                        android:text="朝阳双桥水利所" />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_describe"
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/ll_project_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:layout_height="30dp"
+                            android:src="@mipmap/icon_blue_short_vertical_div"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_6dp"
+                            android:textColor="@color/color_report_ent"
+                            android:text ="风险源信息"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:background="@color/gray_bb"></View>
 
-                    <com.syberos.shuili.view.AudioEditView
+                    <LinearLayout
+                        android:id="@+id/rl_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_unit_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="所属单位" />
+
+                        <TextView
+                            android:id="@+id/tv_unit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:textColor="@color/black"
+                            android:text="" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rl_project"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+
+                        <TextView
+                            android:id="@+id/tv_project_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="所属工程" />
+
+                        <TextView
+                            android:id="@+id/tv_project"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rl_danger_grade"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_danger_grade_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="危险源等级" />
+
+                        <TextView
+                            android:id="@+id/tv_danger_grade"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rl_lince_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:paddingLeft="@dimen/_5dp"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_lince_note_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="是否已立牌并公告" />
+
+                        <TextView
+                            android:id="@+id/tv_lince_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rl_super_pers"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:paddingLeft="@dimen/_5dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_super_pers_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="监管责任人" />
+
+                        <TextView
+                            android:id="@+id/tv_super_pers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rl_super_pers_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_super_pers_phone_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="监管责任人电话" />
+
+                        <TextView
+                            android:id="@+id/tv_super_pers_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="朝阳双桥水利所" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rl_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:paddingLeft="@dimen/_5dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_dot_blue"/>
+                        <TextView
+                            android:id="@+id/tv_time_label"
+                            android:layout_width="@dimen/_60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_5dp"
+                            android:text="上报时间" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:text="" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_content1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/dialog_bg_shape"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:layout_height="30dp"
+                            android:src="@mipmap/icon_blue_short_vertical_div"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_6dp"
+                            android:textColor="@color/color_report_ent"
+                            android:text ="可能造成的危害风险"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:background="@color/gray_bb"></View>
+                    <TextView
                         android:id="@+id/ae_describe_audio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_10dp"
+                        android:text=""
                         android:minHeight="@dimen/_50dp"
-                        android:paddingTop="@dimen/_15dp"
-                        app:view_label="可能造成的危害风险"
-                        app:view_labelWidth="@dimen/_60dp"
                         />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-                <RelativeLayout
-                    android:id="@+id/rl_describe_1"
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_content2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <com.syberos.shuili.view.AudioEditView
+                    android:background="@drawable/dialog_bg_shape"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:layout_height="30dp"
+                            android:src="@mipmap/icon_blue_short_vertical_div"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_6dp"
+                            android:textColor="@color/color_report_ent"
+                            android:text ="监控防范措施"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:background="@color/gray_bb"></View>
+                    <TextView
                         android:id="@+id/ae_describe1_audio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_10dp"
+                        android:text=""
                         android:minHeight="@dimen/_50dp"
-                        android:paddingTop="@dimen/_15dp"
-                        app:view_label="监控防范措施"
-                        app:view_labelWidth="@dimen/_60dp"
                         />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <TextView
-                        android:id="@+id/tv_time_label"
-                        android:layout_width="@dimen/_60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="上报时间" />
-
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_toEndOf="@+id/tv_time_label"
-                        android:text="2017-07-21 18:21" />
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/dialog_bg_shape"
+                android:orientation="vertical">
                 <RelativeLayout
                     android:id="@+id/rl_patrol"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:paddingLeft="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_patrol_label"
@@ -301,15 +351,8 @@
                         android:layout_marginEnd="@dimen/_5dp"
                         android:src="@mipmap/icon_label_next" />
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
+            </LinearLayout>
 
             </LinearLayout>
         </com.syberos.shuili.view.CustomScrollView>
-
-    </LinearLayout>
 </RelativeLayout>

@@ -248,7 +248,7 @@ public class HazListForEntActivity extends BaseActivity
             ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
             ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
             Button btn = (Button)(holder.getView(R.id.btn_text));
-            btn.setText("巡视");
+            btn.setText("巡查");
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -261,6 +261,8 @@ public class HazListForEntActivity extends BaseActivity
             ((TextView) (holder.getView(R.id.tv_type))).setText(dangerousInformation.getHiddGradName());
             switch (type) {
                     case GlobleConstants.HAZ_HTYPE_NORMAL:{
+                        ((TextView) (holder.getView(R.id.tv_type))).setText(
+                                R.string.dangerous_type_normal);
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }
