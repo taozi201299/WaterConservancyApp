@@ -160,6 +160,7 @@ public class MainActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+//        securityCloudFragment = new SecurityCloudFragment();
         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }
@@ -210,6 +211,7 @@ public class MainActivity extends TranslucentActivity
         hideFragment(transaction);
         rgTabs.check(id);
         checkId = id;
+
         switch (id) {
             case R.id.btn_workFragment:
                 if (workFragment == null) {
@@ -222,8 +224,13 @@ public class MainActivity extends TranslucentActivity
                 break;
             case R.id.btn_securityCloudFragment:
                 if (securityCloudFragment == null) {
+                    long time1,time2;
+
+                    time1=System.currentTimeMillis();
                     securityCloudFragment = new SecurityCloudFragment();
                     transaction.add(R.id.container, securityCloudFragment);
+                    time2=System.currentTimeMillis();
+                    Log.e(TAG, "switchFragment: time"+(time2-time1));
                 } else {
                     transaction.show(securityCloudFragment);
                 }

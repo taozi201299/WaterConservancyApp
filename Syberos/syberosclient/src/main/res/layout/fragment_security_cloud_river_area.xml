@@ -81,7 +81,7 @@
                     android:layout_marginTop="@dimen/_5dp"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="98"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="90sp"
                     app:layout_constraintBottom_toBottomOf="@id/view_dial_plate"
@@ -121,7 +121,14 @@
                 android:layout_height="?android:actionBarSize"
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
-
+                <ImageView
+                    android:id="@+id/iv_back_tool_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/back"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/_12dp"
+                    android:padding="@dimen/_5dp"/>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -141,6 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_12dp"
+                android:layout_marginLeft="@dimen/_12dp"
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/icon_blue_short_vertical_div"
                 android:drawablePadding="@dimen/_6dp"

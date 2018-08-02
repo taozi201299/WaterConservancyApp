@@ -355,7 +355,6 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.in_from_right, R.anim.out_from_left);
         if(isfinish){
             activity.finish();
-
         }
     }
     public void activityFinish(){

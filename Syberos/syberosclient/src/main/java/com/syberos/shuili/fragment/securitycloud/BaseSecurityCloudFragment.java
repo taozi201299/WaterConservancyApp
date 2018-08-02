@@ -1,9 +1,13 @@
 package com.syberos.shuili.fragment.securitycloud;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.CardView;
@@ -17,8 +21,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andview.refreshview.recyclerview.BaseRecyclerAdapter;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -41,6 +47,7 @@ import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
 import com.syberos.shuili.entity.securitycloud.StraightTubeManageEntry;
 import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
+import com.syberos.shuili.fragment.SecurityCloudFragment;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.DialPlateView;
 import com.syberos.shuili.view.WaterView;
@@ -178,6 +185,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     @BindView(R.id.water_view)
     WaterView waterView;
+    @BindView(R.id.iv_back_tool_bar)
+    ImageView ivBackToolBar;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
     String type;
     String title;
     String titleDetail;
@@ -195,13 +206,29 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         this.type = type;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    public void finishActivity(Activity activity) {
+        activity.finish();
+    }
+
     public void initViewData() {
         appBarLayout.addOnOffsetChangedListener(this);
         Gson gson = new Gson();
-        if (strJsonData != null) {
-            securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
-        }
 
+        time1 = System.currentTimeMillis();
+        securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
+
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "gson.fromJson: time---" + (time2 - time1));
         initTitleAndView(type);
         int score = securityCloudEntry.getSynthesisInfoEntry().getScore();
         titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
@@ -210,37 +237,96 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         tvScore.setText(score + "");
         viewDialPlate.updateData(score);
 
+
     }
 
+    long time1, time2;
+
     private void initTitleAndView(String type) {
+
+
+        time1 = System.currentTimeMillis();
         initAccView(securityCloudEntry.getAccidentInfoEntry());
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "initAccView: time---" + (time2 - time1));
+
+
+        time1 = System.currentTimeMillis();
         initHiddenView(securityCloudEntry.getHiddenInfoEntry());
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "initHiddenView: time---" + (time2 - time1));
+
+
+        time1 = System.currentTimeMillis();
         initRiskResource(securityCloudEntry.getRiskSourceEntry());
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "initRiskResource: time---" + (time2 - time1));
+
+
+        time1 = System.currentTimeMillis();
         initTrendView(securityCloudEntry.getCompScoreTrend());
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "initTrendView: time---" + (time2 - time1));
+
+        time1 = System.currentTimeMillis();
         initTrendView(securityCloudEntry.getCompScoreTrend());
+        time2 = System.currentTimeMillis();
+        LogUtil.e(TAG, "initTrendView: time---" + (time2 - time1));
+
         switch (type) {
             case "1":
                 title = "直管工程";
                 cardViewManagerDirect.setVisibility(View.VISIBLE);
+                time1 = System.currentTimeMillis();
                 initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "initStraightTubeManage: case 1 time---" + (time2 - time1));
+
+                time1 = System.currentTimeMillis();
                 initRankView(securityCloudEntry.getRankList());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "initRankView: case 1 time---" + (time2 - time1));
                 break;
             case "2":
                 title = "流域机构";
                 cardViewManager.setVisibility(View.VISIBLE);
+                time1 = System.currentTimeMillis();
                 initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "initSupervisionManage: case 2 time---" + (time2 - time1));
+                time1 = System.currentTimeMillis();
                 initRankView(securityCloudEntry.getRankList());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "securityCloudEntry: case 2 time---" + (time2 - time1));
+
+
                 break;
             case "3":
                 title = "行业监管";
                 cardViewManager.setVisibility(View.VISIBLE);
+                time1 = System.currentTimeMillis();
                 initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "initSupervisionManage: case 3 time---" + (time2 - time1));
+
+                time1 = System.currentTimeMillis();
                 initRankView(securityCloudEntry.getRankList());
+                time2 = System.currentTimeMillis();
+                LogUtil.e(TAG, "initRankView: case 3 time---" + (time2 - time1));
+
                 break;
             case "4"://具体区域 或河流
                 title = "";
                 cardViewManager.setVisibility(View.VISIBLE);
                 viewRank.setVisibility(View.GONE);
+                ivBackToolBar.setVisibility(View.VISIBLE);
+                ivBackToolBar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getActivity().finish();
+//                        finishActivity(SecurityCloudDetailActivity.getInstance());
+                    }
+                });
                 break;
         }
     }
@@ -259,9 +345,21 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             rankList.add(rank);
         }
 
-        RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerAdapter = new RecyclerAdapter(rankList);
+        recyclerAdapter.setListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+//                Bundle bundle=new Bundle();
+                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
+//                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
+                String title = securityCloudEntry.getRankList().get(position).getName();
+                String id = securityCloudEntry.getRankList().get(position).getId();
+                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
+            }
+
+        });
         recyclerView.setAdapter(recyclerAdapter);
     }
 
@@ -272,6 +370,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
      */
     private void initTrendView(SecurityCloudEntry.CompScoreTrend compScoreTrend) {
         lineChart = viewGradeTrend.findViewById(R.id.line_chart);
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.show("选择日期");
+            }
+        });
         initLineCharView(lineChart, securityCloudEntry.getCompScoreTrend().getDataList());
 
     }
@@ -414,10 +518,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         pieChart.setNoDataText(str);
         pieChart.setTouchEnabled(false);
         pieChart.setNoDataTextColor(R.color.text_black_color);
-        cardViewAcc.invalidate();
+        cardViewAcc.postInvalidateDelayed(100);
     }
 
-    public void updataData(String title, String strJsonData) {
+    public void updateData(String title, String strJsonData) {
         this.title = title;
         this.strJsonData = strJsonData;
         initData();
@@ -490,7 +594,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        xAxis.setGridLineWidth(1); //X轴上的刻度竖线的宽 float类型
         xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
         xAxis.isDrawLabelsEnabled();
-        final List<String> dateList=new ArrayList<>();
+        final List<String> dateList = new ArrayList<>();
 //        for (int i = 0; i < 6; i++) {
 ////            Date date = new Date(Long.parseLong(dataList.get(i).getDate()));
 //            Date date = new Date(System.currentTimeMillis()+i*(1000*60*60*24*30));
@@ -498,7 +602,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
 //            String strDate=format.format(date);
 //            dateList.add(strDate);
-//            Log.e(TAG, "initLineCharView: strDate:"+(System.currentTimeMillis()+i*(1000*60*60*24*30))+"----" );
+//            LogUtil.e(TAG, "initLineCharView: strDate:"+(System.currentTimeMillis()+i*(1000*60*60*24*30))+"----" );
 //        }
         dateList.add("一月");
         dateList.add("二月");
@@ -507,12 +611,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         dateList.add("五月");
         dateList.add("六月");
 //        final String[] data = new String[]{"一月", "二月", "三月", "四月", "五月", "六月"};
-        xAxis.setLabelCount(dateList.size()-1);
+        xAxis.setLabelCount(dateList.size() - 1);
 //      X轴专用
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return dateList.get((int)((value+0.5)));//[(int) value];
+                return dateList.get((int) ((value + 0.5)));//[(int) value];
             }
         });
         xAxis.setAvoidFirstLastClipping(false);
@@ -580,11 +684,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
         ArrayList<Entry> entries = new ArrayList<Entry>();     //坐标点的集合
 //        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-        Random random=new Random(10);
+        Random random = new Random(10);
         for (int i = 0; i < 6; i++) {
 //            Entry entry = new Entry(i, dataList.get(i).getScore());
 
-            Entry entry = new Entry(i,random.nextInt(100));
+            Entry entry = new Entry(i, random.nextInt(100));
             entries.add(entry);
         }
 
@@ -670,7 +774,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     @Override
     protected void initData() {
-        initViewData();
+        if (strJsonData != null) {
+            initViewData();
+        }
 
     }
 
@@ -716,9 +822,18 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         }
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
     class RecyclerAdapter extends BaseRecyclerAdapter<RecyclerViewHolder> {
+        OnItemClickListener listener;
         List<SecurityCloudEntry.AreaRank> list;
         RecyclerViewHolder holder;
+
+        public void setListener(OnItemClickListener listener) {
+            this.listener = listener;
+        }
 
         public RecyclerAdapter(List<SecurityCloudEntry.AreaRank> list) {
             this.list = list;
@@ -737,7 +852,41 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         }
 
         @Override
-        public void onBindViewHolder(RecyclerViewHolder holder, int position, boolean isItem) {
+        public void onBindViewHolder(RecyclerViewHolder holder, final int position, boolean isItem) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(view, position);
+                }
+            });
+//            holder.tvRank.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    listener.onItemClick(view, position);
+//                }
+//            });
+//
+//            holder.tvName.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    listener.onItemClick(view, position);
+//                }
+//            });
+//
+//            holder.tvScore.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    listener.onItemClick(view, position);
+//                }
+//            });
+            holder.ivRank.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(view, position);
+                }
+            });
+
+
             if (position == 0) {
                 holder.ivRank.setVisibility(View.VISIBLE);
                 holder.ivRank.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.security_gold_medal));
@@ -761,5 +910,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         public int getAdapterItemCount() {
             return list.size();
         }
+
     }
 }

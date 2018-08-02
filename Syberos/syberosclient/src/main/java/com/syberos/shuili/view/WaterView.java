@@ -190,7 +190,7 @@ public class WaterView extends View {
         paint.setColor(getResources().getColor(R.color.text_black_color));
         paint.setTextSize(radius);
         paint.setStyle(Paint.Style.FILL);
-        canvas.drawText(progress + "", radius -getTextWidth(paint,progress+"")/2+shadowWidth, radius +shadowWidth, paint);
+        canvas.drawText(progress + "", radius -getTextWidth(paint,progress+"")/2, radius +shadowWidth*2, paint);
 
 //判断是不是平移完了一个周期
 //        if (startPoint.x + 40 >= 0) {
