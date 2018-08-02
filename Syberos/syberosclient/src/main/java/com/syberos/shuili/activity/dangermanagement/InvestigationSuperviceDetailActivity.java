@@ -422,34 +422,27 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
     }
     private void initElements(View rectifyView,int type){
-        RelativeLayout rl_rectify = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify);
-        View line0 = (View)rectifyView.findViewById(R.id.line0);
-        RelativeLayout rl_rectify_member = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify_member);
-        View line1 = (View)rectifyView.findViewById(R.id.line1);
-        RelativeLayout rl_rectify_describe = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify_describe);
-        View line2 = (View)rectifyView.findViewById(R.id.line2);
-        RelativeLayout rl_attachment = (RelativeLayout)rectifyView.findViewById(R.id.ll_attachment);
-        View line3 = (View)rectifyView.findViewById(R.id.line3);
+        RelativeLayout rl_rectify = rectifyView.findViewById(R.id.ll_rectify);
+        RelativeLayout rl_rectify_member = rectifyView.findViewById(R.id.ll_rectify_member);
+        RelativeLayout rl_rectify_describe = rectifyView.findViewById(R.id.ll_rectify_describe);
+        RelativeLayout rl_attachment = rectifyView.findViewById(R.id.ll_attachment);
 
-        RelativeLayout rl_accept_member = (RelativeLayout)rectifyView.findViewById(R.id.ll_accept_member);
-        View line4 = (View)rectifyView.findViewById(R.id.line4);
-        RelativeLayout ll_rectify_opinion_describe = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify_opinion_describe);
-        View line5 = (View)rectifyView.findViewById(R.id.line5);
-        RelativeLayout ll_rectify_opinion_attachment = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify_opinion_attachment);
-        View line6 = (View)rectifyView.findViewById(R.id.line6);
-        RelativeLayout ll_rectify_result = (RelativeLayout)rectifyView.findViewById(R.id.ll_rectify_result) ;
+        RelativeLayout rl_accept_member = rectifyView.findViewById(R.id.ll_accept_member);
+        RelativeLayout ll_rectify_opinion_describe = rectifyView.findViewById(R.id.ll_rectify_opinion_describe);
+        RelativeLayout ll_rectify_opinion_attachment = rectifyView.findViewById(R.id.ll_rectify_opinion_attachment);
+        RelativeLayout ll_rectify_result = rectifyView.findViewById(R.id.ll_rectify_result) ;
 
-        tv_rectify_label = (TextView)rectifyView.findViewById(R.id.tv_rectify_label);
-        tv_rectify_time  = (TextView)rectifyView.findViewById(R.id.tv_rectify_time);
-        tv_rectify_member = (TextView)rectifyView.findViewById(R.id.tv_rectify_member);
-        ev_rectify_des_audio = (AudioEditView)rectifyView.findViewById(R.id.ev_rectify_des_audio);
-        ll_rectify_multimedia = (MultimediaView)rectifyView.findViewById(R.id.ll_rectify_multimedia);
-        tv_accept_member = (TextView)rectifyView.findViewById(R.id.tv_accept_member);
-        ev_rectify_opinion_audio = (AudioEditView)rectifyView.findViewById(R.id.ev_rectify_opinion_audio);
-        ll_rectify_opinion_multimedia = (MultimediaView)rectifyView.findViewById(R.id.ll_rectify_opinion_multimedia);
+        tv_rectify_label = rectifyView.findViewById(R.id.tv_rectify_label);
+        tv_rectify_time  = rectifyView.findViewById(R.id.tv_rectify_time);
+        tv_rectify_member = rectifyView.findViewById(R.id.tv_rectify_member);
+        ev_rectify_des_audio = rectifyView.findViewById(R.id.ev_rectify_des_audio);
+        ll_rectify_multimedia = rectifyView.findViewById(R.id.ll_rectify_multimedia);
+        tv_accept_member = rectifyView.findViewById(R.id.tv_accept_member);
+        ev_rectify_opinion_audio = rectifyView.findViewById(R.id.ev_rectify_opinion_audio);
+        ll_rectify_opinion_multimedia = rectifyView.findViewById(R.id.ll_rectify_opinion_multimedia);
         ev_rectify_des_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_rectify_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
-        tv_rectify_result = (TextView)rectifyView.findViewById(R.id.tv_rectify_result) ;
+        tv_rectify_result = rectifyView.findViewById(R.id.tv_rectify_result) ;
         ev_rectify_opinion_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_rectify_opinion_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
         ev_rectify_opinion_audio.setLabelText("验收意见");
@@ -462,8 +455,6 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
                 ll_rectify_opinion_describe.setVisibility(View.GONE);
                 ll_rectify_opinion_attachment.setVisibility(View.GONE);
                 ll_rectify_result.setVisibility(View.GONE);
-                line4.setVisibility(View.GONE);
-                line5.setVisibility(View.GONE);
                 break;
             // 验收信息
             case 1:
@@ -471,11 +462,6 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
                 rl_rectify_member.setVisibility(View.GONE);
                 rl_rectify_describe.setVisibility(View.GONE);
                 rl_attachment.setVisibility(View.GONE);
-                line0.setVisibility(View.GONE);
-                line1.setVisibility(View.GONE);
-                line2.setVisibility(View.GONE);
-                line3.setVisibility(View.GONE);
-                line6.setVisibility(View.GONE);
                 break;
         }
     }

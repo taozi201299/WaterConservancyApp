@@ -3,75 +3,87 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:AudioEditView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/transparent">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10dp"
+        android:layout_margin="@dimen/_5dp"
+        >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_10dp"
-        android:layout_marginLeft="@dimen/_10dp"
-        android:paddingLeft="@dimen/_5dp"
-        android:paddingRight="@dimen/_5dp"
-        android:layout_marginTop="@dimen/padding_5"
-        android:background="@drawable/dialog_bg_shape"
         android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/ll_supervise"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_20dp"
-            android:paddingLeft="@dimen/_5dp"
-            android:paddingRight="@dimen/_5dp"
-            android:orientation="horizontal">
-            <View
-                android:layout_marginLeft="@dimen/_5dp"
-                android:layout_width="@dimen/_3dp"
-                android:layout_height="@dimen/_15dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/button_login_normal"/>
+            android:layout_height="@dimen/_30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_blue_short_vertical_div"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="督办记录"
-                android:layout_marginLeft="@dimen/_2dp"
-                android:textColor="@color/button_login_normal"/>
+                android:layout_marginLeft="@dimen/_6dp"
+                android:textColor="@color/color_report_ent"
+                android:text ="督办记录"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
             android:background="@color/gray_bb"
-            android:layout_below="@+id/ll_supervise"
-            android:layout_marginTop="@dimen/_2dp"/>
+            ></View>
         <RelativeLayout
             android:id="@+id/ll_supervise_describe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_5dp"
-            android:paddingRight="@dimen/_5dp">
+            android:paddingLeft="@dimen/_10dp"
+            android:paddingRight="@dimen/_10dp">
+            <ImageView
+                android:id="@+id/iv_dot0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_dot_blue"/>
             <com.syberos.shuili.view.AudioEditView
                 android:id="@+id/ev_supervise_des_audio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_dot0"
+                android:layout_marginLeft="@dimen/_5dp"
                 AudioEditView:view_label="督办原因"
+                style="@style/text_detail_14sp_title0"
                 android:paddingTop="@dimen/_15dp"
                 android:minHeight="@dimen/_50dp">
             </com.syberos.shuili.view.AudioEditView>
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1dp"
-            android:background="@color/gray_bb"
-            android:layout_below="@+id/ll_supervise_describe"
-            android:layout_marginTop="@dimen/_2dp"/>
-
         <RelativeLayout
             android:id="@+id/ll_supervise_time"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50dp">
+            android:paddingLeft="@dimen/_10dp"
+            android:paddingRight="@dimen/_10dp"
+            android:layout_height="@dimen/_40dp">
+            <ImageView
+                android:id="@+id/iv_dot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_dot_blue"/>
             <TextView
                 android:id="@+id/tv_supervise_time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_dot1"
+                android:layout_marginLeft="@dimen/_5dp"
+                style="@style/text_detail_14sp_title1"
                 android:text="督办时间"/>
 
             <TextView
@@ -79,11 +91,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_supervise_time_label"
-                android:layout_marginLeft="@dimen/padding_20"
+                android:layout_marginLeft="@dimen/_10dp"
+                style="@style/text_detail_14sp_title0"
                 android:layout_centerVertical="true"
                 android:text= "" />
 
         </RelativeLayout>
     </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
