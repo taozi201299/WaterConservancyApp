@@ -257,4 +257,15 @@
         <item name="android:layout_margin">@dimen/_5dp</item>
     </style>
 
+    <style name="text_detail_14sp_title1">
+        <item name="android:textColor">@color/title_1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/_14sp</item>
+    </style>
+    <style name="text_detail_14sp_title0">
+        <item name="android:textColor">@color/title_0</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/_14sp</item>
+    </style>
+
 </resources>

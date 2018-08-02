@@ -56,7 +56,7 @@ public class AccidentDetailActivity extends BaseActivity {
     TextView tv_time;
 
     @BindView(R.id.ae_accident_describe_audio)
-    AudioEditView ae_accident_describe_audio;
+    TextView ae_accident_describe_audio;
 
     @BindView(R.id.mv_accident_multimedia)
     MultimediaView mv_accident_multimedia;
@@ -125,9 +125,7 @@ public class AccidentDetailActivity extends BaseActivity {
 
 
             mv_accident_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
-
-            ae_accident_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-            ae_accident_describe_audio.setEditText(accidentInformation.getAcciSitu());
+            ae_accident_describe_audio.setText(accidentInformation.getAcciSitu());
             if(reportInfo != null){
                 ll_report_item.removeAllViews();
                 for(final ObjAcci item : reportInfo) {
@@ -135,6 +133,7 @@ public class AccidentDetailActivity extends BaseActivity {
                     View view = LayoutInflater.from(mContext).inflate(R.layout.simple_list_row, null);
                     RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ll_report_item.getLayoutParams());
                     lp.setMargins(0, 0, 0, 15);
+                    view.setLayoutParams(lp);
                     TextView textView = (TextView) view.findViewById(R.id.textView);
                     textView.setText(item.getCollTime() + " " + "补报");
                     view.setOnClickListener(new View.OnClickListener() {

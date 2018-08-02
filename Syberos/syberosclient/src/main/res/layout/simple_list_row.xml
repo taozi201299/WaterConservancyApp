@@ -2,16 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/white"
-    android:paddingTop="16dp"
-    android:paddingRight="@dimen/_16dp"
-    android:paddingBottom="@dimen/_16dp"
-    android:paddingLeft="@dimen/_5dp">
+    android:layout_height="@dimen/_40dp"
+    android:paddingLeft="@dimen/_5dp"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:layout_centerVertical="true"
+        android:text="sssssssss"
+        style="@style/text_detail_14sp_title1"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/_10dp"
+        android:src="@mipmap/icon_right"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@color/gray_bb"></View>
 </RelativeLayout>
