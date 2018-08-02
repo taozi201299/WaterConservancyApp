@@ -4,49 +4,46 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:EnumViewButtonGroup="http://schemas.android.com/tools"
-    android:background="@color/transparent"
+    android:background="@color/color_bg"
     android:orientation="vertical">
 
     <include
         android:id="@+id/action_bar"
         layout="@layout/action_bar2_layout" />
-
-    <LinearLayout
-        android:id="@+id/ll_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/action_bar"
-        android:layout_above="@+id/ll_commit"
-        android:layout_margin="@dimen/_6dp"
-        android:background="@drawable/dialog_bg_shape"
-        android:orientation="vertical">
-
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
+            android:scrollbars="none"
+            android:layout_below="@+id/action_bar"
+            android:layout_above="@+id/ll_commit"
             android:layout_margin="@dimen/_6dp"
             >
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_10dp">
 
             <LinearLayout
                 android:id="@+id/ll_project_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingEnd="@dimen/_5dp"
-                android:paddingStart="@dimen/_5dp">
-
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp"
+                >
                 <RelativeLayout
                     android:id="@+id/rl_accident_unit"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingRight="@dimen/_5dp"
+                    >
 
                     <TextView
                         android:id="@+id/tv_accident_unit_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/text_detail_14sp_title0"
                         android:layout_centerVertical="true"
                         android:text="事故单位" />
 
@@ -58,6 +55,7 @@
                         android:layout_marginStart="@dimen/padding_20"
                         android:layout_toEndOf="@+id/tv_accident_unit_label"
                         android:background="@color/transparent"
+                        style="@style/text_detail_14sp_title0"
                         android:hint="请填写（必填）" />
                 </RelativeLayout>
 
@@ -79,6 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="事故名称" />
 
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
@@ -89,6 +88,7 @@
                         android:layout_marginStart="@dimen/padding_20"
                         android:layout_toEndOf="@+id/tv_accident_name_label"
                         android:background="@color/transparent"
+                        style="@style/text_detail_14sp_title0"
                         android:hint="请填写&lt;自动&gt;" />
                 </RelativeLayout>
 
@@ -109,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="事故地点" />
 
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
@@ -118,8 +119,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/padding_20"
                         android:layout_toEndOf="@+id/tv_occo_loc_label"
+                        style="@style/text_detail_14sp_title0"
                         android:background="@color/transparent"
                         android:hint="请填写" />
+
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
@@ -156,6 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="重伤人数" />
 
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
@@ -170,6 +174,7 @@
                         android:gravity="center_vertical"
                         android:background="@color/transparent"
                         android:inputType="number"
+                        style="@style/text_detail_14sp_title0"
                         android:hint="请填写" />
 
                     <TextView
@@ -178,6 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="人" />
                 </RelativeLayout>
 
@@ -199,6 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="死亡人数" />
 
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
@@ -212,6 +219,7 @@
                         android:layout_toStartOf="@+id/tv_death_count_unit"
                         android:gravity="center_vertical"
                         android:background="@color/transparent"
+                        style="@style/text_detail_14sp_title0"
                         android:inputType="number"
                         android:hint="请填写" />
 
@@ -221,6 +229,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="人" />
                 </RelativeLayout>
 
@@ -242,6 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="直接经济损失" />
 
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
@@ -256,6 +266,7 @@
                         android:gravity="center_vertical"
                         android:background="@color/transparent"
                         android:inputType="numberDecimal"
+                        style="@style/text_detail_14sp_title0"
                         android:hint="请填写金额" />
 
                     <TextView
@@ -264,6 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="元" />
                 </RelativeLayout>
 
@@ -285,18 +297,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="发生时间" />
-
                     <TextView
                         android:id="@+id/tv_time"
+                        style="@style/text_detail_14sp_title0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/padding_20"
-                        android:layout_marginEnd="@dimen/padding_20"
-                        android:layout_toEndOf="@+id/tv_time_label"
-                        android:layout_toStartOf="@+id/iv_arrow_right"
-                        android:gravity="center_vertical|end"
+                        android:layout_toRightOf="@id/tv_time_label"
+                        android:layout_marginLeft="@dimen/_17dp"
                         android:hint="必填" />
 
                     <ImageView
@@ -324,6 +334,7 @@
                     android:minHeight="@dimen/_50dp"
                     android:paddingEnd="@dimen/_5dp"
                     android:paddingStart="@dimen/_5dp"
+                    style="@style/text_detail_14sp_title0"
                     app:view_label="事故描述"
                     >
                 </com.syberos.shuili.view.AudioEditView>
@@ -342,6 +353,7 @@
                     android:layout_marginBottom="@dimen/_2dp"
                     android:paddingEnd="@dimen/_5dp"
                     android:paddingStart="@dimen/_5dp"
+                    style="@style/text_detail_14sp_title0"
                     app:mv_label="现场情况"
                     >
 
@@ -401,6 +413,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
                         android:text="是否责任事故" />
 
 
@@ -416,6 +429,8 @@
                             android:id="@+id/rb_accident_liability_yes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/text_detail_14sp_title0"
+
                             android:text="是" />
 
                         <RadioButton
@@ -455,6 +470,7 @@
                             android:id="@+id/rb_accident_phone_report_yes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/text_detail_14sp_title0"
                             android:text="是"
                             />
 
@@ -462,17 +478,15 @@
                             android:id="@+id/rb_accident_phone_report_no"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/text_detail_14sp_title0"
                             android:checked="true"
                             android:text="否"
                             />
                     </RadioGroup>
                 </RelativeLayout>
-
-
             </LinearLayout>
+            </android.support.v7.widget.CardView>
         </com.syberos.shuili.view.CustomScrollView>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_commit"

@@ -204,7 +204,7 @@
     </style>
 
     <style name="text_detail">
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/title_0</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/font_size_13</item>
     </style>
