@@ -449,7 +449,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    ObjAcci accidentInformation = objAccis.dataSource.get(position);
+                    ObjAcci accidentInformation = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, accidentInformation);
                     bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
                     bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
@@ -463,7 +463,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    ObjAcci item = datas.get(position);
+                    ObjAcci item = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, item);
                     bundle.putSerializable("data",reportInfos);
                     intentActivity(AccidentListAcitvity.this,
