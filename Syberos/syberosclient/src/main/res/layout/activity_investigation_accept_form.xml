@@ -3,21 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:AudioEditView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical">
     <include
         android:id="@+id/action_bar"
         layout="@layout/action_bar2_layout">
 
     </include>
-    <LinearLayout
-        android:layout_below="@+id/action_bar"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/padding_3"
-        android:layout_marginLeft="@dimen/padding_3"
-        android:layout_marginTop="@dimen/padding_2"
-        android:background="@drawable/dialog_bg_shape"
+        android:layout_below="@+id/action_bar"
+        android:layout_margin="@dimen/_5dp"
+        app:cardCornerRadius="@dimen/_10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_blue_short_vertical_div"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_6dp"
+                android:textColor="@color/color_report_ent"
+                android:text ="销号信息填写"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/gray_bb"/>
         <RelativeLayout
             android:id="@+id/ll_accept_member"
             android:layout_width="match_parent"
@@ -29,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title1"
                 android:text="验收人"/>
 
             <TextView
@@ -37,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_accept_member_label"
                 android:layout_marginLeft="@dimen/padding_20"
+                style="@style/text_detail_14sp_title0"
                 android:layout_centerVertical="true"
                 android:text= "李白" />
 
@@ -63,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
                 android:text="验收时间" />
 
             <TextView
@@ -75,6 +102,7 @@
                 android:layout_toEndOf="@+id/tv_time_label"
                 android:layout_toStartOf="@+id/iv_arrow_right"
                 android:gravity="center_vertical|end"
+                style="@style/text_detail_14sp_title0"
                 android:hint="必填" />
 
             <ImageView
@@ -101,6 +129,7 @@
             android:minHeight="@dimen/_50dp"
             android:layout_marginLeft="@dimen/_10dp"
             AudioEditView:view_label ="验收意见"
+            style="@style/text_detail_14sp_title0"
             android:layout_marginRight="@dimen/_10dp">
         </com.syberos.shuili.view.AudioEditView>
 
@@ -122,6 +151,7 @@
 
         </com.syberos.shuili.view.MultimediaView>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:id="@+id/ll_commit"
         android:layout_width="match_parent"

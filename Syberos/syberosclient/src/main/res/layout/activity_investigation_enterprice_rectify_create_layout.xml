@@ -9,19 +9,44 @@
         layout="@layout/action_bar2_layout">
 
     </include>
-    <LinearLayout
-        android:layout_below="@+id/action_bar"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/padding_3"
-        android:layout_marginLeft="@dimen/padding_3"
-        android:layout_marginTop="@dimen/padding_2"
-        android:background="@drawable/dialog_bg_shape"
+        android:layout_below="@id/action_bar"
+        app:cardCornerRadius="@dimen/_10dp"
+        android:layout_margin="@dimen/_5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/icon_blue_short_vertical_div"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_6dp"
+                android:textColor="@color/color_report_ent"
+                android:text ="整改信息填写"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:background="@color/gray_bb"/>
         <RelativeLayout
             android:id="@+id/ll_rectify_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_5dp"
             android:paddingLeft="@dimen/_5dp"
             android:visibility="gone"
             android:paddingRight="@dimen/_5dp">
@@ -41,13 +66,6 @@
                 android:background="@null"
                 android:hint="请填写"/>
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1dp"
-            android:layout_marginLeft="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:background="@color/gray_bb" />
         <com.syberos.shuili.view.AudioEditView
             android:id="@+id/ev_rectify_des"
             android:layout_width="match_parent"
@@ -76,6 +94,8 @@
 
         </com.syberos.shuili.view.MultimediaView>
     </LinearLayout>
+
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:id="@+id/ll_commit"
         android:layout_width="match_parent"
