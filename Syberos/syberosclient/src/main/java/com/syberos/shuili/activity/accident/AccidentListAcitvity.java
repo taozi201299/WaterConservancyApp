@@ -335,13 +335,6 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle bundle = new Bundle();
-        ObjAcci item = datas.get(position);
-        bundle.putSerializable(SEND_BUNDLE_KEY, item);
-        bundle.putSerializable("data",reportInfos);
-        intentActivity(AccidentListAcitvity.this,
-                AccidentDetailActivity.class,
-                false, bundle);
     }
 
     public class AccidentListAdapter extends BaseAdapter implements StickyListHeadersAdapter,SectionIndexer {
@@ -375,6 +368,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                convertView.setTag(viewHolder);
            }
            viewHolder.mHeadText.setText(""+tasks.get(position).getAccidentUnitName());
+           viewHolder.mHeadText.setVisibility(View.GONE);
             
             return convertView;
         }
@@ -413,6 +407,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             final ObjAcci accidentInformation
                     = tasks.get(position);
             viewHolder.tv_name.setText(accidentInformation.getAccidentUnitName());
+            viewHolder.tv_time.setText(accidentInformation.getCollTime());
             String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
@@ -461,6 +456,18 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     bundle.putInt("type",Integer.valueOf(accidentInformation.getRepStat()));
                     intentActivity(AccidentListAcitvity.this,
                             AccidentNewFormActivity.class,
+                            false, bundle);
+                }
+            });
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    ObjAcci item = datas.get(position);
+                    bundle.putSerializable(SEND_BUNDLE_KEY, item);
+                    bundle.putSerializable("data",reportInfos);
+                    intentActivity(AccidentListAcitvity.this,
+                            AccidentDetailActivity.class,
                             false, bundle);
                 }
             });
@@ -528,8 +535,6 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             TextView tv_time;
             @BindView(R.id.tv_name)
             TextView tv_name;
-            @BindView(R.id.tv_content)
-            TextView tv_content;
             @BindView(R.id.btn_report)
             Button btn_report;
 

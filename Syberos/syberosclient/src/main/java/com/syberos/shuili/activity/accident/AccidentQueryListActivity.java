@@ -445,7 +445,6 @@ public class AccidentQueryListActivity extends BaseActivity {
             holder.setText(R.id.tv_title, item.getDcItemName());
             holder.setText(R.id.tv_time, accidentInformation.getOccuTime());
             holder.setText(R.id.tv_name, accidentInformation.getAccidentUnitName());
-            holder.setText(R.id.tv_content, accidentInformation.getAcciSitu());
         }
     }
 }
