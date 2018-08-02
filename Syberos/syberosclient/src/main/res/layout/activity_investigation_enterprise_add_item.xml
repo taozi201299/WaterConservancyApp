@@ -46,13 +46,6 @@
                 style="@style/text_detail_14sp_title0"
                 android:text="小月河水利工程" />
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1dp"
-            android:background="@color/gray_bb"
-            android:layout_below="@+id/ll_project"
-            android:layout_marginTop="@dimen/_2dp"
-            />
         <RelativeLayout
             android:id="@+id/ll_project_tend"
             android:layout_width="match_parent"
