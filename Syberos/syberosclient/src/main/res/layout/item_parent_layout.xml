@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dp"
         android:background="@color/white"
+        android:textColor="@color/color_report_ent"
         android:paddingLeft="12.5dp"
         android:paddingRight="15dp"
         android:paddingTop="2dp"/>

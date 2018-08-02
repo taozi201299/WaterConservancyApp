@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:EnumViewButtonGroup="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/ll_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5dp"
+        app:cardCornerRadius="@dimen/_10dp"
+        >
+
     <LinearLayout
         android:id="@+id/ll_project_info"
         android:layout_width="match_parent"
@@ -13,8 +21,7 @@
         android:layout_marginLeft="@dimen/_10dp"
         android:layout_marginRight="@dimen/_10dp"
         android:paddingLeft="@dimen/_5dp"
-        android:paddingRight="@dimen/_5dp"
-        android:background="@drawable/dialog_bg_shape">
+        android:paddingRight="@dimen/_5dp">
         <RelativeLayout
             android:id="@+id/ll_project"
             android:layout_width="match_parent"
@@ -26,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title1"
                 android:text="所属工程"/>
 
             <TextView
@@ -35,6 +43,7 @@
                 android:layout_toRightOf="@+id/tv_project_name_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
                 android:text="小月河水利工程" />
         </RelativeLayout>
         <View
@@ -55,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title1"
                 android:text="所属标段"/>
 
             <TextView
@@ -64,6 +74,7 @@
                 android:layout_toRightOf="@+id/tv_project_tend_label"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
                 android:text="小月河水利工程" />
         </RelativeLayout>
         <View
@@ -85,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
                 android:text="隐患名称"/>
 
             <com.syberos.shuili.view.indexListView.ClearEditText
@@ -95,6 +107,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding_20"
                 android:background="@null"
+                style="@style/text_detail_14sp_title0"
                 android:hint="请填写"/>
         </RelativeLayout>
         <View
@@ -115,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
                 android:text="隐患部位"/>
             <com.syberos.shuili.view.indexListView.ClearEditText
                 android:id="@+id/tv_hidden_part"
@@ -124,6 +138,7 @@
                 android:layout_marginLeft="@dimen/padding_20"
                 android:layout_toRightOf="@+id/tv_part_label"
                 android:background="@null"
+                style="@style/text_detail_14sp_title0"
                 android:hint="请填写" />
 
         </RelativeLayout>
@@ -145,6 +160,7 @@
                 android:id="@+id/ll_enum_level"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50dp"
+                android:gravity="center_vertical"
                 EnumViewButtonGroup:enum_title ="隐患级别">
             </com.syberos.shuili.view.EnumView>
         </RelativeLayout>
@@ -164,6 +180,7 @@
                 android:id="@+id/ev_des_audio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_detail_14sp_title0"
                 android:paddingTop="@dimen/_15dp"
                 android:minHeight="@dimen/_50dp">
             </com.syberos.shuili.view.AudioEditView>
@@ -180,21 +197,24 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/_5dp"
             android:paddingRight="@dimen/_5dp">
+            <TextView
+                android:id="@+id/tv_attach_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                style="@style/text_detail_14sp_title0"
+                android:text="现场情况"/>
             <com.syberos.shuili.view.MultimediaView
                 android:id="@+id/ll_multimedia"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_60dp"
+                android:layout_below="@id/tv_attach_label">
 
             </com.syberos.shuili.view.MultimediaView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1dp"
-                android:background="@color/gray_bb"
-                android:layout_below="@+id/ll_multimedia"
-                android:layout_marginTop="@dimen/_10dp"/>
         </RelativeLayout>
     </LinearLayout>
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:id="@+id/ll_other_info"
         android:layout_width="match_parent"

@@ -258,7 +258,9 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             if (tasks != null) tasks.clear();
             tasks = data;
             sectionIndices = getSectionIndices();
+            if(sectionIndices == null)return;
             sectionHeaders = getSectionHeaders();
+            if(sectionHeaders == null) return;
             notifyDataSetChanged();
         }
 
@@ -304,15 +306,10 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             if (convertView != null) {
                 viewHolder = (ViewHolder) convertView.getTag();
             } else {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_investigation_task_item, null);
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_engine_item_layout, null);
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
             }
-            viewHolder.ll_type.setVisibility(View.GONE);
-            viewHolder.tv_title.setVisibility(View.GONE);
-            viewHolder.tv_time.setVisibility(View.GONE);
-            viewHolder.tv_name_label.setVisibility(View.GONE);
-            viewHolder.ll_content.setVisibility(View.GONE);
             viewHolder.tv_name.setText(tasks.get(position).getName());
             return convertView;
         }
@@ -368,18 +365,8 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         }
 
         class ViewHolder {
-            @BindView(R.id.rl_type)
-            RelativeLayout ll_type;
-            @BindView(R.id.tv_title)
-            TextView tv_title;
-            @BindView(R.id.tv_time)
-            TextView tv_time;
             @BindView(R.id.tv_name)
             TextView tv_name;
-            @BindView(R.id.tv_name_label)
-            TextView tv_name_label;
-            @BindView(R.id.ll_content)
-            LinearLayout ll_content;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
