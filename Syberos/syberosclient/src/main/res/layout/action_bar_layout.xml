@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/button_login_normal"
-    android:padding="@dimen/padding_10">
+    android:padding="@dimen/padding_6">
 
     <ImageView
         android:id="@+id/iv_action_bar_left"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:paddingLeft="@dimen/padding_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8dp"
         android:src="@mipmap/icon_person" />
 
     <TextView
@@ -19,21 +19,21 @@
         android:layout_centerInParent="true"
         android:text="详情"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_13" />
+        android:textSize="@dimen/font_size_16" />
 
     <ImageView
         android:id="@+id/iv_action_bar_right_1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="@dimen/padding_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8dp"
         android:layout_toLeftOf="@+id/iv_action_bar_right_2"
         android:src="@mipmap/icon_loc" />
 
     <ImageView
         android:id="@+id/iv_action_bar_right_2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8dp"
         android:layout_alignParentRight="true"
-        android:paddingRight="@dimen/padding_10"
         android:src="@mipmap/icon_scan" />
 </RelativeLayout>

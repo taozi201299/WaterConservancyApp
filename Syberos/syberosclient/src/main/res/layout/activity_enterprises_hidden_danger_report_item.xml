@@ -1,76 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_6dp"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <android.support.v7.widget.CardView
+        style="@style/Item_Card_Style"
+        app:cardCornerRadius="@dimen/_10dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_6dp"
-            android:orientation="vertical">
+            android:padding="@dimen/_5dp">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:text="2017年07月"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_10"
-                android:text="北京水利总院"
-                android:maxLines="1"
+                android:layout_marginEnd="@dimen/_80dp"
+                android:layout_marginStart="@dimen/padding_1"
                 android:ellipsize="end"
+                android:maxLines="1"
+                android:text="北京水利总院"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sp" />
+                android:textSize="@dimen/_16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_date"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_10"
-                android:text="2017-07-20" />
-        </LinearLayout>
+                android:id="@+id/tv_refunded"
+                android:layout_width="@dimen/_60dp"
+                android:layout_height="@dimen/_30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_6dp"
+                android:gravity="center"
+                android:text="@string/refunded"
+                android:textColor="@color/refunded_link_text_color"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_report"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_refunded"
-            android:layout_width="@dimen/_60dp"
-            android:layout_height="@dimen/_30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/_6dp"
-            android:gravity="center"
-            android:text="@string/refunded"
-            android:textColor="@color/refunded_link_text_color"
-            android:textSize="@dimen/_14sp" />
+            <TextView
+                android:id="@+id/tv_report"
+                android:layout_width="@dimen/_60dp"
+                android:layout_height="@dimen/_30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_6dp"
+                android:background="@drawable/button_login_normal"
+                android:gravity="center"
+                android:text="上报"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/tv_recall"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_report"
-            android:layout_width="@dimen/_60dp"
-            android:layout_height="@dimen/_30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/_6dp"
-            android:background="@drawable/button_login_normal"
-            android:gravity="center"
-            android:text="上报"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sp" />
-        <TextView
-            android:id="@+id/tv_recall"
-            android:layout_width="@dimen/_60dp"
-            android:layout_height="@dimen/_30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/_6dp"
-            android:background="@drawable/button_refund_normal"
-            android:gravity="center"
-            android:text="撤回"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_recall"
+                android:layout_width="@dimen/_60dp"
+                android:layout_height="@dimen/_30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_6dp"
+                android:background="@drawable/button_refund_normal"
+                android:gravity="center"
+                android:text="撤回"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
+
+    </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -16,6 +16,7 @@ public class EnterprisesElementCheckInfo
     public final static int LEVEL_COMMON    = 1;    // 一般隐患
     public final static int LEVEL_NOT_SURE  = 4;    // 待查
     public final static int LEVEL_LARGE     = 2;    // 重大隐患
+    public final static int LEVEL_OTHER     = 5;    // 重大隐患
 
     private int level;          // 隐患级别
     private String name;        // 元素名称

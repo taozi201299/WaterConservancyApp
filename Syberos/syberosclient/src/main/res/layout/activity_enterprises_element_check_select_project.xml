@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.inspect.InspectProjectSelectActivity"
     android:orientation="vertical"
-    >
+    tools:context=".activity.inspect.InspectProjectSelectActivity">
 
     <include
         android:id="@+id/layout_bar"
@@ -16,37 +15,26 @@
         android:id="@+id/ll_hidden_object"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginLeft="@dimen/_10dp"
         android:layout_marginRight="@dimen/_10dp"
         android:layout_marginTop="@dimen/padding_5"
+        android:layout_weight="1"
         android:background="@drawable/dialog_bg_shape"
         android:orientation="vertical"
         android:padding="@dimen/_5dp">
 
-        <RelativeLayout
-            android:id="@+id/rl_hiddlen_object_title"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_10dp">
-
-            <LinearLayout
-                android:id="@+id/ll_hiddlen_object_title"
-                android:layout_width="@dimen/_3dp"
-                android:layout_height="@dimen/_15dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/button_login_normal"
-                android:orientation="vertical" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_2dp"
-                android:layout_toEndOf="@+id/ll_hiddlen_object_title"
-                android:textSize="@dimen/_18sp"
-                android:text="请选择排查工程"
-                android:textColor="@color/button_login_normal" />
-        </RelativeLayout>
+            android:layout_marginBottom="@dimen/_5dp"
+            android:layout_marginStart="@dimen/_2dp"
+            android:layout_marginTop="@dimen/_5dp"
+            android:layout_toEndOf="@+id/ll_hiddlen_object_title"
+            android:drawableLeft="@mipmap/text_drawable_left"
+            android:drawablePadding="@dimen/_6dp"
+            android:text="请选择排查工程"
+            android:textColor="@color/button_login_normal"
+            android:textSize="@dimen/_18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -58,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_record_review"
                 android:layout_width="match_parent"

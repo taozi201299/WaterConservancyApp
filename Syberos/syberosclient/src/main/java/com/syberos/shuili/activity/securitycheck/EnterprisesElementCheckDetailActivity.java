@@ -239,15 +239,15 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         TextView tv_type = (TextView) (view.findViewById(R.id.tv_type));
         tv_type.setText(levelNames[level]);
 
-        LinearLayout ll_type = (LinearLayout) (view.findViewById(R.id.ll_type));
+//        LinearLayout ll_type = (LinearLayout) (view.findViewById(R.id.ll_type));
         switch (level) {
             case 0: {
-                ll_type.setBackground(getResources().getDrawable(
+                tv_type.setBackground(getResources().getDrawable(
                         R.drawable.bg_enterprises_element_check_level_normal));
             }
             break;
             case 1: {
-                ll_type.setBackground(getResources().getDrawable(
+                tv_type.setBackground(getResources().getDrawable(
                         R.drawable.bg_enterprises_element_check_level_large));
                 break;
             }

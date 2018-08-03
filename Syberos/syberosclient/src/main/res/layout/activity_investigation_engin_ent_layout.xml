@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_bg">
 
     <include
         android:id="@+id/layout_bar"
         layout="@layout/action_bar2_layout" />
+
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_10dp"
-        android:layout_margin="@dimen/_5dp"
         android:layout_below="@id/layout_bar"
-        >
+        android:layout_margin="@dimen/_5dp"
+        app:cardCornerRadius="@dimen/_10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_8dp"
+            android:paddingRight="@dimen/_8dp">
+
+            <TextView
+
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/_10dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/icon_blue_short_vertical_div"/>
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:textColor="@color/color_report_ent"
-                    android:text="请选择排查工程"
-                    />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5dp"
+                android:layout_marginLeft="@dimen/_5dp"
+                android:drawableLeft="@mipmap/text_drawable_left"
+                android:drawablePadding="@dimen/_6dp"
+                android:paddingBottom="@dimen/_5dp"
+                android:paddingTop="@dimen/_5dp"
+                android:text="请选择排查工程"
+                android:textColor="@color/color_report_ent" />
+
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:background="@color/gray_bb"
-                android:layout_height="@dimen/_1dp"/>
-    <com.andview.refreshview.XRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/xRefreshView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:orientation="vertical"
-        xrefreshview:isHeightMatchParent="true"
-        xrefreshview:isWidthMatchParent="true">
-        <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-            android:id="@+id/stickListHeadersListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10dp"
-            android:dividerHeight = "@dimen/_1dp"
-            android:divider="@color/gray_bb"
-            />
-    </com.andview.refreshview.XRefreshView>
+                android:layout_height="@dimen/_1dp"
+                android:background="@color/gray_bb" />
+
+            <com.andview.refreshview.XRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/xRefreshView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:orientation="vertical"
+                xrefreshview:isHeightMatchParent="true"
+                xrefreshview:isWidthMatchParent="true">
+
+                <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+                    android:id="@+id/stickListHeadersListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:divider="@color/gray_bb"
+                    android:dividerHeight="@dimen/_1dp" />
+            </com.andview.refreshview.XRefreshView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -224,6 +224,7 @@
         <item>重大隐患</item>
         <item>正常</item>
         <item>待查</item>
+        <item>item</item>
     </array>
 
 </resources>

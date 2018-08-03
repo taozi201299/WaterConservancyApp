@@ -103,7 +103,6 @@
         android:id="@+id/ll_report_after"
         android:layout_width="@dimen/_80dp"
         android:layout_height="@dimen/_30dp"
-        android:background="@drawable/dialog_bg_shape"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_5dp"

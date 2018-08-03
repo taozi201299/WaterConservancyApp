@@ -108,6 +108,7 @@
         <item>@string/module_child_anquan_jianchayuansu</item>
         <item>@string/module_child_anquan_jiancharenwu</item>
     </string-array>
+
     <string-array name="module_child_enterprise_yinhuan">
         <item>@string/module_child_yinhuan_paicha</item>
         <item>@string/module_child_yinhuan_zhenggai</item>

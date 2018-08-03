@@ -31,136 +31,140 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView
+        style="@style/Item_Card_Style"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="@dimen/_10dp"
-        android:background="@drawable/dialog_bg_shape"
-        android:orientation="vertical">
+        app:cardCornerRadius="@dimen/_10dp">
 
-        <com.syberos.shuili.view.CustomScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="@dimen/padding_5"
-            android:layout_marginLeft="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginTop="@dimen/padding_5"
-            android:fillViewport="true">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ll_base_info"
+            <com.syberos.shuili.view.CustomScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/padding_5"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_10dp"
+                android:layout_marginTop="@dimen/padding_5"
+                android:layout_weight="1"
+                android:fillViewport="true">
 
                 <LinearLayout
+                    android:id="@+id/ll_base_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:text="考核扣分"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_16sp" />
+                        android:orientation="horizontal">
 
-                    <com.syberos.shuili.view.ClearableEditText.ClearableEditText
-                        android:id="@+id/ce_score"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/padding_10"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:background="@color/transparent"
-                        android:gravity="center_vertical"
-                        android:inputType="number"
-                        android:minHeight="@dimen/_40dp"
-                        android:hint="请输入分数" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:text="考核扣分"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                            android:id="@+id/ce_score"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/padding_10"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:layout_weight="1"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical"
+                            android:hint="请输入分数"
+                            android:inputType="number"
+                            android:minHeight="@dimen/_40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_2dp"
+                            android:text="分"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_16sp" />
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:background="@color/gray_bb" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_describe"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_2dp"
-                        android:text="分"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_16sp" />
+                        android:paddingEnd="@dimen/_5dp"
+                        android:paddingStart="@dimen/_5dp">
+
+                        <com.syberos.shuili.view.AudioEditView
+                            android:id="@+id/ae_describe_audio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/_50dp"
+                            android:paddingTop="@dimen/_15dp"
+                            app:view_label="扣分说明"
+                            app:view_labelWidth="@dimen/_60dp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:background="@color/gray_bb" />
+
+                    <RelativeLayout
+                        android:id="@+id/ll_attachment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/_5dp"
+                        android:paddingStart="@dimen/_5dp">
+
+                        <com.syberos.shuili.view.MultimediaView
+                            android:id="@+id/mv_multimedia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/_50dp" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_describe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <com.syberos.shuili.view.AudioEditView
-                        android:id="@+id/ae_describe_audio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_50dp"
-                        android:paddingTop="@dimen/_15dp"
-                        app:view_label="扣分说明"
-                        app:view_labelWidth="@dimen/_60dp" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
-
-                <RelativeLayout
-                    android:id="@+id/ll_attachment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
-
-                    <com.syberos.shuili.view.MultimediaView
-                        android:id="@+id/mv_multimedia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_50dp" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </com.syberos.shuili.view.CustomScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_commit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginBottom="@dimen/_10dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:id="@+id/tv_save"
+            </com.syberos.shuili.view.CustomScrollView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:id="@+id/ll_commit"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_38dp"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginEnd="@dimen/_20dp"
-            android:background="@drawable/button_login_normal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10dp"
             android:gravity="center"
-            android:text="提交"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_edit_text_size" />
-    </LinearLayout>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38dp"
+                android:layout_marginEnd="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:background="@drawable/button_login_normal"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_edit_text_size" />
+        </LinearLayout>
+
 </LinearLayout>

@@ -293,9 +293,9 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 intentActivity((Activity) mContext, CheckReportForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_baobiao_gongzuo))) {
                 intentActivity((Activity) mContext, WoasReportForEntActivity.class, false, true);
-            } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchayuansu))) {
+            } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_jianchayuansu))) {//元素检查
                 intentActivity((Activity) mContext, EnterprisesElementCheckListActivity.class, false, true);
-            } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))) {
+            } else if (itemTag.equals(strResource.getString(R.string.module_child_anquan_xianchangjiancha))) {//现场检查
                 intentActivity((Activity) mContext,EnterprisesOnSiteCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_paicha))) {
                 Bundle bundle = new Bundle();

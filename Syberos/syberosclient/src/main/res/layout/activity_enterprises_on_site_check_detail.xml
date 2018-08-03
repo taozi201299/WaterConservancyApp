@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/transparent">
 
@@ -17,6 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <android.support.v7.widget.CardView
+               style="@style/Item_Card_Style"
+                app:cardCornerRadius="10dp">
             <LinearLayout
                 android:id="@+id/ll_base_info"
                 android:layout_width="match_parent"
@@ -26,7 +30,6 @@
                 android:paddingLeft="@dimen/_5dp"
                 android:paddingRight="@dimen/_5dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -102,9 +105,11 @@
                         android:layout_centerVertical="true"
                         android:text= "水库、农村水电站、於地段、在建功能、勘察设计和水温监测"/>
                 </RelativeLayout>
-
             </LinearLayout>
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                style="@style/Item_Card_Style"
+                app:cardCornerRadius="10dp">
             <LinearLayout
                 android:id="@+id/ll_check_object"
                 android:layout_width="match_parent"
@@ -114,7 +119,6 @@
                 android:paddingLeft="@dimen/_5dp"
                 android:paddingRight="@dimen/_5dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:id="@+id/rl__check_object_title"
@@ -157,6 +161,11 @@
                     android:orientation="vertical">
                 </LinearLayout>
             </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                style="@style/Item_Card_Style"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="@dimen/_10dp">
             <LinearLayout
                 android:id="@+id/ll_hidden_object"
                 android:layout_width="match_parent"
@@ -166,7 +175,6 @@
                 android:paddingLeft="@dimen/_5dp"
                 android:paddingRight="@dimen/_5dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:id="@+id/rl_hiddlen_object_title"
@@ -203,6 +211,7 @@
                     android:orientation="vertical">
                 </LinearLayout>
             </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
     </com.syberos.shuili.view.CustomScrollView>
 </RelativeLayout>
