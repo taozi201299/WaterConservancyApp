@@ -218,13 +218,17 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                Gson gson = new Gson();
-                mapBoundBean = gson.fromJson(result, MapBoundBean.class);
-                if (mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0) {
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                } else {
-                    tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
-                    setMapData();
+                if(!result.isEmpty()) {
+                    Gson gson = new Gson();
+                    mapBoundBean = gson.fromJson(result, MapBoundBean.class);
+                    if (mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0) {
+                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    } else {
+                        tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
+                        setMapData();
+                    }
+                }else {
+                    ToastUtils.show("getCenterXY 内容为空");
                 }
 
             }
@@ -243,19 +247,22 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
             @Override
             public void onResponse(String result) {
-                CityInfoBean cityInfoBean = new CityInfoBean();
-                Gson gson = new Gson();
-                cityInfoBean = gson.fromJson(result, CityInfoBean.class);
-                if (cityInfoBean != null && cityInfoBean.result != null && cityInfoBean.result.size() > 0) {
-                    for (CityInfoBean item : cityInfoBean.result) {
-                        if (item.level.equals("3")) {
-                            strCityName = item.name;
-                            break;
+                if(result.isEmpty()) {
+                    CityInfoBean cityInfoBean = new CityInfoBean();
+                    Gson gson = new Gson();
+                    cityInfoBean = gson.fromJson(result, CityInfoBean.class);
+                    if (cityInfoBean != null && cityInfoBean.result != null && cityInfoBean.result.size() > 0) {
+                        for (CityInfoBean item : cityInfoBean.result) {
+                            if (item.level.equals("3")) {
+                                strCityName = item.name;
+                                break;
 
+                            }
                         }
                     }
+                }else {
+                    ToastUtils.show("getCityName 为空");
                 }
-
 
             }
 

@@ -1,1 +1,1 @@
-include ':syberosclient', ':androidlame',':camera',':imagepicker',':xunfei', ':callback', ':httputils', ':testmodule'
+include ':syberosclient', ':androidlame',':camera',':imagepicker',':xunfei', ':callback', ':httputils', ':testmodule', ':JavaStd'
