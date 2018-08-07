@@ -3,6 +3,8 @@ package com.syberos.shuili.amap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.syberos.shuili.config.GlobleConstants;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +35,7 @@ public class GetJsonDataTask extends AsyncTask<String, Void, String> {
      */
     @Override
     protected String doInBackground(String... urls) {
-        String path = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService";
+        String path = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
 
         try {
             URL url = new URL(path);

@@ -28,7 +28,7 @@ import butterknife.BindView;
 
 /**
  * 工作考核 安全生产考核
- * 1 从BIS_WOAS_GROP中根据LEAD_ORG_GUID 获取所有考核组信息
+ * 1 从BIS_WOAS_GROP中根据LEAD_ORG_GUID 获取所有考核组信息 woasType 水利稽查 1 安全生产 2
  *
  */
 

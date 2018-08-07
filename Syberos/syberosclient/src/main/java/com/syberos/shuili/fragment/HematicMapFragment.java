@@ -16,6 +16,7 @@ import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
 import com.syberos.shuili.activity.ThematicDetailActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.ProvinceJsonBean;
 import com.syberos.shuili.entity.map.CityInfoBean;
 import com.syberos.shuili.entity.map.MapBoundBean;
@@ -203,7 +204,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     private void getCenterXY() {
         String code = App.orgJurd;
-        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService";
+        String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
         HashMap<String, String> params = new HashMap<>();
         params.put("templateCode", "140");
         if (App.jurdAreaType.equals("1")) {
@@ -241,7 +242,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     }
 
     private void getCityName() {
-        String url = "http://192.168.1.11:8091/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
+        String url = GlobleConstants.mapServer +"/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
         HashMap<String, String> params = new HashMap<>();
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
 
