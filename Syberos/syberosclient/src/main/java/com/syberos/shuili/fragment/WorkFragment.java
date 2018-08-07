@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
@@ -29,8 +30,8 @@ import com.syberos.shuili.activity.dangersource.RecordReviewListActivity;
 import com.syberos.shuili.activity.dangersource.WriteOffVerificationListActivity;
 import com.syberos.shuili.activity.woas.InspectAssessListActivity;
 import com.syberos.shuili.activity.woas.SafetyProductionListActivity;
-import com.syberos.shuili.activity.inspect.InspectQueryListActivity;
-import com.syberos.shuili.activity.inspect.OnSiteInspectListActivity;
+import com.syberos.shuili.activity.wins.InspectQueryListActivity;
+import com.syberos.shuili.activity.wins.OnSiteInspectListActivity;
 import com.syberos.shuili.activity.suen.OnSiteLawEnforcementListActivity;
 import com.syberos.shuili.activity.suen.LawEnforcementQueryActivity;
 import com.syberos.shuili.activity.stan.FormalReviewListActivity;
@@ -48,8 +49,13 @@ import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+
+import java.util.ArrayList;
+
+import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,6 +63,7 @@ import butterknife.OnClick;
 /**
  * Created by jidan on 18-3-10.
  * 办公首页 for 行政
+ * 根据机构级别和角色判断哪个模块
  */
 
 public class WorkFragment extends BaseFragment {
@@ -85,7 +92,6 @@ public class WorkFragment extends BaseFragment {
                 .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity_accident_query
                 .initiateScan(); // 初始化扫描
     }
-    private String[] moduleNames;
     private String[]moduleChildReportNames;
     private String[]moduleChildSecurityCheckNames;
     private String[]moduleChildHiddenDangerNames;
@@ -152,7 +158,32 @@ public class WorkFragment extends BaseFragment {
     @Override
     protected void initView() {
         tv_action_bar_title.setText(getResources().getString(R.string.title_work));
-        moduleNames = getResources().getStringArray(R.array.module);
+        ArrayList<String> modules = new ArrayList<>();
+        // 工作考核
+        if(App.sCodes.contains(GlobleConstants.wins)){
+            modules.add(getResources().getString(R.string.module_baobiao));
+            modules.add(getResources().getString(R.string.module_gongzuo));
+        }
+        if(App.sCodes.contains(GlobleConstants.sins)){
+            modules.add(getResources().getString(R.string.module_anjian));
+        }
+        if(App.sCodes.contains(GlobleConstants.hidd)){
+            modules.add(getResources().getString(R.string.module_yinhuan));
+        }
+        if(App.sCodes.contains(GlobleConstants.acci)){
+            modules.add(getResources().getString(R.string.module_shigu));
+        }
+        if(App.sCodes.contains(GlobleConstants.maha)){
+            modules.add(getResources().getString(R.string.module_weixianyuan));
+        }
+        if(App.sCodes.contains(GlobleConstants.stan)){
+            modules.add(getResources().getString(R.string.module_biaozhunhua));
+        }
+        if(App.sCodes.contains(GlobleConstants.suen)){
+            modules.add(getResources().getString(R.string.module_anjian));
+        }if(App.sCodes.contains(GlobleConstants.wins)){
+            modules.add(getResources().getString(R.string.module_shuilijicha));
+        }
         moduleChildReportNames = getResources().getStringArray(R.array.module_child_baobiao);
         moduleChildSecurityCheckNames = getResources().getStringArray(R.array.module_child_anquan);
         moduleChildHiddenDangerNames = getResources().getStringArray(R.array.module_child_yinhuan);
@@ -162,18 +193,18 @@ public class WorkFragment extends BaseFragment {
         moduleChildWorkCheckNames = getResources().getStringArray(R.array.module_child_gongzuokaohe);
         moduleChildLawEnforcementNames = getResources().getStringArray(R.array.module_child_anjian);
         moduleChildInspectionName = getResources().getStringArray(R.array.module_child_shuilijicha);
-        int moduleCount = moduleNames.length;
+        int moduleCount = modules.size();
         for(int i = 0; i< moduleCount ; i++){
             View view = LayoutInflater.from(mContext).inflate(R.layout.view_module_item,null);
             moduleViewHolder = new ModuleViewHolder(mContext,view,null);
-            moduleViewHolder.tv_moduleName.setText(moduleNames[i]);
+            moduleViewHolder.tv_moduleName.setText(modules.get(i));
             GradientDrawable drawable = (GradientDrawable)moduleViewHolder.ll_module_name.getBackground();
             //改变drawable的背景填充色
 
             drawable.setColor(getResources().getColor(moduleColor[i]));
 
-            String[]childNames = getModuleNames(moduleNames[i]);
-            int[]childIcon = getModulesIcon(moduleNames[i]);
+            String[]childNames = getModuleNames(modules.get(i));
+            int[]childIcon = getModulesIcon(modules.get(i));
             if(childNames == null)return;
             int size = childNames.length;
             for(int j = 0 ; j < size ;j ++) {

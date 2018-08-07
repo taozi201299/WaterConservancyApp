@@ -1,4 +1,4 @@
-package com.syberos.shuili.activity.inspect;
+package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,8 +1,7 @@
-package com.syberos.shuili.activity.inspect;
+package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,15 +22,16 @@ import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
 
 /**
  * 现场稽查列表 行政版  该接口暂时没有提供
  * 水利稽查
  * OBJ_WINS_PLAN 表中获取单位的稽查计划，从稽查方案表中找到稽查方案详情
+ *
+ * 8.2.2.83	水利稽察组（BIS_WINS_GROUP）
+ * 从水利稽查组中获取所在的稽查组
  */
 public class OnSiteInspectListActivity extends TranslucentActivity
         implements CommonAdapter.OnItemClickListener {

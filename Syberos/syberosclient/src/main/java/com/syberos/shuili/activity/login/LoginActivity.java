@@ -294,8 +294,6 @@ public class LoginActivity extends TranslucentActivity {
                     || "CJSG".equalsIgnoreCase(roleInfo.getScode())
                     || "CJJL".equalsIgnoreCase(roleInfo.getScode())){
                 App.sCode = roleInfo.getScode();
-                App.orgJurd = roleInfo.getOrgJurd();
-                App.jurdAreaType = roleInfo.getJurdAreaType();
                 bRet = true;
                 break;
             }else if(GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) ||
@@ -357,6 +355,9 @@ public class LoginActivity extends TranslucentActivity {
         String  status =  info.get("status") == null ?"" :info.get("status");
         String userCode = info.get("userCode") == null ?"" :info.get("userCode");
         String userName = info.get("userName") == null ?"" :info.get("userName");
+        App.jurdAreaType = info.get("jurdAreaType") == null ?"":info.get("jurdAreaType");
+        App.orgJurd = info.get("orgJurd") == null ?"":info.get("orgJurd");
+
         UserExtendInfo userExtendInfo = new UserExtendInfo("","",depId,depName,id,"","",orgCode,
                 orgId,orgName, userPassword,persId,persName,"",mobilenumb,null,status,"",userCode,userName,"");
         return userExtendInfo;

@@ -18,6 +18,10 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * BIS_WOAS_OBJ  工作考核对象表中通过工作考核GUID	WOAS_GUID 考核组GUID	WOAS_GROUP_GUID 获取被考核对象
+ */
+
 public class SafetyProductionObjectSelectActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 

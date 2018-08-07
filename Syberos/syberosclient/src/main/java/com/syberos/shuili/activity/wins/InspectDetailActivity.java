@@ -1,4 +1,4 @@
-package com.syberos.shuili.activity.inspect;
+package com.syberos.shuili.activity.wins;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

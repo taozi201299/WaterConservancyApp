@@ -28,11 +28,8 @@ import butterknife.BindView;
 
 /**
  * 工作考核 安全生产考核
- *  1 BIS_WOAS_GROP 考核组表
- *  2 8.2.1.16	工作考核对象表（OBJ_WOAS）中获取详情
+ * 1 从BIS_WOAS_GROP中根据LEAD_ORG_GUID 获取所有考核组信息
  *
- *  1 BIS_WOAS_GROP 考核组长orgguid
- *  2 工作考核对象
  */
 
 public class SafetyProductionListActivity extends  BaseActivity implements CommonAdapter.OnItemClickListener {

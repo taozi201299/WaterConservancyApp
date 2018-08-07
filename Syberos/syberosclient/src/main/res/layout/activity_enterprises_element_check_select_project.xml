@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".activity.wins.InspectProjectSelectActivity"
     android:orientation="vertical"
-    tools:context=".activity.inspect.InspectProjectSelectActivity">
+    >
 
     <include
         android:id="@+id/layout_bar"

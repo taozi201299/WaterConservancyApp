@@ -277,35 +277,35 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectDetailActivity"
+            android:name=".activity.wins.InspectDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectProblemDetailActivity"
+            android:name=".activity.wins.InspectProblemDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.OnSiteInspectListActivity"
+            android:name=".activity.wins.OnSiteInspectListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectProjectSelectActivity"
+            android:name=".activity.wins.InspectProjectSelectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectNewProblemActivity"
+            android:name=".activity.wins.InspectNewProblemActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectQueryListActivity"
+            android:name=".activity.wins.InspectQueryListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectQueryDetailActivity"
+            android:name=".activity.wins.InspectQueryDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.inspect.InspectQueryProblemListActivity"
+            android:name=".activity.wins.InspectQueryProblemListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity

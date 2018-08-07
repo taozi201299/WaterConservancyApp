@@ -1,4 +1,4 @@
-package com.syberos.shuili.activity.inspect;
+package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import butterknife.BindView;
 
 /**
  * 稽查查询列表
+ * OBJ_WINS_PLAN 表中获取单位的稽查计划，从稽查方案表中找到稽查方案详情
  */
 public class InspectQueryListActivity extends BaseActivity {
 

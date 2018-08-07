@@ -1,4 +1,4 @@
-package com.syberos.shuili.activity.inspect;
+package com.syberos.shuili.activity.wins;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.inspect.InspectPlan;
 import com.syberos.shuili.utils.Strings;
-import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.List;
 

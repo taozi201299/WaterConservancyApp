@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,52 +15,41 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.CommonAdapter;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.entity.report.ReportBaseEntity;
 import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
+import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
+import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class WoasReportActivity extends TranslucentActivity
-        implements PullRecyclerView.OnPullRefreshListener, CommonAdapter.OnItemClickListener{
-    private int pageIndex = 1;
-    private ListAdapter adapter;
-    List<SecurityCheckInformation> infos = new ArrayList<>();
-    public static final String SEND_BUNDLE_KEY = "SecurityCheckInformation";
+/**
+ * 行政端 工作考核报表 分为安全生产和水利稽查
+ * 1 从8.2.1.16	工作考核通知对象表（OBJ_WOAS）中获取下发的所有考核通知
+ * 2 分类 安全生产考核 和水利稽查考核
+ * 3 发文单位 根通知guid为null 则无上报 为退回
+ * 4 根通知guid不为null 有上报和撤回，可以查看其发送的单位的上报情况
+ */
 
-    @BindView(R.id.pullRecylerView)
-    PullRecyclerView pullRecyclerView;
+public class WoasReportActivity extends BaseActivity{
 
-    @BindView(R.id.tv_current_month)
-    TextView tv_current_month;
-
-    @BindView(R.id.iv_action_right)
-    LinearLayout iv_action_right;
-
-    @OnClick(R.id.tv_current_month)
-    void onCurrentMonthClicked() {
-        onSelectMonthClicked();
-    }
-
-    @OnClick(R.id.iv_action_right)
-    void onActionBarRightClicked() {
-        onSelectMonthClicked();
-    }
-
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        activityFinish();
-    }
-
+    @BindView(R.id.recyclerView_report_woas)
+    RecyclerView recyclerView_report_woas;
+    private final String TAG = WoasReportActivity.class.getSimpleName();
+    private final String Title = "工作考核报表";
+    HashMap<String,ArrayList<String>> groupMap = new HashMap<>();
     @Override
     public int getLayoutId() {
         return R.layout.activity_job_rating_report;
@@ -68,8 +58,7 @@ public class WoasReportActivity extends TranslucentActivity
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void initListener() {
-        tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
-        iv_action_right.setOnTouchListener(new ItemClickedAlphaChangeListener());
+
     }
 
     @Override
@@ -80,74 +69,68 @@ public class WoasReportActivity extends TranslucentActivity
     @Override
     public void initView() {
 
-        infos.clear();
+    }
+    private class GroupedListAdapter extends GroupedRecyclerViewAdapter{
 
-        for (int i = 0; i < 10; ++i) {
-            SecurityCheckInformation information = new SecurityCheckInformation();
-            information.setTitle("北京市水利部署通知" + (i+1));
-            information.setDate("2017-12-1" + i);
-            infos.add(information);
+        private ArrayList<ReportBaseEntity<String>>mGroups;
+        public GroupedListAdapter(
+                Context context, ArrayList<ReportBaseEntity<String>> groups) {
+            super(context);
+            mGroups = groups;
         }
+        public void setData(ArrayList<ReportBaseEntity<String>> groups){
+            mGroups = groups;
 
-        adapter = new ListAdapter(mContext, R.layout.layout_security_check_report_item, infos);
-        pullRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        pullRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        pullRecyclerView.setAdapter(adapter);
-        pullRecyclerView.setOnPullRefreshListener(this);
-        adapter.setOnItemClickListener(this);
-    }
-
-    private void onSelectMonthClicked() {
-        //时间选择器
-        boolean[] type = {true, true, false, false, false, false};
-
-        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (date.getTime() > System.currentTimeMillis()) {
-                    ToastUtils.show("提示：所选月份不应大于系统当前月份");
-                    return;
-                }
-                tv_current_month.setText(Strings.formatYearMonth(date));
-                // TODO: 2018/4/10 处理时间设置之后的逻辑
-            }
-        })
-                .isDialog(true)
-                .setType(type)
-                .build();
-        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
-        pvTime.show();
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
-        SecurityCheckInformation information = infos.get(position);
-        bundle.putSerializable(SEND_BUNDLE_KEY, information);
-
-        intentActivity(this, WoasDetailActivity.class, false, bundle);
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    private class ListAdapter extends CommonAdapter<SecurityCheckInformation> {
-        public ListAdapter(Context context, int layoutId, List<SecurityCheckInformation> datas) {
-            super(context, layoutId, datas);
+        }
+        @Override
+        public int getGroupCount() {
+            return mGroups == null ? 0 : mGroups.size();
         }
 
         @Override
-        public void convert(ViewHolder holder, SecurityCheckInformation information) {
-            ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(information.getDate());
-            ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(information.getTitle());
+        public int getChildrenCount(int groupPosition) {
+            ArrayList<String> children = mGroups.get(groupPosition).getChildren();
+            return children == null ? 0 : children.size();
+        }
+
+        @Override
+        public boolean hasHeader(int groupPosition) {
+            return true;
+        }
+
+        @Override
+        public boolean hasFooter(int groupPosition) {
+            return false;
+        }
+
+        @Override
+        public int getHeaderLayout(int viewType) {
+            return 0;
+        }
+
+        @Override
+        public int getFooterLayout(int viewType) {
+            return 0;
+        }
+
+        @Override
+        public int getChildLayout(int viewType) {
+            return 0;
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+
+        }
+
+        @Override
+        public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
+
+        }
+
+        @Override
+        public void onBindChildViewHolder(BaseViewHolder holder, int groupPosition, int childPosition) {
+
         }
     }
 }
