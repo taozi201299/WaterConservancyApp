@@ -212,8 +212,8 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         } else if (App.jurdAreaType.equals("3")) {
             params.put("type", "XZBA");
         }
-        //params.put("guid",code);
-        params.put("guid", "152201");
+        code = code.substring(0,6);
+        params.put("guid",code);
         params.put("name", "");
         params.put("targetId", "search.GetBoundsAndCenterXYLogic");
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
@@ -279,6 +279,20 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         for (Fragment item : fragments) {
             if (item instanceof HiddenChartFragment) {
                 ((HiddenChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  AccidentChartFragment){
+                ((AccidentChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }else if (item instanceof  DanagerSourceChartFragment){
+                ((DanagerSourceChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  SinsChartFragment){
+                ((SinsChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  StanChartFragment){
+                ((StanChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  SuenChartFragment){
+                ((SuenChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  WinsChartFragment){
+                ((WinsChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            }else if(item instanceof  WoasChartFragment){
+                ((WoasChartFragment)item).setMapData(mapBoundBean.result.get(0));
             }
         }
     }
