@@ -207,11 +207,15 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
         HashMap<String, String> params = new HashMap<>();
         params.put("templateCode", "140");
-        if (App.jurdAreaType.equals("1")) {
+        if ("1".equals(App.jurdAreaType)) {
             params.put("type", "PROVINCE");
-        } else if (App.jurdAreaType.equals("3")) {
-            params.put("type", "XZBA");
+        } else if ("4".equals(App.jurdAreaType.equals("4"))) {
+            params.put("type", "XZBAS");
+        }else {
+            ToastUtils.show("机构管辖范围类型错误");
+            params.put("type","PROVINCE");
         }
+        params.put("type", "XZBAS");
         code = code.substring(0,6);
         params.put("guid",code);
         params.put("name", "");
@@ -238,7 +242,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
             }
-        }, CacheMode.REQUEST_FAILED_READ_CACHE);
+        }, CacheMode.DEFAULT);
     }
 
     private void getCityName() {
