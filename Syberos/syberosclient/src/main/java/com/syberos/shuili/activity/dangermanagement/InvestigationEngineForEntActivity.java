@@ -19,8 +19,10 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.accident.AccidentNewFormActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHiddenActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
@@ -35,6 +37,8 @@ import butterknife.ButterKnife;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_ACCIDENT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_UNIT_KEY;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
@@ -83,6 +87,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
    private ArrayList<MvEngColl>mvEngColls = new ArrayList<>();
    private EngineListAdapter engineListAdapter;
    private String type ;
+   private Bundle mBundle ;
 
     public int getLayoutId() {
         return R.layout.activity_investigation_engin_ent_layout;
@@ -102,15 +107,16 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);
-        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        type = bundle.getString("type");
+        mBundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        type = mBundle.getString("type");
         if("element".equals(type)){
             // 元素检查
-            bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
+            bisSeChit = (BisSeChit) mBundle.getSerializable("checkItem");
         }else if("check".equals(type)){
             // 现场检查
-            bisSinsRec = (BisSinsRec)bundle.getSerializable("bisSinsRec");
-        }else {
+            bisSinsRec = (BisSinsRec)mBundle.getSerializable("bisSinsRec");
+        }
+        else {
             // 隐患模块
         }
         /**
@@ -217,6 +223,16 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MvEngColl item = mvEngColls.get(position);
         Bundle bundle = new Bundle();
+
+        if(String.valueOf(ObjAcci.NEW_ACCI).equals(type)){
+            bundle.putInt("type",ObjAcci.NEW_ACCI);
+            bundle.putSerializable("engColls",item);
+            bundle.putSerializable(DIC_UNIT_KEY,mBundle.getSerializable(DIC_UNIT_KEY));
+            bundle.putSerializable(DIC_ACCIDENT_KEY,bundle.getSerializable(DIC_ACCIDENT_KEY));
+            intentActivity(InvestigationEngineForEntActivity.this, AccidentNewFormActivity.class,
+                    false, bundle);
+            return;
+        }
         bundle.putSerializable("data",item);
         bundle.putSerializable("type",type);
         if(hasTend()) {

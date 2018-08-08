@@ -17,6 +17,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.accident.ObjAcci;
+import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -93,6 +94,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
     private HashMap<Integer,String>m_acciGradeMap;
     private ObjAcci objAcci = null;
     private int type ;
+    MvEngColl item;
 
     @OnClick(R.id.tv_accident_report_quick)
     void onAccidentReportQuickClicked() {
@@ -148,6 +150,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
             m_dicAccidentType = (DicInfo) bundle.getSerializable(DIC_ACCIDENT_KEY);
             tv_time.setText(CommonUtils.getCurrentDate());
             type = bundle.getInt("type");
+            item = (MvEngColl) bundle.getSerializable("engColls");
             initViewData();
             switch (type) {
                 case ObjAcci.REPORT_AFTER:
@@ -193,6 +196,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                     }
                     break;
                 case ObjAcci.NEW_ACCI:
+                    ce_accident_name.setText(item.getName());
                     break;
                 default:
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());

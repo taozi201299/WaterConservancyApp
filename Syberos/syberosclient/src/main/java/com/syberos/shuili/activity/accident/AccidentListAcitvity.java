@@ -19,6 +19,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
+import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
@@ -329,8 +330,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
         bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
-        bundle.putInt("type",ObjAcci.NEW_ACCI);
-        intentActivity(this, AccidentNewFormActivity.class,false,bundle);
+        bundle.putString("type",String.valueOf(ObjAcci.NEW_ACCI));
+        intentActivity(this, InvestigationEngineForEntActivity.class,false,bundle);
     }
 
     @Override
