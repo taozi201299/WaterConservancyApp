@@ -22,12 +22,12 @@
         <RadioGroup
             android:id="@+id/rg_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_60dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="11dp"
             android:paddingRight="11dp"
-            android:paddingTop="7dp">
+            android:paddingTop="11dp">
 
             <RadioButton
                 android:id="@+id/btn_workFragment"
