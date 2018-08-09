@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
@@ -64,6 +65,8 @@ public class MainEnterpriseActivity extends TranslucentActivity
     RelativeLayout rl_me_message_ring;
     ConstraintLayout cl_me_myself;
     ImageView iv_me_red_pot;
+    TextView tv_person_name;
+    TextView tv_person_address;
 
     @BindView(R.id.btn_workFragment)
     RadioButton btn_workFragment;
@@ -161,6 +164,10 @@ public class MainEnterpriseActivity extends TranslucentActivity
         rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
         cl_me_myself = (ConstraintLayout) view.findViewById(R.id.cl_me_myself);
         iv_me_red_pot = (ImageView)view.findViewById(R.id.iv_me_red_pot);
+        tv_person_name = view.findViewById(R.id.tv_person_name);
+        tv_person_name.setText(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        tv_person_address = view.findViewById(R.id.tv_person_address);
+        tv_person_address.setText(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
         if (Boolean.valueOf(SPUtils.get(Msg_Recv, true).toString())) {
             cb_me_switcher_ring.setChecked(true);
         } else {
@@ -261,6 +268,10 @@ public class MainEnterpriseActivity extends TranslucentActivity
                 false, true);
     }
     private void appUpdate(){
+        if(iv_me_red_pot.getVisibility() != View.VISIBLE){
+            ToastUtils.show("当前为最新版本");
+            return;
+        }
         if(UpdateManager.isServiceRunning(this)){
             ToastUtils.show("正在下载新版本");
         }
@@ -324,7 +335,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    ToastUtils.show(errorInfo.getMessage());
+                   // ToastUtils.show(errorInfo.getMessage());
                 }
             });
 
