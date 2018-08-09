@@ -110,6 +110,8 @@
         <activity
             android:name=".activity.searchproject.ProjectDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.searchproject.ProjectInfoActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskActivity"
             android:screenOrientation="portrait"

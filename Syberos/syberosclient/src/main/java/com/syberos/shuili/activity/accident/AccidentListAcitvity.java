@@ -429,7 +429,6 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                 break;
                 case ObjAcci.TYPE_LARGE: {
                     viewHolder.tv_type.setText(R.string.accident_type_large);
-                    viewHolder.tv_type.setTextColor(getResources().getColor(R.color.black));
                     viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_large_shape);
                 }
                 break;

@@ -19,6 +19,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
+import com.syberos.shuili.activity.searchproject.ProjectInfoActivity;
 import com.syberos.shuili.activity.stan.DataReviewListActivity;
 import com.syberos.shuili.activity.stan.NoticeListActivity;
 import com.syberos.shuili.activity.stan.PublicityListActivity;
@@ -405,29 +406,12 @@ public class WorkFragment extends BaseFragment {
 
                 Bundle bundle = new Bundle();
                 if (Strings.isValidUrl(scanResult)) {
-                } else {
-                    // TODO: 18-3-22 test show project details
-                    bundle.putString(ProjectDetailsActivity.RESULT_UNIT,
-                            "南京市河道管理处");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_NAME,
-                            "长江南京新济州河段河道整治工程");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_CODE,
-                            "1220000008881");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PARENT_UNIT,
-                            "南京市水务局");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_STATUS,
-                            "在建工程");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_START,
-                            "2014年01月");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_END,
-                            "2018年6月");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_PRICE,
-                            "800万元");
-                    bundle.putString(ProjectDetailsActivity.RESULT_PROJECT_IMPORTANCE,
-                            "市重点");
-
-                    intentActivity(getActivity(), ProjectDetailsActivity.class,
+                    scanResult += "&ukey=1";
+                    bundle.putString("url",scanResult);
+                    intentActivity(getActivity(), ProjectInfoActivity.class,
                             false, bundle);
+                } else {
+                    ToastUtils.show("二维码识别有误");
                 }
 
                 ToastUtils.show("Scan Result: " + scanResult);
