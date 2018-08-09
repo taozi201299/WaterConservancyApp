@@ -56,8 +56,6 @@ import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 
-import javax.microedition.khronos.opengles.GL;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

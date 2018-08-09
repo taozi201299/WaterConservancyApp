@@ -74,7 +74,7 @@ public class NotificationDetailActivity extends BaseActivity {
 
         tv_action_bar2_title.setText("通知详情");
         tv_action_bar2_title.setGravity(Gravity.LEFT);
-        iv_action_bar2_right.setImageResource(R.mipmap.icon_button_notification_item_delete);
+        iv_action_bar2_right.setImageResource(R.mipmap.icon_delete);
         iv_action_bar2_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

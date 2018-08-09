@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sl_notification"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:minHeight="60dp"
-    android:paddingTop="@dimen/padding_3"
-    android:paddingBottom="@dimen/padding_3"
-    android:layout_marginStart="@dimen/padding_3"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_5dp"
     android:layout_marginEnd="@dimen/padding_3"
-    android:background="@drawable/border_background_no_radius"
-    >
+    android:layout_marginStart="@dimen/padding_3"
+    android:minHeight="@dimen/work_button_item_width"
+    android:paddingBottom="@dimen/padding_3"
+    android:paddingTop="@dimen/padding_3">
 
     <!-- Bottom View Start-->
     <LinearLayout
-        android:background="@color/red_delete"
         android:id="@+id/bottom_wrapper"
         android:layout_width="120dp"
-        android:weightSum="1"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:background="@color/red_delete"
+        android:orientation="horizontal"
+        android:weightSum="1">
         <!--What you want to show-->
         <TextView
             android:id="@+id/tv_delete"
@@ -29,8 +27,7 @@
             android:gravity="center"
             android:text="@string/delete"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_size_18"
-            />
+            android:textSize="@dimen/font_size_18" />
     </LinearLayout>
     <!-- Bottom View End-->
 
@@ -39,46 +36,48 @@
         android:id="@+id/top_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            >
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_notification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_18"
-                android:maxLines="1"
                 android:ellipsize="end"
-                />
+                android:maxLines="1"
+                android:textColor="@color/text_black_color"
+                android:textSize="@dimen/_18sp" />
 
             <TextView
                 android:id="@+id/tv_notification_content"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:maxLines="2"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6dp"
                 android:ellipsize="end"
-                android:layout_weight="1"
-                android:textSize="@dimen/font_size_16"
-                />
+                android:maxLines="2"
+                android:textColor="@color/text_gray_color"
+                android:textSize="@dimen/_16sp" />
 
         </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="@dimen/_10dp"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_notification_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/font_size_18"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/font_size_18" />
     </LinearLayout>
     <!-- Surface View End -->
 </com.daimajia.swipe.SwipeLayout>
