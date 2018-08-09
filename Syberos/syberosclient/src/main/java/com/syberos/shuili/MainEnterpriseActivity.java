@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -57,12 +58,14 @@ public class MainEnterpriseActivity extends TranslucentActivity
     LinearLayout setting_menu;
     RelativeLayout rl_me_password;
     CheckBox cb_me_switcher_ring;
+    CheckBox cb_screenshot_ring;
 
     RelativeLayout rl_me_update;
     RelativeLayout rl_me_clear;
     RelativeLayout rl_me_logout;
     RelativeLayout rl_map_down;
     RelativeLayout rl_me_message_ring;
+    RelativeLayout rl_allow_screenshot;
     ConstraintLayout cl_me_myself;
     ImageView iv_me_red_pot;
     TextView tv_person_name;
@@ -109,6 +112,18 @@ public class MainEnterpriseActivity extends TranslucentActivity
                 Singleton.INSTANCE.messageReceiveRemindSwitch(isChecked);
             }
         });
+        cb_screenshot_ring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SPUtils.put(Allow_ScreenShot,isChecked);
+                if(isChecked) {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+                }else {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                }
+            }
+
+        });
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
         rl_me_logout.setOnClickListener(this);
@@ -117,6 +132,12 @@ public class MainEnterpriseActivity extends TranslucentActivity
             @Override
             public void onClick(View v) {
                 cb_me_switcher_ring.setChecked(!cb_me_switcher_ring.isChecked());
+            }
+        });
+        rl_allow_screenshot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cb_screenshot_ring.setChecked(!cb_screenshot_ring.isChecked());
             }
         });
         cl_me_myself.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +158,11 @@ public class MainEnterpriseActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+        if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
         btn_workFragment.setVisibility(View.GONE);
         btn_addressListFragment.setVisibility(View.GONE);
         btn_gateWayFragment.setVisibility(View.GONE);
@@ -157,11 +183,13 @@ public class MainEnterpriseActivity extends TranslucentActivity
         View view = inflater.inflate(R.layout.activity_setting_layout, null);
         rl_me_password = (RelativeLayout) view.findViewById(R.id.rl_me_password);
         cb_me_switcher_ring = (CheckBox) view.findViewById(R.id.cb_me_switcher_ring);
+        cb_screenshot_ring = (CheckBox)view.findViewById(R.id.cb_screenshot_ring);
         rl_me_update = (RelativeLayout) view.findViewById(R.id.rl_me_update);
         rl_me_clear = (RelativeLayout) view.findViewById(R.id.rl_me_clear);
         rl_me_logout = (RelativeLayout) view.findViewById(R.id.rl_me_logout);
         rl_map_down = (RelativeLayout)view.findViewById(R.id.rl_map_down);
         rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
+        rl_allow_screenshot = (RelativeLayout)view.findViewById(R.id.rl_allow_screenshot);
         cl_me_myself = (ConstraintLayout) view.findViewById(R.id.cl_me_myself);
         iv_me_red_pot = (ImageView)view.findViewById(R.id.iv_me_red_pot);
         tv_person_name = view.findViewById(R.id.tv_person_name);
@@ -173,6 +201,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
         } else {
             cb_me_switcher_ring.setChecked(false);
         }
+        cb_screenshot_ring.setChecked(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString()));
         setting_menu.addView(view);
 
 
