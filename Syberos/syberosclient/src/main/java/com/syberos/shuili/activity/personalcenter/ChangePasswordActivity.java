@@ -3,6 +3,7 @@ package com.syberos.shuili.activity.personalcenter;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class ChangePasswordActivity extends BaseActivity {
     ClearableEditText et_repeat_new_password;
 
     @BindView(R.id.tv_change_password_submit)
-    TextView tv_change_password_submit;
+    Button tv_change_password_submit;
 
     @BindView(R.id.cb_input_original_password)
     CheckBox cb_input_original_password;

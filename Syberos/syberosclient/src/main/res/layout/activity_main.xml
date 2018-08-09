@@ -18,108 +18,128 @@
         </FrameLayout>
 
 
-
-        <RadioGroup
-            android:id="@+id/rg_tab"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="11dp">
-
-            <RadioButton
-                android:id="@+id/btn_workFragment"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:id="@+id/rg_tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_work"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="办公" />
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingTop="11dp">
 
-            <RadioButton
-                android:id="@+id/btn_workFragment_enterprises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/radiobtn_bg_work"
-                android:gravity="center_horizontal"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="办公" />
+                <RadioButton
+                    android:id="@+id/btn_workFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_work"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="办公" />
 
-            <RadioButton
-                android:id="@+id/btn_securityCloudFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_sercurity"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="安全云" />
+                <RadioButton
+                    android:id="@+id/btn_workFragment_enterprises"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:drawableTop="@drawable/radiobtn_bg_work"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="办公" />
 
-            <RadioButton
-                android:id="@+id/btn_hematicMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_sercurity"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="专题图" />
+                <RadioButton
+                    android:id="@+id/btn_securityCloudFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_sercurity"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="安全云" />
 
-            <RadioButton
-                android:id="@+id/btn_addressListFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_address"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="通讯录" />
+                <RadioButton
+                    android:id="@+id/btn_hematicMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_thematic"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="专题图" />
 
-            <RadioButton
-                android:id="@+id/btn_addressListFragment_enterprises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_address"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="通讯录" />
+                <RadioButton
+                    android:id="@+id/btn_addressListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_address"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="通讯录" />
 
-            <RadioButton
-                android:id="@+id/btn_gateWayFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableTop="@drawable/radiobtn_bg_gateway"
-                android:textColor="@color/radiobtn_text_color"
-                android:gravity="center_horizontal"
-                android:text="门户" />
+                <RadioButton
+                    android:id="@+id/btn_addressListFragment_enterprises"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_address"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="通讯录" />
 
-            <RadioButton
-                android:id="@+id/btn_gateWayFragment_enterprises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center_horizontal"
-                android:drawableTop="@drawable/radiobtn_bg_gateway"
-                android:textColor="@color/radiobtn_text_color"
-                android:text="门户" />
+                <RadioButton
+                    android:id="@+id/btn_gateWayFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:button="@null"
+                    android:drawableTop="@drawable/radiobtn_bg_gateway"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:gravity="center_horizontal"
+                    android:text="门户" />
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/btn_gateWayFragment_enterprises"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_2dp"
+                    android:drawablePadding="@dimen/_2dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/radiobtn_bg_gateway"
+                    android:textColor="@color/radiobtn_text_color"
+                    android:text="门户" />
+
+            </RadioGroup>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
@@ -130,6 +150,4 @@
         android:layout_gravity="start"
         android:background="@color/white"
         android:orientation="vertical" />
-
-
 </android.support.v4.widget.DrawerLayout>

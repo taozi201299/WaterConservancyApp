@@ -231,7 +231,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         LogUtil.e(TAG, "gson.fromJson: time---" + (time2 - time1));
         initTitleAndView(type);
         int score = securityCloudEntry.getSynthesisInfoEntry().getScore();
-        titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
+        if (title.isEmpty()) {
+            titleDetail = new String(new StringBuilder("安全评分·").append(score).append("分"));
+        } else {
+
+            titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
+        }
         tvTitle.setText(title);
         collapsingToolbarLayout.setTitle(titleDetail);
         tvScore.setText(score + "");
@@ -774,6 +779,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (strJsonData != null) {
             initViewData();
         }

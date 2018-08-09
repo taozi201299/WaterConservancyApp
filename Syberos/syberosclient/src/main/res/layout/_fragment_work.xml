@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    xmlns:whatever="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150dp"
         android:background="@color/button_login_normal"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"></LinearLayout>
 
     <include
         android:id="@+id/action_bar"
-        layout="@layout/action_bar_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+        layout="@layout/action_bar_layout" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/ll_title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action_bar"
         android:layout_marginLeft="@dimen/_10dp"
         android:layout_marginRight="@dimen/_10dp"
         android:layout_marginTop="@dimen/_20dp"
-        app:cardCornerRadius="@dimen/_10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13">
+        whatever:cardCornerRadius="@dimen/_15dp">
 
         <LinearLayout
+            android:paddingTop="@dimen/_20dp"
+            android:paddingBottom="@dimen/_20dp"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/_25dp"
-            android:paddingTop="@dimen/_25dp">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/ll_work_todo"
@@ -109,17 +104,13 @@
 
     <ScrollView
         android:id="@+id/moduleScrollVertical"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:layout_marginLeft="@dimen/_10dp"
-        android:layout_marginRight="@dimen/_10dp"
-        android:layout_marginBottom="@dimen/_2dp"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_title">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_title"
+        android:layout_marginEnd="@dimen/padding_8"
+        android:layout_marginStart="@dimen/padding_8"
+        android:layout_marginTop="@dimen/padding_10"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/ll_module"
@@ -127,4 +118,4 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

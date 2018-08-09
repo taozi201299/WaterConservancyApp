@@ -163,8 +163,8 @@ public class LoginActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
-        accountEdit.setText("235407195106112745");
-        passwordEdit.setText("112745");
+//        accountEdit.setText("235407195106112745");
+//        passwordEdit.setText("112745");
 //        accountEdit.setText("ceshi321");
 //        passwordEdit.setText("123456");
         updateLoginButtonEnabledStatus();
@@ -217,12 +217,7 @@ public class LoginActivity extends TranslucentActivity {
                 switchSMSAndAccountLogin(!Singleton.INSTANCE.isAccountLogin);
                 break;
             case R.id.iv_btn_help:
-                new AlertDialog.Builder(LoginActivity.this)
-                        .setTitle(R.string.tip)
-                        .setMessage("账号通过水行政单位配置获得，请向水行政部门申请账号。")
-                        .setNegativeButton(getText(R.string.OK), null)
-                        .setCancelable(true)
-                        .show();
+                new AlertDialog.Builder(LoginActivity.this).setTitle(R.string.tip).setMessage("账号通过水行政单位配置获得，请向水行政部门申请账号。").setNegativeButton(getText(R.string.OK), null).setCancelable(true).show();
                 break;
             case R.id.btn_send_sms_code:
                 sendSMSVerifyCode();
@@ -231,18 +226,18 @@ public class LoginActivity extends TranslucentActivity {
     }
 
     /**
-     *  1 登录用户如何判断是行政用户还是企事业用户
-     *  2 用户单位类型
-     *  大中型已建工程运行管理单位1CJYJ  大中型在建工程项目法人	2 小型工程管理单位和技术服务单位	3
-     *  3 是否有角色的区分
+     * 1 登录用户如何判断是行政用户还是企事业用户
+     * 2 用户单位类型
+     * 大中型已建工程运行管理单位1CJYJ  大中型在建工程项目法人	2 小型工程管理单位和技术服务单位	3
+     * 3 是否有角色的区分
      */
-    private void login(){
+    private void login() {
         showLoadingDialog("登录中...");
         final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
-        final  HashMap<String,Object>params = new HashMap<>();
-        params.put("arg0",accountEdit.getText().toString());
-        params.put("arg1",encrypt(passwordEdit.getText().toString()));
-        SyberosManagerImpl.getInstance().login(params,methodName, new RequestCallback<Object>() {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("arg0", accountEdit.getText().toString());
+        params.put("arg1", encrypt(passwordEdit.getText().toString()));
+        SyberosManagerImpl.getInstance().login(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
                 closeDialog();
@@ -252,11 +247,11 @@ public class LoginActivity extends TranslucentActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(userExtendInfo == null){
-                    ToastUtils.show( ErrorInfo.ErrorCode.valueOf(-3).getMessage());
+                if (userExtendInfo == null) {
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-3).getMessage());
                     return;
                 }
-                if(checkUserPermission(userExtendInfo)) {
+                if (checkUserPermission(userExtendInfo)) {
                     // TODO: 2018/8/1 企事业用户需要获取功能模块权限
                     /**
                      * 行政用户直接进行登录
@@ -265,10 +260,11 @@ public class LoginActivity extends TranslucentActivity {
                     Singleton.INSTANCE.isLogin = true;
                     go2Activity();
                     syncAddressList();
-                }else {
+                } else {
                     ToastUtils.show("该用户无权限使用本系统");
                 }
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDialog();
@@ -276,10 +272,11 @@ public class LoginActivity extends TranslucentActivity {
             }
         });
     }
-    private boolean checkUserPermission(UserExtendInfo info){
+
+    private boolean checkUserPermission(UserExtendInfo info) {
         boolean bRet = false;
-        ArrayList<RoleBaseInfo>roleList=  info.getRoleExtInfoList();
-        if(roleList == null || roleList.size() == 0){
+        ArrayList<RoleBaseInfo> roleList = info.getRoleExtInfoList();
+        if (roleList == null || roleList.size() == 0) {
             return bRet;
         }
         /**
@@ -289,127 +286,119 @@ public class LoginActivity extends TranslucentActivity {
          * 4 大中型在建工程施工单位  CJSG
          * 5 大中型在建工程监理单位 CJJL
          */
-        for(RoleBaseInfo roleInfo : roleList){
-            if("CJYJ".equalsIgnoreCase(roleInfo.getScode())
-                    || "CJFR".equalsIgnoreCase(roleInfo.getScode())
-                    || "CJFW".equalsIgnoreCase(roleInfo.getScode())
-                    || "CJSG".equalsIgnoreCase(roleInfo.getScode())
-                    || "CJJL".equalsIgnoreCase(roleInfo.getScode())){
+        for (RoleBaseInfo roleInfo : roleList) {
+            if ("CJYJ".equalsIgnoreCase(roleInfo.getScode()) || "CJFR".equalsIgnoreCase(roleInfo.getScode()) || "CJFW".equalsIgnoreCase(roleInfo.getScode()) || "CJSG".equalsIgnoreCase(roleInfo.getScode()) || "CJJL".equalsIgnoreCase(roleInfo.getScode())) {
                 App.sCode = roleInfo.getScode();
                 bRet = true;
                 break;
-            }else if(GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) ||
-                    GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())){
+            } else if (GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())) {
                 App.sCodes.add(roleInfo.getScode());
                 bRet = true;
             }
         }
         return bRet;
     }
+
     private UserExtendInfo parseLoginResult(Object result) throws ParseException {
-        HashMap<String,String> info = new HashMap<>();
-        List<HashMap<String,String>> infoList = new ArrayList<>();
+        HashMap<String, String> info = new HashMap<>();
+        List<HashMap<String, String>> infoList = new ArrayList<>();
         String reponse = result.toString();
-        reponse = reponse.replace(" ","");
-        reponse = reponse.replace("\n","");
-        if(!reponse.contains("userPassword")) return null;
+        reponse = reponse.replace(" ", "");
+        reponse = reponse.replace("\n", "");
+        if (!reponse.contains("userPassword")) return null;
         String[] array = reponse.split("roleInfoList=anyType");
-        String[] childArray ={"0"} ;
+        String[] childArray = {"0"};
         int size = array.length;
-        for(int i = 0; i < size ; i++){
-            if(array[i].contains("}")) {
+        for (int i = 0; i < size; i++) {
+            if (array[i].contains("}")) {
                 childArray = array[i].split("\\}");
-            }else childArray[0] = array[i];
-            if(childArray.length == 1){
-                info.putAll(setUserInfo(childArray[0].replace("anyType{","")));
-            }else  if(childArray.length == 2){
-                HashMap <String,String>map = setUserInfo(childArray[0].replace("{",""));
+            } else childArray[0] = array[i];
+            if (childArray.length == 1) {
+                info.putAll(setUserInfo(childArray[0].replace("anyType{", "")));
+            } else if (childArray.length == 2) {
+                HashMap<String, String> map = setUserInfo(childArray[0].replace("{", ""));
                 infoList.add(map);
-                if(childArray[1].length() > 1){
+                if (childArray[1].length() > 1) {
                     info.putAll(setUserInfo(childArray[1]));
                 }
             }
         }
-        ArrayList<RoleBaseInfo>roleList = setRoleList(infoList);
+        ArrayList<RoleBaseInfo> roleList = setRoleList(infoList);
         UserExtendInfo userExtendInfo = setUserExtendInfo(info);
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
         return userExtendInfo;
 
     }
-    private UserExtendInfo setUserExtendInfo( HashMap<String,String> info){
-        String depId = info.get("depId") == null ? "" :info.get("depId").toString();
-        String depName = info.get("depName") == null ?"":info.get("depName").toString();
-        String id = info.get("id") == null ? "" :info.get("id").toString();
-        String orgCode = info.get("orgCode") == null ? "" :info.get("orgCode").toString();
-        String orgId = info.get("orgId") == null ?"":info.get("orgId").toString();
-        String orgName = info.get("orgName") == null ?"":info.get("orgName").toString();
-        String userPassword = info.get("userPassword") == null ? "" :info.get("userPassword");
-        String persId = info.get("persId") == null ?"" :info.get("persId");
-        String persName = info.get("persName") == null ?"" :info.get("persName");
-        String mobilenumb = info.get("mobilenumb") == null ?"" :info.get("mobilenumb");
-        String  status =  info.get("status") == null ?"" :info.get("status");
-        String userCode = info.get("userCode") == null ?"" :info.get("userCode");
-        String userName = info.get("userName") == null ?"" :info.get("userName");
-        App.jurdAreaType = info.get("jurdAreaType") == null ?"":info.get("jurdAreaType");
-        App.orgJurd = info.get("orgJurd") == null ?"":info.get("orgJurd");
 
-        UserExtendInfo userExtendInfo = new UserExtendInfo("","",depId,depName,id,"","",orgCode,
-                orgId,orgName, userPassword,persId,persName,"",mobilenumb,null,status,"",userCode,userName,"");
+    private UserExtendInfo setUserExtendInfo(HashMap<String, String> info) {
+        String depId = info.get("depId") == null ? "" : info.get("depId").toString();
+        String depName = info.get("depName") == null ? "" : info.get("depName").toString();
+        String id = info.get("id") == null ? "" : info.get("id").toString();
+        String orgCode = info.get("orgCode") == null ? "" : info.get("orgCode").toString();
+        String orgId = info.get("orgId") == null ? "" : info.get("orgId").toString();
+        String orgName = info.get("orgName") == null ? "" : info.get("orgName").toString();
+        String userPassword = info.get("userPassword") == null ? "" : info.get("userPassword");
+        String persId = info.get("persId") == null ? "" : info.get("persId");
+        String persName = info.get("persName") == null ? "" : info.get("persName");
+        String mobilenumb = info.get("mobilenumb") == null ? "" : info.get("mobilenumb");
+        String status = info.get("status") == null ? "" : info.get("status");
+        String userCode = info.get("userCode") == null ? "" : info.get("userCode");
+        String userName = info.get("userName") == null ? "" : info.get("userName");
+        App.jurdAreaType = info.get("jurdAreaType") == null ? "" : info.get("jurdAreaType");
+        App.orgJurd = info.get("orgJurd") == null ? "" : info.get("orgJurd");
+
+        UserExtendInfo userExtendInfo = new UserExtendInfo("", "", depId, depName, id, "", "", orgCode, orgId, orgName, userPassword, persId, persName, "", mobilenumb, null, status, "", userCode, userName, "");
         return userExtendInfo;
     }
-    private ArrayList setRoleList(List<HashMap<String,String>> infoList){
-        ArrayList<RoleBaseInfo>roleList = new ArrayList<>();
-        for(HashMap map: infoList){
+
+    private ArrayList setRoleList(List<HashMap<String, String>> infoList) {
+        ArrayList<RoleBaseInfo> roleList = new ArrayList<>();
+        for (HashMap map : infoList) {
             RoleBaseInfo roleBaseInfo = new RoleBaseInfo();
-            String roleId = map.get("roleId") == null ?"":map.get("roleId").toString();
-            String roleCode = map.get("roleCode") == null ?"":map.get("roleCode").toString();
-            String orgCode = map.get("orgCode") == null ?"":map.get("orgCode").toString();
-            String orgName = map.get("orgName") == null ?"":map.get("orgName").toString();
-            String roleName = map.get("roleName") == null ?"":map.get("roleName").toString();
-            String roleDesc = map.get("roleDesc") == null ? "":map.get("roleDesc").toString();
-            String roleType = map.get("roleType") == null ? "":map.get("roleType").toString();
-            String Scode = map.get("scode") == null ? "":map.get("scode").toString();
-            String sname = map.get("sname") == null ?"" :map.get("sname").toString();
-            String ts = map.get("ts") == null ? "":map.get("ts").toString();
-            String note = map.get("Note") == null ?"":map.get("Note").toString();
-            String status = map.get("status") == null ? "":map.get("status").toString();
-            String modifier = map.get("modifier") == null ?"":map.get("modifier").toString();
-            String orgJurd = map.get("orgJurd") == null ? "":map.get("orgJurd").toString();
-            String jurdAreaType = map.get("jurdAreaType") == null ?"":map.get("jurdAreaType").toString();
-            RoleBaseInfo roleExtInfo = new RoleBaseInfo(roleId,roleCode,orgCode,orgName,roleName,
-                    roleDesc,roleType,Scode,sname,ts,note, status,modifier,orgJurd,jurdAreaType);
+            String roleId = map.get("roleId") == null ? "" : map.get("roleId").toString();
+            String roleCode = map.get("roleCode") == null ? "" : map.get("roleCode").toString();
+            String orgCode = map.get("orgCode") == null ? "" : map.get("orgCode").toString();
+            String orgName = map.get("orgName") == null ? "" : map.get("orgName").toString();
+            String roleName = map.get("roleName") == null ? "" : map.get("roleName").toString();
+            String roleDesc = map.get("roleDesc") == null ? "" : map.get("roleDesc").toString();
+            String roleType = map.get("roleType") == null ? "" : map.get("roleType").toString();
+            String Scode = map.get("scode") == null ? "" : map.get("scode").toString();
+            String sname = map.get("sname") == null ? "" : map.get("sname").toString();
+            String ts = map.get("ts") == null ? "" : map.get("ts").toString();
+            String note = map.get("Note") == null ? "" : map.get("Note").toString();
+            String status = map.get("status") == null ? "" : map.get("status").toString();
+            String modifier = map.get("modifier") == null ? "" : map.get("modifier").toString();
+            String orgJurd = map.get("orgJurd") == null ? "" : map.get("orgJurd").toString();
+            String jurdAreaType = map.get("jurdAreaType") == null ? "" : map.get("jurdAreaType").toString();
+            RoleBaseInfo roleExtInfo = new RoleBaseInfo(roleId, roleCode, orgCode, orgName, roleName, roleDesc, roleType, Scode, sname, ts, note, status, modifier, orgJurd, jurdAreaType);
             roleList.add(roleExtInfo);
         }
         return roleList;
     }
-    private HashMap<String,String> setUserInfo(String result){
-        HashMap<String,String> info = new HashMap<>();
-        if(result == null) return null;
-        String[]array = result.split(";");
-        for(int i = 0; i < array.length; i++){
-            String[]childArray = array[i].split("=");
-            if(childArray != null && childArray.length >=2) {
+
+    private HashMap<String, String> setUserInfo(String result) {
+        HashMap<String, String> info = new HashMap<>();
+        if (result == null) return null;
+        String[] array = result.split(";");
+        for (int i = 0; i < array.length; i++) {
+            String[] childArray = array[i].split("=");
+            if (childArray != null && childArray.length >= 2) {
                 info.put(childArray[0], childArray[1]);
             }
-    }
-    return info;
+        }
+        return info;
 
     }
-    private void syncAddressList(){
+
+    private void syncAddressList() {
         String lastUser = App.getLastUserAccount();
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-        if(!lastUser.equals(userId)){
+        if (!lastUser.equals(userId)) {
             App.setLastUserAccount(userId);
-            HashMap<String,String> map = new HashMap<>();
-            map.put("arg0",info.getOrgId());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("arg0", info.getOrgId());
             SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
                 @Override
                 public void onSuccess(List<UserExtendInfo> var1) {
@@ -421,7 +410,7 @@ public class LoginActivity extends TranslucentActivity {
                     ToastUtils.show(var1.getMessage());
                 }
             });
-        }else{
+        } else {
             App.setLastUserAccount("");
             Singleton.INSTANCE.isLogin = true;
         }
@@ -430,39 +419,32 @@ public class LoginActivity extends TranslucentActivity {
     /**
      * 获取orgClienType 单位类型
      */
-private void getOrgBaseInfo(){
-    final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
-    final  HashMap<String,Object>params = new HashMap<>();
-    params.put("arg0",accountEdit.getText().toString());
-    params.put("arg1",encrypt(passwordEdit.getText().toString()));
-    SyberosManagerImpl.getInstance().getOrgBaseInfo(params, methodName, new RequestCallback<Object>() {
-        @Override
-        public void onResponse(Object result) {
-            go2Activity();
-        }
+    private void getOrgBaseInfo() {
+        final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("arg0", accountEdit.getText().toString());
+        params.put("arg1", encrypt(passwordEdit.getText().toString()));
+        SyberosManagerImpl.getInstance().getOrgBaseInfo(params, methodName, new RequestCallback<Object>() {
+            @Override
+            public void onResponse(Object result) {
+                go2Activity();
+            }
 
-        @Override
-        public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
 
-        }
-    });
-}
-   private void go2Activity(){
-    if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode)
-            || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)
-            || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)){
-        intentActivity(LoginActivity.this, MainEnterpriseActivity.class,false,false);
-    }else if(App.sCodes.contains(GlobleConstants.acci) ||
-            App.sCodes.contains(GlobleConstants.sins) ||
-            App.sCodes.contains(GlobleConstants.stan) ||
-            App.sCodes.contains(GlobleConstants.maha) ||
-            App.sCodes.contains(GlobleConstants.woas) ||
-            App.sCodes.contains(GlobleConstants.suen) ||
-            App.sCodes.contains(GlobleConstants.wins) ||
-            App.sCodes.contains(GlobleConstants.hidd)) {
-        intentActivity(LoginActivity.this, MainActivity.class, false, true);
+            }
+        });
     }
-   }
+
+    private void go2Activity() {
+        if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
+            intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
+        } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)) {
+            intentActivity(LoginActivity.this, MainActivity.class, false, true);
+        }
+    }
+
     private void showGateWayFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -497,15 +479,14 @@ private void getOrgBaseInfo(){
         hideFragment(transaction);
         login_container.setVisibility(View.GONE);
         if (null == loginEnvironmentVerifyFragment) {
-            loginEnvironmentVerifyFragment = new LoginEnvironmentVerifyFragment(
-                    new LoginEnvironmentVerifyListener() {
-                        @Override
-                        public void callEnter() {
-                            showLoginEnvironmentVerifyEnterFragment();
-                        }
-                    });
+            loginEnvironmentVerifyFragment = new LoginEnvironmentVerifyFragment(new LoginEnvironmentVerifyListener() {
+                @Override
+                public void callEnter() {
+                    showLoginEnvironmentVerifyEnterFragment();
+                }
+            });
             transaction.add(R.id.frame_container, loginEnvironmentVerifyFragment);
-        }else {
+        } else {
             transaction.show(loginEnvironmentVerifyFragment);
         }
         FrameLayout fl = findViewById(R.id.frame_container);
@@ -523,7 +504,7 @@ private void getOrgBaseInfo(){
         if (null == loginEnvironmentVerifyEnterFragment) {
             loginEnvironmentVerifyEnterFragment = new LoginEnvironmentVerifyEnterFragment();
             transaction.add(R.id.frame_container, loginEnvironmentVerifyEnterFragment);
-        }else {
+        } else {
             transaction.show(loginEnvironmentVerifyEnterFragment);
         }
         FrameLayout fl = findViewById(R.id.frame_container);
@@ -534,8 +515,8 @@ private void getOrgBaseInfo(){
     }
 
     /*
-      * 隐藏所有的Fragment
-      * */
+     * 隐藏所有的Fragment
+     * */
     private void hideFragment(FragmentTransaction transaction) {
         if (null != gateWayFragment) {
             transaction.hide(gateWayFragment);
@@ -616,8 +597,7 @@ private void getOrgBaseInfo(){
     private void sendSMSVerifyCode() {
         String phoneNum = phoneNumberEdit.getText().toString();
         if (Strings.isValidPhoneNum(phoneNum)) {
-            SendSMSCodeCountDownTimer timer
-                    = new SendSMSCodeCountDownTimer(btn_send_sms_code, "重新获取");
+            SendSMSCodeCountDownTimer timer = new SendSMSCodeCountDownTimer(btn_send_sms_code, "重新获取");
             timer.start();
         } else {
             ToastUtils.show(getResources().getText(R.string.invalid_phone_number));
@@ -663,7 +643,7 @@ private void getOrgBaseInfo(){
         return true;
     }
 
-    private static class ViewHolder{
+    private static class ViewHolder {
         TextView loginRecordMenuItemText;
     }
 
@@ -693,11 +673,9 @@ private void getOrgBaseInfo(){
 
             ViewHolder holder;
             if (null == convertView) {
-                convertView = LayoutInflater.from(LoginActivity.this).inflate(
-                        R.layout.login_record_menu_item, null);
+                convertView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.login_record_menu_item, null);
                 holder = new ViewHolder();
-                holder.loginRecordMenuItemText
-                        = convertView.findViewById(R.id.login_record_menu_item_text);
+                holder.loginRecordMenuItemText = convertView.findViewById(R.id.login_record_menu_item_text);
                 convertView.setTag(holder);
 
                 convertView.setOnClickListener(new View.OnClickListener() {
@@ -706,6 +684,7 @@ private void getOrgBaseInfo(){
                         ViewHolder holder = (ViewHolder) v.getTag();
                         if (Singleton.INSTANCE.isAccountLogin) {
                             accountEdit.setText(holder.loginRecordMenuItemText.getText());
+                            passwordEdit.setText("");
                         } else {
                             phoneNumberEdit.setText(holder.loginRecordMenuItemText.getText());
                         }

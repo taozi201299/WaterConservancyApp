@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_type"
         android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_10dp"
         android:padding="@dimen/padding_4">
 
         <TextView

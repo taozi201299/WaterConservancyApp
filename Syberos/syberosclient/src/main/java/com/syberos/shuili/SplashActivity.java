@@ -17,12 +17,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class SplashActivity extends Activity implements EasyPermissions.PermissionCallbacks {
-    public static final String[] requestPermissions = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO
-    };
+    public static final String[] requestPermissions = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
     private static final int RC_PERM = 110;
     private static final String TAG = SplashActivity.class.getSimpleName();
     private Handler mHandler;
@@ -38,36 +33,36 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestMulti();
-        }else{
+        } else {
             go2ActivityDelay();
         }
     }
 
-    private void go2Activity(){
+    private void go2Activity() {
         // TODO: 2018/4/16 在本地修改此处，此处设计到用户的初始化
         if (Singleton.INSTANCE.isLogin) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
-       }
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        }
         finish();
     }
-    private void go2ActivityDelay(){
+
+    private void go2ActivityDelay() {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-             go2Activity();
+                go2Activity();
             }
-        },2000);
+        }, 2000);
 
     }
+
     /**
      * 请求多个权限
-     *
      */
     public void requestMulti() {
-        EasyPermissions.requestPermissions(this, "需要申请功能",
-                RC_PERM, requestPermissions);
+        EasyPermissions.requestPermissions(this, "需要申请功能", RC_PERM, requestPermissions);
     }
 
     @Override
@@ -79,14 +74,14 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        if(requestCode == RC_PERM){
+        if (requestCode == RC_PERM) {
             go2Activity();
         }
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if(requestCode == RC_PERM){
+        if (requestCode == RC_PERM) {
             go2Activity();
         }
     }
