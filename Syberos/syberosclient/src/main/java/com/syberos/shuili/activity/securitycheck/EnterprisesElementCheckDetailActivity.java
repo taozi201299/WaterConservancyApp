@@ -15,6 +15,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
@@ -255,6 +256,14 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         }
 
         ll_object_container_1.addView(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",hiddenItemInfo);
+                intentActivity(EnterprisesElementCheckDetailActivity.this,InvestigationAccepDetailActivity.class,false,bundle);
+            }
+        });
     }
 
     /**

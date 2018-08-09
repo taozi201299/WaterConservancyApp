@@ -173,16 +173,11 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
 
     @Override
     public void initView() {
+        showTitle("隐患详情");
 
         scrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.tv_action_bar2_title)).setText(InvestigationAccepTaskActivity.Title);
-        ((ImageView)findViewById(R.id.iv_action_bar2_left)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setActionBarRightVisible(View.INVISIBLE);
         ((ImageView)findViewById(R.id.iv_action_bar2_right)).setVisibility(View.INVISIBLE);
         ll_check_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_check_info);
         ll_supervise_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_supervice_info);
