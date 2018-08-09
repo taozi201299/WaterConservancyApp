@@ -355,6 +355,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             map.clear();
             this.tasks = data;
             sectionIndices =getSectionIndices();
+            if(sectionIndices == null)return;
             sectionHeaders = getSectionHeaders();
             notifyDataSetChanged();
         }

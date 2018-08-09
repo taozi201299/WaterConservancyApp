@@ -13,6 +13,7 @@ import com.syberos.shuili.entity.objCase.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity {
     private OptionsPickerView typePicker = null;
     private LawEnforcementEvidenceInformation submitInformation = null;
 
-    @BindView(R.id.tv_type)
-    TextView tv_type;
+    @BindView(R.id.ev_severity)
+    EnumView ev_severity;
 
     @BindView(R.id.ae_describe_audio)
     AudioEditView ae_describe_audio;
@@ -37,10 +38,6 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity {
     @BindView(R.id.mv_multimedia)
     MultimediaView mv_multimedia;
 
-    @OnClick(R.id.tv_type)
-    void onTypeClicked() {
-        typePicker.show();
-    }
 
     @OnClick(R.id.tv_submit)
     void onSubmitClicked() {
@@ -75,22 +72,11 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity {
     @Override
     public void initView() {
 
+        showTitle("新增证据");
+        setActionBarRightVisible(View.INVISIBLE);
         submitInformation = new LawEnforcementEvidenceInformation();
-
-        typePicker = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                tv_type.setText(types.get(options1));
-                submitInformation.setType(options1);
-            }
-        })
-                .setTitleText("执法类型选择")
-                .isDialog(true)
-                .setOutSideCancelable(false)
-                .build();
-
         types = Arrays2.stringArrayToListString(getResources().getStringArray(
                 R.array.law_enforcement_evidence_types));
-        typePicker.setPicker(types);
+        ev_severity.setEntries(types);
     }
 }

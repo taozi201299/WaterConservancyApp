@@ -16,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.objCase.ObjLayer;
@@ -30,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LawEnforcementQueryActivity extends TranslucentActivity
+public class LawEnforcementQueryActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
     public static final String SEND_BUNDLE_KEY = "LawQueryInformation";
@@ -50,12 +51,6 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
 
     private boolean bSearch = false;
 
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        CommonUtils.hideSoftPan(searchClearEditText);
-        searchClearEditText.clearFocus();
-        activityFinish();
-    }
 
     @OnClick(R.id.tv_quit_search)
     void onCancelSearchClicked() {
@@ -85,6 +80,8 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+        showTitle("法律法规");
+        setActionBarRightVisible(View.INVISIBLE);
         searchClearEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

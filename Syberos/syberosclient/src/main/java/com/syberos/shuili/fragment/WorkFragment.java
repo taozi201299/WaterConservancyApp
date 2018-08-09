@@ -158,31 +158,40 @@ public class WorkFragment extends BaseFragment {
     protected void initView() {
         tv_action_bar_title.setText(getResources().getString(R.string.title_work));
         ArrayList<String> modules = new ArrayList<>();
-        // 工作考核
-        if(App.sCodes.contains(GlobleConstants.wins)){
-            modules.add(getResources().getString(R.string.module_baobiao));
-            modules.add(getResources().getString(R.string.module_gongzuo));
-        }
-        if(App.sCodes.contains(GlobleConstants.sins)){
-            modules.add(getResources().getString(R.string.module_anjian));
-        }
-        if(App.sCodes.contains(GlobleConstants.hidd)){
-            modules.add(getResources().getString(R.string.module_yinhuan));
-        }
-        if(App.sCodes.contains(GlobleConstants.acci)){
-            modules.add(getResources().getString(R.string.module_shigu));
-        }
-        if(App.sCodes.contains(GlobleConstants.maha)){
-            modules.add(getResources().getString(R.string.module_weixianyuan));
-        }
-        if(App.sCodes.contains(GlobleConstants.stan)){
-            modules.add(getResources().getString(R.string.module_biaozhunhua));
-        }
-        if(App.sCodes.contains(GlobleConstants.suen)){
-            modules.add(getResources().getString(R.string.module_anjian));
-        }if(App.sCodes.contains(GlobleConstants.wins)){
-            modules.add(getResources().getString(R.string.module_shuilijicha));
-        }
+        modules.add(getResources().getString(R.string.module_baobiao));
+        modules.add(getResources().getString(R.string.module_gongzuo));
+        modules.add(getResources().getString(R.string.module_anjian));
+        modules.add(getResources().getString(R.string.module_yinhuan));
+        modules.add(getResources().getString(R.string.module_shigu));
+        modules.add(getResources().getString(R.string.module_weixianyuan));
+        modules.add(getResources().getString(R.string.module_biaozhunhua));
+        modules.add(getResources().getString(R.string.module_anjian));
+        modules.add(getResources().getString(R.string.module_shuilijicha));
+//        // 工作考核
+//        if(App.sCodes.contains(GlobleConstants.wins)){
+//            modules.add(getResources().getString(R.string.module_baobiao));
+//            modules.add(getResources().getString(R.string.module_gongzuo));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.sins)){
+//            modules.add(getResources().getString(R.string.module_anjian));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.hidd)){
+//            modules.add(getResources().getString(R.string.module_yinhuan));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.acci)){
+//            modules.add(getResources().getString(R.string.module_shigu));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.maha)){
+//            modules.add(getResources().getString(R.string.module_weixianyuan));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.stan)){
+//            modules.add(getResources().getString(R.string.module_biaozhunhua));
+//        }
+//        if(App.sCodes.contains(GlobleConstants.suen)){
+//            modules.add(getResources().getString(R.string.module_anjian));
+//        }if(App.sCodes.contains(GlobleConstants.wins)){
+//            modules.add(getResources().getString(R.string.module_shuilijicha));
+//        }
         moduleChildReportNames = getResources().getStringArray(R.array.module_child_baobiao);
         moduleChildSecurityCheckNames = getResources().getStringArray(R.array.module_child_anquan);
         moduleChildHiddenDangerNames = getResources().getStringArray(R.array.module_child_yinhuan);

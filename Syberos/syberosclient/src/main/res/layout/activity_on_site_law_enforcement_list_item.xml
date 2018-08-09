@@ -2,16 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/white_ripple_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/rl_detail_problem_item"
-    android:layout_margin="@dimen/_5dp"
-    >
+    android:layout_margin="@dimen/_5dp">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/transparent_border_shape"
         android:orientation="horizontal"
         >
         <LinearLayout
@@ -20,6 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/_5dp"
+            android:layout_toLeftOf="@+id/btn_new_evidence"
             >
             <RelativeLayout
                 android:id="@+id/rl_type"
@@ -81,10 +84,9 @@
                     />
                 <TextView
                     android:id="@+id/tv_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:textColor="@color/gray_bb"
                     android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。"/>
             </LinearLayout>
@@ -95,11 +97,12 @@
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ll_text"
-            android:layout_margin="@dimen/_5dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginRight="@dimen/_5dp"
             android:background="@drawable/button_login_normal"
             android:textColor="@color/white"
             android:text="新增证据"/>
     </RelativeLayout>
-
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>
