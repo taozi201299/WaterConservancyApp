@@ -70,7 +70,7 @@ public class HazListForEntActivity extends BaseActivity
     }
 
     private void getHazsDic(){
-        String url  = App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HAZ");
         params.put("attColCode","HAZ_GRAD");
@@ -107,7 +107,7 @@ public class HazListForEntActivity extends BaseActivity
         return dicName;
     }
     private void getHazsList(){
-        String url = App.strIP + "/sjjk/v1/bis/obj/objHazs/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
@@ -134,7 +134,7 @@ public class HazListForEntActivity extends BaseActivity
             if(iFailedCount != 0){
                 break;
             }
-            String url = App.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getEngGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -170,7 +170,7 @@ public class HazListForEntActivity extends BaseActivity
                 break;
             }
             final ObjHaz item = inspectionList.dataSource.get(i);
-            String url = App.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getOrgGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

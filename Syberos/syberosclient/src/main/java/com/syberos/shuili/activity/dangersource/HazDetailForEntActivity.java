@@ -13,6 +13,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
@@ -91,7 +92,7 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     }
 
     private void getBisHazRegDetail(){
-        String url = App.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
         HashMap<String,String> param = new HashMap<>();
         param.put("guid",information.getGuid());
         param.put("hazGuid",information.getGuid());

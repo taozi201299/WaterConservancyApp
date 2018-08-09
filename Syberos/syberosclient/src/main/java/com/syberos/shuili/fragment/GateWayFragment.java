@@ -187,7 +187,7 @@ public class GateWayFragment extends BaseFragment {
 
     TabAdapter tabAdapter;
 
-    public static final String[] tabTitle = new String[]{"安监咨讯", "三类人员", "标准化", "教育培训"};
+    public static final String[] tabTitle = new String[]{"三类人员", "标准化", "教育培训"};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -17,6 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -60,7 +61,7 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
     }
 
     private void getObjCaseList(){
-        String url = App.strIP + "/sjjk/v1/obj/case/objCases/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/case/objCases/";
         HashMap<String,String>param = new HashMap<>();
         param.put("suneOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {

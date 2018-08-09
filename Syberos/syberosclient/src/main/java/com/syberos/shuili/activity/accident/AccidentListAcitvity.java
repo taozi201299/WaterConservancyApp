@@ -21,6 +21,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -137,7 +138,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
      * 获取事故单位类型字典
      */
     private void getAccidentUnitType(){
-        String url =  App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_WIUN_TYPE");
@@ -169,7 +170,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
      * 获取事故类别字典
      */
     private void getAcciCate(){
-        String url =  App.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_CATE");
@@ -202,7 +203,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
      * 获取快报事故列表
      */
     private void getAccidentList(){
-        String url =  App.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
         param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
@@ -251,7 +252,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
      * 获取事故单位名称
      */
     private void getAccidentUnitInfo(){
-        String url =  App.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : objAccis.dataSource){
             params.put("guid",item.getAcciWindGuid());

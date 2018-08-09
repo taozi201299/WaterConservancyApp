@@ -11,6 +11,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
@@ -82,7 +83,7 @@ public class RecordReviewConfirmActivity extends BaseActivity {
     }
 
     private void getBisHazRegDetail(){
-        String url = App.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
         HashMap<String,String>param = new HashMap<>();
         param.put("guid",information.guid);
         param.put("hazGuid",information.guid);
@@ -141,7 +142,7 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         ae_describe_audio.setLabelText("备注");
     }
     private  void commit(){
-        String url = App.strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrit/";
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrit/";
         HashMap<String,String> params= new HashMap<>();
         params.put("hazGuid",information.guid); // 危险源GUID
         params.put("regOrgGuid",bisHazRegDetail.dataSource.get(0).orgGuid); // 报备单位GUID

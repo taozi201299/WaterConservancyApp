@@ -11,6 +11,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.IResultCallback;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -222,8 +223,8 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         /**
          * 新增事故返回
          */
-        if(url.equals(App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/create") ||
-                url.equals(App.strCJIP +"/wcsps-api/cj/obj/hidd/addObjHidd")) {
+        if(url.equals(GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/create") ||
+                url.equals(GlobleConstants.strCJIP +"/wcsps-api/cj/obj/hidd/addObjHidd")) {
             String selection = DBDefinition.seriesKey + "=?";
             String[] selectionArgs = {id};
             List list = dbHelper.query(DBDefinition.COMMIT_TABLE, null, null, null, AttachMentInfoEntity.class);

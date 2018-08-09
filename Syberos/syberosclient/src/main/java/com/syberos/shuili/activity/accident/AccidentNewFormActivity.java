@@ -16,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -272,7 +273,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
     private void accidentReport() {
         int localStatus = 0;
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
-        String url = App.strCJIP + "/wcsps-api/cj/yuanXin/Accident/create";
+        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Accident/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
         params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
@@ -298,13 +299,13 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                 params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 params.put("repStat", "1");
                 params.put("pGuid",objAcci.getId());
-                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
+                url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
                 localStatus = 1;
                 localCacheEntity.commitType = 0;
                 break;
             case ObjAcci.REPORT_QUICK:
             case 0:
-                url = App.strCJIP +"/wcsps-api/cj/yuanXin/Accident/fastReport";
+                url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/fastReport";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
                 params.put("missNum","");
@@ -331,7 +332,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url =  App.strIP + "/sjjk/v1/jck/attMedBase/";
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_ACCI";
                 info.bisGuid = "";
                 info.localStatus = "0";

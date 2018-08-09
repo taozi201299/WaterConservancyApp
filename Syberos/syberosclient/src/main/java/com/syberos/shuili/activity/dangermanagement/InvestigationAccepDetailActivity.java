@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
@@ -274,7 +275,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      * 排查单位名称
      */
     private void getUnitNameByOrgID(String id){
-        String url = App.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",id);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

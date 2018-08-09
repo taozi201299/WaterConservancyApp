@@ -17,6 +17,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.objCase.ObjLayer;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -142,7 +143,7 @@ public class LawEnforcementQueryActivity extends TranslucentActivity
     }
 
     private void getObjLayerList(){
-        String url = App.strIP + "/sjjk/v1/obj/lare/objLares/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/lare/objLares/";
         HashMap<String,String>params = new HashMap<>();
       //  params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgGuid","5E554BC50F634822AE1308CB85947B8A");

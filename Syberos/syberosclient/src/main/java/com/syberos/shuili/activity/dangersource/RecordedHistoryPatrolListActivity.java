@@ -16,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
@@ -69,7 +70,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
 
     @Override
     public void initData() {
-        String url = App.strIP + "/sjjk/v1/bis/haz/bisHazPatRecs/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/haz/bisHazPatRecs/";
         HashMap<String,String>params = new HashMap<>();
         if("admin".equals(type)){
             params.put("hazGuid",bisHazReg.guid);

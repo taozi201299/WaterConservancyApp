@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -132,7 +133,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      */
     private void submit(int type){
       // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
-        String url = App.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
@@ -153,7 +154,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = App.strIP + "/sjjk/v1/jck/attMedBase/";
+                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_HIDD_RECT_ACCE";
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";

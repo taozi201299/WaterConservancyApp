@@ -17,6 +17,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -80,7 +81,7 @@ public class DataReviewListActivity extends TranslucentActivity
 
     //材料审核 对象表
     private void getobjStanRevisList() {
-        String url = App.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String> param = new HashMap<>();
         param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("veriConc","1");

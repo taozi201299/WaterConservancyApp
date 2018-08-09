@@ -14,6 +14,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
 import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
@@ -329,7 +330,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      * 隐患整改信息
      */
     private void getRectifyInfo(){
-        String url =  App.strIP +"/sjjk/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";
+        String url =  GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

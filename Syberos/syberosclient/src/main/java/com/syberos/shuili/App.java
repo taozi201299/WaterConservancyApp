@@ -31,8 +31,6 @@ public class  App extends Application {
     private static final int MAX_LOGIN_RECORD_COUNT = 4;
 
     public static App app;
-    private String mVersionName;
-    private int mVersionCode;
     private static Context context;
     private static SharedPreferences preferences;
     /**
@@ -44,10 +42,6 @@ public class  App extends Application {
 
      */
     private static int orgType = 1;
-
-//    public static String strIP ="7.199.44.211:8080";
-    public static String strIP ="http://192.168.1.8:8080";
-    public static String strCJIP = "http://192.168.1.11:9080";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR

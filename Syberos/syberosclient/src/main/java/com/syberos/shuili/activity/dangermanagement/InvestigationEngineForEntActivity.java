@@ -22,6 +22,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.accident.AccidentNewFormActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHiddenActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
@@ -158,7 +159,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
     }
 
     private void getEngineList(){
-        String url =  App.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
+        String url =  GlobleConstants.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
         HashMap<String,String>params = new HashMap<>();
         params.put("orgguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

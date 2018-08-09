@@ -18,6 +18,7 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationEngineTendForEn
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -120,30 +121,30 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         String url = "";
         for(final  ObjectEngine item : objectEngine.dataSource){
             if(item.getEngType().equals("1")){
-                url = App.strIP  + "/sjjk/v1/jck/att/eng/attEngRess/" ;
+                url = GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngRess/" ;
             }else  if(item.getEngType().equals("2")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngWagas/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngWagas/" ;
             }
             else if(item.getEngType().equals("3")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngPusts/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngPusts/" ;
 
             }else if(item.getEngType().equals("4")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngHysts/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngHysts/" ;
             }
             else if(item.getEngType().equals("5")){
-                url =  App.strIP  + "sjjk/v1/jck/att/eng/attEngDikes/" ;
+                url =  GlobleConstants.strIP  + "sjjk/v1/jck/att/eng/attEngDikes/" ;
             }
             else if(item.getEngType().equals("6")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/attEngIrrs/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/attEngIrrs/" ;
             }else if(item.getEngType().equals("7")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngWadis/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngWadis/" ;
             }else if(item.getEngType().equals("8")){
-                url = App.strIP  + "/sjjk/v1/jck/att/eng/attEngSds/" ;
+                url = GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngSds/" ;
             }
             else if(item.getEngType().equals("9")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngCwss/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngCwss/" ;
             }else if(item.getEngType().equals("10")){
-                url =  App.strIP  + "/sjjk/v1/jck/att/eng/attEngOthes/" ;
+                url =  GlobleConstants.strIP  + "/sjjk/v1/jck/att/eng/attEngOthes/" ;
             }
             getObjStatus(item,url);
         }

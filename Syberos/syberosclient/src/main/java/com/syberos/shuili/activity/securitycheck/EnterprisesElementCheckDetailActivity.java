@@ -17,6 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.entity.securitycheck.ObjSe;
@@ -299,7 +300,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             results.add(params);
         }
        // String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/wiun/bisSeWiunCheck/";
-        String url = App.strCJIP + "/wcsps-api/cj/bis/se/wiuncheck/addBisSeWiunCheck";
+        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/bis/se/wiuncheck/addBisSeWiunCheck";
         for(final HashMap<String,String> map :results){
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;

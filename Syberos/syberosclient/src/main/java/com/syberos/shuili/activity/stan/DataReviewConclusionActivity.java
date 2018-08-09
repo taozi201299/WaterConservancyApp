@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -108,7 +109,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(int result){
-        String url =  App.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","2");
         params.put("confTime",tv_time.getText().toString()); //会议时间

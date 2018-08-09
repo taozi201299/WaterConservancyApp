@@ -15,6 +15,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
@@ -178,7 +179,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
      */
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commit(){
-        String url = App.strCJIP + "/wcsps-api/cj/obj/hiddAndSe/addObjHidd";
+        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/obj/hiddAndSe/addObjHidd";
         //String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称

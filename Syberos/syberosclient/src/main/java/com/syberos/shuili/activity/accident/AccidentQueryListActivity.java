@@ -15,6 +15,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.accident.AccidentInformationGroup;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
@@ -184,7 +185,7 @@ public class AccidentQueryListActivity extends BaseActivity {
         }
     }
     private void getAccidentUnitInfo(){
-        String url = App.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : accidentInformation.dataSource){
             params.put("guid",item.getAcciWindGuid());

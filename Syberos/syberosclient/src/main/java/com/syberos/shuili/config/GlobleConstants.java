@@ -17,6 +17,8 @@ public class GlobleConstants {
 
     // 地图服务器地址
     public static final String mapServer = "http://192.168.1.11:8088";
+    public static String strIP ="http://192.168.1.8:8080";
+    public static String strCJIP = "http://192.168.1.11:9080";
 
 
     /**

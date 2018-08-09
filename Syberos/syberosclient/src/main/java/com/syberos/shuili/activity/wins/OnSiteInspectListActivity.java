@@ -16,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.inspect.BisWinsProg;
 import com.syberos.shuili.entity.inspect.ObjWinsPlan;
 import com.syberos.shuili.utils.ToastUtils;
@@ -95,7 +96,7 @@ public class OnSiteInspectListActivity extends TranslucentActivity
      * 从稽查计划对象表中获取所有稽查列表
      */
     private void getObjWinsList(){
-        String url = App.strIP + "/sjjk/v1/obj/wins/plan/objWinsPlans/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/objWinsPlans/";
         HashMap<String,String>params = new HashMap<>();
         params.put("planOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

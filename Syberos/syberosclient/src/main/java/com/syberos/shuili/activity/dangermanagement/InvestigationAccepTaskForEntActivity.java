@@ -18,6 +18,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -170,7 +171,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         final int size  = investigationTaskInfo.dataSource.size();
         for(int i = 0; i < size; i++) {
             final ObjHidden item = investigationTaskInfo.dataSource.get(i);
-            String url = App.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
+            String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
             HashMap<String, String> params = new HashMap<>();
             params.put("hiddGuid", item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
