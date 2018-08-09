@@ -126,7 +126,13 @@ public class MainActivity extends TranslucentActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SPUtils.put(Allow_ScreenShot,isChecked);
+                if(isChecked) {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+                }else {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                }
             }
+
         });
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
@@ -166,6 +172,8 @@ public class MainActivity extends TranslucentActivity
 //        securityCloudFragment = new SecurityCloudFragment();
         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
         btn_addressListFragment_enterprises.setVisibility(View.GONE);
         btn_gateWayFragment_enterprises.setVisibility(View.GONE);

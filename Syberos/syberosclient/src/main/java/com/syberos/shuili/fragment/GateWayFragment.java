@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -33,6 +35,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.syberos.shuili.utils.CommonUtils.encrypt;
+import static com.syberos.shuili.utils.CommonUtils.fileCopy;
 
 /**
  * Created by jidan on 18-3-10.
@@ -47,40 +50,18 @@ public class GateWayFragment extends BaseFragment {
     @BindView(R.id.vp_content)
     ViewPager vp_content;
 
-    @BindView(R.id.tv_action_bar_title)
-    TextView tv_action_bar_title;
+    @BindView(R.id.tv_action_bar2_title)
+    TextView tv_action_bar2_title;
+    @BindView(R.id.iv_action_bar2_left)
+    ImageView iv_action_bar2_left;
+    @BindView(R.id.iv_action_bar2_right)
+    ImageView iv_action_bar2_right;
+
 
     private static GateWayAdatper m_adapter;
     static List<String> datas = new ArrayList<>();
 
     private Back2LoginActivityListener back2LoginActivityListener = null;
-
-    @OnClick(R.id.iv_action_bar_right_2)
-    void popupWindow() {
-        ((TranslucentActivity) getActivity()).initShare("分享", "http://www.163.com").showShareView();
-    }
-
-    @OnClick(R.id.iv_action_bar_right_1)
-    void go2ScanActivity() {
-        IntentIntegrator intentIntegrator =
-                IntentIntegrator.forSupportFragment(this);
-        intentIntegrator
-                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
-                .setPrompt("将二维码/条形码放入框内，即可自动扫描")//写那句提示的话
-                .setOrientationLocked(false)//扫描方向固定
-                .setCaptureActivity(CustomScannerActivity.class) // 设置自定义的 activity_accident_query
-                .initiateScan(); // 初始化扫描
-    }
-
-    @OnClick(R.id.iv_action_bar_left)
-    void go2PersonalCenterActivity() {
-        if (null != getOpenDrawerListener()) {
-            getOpenDrawerListener().open();
-        } else if (null != back2LoginActivityListener){
-            // 没有登录
-            back2LoginActivityListener.back();
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -210,7 +191,14 @@ public class GateWayFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tv_action_bar_title.setVisibility(View.INVISIBLE);
+        tv_action_bar2_title.setText("门户");
+        iv_action_bar2_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity)mContext).finish();
+            }
+        });
+        iv_action_bar2_right.setVisibility(View.INVISIBLE);
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < tabTitle.length; i++) {
             GateWayTableLayoutFragment fragment = new GateWayTableLayoutFragment();
