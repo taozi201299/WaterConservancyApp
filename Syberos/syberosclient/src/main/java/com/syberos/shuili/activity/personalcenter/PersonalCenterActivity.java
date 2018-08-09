@@ -248,7 +248,7 @@ public class PersonalCenterActivity extends BaseActivity {
 
     }
     private void updateShowWidgets() {
-        tv_username_show.setText(userInfo.getUserName());
+        tv_username_show.setText(userInfo.getPersName());
         tv_phoneNumber_show.setText(userInfo.getPhone());
         tv_email_show.setText("");
         tv_unitName_show.setText(userInfo.getOrgName());
@@ -257,7 +257,7 @@ public class PersonalCenterActivity extends BaseActivity {
     }
 
     private void updateEditWidgets() {
-        et_username_edit.setText(userInfo.getUserName());
+        et_username_edit.setText(userInfo.getPersName());
         et_phoneNumber_edit.setText(userInfo.getPhone());
         et_email_edit.setText("");
         et_unitName_edit.setText(userInfo.getOrgName());
