@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 
+import com.syberos.shuili.R;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.utils.Strings;
 
@@ -157,7 +158,7 @@ public class ClearableEditText extends android.support.v7.widget.AppCompatEditTe
             xD = getCompoundDrawables()[loc.idx];
         }
         if (xD == null) {
-            xD = getResources().getDrawable(android.R.drawable.presence_offline);
+            xD = getResources().getDrawable(R.mipmap.icon_delete_);
         }
         xD.setBounds(0, 0, xD.getIntrinsicWidth(), xD.getIntrinsicHeight());
         int min = getPaddingTop() + xD.getIntrinsicHeight() + getPaddingBottom();

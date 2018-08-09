@@ -36,7 +36,7 @@ public class ChangePasswordActivity extends BaseActivity {
     ClearableEditText et_repeat_new_password;
 
     @BindView(R.id.tv_change_password_submit)
-    Button tv_change_password_submit;
+    TextView tv_change_password_submit;
 
     @BindView(R.id.cb_input_original_password)
     CheckBox cb_input_original_password;
