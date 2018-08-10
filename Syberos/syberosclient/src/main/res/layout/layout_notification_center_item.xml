@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_10dp"
             android:paddingRight="@dimen/_10dp"
-            android:src="@mipmap/icon_dot_blue"/>
+            android:src="@mipmap/me_red_pot"/>
     </LinearLayout>
     <!-- Surface View End -->
 </com.daimajia.swipe.SwipeLayout>
