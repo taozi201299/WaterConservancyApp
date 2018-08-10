@@ -24,6 +24,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.strCJIP;
+
 /**
  * Created by Administrator on 2018/4/4.
  */
@@ -55,10 +57,10 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     }
 
     private void getData(){
-        String url = "http://192.168.1.110:8080/pprty/WSRest/service/backlog/pagelist";
+        String url = strCJIP+"/pprty/WSRest/service/backlog";
         HashMap<String,String> params = new HashMap<>();
-        params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
-        params.put("page",String.valueOf(pageIndex));
+        params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+      //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
