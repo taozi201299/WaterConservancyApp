@@ -15,7 +15,7 @@
         android:layout_height="@dimen/padding_1"
         />
 
-    <com.syberos.shuili.view.PullRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_all_notifications"
         android:layout_width="match_parent"
         android:layout_height="0dp"

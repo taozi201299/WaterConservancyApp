@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,36 +44,15 @@ import static com.syberos.shuili.activity.work.NotificationCenterActivity.Delete
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ONE;
 import static com.syberos.shuili.config.GlobleConstants.strCJIP;
 
-public class NotificationCenterActivity extends BaseActivity implements PullRecyclerView.OnPullRefreshListener,CommonAdapter.OnItemClickListener {
+public class NotificationCenterActivity extends BaseActivity implements CommonAdapter.OnItemClickListener {
 
     private static final String TAG = NotificationCenterActivity.class.getSimpleName();
 
     private NotificationsListAdapter notificationsListAdapter = null;
     private RecyclerView.AdapterDataObserver dataSetObserver = null;
     private List<NoticeInfo>datas = new ArrayList<>();
-    private List<NoticeInfo>results;
-
-    private int pageIndex = 1;
-
-    @Override
-    public void onRefresh() {
-        pageIndex = 1;
-        datas.clear();
-        results.clear();
-        getNotices();
-
-    }
-
-    @Override
-    public void onLoadMore() {
-        pageIndex ++;
-        getNotices();
-    }
-
     private void clearData(){
         datas.clear();
-        results.clear();
-        pageIndex = 1;
     }
 
     @Override
@@ -93,7 +73,7 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
     }
 
     @BindView(R.id.lv_all_notifications)
-    PullRecyclerView lv_all_notifications;
+    RecyclerView lv_all_notifications;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
@@ -118,14 +98,13 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
 
     @Override
     public void initData() {
-
+        showDataLoadingDialog();
+        getNotices();
     }
 
     @Override
     public void initView() {
         setInitActionBar(false);
-        showDataLoadingDialog();
-        getNotices();
         tv_action_bar_title.setText("通知提醒");
         tv_action_bar_editStatus.setText("清空");
         tv_action_bar_editStatus.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +134,6 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
         lv_all_notifications.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
         lv_all_notifications.setLayoutManager(new LinearLayoutManager(mContext));
         lv_all_notifications.setAdapter(notificationsListAdapter);
-        lv_all_notifications.setOnPullRefreshListener(this);
         dataSetObserver = new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -198,24 +176,17 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
         HashMap<String,String> params = new HashMap<>();
       //  params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("userGuid","4444444444446774444             ");
-        params.put("page",String.valueOf(pageIndex));
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 closeDataDialog();
-                lv_all_notifications.refreshOrLoadComplete();
                 Gson gson = new Gson();
                 NoticeInfo noticeInfo = gson.fromJson(result, NoticeInfo.class);
                 if(noticeInfo.dataSource.list!=null) {
-                    results = noticeInfo.dataSource.list;
+                    datas = noticeInfo.dataSource.list;
                 }
-                if(results.size() == 0){
-                    if(pageIndex == 1)
-                        ToastUtils.show("没有通知消息");
-                    else {
-                        ToastUtils.show("没有更多消息了");
-                        lv_all_notifications.setHasMore(false);
-                    }
+                if(datas.size() == 0){
+                    ToastUtils.show("没有更多消息了");
                 }
                 refreshUI();
             }
@@ -223,14 +194,12 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
-                lv_all_notifications.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
         });
     }
     private void refreshUI(){
-        datas.addAll(results);
         notificationsListAdapter.setData(datas);
         notificationsListAdapter.notifyDataSetChanged();
     }
@@ -243,6 +212,11 @@ public class NotificationCenterActivity extends BaseActivity implements PullRecy
         public void convert(ViewHolder holder, final NoticeInfo noticeInfo) {
             ((TextView)holder.getView(R.id.tv_notification_title)).setText(noticeInfo.getNoticeTitle());
             ((TextView)holder.getView(R.id.tv_notification_time)).setText(noticeInfo.getFromDate());
+            if("0".equals(noticeInfo.getIsRead())){
+                holder.getView(R.id.iv_dot).setVisibility(View.VISIBLE);
+            }else {
+                holder.getView(R.id.iv_dot).setVisibility(View.INVISIBLE);
+            }
             TextView del = holder.getView(R.id.tv_delete);
             del.setOnClickListener(new View.OnClickListener() {
                 @Override

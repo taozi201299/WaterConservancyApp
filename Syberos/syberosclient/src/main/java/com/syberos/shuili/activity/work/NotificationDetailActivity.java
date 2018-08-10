@@ -14,6 +14,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.NoticeDetailInfo;
 import com.syberos.shuili.entity.NoticeFormInfo;
@@ -74,6 +75,7 @@ public class NotificationDetailActivity extends BaseActivity {
             detail_time.setText(noticeInfo.getFromDate());
             detail_content.setText(noticeInfo.getNoticeContent());
         }
+        updateMsgStatus();
     }
 
     @Override
@@ -128,6 +130,23 @@ public class NotificationDetailActivity extends BaseActivity {
                 activityFinish();
             }
         });
+    }
+    private void  updateMsgStatus(){
+        String url = strCJIP + "/pprty/WSRest/service/notice/isread";
+        HashMap<String,String>param = new HashMap<>();
+        param.put("guid",noticeInfo.getGuid());
+      HttpUtils.getInstance().requestNet_put(url, param, url, new RequestCallback<String>() {
+          @Override
+          public void onResponse(String result) {
+              ToastUtils.show("消息状态修改成功");
+          }
+
+          @Override
+          public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+              ToastUtils.show(errorInfo.getMessage());
+
+          }
+      });
     }
 
 }

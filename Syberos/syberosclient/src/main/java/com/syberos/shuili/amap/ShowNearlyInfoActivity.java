@@ -106,7 +106,7 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
 
     private List<String> types;
     private OptionsPickerView typePicker = null;
-    private int currentShowRange = 30;
+    private int currentShowRange = 10;
 
     private  final int RC_PERM = 110;
     public static final String[] requestPermissions = {
@@ -129,16 +129,16 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
                         currentShowRange = 10;
                         break;
                     case 1:
-                        currentShowRange = 30;
+                        currentShowRange = 15;
                         break;
                     case 2:
-                        currentShowRange = 50;
+                        currentShowRange = 20;
                         break;
                     case 3:
-                        currentShowRange = 100;
+                        currentShowRange = 30;
                         break;
                     default:
-                        currentShowRange = 30;
+                        currentShowRange = 10;
                         break;
                 }
                 updateNearInfo(mLon, mLan, String.valueOf(currentShowRange));
@@ -152,9 +152,9 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
 
         types = new ArrayList<>();
         types.add("10公里");
+        types.add("15公里");
+        types.add("20公里");
         types.add("30公里");
-        types.add("50公里");
-        types.add("100公里");
 
         typePicker.setPicker(types);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

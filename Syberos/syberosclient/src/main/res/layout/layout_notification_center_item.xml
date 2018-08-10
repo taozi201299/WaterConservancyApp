@@ -77,7 +77,15 @@
             android:paddingBottom="@dimen/padding_3"
             android:paddingTop="@dimen/padding_3"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="llsdddddd"
             android:textSize="@dimen/font_size_18" />
+        <ImageView
+            android:id="@+id/iv_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingRight="@dimen/_10dp"
+            android:src="@mipmap/icon_dot_blue"/>
     </LinearLayout>
     <!-- Surface View End -->
 </com.daimajia.swipe.SwipeLayout>
