@@ -447,6 +447,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     viewHolder.btn_report.setText("补报");
                     break;
             }
+            final int finalType = type;
             viewHolder.btn_report.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -455,7 +456,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     bundle.putSerializable(SEND_BUNDLE_KEY, accidentInformation);
                     bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
                     bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
-                    bundle.putInt("type",Integer.valueOf(accidentInformation.getRepStat()));
+                    bundle.putInt("type", finalType);
                     intentActivity(AccidentListAcitvity.this,
                             AccidentNewFormActivity.class,
                             false, bundle);

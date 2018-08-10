@@ -38,6 +38,8 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * Created by jidan on 18-4-6.
  * 安全检查新建隐患
@@ -124,7 +126,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
 
     }
     private void getHiddenDic(){
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = strIP+"/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

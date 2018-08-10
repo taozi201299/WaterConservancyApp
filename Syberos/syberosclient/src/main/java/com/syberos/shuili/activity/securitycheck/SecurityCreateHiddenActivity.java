@@ -32,6 +32,8 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * Created by jidan on 18-4-6.
  * 安全检查新建隐患
@@ -97,7 +99,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
 
     }
     private void getHiddenDic(){
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = strIP +"/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");
@@ -147,7 +149,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
     }
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commit(){
-        String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
+        String  url = strIP +"/sjjk/v1/bis/obj/objHidd/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",relSinsGroupWiun.getGuid()); // 所属工程
@@ -171,7 +173,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://192.168.1.8:8080/sjjk/v1/jck/attMedBase/";
+                info.url = strIP +"/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";
                 info.localStatus = "0";

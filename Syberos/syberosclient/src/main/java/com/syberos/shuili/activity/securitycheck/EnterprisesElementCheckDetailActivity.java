@@ -35,6 +35,8 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * 企事业版 元素检查 检查项 8.2.2.1	安全元素检查项信息表（BIS_SE_CHIT）
  */
@@ -104,7 +106,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     }
 
     private void getCheckItemsByElementId(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/bisSeChits/";
+        String url = strIP+"/sjjk/v1/bis/se/bisSeChits/";
         HashMap<String,String>params = new HashMap<>();
         params.put("seGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -129,7 +131,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     }
     private void getAllHidden(){
         // 根据单位ID和 安全检查项ID查询检查项下隐患
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
+        String url = strIP + "/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String >params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("seCheckItemGuid",bisSeChit.getGuid());

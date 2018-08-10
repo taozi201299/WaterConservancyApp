@@ -29,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * Created by Administrator on 2018/4/3.
  * 安全检查行政版 现场检查
@@ -90,7 +92,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
      */
     private void getScheGroupIdByUserId(){
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
-        String url = "http://192.168.1.8:8080/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
         //params.put("persGuid",userId);
         params.put("persGuid","dfdfgfdfA9FBCffgfgBF285D6Affgrtr");
@@ -119,7 +121,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
  *   2 根据检查分组GUID 获取安全检查方案分组信息  （现场检查任务列表）
  */
        for(final RelSinsGroupPers item :relSinsGroupPers.dataSource) {
-           String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+           String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
            HashMap<String, String> params = new HashMap<>();
            params.put("guid",item.getGroupGuid());
            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -153,7 +155,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
      * todo 该接口sql报错 暂未处理
      */
     private void getPlanInfo(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
             params.put("guid",item.getScheGuid());

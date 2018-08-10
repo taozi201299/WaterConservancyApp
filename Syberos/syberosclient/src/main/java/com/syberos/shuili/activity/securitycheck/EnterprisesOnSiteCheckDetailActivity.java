@@ -26,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import okhttp3.Call;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
 
     public static final String DEFAULT_BUNDLE_NAME = "bundle";
@@ -56,9 +58,6 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     LinearLayout ll_check_road_container;
     @BindView(R.id.ll_hidden_object_container)
     LinearLayout ll_hidden_object_container;
-
-    @BindView(R.id.ll_hiddlen_object_title)
-    LinearLayout ll_hiddlen_object_title;
 
     ObjHidden objHidden =null;
 
@@ -96,7 +95,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         }
     }
     private void getHiddenInfo(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
+        String url = strIP +"/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String > params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("inspRecGuid",bisSinsRec.sinsGuid);

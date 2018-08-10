@@ -34,6 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import okhttp3.Call;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * 企事业版 安全检查 现场检查列表
  * 8.2.2.11	安全检查记录（BIS_SINS_REC）
@@ -106,7 +108,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     }
 
     private void getBisSinsRec(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/bisSinsRecs/";
+        String url = strIP +"/sjjk/v1/bis/sins/bisSinsRecs/";
         HashMap<String,String> params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -146,7 +148,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
      * 获取单位的部署通知信息
      */
     private void getObjSins(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/sis/objSinss/";
+        String url = strIP + "/sjjk/v1/obj/sis/objSinss/";
         HashMap<String,String> params = new HashMap<>();
        // params.put("notIssuWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("notIssuWiun", "35B00CA81E084CFBAEB22E928BDD2B01");
@@ -175,7 +177,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     private void  getPlanInfo(){
         // 外键 检查部署guid
         final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String> params = new HashMap<>();
         final int size =infos.size();
         for(int i = 0; i < size ; i ++){

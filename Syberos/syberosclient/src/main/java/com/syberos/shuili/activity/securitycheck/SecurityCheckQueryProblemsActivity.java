@@ -27,6 +27,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import okhttp3.Call;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * 安全检查检查记录中隐患信息 被检对象详情和被检对象下的隐患信息
  */
@@ -95,7 +97,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
      * 获取专家信息 从检查小组和专家关系表中获取专家GUID，在从专家信息表中获取专家详细信息
      */
     private void getExpertGuid(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
         HashMap<String,String> params = new HashMap<>();
         params.put("groupGuid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -116,7 +118,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
         });
     }
     private void getExpertInfo(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/expert/objExperts/";
+        String url = strIP +"/sjjk/v1/obj/expert/objExperts/";
         HashMap<String,String> params = new HashMap<>();
         params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -141,7 +143,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
      * 获取被检对象
      */
     private void getCheckObject(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -162,7 +164,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
         });
     }
     private void getAllhiddenByPlanId(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/selectCheckPlansHiddInfo/";
+        String url = strIP +"/sjjk/v1/bis/obj/selectCheckPlansHiddInfo/";
         HashMap<String,String>params = new HashMap<>();
         params.put("sinsGuid",bisSinsScheGroup.getScheGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

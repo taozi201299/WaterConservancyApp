@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 
 import static com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 public class SecurityCheckQueryDetailActivity extends BaseActivity {
 
@@ -89,7 +90,7 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
      * 获取该方案下的检查组信息
      */
     private void getGroupByPlanId(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+        String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
         HashMap<String, String> params = new HashMap<>();
         params.put("scheGuid",bisSinsSche.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

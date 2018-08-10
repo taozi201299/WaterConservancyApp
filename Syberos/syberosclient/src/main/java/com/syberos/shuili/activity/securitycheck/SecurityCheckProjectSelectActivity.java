@@ -29,6 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import okhttp3.Call;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * 安全检查被检对象选择列表
  */
@@ -101,7 +103,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
      * 获取被检对象
      */
     private void getCheckObject(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
         HashMap<String,String> params = new HashMap<>();
         // 检查小组GUID
         params.put("guid",information.getGuid());

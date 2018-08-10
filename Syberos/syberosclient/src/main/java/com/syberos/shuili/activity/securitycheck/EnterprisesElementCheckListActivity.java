@@ -30,6 +30,8 @@ import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.HttpUrl;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * 企事业版本 元素检查 列表 元素/元素组
  * 1 从8.2.2.4	单位安全元素分解（BIS_SE_WIUN_DECO） 中获取检查元素GUID
@@ -71,7 +73,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
      * 根据用户ID 从BIS_SE_WIUN_DECO表中获取元素guid
      */
     private void getBisSeWiunByUserId() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
+        String url = strIP + "/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String, String> params = new HashMap<>();
         // params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
@@ -102,7 +104,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
     }
 
     private void getSeElementByElementId() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/bisSeWiuns/";
+        String url = strIP + "/sjjk/v1/bis/se/bisSeWiuns/";
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiunDeco.dataSource.size();
         for (int i = 0; i < count; i++) {
@@ -138,7 +140,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
      * 根据元素ID 获取元素名称等详细信息
      */
     private void getSeElementInfo() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/objSes/";
+        String url = strIP +"/sjjk/v1/obj/objSes/";
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiuns.size();
         for (int i = 0; i < count; i++) {

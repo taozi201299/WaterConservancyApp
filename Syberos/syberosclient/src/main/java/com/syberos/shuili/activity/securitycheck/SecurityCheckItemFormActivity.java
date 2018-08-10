@@ -24,6 +24,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import okhttp3.Call;
 
+import static com.syberos.shuili.config.GlobleConstants.strIP;
+
 /**
  * Created by jidan on 18-4-6.
  * 安全检查被检对象详情
@@ -85,7 +87,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
         setActionBarRightVisible(View.INVISIBLE);
     }
     private void getUnitIDByEngGuid(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/jck/rel/relEngOrgs/";
+        String url = strIP +"/sjjk/v1/jck/rel/relEngOrgs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("engGuid",relSinsGroupWiun.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -108,7 +110,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
         });
     }
     private void getUnitInfo(){
-       String url = "http://192.168.1.8:8080/sjjk/v1/att/org/ext/attOrgExts/";
+       String url = strIP +"/sjjk/v1/att/org/ext/attOrgExts/";
        HashMap<String,String>params = new HashMap<>();
       // params.put("orgGuid",relEngOrg.dataSource.get(0).getOrgGuid());
         params.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
@@ -133,7 +135,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
         });
     }
     private void getBisEutrOfflRecs(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/eutr/bisEutrOfflRecs/";
+        String url = strIP +"/sjjk/v1/bis/eutr/bisEutrOfflRecs/";
         HashMap<String,String>params = new HashMap<>();
        // params.put("orgGuid",attOrgExt.getOrgGuid());
         params.put("orgGuid","F83199FDD35E49FF9643A6C394DBBF45");
