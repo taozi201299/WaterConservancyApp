@@ -16,23 +16,27 @@ import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.NoticeDetailInfo;
+import com.syberos.shuili.entity.NoticeFormInfo;
+import com.syberos.shuili.entity.NoticeInfo;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
+
+import static com.syberos.shuili.config.GlobleConstants.strCJIP;
 
 public class NotificationDetailActivity extends BaseActivity {
 
     private final String TAG = NotificationDetailActivity.class.getSimpleName();
-
-    @OnClick(R.id.iv_action_bar2_left)
-    void go2back() {
-        gotoBack(false);
-    }
 
     @BindView(R.id.tv_action_bar2_title)
     TextView tv_action_bar2_title;
@@ -49,9 +53,7 @@ public class NotificationDetailActivity extends BaseActivity {
     @BindView(R.id.detail_content)
     TextView detail_content;
 
-    private int detail_position = -1;
-
-    private NoticeDetailInfo m_datas;
+    private NoticeInfo noticeInfo;
 
     @Override
     public int getLayoutId() {
@@ -65,13 +67,18 @@ public class NotificationDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+        noticeInfo = (NoticeInfo) bundle.getSerializable("msgInfo");
+        if (null != bundle) {
+            detail_title.setText(noticeInfo.getNoticeTitle());
+            detail_time.setText(noticeInfo.getFromDate());
+            detail_content.setText(noticeInfo.getNoticeContent());
+        }
     }
 
     @Override
     public void initView() {
         setInitActionBar(false);
-
         tv_action_bar2_title.setText("通知详情");
         tv_action_bar2_title.setGravity(Gravity.LEFT);
         iv_action_bar2_right.setImageResource(R.mipmap.icon_delete);
@@ -86,54 +93,41 @@ public class NotificationDetailActivity extends BaseActivity {
                 customDialog.setOnConfirmClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gotoBack(true);
                         customDialog.dismiss();
+                        deleteNotice();
                     }
                 });
                 customDialog.show();
             }
         });
-
-        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        if (null != bundle) {
-            detail_title.setText(bundle.getString(NotificationCenterActivity.DETAIL_TITLE));
-            detail_time.setText(bundle.getString(NotificationCenterActivity.DETAIL_TIME));
-            detail_content.setText(bundle.getString(NotificationCenterActivity.DETAIL_CONTENT));
-            detail_position = bundle.getInt(NotificationCenterActivity.DETAIL_POSITION);
-        }
     }
+    private void deleteNotice(){
+        showDataLoadingDialog();
+        ArrayList<String>noticeIds = new ArrayList<>();
+        noticeIds.add(noticeInfo.getGuid());
+        String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
+        NoticeFormInfo formInfo = new NoticeFormInfo();
+        formInfo.userGuid = "4444444444446774444             ";
+        formInfo.all = false;
+        formInfo.list = noticeIds;
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(formInfo);
+        ToastUtils.show(jsonStr);
 
-    private void gotoBack(final boolean del) {
-        Intent returnIntent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(NotificationCenterActivity.DETAIL_FINISH_RESULT, del);
-        bundle.putInt(NotificationCenterActivity.DETAIL_POSITION, detail_position);
-        returnIntent.putExtras(bundle);
-        setResult(Activity.RESULT_OK, returnIntent);
-        activityFinish();
-    }
-
-    private void getNotices(){
-        String url = "http://192.168.1.110:8080/pprty/WSRest/service/notice/pagelist";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
-        HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
+        OkHttpUtils.delete().url(url).requestBody(jsonStr).build().execute(new StringCallback() {
             @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                NoticeDetailInfo noticeInDetailfo = gson.fromJson(result, NoticeDetailInfo.class);
-                if(noticeInDetailfo != null){
-                    m_datas = noticeInDetailfo.dataSource;
-                }else{
-                    // TODO: 2018/4/4 沒有詳細信息
-                }
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+            public void onError(Call call, Exception e, int id) {
                 closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                ToastUtils.show("消息删除失败");
             }
-        }, CacheMode.DEFAULT);
+
+            @Override
+            public void onResponse(String response, int id) {
+                closeDataDialog();
+                ToastUtils.show("消息删除成功");
+                activityFinish();
+            }
+        });
     }
+
 }

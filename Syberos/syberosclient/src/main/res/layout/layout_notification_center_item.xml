@@ -3,18 +3,13 @@
     android:id="@+id/sl_notification"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_5dp"
-    android:layout_marginEnd="@dimen/padding_3"
-    android:layout_marginStart="@dimen/padding_3"
-    android:minHeight="@dimen/work_button_item_width"
-    android:paddingBottom="@dimen/padding_3"
-    android:paddingTop="@dimen/padding_3">
+    android:minHeight="@dimen/_50dp">
 
     <!-- Bottom View Start-->
     <LinearLayout
         android:id="@+id/bottom_wrapper"
         android:layout_width="120dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/_50dp"
         android:background="@color/red_delete"
         android:orientation="horizontal"
         android:weightSum="1">
@@ -36,6 +31,8 @@
         android:id="@+id/top_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/padding_3"
+        android:paddingTop="@dimen/padding_3"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -51,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/text_black_color"
                 android:textSize="@dimen/_18sp" />
 
@@ -60,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6dp"
+                android:visibility="gone"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/text_gray_color"
@@ -76,6 +74,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_3"
+            android:paddingTop="@dimen/padding_3"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:textSize="@dimen/font_size_18" />
     </LinearLayout>

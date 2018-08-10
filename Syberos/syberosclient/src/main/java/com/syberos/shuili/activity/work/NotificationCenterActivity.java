@@ -1,9 +1,13 @@
 package com.syberos.shuili.activity.work;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +18,18 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.NoticeFormInfo;
 import com.syberos.shuili.entity.NoticeInfo;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
+import com.syberos.shuili.view.PullRecyclerView;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,36 +37,63 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
-public class NotificationCenterActivity extends BaseActivity {
+import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ALL;
+import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ONE;
+import static com.syberos.shuili.config.GlobleConstants.strCJIP;
+
+public class NotificationCenterActivity extends BaseActivity implements PullRecyclerView.OnPullRefreshListener,CommonAdapter.OnItemClickListener {
 
     private static final String TAG = NotificationCenterActivity.class.getSimpleName();
-    private static final int SHOW_DETAIL_REQUEST_CODE = 1454;
 
-    private static final int INDEX_TITLE = 0;
-    private static final int INDEX_CONTENT = 1;
-    private static final int INDEX_TIME = 2;
-
-    static final String DETAIL_TITLE = "DETAIL_TITLE";
-    static final String DETAIL_CONTENT = "DETAIL_CONTENT";
-    static final String DETAIL_TIME = "DETAIL_TIME";
-    static final String DETAIL_POSITION = "DETAIL_POSITION";
-    static final String DETAIL_FINISH_RESULT = "DETAIL_FINISH_RESULT";
-
-
-    private List<List<String>> notificationsList = null;
     private NotificationsListAdapter notificationsListAdapter = null;
-    private DataSetObserver dataSetObserver = null;
-    private List<NoticeInfo>datas;
+    private RecyclerView.AdapterDataObserver dataSetObserver = null;
+    private List<NoticeInfo>datas = new ArrayList<>();
+    private List<NoticeInfo>results;
 
     private int pageIndex = 1;
+
+    @Override
+    public void onRefresh() {
+        pageIndex = 1;
+        datas.clear();
+        results.clear();
+        getNotices();
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        pageIndex ++;
+        getNotices();
+    }
+
+    private void clearData(){
+        datas.clear();
+        results.clear();
+        pageIndex = 1;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        clearData();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("msgInfo",datas.get(position));
+        intentActivity(NotificationCenterActivity.this,NotificationDetailActivity.class,false,bundle);
+    }
 
     enum DeleteType{
         DELETE_ONE,DELETE_ALL
     }
 
     @BindView(R.id.lv_all_notifications)
-    ListView lv_all_notifications;
+    PullRecyclerView lv_all_notifications;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
@@ -81,11 +118,14 @@ public class NotificationCenterActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
     }
 
     @Override
     public void initView() {
         setInitActionBar(false);
+        showDataLoadingDialog();
+        getNotices();
         tv_action_bar_title.setText("通知提醒");
         tv_action_bar_editStatus.setText("清空");
         tv_action_bar_editStatus.setOnClickListener(new View.OnClickListener() {
@@ -98,61 +138,39 @@ public class NotificationCenterActivity extends BaseActivity {
                 customDialog.setOnConfirmClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        notificationsList.clear();
                         notificationsListAdapter.notifyDataSetChanged();
                         customDialog.dismiss();
+                        ArrayList<String>ids = new ArrayList<>();
+                        for(NoticeInfo info : datas){
+                            ids.add(info.getGuid());
+                        }
+                        deleteNotice(DELETE_ALL,ids);
                     }
                 });
                 customDialog.show();
             }
         });
         tv_action_bar_title.setGravity(Gravity.LEFT);
-        notificationsListAdapter = new NotificationsListAdapter();
-        dataSetObserver = new DataSetObserver() {
+        notificationsListAdapter = new NotificationsListAdapter(this,R.layout.layout_notification_center_item,datas);
+        lv_all_notifications.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
+        lv_all_notifications.setLayoutManager(new LinearLayoutManager(mContext));
+        lv_all_notifications.setAdapter(notificationsListAdapter);
+        lv_all_notifications.setOnPullRefreshListener(this);
+        dataSetObserver = new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
-                tv_action_bar_editStatus.setEnabled(notificationsList.size() > 0);
+                tv_action_bar_editStatus.setEnabled(datas.size() > 0);
             }
         };
-        notificationsListAdapter.registerDataSetObserver(dataSetObserver);
-        lv_all_notifications.setAdapter(notificationsListAdapter);
-
-
-        // TODO: 18-3-19 下面仅是测试数据，需要使用真实数据
-        if (null == notificationsList) {
-            notificationsList = new ArrayList<>();
-        } else {
-            notificationsList.clear();
-        }
-        for (int i=0; i<10; ++i){
-            List<String> tmpList = new ArrayList<>();
-            tmpList.add("隐患整改确认");
-            tmpList.add("内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" +
-                    "内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容" +
-                    "内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内");
-            tmpList.add("10:2" + String.valueOf(i));
-            notificationsList.add(tmpList);
-        }
+        notificationsListAdapter.registerAdapterDataObserver(dataSetObserver);
+        notificationsListAdapter.setOnItemClickListener(this);
     }
     private void deleteNotice(DeleteType type,List<String> noticeIds){
-        String url = "http://192.168.1.110:8080/pprty/WSRest/service/notice/del_all";
+        showDataLoadingDialog();
+        String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.user_gid = "EFB8D92EEA1542C39BB437201659DC1D";
+        formInfo.userGuid = "4444444444446774444             ";
         if(type == DeleteType.DELETE_ALL)
         formInfo.all = true;
         else formInfo.all = false;
@@ -160,135 +178,91 @@ public class NotificationCenterActivity extends BaseActivity {
         Gson gson = new Gson();
         String jsonStr = gson.toJson(formInfo);
         ToastUtils.show(jsonStr);
-//        HttpsUtils.getInstance().requestNet_json(url, jsonStr, "", new StringCallback() {
-//            @Override
-//            public void onError(Call call, Exception e) {
-//                ToastUtils.show(e.getMessage());
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                ToastUtils.show(response);
-//            }
-//        });
+        OkHttpUtils.delete().url(url).requestBody(jsonStr).build().execute(new com.zhy.http.okhttp.callback.StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                closeDataDialog();
+                ToastUtils.show("消息删除失败");
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                ToastUtils.show("消息删除成功");
+                clearData();
+                getNotices();
+            }
+        });
     }
     private void getNotices(){
-        String url = "http://192.168.1.110:8080/pprty/WSRest/service/notice/pagelist";
+        String url = strCJIP+"/pprty/WSRest/service/notice/pagelist";
         HashMap<String,String> params = new HashMap<>();
-        params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
+      //  params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("userGuid","4444444444446774444             ");
         params.put("page",String.valueOf(pageIndex));
-//        HttpsUtils.getInstance().requestNet(url, params, TAG, new StringCallback() {
-//            @Override
-//            public void onError(Call call, Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Gson gson = new Gson();
-//                NoticeInfo noticeInfo = gson.fromJson(response, NoticeInfo.class);
-//                if(noticeInfo.dataSource.list!=null) {
-//                    datas = noticeInfo.dataSource.list;
-//                }else{
-//                    // TODO: 2018/4/4 no data
-//                }
-//
-//            }
-//        });
-    }
-    private static class ViewHolder{
-        TextView notificationTitle;
-        TextView notificationContent;
-        TextView notificationTime;
-    }
-
-    private class NotificationsListAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return null == notificationsList ? 0 : notificationsList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null == notificationsList ? null : notificationsList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            if (null == notificationsList || notificationsList.size() <= 0) {
-                return convertView;
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                lv_all_notifications.refreshOrLoadComplete();
+                Gson gson = new Gson();
+                NoticeInfo noticeInfo = gson.fromJson(result, NoticeInfo.class);
+                if(noticeInfo.dataSource.list!=null) {
+                    results = noticeInfo.dataSource.list;
+                }
+                if(results.size() == 0){
+                    if(pageIndex == 1)
+                        ToastUtils.show("没有通知消息");
+                    else {
+                        ToastUtils.show("没有更多消息了");
+                        lv_all_notifications.setHasMore(false);
+                    }
+                }
+                refreshUI();
             }
 
-            ViewHolder holder;
-            if (null == convertView) {
-                convertView = LayoutInflater.from(NotificationCenterActivity.this).inflate(
-                        R.layout.layout_notification_center_item, null);
-                holder = new ViewHolder();
-                holder.notificationTitle
-                        = convertView.findViewById(R.id.tv_notification_title);
-                holder.notificationContent
-                        = convertView.findViewById(R.id.tv_notification_content);
-                holder.notificationTime
-                        = convertView.findViewById(R.id.tv_notification_time);
-                convertView.setTag(holder);
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                lv_all_notifications.refreshOrLoadComplete();
+                ToastUtils.show(errorInfo.getMessage());
 
-                TextView del = convertView.findViewById(R.id.tv_delete);
-                del.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final CustomDialog customDialog
-                                = new CustomDialog(NotificationCenterActivity.this);
-                        customDialog.setDialogMessage("消息管理", null, null);
-                        customDialog.setMessage("确认删除该通知？");
-                        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                notificationsList.remove(position);
-                                notificationsListAdapter.notifyDataSetChanged();
-                                customDialog.dismiss();
-                            }
-                        });
-                        customDialog.show();
-                    }
-                });
+            }
+        });
+    }
+    private void refreshUI(){
+        datas.addAll(results);
+        notificationsListAdapter.setData(datas);
+        notificationsListAdapter.notifyDataSetChanged();
+    }
+    private class NotificationsListAdapter extends CommonAdapter<NoticeInfo> {
+        public NotificationsListAdapter(Context context, int layoutId, List<NoticeInfo> datas) {
+            super(context, layoutId, datas);
+        }
 
-                final SwipeLayout swipeLayout = convertView.findViewById(R.id.sl_notification);
-                swipeLayout.setClickToClose(true);
-                swipeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (SwipeLayout.Status.Close == swipeLayout.getOpenStatus()) {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString(DETAIL_TITLE,
-                                    notificationsList.get(position).get(INDEX_TITLE));
-                            bundle.putString(DETAIL_CONTENT,
-                                    notificationsList.get(position).get(INDEX_CONTENT));
-                            bundle.putString(DETAIL_TIME,
-                                    notificationsList.get(position).get(INDEX_TIME));
-                            bundle.putInt(DETAIL_POSITION, position);
-                            // 显示详情页
-                            intentActivity(NotificationCenterActivity.this,
-                                    NotificationDetailActivity.class, false, bundle,
-                                    SHOW_DETAIL_REQUEST_CODE);
-
+        @Override
+        public void convert(ViewHolder holder, final NoticeInfo noticeInfo) {
+            ((TextView)holder.getView(R.id.tv_notification_title)).setText(noticeInfo.getNoticeTitle());
+            ((TextView)holder.getView(R.id.tv_notification_time)).setText(noticeInfo.getFromDate());
+            TextView del = holder.getView(R.id.tv_delete);
+            del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final CustomDialog customDialog
+                            = new CustomDialog(NotificationCenterActivity.this);
+                    customDialog.setDialogMessage("消息管理", null, null);
+                    customDialog.setMessage("确认删除该通知？");
+                    customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ArrayList<String> ids = new ArrayList<>();
+                            ids.add(noticeInfo.getGuid());
+                            deleteNotice(DELETE_ONE,ids);
+                            customDialog.dismiss();
                         }
-                    }
-                });
-
-            }  else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            holder.notificationTitle.setText(notificationsList.get(position).get(INDEX_TITLE));
-            holder.notificationContent.setText(notificationsList.get(position).get(INDEX_CONTENT));
-            holder.notificationTime.setText(notificationsList.get(position).get(INDEX_TIME));
-            return convertView;
+                    });
+                    customDialog.show();
+                }
+            });
         }
     }
 
@@ -296,19 +270,7 @@ public class NotificationCenterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (null != notificationsListAdapter && null != dataSetObserver) {
-            notificationsListAdapter.unregisterDataSetObserver(dataSetObserver);
+            notificationsListAdapter.unregisterAdapterDataObserver(dataSetObserver);
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SHOW_DETAIL_REQUEST_CODE && Activity.RESULT_OK == resultCode) {
-            Bundle bundle = data.getExtras();
-            if (null != bundle && bundle.getBoolean(DETAIL_FINISH_RESULT)) {
-                notificationsList.remove(bundle.getInt(DETAIL_POSITION));
-                notificationsListAdapter.notifyDataSetChanged();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

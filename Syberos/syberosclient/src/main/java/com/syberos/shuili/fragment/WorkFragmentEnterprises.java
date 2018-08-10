@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,11 @@ import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.accident.AccidentListAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
@@ -38,10 +42,13 @@ import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PopupButton.ImportMenuView;
 import com.syberos.shuili.view.PopupButton.RippleLayout;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -333,21 +340,71 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else {
                 // scanResult 为获取到的字符串
                 String scanResult = intentResult.getContents();
+                if (scanResult.contains(" ")) {
+                    String[] scanResultArray = scanResult.split(" ");
+                    if (2 == scanResultArray.length) {
+                        switch (Integer.valueOf(scanResultArray[0])) { // 0-登录，1-工程，2-证书
+                            case 0:
+                                Log.d(TAG, "授权登录中...");
+                                showLoadingDialog("授权登录中...");
+                                final String methodName = "updateRelGuidUser";
+                                final HashMap<String,Object> params = new HashMap<>();
+                                params.put("arg0", scanResultArray[1]);
+                                params.put("arg1", SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserName());
+                                params.put("arg2", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword());
+                                class LoginRunnable implements Runnable {
+                                    @Override
+                                    public void run() {
+                                        SoapUtils.getInstance().callWebService(params, methodName, new RequestCallback<Object>() {
+                                            @Override
+                                            public void onResponse(final Object result) {
+                                                mHandler.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        closeDialog();
+                                                        Integer r = Integer.valueOf(result.toString());
+                                                        Log.d(TAG, "授权登录结果：" + r);
+                                                    }
+                                                });
+                                            }
 
-                Bundle bundle = new Bundle();
-                if (Strings.isValidUrl(scanResult)) {
-                    scanResult += "&ukey=1";
-                    bundle.putString("url",scanResult);
-                    intentActivity(getActivity(), ProjectInfoActivity.class,
-                            false, bundle);
+                                            @Override
+                                            public void onFailure(final ErrorInfo.ErrorCode errorInfo) {
+                                                mHandler.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        closeDialog();
+                                                        ToastUtils.show(errorInfo.getMessage());
+                                                    }
+                                                });
+                                            }
+
+                                        }, SoapUtils.SoapType.WSDL_BASE);
+                                    }
+                                }
+                                new Thread(new LoginRunnable()).start();
+                                break;
+                            case 1:
+                                Bundle bundle = new Bundle();
+                                String result = scanResultArray[1] += "&ukey=1";
+                                bundle.putString("url",result);
+                                intentActivity(getActivity(), ProjectInfoActivity.class,
+                                        false, bundle);
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        ToastUtils.show("二维码格式错误");
+                    }
                 } else {
-                   ToastUtils.show("二维码识别有误");
+                    ToastUtils.show("二维码格式错误");
                 }
-
                 ToastUtils.show("Scan Result: " + scanResult);
+
             }
         }
     }
-
-
 }

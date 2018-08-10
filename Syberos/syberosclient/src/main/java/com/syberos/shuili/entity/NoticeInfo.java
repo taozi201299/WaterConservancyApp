@@ -11,6 +11,16 @@ public class NoticeInfo extends HttpBaseListResponse<NoticeInfo> {
     public String isRead;
     public String fromDate;
 
+    public String getNoticeContent() {
+        return noticeContent == null ? "" : noticeContent;
+    }
+
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
+
+    public String noticeContent;
+
 
     public String getGuid() {
         return guid;
