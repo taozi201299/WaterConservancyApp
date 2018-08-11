@@ -13,24 +13,24 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     String attId;
     String id;
     String engcode;
-    String name;
-    String engstat;
-    String engtype;
+    String name; // 工程名称
+    String engstat; // 工程建设情况
+    String engtype; // 工程类型
     String engTypeName;
     String charperstel;
-    String stat;
+    String stat;   // 状态
     String bisengsareid;
     String mixobjid;
     String orgguid;
     String adguid;
     String marker;
-    String impograd;
-    String startdate;
-    String compdate;
-    String oflpcode;
+    String impograd; //重要性
+    String startdate; // 开工时间
+    String compdate; // 建成时间
+    String oflpcode; // 所属水行政管理部门
 
     public String getFromdate() {
-        return fromdate;
+        return fromdate == null ? "" : fromdate;
     }
 
     public void setFromdate(String fromdate) {
@@ -38,7 +38,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getEngId() {
-        return engId;
+        return engId == null ? "" : engId;
     }
 
     public void setEngId(String engId) {
@@ -46,7 +46,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getBesId() {
-        return besId;
+        return besId == null ? "" : besId;
     }
 
     public void setBesId(String besId) {
@@ -54,7 +54,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getAttId() {
-        return attId;
+        return attId == null ? "" : attId;
     }
 
     public void setAttId(String attId) {
@@ -62,7 +62,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getId() {
-        return id;
+        return id == null ? "" : id;
     }
 
     public void setId(String id) {
@@ -70,7 +70,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getEngcode() {
-        return engcode;
+        return engcode == null ? "" : engcode;
     }
 
     public void setEngcode(String engcode) {
@@ -78,7 +78,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -86,7 +86,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getEngstat() {
-        return engstat;
+        return engstat == null ? "" : engstat;
     }
 
     public void setEngstat(String engstat) {
@@ -94,7 +94,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getEngtype() {
-        return engtype;
+        return engtype == null ? "" : engtype;
     }
 
     public void setEngtype(String engtype) {
@@ -102,7 +102,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getEngTypeName() {
-        return engTypeName;
+        return engTypeName == null ? "" : engTypeName;
     }
 
     public void setEngTypeName(String engTypeName) {
@@ -110,7 +110,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getCharperstel() {
-        return charperstel;
+        return charperstel == null ? "" : charperstel;
     }
 
     public void setCharperstel(String charperstel) {
@@ -118,7 +118,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getStat() {
-        return stat;
+        return stat == null ? "" : stat;
     }
 
     public void setStat(String stat) {
@@ -126,7 +126,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getBisengsareid() {
-        return bisengsareid;
+        return bisengsareid == null ? "" : bisengsareid;
     }
 
     public void setBisengsareid(String bisengsareid) {
@@ -134,7 +134,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getMixobjid() {
-        return mixobjid;
+        return mixobjid == null ? "" : mixobjid;
     }
 
     public void setMixobjid(String mixobjid) {
@@ -142,7 +142,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getOrgguid() {
-        return orgguid;
+        return orgguid == null ? "" : orgguid;
     }
 
     public void setOrgguid(String orgguid) {
@@ -150,7 +150,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getAdguid() {
-        return adguid;
+        return adguid == null ? "" : adguid;
     }
 
     public void setAdguid(String adguid) {
@@ -158,7 +158,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getMarker() {
-        return marker;
+        return marker == null ? "" : marker;
     }
 
     public void setMarker(String marker) {
@@ -166,7 +166,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getImpograd() {
-        return impograd;
+        return impograd == null ? "" : impograd;
     }
 
     public void setImpograd(String impograd) {
@@ -174,7 +174,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getStartdate() {
-        return startdate;
+        return startdate == null ? "" : startdate;
     }
 
     public void setStartdate(String startdate) {
@@ -182,7 +182,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getCompdate() {
-        return compdate;
+        return compdate == null ? "" : compdate;
     }
 
     public void setCompdate(String compdate) {
@@ -190,7 +190,7 @@ public class MvEngColl extends HttpBaseResponse<MvEngColl> {
     }
 
     public String getOflpcode() {
-        return oflpcode;
+        return oflpcode == null ? "" : oflpcode;
     }
 
     public void setOflpcode(String oflpcode) {

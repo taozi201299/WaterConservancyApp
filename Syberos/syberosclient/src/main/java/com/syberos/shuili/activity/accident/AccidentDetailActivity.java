@@ -131,8 +131,8 @@ public class AccidentDetailActivity extends BaseActivity {
                 for(final ObjAcci item : reportInfo) {
                     if(!item.getPID().equals(accidentInformation.getId()))continue;
                     View view = LayoutInflater.from(mContext).inflate(R.layout.simple_list_row, null);
-                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ll_report_item.getLayoutParams());
-                    lp.setMargins(0, 0, 0, 15);
+                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,100);
+                    lp.setMargins(0,15,0,15);
                     view.setLayoutParams(lp);
                     TextView textView = (TextView) view.findViewById(R.id.textView);
                     textView.setText(item.getCollTime() + " " + "补报");

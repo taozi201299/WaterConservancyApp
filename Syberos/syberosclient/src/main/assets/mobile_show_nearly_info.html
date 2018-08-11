@@ -66,7 +66,10 @@ function showMap(x, y) {
             var objTitle = document.getElementById('title').innerText=objName;
             overlay.show(feature.getGeometry().getCoordinates(),divMark);
             divMark.addEventListener("click", attribute);
-            function attribute(){window.DEMO.go2ProjectInfoActivity(objGuid);};
+            function attribute(){
+            window.DEMO.go2ProjectInfoActivity(objGuid);
+            overlay.hide();
+            };
             return;
         }
     }

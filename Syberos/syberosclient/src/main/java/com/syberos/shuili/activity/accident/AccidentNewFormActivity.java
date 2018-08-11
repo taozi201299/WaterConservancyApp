@@ -172,7 +172,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                     ce_accident_name.setText(getAcciTypeName(objAcci.getAcciCate()));
                     ce_occo_loc.setText(objAcci.getOccuLoc());
                     if(objAcci.getAcciGrad() != null) {
-                        ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(objAcci.getAcciGrad()));
+                        ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(Integer.valueOf(objAcci.getAcciGrad())));
                     }
                     ce_serious_injuries_count.setText(objAcci.getSerInjNum());
                     ce_death_count.setText(objAcci.getCasNum());

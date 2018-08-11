@@ -91,6 +91,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initData() {
+        datas.clear();
+        reportInfos.clear();
         showDataLoadingDialog();
         getAccidentUnitType();
     }

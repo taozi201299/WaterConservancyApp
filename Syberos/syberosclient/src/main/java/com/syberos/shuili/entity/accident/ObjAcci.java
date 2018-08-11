@@ -19,7 +19,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     public static final int UNIT_SELF = 0; // 本单位
     public static final int UNIT_OTHER = 1; // 参建单位/下级单位
 
-    public static final int NEW_ACCI = 3;
+    public static final int NEW_ACCI = -1;
     String acciWiunType;
     String acciTreaResu;
     String occuTime;

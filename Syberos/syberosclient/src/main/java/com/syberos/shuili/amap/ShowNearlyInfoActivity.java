@@ -136,6 +136,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
 
     @Override
     public void initView() {
+        showDataLoadingDialog();
         showTitle("查附近");
         setActionBarRightVisible(View.INVISIBLE);
         typePicker = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
@@ -390,6 +391,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
                 webView.loadUrl("javascript:showMap(" + mLon + ',' + mLan + ")");
 //                webView.loadUrl("javascript:updateStartPoint(" + mLon + ',' + mLan + ")");
                 hasShowMap = true;
+                closeDataDialog();
             }
 
             updateLineAddPoint(mLon, mLan);
@@ -675,6 +677,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
                         change_show_range.setVisibility(View.VISIBLE);
                         updateNearInfo(mLon, mLan, String.valueOf(currentShowRange));
                         hasShowMap = true;
+                        closeDataDialog();
                     }
 
                     updateCurrentPoint(mLon, mLan);
