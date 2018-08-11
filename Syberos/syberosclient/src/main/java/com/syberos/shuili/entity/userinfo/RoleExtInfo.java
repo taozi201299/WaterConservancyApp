@@ -1,5 +1,7 @@
 package com.syberos.shuili.entity.userinfo;
 
+import com.syberos.shuili.utils.CommonUtils;
+
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.PropertyInfo;
@@ -25,7 +27,7 @@ public class RoleExtInfo implements KvmSerializable {
     public String status;
     public String modifier;
     public String appCode;
-    public String ts;
+    public Date ts;
     public String remark;
 
     @Override
@@ -99,7 +101,10 @@ public class RoleExtInfo implements KvmSerializable {
                 appCode = o.toString();
                 break;
             case 10:
-                ts = o.toString();
+                try {ts = CommonUtils.stringToDate(o.toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 11:
                 remark = o.toString();
@@ -154,7 +159,7 @@ public class RoleExtInfo implements KvmSerializable {
                 propertyInfo.name = "appCode";
                 break;
             case 10:
-                propertyInfo.type = PropertyInfo.STRING_CLASS;;
+                propertyInfo.type = MarshalDate.DATE_CLASS;
                 propertyInfo.name = "ts";
                 break;
             case  11:

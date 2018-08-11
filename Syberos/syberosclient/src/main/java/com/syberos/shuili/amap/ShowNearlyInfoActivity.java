@@ -37,6 +37,8 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.map.NearbyEngInfoBean;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -55,7 +57,7 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressLint("MissingPermission")
-public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
 
     private final static String TAG = ShowNearlyInfoActivity.class.getSimpleName();
 
@@ -116,11 +118,26 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_nearly_info);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_show_nearly_info;
+    }
 
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void initData() {
+        if (!USE_GAO_DE_SDK_API) {
+            registerListener();
+        }
+    }
+
+    @Override
+    public void initView() {
+        showTitle("查附近");
+        setActionBarRightVisible(View.INVISIBLE);
         typePicker = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -162,14 +179,7 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
         }else{
             webMap();
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!USE_GAO_DE_SDK_API) {
-            registerListener();
-        }
     }
 
     @Override
@@ -325,6 +335,14 @@ public class ShowNearlyInfoActivity extends AppCompatActivity implements EasyPer
                 }
             };
             getJsonDataTask.execute(jsonString);
+        }
+        @JavascriptInterface
+        public void go2ProjectInfoActivity(String guid){
+            Bundle bundle = new Bundle();
+            bundle.putString("guid",guid);
+            intentActivity(ShowNearlyInfoActivity.this, ProjectDetailsActivity.class,false,bundle);
+
+
         }
     }
 

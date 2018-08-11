@@ -2,15 +2,16 @@ package com.syberos.shuili.entity.userinfo;
 import android.os.Build;
 
 import com.syberos.shuili.entity.userinfo.RoleInfo;
+import com.syberos.shuili.utils.CommonUtils;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.PropertyInfo;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class UserInfo implements KvmSerializable {
     public String phone;
     public ArrayList<RoleExtInfo> roleExtInfoList;
     public String status;
-    public String ts;
+    public Date ts;
     public String userCode;
     public String userName;
     public String userType;
@@ -154,7 +155,11 @@ public class UserInfo implements KvmSerializable {
                 status = arg1.toString();
                 break;
             case 17:
-                ts = arg1.toString();
+                try {
+                    ts = CommonUtils.stringToDate(arg1.toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             case 18:
                 userCode = arg1.toString();
                 break;
@@ -242,7 +247,7 @@ public class UserInfo implements KvmSerializable {
                 propertyInfo.name = "status";
                 break;
             case 17:
-                propertyInfo.type = PropertyInfo.STRING_CLASS;;
+                propertyInfo.type = MarshalDate.DATE_CLASS;;;
                 propertyInfo.name = "ts";
                 break;
             case 18:

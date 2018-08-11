@@ -153,9 +153,7 @@ public class SoapUtils {
         envelope.bodyOut = transport;
         envelope.setOutputSoapObject(request);// 设置请求参数
         new MarshalBase64().register(envelope);
-       // envelope.addMapping(NAME_SPACE, "UserInfo", info.getClass(),new MarshalBase64());// 传对象时必须，参数namespace是webservice中指定的，
-        // claszz是自定义类的类型
-        envelope.addMapping(NAME_SPACE,"UserInfo",info.getClass());
+       envelope.addMapping(NAME_SPACE, "userExtendInfo", info.getClass(),new MarshalBase64());// 传对象时必须，参数namespace是webservice中指定的，
         try {
             transport.call(SOAP_ACTION, envelope);
             Object obj = envelope.getResponse();// 直接将返回值强制转换为已知对象

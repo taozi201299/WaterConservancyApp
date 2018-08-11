@@ -2,26 +2,27 @@ package com.syberos.shuili.activity.searchproject;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.MvEngColl;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ProjectDetailsActivity extends BaseActivity {
-
-    public static final String RESULT_UNIT                 = "RESULT_UNIT";
-    public static final String RESULT_PROJECT_NAME         = "RESULT_PROJECT_NAME";
-    public static final String RESULT_PROJECT_CODE         = "RESULT_PROJECT_CODE";
-    public static final String RESULT_PARENT_UNIT          = "RESULT_PARENT_UNIT";
-    public static final String RESULT_PROJECT_STATUS       = "RESULT_PROJECT_STATUS";
-    public static final String RESULT_PROJECT_START        = "RESULT_PROJECT_START";
-    public static final String RESULT_PROJECT_END          = "RESULT_PROJECT_END";
-    public static final String RESULT_PROJECT_PRICE        = "RESULT_PROJECT_PRICE";
-    public static final String RESULT_PROJECT_IMPORTANCE   = "RESULT_PROJECT_IMPORTANCE";
 
     @BindView(R.id.tv_unit)
     TextView tv_unit;
@@ -50,13 +51,8 @@ public class ProjectDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_project_importance)
     TextView tv_project_importance;
 
-    @BindView(R.id.tv_action_bar_title)
-    TextView tv_action_bar_title;
-
-    @OnClick(R.id.iv_action_bar_back)
-    void go2back() {
-        activityFinish();
-    }
+    private String objGuid;
+    private MvEngColl mvEngColl = null;
 
     @Override
     public int getLayoutId() {
@@ -70,28 +66,49 @@ public class ProjectDetailsActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getProjectInfo();
 
     }
 
     @Override
     public void initView() {
-        setInitActionBar(false);
-
-        tv_action_bar_title.setText("工程详情");
-        tv_action_bar_title.setGravity(Gravity.LEFT);
-
+        showTitle("工程详情");
+        setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
 
         if (null != bundle) {
-            tv_unit.setText(bundle.getString(RESULT_UNIT));
-            tv_project_name.setText(bundle.getString(RESULT_PROJECT_NAME));
-            tv_project_code.setText(bundle.getString(RESULT_PROJECT_CODE));
-            tv_parent_unit.setText(bundle.getString(RESULT_PARENT_UNIT));
-            tv_project_status.setText(bundle.getString(RESULT_PROJECT_STATUS));
-            tv_project_start.setText(bundle.getString(RESULT_PROJECT_START));
-            tv_project_end.setText(bundle.getString(RESULT_PROJECT_END));
-            tv_project_price.setText(bundle.getString(RESULT_PROJECT_PRICE));
-            tv_project_importance.setText(bundle.getString(RESULT_PROJECT_IMPORTANCE));
+           objGuid = bundle.getString("objGuid");
         }
+    }
+    private void getProjectInfo() {
+        String url =  GlobleConstants.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("id",objGuid);
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                mvEngColl = gson.fromJson(result,MvEngColl.class);
+                if(mvEngColl == null || mvEngColl.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(mvEngColl.dataSource.size() == 0){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                }else {
+                    refreshUI();
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void  refreshUI(){
+
     }
 }

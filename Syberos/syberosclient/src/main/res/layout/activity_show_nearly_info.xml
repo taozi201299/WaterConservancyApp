@@ -3,12 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".amap.ShowNearlyInfoActivity" >
+    xmlns:layout="http://schemas.android.com/apk/res-auto"
+    tools:context=".amap.ShowNearlyInfoActivity">
+    <include layout="@layout/action_bar2_layout"
+        android:id="@+id/layout_bar"></include>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_bar">
 
     </WebView>
 
