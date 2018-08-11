@@ -30,7 +30,7 @@ public abstract class BActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (allowFullScreen) {
+        if (isAllowFullScreen()) {
             requestWindowFeature(Window.FEATURE_NO_TITLE); // 取消标题
         }
         mContext = this;
@@ -44,6 +44,7 @@ public abstract class BActivity extends AppCompatActivity {
         StatusbarUtil.setStatusBar(this);
         initView();
         initListener();
+        initData();
     }
 
     public abstract int getLayoutId();

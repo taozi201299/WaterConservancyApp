@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/security_head_bg">
+
+    <TextView
+        android:id="@+id/tv_view_title"
+        style="@style/TextStyleWrite"
+        android:text="标题"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_mark_pot_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5dp"
+        android:src="@drawable/shape_pot_ffd140"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chart_value_1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/tv_chart_value_title_1"
+        app:layout_constraintRight_toLeftOf="@id/tv_chart_value_1"
+        app:layout_constraintTop_toTopOf="@+id/tv_chart_value_1"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_1"
+        style="@style/TextStyle_Write_Bold_Little"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@id/tv_chart_value_title_1"
+        app:layout_constraintLeft_toRightOf="@id/iv_mark_pot_2"
+        app:layout_constraintRight_toRightOf="@id/tv_chart_value_title_1" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_title_1"
+        style="@style/TextStyleWrite"
+        android:text="已排查单位数量"
+        app:layout_constraintBottom_toBottomOf="@id/pie_chart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/pie_chart"
+        app:layout_constraintTop_toTopOf="@id/pie_chart"
+        app:layout_constraintVertical_bias="0.9" />
+
+
+    <ImageView
+        android:id="@+id/iv_mark_pot_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_5dp"
+        android:src="@drawable/shape_pot_ff3232"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chart_value_2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/tv_chart_value_title_2"
+        app:layout_constraintRight_toLeftOf="@id/tv_chart_value_2"
+        app:layout_constraintTop_toTopOf="@+id/tv_chart_value_2" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_2"
+        style="@style/TextStyle_Write_Bold_Little"
+
+        android:includeFontPadding="false"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@id/tv_chart_value_title_2"
+        app:layout_constraintLeft_toRightOf="@id/iv_mark_pot_4"
+        app:layout_constraintRight_toRightOf="@id/tv_chart_value_title_2" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_title_2"
+        style="@style/TextStyleWrite"
+        android:text="标题"
+        app:layout_constraintBottom_toBottomOf="@id/pie_chart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/pie_chart"
+        app:layout_constraintTop_toTopOf="@id/pie_chart"
+        app:layout_constraintVertical_bias="0.3" />
+
+
+    <ImageView
+        android:id="@+id/iv_mark_pot_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_5dp"
+        android:src="@drawable/shape_pot_83d3ff"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chart_value_3"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/tv_chart_value_title_3"
+        app:layout_constraintRight_toLeftOf="@id/tv_chart_value_3"
+        app:layout_constraintTop_toTopOf="@+id/tv_chart_value_3" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_3"
+        style="@style/TextStyle_Write_Bold_Little"
+        android:includeFontPadding="false"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@id/tv_chart_value_title_3"
+        app:layout_constraintLeft_toRightOf="@id/iv_mark_pot_1"
+        app:layout_constraintRight_toRightOf="@id/tv_chart_value_title_3" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_title_3"
+        style="@style/TextStyleWrite"
+        android:text="标题"
+        app:layout_constraintBottom_toBottomOf="@id/pie_chart"
+        app:layout_constraintLeft_toRightOf="@id/pie_chart"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pie_chart"
+        app:layout_constraintVertical_bias="0.9" />
+
+
+    <ImageView
+        android:id="@+id/iv_mark_pot_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_5dp"
+        android:src="@drawable/shape_pot_ffa51e"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chart_value_4"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/tv_chart_value_title_4"
+        app:layout_constraintRight_toLeftOf="@id/tv_chart_value_4"
+        app:layout_constraintTop_toTopOf="@+id/tv_chart_value_4" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_4"
+        style="@style/TextStyle_Write_Bold_Little"
+        android:includeFontPadding="false"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@id/tv_chart_value_title_4"
+        app:layout_constraintLeft_toRightOf="@id/iv_mark_pot_3"
+        app:layout_constraintRight_toRightOf="@id/tv_chart_value_title_4" />
+
+    <TextView
+        android:id="@+id/tv_chart_value_title_4"
+        style="@style/TextStyleWrite"
+        android:text="标题"
+        app:layout_constraintBottom_toBottomOf="@id/pie_chart"
+        app:layout_constraintLeft_toRightOf="@id/pie_chart"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pie_chart"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <!--pie_chart-->
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="@dimen/_140dp"
+        android:layout_height="@dimen/_140dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_data_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_view_title" />
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/_140dp"-->
+    <!--android:layout_height="@dimen/_140dp"-->
+    <!--android:src="@drawable/shape_pot_83d3ff"-->
+    <!--app:layout_constraintBottom_toTopOf="@id/ll_data_1"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@id/tv_view_title" />-->
+
+
+    <LinearLayout
+        android:id="@+id/ll_data_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_60dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ll_data_2"
+        app:layout_constraintTop_toBottomOf="@+id/pie_chart">
+
+        <TextView
+            android:id="@+id/tv_data_1"
+            style="@style/TextStyle_Value_Big"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tv_data_title_1"
+            style="@style/TextStyleWrite"
+            android:text="标题题标题" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/ll_data_1"
+        app:layout_constraintLeft_toRightOf="@id/ll_data_1"
+        app:layout_constraintRight_toLeftOf="@id/ll_data_3">
+
+        <TextView
+            android:id="@+id/tv_data_2"
+            style="@style/TextStyle_Value_Big"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tv_data_title_2"
+            style="@style/TextStyleWrite"
+            android:text="标题题标题" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/ll_data_1"
+        app:layout_constraintLeft_toRightOf="@id/ll_data_2"
+        app:layout_constraintRight_toLeftOf="@id/ll_data_4">
+
+        <TextView
+            android:id="@+id/tv_data_3"
+            style="@style/TextStyle_Value_Big"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tv_data_title_3"
+            style="@style/TextStyleWrite"
+            android:text="标题题标题" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/ll_data_1"
+        app:layout_constraintLeft_toRightOf="@id/ll_data_3"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/tv_data_4"
+            style="@style/TextStyle_Value_Big"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tv_data_title_4"
+            style="@style/TextStyleWrite"
+            android:text="标题题标题" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

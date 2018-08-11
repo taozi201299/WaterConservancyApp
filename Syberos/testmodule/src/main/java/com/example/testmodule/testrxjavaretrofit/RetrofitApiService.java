@@ -10,7 +10,7 @@ import retrofit2.http.GET;
  * Project: Syberos.
  * Package：com.example.testmodule.testrxjavaretrofit.
  */
-public interface ApiService {
+public interface RetrofitApiService {
     @GET("xiaohua.json")
     Observable<List<MyJoke>> getData();
 }

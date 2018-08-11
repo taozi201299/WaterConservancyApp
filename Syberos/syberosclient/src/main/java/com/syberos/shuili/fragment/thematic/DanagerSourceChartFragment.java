@@ -1,4 +1,4 @@
-package com.syberos.shuili.fragment.chart;
+package com.syberos.shuili.fragment.thematic;
 
 import android.Manifest;
 import android.os.Build;
@@ -23,10 +23,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Administrator on 2018/6/26.
- * 标准化专题图
  */
 
-public class StanChartFragment extends BaseLazyFragment{
+public class DanagerSourceChartFragment extends BaseLazyFragment implements EasyPermissions.PermissionCallbacks {
     @BindView(R.id.webview)
     WebView webView;
     private String mLon = "";
@@ -102,6 +101,16 @@ public class StanChartFragment extends BaseLazyFragment{
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
         });
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 
     public class MyJavaScriptInterface {

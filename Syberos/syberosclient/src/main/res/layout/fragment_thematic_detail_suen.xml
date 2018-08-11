@@ -3,11 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--专题图-detail-安检执法-->
 
-    <include layout="@layout/action_bar_thematic" />`
-
-    <FrameLayout
-        android:id="@+id/fragment_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/include_thematic_hidden_summarized_view" />
 </LinearLayout>

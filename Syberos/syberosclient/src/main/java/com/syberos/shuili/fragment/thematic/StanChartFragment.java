@@ -1,4 +1,4 @@
-package com.syberos.shuili.fragment.chart;
+package com.syberos.shuili.fragment.thematic;
 
 import android.Manifest;
 import android.os.Build;
@@ -23,10 +23,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Administrator on 2018/6/26.
- * 安全检查专题图
+ * 标准化专题图
  */
 
-public class SinsChartFragment extends BaseLazyFragment  {
+public class StanChartFragment extends BaseLazyFragment{
     @BindView(R.id.webview)
     WebView webView;
     private String mLon = "";

@@ -1,41 +1,20 @@
-package com.syberos.shuili.fragment.chart;
+package com.syberos.shuili.fragment.thematic;
 
 import android.Manifest;
 import android.os.Build;
-import android.os.Handler;
-import android.support.annotation.BinderThread;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.google.gson.Gson;
-import com.lzy.okhttputils.cache.CacheMode;
-import com.shuili.callback.ErrorInfo;
-import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
-import com.syberos.shuili.amap.AMapToWGS;
-import com.syberos.shuili.amap.SecurityCheckMapTrailsActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.entity.map.CityInfoBean;
 import com.syberos.shuili.entity.map.MapBoundBean;
-import com.syberos.shuili.utils.ToastUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,25 +23,18 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Administrator on 2018/6/26.
+ * 安全检查专题图
  */
 
-public class HiddenChartFragment extends BaseLazyFragment implements View.OnClickListener {
-
+public class SinsChartFragment extends BaseLazyFragment  {
     @BindView(R.id.webview)
     WebView webView;
-    @BindView(R.id.btn_zhiguan)
-    Button btn_zhiguan;
-    @BindView(R.id.btn_liuyu)
-    Button btn_liuyu;
-    @BindView(R.id.btn_jianguan)
-    Button btn_jianguan;
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
     private boolean bShowMap = false;
     private int iMapLevel = 0;
     private final static long duration = 10 * 1000;
-    private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -80,22 +52,12 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initView() {
-        showDataLoadingDialog();
-        // 行政区划
-        if("1".equals(App.jurdAreaType)){
-            type = 1;
-        }else if("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)){
-            type = 2;
-        }
         webMap();
 
     }
 
     @Override
     protected void initListener() {
-        btn_liuyu.setOnClickListener(this);
-        btn_jianguan.setOnClickListener(this);
-        btn_zhiguan.setOnClickListener(this);
 
     }
 
@@ -117,13 +79,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        if(type == 1 || type == 3) {
-            iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/hidd.html");
-        }else if(type == 2){
-            iMapLevel = 0;
-            webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
-        }
+        webView.loadUrl("file:///android_asset/chart/hidd.html");
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -131,7 +87,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
                 if(!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()){
-                    closeDataDialog();
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
                 }
                 addMarkInfo();
@@ -149,34 +104,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        bLoadFinish = false;
-        bShowMap = false;
-        switch (v.getId()){
-            case R.id.btn_zhiguan:
-                iMapLevel = 4;
-                type = 1;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd.html");
-                break;
-            case R.id.btn_liuyu:
-                type = 2;
-                iMapLevel = 0;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
-                break;
-            case R.id.btn_jianguan:
-                iMapLevel = 4;
-                type = 3;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd.html");
-                break;
-
-        }
-
-    }
-
     public class MyJavaScriptInterface {
         public MyJavaScriptInterface() {
 
@@ -190,15 +117,10 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     public void setMapData(MapBoundBean mapData){
         String center = mapData.centerXY;
         String[]array = center.split(",");
-        if(type == 1 || type == 4) {
-            iMapLevel = 4;
-        }else {
-            iMapLevel = 0;
-        }
+        iMapLevel = 4;
         mLon = array[0];
         mLat = array[1];
         if(bLoadFinish) {
-            closeDataDialog();
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
             addMarkInfo();

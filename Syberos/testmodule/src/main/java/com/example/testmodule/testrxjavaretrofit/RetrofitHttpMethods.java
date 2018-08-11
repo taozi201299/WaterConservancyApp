@@ -16,32 +16,38 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Project: Syberos.
  * Package：com.example.testmodule.testrxjavaretrofit.
  */
-public class HttpMethods {
+public class RetrofitHttpMethods {
     private static final String BASE_URL = "http://api.laifudao.com/open/";
     public static final int TIME_OUT = 5;
     private Retrofit retrofit;
-    private ApiService apiService;
+    private RetrofitApiService retrofitApiService;
 
-    private HttpMethods() {
+    private RetrofitHttpMethods() {
         OkHttpClient client = new OkHttpClient();
         client.newBuilder().connectTimeout(TIME_OUT, TimeUnit.SECONDS);
-
-        retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit
+                .Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        apiService = retrofit.create(ApiService.class);
+
+        retrofitApiService = retrofit.create(RetrofitApiService.class);
 
     }
 
-    private static class singleInstance {
-        public static final HttpMethods instance = new HttpMethods();
-    }
+    private static RetrofitHttpMethods instance;
 
-    public static HttpMethods getInstance() {
-        return singleInstance.instance;
+    public static RetrofitHttpMethods getInstance() {
+        if (instance == null) {
+            synchronized (RetrofitHttpMethods.class) {
+                if (instance == null) {
+                    instance = new RetrofitHttpMethods();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -51,7 +57,7 @@ public class HttpMethods {
      */
     public void getJoke(Observer<List<MyJoke>> observer) {
 
-        apiService.getData()
+        retrofitApiService.getData()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

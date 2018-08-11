@@ -129,4 +129,5 @@
     <color name="title_1">#999999</color>
     <color name="color_bg">#eeeeee</color>
 
+    <color name="text_normal_color">#555555</color>
 </resources>

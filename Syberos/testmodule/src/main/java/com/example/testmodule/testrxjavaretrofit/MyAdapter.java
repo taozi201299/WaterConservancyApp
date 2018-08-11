@@ -20,7 +20,7 @@ import java.util.List;
  * Project: Syberos.
  * Package：com.example.testmodule.testrxjavaretrofit.
  */
-public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context context;
     List<MyJoke> dataList;
     private MyViewHolder myViewHolder;
@@ -61,17 +61,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         this.dataList = dataList;
         notifyDataSetChanged();
     }
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTitle;
+        TextView tvContent;
 
-}
-
-
-class MyViewHolder extends RecyclerView.ViewHolder {
-    TextView tvTitle;
-    TextView tvContent;
-
-    public MyViewHolder(@NonNull View itemView) {
-        super(itemView);
-        tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-        tvContent = (TextView) itemView.findViewById(R.id.tv_content);
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvContent = (TextView) itemView.findViewById(R.id.tv_content);
+        }
     }
 }
+
+

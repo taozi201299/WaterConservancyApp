@@ -330,8 +330,9 @@
                             android:background="@drawable/button_login_normal"
                             android:gravity="center"
                             android:text="详情"
+                            android:layout_margin="@dimen/_5dp"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_edit_text_size" />
+                            android:textSize="@dimen/_14sp" />
                     </LinearLayout>
 
                 </LinearLayout>

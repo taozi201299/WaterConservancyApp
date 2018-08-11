@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +14,12 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
-import com.syberos.shuili.activity.ThematicDetailActivity;
+import com.syberos.shuili.activity.thematic.ThematicDetailActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.ProvinceJsonBean;
 import com.syberos.shuili.entity.map.CityInfoBean;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.listener.ProvinceCall;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -28,14 +28,14 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.fragment.chart.AccidentChartFragment;
-import com.syberos.shuili.fragment.chart.DanagerSourceChartFragment;
-import com.syberos.shuili.fragment.chart.HiddenChartFragment;
-import com.syberos.shuili.fragment.chart.SinsChartFragment;
-import com.syberos.shuili.fragment.chart.StanChartFragment;
-import com.syberos.shuili.fragment.chart.SuenChartFragment;
-import com.syberos.shuili.fragment.chart.WinsChartFragment;
-import com.syberos.shuili.fragment.chart.WoasChartFragment;
+import com.syberos.shuili.fragment.thematic.AccidentChartFragment;
+import com.syberos.shuili.fragment.thematic.DanagerSourceChartFragment;
+import com.syberos.shuili.fragment.thematic.HiddenChartFragment;
+import com.syberos.shuili.fragment.thematic.SinsChartFragment;
+import com.syberos.shuili.fragment.thematic.StanChartFragment;
+import com.syberos.shuili.fragment.thematic.SuenChartFragment;
+import com.syberos.shuili.fragment.thematic.WinsChartFragment;
+import com.syberos.shuili.fragment.thematic.WoasChartFragment;
 import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.listener.OpenDrawerListener;
 import com.syberos.shuili.utils.ProvinceDialog;
@@ -56,14 +56,14 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class HematicMapFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = HematicMapFragment.class.getSimpleName();
-    private static final String Hidden = "隐患";
-    private static final String Acci = "事故";
-    private static final String Haz = "危险源";
-    private static final String Stan = "标准化";
-    private static final String Sins = "安全检查";
-    private static final String Woas = "工作考核";
-    private static final String Wins = "水利稽察";
-    private static final String Suen = "安监执法";
+    public static final String Hidden = "隐患";
+    public static final String Acci = "事故";
+    public static final String Haz = "危险源";
+    public static final String Stan = "标准化";
+    public static final String Sins = "安全检查";
+    public static final String Woas = "工作考核";
+    public static final String Wins = "水利稽察";
+    public static final String Suen = "安监执法";
     @BindView(R.id.tl_tab)
     TabLayout tl_tab;
 
@@ -105,7 +105,10 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
 //
-        startActivity(new Intent(getActivity(), ThematicDetailActivity.class));
+        int currentItem = vp_content.getCurrentItem();
+        Intent intent=new Intent(getActivity(), ThematicDetailActivity.class);
+        intent.putExtra("typeValue",currentItem);
+        startActivity(intent);
     }
 
     @OnClick(R.id.iv_action_bar_left)

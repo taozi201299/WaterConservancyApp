@@ -1,4 +1,4 @@
-package com.syberos.shuili.fragment.chart;
+package com.syberos.shuili.fragment.thematic;
 
 import android.Manifest;
 import android.os.Build;

@@ -3,11 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/action_bar_thematic" />`
-
-    <FrameLayout
-        android:id="@+id/fragment_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--专题图-detail-危险源-->
+    <include layout="@layout/include_thematic_hidden_summarized_view" />
 </LinearLayout>

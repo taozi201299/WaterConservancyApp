@@ -11,3 +11,4 @@ maven-repository
 local.properties
 mvn-clone
 *.keystore
+testmodule

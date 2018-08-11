@@ -2,14 +2,10 @@ package com.example.testmodule.testrxjavaretrofit;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.example.testmodule.R;
 
@@ -40,7 +36,7 @@ public class HttpRequestResultActivity extends Activity {
     public void getData() {
 
 
-        HttpMethods.getInstance().getJoke(new Observer<List<MyJoke>>() {
+        RetrofitHttpMethods.getInstance().getJoke(new Observer<List<MyJoke>>() {
             Disposable d;
 
             @Override
