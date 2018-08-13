@@ -11,22 +11,30 @@ import android.widget.TextView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.accident.AccidentInformationGroup;
+import com.syberos.shuili.entity.accident.ObjAcci;
+import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.entity.inspect.BisWinsProb;
+import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
+import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018/4/30.
+ * 分组显示 每个工程下的稽查问题
  */
 
 public class InspectionProblemsAcitvity extends BaseActivity {
-    @BindView(R.id.inspec_prob_recycleview)
-    RecyclerView inspec_prob_recycleview;
+    private final String Title = "稽查问题";
 
-    private BisWinsProb bisWinsProb = null;
+    @BindView(R.id.recyclerView_inspection_prob)
+    RecyclerView recyclerView_inspection_prob;
 
-    private ProblemAdapter problemAdapter ;
     @Override
     public int getLayoutId() {
         return R.layout.activity_inspection_problem_layout;
@@ -44,62 +52,156 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
     @Override
     public void initView() {
-        problemAdapter = new ProblemAdapter(this,R.layout.inspect_detail_problem_list_item);
-        inspec_prob_recycleview.setAdapter(problemAdapter);
+        showTitle("");
+        setActionBarRightVisible(View.INVISIBLE);
+
     }
+    private static class InspectionProblemGroup implements Serializable {
 
-    public class ProblemAdapter extends CommonAdapter<BisWinsProb>{
+        private String header;
+        private ArrayList<ObjAcci> children;
 
-        public ProblemAdapter(Context context, int layoutId) {
-            super(context, layoutId);
+        public InspectionProblemGroup(String header, ArrayList<ObjAcci> children) {
+            this.header = header;
+            this.children = children;
+        }
+
+        public String getHeader() {
+            return header;
+        }
+
+        public void setHeader(String header) {
+            this.header = header;
+        }
+
+        public ArrayList<ObjAcci> getChildren() {
+            return children;
+        }
+
+        public void setChildren(ArrayList<ObjAcci> children) {
+            this.children = children;
+        }
+    }
+    private static class GroupedEnterprisesExpressAccidentListAdapter extends GroupedRecyclerViewAdapter {
+
+
+        private ArrayList<AccidentInformationGroup> mGroups;
+
+        public GroupedEnterprisesExpressAccidentListAdapter(
+                Context context, ArrayList<AccidentInformationGroup> groups) {
+            super(context);
+            mGroups = groups;
+        }
+        public void setData(ArrayList<AccidentInformationGroup> groups){
+            mGroups = groups;
+
         }
 
         @Override
-        public void convert(ViewHolder holder, BisWinsProb bisWinsProb) {
-            RelativeLayout rl_detail_problem_item = holder.getView(R.id.rl_detail_problem_item);
-            rl_detail_problem_item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                //    bundle.putSerializable(SEND_BUNDLE_KEY, problem);
-                    intentActivity(InspectionProblemsAcitvity.this,
-                            InspectProblemDetailActivity.class, false, bundle);
-                }
-            });
+        public int getGroupCount() {
+            return mGroups == null ? 0 : mGroups.size();
+        }
 
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            ArrayList<ObjAcci> children = mGroups.get(groupPosition).getChildren();
+            return children == null ? 0 : children.size();
+        }
 
-            int type = Integer.valueOf(bisWinsProb.getProbCate());
-            LinearLayout ll_type = holder.getView(R.id.ll_type);
-            TextView tv_type = holder.getView(R.id.tv_type);
+        @Override
+        public boolean hasHeader(int groupPosition) {
+            return true;
+        }
+
+        /**
+         * 返回false表示没有组尾
+         *
+         * @param groupPosition
+         * @return
+         */
+        @Override
+        public boolean hasFooter(int groupPosition) {
+            return false;
+        }
+
+        /**
+         * 当hasFooter返回false时，这个方法不会被调用。
+         *
+         * @return
+         */
+        @Override
+        public int getFooterLayout(int viewType) {
+            return 0;
+        }
+
+        /**
+         * 当hasFooter返回false时，这个方法不会被调用。
+         *
+         * @param holder
+         * @param groupPosition
+         */
+        @Override
+        public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
+
+        }
+
+        @Override
+        public int getHeaderLayout(int viewType) {
+            return R.layout.adapter_header;
+        }
+
+        @Override
+        public int getChildLayout(int viewType) {
+            return R.layout.activity_enterprises_express_accident_list_item;
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+            AccidentInformationGroup entity = mGroups.get(groupPosition);
+            holder.setText(R.id.tv_header, entity.getHeader());
+        }
+
+        @Override
+        public void onBindChildViewHolder(BaseViewHolder holder,
+                                          final int groupPosition, final int childPosition) {
+
+            final ObjAcci accidentInformation
+                    = mGroups.get(groupPosition).getChildren().get(childPosition);
+            RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
+            ll_report_after.setVisibility(View.GONE);
+            String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
+            int type = Integer.valueOf(grade);
             switch (type) {
-                case InspectProblemInformation.SEVERITY_NORMAL: {
-                    tv_type.setText(R.string.severity_normal);
-
-                    ll_type.setBackground(getResources().getDrawable(
-                            R.drawable.btn_color_inspect_type_normal));
+                case ObjAcci.TYPE_NORMAL: {
+                    holder.setText(R.id.tv_type,R.string.accident_type_normal);
+                    holder.setBackgroundRes(R.id.ll_type,
+                            R.drawable.btn_accident_type_normal_shape);
                 }
                 break;
-                case InspectProblemInformation.SEVERITY_BIG: {
-                    tv_type.setText(R.string.severity_big);
-
-                    ll_type.setBackground(getResources().getDrawable(
-                            R.drawable.btn_color_inspect_type_big));
+                case ObjAcci.TYPE_BIG: {
+                    holder.setText(R.id.tv_type,R.string.accident_type_big);
+                    holder.setBackgroundRes(R.id.ll_type,
+                            R.drawable.btn_accident_type_big_shape);
                 }
                 break;
-                case InspectProblemInformation.SEVERITY_LARGE: {
-                    tv_type.setText(R.string.severity_large);
+                case ObjAcci.TYPE_BIGGER: {
+                    holder.setText(R.id.tv_type,R.string.accident_type_bigger);
+                    holder.setBackgroundRes(R.id.ll_type,
+                            R.drawable.btn_accident_type_bigger_shape);
+                }
+                break;
+                case ObjAcci.TYPE_LARGE: {
+                    holder.setText(R.id.tv_type,R.string.accident_type_large);
+                    holder.setTextColor(R.id.tv_type, R.color.black);
 
-                    ll_type.setBackground(getResources().getDrawable(
-                            R.drawable.btn_color_inspect_type_large));
+                    holder.setBackgroundRes(R.id.ll_type,
+                            R.drawable.btn_accident_type_large_shape);
                 }
                 break;
             }
-            TextView tv_titile = holder.getView(R.id.tv_title);
-            TextView tv_time = holder.getView(R.id.tv_time);
-            TextView tv_name = holder.getView(R.id.tv_name);
-            tv_titile.setText(bisWinsProb.getGuid());
-            tv_time.setText(bisWinsProb.getCollTime());
-            tv_name.setText(bisWinsProb.getProbType());
+
+            holder.setText(R.id.tv_time, accidentInformation.getOccuTime());
+            holder.setText(R.id.tv_name, accidentInformation.getAccidentUnitName());
         }
     }
 }

@@ -4,39 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/transparent"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:id="@+id/action_bar"
+    <include layout="@layout/action_bar2_layout"
+        ></include>
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/button_login_normal"
-        android:padding="@dimen/padding_10">
-
-        <ImageView
-            android:id="@+id/iv_action_bar_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/padding_10"
-            android:src="@mipmap/back" />
-
-        <TextView
-            android:id="@+id/tv_action_bar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="稽察问题详情"
-            android:textColor="@color/white" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/dialog_bg_shape"
-        android:orientation="vertical">
+        app:cardCornerRadius="@dimen/_10dp"
+        android:layout_margin="@dimen/_5dp">
 
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
@@ -281,5 +255,5 @@
             </LinearLayout>
 
         </com.syberos.shuili.view.CustomScrollView>
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

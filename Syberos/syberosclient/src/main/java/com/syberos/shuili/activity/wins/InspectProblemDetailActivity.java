@@ -45,10 +45,6 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
     @BindView(R.id.mv_multimedia)
     MultimediaView mv_multimedia;
 
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        activityFinish();
-    }
 
 
     @Override

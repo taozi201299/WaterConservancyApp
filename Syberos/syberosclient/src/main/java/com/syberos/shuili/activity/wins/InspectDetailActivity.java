@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.entity.inspect.BisWinsDetail;
@@ -31,9 +33,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 稽查方案详情
+ * 稽查详情
  */
-public class InspectDetailActivity extends TranslucentActivity {
+public class InspectDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_BUNDLE_KEY = "InspectProblemInformation";
     private final static int MAX_SCALING_SIZE = 5;
@@ -82,24 +84,16 @@ public class InspectDetailActivity extends TranslucentActivity {
     @BindView(R.id.tv_experts)
     TextView tv_experts;            // 稽查专家
 
-    @BindView(R.id.ll_project_items)
-    LinearLayout ll_project_items;
+    /**
+     * 稽查组发现的问题数量
+     */
+    @BindView(R.id.tv_problem_count)
+    TextView tv_problem_count;
 
-    @BindView(R.id.ll_problems)
-    LinearLayout ll_problems;
+    @BindView(R.id.rl_prob_count)
+    RelativeLayout rl_prob_count;
 
-    @BindView(R.id.ll_scale)
-    LinearLayout ll_scale;
 
-    @BindView(R.id.iv_scale_direction)
-    ImageView iv_scale_direction;
-
-    private boolean isAllInspectProjectsScaling = false;
-
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        activityFinish();
-    }
 
     @Override
     public int getLayoutId() {
@@ -108,6 +102,8 @@ public class InspectDetailActivity extends TranslucentActivity {
 
     @Override
     public void initListener() {
+        rl_prob_count.setOnClickListener(this);
+
     }
 
     @Override
@@ -257,9 +253,6 @@ public class InspectDetailActivity extends TranslucentActivity {
         tv_assistant.setText(bisWinsDetail.getSpeStafAssiGuid());
         tv_experts.setText(bisWinsDetail.getPersExpertName());
 
-        ll_project_items.removeAllViews();
-        addInspectProjectItems();
-
     }
     /**
      * 从稽查问题表中获取该稽查组下的稽查问题
@@ -267,41 +260,17 @@ public class InspectDetailActivity extends TranslucentActivity {
     private void getBisWinsProb(){
 
     }
-    private void addInspectProjectItems() {
-        for (BisWinsProj item : bisWinsProj.dataSource) {
-            addInspectProjectItem(item.getProjName());
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_prob_count:
+                go2ProblemsActivity();
+            break;
+
         }
     }
+    private void go2ProblemsActivity(){
 
-    private void addInspectProjectItem(final String projectName) {
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_inspect_project_item,
-                ll_project_items, false);
-
-        TextView name = (TextView) layout.findViewById(R.id.tv_project_name);
-        name.setText(projectName);
-
-        ll_project_items.addView(layout);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 2018/4/30 检查项的检查问题界面
-            }
-        });
     }
-
-    private void addInspectProblems(final List<InspectProblemInformation> problems) {
-        for (InspectProblemInformation problem : problems) {
-            addInspectProblem(problem);
-        }
-    }
-
-    private void addInspectProblem(final InspectProblemInformation problem) {
-        View layout = LayoutInflater.from(this).inflate(R.layout.inspect_detail_problem_list_item,
-                ll_problems, false);
-
-
-
-        ll_problems.addView(layout);
-    }
-
 }
