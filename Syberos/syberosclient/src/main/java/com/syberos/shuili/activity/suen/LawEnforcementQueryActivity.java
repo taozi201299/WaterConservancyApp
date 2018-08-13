@@ -131,8 +131,8 @@ public class LawEnforcementQueryActivity extends BaseActivity
     void filterData(final String text) {
         searchResultList.clear();
         for (ObjLayer item : objLayer.dataSource) {
-            if(item.lareName == null)continue;
-            if (item.lareName.contains(text)) {
+            if(item.getLareName() == null)continue;
+            if (item.getLareName().contains(text)) {
                 searchResultList.add(item);
             }
         }
@@ -200,7 +200,7 @@ public class LawEnforcementQueryActivity extends BaseActivity
         public void convert(ViewHolder holder, ObjLayer information) {
 
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.lareName == null ?"无名":information.lareName);
+                    information.getLareName() == null ?"无名":information.getLareName());
 
         }
     }

@@ -112,18 +112,19 @@ public class WorkFragment extends BaseFragment {
     private String[]moduleChildInspectionName;
 
 
-    private int[]moduleChildReportIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildSecurityCheckIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildHiddenDangerIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildAccidentIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildDangerIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
+    private int[]moduleChildReportIcon = {R.mipmap.icon_report_hidd_ent,R.mipmap.icon_report_acci_ent,
+            R.mipmap.icon_report_check_ent,R.mipmap.icon_report_woas_ent};
+    private int[]moduleChildSecurityCheckIcon = {R.mipmap.icon_check_onsite_ent,R.mipmap.icon_check_element_ent};
+    private int[]moduleChildHiddenDangerIcon = {R.mipmap.icon_hidd_add_ent,R.mipmap.icon_hidd_accept_ent};
+    private int[]moduleChildAccidentIcon = {R.mipmap.icon_haz_add_ent,R.mipmap.icon_haz_query_ent};
+    private int[]moduleChildDangerIcon = {R.mipmap.icon_acci_ent,R.mipmap.icon_acci_query_ent};
     private int[]moduleChildStandardizationIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
     private int[]moduleChildWorkCheckIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
     private int[]moduleChildLawEnforcementIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
     private int[]moduleChildInspectionIcons = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
 
-    private int[]moduleColor = {R.color.button_login_pressed,R.color.duty_color,R.color.material_yellow_100,R.color.material_blue_grey_300,
-    R.color.button_login_pressed,R.color.duty_color,R.color.material_yellow_500,R.color.material_yellow_500,R.color.material_yellow_500};
+    private int[]moduleColor = {R.color.color_report_admin,R.color.color_check_admin, R.color.color_hidd_admin,R.color.color_acci_admin,
+    R.color.color_haz_admin,R.color.color_stan_admin, R.color.color_woas_admin,R.color.color_suen_admin,R.color.color_wins_admin};
 
     @OnClick(R.id.iv_action_bar_left)
     void go2PersonalCenterActivityFromWorkFragment() {
@@ -169,12 +170,13 @@ public class WorkFragment extends BaseFragment {
         tv_action_bar_title.setText(getResources().getString(R.string.title_work));
         ArrayList<String> modules = new ArrayList<>();
         modules.add(getResources().getString(R.string.module_baobiao));
-        modules.add(getResources().getString(R.string.module_gongzuo));
-        modules.add(getResources().getString(R.string.module_anjian));
+        modules.add(getResources().getString(R.string.module_anquan));
         modules.add(getResources().getString(R.string.module_yinhuan));
         modules.add(getResources().getString(R.string.module_shigu));
         modules.add(getResources().getString(R.string.module_weixianyuan));
         modules.add(getResources().getString(R.string.module_biaozhunhua));
+        modules.add(getResources().getString(R.string.module_gongzuo));
+
         modules.add(getResources().getString(R.string.module_anjian));
         modules.add(getResources().getString(R.string.module_shuilijicha));
 //        // 工作考核

@@ -125,6 +125,21 @@
     <color name="color_acci_ent">#36D0CF</color>
     <color name="color_haz_ent">#FF5F38</color>
 
+
+    <!--行政版颜色-->
+    <color name="color_report_admin">#1684D9</color>
+    <color name="color_check_admin">#0399CE</color>
+    <color name="color_hidd_admin">#FF9304</color>
+    <color name="color_acci_admin">#FF5937</color>
+    <color name="color_haz_admin">#34C8D4</color>
+
+    <color name="color_stan_admin">#587DFF</color>
+    <color name="color_woas_admin">#BACA0F</color>
+    <color name="color_suen_admin">#029CD0</color>
+    <color name="color_wins_admin">#6250FE</color>
+
+
+
     <color name="title_0">#333333</color>
     <color name="title_1">#999999</color>
     <color name="color_bg">#eeeeee</color>

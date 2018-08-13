@@ -7,7 +7,32 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 
 public class ObjLayer extends HttpBaseResponse<ObjLayer> {
-    public String guid;
-    public String lareName;
-    public String conSumm;
+     String guid;
+
+    public String getGuid() {
+        return guid == null ? "" : guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
+    public String getLareName() {
+        return lareName == null ? "" : lareName;
+    }
+
+    public void setLareName(String lareName) {
+        this.lareName = lareName;
+    }
+
+    public String getConSumm() {
+        return conSumm == null ? "" : conSumm;
+    }
+
+    public void setConSumm(String conSumm) {
+        this.conSumm = conSumm;
+    }
+
+    String lareName;
+     String conSumm;
 }

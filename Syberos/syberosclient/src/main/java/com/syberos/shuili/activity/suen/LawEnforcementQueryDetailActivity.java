@@ -41,6 +41,6 @@ public class LawEnforcementQueryDetailActivity extends BaseActivity {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         lawQueryInformation = (ObjLayer) bundle.getSerializable(
                 LawEnforcementQueryActivity.SEND_BUNDLE_KEY);
-        tv_html_text.setText(Html.fromHtml(lawQueryInformation.conSumm));
+        tv_html_text.setText(Html.fromHtml(lawQueryInformation.getConSumm()));
     }
 }
