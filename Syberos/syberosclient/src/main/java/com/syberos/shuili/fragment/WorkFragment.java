@@ -112,16 +112,17 @@ public class WorkFragment extends BaseFragment {
     private String[]moduleChildInspectionName;
 
 
-    private int[]moduleChildReportIcon = {R.mipmap.icon_report_hidd_ent,R.mipmap.icon_report_acci_ent,
-            R.mipmap.icon_report_check_ent,R.mipmap.icon_report_woas_ent};
-    private int[]moduleChildSecurityCheckIcon = {R.mipmap.icon_check_onsite_ent,R.mipmap.icon_check_element_ent};
-    private int[]moduleChildHiddenDangerIcon = {R.mipmap.icon_hidd_add_ent,R.mipmap.icon_hidd_accept_ent};
-    private int[]moduleChildAccidentIcon = {R.mipmap.icon_haz_add_ent,R.mipmap.icon_haz_query_ent};
-    private int[]moduleChildDangerIcon = {R.mipmap.icon_acci_ent,R.mipmap.icon_acci_query_ent};
-    private int[]moduleChildStandardizationIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildWorkCheckIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildLawEnforcementIcon = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
-    private int[]moduleChildInspectionIcons = {R.mipmap.icon_action_learn,R.mipmap.icon_action_learn,R.mipmap.icon_action_learn};
+    private int[]moduleChildReportIcon = {R.mipmap.icon_report_hidd_admin,R.mipmap.icon_report_acci_admin,
+            R.mipmap.icon_report_check_admin,R.mipmap.icon_report_woad_admin};
+    private int[]moduleChildSecurityCheckIcon = {R.mipmap.icon_check_admin,R.mipmap.icon_check_query_admin};
+    private int[]moduleChildHiddenDangerIcon = {R.mipmap.icon_hidd_sup_admin,R.mipmap.icon_hidd_accpet_admin};
+    private int[]moduleChildAccidentIcon = {R.mipmap.icon_haz_reg_admin,R.mipmap.icon_haz_cancel_admin};
+    private int[]moduleChildDangerIcon = {R.mipmap.icon_acci_admin,R.mipmap.icon_acci_query_admin};
+    private int[]moduleChildStandardizationIcon = {R.mipmap.icon_stan_admin1,R.mipmap.icon_stan_admin2,
+            R.mipmap.icon_stan_admin3,R.mipmap.icon_stan_admin4,R.mipmap.icon_stan_admin5,R.mipmap.icon_stan_admin6};
+    private int[]moduleChildWorkCheckIcon = {R.mipmap.icon_woas_admin0,R.mipmap.icon_woas_admin1};
+    private int[]moduleChildLawEnforcementIcon = {R.mipmap.icon_suen_admin,R.mipmap.icon_suen_query_admin};
+    private int[]moduleChildInspectionIcons = {R.mipmap.icon_inspection_admin,R.mipmap.icon_inspection_query_admin};
 
     private int[]moduleColor = {R.color.color_report_admin,R.color.color_check_admin, R.color.color_hidd_admin,R.color.color_acci_admin,
     R.color.color_haz_admin,R.color.color_stan_admin, R.color.color_woas_admin,R.color.color_suen_admin,R.color.color_wins_admin};

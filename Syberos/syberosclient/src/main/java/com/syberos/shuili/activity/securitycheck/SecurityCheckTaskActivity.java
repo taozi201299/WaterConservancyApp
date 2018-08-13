@@ -34,6 +34,10 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
 /**
  * Created by Administrator on 2018/4/3.
  * 安全检查行政版 现场检查
+ * 通过一个临时账号
+ * 1 检查小组与组员关系表
+ * 2 安全检查方案分组表 找到检查小组
+ * 3 根据检查方案GUID 获取检查方案的信息
  */
 
 public class SecurityCheckTaskActivity extends BaseActivity implements CommonAdapter.OnItemClickListener {
@@ -94,8 +98,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
-        //params.put("persGuid",userId);
-        params.put("persGuid","dfdfgfdfA9FBCffgfgBF285D6Affgrtr");
+       // params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("persGuid","C9C14B0BD81D4900940114AADD8491A0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -158,7 +162,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
-            params.put("guid",item.getScheGuid());
+          //  params.put("guid",item.getScheGuid());
+            params.put("guid","1C30B5F7C3C14B41862C31BC588ABAD0");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
