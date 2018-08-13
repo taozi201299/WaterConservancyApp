@@ -1,9 +1,11 @@
 package com.syberos.shuili.activity.woas;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.syberos.shuili.R;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.utils.Strings;
@@ -13,8 +15,12 @@ import com.syberos.shuili.view.MultimediaView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class InspectAssessNewDeductMarksActivity extends TranslucentActivity {
+/**
+ * 水利稽查考核扣分
+ */
+public class InspectAssessNewDeductMarksActivity extends BaseActivity {
 
+    private final String Title = "水利稽查考核";
     private DeductMarksInfo info = null;
 
     @BindView(R.id.tv_action_bar_title)
@@ -57,6 +63,8 @@ public class InspectAssessNewDeductMarksActivity extends TranslucentActivity {
 
     @Override
     public void initView() {
+        showTitle(Title);
+        setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         info = (DeductMarksInfo) bundle.getSerializable(
                 InspectAssessObjectSelectActivity.SEND_BUNDLE_KEY);

@@ -1,42 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/button_login_normal"
-        android:padding="@dimen/padding_10">
-
-        <ImageView
-            android:id="@+id/iv_action_bar_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/padding_10"
-            android:src="@mipmap/back" />
-
-        <TextView
-            android:id="@+id/tv_action_bar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="新建隐患"
-            android:textColor="@color/white" />
-
-    </RelativeLayout>
-
+    <include layout="@layout/action_bar2_layout"
+        android:id="@+id/action_bar"></include>
     <android.support.v7.widget.CardView
         style="@style/Item_Card_Style"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/_10dp"
-        android:layout_weight="1"
-        app:cardCornerRadius="@dimen/_10dp">
+        app:cardCornerRadius="@dimen/_10dp"
+        android:layout_below="@+id/action_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,12 +19,11 @@
 
             <com.syberos.shuili.view.CustomScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_5"
                 android:layout_marginLeft="@dimen/_10dp"
                 android:layout_marginRight="@dimen/_10dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:layout_weight="1"
                 android:fillViewport="true">
 
                 <LinearLayout
@@ -58,31 +31,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="考核单位"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sp" />
+                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_2dp"
+                        android:background="@color/gray_bb" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40dp"
+                        android:paddingLeft="@dimen/_10dp"
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/padding_10"
+                            android:layout_centerVertical="true"
                             android:text="考核扣分"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_16sp" />
 
                         <com.syberos.shuili.view.ClearableEditText.ClearableEditText
                             android:id="@+id/ce_score"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="@dimen/padding_10"
-                            android:layout_marginStart="@dimen/padding_10"
-                            android:layout_weight="1"
+                            android:layout_toRightOf="@+id/tv_title"
+                            android:layout_marginLeft="@dimen/_10dp"
                             android:background="@color/transparent"
-                            android:gravity="center_vertical"
+                            android:layout_centerVertical="true"
                             android:hint="请输入分数"
                             android:inputType="number"
                             android:minHeight="@dimen/_40dp" />
@@ -90,12 +86,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/_2dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/_10dp"
+                            android:layout_centerVertical="true"
                             android:text="分"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_16sp" />
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                     <View
@@ -115,7 +112,7 @@
                             android:id="@+id/ae_describe_audio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="@dimen/_50dp"
+                            android:minHeight="@dimen/_40dp"
                             android:paddingTop="@dimen/_15dp"
                             app:view_label="扣分说明"
                             app:view_labelWidth="@dimen/_60dp" />
@@ -138,7 +135,7 @@
                             android:id="@+id/mv_multimedia"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="@dimen/_50dp" />
+                            android:minHeight="@dimen/_40dp" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -152,6 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -167,4 +165,4 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_edit_text_size" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
