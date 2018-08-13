@@ -52,4 +52,22 @@ public class GlobleConstants {
             put(HAZ_TYPE_BIGER,"重大危险源");
         }
     };
+    public static HashMap<Integer,String>winsProbMap = new HashMap<Integer, String>(){
+
+        {
+            put(1,"前期设计");
+            put(2,"建设管理");
+            put(3,"计划管理");
+            put(4,"财务管理");
+            put(5,"质量管理");
+
+        }
+    };
+    public static HashMap<Integer,String>winsProbTypeMap = new HashMap<Integer, String>(){
+        {
+            put(1,"一般");
+            put(2,"严重");
+            put(3,"非常严重");
+        }
+    };
 }

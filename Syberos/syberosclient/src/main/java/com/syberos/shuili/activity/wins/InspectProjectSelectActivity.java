@@ -6,17 +6,25 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.entity.inspect.OnSiteInspectInformation;
+import com.syberos.shuili.entity.wins.InspectionProject;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,16 +35,11 @@ import butterknife.BindView;
 public class InspectProjectSelectActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
-    private OnSiteInspectInformation information;
-    private final static int REQUEST_CODE = 1915;
-
-    public static final String SEND_BUNDLE_KEY = "OnSiteInspectInformation";
-
     @BindView(R.id.recyclerView_record_review)
     RecyclerView recyclerView;
 
     ListAdapter listAdapter;
-    List<String> informationList = null;
+    InspectionProject inspectionProjects = null;
 
     @Override
     public int getLayoutId() {
@@ -50,71 +53,73 @@ public class InspectProjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
-        listAdapter.notifyDataSetChanged();
+         showDataLoadingDialog();
+         getInspectionProject();
     }
 
     @Override
     public void initView() {
         setActionBarTitle("稽察项目选择");
+        setActionBarRightVisible(View.INVISIBLE);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView.setLayoutManager(layoutManager);
+        listAdapter = new ListAdapter(this,
+                R.layout.activity_inspect_project_select_item);
+        recyclerView.setAdapter(listAdapter);
+        listAdapter.setOnItemClickListener(this);
+    }
+    private void getInspectionProject(){
+        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectInspectionTeamAllProjectNames/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("bwgGuid","455F9FDBBFD04B62A80C909989761E70");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                inspectionProjects = gson.fromJson(result,InspectionProject.class);
+                if(inspectionProjects == null || inspectionProjects.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(inspectionProjects.dataSource.size() == 0){
+                    ToastUtils.show("没有稽查项目");
+                }else {
+                    refreshUI();
+                }
 
-        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        information = (OnSiteInspectInformation)bundle.getSerializable(
-                OnSiteInspectListActivity.SEND_BUNDLE_KEY);
-
-        if (null != information) {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            //设置RecyclerView 布局
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-            listAdapter = new ListAdapter(this,
-                    R.layout.activity_inspect_project_select_item);
-            recyclerView.setAdapter(listAdapter);
-            listAdapter.setOnItemClickListener(this);
-
-            if (null == informationList) {
-                informationList = new ArrayList<>();
-            } else {
-                informationList.clear();
             }
 
-            informationList = information.getProjects();
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
 
-            listAdapter.setData(informationList);
-        }
+            }
+        });
     }
+private void refreshUI(){
+        listAdapter.setData(inspectionProjects.dataSource);
+        listAdapter.notifyDataSetChanged();
 
+}
     @Override
     public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
-        InspectProblemInformation information = new InspectProblemInformation();
-        information.setProject(informationList.get(position));
-        bundle.putSerializable(SEND_BUNDLE_KEY, information);
-        intentActivity(this, InspectNewProblemActivity.class, false, bundle, REQUEST_CODE);
+        intentActivity(this, InspectNewProblemActivity.class, false, true);
     }
 
-    private class ListAdapter extends CommonAdapter<String> {
+    private class ListAdapter extends CommonAdapter<InspectionProject> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(ViewHolder holder, final String information) {
+        public void convert(ViewHolder holder, final InspectionProject information) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information);
+                    information.getPROJNAME());
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-                InspectProblemInformation information
-                        = (InspectProblemInformation)data.getSerializableExtra(InspectNewProblemActivity.RESULT_KEY);
-
-                ToastUtils.show(information.getDepartment());
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
