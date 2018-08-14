@@ -58,12 +58,16 @@
         <activity
             android:name=".activity.TestActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.thematic.ThematicDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-          <activity
+        <activity
+            android:name=".activity.thematic.ThematicDetailProjActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".fragment.securitycloud.SecurityCloudDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -91,10 +95,12 @@
         <activity
             android:name=".activity.login.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.personalcenter.PersonalCenterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.personalcenter.ChangePasswordActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.personalcenter.PersonalCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.personalcenter.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.work.NotificationCenterActivity"
             android:screenOrientation="portrait" />
@@ -112,7 +118,8 @@
         <activity
             android:name=".activity.searchproject.ProjectDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.searchproject.ProjectInfoActivity"
+        <activity
+            android:name=".activity.searchproject.ProjectInfoActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.dangermanagement.InvestigationAccepTaskActivity"
@@ -203,9 +210,10 @@
             android:name=".activity.securitycheck.SecurityCreateHiddenActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.securitycheck.SecurityCheckHiddenActivity"
+        <activity
+            android:name=".activity.securitycheck.SecurityCheckHiddenActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.securitycheck.SecurityHiddenTraceTaskActivity"
             android:screenOrientation="portrait"
@@ -245,7 +253,8 @@
             android:name=".activity.dangersource.HazDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.dangersource.HazDetailForEntActivity"
+        <activity
+            android:name=".activity.dangersource.HazDetailForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
@@ -256,7 +265,8 @@
             android:name=".activity.dangersource.HazSearchListForEntActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.dangersource.RecordedHistoryPatrolDetailActivity"
+        <activity
+            android:name=".activity.dangersource.RecordedHistoryPatrolDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity

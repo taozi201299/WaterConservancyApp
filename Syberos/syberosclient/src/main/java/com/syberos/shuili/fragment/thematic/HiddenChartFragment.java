@@ -8,12 +8,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.HashMap;
 
@@ -33,6 +37,19 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     Button btn_liuyu;
     @BindView(R.id.btn_jianguan)
     Button btn_jianguan;
+
+    @BindView(R.id.radio_group)
+    RadioGroup radioGroup;
+
+    @BindView(R.id.radio_btn_jianguan)
+    RadioButton rbtnJianguan;
+
+    @BindView(R.id.radio_btn_zhiguan)
+    RadioButton rbtnZhiguan;
+
+    @BindView(R.id.radio_btn_liuyu)
+    RadioButton rbtnLiuyu;
+
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
@@ -59,9 +76,9 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     protected void initView() {
         showDataLoadingDialog();
         // 行政区划
-        if("1".equals(App.jurdAreaType)){
+        if ("1".equals(App.jurdAreaType)) {
             type = 1;
-        }else if("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)){
+        } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
             type = 2;
         }
         webMap();
@@ -73,6 +90,40 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         btn_liuyu.setOnClickListener(this);
         btn_jianguan.setOnClickListener(this);
         btn_zhiguan.setOnClickListener(this);
+
+//        rbtnJianguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//            }
+//        });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+
+                switch (checkId) {
+                    case R.id.radio_btn_zhiguan:
+                        iMapLevel = 4;
+                        type = 1;
+                        webView.removeAllViews();
+                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+                        break;
+                    case R.id.radio_btn_liuyu:
+                        type = 2;
+                        iMapLevel = 0;
+                        webView.removeAllViews();
+                        webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
+                        break;
+                    case R.id.radio_btn_jianguan:
+                        iMapLevel = 4;
+                        type = 3;
+                        webView.removeAllViews();
+                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+                        break;
+
+                }
+            }
+        });
 
     }
 
@@ -94,10 +145,10 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        if(type == 1 || type == 3) {
+        if (type == 1 || type == 3) {
             iMapLevel = 4;
             webView.loadUrl("file:///android_asset/chart/hidd.html");
-        }else if(type == 2){
+        } else if (type == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
         }
@@ -107,7 +158,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
-                if(!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()){
+                if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     closeDataDialog();
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
                 }
@@ -118,8 +169,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
         webView.setWebChromeClient(new WebChromeClient() {
             //重写WebChromeClient的onGeolocationPermissionsShowPrompt
-            public void onGeolocationPermissionsShowPrompt(String origin,
-                                                           GeolocationPermissions.Callback callback) {
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
@@ -130,7 +180,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     public void onClick(View v) {
         bLoadFinish = false;
         bShowMap = false;
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_zhiguan:
                 iMapLevel = 4;
                 type = 1;
@@ -158,30 +208,33 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         public MyJavaScriptInterface() {
 
         }
+
         @JavascriptInterface
         public void toast(String str) {
             Toast.makeText(mContext, "map test", Toast.LENGTH_SHORT).show();
         }
 
     }
-    public void setMapData(MapBoundBean mapData){
+
+    public void setMapData(MapBoundBean mapData) {
         String center = mapData.centerXY;
-        String[]array = center.split(",");
-        if(type == 1 || type == 4) {
+        String[] array = center.split(",");
+        if (type == 1 || type == 4) {
             iMapLevel = 4;
-        }else {
+        } else {
             iMapLevel = 0;
         }
         mLon = array[0];
         mLat = array[1];
-        if(bLoadFinish) {
+        if (bLoadFinish) {
             closeDataDialog();
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
             addMarkInfo();
         }
     }
-    private void addMarkInfo(){
-        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat +")");
+
+    private void addMarkInfo() {
+        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat + ")");
     }
 }

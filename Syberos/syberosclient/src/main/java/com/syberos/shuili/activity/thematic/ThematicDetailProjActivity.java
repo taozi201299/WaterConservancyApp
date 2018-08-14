@@ -10,7 +10,7 @@ import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
-import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHiddenFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailHiddenProjFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +47,7 @@ public class ThematicDetailProjActivity extends BActivity {
 
     }
 
-    ThematicDetailHiddenFragment thematicDetailHiddenFragment = new ThematicDetailHiddenFragment();
+    ThematicDetailHiddenProjFragment thematicDetailHiddenFragment = new ThematicDetailHiddenProjFragment();
     ThematicDetailHazFragment thematicDetailHazFragment = new ThematicDetailHazFragment();
     ThematicDetailAcciFragment thematicDetailAcciFragment = new ThematicDetailAcciFragment();
     BaseLazyFragment[] fragments = {thematicDetailHiddenFragment, thematicDetailAcciFragment, thematicDetailHazFragment};

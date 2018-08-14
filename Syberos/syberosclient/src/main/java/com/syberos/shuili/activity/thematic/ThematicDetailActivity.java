@@ -39,58 +39,6 @@ public class ThematicDetailActivity extends BActivity {
     ImageButton ibtnBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_view_title)
-    TextView tvViewTitle;
-    @BindView(R.id.iv_mark_pot_2)
-    ImageView ivMarkPot2;
-    @BindView(R.id.tv_chart_value_1)
-    TextView tvChartValue1;
-    @BindView(R.id.tv_chart_value_title_1)
-    TextView tvChartValueTitle1;
-    @BindView(R.id.iv_mark_pot_4)
-    ImageView ivMarkPot4;
-    @BindView(R.id.tv_chart_value_2)
-    TextView tvChartValue2;
-    @BindView(R.id.tv_chart_value_title_2)
-    TextView tvChartValueTitle2;
-    @BindView(R.id.iv_mark_pot_1)
-    ImageView ivMarkPot1;
-    @BindView(R.id.tv_chart_value_3)
-    TextView tvChartValue3;
-    @BindView(R.id.tv_chart_value_title_3)
-    TextView tvChartValueTitle3;
-    @BindView(R.id.iv_mark_pot_3)
-    ImageView ivMarkPot3;
-    @BindView(R.id.tv_chart_value_4)
-    TextView tvChartValue4;
-    @BindView(R.id.tv_chart_value_title_4)
-    TextView tvChartValueTitle4;
-    @BindView(R.id.pie_chart)
-    PieChart pieChart;
-    @BindView(R.id.ll_data_1)
-    LinearLayout llData1;
-    @BindView(R.id.tv_data_1)
-    TextView tvData1;
-    @BindView(R.id.tv_data_title_1)
-    TextView tvDataTitle1;
-    @BindView(R.id.ll_data_2)
-    LinearLayout llData2;
-    @BindView(R.id.tv_data_2)
-    TextView tvData2;
-    @BindView(R.id.tv_data_title_2)
-    TextView tvDataTitle2;
-    @BindView(R.id.ll_data_3)
-    LinearLayout llData3;
-    @BindView(R.id.tv_data_3)
-    TextView tvData3;
-    @BindView(R.id.tv_data_title_3)
-    TextView tvDataTitle3;
-    @BindView(R.id.ll_data_4)
-    LinearLayout llData4;
-    @BindView(R.id.tv_data_4)
-    TextView tvData4;
-    @BindView(R.id.tv_data_title_4)
-    TextView tvDataTitle4;
 
     @Override
     public int getLayoutId() {

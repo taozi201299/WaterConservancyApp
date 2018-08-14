@@ -122,6 +122,9 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.layout_recycler_view)
+    View layoutRecycler;
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_thematic_detail_hidden;
@@ -185,7 +188,7 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
         tvChartValue2.setVisibility(View.GONE);
         tvChartValueTitle2.setVisibility(View.GONE);
 
-          ivMarkPot3.setVisibility(View.GONE);
+        ivMarkPot3.setVisibility(View.GONE);
         tvChartValue3.setVisibility(View.GONE);
         tvChartValueTitle3.setVisibility(View.GONE);
 
@@ -198,7 +201,8 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
 
-        recyclerView.setVisibility(View.GONE);
+        layoutRecycler.setVisibility(View.GONE);
+//        recyclerView.setVisibility(View.GONE);
 
     }
 

@@ -48,6 +48,9 @@ public abstract class BaseLazyFragment extends Fragment {
 
         initView();
         initListener();
+        if(getUserVisibleHint()){
+            hasStarted=true;
+        }
         if (hasStarted && !isPrepared) {
             initData();
         }

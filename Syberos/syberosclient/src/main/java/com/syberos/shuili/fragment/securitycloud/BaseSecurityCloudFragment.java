@@ -220,6 +220,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         activity.finish();
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
+    //    @Override
     public void initViewData() {
         appBarLayout.addOnOffsetChangedListener(this);
         Gson gson = new Gson();
@@ -442,7 +448,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     }
 
     /**
-     *
      * 初始化风险源数据
      *
      * @param riskSourceEntry
@@ -530,7 +535,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     public void updateData(String title, String strJsonData) {
         this.title = title;
         this.strJsonData = strJsonData;
-        initData();
+//        initData();
     }
 
     @Override
@@ -778,9 +783,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         pieChart.invalidate();
     }
 
-    @Override
-    protected void initData() {
-    }
 
     @Override
     public void onResume() {

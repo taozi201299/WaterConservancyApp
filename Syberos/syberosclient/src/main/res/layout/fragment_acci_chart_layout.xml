@@ -2,33 +2,83 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
+        android:layout_height="match_parent"></WebView>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="@dimen/_15dp"-->
+        <RadioButton
+            android:id="@+id/radio_btn_zhiguan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:checked="true"
+            android:text="直管工程"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+
+        <RadioButton
+            android:id="@+id/radio_btn_liuyu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:text="流域机构"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_jianguan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:text="行业监管"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/_10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <Button
             android:id="@+id/btn_zhiguan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="直管工程"/>
+            android:text="直管工程" />
+
         <Button
             android:id="@+id/btn_liuyu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="流域机构"/>
+            android:text="流域机构" />
+
         <Button
             android:id="@+id/btn_jianguan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="监管"/>
-
+            android:text="监管" />
     </LinearLayout>
 
 

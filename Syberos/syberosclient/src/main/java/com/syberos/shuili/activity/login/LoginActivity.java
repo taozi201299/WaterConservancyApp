@@ -134,6 +134,27 @@ public class LoginActivity extends TranslucentActivity {
         super.onCreate(savedInstanceState);
         SyberosManagerImpl.init(this);
         SyberosAidlClient.init(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                    if(accountEdit.getText().toString().equals("ceshi321")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                passwordEdit.setText("123456");
+                                login();
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
     }
 
     @Override
