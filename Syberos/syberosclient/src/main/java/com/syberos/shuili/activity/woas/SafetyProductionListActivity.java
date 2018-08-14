@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.ObjWoas;
 import com.syberos.shuili.entity.woas.OnSiteInspectionInfo;
@@ -84,9 +85,11 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     }
 
     private void getWoasGroupList(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
         params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        // 1 水利稽查工作考核 2 安全生产工作考核
+        params.put("woasType","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

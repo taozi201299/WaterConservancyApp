@@ -8,13 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
+import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 
@@ -47,6 +55,8 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getWoasObj();
 
     }
 
@@ -64,20 +74,6 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
                 R.layout.activity_inspect_assess_object_select_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
-
-        if (null == informationList) {
-            informationList = new ArrayList<>();
-        } else {
-            informationList.clear();
-        }
-
-        for (int i = 0; i < 6; ++i) {
-            informationList.add("山东省水利厅" + (i + 1));
-        }
-
-        listAdapter.setData(informationList);
-
-        listAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -88,6 +84,30 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, InspectAssessNewDeductMarksActivity.class,
                 false, bundle);
+    }
+    private void getWoasObj(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/selectAssessedObjectList/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("woasGroupGuid","");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                refreshUI();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
+    private void refreshUI(){
+
     }
 
     private class ListAdapter extends CommonAdapter<String> {
