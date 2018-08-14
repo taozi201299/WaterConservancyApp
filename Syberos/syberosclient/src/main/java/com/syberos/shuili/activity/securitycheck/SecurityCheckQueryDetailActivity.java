@@ -67,15 +67,15 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
-//        if(bisSinsSche == null){
-//            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-//            bisSinsSche = (BisSinsSche) bundle.getSerializable(SEND_BUNDLE_KEY);
-//        }
-//        if(bisSinsSche == null){
-//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-//            return;
-//        }
-//        showTitle(bisSinsSche.getScheName());
+        if(bisSinsSche == null){
+            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+            bisSinsSche = (BisSinsSche) bundle.getSerializable(SEND_BUNDLE_KEY);
+        }
+        if(bisSinsSche == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            return;
+        }
+        showTitle(bisSinsSche.getScheName());
         showDataLoadingDialog();
         /**
          * 1 检查方案信息

@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity.SEND_BUNDLE_KEY;
 import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
@@ -43,8 +44,6 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
  * 安全检查对象表（OBJ_SINS）
  */
 public class SecurityCheckQueryListActivity extends TranslucentActivity {
-
-    public static final String SEND_BUNDLE_KEY = "HiddenInvestigationTaskInfo";
     private GroupedListAdapter groupedListAdapter;
 
     @BindView(R.id.recyclerView_query_accident)
@@ -81,6 +80,9 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     private BisSinsSche bisSinsSche;
     private HashMap<String,BisSinsSche> map = new HashMap<>();
 
+    private int iSucessCount;
+    private int iFailedCount;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_security_check_query_list;
@@ -95,6 +97,8 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         getObjSins();
 
     }
@@ -139,7 +143,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     private void getObjSins(){
         String url = strIP +"/sjjk/v1/obj/sis/objSinss/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("notIssuWiun","02BF29A11A1346308BC71B4692EFA4B8");
+        params.put("notIssuGuid","02BF29A11A1346308BC71B4692EFA4B8");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -168,26 +172,28 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
         for(int i = 0; i < size ;i ++){
             final ObjSins item = infos.get(i);
             params.put("sinsGuid",item.getGuid());
-            final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    closeDataDialog();
+                    iSucessCount ++;
                     Gson gson = new Gson();
                     bisSinsSche = gson.fromJson(result,BisSinsSche.class);
-                    if(bisSinsSche != null){
+                    if(bisSinsSche != null && bisSinsSche.dataSource != null && bisSinsSche.dataSource.size() != 0){
                         map.put(item.getGuid(),bisSinsSche);
                     }
-                    Log.d("1111111111111",String.valueOf(finalI));
-                    if(map.size() == infos.size()){
+                    if(iSucessCount + iFailedCount == infos.size()){
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == infos.size()){
+                        closeDataDialog();
+                        refreshUI();
+                    }
                 }
             });
         }
