@@ -138,7 +138,9 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
      */
     private void getObjSins(){
         String url = strIP +"/sjjk/v1/obj/sis/objSinss/";
-        SyberosManagerImpl.getInstance().requestGet_Default(url, null, url, new RequestCallback<String>() {
+        HashMap<String,String>params = new HashMap<>();
+        params.put("notIssuWiun","02BF29A11A1346308BC71B4692EFA4B8");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();

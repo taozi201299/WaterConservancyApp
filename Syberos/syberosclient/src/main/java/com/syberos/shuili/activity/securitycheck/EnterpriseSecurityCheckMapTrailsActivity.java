@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -42,17 +41,13 @@ import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.amap.AMapToWGS;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
-import com.syberos.shuili.entity.securitycheck.BisSinsSche;
-import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
-import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.io.BufferedReader;
@@ -74,9 +69,9 @@ import static com.lzy.okhttputils.callback.FileCallback.DM_TARGET_FOLDER;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 @SuppressLint("MissingPermission")
-public class SecurityCheckMapTrailsActivity extends Activity implements EasyPermissions.PermissionCallbacks {
+public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implements EasyPermissions.PermissionCallbacks {
 
-    private final static String TAG = SecurityCheckMapTrailsActivity.class.getSimpleName();
+    private final static String TAG = EnterpriseSecurityCheckMapTrailsActivity.class.getSimpleName();
     private final static boolean USE_GAO_DE_SDK_API = true;
 
     private final static long duration = 10 * 1000;
@@ -292,7 +287,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
             @Override
             public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
                 Log.d(TAG, message);
-                AlertDialog.Builder b = new AlertDialog.Builder(SecurityCheckMapTrailsActivity.this);
+                AlertDialog.Builder b = new AlertDialog.Builder(EnterpriseSecurityCheckMapTrailsActivity.this);
                 b.setTitle("Alert");
                 b.setMessage(message);
                 b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -316,7 +311,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
 
         @JavascriptInterface
         public void toast(String str) {
-            Toast.makeText(SecurityCheckMapTrailsActivity.this, "map test", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EnterpriseSecurityCheckMapTrailsActivity.this, "map test", Toast.LENGTH_SHORT).show();
         }
 
         @JavascriptInterface
@@ -543,7 +538,7 @@ public class SecurityCheckMapTrailsActivity extends Activity implements EasyPerm
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     // 设置完成后返回到原来的界面
-                    SecurityCheckMapTrailsActivity.this.startActivityForResult(intent, 0);
+                    EnterpriseSecurityCheckMapTrailsActivity.this.startActivityForResult(intent, 0);
                 }
             });
             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

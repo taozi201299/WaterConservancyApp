@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,13 +12,9 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.an_quan_jian_cha.EECI_HiddenItemInfo;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
-import com.syberos.shuili.entity.basicbusiness.ObjectTend;
-import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
@@ -32,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
 
 import static com.syberos.shuili.config.GlobleConstants.strIP;
 
@@ -254,6 +247,6 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         Bundle bundle = new Bundle();
         bundle.putSerializable("bisSinsRec",item);
         bundle.putString("type","check");
-        intentActivity(EnterprisesOnSiteCheckListActivity.this,SecurityCheckMapTrailsActivity.class,false,bundle);
+        intentActivity(EnterprisesOnSiteCheckListActivity.this,EnterpriseSecurityCheckMapTrailsActivity.class,false,bundle);
     }
 }

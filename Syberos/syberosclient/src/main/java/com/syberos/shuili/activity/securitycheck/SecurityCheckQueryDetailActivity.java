@@ -67,15 +67,15 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        if(bisSinsSche == null){
-            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-            bisSinsSche = (BisSinsSche) bundle.getSerializable(SEND_BUNDLE_KEY);
-        }
-        if(bisSinsSche == null){
-            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-            return;
-        }
-        showTitle(bisSinsSche.getScheName());
+//        if(bisSinsSche == null){
+//            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+//            bisSinsSche = (BisSinsSche) bundle.getSerializable(SEND_BUNDLE_KEY);
+//        }
+//        if(bisSinsSche == null){
+//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+//            return;
+//        }
+//        showTitle(bisSinsSche.getScheName());
         showDataLoadingDialog();
         /**
          * 1 检查方案信息
@@ -92,10 +92,12 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
     private void getGroupByPlanId(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
         HashMap<String, String> params = new HashMap<>();
-        params.put("scheGuid",bisSinsSche.getGuid());
+     //   params.put("scheGuid",bisSinsSche.getGuid());
+        params.put("scheGuid","4F8AF0316E6343A3BC3FA926E44F3E62");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 bisSinsScheGroup = (BisSinsScheGroup)gson.fromJson(result,BisSinsScheGroup.class);
                 if(bisSinsScheGroup == null || bisSinsScheGroup.dataSource == null){
@@ -116,6 +118,7 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
 
     private void refreshUI(){
         // 动态加载view
+        ll_child_groups_container.removeAllViews();
         for(final BisSinsScheGroup item : bisSinsScheGroup.dataSource){
             View view = LayoutInflater.from(mContext).inflate(R.layout.view_with_right_arrow,null);
             TextView tv_item_name = (TextView)view.findViewById(R.id.tv_item_name);
@@ -130,11 +133,12 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
                 public void onClick(View v) {
                     // TODO: 2018/4/26  检查组下的详情信息
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("bisSinsScheGroup",item);
-                    intentActivity(SecurityCheckQueryDetailActivity.this,SecurityCheckQueryProblemsActivity.class,
+                    bundle.putSerializable(SEND_BUNDLE_KEY,item);
+                    intentActivity(SecurityCheckQueryDetailActivity.this,SecurityCheckDetailActivity.class,
                             false,bundle);
                 }
             });
+            ll_child_groups_container.addView(view);
 
         }
 

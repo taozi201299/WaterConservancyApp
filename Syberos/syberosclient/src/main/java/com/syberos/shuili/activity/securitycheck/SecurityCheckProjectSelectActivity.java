@@ -32,6 +32,7 @@ import okhttp3.Call;
 import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
+ * 行政端
  * 安全检查被检对象选择列表
  */
 public class SecurityCheckProjectSelectActivity extends BaseActivity
