@@ -21,6 +21,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -44,8 +45,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
     PullRecyclerView recyclerView;
 
     ListAdapter listAdapter = null;
-    ArrayList<ObjStanRevis> selectedReviewItemInformationList = new ArrayList<>();
-    private ObjStanRevis objStanRevis = null;
+    ArrayList<BisStanReviRec> selectedReviewItemInformationList = new ArrayList<>();
     BisStanReviRec bisStanReviRec = null;
 
     @OnClick(R.id.tv_review)
@@ -108,11 +108,11 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/selectStanrdReview/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","3");
         param.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, null, url, new RequestCallback<String>() {
+        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String response) {
                 closeDataDialog();
@@ -136,7 +136,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
     private void refreshUI(){
-        listAdapter.setData(objStanRevis.dataSource);
+        listAdapter.setData(bisStanReviRec.dataSource);
         listAdapter.notifyDataSetChanged();
     }
     @Override
@@ -166,13 +166,13 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
 
-    private class ListAdapter extends CommonAdapter<ObjStanRevis> {
+    private class ListAdapter extends CommonAdapter<BisStanReviRec> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(final ViewHolder holder, final ObjStanRevis information) {
+        public void convert(final ViewHolder holder, final BisStanReviRec information) {
 
             final CheckBox checkBox = (CheckBox) holder.getView(R.id.cb_select);
 
@@ -199,7 +199,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getApplOrgGuid());
+                    information.getWiunName());
             // 申请时间
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
@@ -217,7 +217,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
         params.put("reviType","4");
         // 审定意见
         int size = selectedReviewItemInformationList.size();
-        for(ObjStanRevis item : selectedReviewItemInformationList){
+        for(BisStanReviRec item : selectedReviewItemInformationList){
             url += item.getGuid() +"/"+"?";
             for(String key :params.keySet()){
                 url += key;

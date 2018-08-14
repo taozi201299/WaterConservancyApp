@@ -32,6 +32,7 @@ import butterknife.BindView;
 import static com.syberos.shuili.config.GlobleConstants.HAZ_HTYPE_NORMAL;
 import static com.syberos.shuili.config.GlobleConstants.HAZ_TYPE_BIGER;
 import static com.syberos.shuili.config.GlobleConstants.hazGradeMap;
+import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
  * 行政版危险源备案审核 重大危险源备案核销表
@@ -69,9 +70,10 @@ public class RecordReviewListActivity extends BaseActivity
 
     }
     public void getHazList(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
+        String url = strIP + "/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
         HashMap<String,String>params = new HashMap<>();
        // params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("orgGuid","21260E691D454685B61086E7F2074B71");
         params.put("hazStat","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
@@ -150,6 +152,8 @@ public class RecordReviewListActivity extends BaseActivity
                     hazGradeMap.get(String.valueOf(type)));
             switch (type) {
                 case HAZ_HTYPE_NORMAL:{
+                    ((TextView) (holder.getView(R.id.tv_type))).setText(
+                            R.string.dangerous_type_normal);
                     ll_type.setBackground(getResources().getDrawable(
                             R.drawable.btn_dangerous_type_normal_shape));
                 }

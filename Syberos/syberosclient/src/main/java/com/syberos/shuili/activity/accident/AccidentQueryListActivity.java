@@ -153,7 +153,8 @@ public class AccidentQueryListActivity extends BaseActivity {
     private void getAccidentList(){
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
-        param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       // param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       param.put("acciWiunGuid","537AD1AB8E7447AAA249AB22A5344955");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -399,6 +400,7 @@ public class AccidentQueryListActivity extends BaseActivity {
 
         @Override
         public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+            if(groupPosition >= mGroups.size()) return;
             AccidentInformationGroup entity = mGroups.get(groupPosition);
             holder.setText(R.id.tv_header, entity.getHeader());
         }
@@ -407,6 +409,7 @@ public class AccidentQueryListActivity extends BaseActivity {
         public void onBindChildViewHolder(BaseViewHolder holder,
                                           final int groupPosition, final int childPosition) {
 
+            if(groupPosition >= mGroups.size()) return;
             final ObjAcci accidentInformation
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
             DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());

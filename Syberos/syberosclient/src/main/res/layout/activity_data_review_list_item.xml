@@ -2,18 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg_shape"
-    android:orientation="horizontal"
-    android:padding="@dimen/padding_10"
-    android:layout_margin="@dimen/padding_5"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10dp"
+        android:layout_margin="@dimen/_5dp">
     <LinearLayout
         android:id="@+id/ll_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/white_ripple_bg"
+        android:padding="@dimen/_10dp"
         >
 
         <LinearLayout
@@ -104,6 +106,5 @@
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
-
-
+    </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -21,6 +21,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -108,7 +109,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/puno/selectObjPuno/" ;
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/selectObjPuno/" ;
         HashMap<String,String> param = new HashMap<>();
         param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("valiTime","5");

@@ -56,9 +56,9 @@ public class HazDetailActivity extends BaseActivity
     @BindView(R.id.tv_super_pers_phone)
     TextView tv_super_pers_phone;
     @BindView(R.id.ae_describe_audio)
-    AudioEditView ae_describe_audio;
+    TextView ae_describe_audio;
     @BindView(R.id.ae_describe1_audio)
-    AudioEditView ae_describe1_audio;
+    TextView ae_describe1_audio;
     @BindView(R.id.tv_time)
     TextView tv_time;
     @BindView(R.id.rl_patrol)
@@ -124,8 +124,6 @@ public class HazDetailActivity extends BaseActivity
     public void initView() {
         showTitle("危险源详情");
         setActionBarRightVisible(View.INVISIBLE);
-        ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-        ae_describe1_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
 
     }
 
@@ -162,7 +160,7 @@ public class HazDetailActivity extends BaseActivity
         }
         tv_super_pers.setText(item.supPers);
         tv_super_pers_phone.setText(item.offiTel);
-        ae_describe_audio.setEditText(item.note);
+        ae_describe_audio.setText(item.note);
         tv_time.setText(item.regTime);
     }
 }

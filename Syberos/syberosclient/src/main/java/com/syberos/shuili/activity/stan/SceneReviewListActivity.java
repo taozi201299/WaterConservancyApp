@@ -14,6 +14,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -57,7 +58,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/selectStanrdReview/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","2");
        // param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
