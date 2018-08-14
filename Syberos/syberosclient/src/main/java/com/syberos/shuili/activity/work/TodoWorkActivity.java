@@ -59,7 +59,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     private void getData(){
         String url = strCJIP+"/pprty/WSRest/service/backlog";
         HashMap<String,String> params = new HashMap<>();
-        params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("roleCode","235407195106112745");
       //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
@@ -72,8 +72,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
                 if(todoWorkInfo.dataSource.list!=null) {
                     datas = todoWorkInfo.dataSource.list;
                 }
-                adapter.setData(datas);
-                adapter.notifyDataSetChanged();
+                refreshUI();
                 pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore=="true");
             }
 
@@ -97,8 +96,16 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
 
     }
 
+    /**
+     * 根据权限模块进行过滤
+     */
+    private void refreshUI(){
+        adapter.setData(datas);
+        adapter.notifyDataSetChanged();
+    }
     @Override
     public void onItemClick(int position) {
+        TodoWorkInfo todoWorkInfo = datas.get(position);
         final CustomDialog customDialog = new CustomDialog(TodoWorkActivity.this);
         customDialog.setDialogMessage(Title, "", null);
         customDialog.setMessage("请在电脑端进行处理");
@@ -135,9 +142,8 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
 
     @Override
     public void convert(ViewHolder holder, TodoWorkInfo todoWorkInfo) {
-        ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(todoWorkInfo.getFromDate());
+        ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(todoWorkInfo.getMtime());
         ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(todoWorkInfo.getBusiName());
-
 
 
     }
