@@ -11,11 +11,8 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10dp"
-        android:layout_marginEnd="@dimen/_10dp"
-        android:layout_marginTop="@dimen/_20dp"
-        android:layout_marginBottom="@dimen/_20dp"
-        android:textSize="@dimen/_18sp"
+        android:padding="@dimen/_10dp"
+        android:textSize="@dimen/_16sp"
         />
 
 </LinearLayout>

@@ -14,6 +14,8 @@ public class GlobleConstants {
     public static final String DENSITY = "density";
     public static final int HAZ_HTYPE_NORMAL= 1;
     public static final int HAZ_TYPE_BIGER = 2;
+    public static final int HIDD_TYPE_NORMAL = 1;
+    public static final int HIDD_TYPE_BIGER = 2;
 
     // 地图服务器地址
     public static final String mapServer = "http://192.168.1.11:8088";

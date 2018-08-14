@@ -88,7 +88,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         Bundle bundle = new Bundle();
         BisSinsScheGroup item = bisSinsScheGroup.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
-        intentActivity((Activity) mContext, SecurityCheckFormActivity.class, false, bundle);
+        intentActivity((Activity) mContext, SecurityCheckDetailActivity.class, false, bundle);
     }
 
     /**
@@ -162,8 +162,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
-          //  params.put("guid",item.getScheGuid());
-            params.put("guid","1C30B5F7C3C14B41862C31BC588ABAD0");
+          //  params.put("sinsGuid",item.getScheGuid());
+            params.put("sinsGuid","1C30B5F7C3C14B41862C31BC588ABAD0");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
@@ -206,6 +206,11 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                     group.setScheCompTime(item.getScheCompTime());
                     group.setScheCont(item.getScheCont());
                 }
+                // TODO: 2018/8/13 测试，后期删除
+                group.setScheName(item.getScheName());
+                group.setScheStartTime(item.getScheStartTime());
+                group.setScheCompTime(item.getScheCompTime());
+                group.setScheCont(item.getScheCont());
 
             }
         }

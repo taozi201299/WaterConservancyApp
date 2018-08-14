@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,9 +37,10 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
  * 检查方案 + 被检对象+  隐患
  * 被检对象为工程ID 或者单位ID
  * 根据组ID 从检查小组与检查对象关系表中找到所有的检查对象ID 根据ID从工程对象表和机构对象表中查找对应的信息
+ * 交互修改：该界面不显示隐患信息 在新的界面中显示隐患
  */
 
-public class SecurityCheckFormActivity extends BaseActivity {
+public class SecurityCheckDetailActivity extends BaseActivity implements View.OnClickListener{
 
     private HiddenInvestigationTaskInfo information;
     /**
@@ -83,6 +85,8 @@ public class SecurityCheckFormActivity extends BaseActivity {
     @BindView(R.id.tv_check_person)
     TextView tv_check_person;
 
+    @BindView(R.id.rl_hidden_count)
+    RelativeLayout rl_hidden_count;
     @BindView(R.id.ll_check_object_container)
     LinearLayout ll_check_object_container;
     @BindView(R.id.ll_hidden_object_container)
@@ -96,6 +100,7 @@ public class SecurityCheckFormActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        rl_hidden_count.setOnClickListener(this);
 
     }
 
@@ -121,13 +126,14 @@ public class SecurityCheckFormActivity extends BaseActivity {
     private void getExpertGuid(){
         String url = strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("groupGuid",bisSinsScheGroup.getGuid());
+        //params.put("groupGuid",bisSinsScheGroup.getGuid());
+        params.put("groupGuid","0E42146FDABD44688DACC34893E3D1F0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 relSinsGroupExpert = (RelSinsGroupExpert)gson.fromJson(result,RelSinsGroupExpert.class);
-                if(relSinsGroupExpert != null){
+                if(relSinsGroupExpert != null && relSinsGroupExpert.dataSource.size() > 0){
                     getExpertInfo();
                 }
             }
@@ -142,7 +148,8 @@ public class SecurityCheckFormActivity extends BaseActivity {
     private void getExpertInfo(){
         String url = strIP +"/sjjk/v1/obj/expert/objExperts/";
         HashMap<String,String> params = new HashMap<>();
-        params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
+       // params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
+        params.put("persGuid","24fb0a96e79947a99fe1a272a8c4a16a");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -167,14 +174,17 @@ public class SecurityCheckFormActivity extends BaseActivity {
     private void getCheckObject(){
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("guid",bisSinsScheGroup.getGuid());
+     //   params.put("guid",bisSinsScheGroup.getGuid());
+        params.put("guid","0E42146FDABD44688DACC34893E3D1F0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 relSinsGroupWiun = (RelSinsGroupWiun)gson.fromJson(result,RelSinsGroupWiun.class);
                 if(relSinsGroupWiun != null && relSinsGroupWiun.dataSource != null){
-                    getCheckObjectInfo();
+                 //   getCheckObjectInfo();
+                    refreshUI();
                 }
             }
 
@@ -249,6 +259,7 @@ public class SecurityCheckFormActivity extends BaseActivity {
         // 专家姓名
         tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
         // 被检对象
+        ll_check_object_container.removeAllViews();
         final ArrayList<RelSinsGroupWiun>infos = (ArrayList<RelSinsGroupWiun>) relSinsGroupWiun.dataSource;
         final int size = infos.size();
         for (int i = 0; i < size; i++) {
@@ -262,10 +273,11 @@ public class SecurityCheckFormActivity extends BaseActivity {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("checkItem",infos.get(finalI));
-                    intentActivity(SecurityCheckFormActivity.this, SecurityCheckItemFormActivity.class,
+                    intentActivity(SecurityCheckDetailActivity.this, SecurityCheckItemFormActivity.class,
                             false, bundle);
                 }
             });
+            return;
         }
 
         // 隐患类别
@@ -294,7 +306,7 @@ public class SecurityCheckFormActivity extends BaseActivity {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data",item);
-                    intentActivity(SecurityCheckFormActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
+                    intentActivity(SecurityCheckDetailActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
                 }
             });
         }
@@ -307,4 +319,19 @@ public class SecurityCheckFormActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_hidden_count:
+                go2CheckHiddenActivity();
+                break;
+        }
+    }
+    private void go2CheckHiddenActivity(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("checkObject",relSinsGroupWiun);
+        bundle.putSerializable("checkGroup",bisSinsScheGroup);
+        intentActivity(SecurityCheckDetailActivity.this,SecurityCheckHiddenActivity.class,false,bundle);
+
+    }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_bar"
+        layout="@layout/action_bar2_layout" />
+
+    <com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
+        android:layout_below="@+id/layout_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_security_hidden"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout>
+</RelativeLayout>

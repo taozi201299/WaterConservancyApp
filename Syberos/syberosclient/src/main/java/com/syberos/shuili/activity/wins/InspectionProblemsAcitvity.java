@@ -167,6 +167,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
             final ObjAcci accidentInformation
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
+          //  DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());
             RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
             ll_report_after.setVisibility(View.GONE);
             String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
@@ -200,6 +201,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
                 break;
             }
 
+         //   holder.setText(R.id.tv_title, item.getDcItemName());
             holder.setText(R.id.tv_time, accidentInformation.getOccuTime());
             holder.setText(R.id.tv_name, accidentInformation.getAccidentUnitName());
         }

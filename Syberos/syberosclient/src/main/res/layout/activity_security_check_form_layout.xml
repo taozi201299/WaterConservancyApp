@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/transparent">
 
@@ -18,6 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_10dp"
+                android:layout_margin="@dimen/_5dp">
         <LinearLayout
             android:id="@+id/ll_base_info"
             android:layout_width="match_parent"
@@ -27,7 +33,6 @@
             android:paddingLeft="@dimen/_5dp"
             android:paddingRight="@dimen/_5dp"
             android:layout_marginTop="@dimen/padding_5"
-            android:background="@drawable/dialog_bg_shape"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/ll_base_info_title"
@@ -239,19 +244,51 @@
                     android:layout_centerVertical="true"
                     android:text= "李白、杜甫"/>
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:background="@color/gray_bb"
+                android:layout_marginTop="@dimen/_2dp"/>
+            <RelativeLayout
+                android:id="@+id/rl_hidden_count"
+                android:layout_width="match_parent"
+                android:layout_height= "wrap_content"
+                android:minHeight="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_5dp">
+                <TextView
+                    android:id="@+id/tv_hidden_count_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="隐患数量:"/>
 
+                <TextView
+                    android:id="@+id/tv_hidden_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_hidden_count_label"
+                    android:layout_marginStart="@dimen/padding_20"
+                    android:layout_centerVertical="true"
+                    android:text= "4"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:src="@mipmap/icon_right"/>
+            </RelativeLayout>
         </LinearLayout>
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_10dp"
+                android:layout_margin="@dimen/_5dp">
         <LinearLayout
             android:id="@+id/ll_check_object"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginLeft="@dimen/_10dp"
-            android:paddingLeft="@dimen/_5dp"
-            android:paddingRight="@dimen/_5dp"
-            android:layout_marginTop="@dimen/padding_5"
-            android:background="@drawable/dialog_bg_shape"
             android:orientation="vertical">
             <RelativeLayout
                 android:id="@+id/rl__check_object_title"
@@ -295,6 +332,7 @@
                 android:orientation="vertical">
             </LinearLayout>
         </LinearLayout>
+  </android.support.v7.widget.CardView>
         <LinearLayout
             android:id="@+id/ll_hidden_object"
             android:layout_width="match_parent"
@@ -304,6 +342,7 @@
             android:paddingLeft="@dimen/_5dp"
             android:paddingRight="@dimen/_5dp"
             android:layout_marginTop="@dimen/padding_5"
+            android:visibility="gone"
             android:background="@drawable/dialog_bg_shape"
             android:orientation="vertical">
             <RelativeLayout
