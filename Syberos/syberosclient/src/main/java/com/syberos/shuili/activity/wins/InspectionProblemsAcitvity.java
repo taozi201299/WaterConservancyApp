@@ -4,23 +4,27 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
-import com.syberos.shuili.adapter.CommonAdapter;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.accident.AccidentInformationGroup;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
-import com.syberos.shuili.entity.common.DicInfo;
-import com.syberos.shuili.entity.inspect.InspectProblemInformation;
-import com.syberos.shuili.entity.inspect.BisWinsProb;
+import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsProj;
+import com.syberos.shuili.entity.wins.BisWinsProjAll;
+import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -34,6 +38,10 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
     @BindView(R.id.recyclerView_inspection_prob)
     RecyclerView recyclerView_inspection_prob;
+    private BisWinsProjAll bisWinsProjAll = null;
+    private BisWinsGroup bisWinsGroup = null;
+
+    ArrayList<InspectionProblemGroup> groups = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -47,14 +55,79 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+        bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
+        if(bisWinsGroup == null){
+            ToastUtils.show("参数错误");
+            activityFinish();
+        }
     }
+
 
     @Override
     public void initView() {
-        showTitle("");
+        showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
 
+    }
+
+    /**
+     * 从稽查项目表中获取稽查对象 根据稽查组ID
+     */
+    private void getInspectionProject(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisWinsProjAll = gson.fromJson(result,BisWinsProjAll.class);
+                if(bisWinsProjAll == null || bisWinsProjAll.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(bisWinsProjAll.dataSource.size() == 0){
+                    ToastUtils.show("没有稽查项目");
+                }else {
+                    getWinsProblems();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+
+    /**
+     * 根据稽察组GUID和稽察地区名称查询稽察问题详情
+     */
+    private void getWinsProblems(){
+        int size = bisWinsProjAll.dataSource.size();
+        ArrayList<BisWinsProjAll>projAlls = (ArrayList<BisWinsProjAll>) bisWinsProjAll.dataSource;
+        for(int i = 0 ; i < size ; i++){
+            String  url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectDetailsInspectionQuestions/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("bwgGuid",bisWinsGroup.getBwgGuid());
+            params.put("adminWiunName",projAlls.get(i).getAdminWiunName());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+                }
+            });
+
+
+
+        }
     }
     private static class InspectionProblemGroup implements Serializable {
 
@@ -82,17 +155,17 @@ public class InspectionProblemsAcitvity extends BaseActivity {
             this.children = children;
         }
     }
-    private static class GroupedEnterprisesExpressAccidentListAdapter extends GroupedRecyclerViewAdapter {
+    private static class GroupedWinsProbListAdapter extends GroupedRecyclerViewAdapter {
 
 
-        private ArrayList<AccidentInformationGroup> mGroups;
+        private ArrayList<InspectionProblemGroup> mGroups;
 
-        public GroupedEnterprisesExpressAccidentListAdapter(
-                Context context, ArrayList<AccidentInformationGroup> groups) {
+        public GroupedWinsProbListAdapter(
+                Context context, ArrayList<InspectionProblemGroup> groups) {
             super(context);
             mGroups = groups;
         }
-        public void setData(ArrayList<AccidentInformationGroup> groups){
+        public void setData(ArrayList<InspectionProblemGroup> groups){
             mGroups = groups;
 
         }
@@ -157,7 +230,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
         @Override
         public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
-            AccidentInformationGroup entity = mGroups.get(groupPosition);
+            InspectionProblemGroup entity = mGroups.get(groupPosition);
             holder.setText(R.id.tv_header, entity.getHeader());
         }
 

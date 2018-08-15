@@ -1,4 +1,4 @@
-package com.syberos.shuili.entity.inspect;
+package com.syberos.shuili.entity.wins;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 

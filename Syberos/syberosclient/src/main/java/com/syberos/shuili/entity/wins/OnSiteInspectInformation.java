@@ -1,6 +1,4 @@
-package com.syberos.shuili.entity.inspect;
-
-import com.syberos.shuili.entity.inspect.InspectProblemInformation;
+package com.syberos.shuili.entity.wins;
 
 import java.io.Serializable;
 import java.util.List;

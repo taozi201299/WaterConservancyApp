@@ -16,7 +16,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
-// 考前摸底
+/**
+ * 安全检查对象 考前摸底
+ */
 
 public class SafetyProductionDetailRealSituationActivity extends BaseActivity {
 

@@ -6,7 +6,7 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  * Created by Administrator on 2018/8/13.
  */
 
-public class InspectionProject extends HttpBaseResponse<InspectionProject>{
+public class BisWinsProj extends HttpBaseResponse<BisWinsProj>{
     String PROJNAME;
 
     public String getPROJNAME() {

@@ -13,6 +13,9 @@ import com.syberos.shuili.view.MultimediaView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 考核组下所有考核对象的扣分记录 分组显示
+ */
 public class InspectAssessDetailDeductMarksActivity extends TranslucentActivity {
 
     private DeductMarksInfo info = null;

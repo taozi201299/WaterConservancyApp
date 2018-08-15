@@ -80,7 +80,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
         Bundle bundle = new Bundle();
         OnSiteInspectionInfo item = infoList.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
-        intentActivity((Activity) mContext, InspectAssessDetailActivity.class,
+        intentActivity((Activity) mContext, SafetyProductionDetailActivity.class,
                 false, bundle);
     }
 

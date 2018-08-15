@@ -1,27 +1,18 @@
 package com.syberos.shuili.activity.wins;
 
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.inspect.InspectProblemInformation;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
-import com.syberos.shuili.utils.Arrays2;
-import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.EnumView;
@@ -29,11 +20,9 @@ import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 新建稽查问题
@@ -100,7 +89,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
 
     }
     private void submit(){
-        showCommitDialog("确认提交考核结果?",0);
+        showCommitDialog("确认提交稽查问题?",0);
     }
     private void commit(){
         String url = GlobleConstants.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";

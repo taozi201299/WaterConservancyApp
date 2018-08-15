@@ -313,6 +313,9 @@
             android:name=".activity.wins.InspectNewProblemActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.wins.InspectionProblemsAcitvity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.wins.InspectQueryListActivity"
             android:screenOrientation="portrait"

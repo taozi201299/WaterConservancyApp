@@ -2,8 +2,6 @@ package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,15 +15,10 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.inspect.InspectProblemInformation;
-import com.syberos.shuili.entity.inspect.OnSiteInspectInformation;
-import com.syberos.shuili.entity.wins.InspectionProject;
-import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.entity.wins.BisWinsProj;
 import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -39,7 +32,7 @@ public class InspectProjectSelectActivity extends BaseActivity
     RecyclerView recyclerView;
 
     ListAdapter listAdapter;
-    InspectionProject inspectionProjects = null;
+    BisWinsProj inspectionProjects = null;
 
     @Override
     public int getLayoutId() {
@@ -78,7 +71,7 @@ public class InspectProjectSelectActivity extends BaseActivity
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                inspectionProjects = gson.fromJson(result,InspectionProject.class);
+                inspectionProjects = gson.fromJson(result,BisWinsProj.class);
                 if(inspectionProjects == null || inspectionProjects.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else if(inspectionProjects.dataSource.size() == 0){
@@ -107,13 +100,13 @@ private void refreshUI(){
         intentActivity(this, InspectNewProblemActivity.class, false, true);
     }
 
-    private class ListAdapter extends CommonAdapter<InspectionProject> {
+    private class ListAdapter extends CommonAdapter<BisWinsProj> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(ViewHolder holder, final InspectionProject information) {
+        public void convert(ViewHolder holder, final BisWinsProj information) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(
                     information.getPROJNAME());
         }

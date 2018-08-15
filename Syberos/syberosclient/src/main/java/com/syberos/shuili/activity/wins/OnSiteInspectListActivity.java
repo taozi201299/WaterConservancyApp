@@ -11,14 +11,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.inspect.BisWinsProg;
-import com.syberos.shuili.entity.inspect.ObjWinsPlan;
+import com.syberos.shuili.entity.wins.BisWinsProg;
+import com.syberos.shuili.entity.wins.ObjWinsPlan;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -66,8 +65,7 @@ public class OnSiteInspectListActivity extends TranslucentActivity
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
-        getObjWinsList();
+        //showDataLoadingDialog();
     }
 
     @Override
@@ -85,88 +83,9 @@ public class OnSiteInspectListActivity extends TranslucentActivity
 
     @Override
     public void onItemClick(int position) {
-        Bundle bundle = new Bundle();
-        ObjWinsPlan information = objWinsPlan.dataSource.get(position);
-        bundle.putSerializable("objWinsPlan", information);
-        bundle.putSerializable("bisWinsProg",bisWinsProgs.get(position));
-        intentActivity(this, InspectDetailActivity.class, false, bundle);
     }
 
-    /**
-     * 从稽查计划对象表中获取所有稽查列表
-     */
-    private void getObjWinsList(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/objWinsPlans/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("planOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                objWinsPlan = gson.fromJson(result,ObjWinsPlan.class);
-                if(objWinsPlan == null || objWinsPlan.dataSource == null){
-                    closeDataDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
-                }
-                if(objWinsPlan.dataSource.size() == 0){
-                    closeDataDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
-                    return;
-                }
-                getWinsPlanInfo();
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-            }
-        });
-    }
-
-    /**
-     * 根据稽查计划Guid从稽查方案表中获取稽查方案详情
-     */
-    private void getWinsPlanInfo(){
-        ArrayList<ObjWinsPlan> list = (ArrayList<ObjWinsPlan>) objWinsPlan.dataSource;
-        String url = "";
-        HashMap<String,String>params = new HashMap<>();
-        final int size = list.size();
-        for(int i = 0; i<size;i ++){
-            final ObjWinsPlan item = list.get(i);
-            params.put("winsPlanGuid",item.getGuid());
-            final int finalI = i;
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    bisWinsProg = gson.fromJson(result,BisWinsProg.class);
-                    if(bisWinsProg == null || bisWinsProg.dataSource == null ||
-                            bisWinsProg.dataSource.size() == 0){
-                        closeDataDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
-                    }
-                    bisWinsProgs.add(bisWinsProg.dataSource.get(0));
-                    item.setStartTime(bisWinsProg.dataSource.get(0).getStartTime());
-                    item.setEndTime(bisWinsProg.dataSource.get(0).getEndTime());
-                    if(finalI == size -1){
-                        closeDataDialog();
-                        refreshUI();
-                    }
-                }
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
-    }
     private void refreshUI(){
-        listAdapter.setData(objWinsPlan.dataSource);
-        listAdapter.notifyDataSetChanged();
 
     }
     private class ListAdapter extends CommonAdapter<ObjWinsPlan> {
@@ -189,11 +108,10 @@ public class OnSiteInspectListActivity extends TranslucentActivity
             });
 
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getWinsPlanName());
+                    information.getWINSPLANNAME());
             ((TextView) (holder.getView(R.id.tv_batch))).setText(
-                    information.getWinsArrayNum());
-            ((TextView) (holder.getView(R.id.tv_time))).setText(
-                    information.getStartTime() + "-"+ information.getEndTime());
+                    information.getWINSARRAYNUM());
+            ((TextView) (holder.getView(R.id.tv_time))).setText(information.getCOLLTIME());
         }
     }
 }

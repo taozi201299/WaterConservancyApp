@@ -6,11 +6,20 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.inspect.InspectPlan;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsProg;
+import com.syberos.shuili.entity.wins.InspectPlan;
 import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,7 +30,8 @@ import butterknife.OnClick;
  */
 public class InspectQueryDetailActivity extends TranslucentActivity {
 
-    private InspectPlan inspectPlan;
+    private BisWinsProg bisWinsProg;
+    private BisWinsGroup bisWinsGroup ;
 
     @BindView(R.id.ll_groups)
     LinearLayout ll_groups;
@@ -29,11 +39,6 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
 
-    @OnClick(R.id.tv_detail)
-    void onDetailClicked() {
-        intentActivity(this,
-                InspectQueryProblemListActivity.class, false, true);
-    }
 
     @Override
     public int getLayoutId() {
@@ -47,6 +52,8 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getWinsGroupByWinsProgGuid();
 
     }
 
@@ -54,33 +61,59 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
     public void initView() {
 
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        inspectPlan = (InspectPlan) bundle.getSerializable(
+        bisWinsProg = (BisWinsProg) bundle.getSerializable(
                 InspectQueryListActivity.SEND_BUNDLE_KEY);
 
-        if (null != inspectPlan) {
-
-            tv_action_bar_title.setText(inspectPlan.getName());
-
-            List<String> groups = inspectPlan.getGroups();
-            addGroupItems(groups);
+        if (null != bisWinsProg) {
+            tv_action_bar_title.setText(bisWinsProg.getWinsProjType());
         }
     }
 
-    private void addGroupItems(final List<String> groups) {
-        if (groups.size() > 0) {
-            for (String group : groups) {
-                addGroupItem(group);
+    private void  getWinsGroupByWinsProgGuid(){
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectWinsGroupInfoByWinsProgGuid/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("winsProgGuid",bisWinsProg.getBwpGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisWinsGroup = gson.fromJson(result,BisWinsGroup.class);
+                if(bisWinsGroup == null || bisWinsGroup.dataSource == null){
+                    ToastUtils.show("获取稽查组信息错误");
+                }else {
+                   addGroupItems(bisWinsGroup.dataSource);
+                }
+
             }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show("获取稽查组信息错误");
+            }
+        });
+    }
+    private void addGroupItems(final List<BisWinsGroup> groups) {
+        ll_groups.removeAllViews();
+        int size = groups.size();
+        for(int i = 0; i< size; i++) {
+            View layout = LayoutInflater.from(this).inflate(R.layout.layout_inspect_query_group_item,
+                    ll_groups, false);
+            TextView name = (TextView) layout.findViewById(R.id.tv_name);
+            name.setText(groups.get(i).getWinsGroupNum());
+            ll_groups.addView(layout);
+            final int finalI = i;
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bisWinsGroup",groups.get(finalI));
+                    bundle.putSerializable("bisWinsProg",bisWinsProg);
+                    intentActivity(InspectQueryDetailActivity.this,InspectDetailActivity.class,false,bundle);
+                }
+            });
         }
     }
 
-    private void addGroupItem(final String groupName) {
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_inspect_query_group_item,
-                ll_groups, false);
-
-        TextView name = (TextView) layout.findViewById(R.id.tv_name);
-        name.setText(groupName);
-
-        ll_groups.addView(layout);
-    }
 }

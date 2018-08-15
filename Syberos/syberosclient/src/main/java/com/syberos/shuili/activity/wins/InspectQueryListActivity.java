@@ -6,10 +6,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.inspect.InspectPlan;
-import com.syberos.shuili.entity.inspect.InspectPlanGroup;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.wins.BisWinsProb;
+import com.syberos.shuili.entity.wins.BisWinsProg;
+import com.syberos.shuili.entity.wins.InspectPlan;
+import com.syberos.shuili.entity.wins.InspectPlanGroup;
+import com.syberos.shuili.entity.wins.ObjWinsPlan;
+import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
@@ -25,18 +34,20 @@ import butterknife.BindView;
  */
 public class InspectQueryListActivity extends BaseActivity {
 
-    private final String Title = "事故查询";
+    private final String Title = "稽查查询";
 
     public static final String SEND_BUNDLE_KEY = "InspectPlan";
 
     @BindView(R.id.recyclerView_query_accident)
     RecyclerView recyclerView;
-
-    private HashMap<String, List<InspectPlan>> groupMap = new HashMap<>();
-
     private GroupedListAdapter groupedListAdapter;
 
-    private List<InspectPlanGroup> inspectPlanGroups;
+    private List<InspectPlanGroup> inspectPlanGroups = new ArrayList<>();
+
+    private ObjWinsPlan objWinsPlan = null;
+    private BisWinsProg bisWinsProg = null;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public int getLayoutId() {
@@ -50,6 +61,11 @@ public class InspectQueryListActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        iFailedCount = 0;
+        iSucessCount = 0;
+        inspectPlanGroups.clear();
+        getObjWinsPlan();
 
     }
 
@@ -73,9 +89,9 @@ public class InspectQueryListActivity extends BaseActivity {
                                              int groupPosition, int childPosition) {
 
                         Bundle bundle = new Bundle();
-                        List<InspectPlan> children
+                        List<BisWinsProg> children
                                 = inspectPlanGroups.get(groupPosition).getChildren();
-                        InspectPlan inspectPlan = children.get(childPosition);
+                        BisWinsProg inspectPlan = children.get(childPosition);
                         bundle.putSerializable(SEND_BUNDLE_KEY, inspectPlan);
 
                         intentActivity(InspectQueryListActivity.this,
@@ -85,51 +101,70 @@ public class InspectQueryListActivity extends BaseActivity {
                 });
 
         recyclerView.setAdapter(groupedListAdapter);
-
-        groupedListAdapter.notifyDataSetChanged();
-
-        refreshUI();
     }
 
-    private void refreshUI() {
-        if (inspectPlanGroups == null) {
-            inspectPlanGroups = new ArrayList<>();
-        }
-        inspectPlanGroups.clear();
-
-        for (int m = 0; m < 2; m++) {
-
-            List<InspectPlan> infos = new ArrayList<>();
-            for (int i = 0; i < 9; i++) {
-                InspectPlan item = new InspectPlan();
-                item.setName("稽察方案名称" + (i + 1));
-                item.setTime("2017-07-07 —— 2017-08-07");
-                item.setBatch("2017年度第三批稽察");
-
-                List<String> groups = new ArrayList<>();
-                groups.add("小组名称1");
-                groups.add("小组名称2");
-                item.setGroups(groups);
-
-                item.setSpecial("赵博士");
-                item.setAssistant("王某某");
-                item.setExperts("李白，杜甫，苏轼，苏哲");
-                item.setProject("对象工程1，对象工程2");
-                item.setProblemCount("4");
-                infos.add(item);
+    private void getObjWinsPlan(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInformation/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("planOrgGuid","21260E691D454685B61086E7F2074B71");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                objWinsPlan = gson.fromJson(result,ObjWinsPlan.class);
+                if(objWinsPlan == null || objWinsPlan.dataSource == null){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(objWinsPlan.dataSource.size() == 0){
+                    ToastUtils.show("没查询到稽查计划");
+                }else {
+                    getBisWinsProg();
+                }
             }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void  getBisWinsProg(){
+        final int size = objWinsPlan.dataSource.size();
+        for(int i = 0; i < size ;i++){
+            final ObjWinsPlan item ;
+            item = objWinsPlan.dataSource.get(i);
+            String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectCheckProgramDetailsByAuditPlan/";
+            HashMap<String,String> params = new HashMap<>();
+            params.put("owpGuid",item.getOWPGUID());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    bisWinsProg = gson.fromJson(result,BisWinsProg.class);
+                    if(bisWinsProg == null || bisWinsProg.dataSource == null || bisWinsProg.dataSource.size() == 0){
+                    }else {
+                        inspectPlanGroups.add(new InspectPlanGroup(item.getWINSPLANNAME(),bisWinsProg.dataSource));
+                    }
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
+                }
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
 
-            groupMap.put("稽察计划" + (m + 1), infos);
+                }
+            });
         }
-
-        Object[] headArray = groupMap.keySet().toArray();
-        int len = headArray.length;
-        for (int i = 0; i < len; i++) {
-            String headCode = headArray[i].toString();
-            inspectPlanGroups.add(new InspectPlanGroup(headCode, groupMap.get(headCode)));
-            groupedListAdapter.setData(inspectPlanGroups);
-            groupedListAdapter.notifyDataSetChanged();
-        }
+    }
+    private void refreshUI() {
+        closeDataDialog();
+        groupedListAdapter.setData(inspectPlanGroups);
+        groupedListAdapter.notifyDataSetChanged();
     }
 
     private class GroupedListAdapter extends GroupedRecyclerViewAdapter {
@@ -155,7 +190,7 @@ public class InspectQueryListActivity extends BaseActivity {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            List<InspectPlan> children = mGroups.get(groupPosition).getChildren();
+            List<BisWinsProg> children = mGroups.get(groupPosition).getChildren();
             return children == null ? 0 : children.size();
         }
 
@@ -215,11 +250,11 @@ public class InspectQueryListActivity extends BaseActivity {
         @Override
         public void onBindChildViewHolder(BaseViewHolder holder,
                                           int groupPosition, int childPosition) {
-            InspectPlan inspectPlan
+            BisWinsProg inspectPlan
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
-            holder.setText(R.id.tv_title, inspectPlan.getName());
-            holder.setText(R.id.tv_time, inspectPlan.getTime());
-            holder.setText(R.id.tv_batch, inspectPlan.getBatch());
+            holder.setText(R.id.tv_title,inspectPlanGroups.get(groupPosition).getHeader() );
+            holder.setText(R.id.tv_time, inspectPlan.getStartTime()+"--"+inspectPlan.getEndTime());
+            holder.setText(R.id.tv_batch, inspectPlan.getWinsArrayCode());
 
         }
     }

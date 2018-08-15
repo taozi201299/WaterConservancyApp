@@ -313,6 +313,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
         return new DicInfo();
     }
     private void refreshUI(){
+        datas.clear();
         datas.addAll(objAccis.dataSource);
         for(ObjAcci item : objAccis.dataSource){
             if(item.getPID() != null){
@@ -320,6 +321,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             }
         }
         accidentListAdapter.setData(datas);
+        accidentListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -454,6 +456,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             viewHolder.btn_report.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(position >=tasks.size())return;
                     Bundle bundle = new Bundle();
                     ObjAcci accidentInformation = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, accidentInformation);
@@ -468,6 +471,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(position >=tasks.size())return;
                     Bundle bundle = new Bundle();
                     ObjAcci item = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, item);

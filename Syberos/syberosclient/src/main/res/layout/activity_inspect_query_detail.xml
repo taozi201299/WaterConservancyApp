@@ -166,12 +166,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:background="@color/gray_bb" />
+                        android:background="@color/gray_bb"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -198,12 +200,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:background="@color/gray_bb" />
+                        android:background="@color/gray_bb"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -230,12 +234,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:background="@color/gray_bb" />
+                        android:background="@color/gray_bb"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -244,6 +250,7 @@
                             android:layout_marginStart="@dimen/padding_10"
                             android:text="稽察专家"
                             android:textColor="@color/black"
+                            android:visibility="gone"
                             android:textSize="@dimen/_16sp" />
 
                         <TextView
@@ -262,12 +269,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:background="@color/gray_bb" />
+                        android:background="@color/gray_bb"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -294,12 +303,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_2dp"
-                        android:background="@color/gray_bb" />
+                        android:background="@color/gray_bb"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"

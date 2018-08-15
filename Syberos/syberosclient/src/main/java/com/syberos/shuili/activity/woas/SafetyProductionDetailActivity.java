@@ -18,6 +18,10 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 安全生产考核详情界面
+ *
+ */
 public class SafetyProductionDetailActivity extends BaseActivity {
 
     public static final String SEND_BUNDLE_KEY_0 = "InspectionObjectInfo";

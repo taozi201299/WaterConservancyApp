@@ -1,4 +1,4 @@
-package com.syberos.shuili.entity.inspect;
+package com.syberos.shuili.entity.wins;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.List;
 public class InspectPlanGroup implements Serializable {
 
     private String header;
-    private List<InspectPlan> children;
+    private List<BisWinsProg> children;
 
-    public InspectPlanGroup(String header, List<InspectPlan> children) {
+    public InspectPlanGroup(String header, List<BisWinsProg> children) {
         this.header = header;
         this.children = children;
     }
@@ -27,11 +27,11 @@ public class InspectPlanGroup implements Serializable {
         this.header = header;
     }
 
-    public List<InspectPlan> getChildren() {
+    public List<BisWinsProg> getChildren() {
         return children;
     }
 
-    public void setChildren(List<InspectPlan> children) {
+    public void setChildren(List<BisWinsProg> children) {
         this.children = children;
     }
 
