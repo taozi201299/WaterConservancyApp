@@ -20,12 +20,16 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.winsProjType;
+import static com.syberos.shuili.config.GlobleConstants.winsTypeMap;
+
 /**
  * 稽查详情
  */
 public class InspectDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_BUNDLE_KEY = "InspectProblemInformation";
+    private final String Title = "稽查组信息";
     /**
      * 稽查组
      */
@@ -83,7 +87,8 @@ public class InspectDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initView() {
-
+        showTitle(Title);
+        setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
         bisWinsProg = (BisWinsProg)bundle.getSerializable("bisWinsProg");
@@ -97,10 +102,10 @@ public class InspectDetailActivity extends BaseActivity implements View.OnClickL
     private void refreshUI(){
         tv_batch.setText(bisWinsProg.getWinsArrayCode());
         tv_time.setText(bisWinsProg.getStartTime() +"--"+bisWinsProg.getEndTime());
-        tv_projType.setText(bisWinsProg.getWinsProjType());
+        tv_projType.setText(winsProjType.get(bisWinsProg.getWinsProjType()));
         tv_special.setText(bisWinsGroup.getSpeStafName());
         tv_assistant.setText("");
-        tv_winsType.setText(bisWinsProg.getWinsType());
+        tv_winsType.setText(winsTypeMap.get(bisWinsProg.getWinsType()));
 
     }
     @Override

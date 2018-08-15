@@ -87,7 +87,8 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     private void getWoasGroupList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       // params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("leadOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
         // 1 水利稽查工作考核 2 安全生产工作考核
         params.put("woasType","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

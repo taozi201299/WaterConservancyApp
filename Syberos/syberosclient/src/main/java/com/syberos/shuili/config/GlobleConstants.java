@@ -72,4 +72,30 @@ public class GlobleConstants {
             put(3,"非常严重");
         }
     };
+    public static HashMap<String,String>winsProjType = new HashMap<String,String>(){
+        {
+            put("01","基建项目");
+            put("02","预算项目");
+            put("03","国科项目");
+            put("04","许可项目");
+            put("05","生产项目");
+            put("06","其他项目");
+            put("07","水库工程");
+            put("08","水闸工程");
+            put("09","泵站工程");
+            put("10","水电站工程");
+            put("11","堤防工程");
+            put("12","罐区工程");
+            put("13","引水调工程");
+            put("14","淤地坝工程");
+            put("15","农村供水工程");
+            put("16","其他工程");
+        }
+    };
+    public static HashMap<String,String>winsTypeMap = new HashMap<String, String>(){
+        {
+            put("1","工作稽查");
+            put("2","工程稽查");
+        }
+    };
 }
