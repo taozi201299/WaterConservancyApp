@@ -2,14 +2,19 @@ package com.syberos.shuili.base;
 
 import android.app.Dialog;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.syberos.shuili.R;
+import com.syberos.shuili.utils.SPUtils;
+import com.syberos.shuili.utils.ScreenManager;
+import com.syberos.shuili.utils.ToastUtils;
 
 import butterknife.BindView;
 
@@ -96,6 +101,5 @@ public abstract class TranslucentActivity extends BaseFragmentActivity {
             this.m_btnClicked = ibtnClicked;
         }
     }
-
 
 }

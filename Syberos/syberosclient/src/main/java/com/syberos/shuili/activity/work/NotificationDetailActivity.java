@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 import static com.syberos.shuili.config.GlobleConstants.strCJIP;
 
@@ -109,14 +110,14 @@ public class NotificationDetailActivity extends BaseActivity {
         noticeIds.add(noticeInfo.getGuid());
         String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = "4444444444446774444             ";
+        formInfo.userGuid = "4444444444446774444";
         formInfo.all = false;
         formInfo.list = noticeIds;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(formInfo);
         ToastUtils.show(jsonStr);
-
-        OkHttpUtils.delete().url(url).requestBody(jsonStr).build().execute(new StringCallback() {
+        OkHttpUtils.delete().url(url).requestBody(RequestBody.create(MediaType.parse("application/json"),jsonStr))
+                .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 closeDataDialog();

@@ -17,6 +17,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.BisWoasObj;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.utils.Strings;
@@ -48,7 +49,7 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
     /**
      * 考核组对象
      */
-    BisWinsGroup bisWinsGroup = null;
+    BisWoasGrop bisWoasGroup = null;
     /**
      * 考核对象
      */
@@ -66,10 +67,10 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
-        if(bisWinsGroup == null){
+        if(bisWoasGroup == null){
             Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-            bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
-            if(bisWinsGroup == null){
+            bisWoasGroup = (BisWoasGrop) bundle.getSerializable("bisWoasGrop");
+            if(bisWoasGroup == null){
                 ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                 activityFinish();
             }
@@ -98,7 +99,7 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("woasGroupGuid",bisWinsGroup);
+        bundle.putSerializable("woasGroupGuid",bisWoasGroup);
         bundle.putSerializable("bisWoasObj",bisWoasObj.dataSource.get(position));
         intentActivity(this, InspectAssessNewDeductMarksActivity.class,
                 false, bundle);
@@ -106,7 +107,7 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
     private void getWoasObj(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/selectAssessedObjectList/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("woasGroupGuid",bisWinsGroup.getBwgGuid());
+        params.put("woasGroupGuid",bisWoasGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

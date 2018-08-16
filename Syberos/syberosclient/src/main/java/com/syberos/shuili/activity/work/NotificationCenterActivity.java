@@ -31,6 +31,7 @@ import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.PullRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ALL;
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ONE;
@@ -148,15 +151,15 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         showDataLoadingDialog();
         String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = "4444444444446774444             ";
+        formInfo.userGuid = "4444444444446774444";
         if(type == DeleteType.DELETE_ALL)
         formInfo.all = true;
         else formInfo.all = false;
         formInfo.list = noticeIds;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(formInfo);
-        ToastUtils.show(jsonStr);
-        OkHttpUtils.delete().url(url).requestBody(jsonStr).build().execute(new com.zhy.http.okhttp.callback.StringCallback() {
+        OkHttpUtils.delete().url(url).requestBody(RequestBody.create(MediaType.parse("application/json"),jsonStr))
+                .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 closeDataDialog();
@@ -165,9 +168,9 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
 
             @Override
             public void onResponse(String response, int id) {
+                closeDataDialog();
                 ToastUtils.show("消息删除成功");
-                clearData();
-                getNotices();
+                activityFinish();
             }
         });
     }
@@ -175,7 +178,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         String url = strCJIP+"/pprty/WSRest/service/notice/pagelist";
         HashMap<String,String> params = new HashMap<>();
       //  params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("userGuid","4444444444446774444             ");
+        params.put("userGuid","4444444444446774444");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

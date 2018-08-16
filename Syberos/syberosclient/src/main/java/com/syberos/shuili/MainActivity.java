@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -364,6 +365,7 @@ public class MainActivity extends TranslucentActivity
             @Override
             public void onClick(View v) {
                 ScreenManager.getScreenManager().popAll();
+                SPUtils.put("login","-1");
                 intentActivity(MainActivity.this, LoginActivity.class,
                         true, true);
                 customDialog.dismiss();
@@ -418,4 +420,15 @@ public class MainActivity extends TranslucentActivity
 
         }
     };
+
+    //对返回键进行监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            logout();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

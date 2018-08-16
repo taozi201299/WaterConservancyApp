@@ -29,6 +29,7 @@ import com.syberos.shuili.MainEnterpriseActivity;
 import com.syberos.shuili.R;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
+import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
@@ -134,27 +135,27 @@ public class LoginActivity extends TranslucentActivity {
         super.onCreate(savedInstanceState);
         SyberosManagerImpl.init(this);
         SyberosAidlClient.init(this);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(500);
-                    if(accountEdit.getText().toString().equals("ceshi321")){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                passwordEdit.setText("123456");
-                                login();
-                            }
-                        });
-
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(500);
+//                    if(accountEdit.getText().toString().equals("ceshi321")){
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                passwordEdit.setText("123456");
+//                                login();
+//                            }
+//                        });
+//
+//                    }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }).start();
     }
 
     @Override
@@ -278,7 +279,6 @@ public class LoginActivity extends TranslucentActivity {
                      * 行政用户直接进行登录
                      */
                     SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInfo);
-                    Singleton.INSTANCE.isLogin = true;
                     go2Activity();
                     syncAddressList();
                 } else {
@@ -461,8 +461,10 @@ public class LoginActivity extends TranslucentActivity {
     private void go2Activity() {
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
+            SPUtils.put("login","0");
         } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)) {
             intentActivity(LoginActivity.this, MainActivity.class, false, true);
+            SPUtils.put("login","1");
         }
     }
 

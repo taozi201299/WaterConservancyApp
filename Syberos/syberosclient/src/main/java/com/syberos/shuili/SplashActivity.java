@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.syberos.shuili.activity.login.LoginActivity;
+import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
 
 import java.util.List;
@@ -40,11 +41,17 @@ public class SplashActivity extends Activity implements EasyPermissions.Permissi
 
     private void go2Activity() {
         // TODO: 2018/4/16 在本地修改此处，此处设计到用户的初始化
-        if (Singleton.INSTANCE.isLogin) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        } else {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-        }
+//        String type = (String) SPUtils.get("login","-1");
+//        if("-1".equals(type)){
+//            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//        }else {
+//            if("0".equals(type)){
+//                startActivity(new Intent(SplashActivity.this, MainEnterpriseActivity.class));
+//            }else if("1".equals(type)){
+//                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//            }
+//        }
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         finish();
     }
 

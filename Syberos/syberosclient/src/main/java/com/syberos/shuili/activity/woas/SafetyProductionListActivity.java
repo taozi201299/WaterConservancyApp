@@ -183,7 +183,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bisWoasGrop",information);
                     intentActivity((Activity) mContext, SafetyProductionObjectSelectActivity.class,
-                            false, true);
+                            false, bundle);
                 }
             });
         }

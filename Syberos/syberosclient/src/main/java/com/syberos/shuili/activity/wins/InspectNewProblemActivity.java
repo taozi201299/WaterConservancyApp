@@ -90,7 +90,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mv_multimedia.setData(null);
+        mv_multimedia.onActivityResult(requestCode, requestCode, data);
     }
 
     @Override

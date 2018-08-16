@@ -146,6 +146,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                         item.setEndTime(objWoas.dataSource.get(0).getWoasDeadline());
                     }
                     if(iSucessCount == size){
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
@@ -179,8 +180,10 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
             tv_assess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    intentActivity((Activity) mContext, InspectAssessObjectSelectActivity.class,
-                            false, true);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bisWoasGrop",information);
+                    intentActivity((Activity) mContext, SafetyProductionObjectSelectActivity.class,
+                            false, bundle);
                 }
             });
         }
