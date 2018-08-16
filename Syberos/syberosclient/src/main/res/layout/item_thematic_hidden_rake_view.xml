@@ -47,6 +47,7 @@
             android:textSize="@dimen/font_size_22" />
 
         <TextView
+            android:id="@+id/tv_unit"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -16,6 +16,16 @@ public class AccidentItemDetailEntry implements Serializable {
     String accReason;    //事故原因
     String accDescription;     //事故描述
 
+    public AccidentItemDetailEntry(String accTitle, int accCount, int deadCount, int seriouslyInjured, int directEconomicLosses, String accReason, String accDescription) {
+        this.accTitle = accTitle;
+        this.accCount = accCount;
+        this.deadCount = deadCount;
+        this.seriouslyInjured = seriouslyInjured;
+        this.directEconomicLosses = directEconomicLosses;
+        this.accReason = accReason;
+        this.accDescription = accDescription;
+    }
+
     public String getAccTitle() {
         return accTitle == null ? "" : accTitle;
     }

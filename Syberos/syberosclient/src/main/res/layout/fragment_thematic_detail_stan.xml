@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <!--专题图-detail-标准化-->
-    <include layout="@layout/include_thematic_hidden_summarized_view"/>
-</LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+    <!--专题图-detail-危险源-->
+    <include layout="@layout/include_thematic_summarized_view_general" />
+
+    <include layout="@layout/include_thematic_stan_rate_view" />
+
+    <include
+        android:id="@+id/view_recycler_view"
+        layout="@layout/include_thematic_hidden_data_list_view_general" />
+  </LinearLayout>
+</ScrollView>

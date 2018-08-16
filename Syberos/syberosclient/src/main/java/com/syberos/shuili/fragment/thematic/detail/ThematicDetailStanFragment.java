@@ -1,9 +1,12 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,16 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by BZB on 2018/8/11.
  * Project: Syberos.
  * Package：com.syberos.shuili.fragment.thematic.detail.
- *
- * 危险源
+ * <p>
+ * 标准化
  */
-public class ThematicDetailHazFragment extends BaseLazyFragment {
+public class ThematicDetailStanFragment extends BaseLazyFragment {
+
 
     @BindView(R.id.tv_view_title)
     TextView tvViewTitle;
@@ -104,20 +109,6 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     TextView tvValue22;
     @BindView(R.id.tv_value_2_3)
     TextView tvValue23;
-    @BindView(R.id.tv_value_2_4)
-    TextView tvValue24;
-    @BindView(R.id.tv_value_2_5)
-    TextView tvValue25;
-    @BindView(R.id.tv_value_3_1)
-    TextView tvValue31;
-    @BindView(R.id.tv_value_3_2)
-    TextView tvValue32;
-    @BindView(R.id.tv_value_3_3)
-    TextView tvValue33;
-    @BindView(R.id.tv_value_3_4)
-    TextView tvValue34;
-    @BindView(R.id.tv_value_3_5)
-    TextView tvValue35;
     @BindView(R.id.tv_list_title)
     TextView tvListTitle;
     @BindView(R.id.recycler_view)
@@ -126,7 +117,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_thematic_detail_haz;
+        return R.layout.fragment_thematic_detail_stan;
     }
 
     @Override
@@ -137,36 +128,28 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
 
-        tvData1.setText(13+"");
-        tvData2.setText(42+"");
+        tvData1.setText(13 + "");
+        tvData2.setText(42 + "");
+        List<PieEntry> dataList = new ArrayList<>();
+        dataList.add(new PieEntry(18, "一般标准化数量 " + 18));
+        dataList.add(new PieEntry(6, "重大标准化数量 " + 6));
+        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHazRate, dataList, true);
 
-        List<PieEntry> dataList=new ArrayList<>();
-        dataList.add(new PieEntry(18,"一般危险源数量 "+18));
-        dataList.add(new PieEntry(6,"一般危险源数量 "+6));
-        MPChartUtil.getInstance().initPieCharHiddenRate(mContext,pieCharHazRate,dataList,true);
-
-        tvValue11.setText(10+"");
-        tvValue12.setText(4+"");
+        tvValue11.setText(10 + "");
+        tvValue12.setText(4 + "");
         tvValue13.setText("45%");
 
-        tvValue21.setText(10+"");
-        tvValue22.setText(4+"");
+        tvValue21.setText(10 + "");
+        tvValue22.setText(4 + "");
         tvValue23.setText("21%");
-        tvValue24.setText(10+"");
-        tvValue25.setText("61%");
 
-        tvValue31.setText(10+"");
-        tvValue32.setText(4+"");
-        tvValue33.setText( "66%");
-        tvValue34.setText(10+"");
-        tvValue35.setText("80%");
 
         List<ProjectEntry> list = new ArrayList<>();
         list.add(new ProjectEntry("rerw", "北京", 100));
         list.add(new ProjectEntry("rerw", "上海", 120));
         list.add(new ProjectEntry("rerw", "广东", 150));
 
-        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(list);
+        RecyclerAdapterGeneral adapterGeneral = new RecyclerAdapterGeneral(list, "");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapterGeneral);
         adapterGeneral.setListener(new OnItemClickListener() {
@@ -177,7 +160,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 //                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
 //                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
                 Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
-                intent.putExtra("typeValue", HematicMapFragment.Haz);
+                intent.putExtra("typeValue", HematicMapFragment.Stan);
                 startActivity(intent);
             }
         });
@@ -206,7 +189,6 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
-
 
     }
 }

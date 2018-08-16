@@ -10,7 +10,14 @@ import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailAcciProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailHazProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailHiddenProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailSinsProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailStanProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailSuenProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailWinsProjFragment;
+import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailWoasProjFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,14 +55,31 @@ public class ThematicDetailProjActivity extends BActivity {
     }
 
     ThematicDetailHiddenProjFragment thematicDetailHiddenFragment = new ThematicDetailHiddenProjFragment();
-    ThematicDetailHazFragment thematicDetailHazFragment = new ThematicDetailHazFragment();
-    ThematicDetailAcciFragment thematicDetailAcciFragment = new ThematicDetailAcciFragment();
-    BaseLazyFragment[] fragments = {thematicDetailHiddenFragment, thematicDetailAcciFragment, thematicDetailHazFragment};
+    //    事故
+    ThematicDetailAcciProjFragment thematicDetailAcciFragment = new ThematicDetailAcciProjFragment();
+    //    风险源
+    ThematicDetailHazProjFragment thematicDetailHazFragment = new ThematicDetailHazProjFragment();
+    //    标准化
+    ThematicDetailStanProjFragment thematicDetailStanFragment = new ThematicDetailStanProjFragment();
+    //    安全检查
+    ThematicDetailSinsProjFragment thematicDetailSinsFragment = new ThematicDetailSinsProjFragment();
+    //    工作考核
+    ThematicDetailWoasProjFragment thematicDetailWoasFragment = new ThematicDetailWoasProjFragment();
+    //    水利稽查
+    ThematicDetailWinsProjFragment thematicDetailWinsFragment = new ThematicDetailWinsProjFragment();
+    //    安检执法
+    ThematicDetailSuenProjFragment thematicDetailSuenFragment = new ThematicDetailSuenProjFragment();
+
+
+    BaseLazyFragment[] fragments = {thematicDetailHiddenFragment, thematicDetailAcciFragment,
+            thematicDetailHazFragment,thematicDetailStanFragment,
+            thematicDetailSinsFragment,thematicDetailWoasFragment,
+            thematicDetailWinsFragment,thematicDetailSuenFragment};
 
     @Override
     public void initData() {
 //        tabTitle[3]
-        switch (tabTitle[getIntent().getIntExtra("typeValue", 0)]) {
+        switch (getIntent().getStringExtra("typeValue")) {
             case Hidden:
 //                todo 隐患
                 tvTitle.setText("隐患");
@@ -69,27 +93,32 @@ public class ThematicDetailProjActivity extends BActivity {
             case Haz:
 //                todo 危险源
                 tvTitle.setText("危险源");
-                switchFragment(fragments[3]);
+                switchFragment(fragments[2]);
                 break;
             case Stan:
 //                todo 标准化
                 tvTitle.setText("标准化");
+                switchFragment(fragments[3]);
                 break;
             case Sins:
 //                todo 安全检查
                 tvTitle.setText("安全检查");
+                switchFragment(fragments[4]);
                 break;
             case Woas:
 //                todo 工作考核
                 tvTitle.setText("工作考核");
+                switchFragment(fragments[5]);
                 break;
             case Wins:
 //                todo 水利稽察
                 tvTitle.setText("水利稽察");
+                switchFragment(fragments[6]);
                 break;
             case Suen:
 //                todo 安监执法
                 tvTitle.setText("安监执法");
+                switchFragment(fragments[7]);
                 break;
             default:
                 switchFragment(fragments[3]);

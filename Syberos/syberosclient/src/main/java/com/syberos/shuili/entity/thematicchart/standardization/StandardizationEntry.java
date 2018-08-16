@@ -1,5 +1,6 @@
 package com.syberos.shuili.entity.thematicchart.standardization;
 
+import com.syberos.shuili.entity.thematicchart.ProjectRankEntry;
 import com.syberos.shuili.entity.thematicchart.RankRateItem;
 
 import java.io.Serializable;
@@ -23,6 +24,15 @@ public class StandardizationEntry implements Serializable {
     //    标准化考核情况
     private StandardizationAssessment standardizationAssessment;// 标准化考核
 
+    private List<ProjectRankEntry> projectRankEntries;
+
+    public List<ProjectRankEntry> getProjectRankEntries() {
+        return projectRankEntries;
+    }
+
+    public void setProjectRankEntries(List<ProjectRankEntry> projectRankEntries) {
+        this.projectRankEntries = projectRankEntries;
+    }
 
     public List<StandardizationPointEntry> getPointEntryList() {
         if (pointEntryList == null) {

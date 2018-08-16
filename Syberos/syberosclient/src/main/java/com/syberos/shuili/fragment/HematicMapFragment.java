@@ -107,7 +107,8 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 //
         int currentItem = vp_content.getCurrentItem();
         Intent intent=new Intent(getActivity(), ThematicDetailActivity.class);
-        intent.putExtra("typeValue",currentItem);
+        intent.putExtra("typeValue",tabTitle[currentItem]);
+//        intent.putExtra("ownerType",);
         startActivity(intent);
     }
 

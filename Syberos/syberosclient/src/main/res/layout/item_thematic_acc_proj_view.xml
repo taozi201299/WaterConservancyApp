@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_12dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:drawableLeft="@mipmap/icon_green_short_vertical_div"
+            android:drawablePadding="@dimen/_12dp"
+            android:text="张家屯书库坍塌事故"
+            android:textColor="@color/text_black_color"
+            android:textSize="@dimen/_16sp" />
+
+        <View
+            android:id="@+id/div1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp"
+            android:layout_marginLeft="@dimen/_12dp"
+            android:layout_marginRight="@dimen/_12dp"
+            android:layout_marginTop="@dimen/_6dp"
+            android:background="@color/div" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextSubTitleStyle"
+                    android:text="事故数量" />
+
+                <TextView
+                    android:id="@+id/tv_value_1_1"
+                    style="@style/TextValueStyle"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextSubTitleStyle"
+                    android:text="死亡人数" />
+
+                <TextView
+                    android:id="@+id/tv_value_1_2"
+                    style="@style/TextValueStyle"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextSubTitleStyle"
+                    android:text="重伤人数" />
+
+                <TextView
+                    android:id="@+id/tv_value_1_3"
+                    style="@style/TextValueStyle"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextSubTitleStyle"
+                    android:text="直接经济损失" />
+
+                <TextView
+                    android:id="@+id/tv_value_1_4"
+                    style="@style/TextValueStyle"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="事故概述" />
+
+            <TextView
+                android:id="@+id/tv_acc_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:lines="1" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="事故概述" />
+
+            <TextView
+                android:id="@+id/tv_overview1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:lines="3" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

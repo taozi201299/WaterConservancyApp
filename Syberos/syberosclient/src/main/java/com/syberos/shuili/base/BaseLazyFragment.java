@@ -40,22 +40,9 @@ public abstract class BaseLazyFragment extends Fragment {
     private Dialog dataDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LogUtils.i(TAG, "onCreateView");
-        View view = layoutInflater.inflate(getLayoutID(), null);
-        this.view = view;
-        unbinder = ButterKnife.bind(this, view);
-
-        initView();
-        initListener();
-        if(getUserVisibleHint()){
-            hasStarted=true;
-        }
-        if (hasStarted && !isPrepared) {
-            initData();
-        }
-        isPrepared = true;
-        return view;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -64,17 +51,29 @@ public abstract class BaseLazyFragment extends Fragment {
         super.onCreate(savedInstanceState);
         layoutInflater = LayoutInflater.from(mContext);
     }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LogUtils.i(TAG, "onCreateView");
+        View view = layoutInflater.inflate(getLayoutID(), null);
+        this.view = view;
+        unbinder = ButterKnife.bind(this, view);
+
+        initView();
+        initListener();
+        if (getUserVisibleHint()) {
+            hasStarted = true;
+        }
+        if (hasStarted && !isPrepared) {
+            initData();
+        }
+        isPrepared = true;
+        return view;
     }
 
     protected abstract int getLayoutID();
 
     /**
-     * ]
+     *
      * 设置监听事件
      */
     protected abstract void initListener();
@@ -145,16 +144,17 @@ public abstract class BaseLazyFragment extends Fragment {
     /**
      * 加载对话框
      */
-    public void showDataLoadingDialog(){
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(mContext)
+    public void showDataLoadingDialog() {
+        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(mContext)
                 .setMessage("加载中...")
                 .setCancelable(true)
                 .setCancelOutside(true);
-        dataDialog=loadBuilder.create();
+        dataDialog = loadBuilder.create();
         dataDialog.show();
 
     }
-    public void closeDataDialog(){
+
+    public void closeDataDialog() {
         if (dataDialog != null && dataDialog.isShowing()) {
             dataDialog.dismiss();
         }

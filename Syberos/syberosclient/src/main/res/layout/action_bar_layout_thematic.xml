@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:text="详情"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_13" />
+        android:textSize="@dimen/font_size_15" />
 
     <ImageView
         android:id="@+id/iv_action_bar_right_1"

@@ -1,14 +1,24 @@
-package com.syberos.shuili.fragment.thematic.detail;
+package com.syberos.shuili.fragment.thematic.detail.detailproj;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.andview.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
@@ -23,16 +33,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by BZB on 2018/8/11.
  * Project: Syberos.
  * Package：com.syberos.shuili.fragment.thematic.detail.
- *
- * 危险源
+ * <p>
+ * 风险源
  */
-public class ThematicDetailHazFragment extends BaseLazyFragment {
+public class ThematicDetailHazProjFragment extends BaseLazyFragment {
+
 
     @BindView(R.id.tv_view_title)
     TextView tvViewTitle;
@@ -122,7 +134,8 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     TextView tvListTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    Unbinder unbinder;
+    @BindView(R.id.view_recycler_view)
+    View viewRecyclerView;
 
     @Override
     protected int getLayoutID() {
@@ -139,26 +152,25 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
         tvData1.setText(13+"");
         tvData2.setText(42+"");
+        List<PieEntry> dataList = new ArrayList<>();
+        dataList.add(new PieEntry(18, "一般危险源数量 " + 18));
+        dataList.add(new PieEntry(6, "一般危险源数量 " + 6));
+        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHazRate, dataList, true);
 
-        List<PieEntry> dataList=new ArrayList<>();
-        dataList.add(new PieEntry(18,"一般危险源数量 "+18));
-        dataList.add(new PieEntry(6,"一般危险源数量 "+6));
-        MPChartUtil.getInstance().initPieCharHiddenRate(mContext,pieCharHazRate,dataList,true);
-
-        tvValue11.setText(10+"");
-        tvValue12.setText(4+"");
+        tvValue11.setText(10 + "");
+        tvValue12.setText(4 + "");
         tvValue13.setText("45%");
 
-        tvValue21.setText(10+"");
-        tvValue22.setText(4+"");
+        tvValue21.setText(10 + "");
+        tvValue22.setText(4 + "");
         tvValue23.setText("21%");
-        tvValue24.setText(10+"");
+        tvValue24.setText(10 + "");
         tvValue25.setText("61%");
 
-        tvValue31.setText(10+"");
-        tvValue32.setText(4+"");
-        tvValue33.setText( "66%");
-        tvValue34.setText(10+"");
+        tvValue31.setText(10 + "");
+        tvValue32.setText(4 + "");
+        tvValue33.setText("66%");
+        tvValue34.setText(10 + "");
         tvValue35.setText("80%");
 
         List<ProjectEntry> list = new ArrayList<>();
@@ -166,21 +178,21 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         list.add(new ProjectEntry("rerw", "上海", 120));
         list.add(new ProjectEntry("rerw", "广东", 150));
 
-        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(adapterGeneral);
-        adapterGeneral.setListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                ThematicDetailHiddenProjFragment thematicDetailHiddenProjFragment=new ThematicDetailHiddenProjFragment();
-//                getFragmentManager().beginTransaction().add(thematicDetailHiddenProjFragment,"ddd").commitAllowingStateLoss();
-//                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
-//                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
-                Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
-                intent.putExtra("typeValue", HematicMapFragment.Haz);
-                startActivity(intent);
-            }
-        });
+//        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+//        recyclerView.setAdapter(adapterGeneral);
+//        adapterGeneral.setListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+////                ThematicDetailHiddenProjFragment thematicDetailHiddenProjFragment=new ThematicDetailHiddenProjFragment();
+////                getFragmentManager().beginTransaction().add(thematicDetailHiddenProjFragment,"ddd").commitAllowingStateLoss();
+////                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
+////                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
+//                Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
+//                intent.putExtra("typeValue", HematicMapFragment.Haz);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -207,6 +219,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
 
-
+        viewRecyclerView.setVisibility(View.GONE);
     }
+
 }

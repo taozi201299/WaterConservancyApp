@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.utils.MPChartUtil;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -139,15 +140,6 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
     protected void initData() {
         tvViewTitle.setText("");
 
-//        List<PieEntry> listSummarise = new ArrayList<>();
-//        listSummarise.add(new PieEntry(16, "已排查单位数量"));
-//        listSummarise.add(new PieEntry(16, "为排查单位数量"));
-//        initPieCharHiddenRate(pieChartSummarized, listSummarise, 2, typeSummarise);
-//        tvChartValue1.setText(16 + "");
-//        tvChartValueTitle1.setText("已排查单位数量");
-//        tvChartValue2.setText(16 + "");
-//        tvChartValueTitle2.setText("为排查单位数量");
-
         tvData1.setText(20 + "");
         tvDataTitle1.setText("未整改数量");
 
@@ -158,7 +150,7 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
         listHiddenRate.add(new PieEntry(20, "一般隐患数量 " + 20 + ""));
         listHiddenRate.add(new PieEntry(30, "重大隐患数量 " + 30 + ""));
 
-        initPieCharHiddenRate(pieCharHiddenRate, listHiddenRate, 2, typeHiddenRate);
+        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHiddenRate, listHiddenRate, true);
 
 
         List<ProjectEntry> list = new ArrayList<>();
@@ -166,16 +158,6 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
         list.add(new ProjectEntry("rerw", "上海", 120));
         list.add(new ProjectEntry("rerw", "广东", 150));
 
-//        HiddenRecyclerAdapter adapter = new HiddenRecyclerAdapter(list);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-//        recyclerView.setAdapter(adapter);
-//        adapter.setListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                ToastUtils.show("第" + position + "个 item 点击了");
-//            }
-//        });
     }
 
     @Override
@@ -202,149 +184,5 @@ public class ThematicDetailHiddenProjFragment extends BaseLazyFragment {
         llData4.setVisibility(View.GONE);
 
         layoutRecycler.setVisibility(View.GONE);
-//        recyclerView.setVisibility(View.GONE);
-
-    }
-
-
-    private void initPieCharHiddenRate(PieChart pieChart, List<PieEntry> strings, int count, String type) {
-
-        PieDataSet dataSet = new PieDataSet(strings, "");
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.pie_chart_color_level_one));
-        colors.add(getResources().getColor(R.color.pie_chart_color_level_two));
-//        colors.add(getResources().getColor(R.color.pie_chart_color_level_three));
-//        colors.add(getResources().getColor(R.color.pie_chart_color_level_four));
-        dataSet.setColors(colors);
-        // 获取pieCahrt图列
-        Legend l = pieChart.getLegend();
-        if (type.equals(typeHiddenRate)) {
-            l.setEnabled(true);                    //是否启用图列（true：下面属性才有意义）
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-            l.setOrientation(Legend.LegendOrientation.VERTICAL);
-            l.setForm(Legend.LegendForm.SQUARE); //设置图例的形状
-            l.setFormSize(14);                      //设置图例的大小
-            l.setFormToTextSpace(12f);              //设置每个图例实体中标签和形状之间的间距
-            l.setDrawInside(false);
-            l.setWordWrapEnabled(true);              //设置图列换行(注意使用影响性能,仅适用legend位于图表下面)
-//        l.setXEntrySpace(10f);				  //设置图例实体之间延X轴的间距（setOrientation = HORIZONTAL有效）
-            l.setYEntrySpace(6f);                  //设置图例实体之间延Y轴的间距（setOrientation = VERTICAL 有效）
-            l.setYOffset(-20f);                      //设置比例块Y轴偏移量
-//        l.setXOffset(-10);
-            l.setTextSize(14f);                      //设置图例标签文本的大小
-            l.setTextColor(getResources().getColor(R.color.text_gray_color));//设置图例标签文本的颜色
-        } else {
-            l.setEnabled(false);
-        }
-//        pieCharHiddenRate.invalidate();
-//        是否允许点击
-        PieData pieData = new PieData(dataSet);
-        pieData.setDrawValues(false);
-
-        pieChart.setTouchEnabled(false);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setDrawEntryLabels(false);
-//        是否允许旋转
-        pieChart.setRotationEnabled(false);
-        Description description = new Description();
-        description.setText("");
-        pieChart.setDescription(description);
-//        pieCharHiddenRate.setHoleRadius(0.8f);
-        pieChart.setHoleRadius(65f);
-        pieChart.setDrawHoleEnabled(true);
-
-        pieChart.setHoleColor(Color.TRANSPARENT);
-//        pieChart.setHoleColor(R.color.transparent);
-        pieChart.setTransparentCircleAlpha(0);
-        pieChart.setTransparentCircleRadius(65f);
-        pieChart.setData(pieData);
-        pieChart.setNoDataTextColor(Color.RED);
-//        pieCharHiddenRate.show
-        pieChart.setNoDataText("暂无数据");
-        if (type.equals(typeHiddenRate)) {
-            pieChart.setExtraOffsets(-10, 0, 10, 0);
-        }
-//        pieCharHiddenRate.setTranslationX(20);
-//        pieCharHiddenRate.setPivotX();
-        pieChart.invalidate();
-    }
-
-    class HiddenRecyclerAdapter extends BaseRecyclerAdapter<HiddenViewHold> {
-        private OnItemClickListener listener;
-        List<ProjectEntry> list;
-        HiddenViewHold holder;
-
-        public void setListener(OnItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        public HiddenRecyclerAdapter(List<ProjectEntry> list) {
-            this.list = list;
-        }
-
-        @Override
-        public HiddenViewHold getViewHolder(View view) {
-            return holder;
-        }
-
-        @Override
-        public HiddenViewHold onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_thematic_hidden_rake_view, null);
-            holder = new HiddenViewHold(view);
-            return holder;
-        }
-
-        @SuppressLint("SetTextI18n")
-        @Override
-        public void onBindViewHolder(HiddenViewHold holder, @SuppressLint("RecyclerView") final int position, boolean isItem) {
-            holder.tvName.setText(list.get(position).getProName());
-            holder.tvNum.setText(position + "");
-            holder.tvScore.setText(list.get(position).getProTroubleCount() + "");
-            holder.tvScore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(view, position);
-                }
-            });
-
-            holder.tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(view, position);
-                }
-            });
-
-            holder.tvNum.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(view, position);
-                }
-            });
-
-
-        }
-
-        @Override
-        public int getAdapterItemCount() {
-            return list.size();
-        }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    class HiddenViewHold extends RecyclerView.ViewHolder {
-        TextView tvNum;
-        TextView tvName;
-        TextView tvScore;
-
-        public HiddenViewHold(View itemView) {
-            super(itemView);
-            tvNum = itemView.findViewById(R.id.tv_position);
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvScore = itemView.findViewById(R.id.tv_score);
-        }
     }
 }

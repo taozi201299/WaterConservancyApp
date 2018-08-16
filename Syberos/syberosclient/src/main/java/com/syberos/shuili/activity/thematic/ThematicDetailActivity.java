@@ -14,6 +14,11 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHiddenFragment;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailSinsFragment;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailStanFragment;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailSuenFragment;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWinsFragment;
+import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWoasFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,15 +55,34 @@ public class ThematicDetailActivity extends BActivity {
 
     }
 
+    //    隐患
     ThematicDetailHiddenFragment thematicDetailHiddenFragment = new ThematicDetailHiddenFragment();
-    ThematicDetailHazFragment thematicDetailHazFragment = new ThematicDetailHazFragment();
+    //    事故
     ThematicDetailAcciFragment thematicDetailAcciFragment = new ThematicDetailAcciFragment();
-    BaseLazyFragment[] fragments = {thematicDetailHiddenFragment, thematicDetailAcciFragment, thematicDetailHazFragment};
+    //    风险源
+    ThematicDetailHazFragment thematicDetailHazFragment = new ThematicDetailHazFragment();
+    //    标准化
+    ThematicDetailStanFragment thematicDetailStanFragment = new ThematicDetailStanFragment();
+    //    安全检查
+    ThematicDetailSinsFragment thematicDetailSinsFragment = new ThematicDetailSinsFragment();
+    //    工作考核
+    ThematicDetailWoasFragment thematicDetailWoasFragment = new ThematicDetailWoasFragment();
+    //    水利稽查
+    ThematicDetailWinsFragment thematicDetailWinsFragment = new ThematicDetailWinsFragment();
+    //    安检执法
+    ThematicDetailSuenFragment thematicDetailSuenFragment = new ThematicDetailSuenFragment();
+
+
+    BaseLazyFragment[] fragments = {
+            thematicDetailHiddenFragment, thematicDetailAcciFragment,
+            thematicDetailHazFragment, thematicDetailStanFragment,
+            thematicDetailSinsFragment, thematicDetailWoasFragment,
+            thematicDetailWinsFragment, thematicDetailSuenFragment};
 
     @Override
     public void initData() {
 //        tabTitle[3]
-        switch (tabTitle[getIntent().getIntExtra("typeValue", 0)]) {
+        switch (getIntent().getStringExtra("typeValue")) {
             case Hidden:
 //                todo 隐患
                 tvTitle.setText("隐患");
@@ -72,30 +96,35 @@ public class ThematicDetailActivity extends BActivity {
             case Haz:
 //                todo 危险源
                 tvTitle.setText("危险源");
-                switchFragment(fragments[3]);
+                switchFragment(fragments[2]);
                 break;
             case Stan:
 //                todo 标准化
                 tvTitle.setText("标准化");
+                switchFragment(fragments[3]);
                 break;
             case Sins:
 //                todo 安全检查
                 tvTitle.setText("安全检查");
+                switchFragment(fragments[4]);
                 break;
             case Woas:
 //                todo 工作考核
                 tvTitle.setText("工作考核");
+                switchFragment(fragments[5]);
                 break;
             case Wins:
 //                todo 水利稽察
                 tvTitle.setText("水利稽察");
+                switchFragment(fragments[6]);
                 break;
             case Suen:
 //                todo 安监执法
                 tvTitle.setText("安监执法");
+                switchFragment(fragments[7]);
                 break;
             default:
-                switchFragment(fragments[3]);
+                switchFragment(fragments[1]);
         }
     }
 

@@ -6,15 +6,17 @@
     android:padding="@dimen/_12dp">
 
     <TextView
+        android:id="@+id/tv_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:layout_weight="1"
         android:drawableLeft="@mipmap/icon_blue_short_vertical_div"
         android:drawablePadding="@dimen/_6dp"
         android:text="隐患统计"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginBottom="12dp"
         android:textSize="@dimen/text_sub_title_normal_14sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1dp"
