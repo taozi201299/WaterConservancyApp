@@ -95,8 +95,8 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
         String orgGuid = SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId();
         String url = strIP +"/sjjk/v1/jck/obj/selectOrgEngInfoByOrgGuid/";
         HashMap<String,String>params = new HashMap<>();
-        // params.put("orgGuid",orgGuid);
-        params.put("orgGuid","B2D68C74986E40C2B91DC2E73C39BD29");
+         params.put("orgGuid",orgGuid);
+        //params.put("orgGuid","B2D68C74986E40C2B91DC2E73C39BD29");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

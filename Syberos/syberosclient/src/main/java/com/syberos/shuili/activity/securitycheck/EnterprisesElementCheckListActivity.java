@@ -75,8 +75,8 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
     private void getBisSeWiunByUserId() {
         String url = strIP + "/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String, String> params = new HashMap<>();
-        // params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
+         params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+      //  params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

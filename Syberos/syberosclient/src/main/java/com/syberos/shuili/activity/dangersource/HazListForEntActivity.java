@@ -275,6 +275,12 @@ public class HazListForEntActivity extends BaseActivity
                             R.drawable.btn_dangerous_type_big_shape));
                 }
                 break;
+                default:
+                    ((TextView) (holder.getView(R.id.tv_type))).setText(
+                            R.string.dangerous_type_normal);
+                    ll_type.setBackground(getResources().getDrawable(
+                            R.drawable.btn_dangerous_type_normal_shape));
+                    break;
             }
             ((TextView) (holder.getView(R.id.tv_title))).setText(
                     dangerousInformation.getHazName());
