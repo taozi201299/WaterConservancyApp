@@ -7,155 +7,86 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  * 8.2.1.16	工作考核对象表（OBJ_WOAS）
  */
 
-public class ObjWoas extends HttpBaseResponse<ObjWoas> {
+public class ObjWoas extends HttpBaseResponse<ObjWoas> {;
+    String ORGGUID;
     String guid;
-    /**
-     * 考核主题
-     */
+    String woasStartime;
+    String otheFileFiel;
+    String woasFileFiel;
+    String woasDeadline;
     String woasThem;
-    /**
-     * 发文号
-     */
-    String learId;
-    /**
-     * 文件标题
-     */
-    String fileTitle;
-    /**
-     * 考核类型
-     */
-    String woasType;
-    /**
-     * 考核要求
-     */
-    String woasRequ;
-    /**
-     * 考核组GUID
-     */
-    String woasGroupGuid;
-    /**
-     * 考核截止时间
-     */
-    String woasDeadLine;
-    /**
-     * 发送状态
-     */
-    String sendStat;
-    String note;
-    String collTime;
-    String updTime;
-    String recPers;
-    String groupName;
+    String lareId;
+    String orgName;
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public String getORGGUID() {
+        return ORGGUID == null ? "" : ORGGUID;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public void setORGGUID(String ORGGUID) {
+        this.ORGGUID = ORGGUID;
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
         this.guid = guid;
     }
 
+    public String getWoasStartime() {
+        return woasStartime == null ? "" : woasStartime;
+    }
+
+    public void setWoasStartime(String woasStartime) {
+        this.woasStartime = woasStartime;
+    }
+
+    public String getOtheFileFiel() {
+        return otheFileFiel == null ? "" : otheFileFiel;
+    }
+
+    public void setOtheFileFiel(String otheFileFiel) {
+        this.otheFileFiel = otheFileFiel;
+    }
+
+    public String getWoasFileFiel() {
+        return woasFileFiel == null ? "" : woasFileFiel;
+    }
+
+    public void setWoasFileFiel(String woasFileFiel) {
+        this.woasFileFiel = woasFileFiel;
+    }
+
+    public String getWoasDeadline() {
+        return woasDeadline == null ? "" : woasDeadline;
+    }
+
+    public void setWoasDeadline(String woasDeadline) {
+        this.woasDeadline = woasDeadline;
+    }
+
     public String getWoasThem() {
-        return woasThem;
+        return woasThem == null ? "" : woasThem;
     }
 
     public void setWoasThem(String woasThem) {
         this.woasThem = woasThem;
     }
 
-    public String getLearId() {
-        return learId;
+    public String getLareId() {
+        return lareId == null ? "" : lareId;
     }
 
-    public void setLearId(String learId) {
-        this.learId = learId;
+    public void setLareId(String lareId) {
+        this.lareId = lareId;
     }
 
-    public String getFileTitle() {
-        return fileTitle;
+    public String getOrgName() {
+        return orgName == null ? "" : orgName;
     }
 
-    public void setFileTitle(String fileTitle) {
-        this.fileTitle = fileTitle;
-    }
-
-    public String getWoasType() {
-        return woasType;
-    }
-
-    public void setWoasType(String woasType) {
-        this.woasType = woasType;
-    }
-
-    public String getWoasRequ() {
-        return woasRequ;
-    }
-
-    public void setWoasRequ(String woasRequ) {
-        this.woasRequ = woasRequ;
-    }
-
-    public String getWoasGroupGuid() {
-        return woasGroupGuid;
-    }
-
-    public void setWoasGroupGuid(String woasGroupGuid) {
-        this.woasGroupGuid = woasGroupGuid;
-    }
-
-    public String getWoasDeadLine() {
-        return woasDeadLine;
-    }
-
-    public void setWoasDeadLine(String woasDeadLine) {
-        this.woasDeadLine = woasDeadLine;
-    }
-
-    public String getSendStat() {
-        return sendStat;
-    }
-
-    public void setSendStat(String sendStat) {
-        this.sendStat = sendStat;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getCollTime() {
-        return collTime;
-    }
-
-    public void setCollTime(String collTime) {
-        this.collTime = collTime;
-    }
-
-    public String getUpdTime() {
-        return updTime;
-    }
-
-    public void setUpdTime(String updTime) {
-        this.updTime = updTime;
-    }
-
-    public String getRecPers() {
-        return recPers;
-    }
-
-    public void setRecPers(String recPers) {
-        this.recPers = recPers;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

@@ -7,45 +7,28 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  * 8.2.2.77	考核组（BIS_WOAS_GROP）
  *
  * 8.2.2.72	工作考核对象（BIS_WOAS_OBJ）
+ * 需要返回考核方案GUID
  */
-
 public class BisWoasGrop extends HttpBaseResponse<BisWoasGrop> {
-    String guid;
-    /**
-     * 考核组名称
-     */
-    String woasGropName;
-    /**
-     * 工作考核GUID
-     */
-    String woasGuid;
-    /**
-     * 考核组长单位
-     */
+    String guid;;
+    String woasGuid;;
     String leadWiun;
-    String note;
-    String collTime;
-    String updTime;
-    String recPers;
+    String woasThem;
+    String woasGropName;
+    String lareId;
+    String startTime;
+    String endTime;
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
         this.guid = guid;
     }
 
-    public String getWoasGropName() {
-        return woasGropName;
-    }
-
-    public void setWoasGropName(String woasGropName) {
-        this.woasGropName = woasGropName;
-    }
-
     public String getWoasGuid() {
-        return woasGuid;
+        return woasGuid == null ? "" : woasGuid;
     }
 
     public void setWoasGuid(String woasGuid) {
@@ -53,42 +36,50 @@ public class BisWoasGrop extends HttpBaseResponse<BisWoasGrop> {
     }
 
     public String getLeadWiun() {
-        return leadWiun;
+        return leadWiun == null ? "" : leadWiun;
     }
 
     public void setLeadWiun(String leadWiun) {
         this.leadWiun = leadWiun;
     }
 
-    public String getNote() {
-        return note;
+    public String getWoasThem() {
+        return woasThem == null ? "" : woasThem;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setWoasThem(String woasThem) {
+        this.woasThem = woasThem;
     }
 
-    public String getCollTime() {
-        return collTime;
+    public String getWoasGropName() {
+        return woasGropName == null ? "" : woasGropName;
     }
 
-    public void setCollTime(String collTime) {
-        this.collTime = collTime;
+    public void setWoasGropName(String woasGropName) {
+        this.woasGropName = woasGropName;
     }
 
-    public String getUpdTime() {
-        return updTime;
+    public String getLareId() {
+        return lareId == null ? "" : lareId;
     }
 
-    public void setUpdTime(String updTime) {
-        this.updTime = updTime;
+    public void setLareId(String lareId) {
+        this.lareId = lareId;
     }
 
-    public String getRecPers() {
-        return recPers;
+    public String getStartTime() {
+        return startTime == null ? "" : startTime;
     }
 
-    public void setRecPers(String recPers) {
-        this.recPers = recPers;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime == null ? "" : endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

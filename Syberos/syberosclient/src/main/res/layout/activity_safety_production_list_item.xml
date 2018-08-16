@@ -32,8 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="河道坍塌" />
+                    android:singleLine="true"
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -47,14 +47,16 @@
                     android:id="@+id/tv_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="所属考核方案:"
+                    android:text="考核通知文号:"
                     android:textColor="@color/gray_bb" />
 
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="北京朝阳区水务局"
+                    android:text=""
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="@color/gray_bb" />
             </LinearLayout>
 
@@ -76,7 +78,9 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="北京朝阳区水务局"
+                    android:text=""
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="@color/gray_bb" />
             </LinearLayout>
         </LinearLayout>

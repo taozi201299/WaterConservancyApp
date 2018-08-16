@@ -21,6 +21,7 @@ import butterknife.BindView;
 /**
  * 安全生产考核详情界面
  *
+ * 1 获取考核方案信息
  */
 public class SafetyProductionDetailActivity extends BaseActivity {
 
@@ -55,6 +56,8 @@ public class SafetyProductionDetailActivity extends BaseActivity {
 
     @BindView(R.id.ll_container_1)
     LinearLayout ll_container_1;
+
+
 
     @Override
     public int getLayoutId() {

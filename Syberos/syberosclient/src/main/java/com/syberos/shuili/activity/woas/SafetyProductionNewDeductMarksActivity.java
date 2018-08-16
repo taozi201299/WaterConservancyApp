@@ -11,6 +11,8 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.woas.BisWoasObj;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -32,10 +34,8 @@ import butterknife.OnClick;
 public class SafetyProductionNewDeductMarksActivity extends BaseActivity implements  BaseActivity.IDialogInterface {
 
     private final String Title = "新增安全生产考核记录";
-    private DeductMarksInfo info = null;
-
-    @BindView(R.id.tv_action_bar_title)
-    TextView tv_action_bar_title;
+    @BindView(R.id.tv_woas_unit)
+    TextView tv_woas_unit;
 
     @BindView(R.id.ce_score)
     TextView ce_score;
@@ -46,11 +46,14 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
     @BindView(R.id.mv_multimedia)
     MultimediaView mv_multimedia;
 
-
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        activityFinish();
-    }
+    /**
+     * 考核组对象
+     */
+    BisWinsGroup bisWinsGroup = null;
+    /**
+     * 考核对象
+     */
+    private BisWoasObj bisWoasObj = null;
 
     @OnClick(R.id.tv_save)
     void onSubmitClicked() {
@@ -69,22 +72,26 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
 
     @Override
     public void initData() {
-
+        if(bisWinsGroup == null || bisWoasObj == null) {
+            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+            bisWoasObj = (BisWoasObj) bundle.getSerializable("bisWoasObj");
+            bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
+            if(bisWoasObj == null || bisWinsGroup == null){
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+                activityFinish();
+            }
+        }
+        updateView();
     }
 
     @Override
     public void initView() {
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
-        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        info = (DeductMarksInfo) bundle.getSerializable(
-                SafetyProductionObjectSelectActivity.SEND_BUNDLE_KEY);
+    }
 
-        if (null != info) {
-            tv_action_bar_title.setText(info.getUnit());
-
-
-        }
+    private void updateView(){
+        tv_woas_unit.setText(bisWoasObj.getWoasWiunName());
     }
     @Override
     public void dialogClick() {
@@ -101,12 +108,12 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
     private void commit(){
         String url = GlobleConstants.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String> params = new HashMap<>();
-        params.put("woasWiunGuid","");// 被考核单位GUID
-        params.put("woasGuid",""); // 工作考核GUID
-        params.put("woasGropGuid",""); // 考核组GUID
-        params.put("fianDeuc",""); //最终扣分
-        params.put("deucNote","");  //扣分说明
-        params.put("woasType","");// 考核类型
+        params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
+        params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID
+        params.put("woasGropGuid",bisWinsGroup.getBwgGuid()); // 考核组GUID
+        params.put("fianDeuc", (String) ce_score.getText()); //最终扣分
+        params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
+        params.put("woasType","2");// 考核类型
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

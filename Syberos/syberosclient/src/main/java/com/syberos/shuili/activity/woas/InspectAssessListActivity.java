@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.ObjWoas;
 import com.syberos.shuili.entity.woas.OnSiteInspectionInfo;
@@ -45,6 +46,9 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_inspect_assess_list;
@@ -52,12 +56,16 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
 
     @Override
     public void initListener() {
+        adapter.setOnItemClickListener(this);
 
     }
 
     @Override
     public void initData() {
-
+        iSucessCount = 0;
+        iFailedCount = 0;
+        showDataLoadingDialog();
+        getWoasGroupList();
     }
 
     @Override
@@ -84,9 +92,12 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
     }
 
     private void getWoasGroupList(){
-        String url = "";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("leadWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        // params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("leadOrgGuid","036C5D990CD14412B5D04679197AFAF4");
+        // 1 水利稽查工作考核 2 安全生产工作考核
+        //  params.put("woasType","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -97,8 +108,9 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                getWoasGroupInfo();
+                getObjWoasInfoByID();
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
@@ -106,31 +118,40 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
             }
         });
     }
-    private void getWoasGroupInfo(){
+
+    /**
+     * 根据考核ID获取
+     */
+    private void getObjWoasInfoByID(){
         final ArrayList<BisWoasGrop>list = (ArrayList<BisWoasGrop>) bisWoasGrop.dataSource;
         final int size = list.size();
-        String url = "";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/woas/selectSinglDeploymentNotificationInfor/";
         HashMap<String,String>params = new HashMap<>();
         for(int i = 0 ; i < size; i++){
-            params.put("","");
-            final int finalI = i;
+            final BisWoasGrop item = list.get(i);
+            if(iFailedCount > 0) break;
+            params.put("guid",list.get(i).getWoasGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
+                    iSucessCount ++;
                     Gson gson = new Gson();
                     objWoas = gson.fromJson(result,ObjWoas.class);
                     if(objWoas == null || objWoas.dataSource == null || objWoas.dataSource.size() == 0){
+                        iFailedCount ++;
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
+                    }else {
+                        item.setStartTime(objWoas.dataSource.get(0).getWoasStartime());
+                        item.setEndTime(objWoas.dataSource.get(0).getWoasDeadline());
                     }
-                    objWoas.setGroupName(list.get(finalI).getWoasGropName());
-                    if(finalI == size -1){
+                    if(iSucessCount == size){
                         refreshUI();
                     }
                 }
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }
@@ -138,21 +159,21 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
         }
     }
     private void refreshUI(){
-        adapter.setData(objWoas.dataSource);
+        adapter.setData(bisWoasGrop.dataSource);
         adapter.notifyDataSetChanged();
 
     }
-    private class ListAdapter extends CommonAdapter<ObjWoas> {
+    private class ListAdapter extends CommonAdapter<BisWoasGrop> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(ViewHolder holder, final ObjWoas information) {
+        public void convert(ViewHolder holder, final BisWoasGrop information) {
 
-            ((TextView) (holder.getView(R.id.tv_title))).setText(information.getGroupName());
-            ((TextView) (holder.getView(R.id.tv_name))).setText(information.getWoasRequ());
-            ((TextView) (holder.getView(R.id.tv_time))).setText(information.getWoasDeadLine());
+            ((TextView) (holder.getView(R.id.tv_title))).setText(information.getWoasGropName());
+            ((TextView) (holder.getView(R.id.tv_name))).setText(information.getLareId());
+            ((TextView) (holder.getView(R.id.tv_time))).setText(information.getStartTime() +"-"+information.getEndTime());
 
             TextView tv_assess = (TextView) (holder.getView(R.id.tv_assess));
             tv_assess.setOnClickListener(new View.OnClickListener() {
