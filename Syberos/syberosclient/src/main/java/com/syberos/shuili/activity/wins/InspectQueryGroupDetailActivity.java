@@ -5,18 +5,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.shuili.callback.ErrorInfo;
-import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
-import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.wins.BisWinsProg;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -26,7 +20,7 @@ import static com.syberos.shuili.config.GlobleConstants.winsTypeMap;
 /**
  * 稽查详情
  */
-public class InspectDetailActivity extends BaseActivity implements View.OnClickListener {
+public class InspectQueryGroupDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_BUNDLE_KEY = "InspectProblemInformation";
     private final String Title = "稽查组信息";
@@ -120,7 +114,7 @@ public class InspectDetailActivity extends BaseActivity implements View.OnClickL
     private void go2ProblemsActivity(){
         Bundle bundle = new Bundle();
         bundle.putSerializable("bisWinsGroup",bisWinsGroup);
-        intentActivity(InspectDetailActivity.this,InspectionProblemsAcitvity.class,false,bundle);
+        intentActivity(InspectQueryGroupDetailActivity.this,InspectionProblemsAcitvity.class,false,bundle);
 
     }
 }

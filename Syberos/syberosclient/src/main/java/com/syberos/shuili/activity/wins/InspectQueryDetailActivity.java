@@ -15,7 +15,6 @@ import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.wins.BisWinsProg;
-import com.syberos.shuili.entity.wins.InspectPlan;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -23,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 稽查查询详情
@@ -69,6 +67,9 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
         }
     }
 
+    /**
+     * 根据稽查方案GUID 获取稽查组信息
+     */
     private void  getWinsGroupByWinsProgGuid(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectWinsGroupInfoByWinsProgGuid/";
         HashMap<String,String> params = new HashMap<>();
@@ -110,7 +111,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bisWinsGroup",groups.get(finalI));
                     bundle.putSerializable("bisWinsProg",bisWinsProg);
-                    intentActivity(InspectQueryDetailActivity.this,InspectDetailActivity.class,false,bundle);
+                    intentActivity(InspectQueryDetailActivity.this,InspectQueryGroupDetailActivity.class,false,bundle);
                 }
             });
         }

@@ -65,7 +65,7 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
     public void initView() {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         problem = (InspectProblemInformation)bundle.getSerializable(
-                InspectDetailActivity.SEND_BUNDLE_KEY);
+                InspectQueryGroupDetailActivity.SEND_BUNDLE_KEY);
 
         if (null != problem) {
             tv_project.setText(problem.getProject());

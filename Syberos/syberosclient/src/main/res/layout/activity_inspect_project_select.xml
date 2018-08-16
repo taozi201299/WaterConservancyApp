@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5dp"
                 android:layout_toEndOf="@+id/ll_hiddlen_object_title"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/_16sp"
                 android:text="请选择稽查项目"
                 android:textColor="@color/button_login_normal" />
         </RelativeLayout>

@@ -400,7 +400,7 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext, LawEnforcementQueryActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shuilijicha_xianchang))){
-                intentActivity((Activity)mContext, OnSiteInspectListActivity.class,
+                intentActivity((Activity)mContext, InspectProjectSelectActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shuilijicha_wenti))){
 

@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +16,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProj;
+import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.HashMap;
@@ -33,6 +36,7 @@ public class InspectProjectSelectActivity extends BaseActivity
 
     ListAdapter listAdapter;
     BisWinsProj inspectionProjects = null;
+    BisWinsGroupAll bisWinsGroupAll = null;
 
     @Override
     public int getLayoutId() {
@@ -46,6 +50,14 @@ public class InspectProjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
+//        if(bisWinsGroupAll == null){
+//            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+//            bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroupAll");
+//        }
+//        if(bisWinsGroupAll == null){
+//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+//            activityFinish();
+//        }
          showDataLoadingDialog();
          getInspectionProject();
     }
@@ -66,6 +78,7 @@ public class InspectProjectSelectActivity extends BaseActivity
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectInspectionTeamAllProjectNames/";
         HashMap<String,String>params = new HashMap<>();
         params.put("bwgGuid","455F9FDBBFD04B62A80C909989761E70");
+       // params.put("bwgGuid",bisWinsGroupAll.dataSource.get(0).getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -97,7 +110,9 @@ private void refreshUI(){
 }
     @Override
     public void onItemClick(int position) {
-        intentActivity(this, InspectNewProblemActivity.class, false, true);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("inspectionProjects",inspectionProjects);
+        intentActivity(this, InspectNewProblemActivity.class, false, bundle);
     }
 
     private class ListAdapter extends CommonAdapter<BisWinsProj> {
