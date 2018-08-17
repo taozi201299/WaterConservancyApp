@@ -417,7 +417,6 @@ public class LoginActivity extends TranslucentActivity {
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         if (!lastUser.equals(userId)) {
-            App.setLastUserAccount(userId);
             HashMap<String, String> map = new HashMap<>();
             map.put("arg0", info.getOrgId());
             SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
@@ -431,10 +430,8 @@ public class LoginActivity extends TranslucentActivity {
                     ToastUtils.show(var1.getMessage());
                 }
             });
-        } else {
-            App.setLastUserAccount("");
-            Singleton.INSTANCE.isLogin = true;
         }
+        App.setLastUserAccount(userId);
     }
 
     /**
@@ -461,10 +458,10 @@ public class LoginActivity extends TranslucentActivity {
     private void go2Activity() {
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
-            SPUtils.put("login","0");
+            SPUtils.put(GlobleConstants.Login,"0");
         } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)) {
             intentActivity(LoginActivity.this, MainActivity.class, false, true);
-            SPUtils.put("login","1");
+            SPUtils.put(GlobleConstants.Login,"1");
         }
     }
 

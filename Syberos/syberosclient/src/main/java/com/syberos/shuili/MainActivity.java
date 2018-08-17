@@ -31,6 +31,7 @@ import com.syberos.shuili.activity.personalcenter.MapManActitity;
 import com.syberos.shuili.activity.personalcenter.PersonalCenterActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.AppUpdateEntity;
 import com.syberos.shuili.fragment.AddressListFragment;
 import com.syberos.shuili.fragment.GateWayFragment;
@@ -364,8 +365,9 @@ public class MainActivity extends TranslucentActivity
         customDialog.setOnConfirmClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                activityFinish();
                 ScreenManager.getScreenManager().popAll();
-                SPUtils.put("login","-1");
+                SPUtils.put(GlobleConstants.Login,"-1");
                 intentActivity(MainActivity.this, LoginActivity.class,
                         true, true);
                 customDialog.dismiss();

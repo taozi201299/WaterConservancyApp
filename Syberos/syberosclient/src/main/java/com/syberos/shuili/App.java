@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.lzy.okhttputils.OkHttpUtils;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.CrashHandler;
+import com.syberos.shuili.utils.SPUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
@@ -90,6 +92,12 @@ public class  App extends Application {
 //        crashHandler.init();
 
 
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SPUtils.put(GlobleConstants.Login,"-1");
     }
 
     public static Context globalContext() {
