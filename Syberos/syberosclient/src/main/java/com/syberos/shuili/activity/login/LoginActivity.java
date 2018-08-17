@@ -353,6 +353,8 @@ public class LoginActivity extends TranslucentActivity {
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
         SPUtils.put("pwd",userExtendInfo.getPassword());
+        App.setLastUserAccount(userExtendInfo.getUserName());
+
         return userExtendInfo;
 
     }
@@ -436,7 +438,7 @@ public class LoginActivity extends TranslucentActivity {
                 }
             });
         }
-        App.setLastUserAccount(userId);
+
     }
 
     /**

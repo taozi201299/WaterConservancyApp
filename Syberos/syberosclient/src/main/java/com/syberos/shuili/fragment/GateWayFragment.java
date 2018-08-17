@@ -18,6 +18,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.login.LoginActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.adapter.TabAdapter;
@@ -62,6 +63,7 @@ public class GateWayFragment extends BaseFragment {
     static List<String> datas = new ArrayList<>();
 
     private Back2LoginActivityListener back2LoginActivityListener = null;
+    private boolean bUnLogin = false;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,12 +194,14 @@ public class GateWayFragment extends BaseFragment {
     @Override
     protected void initView() {
         tv_action_bar2_title.setText("门户");
-        iv_action_bar2_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((Activity)mContext).finish();
-            }
-        });
+        if(!bUnLogin) {
+            iv_action_bar2_left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((Activity) mContext).finish();
+                }
+            });
+        }
         iv_action_bar2_right.setVisibility(View.INVISIBLE);
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < tabTitle.length; i++) {
@@ -215,12 +219,28 @@ public class GateWayFragment extends BaseFragment {
         tl_tab.setupWithViewPager(vp_content);
         //设置可以滑动
         tl_tab.setTabMode(TabLayout.MODE_FIXED);
+        if(bUnLogin){
+            iv_action_bar2_left.setImageResource(R.mipmap.icon_person);
+            iv_action_bar2_left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    go2LoginActivity();
+                }
+            });
+        }
 
     }
 
     public void setBack2LoginActivityListener(
             Back2LoginActivityListener back2LoginActivityListener) {
         this.back2LoginActivityListener = back2LoginActivityListener;
+    }
+    public void setView(){
+        bUnLogin = true;
+
+    }
+    private void go2LoginActivity(){
+        intentActivity((Activity) mContext, LoginActivity.class,true,true);
     }
     public static class GateWayTableLayoutFragment extends TabLayoutFragment{
         public GateWayTableLayoutFragment(){
