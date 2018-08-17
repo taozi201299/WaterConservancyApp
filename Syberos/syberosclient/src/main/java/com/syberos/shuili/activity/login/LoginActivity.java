@@ -135,27 +135,27 @@ public class LoginActivity extends TranslucentActivity {
         super.onCreate(savedInstanceState);
         SyberosManagerImpl.init(this);
         SyberosAidlClient.init(this);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(500);
-//                    if(accountEdit.getText().toString().equals("ceshi321")){
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                passwordEdit.setText("123456");
-//                                login();
-//                            }
-//                        });
-//
-//                    }
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }).start();
+        if(!SPUtils.get("pwd","").toString().isEmpty()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                accountEdit.setText(App.getLastUserAccount());
+                                passwordEdit.setText(SPUtils.get("pwd","").toString());
+                                login(true);
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+        }
     }
 
     @Override
@@ -232,7 +232,7 @@ public class LoginActivity extends TranslucentActivity {
                 break;
             case R.id.tv_loginBtn:
                 if (verifyLoginInfo()) {
-                    login();
+                    login(false);
                 }
                 break;
             case R.id.tv_switch_login_method:
@@ -253,12 +253,16 @@ public class LoginActivity extends TranslucentActivity {
      * 大中型已建工程运行管理单位1CJYJ  大中型在建工程项目法人	2 小型工程管理单位和技术服务单位	3
      * 3 是否有角色的区分
      */
-    private void login() {
+    private void login(boolean bAuto) {
         showLoadingDialog("登录中...");
         final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
         final HashMap<String, Object> params = new HashMap<>();
         params.put("arg0", accountEdit.getText().toString());
-        params.put("arg1", encrypt(passwordEdit.getText().toString()));
+        if(bAuto){
+            params.put("arg1",passwordEdit.getText().toString());
+        }else {
+            params.put("arg1", encrypt(passwordEdit.getText().toString()));
+        }
         SyberosManagerImpl.getInstance().login(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
@@ -348,6 +352,7 @@ public class LoginActivity extends TranslucentActivity {
         UserExtendInfo userExtendInfo = setUserExtendInfo(info);
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
+        SPUtils.put("pwd",userExtendInfo.getPassword());
         return userExtendInfo;
 
     }
@@ -458,10 +463,10 @@ public class LoginActivity extends TranslucentActivity {
     private void go2Activity() {
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
-            SPUtils.put(GlobleConstants.Login,"0");
+            App.userType = "0";
         } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)) {
             intentActivity(LoginActivity.this, MainActivity.class, false, true);
-            SPUtils.put(GlobleConstants.Login,"1");
+            App.userType = "1";
         }
     }
 

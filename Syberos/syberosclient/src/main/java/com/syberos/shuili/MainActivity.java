@@ -318,7 +318,7 @@ public class MainActivity extends TranslucentActivity
                 clearCache();
                 break;
             case R.id.rl_me_logout:
-                logout();
+                logout(true);
                 break;
             case R.id.rl_map_down:
                 mapDownLoad();
@@ -358,7 +358,7 @@ public class MainActivity extends TranslucentActivity
         });
         customDialog.show();
     }
-    private void logout(){
+    private void logout(final boolean bExist){
         final CustomDialog customDialog = new CustomDialog(this);
         customDialog.setDialogMessage("登录管理", null, null);
         customDialog.setMessage("确认要退出登录吗？");
@@ -367,9 +367,12 @@ public class MainActivity extends TranslucentActivity
             public void onClick(View v) {
                 activityFinish();
                 ScreenManager.getScreenManager().popAll();
-                SPUtils.put(GlobleConstants.Login,"-1");
-                intentActivity(MainActivity.this, LoginActivity.class,
-                        true, true);
+                if(bExist){
+                    App.userType = "-1";
+                    SPUtils.put("pwd","");
+                    intentActivity(MainActivity.this, LoginActivity.class,
+                            true, true);
+                }
                 customDialog.dismiss();
             }
         });
@@ -428,7 +431,7 @@ public class MainActivity extends TranslucentActivity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
-            logout();
+            logout(false);
             return true;
         }
         return super.onKeyDown(keyCode, event);

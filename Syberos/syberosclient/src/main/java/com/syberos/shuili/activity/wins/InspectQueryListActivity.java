@@ -94,9 +94,9 @@ public class InspectQueryListActivity extends BaseActivity {
                         BisWinsProg inspectPlan = children.get(childPosition);
                         bundle.putSerializable(SEND_BUNDLE_KEY, inspectPlan);
 
-                        intentActivity(InspectQueryListActivity.this,
-                                InspectQueryDetailActivity.class,
-                                false, bundle);
+//                        intentActivity(InspectQueryListActivity.this,
+//                                InspectQueryDetailActivity.class,
+//                                false, bundle);
                     }
                 });
 

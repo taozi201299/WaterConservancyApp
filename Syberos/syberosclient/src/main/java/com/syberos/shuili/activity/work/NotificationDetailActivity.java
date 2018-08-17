@@ -139,7 +139,7 @@ public class NotificationDetailActivity extends BaseActivity {
       HttpUtils.getInstance().requestNet_put(url, param, url, new RequestCallback<String>() {
           @Override
           public void onResponse(String result) {
-              ToastUtils.show("消息状态修改成功");
+            //  ToastUtils.show("消息状态修改成功");
           }
 
           @Override

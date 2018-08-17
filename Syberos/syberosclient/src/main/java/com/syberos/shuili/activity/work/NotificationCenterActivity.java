@@ -170,7 +170,6 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
             public void onResponse(String response, int id) {
                 closeDataDialog();
                 ToastUtils.show("消息删除成功");
-                activityFinish();
             }
         });
     }
