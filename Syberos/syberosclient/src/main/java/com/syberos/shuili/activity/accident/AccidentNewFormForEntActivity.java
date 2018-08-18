@@ -143,6 +143,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         String strTitleName = "新建事故";
         if(m_dicUnitType == null || m_dicAccidentType == null) {
             Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);

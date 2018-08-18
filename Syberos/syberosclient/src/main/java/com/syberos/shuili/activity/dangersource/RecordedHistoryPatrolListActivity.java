@@ -103,6 +103,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showDataLoadingDialog();
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);

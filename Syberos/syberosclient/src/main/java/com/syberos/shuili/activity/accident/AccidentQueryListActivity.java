@@ -27,8 +27,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-public class AccidentQueryListForEntActivity extends BaseActivity {
-    private final String TAG = AccidentQueryListForEntActivity.class.getSimpleName();
+public class AccidentQueryListActivity extends BaseActivity {
+    private final String TAG = AccidentQueryListActivity.class.getSimpleName();
     /**
      * 事故单位类型
      */
@@ -82,8 +82,6 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        iSucessCount = 0;
-        iFailedCount = 0;
         groupMap.clear();
         reportInfos.clear();
         if(accidentInformationGroups != null) {
@@ -294,8 +292,8 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
     }
     @Override
     public void initView() {
-        showDataLoadingDialog();
         setInitActionBar(true);
+        showDataLoadingDialog();
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -320,7 +318,7 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
                         bundle.putSerializable(DICINFO_KEY,unitType);
 
                         bundle.putSerializable("data",reportInfos);
-                        intentActivity(AccidentQueryListForEntActivity.this,
+                        intentActivity(AccidentQueryListActivity.this,
                                 AccidentDetailActivity.class,
                                 false, bundle);
                     }

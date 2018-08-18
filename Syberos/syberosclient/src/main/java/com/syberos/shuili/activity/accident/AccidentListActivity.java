@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -37,32 +38,33 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by jidan on 18-5-22.
+ * 行政版 下级单位的事故快报查询
  */
 
-public class AccidentListForEntAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class AccidentListActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
-   private final String TAG = AccidentListForEntAcitvity.class.getSimpleName();
-   private final String Title = "快报事故";
+    private final String TAG = AccidentListActivity.class.getSimpleName();
+    private final String Title = "快报事故";
     /**
      * accident unit type
      */
-   private DicInfo m_unitTypeDic;
+    private DicInfo m_unitTypeDic;
     /**
      * accident type
      */
-   private DicInfo m_accidentTypeDic;
-   private ArrayList<ObjAcci> reportInfos = new ArrayList<>();
+    private DicInfo m_accidentTypeDic;
+    private ArrayList<ObjAcci> reportInfos = new ArrayList<>();
     /**
      * accident task object
      */
-   private ObjAcci objAccis;
+    private ObjAcci objAccis;
     ArrayList<ObjAcci>datas = new ArrayList<>();
     /**
      * unit information
      */
-   private OrgInfo orgInfo;
+    private OrgInfo orgInfo;
 
-   private AccidentListAdapter accidentListAdapter;
+    private AccidentListAdapter accidentListAdapter;
 
     /**
      * view obj
@@ -74,9 +76,9 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
     @BindView(R.id.ll_commit)
     LinearLayout ll_commit;
 
-   public static final String SEND_BUNDLE_KEY = "ObjAcci";
-   public static final String DIC_UNIT_KEY = "dicUnitKey";
-   public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
+    public static final String SEND_BUNDLE_KEY = "ObjAcci";
+    public static final String DIC_UNIT_KEY = "dicUnitKey";
+    public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
 
 
 
@@ -104,8 +106,14 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);
+        ll_commit.setVisibility(View.GONE);
         accidentListAdapter =  new AccidentListAdapter(this);
         stickyListHeadersListView.setAdapter(accidentListAdapter);
+        RelativeLayout.LayoutParams layoutParams=new RelativeLayout
+                .LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.BELOW,R.id.layout_bar);
+        xRefreshView.setLayoutParams(layoutParams);
         xRefreshView.setPullRefreshEnable(true);
         xRefreshView.setPullLoadEnable(false);
         xRefreshView.setMoveHeadWhenDisablePullRefresh(false);
@@ -210,8 +218,6 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
     private void getAccidentList(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
-        param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        //param.put("acciWinuGuid","537AD1AB8E7447AAA249AB22A5344955");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -249,7 +255,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         for(ObjAcci item : objAccis.dataSource){
             item.setAccidentUnitName(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
             if(item.getPID() != null){
-                item.setRepStat("1");
+                item.setRepStat(String.valueOf(GlobleConstants.reportAcci_1));
                 reportInfos.add(item);
             }
         }
@@ -324,6 +330,9 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
             }if(String.valueOf(GlobleConstants.reportAcci_3).equals(item.getRepStat())){
                 datas.remove(item);
             }
+            if(String.valueOf(GlobleConstants.reportAcci_0).equalsIgnoreCase(item.getRepStat())){
+                datas.remove(item);
+            }
         }
         accidentListAdapter.setData(datas);
         accidentListAdapter.notifyDataSetChanged();
@@ -372,17 +381,17 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
 
         @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
-           HeadViewHolder viewHolder;
-           if(convertView != null){
-               viewHolder = (HeadViewHolder)convertView.getTag();
-           }else{
-               convertView = LayoutInflater.from(mContext).inflate(R.layout.item_parent_layout,null);
-               viewHolder = new HeadViewHolder(convertView);
-               convertView.setTag(viewHolder);
-           }
-           viewHolder.mHeadText.setText(""+tasks.get(position).getAccidentUnitName());
-           viewHolder.mHeadText.setVisibility(View.GONE);
-            
+            HeadViewHolder viewHolder;
+            if(convertView != null){
+                viewHolder = (HeadViewHolder)convertView.getTag();
+            }else{
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_parent_layout,null);
+                viewHolder = new HeadViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            }
+            viewHolder.mHeadText.setText(""+tasks.get(position).getAccidentUnitName());
+            viewHolder.mHeadText.setVisibility(View.GONE);
+
             return convertView;
         }
 
@@ -416,7 +425,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
             }
-
+            viewHolder.btn_report.setVisibility(View.GONE);
             final ObjAcci accidentInformation
                     = tasks.get(position);
             viewHolder.tv_name.setText(accidentInformation.getAccidentUnitName());
@@ -473,7 +482,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
                     bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
                     bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
                     bundle.putInt("type", finalType);
-                    intentActivity(AccidentListForEntAcitvity.this,
+                    intentActivity(AccidentListActivity.this,
                             AccidentNewFormForEntActivity.class,
                             false, bundle);
                 }
@@ -486,7 +495,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
                     ObjAcci item = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, item);
                     bundle.putSerializable("data",reportInfos);
-                    intentActivity(AccidentListForEntAcitvity.this,
+                    intentActivity(AccidentListActivity.this,
                             AccidentDetailActivity.class,
                             false, bundle);
                 }

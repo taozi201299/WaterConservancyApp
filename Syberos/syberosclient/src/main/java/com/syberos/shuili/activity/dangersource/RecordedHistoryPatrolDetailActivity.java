@@ -59,6 +59,7 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
 

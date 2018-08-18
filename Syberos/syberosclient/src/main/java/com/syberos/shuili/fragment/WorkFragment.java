@@ -20,7 +20,9 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.accident.AccidentListActivity;
 import com.syberos.shuili.activity.accident.AccidentListForEntAcitvity;
+import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.accident.AccidentQueryListForEntActivity;
 import com.syberos.shuili.activity.searchproject.ProjectInfoActivity;
 import com.syberos.shuili.activity.stan.DataReviewListActivity;
@@ -345,9 +347,9 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext,InvestigationSuperviceTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
-                intentActivity((Activity)mContext,AccidentListForEntAcitvity.class,false,true);
+                intentActivity((Activity)mContext,AccidentListActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){
-                intentActivity((Activity)mContext,AccidentQueryListForEntActivity.class,false,true);
+                intentActivity((Activity)mContext,AccidentQueryListActivity.class,false,true);
             }
             else if(itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_beian))){
                 intentActivity((Activity)mContext,RecordReviewListActivity.class,false,true);

@@ -35,7 +35,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
 
 
     public String getAcciWiunType() {
-        return acciWiunType;
+        return acciWiunType == null ? "" : acciWiunType;
     }
 
     public void setAcciWiunType(String acciWiunType) {
@@ -43,7 +43,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciTreaResu() {
-        return acciTreaResu;
+        return acciTreaResu == null ? "" : acciTreaResu;
     }
 
     public void setAcciTreaResu(String acciTreaResu) {
@@ -51,7 +51,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getOccuTime() {
-        return occuTime;
+        return occuTime == null ? "" : occuTime;
     }
 
     public void setOccuTime(String occuTime) {
@@ -59,7 +59,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getPID() {
-        return PID;
+        return PID == null ? "" : PID;
     }
 
     public void setPID(String PID) {
@@ -67,7 +67,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciCate() {
-        return acciCate;
+        return acciCate == null ? "" : acciCate;
     }
 
     public void setAcciCate(String acciCate) {
@@ -75,7 +75,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getCasNum() {
-        return casNum;
+        return casNum == null ? "" : casNum;
     }
 
     public void setCasNum(String casNum) {
@@ -83,7 +83,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -91,7 +91,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getSerInjNum() {
-        return serInjNum;
+        return serInjNum == null ? "" : serInjNum;
     }
 
     public void setSerInjNum(String serInjNum) {
@@ -99,7 +99,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getOccuLoc() {
-        return occuLoc;
+        return occuLoc == null ? "" : occuLoc;
     }
 
     public void setOccuLoc(String occuLoc) {
@@ -107,7 +107,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getId() {
-        return id;
+        return id == null ? "" : id;
     }
 
     public void setId(String id) {
@@ -115,7 +115,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciGrad() {
-        return acciGrad;
+        return acciGrad == null ? "" : acciGrad;
     }
 
     public void setAcciGrad(String acciGrad) {
@@ -123,7 +123,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciSitu() {
-        return acciSitu;
+        return acciSitu == null ? "" : acciSitu;
     }
 
     public void setAcciSitu(String acciSitu) {
@@ -131,7 +131,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getIfPhoRep() {
-        return ifPhoRep;
+        return ifPhoRep == null ? "" : ifPhoRep;
     }
 
     public void setIfPhoRep(String ifPhoRep) {
@@ -139,7 +139,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getRepStat() {
-        return repStat;
+        return repStat == null ? "" : repStat;
     }
 
     public void setRepStat(String repStat) {
@@ -147,7 +147,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getMissNum() {
-        return missNum;
+        return missNum == null ? "" : missNum;
     }
 
     public void setMissNum(String missNum) {
@@ -155,7 +155,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getRescTreaMeas() {
-        return rescTreaMeas;
+        return rescTreaMeas == null ? "" : rescTreaMeas;
     }
 
     public void setRescTreaMeas(String rescTreaMeas) {
@@ -163,7 +163,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciCause() {
-        return acciCause;
+        return acciCause == null ? "" : acciCause;
     }
 
     public void setAcciCause(String acciCause) {
@@ -171,7 +171,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAcciWindGuid() {
-        return acciWindGuid;
+        return acciWindGuid == null ? "" : acciWindGuid;
     }
 
     public void setAcciWindGuid(String acciWindGuid) {
@@ -179,7 +179,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -187,7 +187,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getIfRespAcci() {
-        return ifRespAcci;
+        return ifRespAcci == null ? "" : ifRespAcci;
     }
 
     public void setIfRespAcci(String ifRespAcci) {
@@ -195,7 +195,7 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getEconLoss() {
-        return econLoss;
+        return econLoss == null ? "" : econLoss;
     }
 
     public void setEconLoss(String econLoss) {
@@ -203,26 +203,26 @@ public class ObjAcci extends HttpBaseResponse<ObjAcci> {
     }
 
     public String getAccidentUnitName() {
-        return AccidentUnitName;
+        return AccidentUnitName == null ? "" : AccidentUnitName;
     }
 
     public void setAccidentUnitName(String accidentUnitName) {
         AccidentUnitName = accidentUnitName;
     }
 
-    public String getAcciCateName() {
-        return acciCateName;
-    }
-
-    public void setAcciCateName(String acciCateName) {
-        this.acciCateName = acciCateName;
-    }
-
     public String getAcciWinunTypeName() {
-        return acciWinunTypeName;
+        return acciWinunTypeName == null ? "" : acciWinunTypeName;
     }
 
     public void setAcciWinunTypeName(String acciWinunTypeName) {
         this.acciWinunTypeName = acciWinunTypeName;
+    }
+
+    public String getAcciCateName() {
+        return acciCateName == null ? "" : acciCateName;
+    }
+
+    public void setAcciCateName(String acciCateName) {
+        this.acciCateName = acciCateName;
     }
 }

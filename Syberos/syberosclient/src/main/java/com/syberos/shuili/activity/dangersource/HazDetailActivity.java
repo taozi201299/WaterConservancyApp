@@ -122,6 +122,7 @@ public class HazDetailActivity extends BaseActivity
     }
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("危险源详情");
         setActionBarRightVisible(View.INVISIBLE);
 

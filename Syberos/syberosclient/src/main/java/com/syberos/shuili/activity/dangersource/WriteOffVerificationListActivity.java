@@ -111,6 +111,7 @@ public class WriteOffVerificationListActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

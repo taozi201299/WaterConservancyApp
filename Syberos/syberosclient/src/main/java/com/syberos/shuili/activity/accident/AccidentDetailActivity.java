@@ -26,9 +26,9 @@ import butterknife.OnClick;
 import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.SEND_BUNDLE_KEY;
 
 
-public class AccidentDetailForEntActivity extends BaseActivity {
+public class AccidentDetailActivity extends BaseActivity {
 
-    private final String TAG = AccidentDetailForEntActivity.class.getSimpleName();
+    private final String TAG = AccidentDetailActivity.class.getSimpleName();
     private final String Title = "快报事故详情";
     private ObjAcci accidentInformation = null;
 
@@ -91,6 +91,7 @@ public class AccidentDetailForEntActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("事故详情");
         setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
@@ -148,7 +149,7 @@ public class AccidentDetailForEntActivity extends BaseActivity {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(SEND_BUNDLE_KEY, item);
                             bundle.putSerializable("data",null);
-                            intentActivity(AccidentDetailForEntActivity.this,AccidentDetailForEntActivity.class
+                            intentActivity(AccidentDetailActivity.this,AccidentDetailActivity.class
                             ,false,bundle);
                         }
                     });
