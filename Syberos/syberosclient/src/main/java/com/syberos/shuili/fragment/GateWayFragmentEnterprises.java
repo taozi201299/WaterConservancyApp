@@ -57,23 +57,6 @@ public class GateWayFragmentEnterprises extends BaseFragment {
     private OpenDrawerListener openDrawerListener = null;
     private Back2LoginActivityListener back2LoginActivityListener = null;
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult intentResult
-                = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (intentResult != null) {
-            if (intentResult.getContents() == null) {
-
-            } else {
-                // scanResult 为获取到的字符串
-                String scanResult = intentResult.getContents();
-                ToastUtils.show("Scan Result: " + scanResult);
-            }
-        }
-    }
-
     TabAdapter tabAdapter;
 
     public static final String[] tabTitle = new String[]{ "三类人员", "标准化", "教育培训"};
@@ -100,21 +83,7 @@ public class GateWayFragmentEnterprises extends BaseFragment {
     @Override
     protected void initView() {
         tv_action_bar2_title.setText("门户");
-        iv_action_bar2_left.setBackgroundResource(R.mipmap.icon_person);
-        iv_action_bar2_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(SyberosManagerImpl.getInstance().getCurrentUserId() != null && !SyberosManagerImpl.getInstance().getCurrentUserId().isEmpty()){
-                    ((Activity)mContext).finish();
-                }else {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, LoginActivity.class);
-                    ((Activity)mContext).overridePendingTransition(R.anim.in_from_right, R.anim.out_from_left);
-                    startActivity(intent);
-                }
-
-            }
-        });
+        iv_action_bar2_left.setVisibility(View.INVISIBLE);
         iv_action_bar2_right.setVisibility(View.INVISIBLE);
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < tabTitle.length; i++) {

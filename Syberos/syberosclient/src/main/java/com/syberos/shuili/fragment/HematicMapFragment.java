@@ -122,21 +122,6 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (intentResult != null) {
-            if (intentResult.getContents() == null) {
-
-            } else {
-                // scanResult 为获取到的字符串
-                String scanResult = intentResult.getContents();
-                ToastUtils.show("Scan Result: " + scanResult);
-            }
-        }
-    }
-
     TabAdapter tabAdapter;
     public static final String[] tabTitle = new String[]{Hidden, Acci, Haz, Stan, Sins, Woas, Wins, Suen};
 

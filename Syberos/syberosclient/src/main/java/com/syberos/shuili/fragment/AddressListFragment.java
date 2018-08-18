@@ -148,6 +148,7 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
     protected void initView() {
         etSearch.clearFocus();
         ll_action_bar.findViewById(R.id.iv_action_bar2_right).setVisibility(View.INVISIBLE);
+        ll_action_bar.findViewById(R.id.iv_action_bar2_left).setVisibility(View.INVISIBLE);
         ((Activity)mContext).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         ((TextView)ll_action_bar.findViewById(R.id.tv_action_bar2_title)).setText(getResources().getString(R.string.address_name));
         characterParser = CharacterParser.getInstance();

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.shuili.callback.ErrorInfo;
@@ -416,78 +417,88 @@ public class WorkFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult
                 = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        HashMap<String,String>mapValue = new HashMap<>();
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
 
             } else {
                 // scanResult 为获取到的字符串
                 String scanResult = intentResult.getContents();
-                if (scanResult.contains(" ")) {
-                    String[] scanResultArray = scanResult.split(" ");
-                    if (2 == scanResultArray.length) {
-                        switch (Integer.valueOf(scanResultArray[0])) { // 0-登录，1-工程，2-证书
-                            case 0:
-                                Log.d(TAG, "授权登录中...");
-                                showLoadingDialog("授权登录中...");
-                                final String methodName = "updateRelGuidUser";
-                                final HashMap<String,Object> params = new HashMap<>();
-                                params.put("arg0", scanResultArray[1]);
-                                params.put("arg1", SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserName());
-                                params.put("arg2", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword());
-                                class LoginRunnable implements Runnable {
-                                    @Override
-                                    public void run() {
-                                        SoapUtils.getInstance().callWebService(params, methodName, new RequestCallback<Object>() {
-                                            @Override
-                                            public void onResponse(final Object result) {
-                                                mHandler.post(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        closeDialog();
-                                                        Integer r = Integer.valueOf(result.toString());
-                                                        Log.d(TAG, "授权登录结果：" + r);
-                                                    }
-                                                });
-                                            }
-
-                                            @Override
-                                            public void onFailure(final ErrorInfo.ErrorCode errorInfo) {
-                                                mHandler.post(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        closeDialog();
-                                                        ToastUtils.show(errorInfo.getMessage());
-                                                    }
-                                                });
-                                            }
-
-                                        }, SoapUtils.SoapType.WSDL_BASE);
-                                    }
-                                }
-                                new Thread(new LoginRunnable()).start();
-                                break;
-                            case 1:
-                                Bundle bundle = new Bundle();
-                                String result = scanResultArray[1] += "&ukey=1";
-                                bundle.putString("url",result);
-                                intentActivity(getActivity(), ProjectInfoActivity.class,
-                                        false, bundle);
-                                break;
-                            case 2:
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
+                if(scanResult.contains("?")){
+                    String[] array  = intentResult.getContents().split("\'?");
+                    if(array.length == 2){
+                        scanResult = array[1];
+                    }else {
                         ToastUtils.show("二维码格式错误");
                     }
-                } else {
-                    ToastUtils.show("二维码格式错误");
                 }
-                ToastUtils.show("Scan Result: " + scanResult);
+                String[]array =  scanResult.split("&");
+                for(String item :array){
+                    String[]mapArray = item.split("=");
+                    if(mapArray.length == 2){
+                        mapValue.put(mapArray[0],mapArray[1]);
+                    }
+                }
+                if ("0".equals(mapValue.get("type"))) {
+                    pcLogin(mapValue.get("guid").toString());
+                }
+                if("1".equals(mapValue.get("type").toString())){
+                    // 工程二维码
+                }else if("2".equals(mapValue.get("type").toString())){
+                    goShare(intentResult.getContents());
+                }
+            }
+        }else {
+            ToastUtils.show("二维码识别错误");
+        }
+    }
+    private void goShare(String url) {
+        String strUrl = url.replace("","&type=2");
+        Bundle bundle = new Bundle();
+        String result = strUrl += "&ukey=1";
+        bundle.putString("url", result);
+        intentActivity(getActivity(), ProjectInfoActivity.class,
+                false, bundle);
+    }
+    private void pcLogin(String value){
+        Log.d(TAG, "授权登录中...");
+        showLoadingDialog("授权登录中...");
+        final String methodName = "updateRelGuidUser";
+        final HashMap<String,Object> params = new HashMap<>();
+        params.put("arg0", value);
+        params.put("arg1", SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserName());
+        params.put("arg2", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword());
+        class LoginRunnable implements Runnable {
+            @Override
+            public void run() {
+                SoapUtils.getInstance().callWebService(params, methodName, new RequestCallback<Object>() {
+                    @Override
+                    public void onResponse(final Object result) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeDialog();
+                                Integer r = Integer.valueOf(result.toString());
+                                Log.d(TAG, "授权登录结果：" + r);
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onFailure(final ErrorInfo.ErrorCode errorInfo) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeDialog();
+                                ToastUtils.show(errorInfo.getMessage());
+                            }
+                        });
+                    }
+
+                }, SoapUtils.SoapType.WSDL_BASE);
             }
         }
+        new Thread(new LoginRunnable()).start();
     }
 
 }
