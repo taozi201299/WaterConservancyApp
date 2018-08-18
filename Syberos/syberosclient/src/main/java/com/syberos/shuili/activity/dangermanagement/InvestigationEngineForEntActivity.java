@@ -225,8 +225,8 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         MvEngColl item = mvEngColls.get(position);
         Bundle bundle = new Bundle();
 
-        if(String.valueOf(ObjAcci.NEW_ACCI).equals(type)){
-            bundle.putInt("type",ObjAcci.NEW_ACCI);
+        if(String.valueOf(GlobleConstants.NEW_ACCI).equals(type)){
+            bundle.putInt("type",GlobleConstants.NEW_ACCI);
             bundle.putSerializable("engColls",item);
             bundle.putSerializable(DIC_UNIT_KEY,mBundle.getSerializable(DIC_UNIT_KEY));
             bundle.putSerializable(DIC_ACCIDENT_KEY,bundle.getSerializable(DIC_ACCIDENT_KEY));

@@ -43,6 +43,7 @@ import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -174,6 +175,14 @@ public class WorkFragmentEnterprises extends BaseFragment {
             for (int j = 0; j < size; j++) {
                 if (childNames[j].equals(getResources().getString(R.string.module_child_yinhuan_chaxun))) {
                     continue;
+                }
+                /**
+                 * 监理和施工没有事故模块
+                 */
+                if(GlobleConstants.CJJL.equals(App.sCode) ||GlobleConstants.CJSG.equals(App.sCode)){
+                    if(childNames[j].equals(getResources().getString(R.string.module_shigu))){
+                        continue;
+                    }
                 }
                 /**
                  * 技术服务 施工 监理单位 只有现场检查模块，项目法人和水利工程管理单位有元素检查

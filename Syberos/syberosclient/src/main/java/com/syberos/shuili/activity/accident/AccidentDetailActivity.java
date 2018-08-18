@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -54,6 +55,10 @@ public class AccidentDetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_time)
     TextView tv_time;
+    @BindView(R.id.If_Resp_Acci)
+    TextView If_Resp_Acci;
+    @BindView(R.id.If_Pho_Rep)
+    TextView If_Pho_Rep;
 
     @BindView(R.id.ae_accident_describe_audio)
     TextView ae_accident_describe_audio;
@@ -122,6 +127,8 @@ public class AccidentDetailActivity extends BaseActivity {
                     String.valueOf(accidentInformation.getEconLoss())
             );
             tv_time.setText(accidentInformation.getOccuTime());
+            If_Pho_Rep.setText(GlobleConstants.YES.equals(accidentInformation.getIfPhoRep()) ?"是":"否");
+            If_Resp_Acci.setText(GlobleConstants.YES.equals(accidentInformation.getIfRespAcci()) ?"是":"否");
 
 
             mv_accident_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);

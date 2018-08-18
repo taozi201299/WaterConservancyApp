@@ -52,6 +52,30 @@ public class GlobleConstants {
     public static final String suen = "suen"; // 安监-监督执法
     public static final String wins = "wins"; // 安监-水利稽察
     public static final String hidd = "hidd" ; // 安监-隐患监管
+    /**
+     * 事故快报状态
+     */
+    public static final int NEW_ACCI = -1; // 新建事故
+    public static final int reportAcci_0  =  0; // 未快报
+    public static final int reportAcci_1 = 1;  // 已快报，要月报
+    public static final int reportAcci_2 = 2; //已快报，不月报
+    public static final int reportAcci_3 = 3; // 非快报事故
+    /**
+     * 事故级别
+     */
+
+    public static final int TYPE_NORMAL = 1; // 一般事故
+    public static final int TYPE_BIG = 2; // 较大事故
+    public static final int TYPE_BIGGER = 3; // 重大事故
+    public static final int TYPE_LARGE = 4; // 特大事故
+
+    /**
+     * If_Pho_Rep IF_RESP_ACCI
+     */
+
+    public static final String YES = "1";
+    public static final String NO = "2";
+
     public static HashMap<Integer,String>hazGradeMap = new HashMap<Integer,String>(){
 
         {

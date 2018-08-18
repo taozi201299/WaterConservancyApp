@@ -246,25 +246,25 @@ public class InspectionProblemsAcitvity extends BaseActivity {
             String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
-                case ObjAcci.TYPE_NORMAL: {
+                case GlobleConstants.TYPE_NORMAL: {
                     holder.setText(R.id.tv_type,R.string.accident_type_normal);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_normal_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIG: {
+                case GlobleConstants.TYPE_BIG: {
                     holder.setText(R.id.tv_type,R.string.accident_type_big);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_big_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIGGER: {
+                case GlobleConstants.TYPE_BIGGER: {
                     holder.setText(R.id.tv_type,R.string.accident_type_bigger);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_bigger_shape);
                 }
                 break;
-                case ObjAcci.TYPE_LARGE: {
+                case GlobleConstants.TYPE_LARGE: {
                     holder.setText(R.id.tv_type,R.string.accident_type_large);
                     holder.setTextColor(R.id.tv_type, R.color.black);
 

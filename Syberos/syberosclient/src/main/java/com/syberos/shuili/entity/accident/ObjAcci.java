@@ -8,18 +8,6 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 public class ObjAcci extends HttpBaseResponse<ObjAcci> {
 
-    public static final int TYPE_NORMAL = 0; // 一般事故
-    public static final int TYPE_BIG = 1; // 较大事故
-    public static final int TYPE_BIGGER = 2; // 重大事故
-    public static final int TYPE_LARGE = 3; // 特大事故
-
-    public static final int REPORT_QUICK = 2; // 快报
-    public static final int REPORT_AFTER = 1; // 补报
-
-    public static final int UNIT_SELF = 0; // 本单位
-    public static final int UNIT_OTHER = 1; // 参建单位/下级单位
-
-    public static final int NEW_ACCI = -1;
     String acciWiunType;
     String acciTreaResu;
     String occuTime;

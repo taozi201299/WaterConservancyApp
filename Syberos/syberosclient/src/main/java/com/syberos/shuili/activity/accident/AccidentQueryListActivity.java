@@ -93,7 +93,7 @@ public class AccidentQueryListActivity extends BaseActivity {
      * 获取事故单位类型
      */
     private void getAccidentUnitType() {
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_WIUN_TYPE");
@@ -123,7 +123,7 @@ public class AccidentQueryListActivity extends BaseActivity {
      * 获取事故类别
      */
     private void getAcciCate(){
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_CATE");
@@ -151,10 +151,10 @@ public class AccidentQueryListActivity extends BaseActivity {
      * 获取快报事故列表
      */
     private void getAccidentList(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/getAccidentManagements/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
-       // param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-       param.put("acciWiunGuid","537AD1AB8E7447AAA249AB22A5344955");
+        param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+    //   param.put("acciWiunGuid","537AD1AB8E7447AAA249AB22A5344955");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -415,28 +415,28 @@ public class AccidentQueryListActivity extends BaseActivity {
             DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());
             RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
             ll_report_after.setVisibility(View.GONE);
-            String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
+            String grade = accidentInformation.getAcciGrad() == null ?"1":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
-                case ObjAcci.TYPE_NORMAL: {
+                case GlobleConstants.TYPE_NORMAL: {
                     holder.setText(R.id.tv_type,R.string.accident_type_normal);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_normal_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIG: {
+                case GlobleConstants.TYPE_BIG: {
                     holder.setText(R.id.tv_type,R.string.accident_type_big);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_big_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIGGER: {
+                case GlobleConstants.TYPE_BIGGER: {
                     holder.setText(R.id.tv_type,R.string.accident_type_bigger);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_bigger_shape);
                 }
                 break;
-                case ObjAcci.TYPE_LARGE: {
+                case GlobleConstants.TYPE_LARGE: {
                     holder.setText(R.id.tv_type,R.string.accident_type_large);
                     holder.setTextColor(R.id.tv_type, R.color.black);
 

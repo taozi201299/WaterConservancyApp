@@ -33,7 +33,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sp"
                 android:padding="@dimen/_2dp"
-                android:text="一般隐患"/>
+                android:text=""/>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_title"
@@ -45,7 +45,7 @@
             android:textColor="@color/title_0"
             android:textSize="@dimen/_16sp"
             android:gravity="center_vertical"
-            android:text="@string/add_problem"
+            android:text=""
             />
     </RelativeLayout>
     <LinearLayout

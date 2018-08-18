@@ -79,6 +79,9 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
    public static final String DIC_UNIT_KEY = "dicUnitKey";
    public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
 
+
+
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_enterprise_express_accident_stickheader_list;
@@ -207,8 +210,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
     private void getAccidentList(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
-       // param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        param.put("acciWinuGuid","537AD1AB8E7447AAA249AB22A5344955");
+        param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        //param.put("acciWinuGuid","537AD1AB8E7447AAA249AB22A5344955");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -318,6 +321,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
         for(ObjAcci item : objAccis.dataSource){
             if(item.getPID() != null){
                 datas.remove(item);
+            }if(String.valueOf(GlobleConstants.reportAcci_3).equals(item.getRepStat())){
+                datas.remove(item);
             }
         }
         accidentListAdapter.setData(datas);
@@ -336,7 +341,7 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
         Bundle bundle = new Bundle();
         bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
         bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
-        bundle.putString("type",String.valueOf(ObjAcci.NEW_ACCI));
+        bundle.putString("type",String.valueOf(GlobleConstants.NEW_ACCI));
         intentActivity(this, InvestigationEngineForEntActivity.class,false,bundle);
     }
 
@@ -416,25 +421,26 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     = tasks.get(position);
             viewHolder.tv_name.setText(accidentInformation.getAccidentUnitName());
             viewHolder.tv_time.setText(accidentInformation.getCollTime());
-            String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
+            viewHolder.tv_title.setText(accidentInformation.getAcciCateName());
+            String grade = accidentInformation.getAcciGrad() == null ?"1":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
-                case ObjAcci.TYPE_NORMAL: {
+                case GlobleConstants.TYPE_NORMAL: {
                     viewHolder.tv_type.setText(R.string.accident_type_normal);
                     viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_normal_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIG: {
+                case GlobleConstants.TYPE_BIG: {
                     viewHolder.tv_type.setText(R.string.accident_type_big);
                     viewHolder.ll_type.setBackgroundResource(  R.drawable.btn_accident_type_big_shape);
                 }
                 break;
-                case ObjAcci.TYPE_BIGGER: {
+                case GlobleConstants.TYPE_BIGGER: {
                     viewHolder.tv_type.setText(R.string.accident_type_bigger);
                     viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_bigger_shape);
                 }
                 break;
-                case ObjAcci.TYPE_LARGE: {
+                case GlobleConstants.TYPE_LARGE: {
                     viewHolder.tv_type.setText(R.string.accident_type_large);
                     viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_large_shape);
                 }
@@ -442,13 +448,13 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
             }
             String repStatus = accidentInformation.getRepStat() == null ? "2" : accidentInformation.getRepStat();
             type = Integer.valueOf(repStatus);
-            // 1 已上报 2 未上报
+            // 0 未上报  1 2 已上报  3 非快报事故
             switch (type) {
-                case 0:
-                case ObjAcci.REPORT_QUICK:
+                case GlobleConstants.reportAcci_0:
                     viewHolder.btn_report.setText("快报");
                     break;
-                case ObjAcci.REPORT_AFTER:
+                case GlobleConstants.reportAcci_1:
+                case GlobleConstants.reportAcci_2:
                     viewHolder.btn_report.setText("补报");
                     break;
             }

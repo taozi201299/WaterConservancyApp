@@ -154,18 +154,18 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
             item = (MvEngColl) bundle.getSerializable("engColls");
             initViewData();
             switch (type) {
-                case ObjAcci.REPORT_AFTER:
-                case ObjAcci.REPORT_QUICK:
-                case 0:
+                case GlobleConstants.reportAcci_0:
+                case GlobleConstants.reportAcci_1:
+                case GlobleConstants.reportAcci_2:
                     objAcci = (ObjAcci) bundle.getSerializable(SEND_BUNDLE_KEY);
                     if(objAcci == null){
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                         finish();
                         return;
                     }
-                    if(objAcci.REPORT_QUICK == type || 0 == type){
+                    if( GlobleConstants.reportAcci_0 == type){
                         strTitleName = "事故快报";
-                    }else if(objAcci.REPORT_AFTER == type){
+                    }else if(GlobleConstants.reportAcci_1 == type || GlobleConstants.reportAcci_2 == type){
                         strTitleName = "事故补报";
                     }
                     ce_accident_unit.setText(objAcci.getAccidentUnitName());
@@ -196,7 +196,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                         ev_type.setCurrentDetailText(getAcciTypeName(objAcci.getAcciCate()));
                     }
                     break;
-                case ObjAcci.NEW_ACCI:
+                case GlobleConstants.NEW_ACCI:
                     ce_accident_name.setText(item.getName());
                     break;
                 default:
@@ -289,22 +289,22 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
         params.put("ifRespAcci",rg_accident_liability.getCheckedRadioButtonId() == R.id.rb_accident_liability_yes ?"1":"0");
         params.put("ifPhoRep",rg_accident_phone_report.getCheckedRadioButtonId() == R.id.rb_accident_phone_report_yes?"1":"0");
         switch (this.type){
-            case ObjAcci.NEW_ACCI:
+            case GlobleConstants.NEW_ACCI:
                 params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 localStatus = 0;
-                params.put("repStat", "0");
+                params.put("repStat", String.valueOf(GlobleConstants.reportAcci_0));
                 localCacheEntity.commitType = 0;
                 break;
-            case ObjAcci.REPORT_AFTER:
+            case GlobleConstants.reportAcci_1:
+            case GlobleConstants.reportAcci_2:
                 params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-                params.put("repStat", "1");
+                params.put("repStat", String.valueOf(GlobleConstants.reportAcci_1));
                 params.put("pGuid",objAcci.getId());
                 url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
                 localStatus = 1;
                 localCacheEntity.commitType = 0;
                 break;
-            case ObjAcci.REPORT_QUICK:
-            case 0:
+            case GlobleConstants.reportAcci_0:
                 url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/fastReport";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
@@ -314,7 +314,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
                 params.put("offiTel","");
                 params.put("updTime","");
                 params.put("guid",objAcci.getId());
-                params.put("repStat", "1");
+                params.put("repStat", String.valueOf(GlobleConstants.reportAcci_1));
                 break;
         }
         localCacheEntity.url = url;
