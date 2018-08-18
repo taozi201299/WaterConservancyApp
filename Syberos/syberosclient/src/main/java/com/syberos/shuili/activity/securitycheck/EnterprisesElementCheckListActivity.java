@@ -53,6 +53,8 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
 
     @Override
@@ -67,6 +69,8 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
     }
 
     /**
@@ -108,6 +112,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiunDeco.dataSource.size();
         for (int i = 0; i < count; i++) {
+            if(iFailedCount > 0)break;
             BisSeWiunDeco item = bisSeWiunDeco.dataSource.get(i);
             params.put("guid", item.getSeWiunGuid());
             final int finalI = i;
@@ -117,18 +122,21 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
                     Gson gson = new Gson();
                     bisSeWiun = gson.fromJson(result, BisSeWiun.class);
                     if (bisSeWiun == null || bisSeWiun.dataSource == null || bisSeWiun.dataSource.size() == 0) {
+                        iFailedCount ++;
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
+                    iSucessCount ++;
                     bisSeWiuns.add(bisSeWiun.dataSource.get(0));
-                    if (finalI == count - 1) {
+                    if (iSucessCount == count) {
                         getSeElementInfo();
                     }
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }
@@ -143,22 +151,25 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
         String url = strIP +"/sjjk/v1/obj/objSes/";
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiuns.size();
+        iSucessCount = 0;
+        iFailedCount = 0;
         for (int i = 0; i < count; i++) {
             BisSeWiun item = bisSeWiuns.get(i);
             params.put("guid", item.getSeGuid());
-            final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     Gson gson = new Gson();
                     objSe = gson.fromJson(result, ObjSe.class);
                     if (objSe == null || objSe.dataSource == null || objSe.dataSource.size() == 0) {
+                        iFailedCount ++;
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
                     objSes.add(objSe.dataSource.get(0));
-                    if (finalI == count - 1) {
+                    iSucessCount ++;
+                    if (iSucessCount == count) {
                         closeDataDialog();
                         paraseResult();
                         refreshUI();
@@ -167,6 +178,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }

@@ -312,7 +312,9 @@ public class LoginActivity extends TranslucentActivity {
          * 5 大中型在建工程监理单位 CJJL
          */
         for (RoleBaseInfo roleInfo : roleList) {
-            if ("CJYJ".equalsIgnoreCase(roleInfo.getScode()) || "CJFR".equalsIgnoreCase(roleInfo.getScode()) || "CJFW".equalsIgnoreCase(roleInfo.getScode()) || "CJSG".equalsIgnoreCase(roleInfo.getScode()) || "CJJL".equalsIgnoreCase(roleInfo.getScode())) {
+            if (GlobleConstants.CJYJ.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.CJFR.equalsIgnoreCase(roleInfo.getScode())
+                    || GlobleConstants.CJFW.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.CJSG.equalsIgnoreCase(roleInfo.getScode())
+                    || GlobleConstants.CJJL.equalsIgnoreCase(roleInfo.getScode())) {
                 App.sCode = roleInfo.getScode();
                 bRet = true;
                 break;
@@ -353,7 +355,7 @@ public class LoginActivity extends TranslucentActivity {
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
         SPUtils.put("pwd",userExtendInfo.getPassword());
-        App.setLastUserAccount(userExtendInfo.getUserName());
+        App.setLastUserAccount(userExtendInfo.getUserCode());
 
         return userExtendInfo;
 

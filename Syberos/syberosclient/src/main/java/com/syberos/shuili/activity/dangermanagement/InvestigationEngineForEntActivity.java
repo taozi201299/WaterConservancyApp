@@ -212,7 +212,8 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         xRefreshView.stopRefresh(false);
     }
     private boolean hasTend(){
-        if("CJFR".equalsIgnoreCase(App.sCode) || "CJSG".equalsIgnoreCase(App.sCode) || "CJJL".equalsIgnoreCase(App.sCode)) {
+        if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)
+                || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode)) {
             return true;
         }
         return false;

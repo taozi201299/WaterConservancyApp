@@ -44,7 +44,7 @@ public class HazSearchListForEntActivity extends BaseActivity
 
     @BindView(R.id.recyclerView_record_review)
     RecyclerView recyclerView;
-    HazSearchListForEntActivity.DangerousListAdapter listAdapter;
+    DangerousListAdapter listAdapter;
     ObjHaz inspectionList  = null;
     private DicInfo hazsGrade = null;
     private int iSucessCount = 0;

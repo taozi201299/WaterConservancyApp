@@ -50,6 +50,7 @@ import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PopupButton.ImportMenuView;
 import com.syberos.shuili.view.PopupButton.RippleLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -158,7 +159,26 @@ public class WorkFragmentEnterprises extends BaseFragment {
         moduleChildHiddenDangerNames = getResources().getStringArray(R.array.module_child_enterprise_yinhuan);
         moduleChildAccidentNames = getResources().getStringArray(R.array.module_child_enterprise_shigu);
         moduleChildDangerName = getResources().getStringArray(R.array.module_child_enterprise_weixianyuan);
+
+        ArrayList<String>moduleNameList = new ArrayList<>();
+        /**
+         * 监理和施工没有事故模块
+         */
+        if(GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) ||GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)){
+            int index = moduleNames.length;
+            for(int i = 0 ; i < index ; i++){
+                if(getResources().getString(R.string.module_shigu).equals(moduleNames[i])){
+                    continue;
+                }else{
+                    moduleNameList.add(moduleNames[i]);
+                }
+            }
+            moduleNames = new String[moduleNameList.size()];
+            moduleNameList.toArray(moduleNames);
+        }
+
         int moduleCount = moduleNames.length;
+
         for (int i = 0; i < moduleCount; i++) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.view_module_item, null);
             moduleViewHolder = new ModuleViewHolder(mContext, view, null);
@@ -173,25 +193,17 @@ public class WorkFragmentEnterprises extends BaseFragment {
             if (childNames == null) return;
             int size = childNames.length;
             for (int j = 0; j < size; j++) {
-                if (childNames[j].equals(getResources().getString(R.string.module_child_yinhuan_chaxun))) {
+                if (childNames[j].equalsIgnoreCase(getResources().getString(R.string.module_child_yinhuan_chaxun))) {
                     continue;
-                }
-                /**
-                 * 监理和施工没有事故模块
-                 */
-                if(GlobleConstants.CJJL.equals(App.sCode) ||GlobleConstants.CJSG.equals(App.sCode)){
-                    if(childNames[j].equals(getResources().getString(R.string.module_shigu))){
-                        continue;
-                    }
                 }
                 /**
                  * 技术服务 施工 监理单位 只有现场检查模块，项目法人和水利工程管理单位有元素检查
                  */
-                if("CJFW".equalsIgnoreCase(App.sCode) || "CJSG".equalsIgnoreCase(App.sCode) ||"CJJL".equalsIgnoreCase(App.sCode)){
+                if(GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) ||GlobleConstants.CJJL.equalsIgnoreCase(App.sCode)){
                     if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_jianchayuansu))){
                         continue;
                     }
-                }else if("CJYJ".equalsIgnoreCase(App.sCode)|| "CJFR".equalsIgnoreCase(App.sCode)){
+                }else if(GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)|| GlobleConstants.CJFR.equalsIgnoreCase(App.sCode)){
                     if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_xianchangjiancha))){
                         continue;
                     }
