@@ -56,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private IDialogInterface iDialogInterface ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setInitActionBar(false);
         super.onCreate(savedInstanceState);
         if (allowFullScreen) {
             requestWindowFeature(Window.FEATURE_NO_TITLE); // 取消标题
@@ -66,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
        // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         ButterKnife.bind(this);
-        setStatusBar();
+        setStatusBar(R.color.button_login_normal);
         initView();
         initListener();
         if (mInitActionBar) {
@@ -133,7 +134,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void setStatusBar() {
+    protected void setStatusBar(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -141,7 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             //根据上面设置是否对状态栏单独设置颜色
             if (useThemestatusBarColor) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.button_login_normal));
+                getWindow().setStatusBarColor(getResources().getColor(color));
             } else {
                 getWindow().setStatusBarColor(Color.TRANSPARENT);
             }

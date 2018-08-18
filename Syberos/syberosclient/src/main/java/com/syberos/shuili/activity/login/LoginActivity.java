@@ -27,6 +27,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.MainActivity;
 import com.syberos.shuili.MainEnterpriseActivity;
 import com.syberos.shuili.R;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
 import com.syberos.shuili.utils.SPUtils;
@@ -65,7 +66,7 @@ import static com.syberos.shuili.utils.CommonUtils.encrypt;
  * 3 同步通讯录
  */
 
-public class LoginActivity extends TranslucentActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -132,6 +133,7 @@ public class LoginActivity extends TranslucentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setInitActionBar(false);
         super.onCreate(savedInstanceState);
         SyberosManagerImpl.init(this);
         SyberosAidlClient.init(this);
@@ -194,6 +196,7 @@ public class LoginActivity extends TranslucentActivity {
 
     @Override
     public void initView() {
+        setStatusBar(R.color.white);
 
         // 初始化密码显示设置
         updatePasswordUI(Singleton.INSTANCE.isShowPassword);
@@ -202,6 +205,7 @@ public class LoginActivity extends TranslucentActivity {
         popup = new LoginRecordSelectPopup(LoginActivity.this);
 
         loginRecordInfoBaseAdapter = new LoginRecordInfoAdapter();
+
     }
 
     public void doClick(View view) {
