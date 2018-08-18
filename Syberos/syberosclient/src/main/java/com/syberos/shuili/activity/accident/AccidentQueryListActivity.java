@@ -444,6 +444,10 @@ public class AccidentQueryListActivity extends BaseActivity {
                             R.drawable.btn_accident_type_large_shape);
                 }
                 break;
+                default:
+                    holder.setText(R.id.tv_type,R.string.accident_type_normal);
+                    holder.setBackgroundRes(R.id.ll_type,
+                            R.drawable.btn_accident_type_normal_shape);
             }
 
             holder.setText(R.id.tv_title, item.getDcItemName());

@@ -445,6 +445,10 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_large_shape);
                 }
                 break;
+                default:
+                    viewHolder.tv_type.setText(R.string.accident_type_normal);
+                    viewHolder.ll_type.setBackgroundResource(R.drawable.btn_accident_type_normal_shape);
+                    break;
             }
             String repStatus = accidentInformation.getRepStat() == null ? "2" : accidentInformation.getRepStat();
             type = Integer.valueOf(repStatus);

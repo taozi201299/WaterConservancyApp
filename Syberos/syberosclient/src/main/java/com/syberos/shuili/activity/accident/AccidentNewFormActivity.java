@@ -285,7 +285,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
         params.put("acciSitu", aev_accident_description.getEditText()); // 事故简要情况
         params.put("note", "移动端接口测试");
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("acciGrad", String.valueOf(ll_enum_level.getCurrentIndex()));
+        params.put("acciGrad", String.valueOf(ll_enum_level.getCurrentIndex()+1));
         params.put("ifRespAcci",rg_accident_liability.getCheckedRadioButtonId() == R.id.rb_accident_liability_yes ?"1":"0");
         params.put("ifPhoRep",rg_accident_phone_report.getCheckedRadioButtonId() == R.id.rb_accident_phone_report_yes?"1":"0");
         switch (this.type){
