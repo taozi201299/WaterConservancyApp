@@ -40,6 +40,7 @@ import com.syberos.shuili.fragment.SecurityCloudFragment;
 import com.syberos.shuili.fragment.WorkFragment;
 import com.syberos.shuili.listener.OpenDrawerListener;
 import com.syberos.shuili.service.update.UpdateManager;
+import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.Singleton;
@@ -353,6 +354,10 @@ public class MainActivity extends TranslucentActivity
             @Override
             public void onClick(View v) {
                 SyberosManagerImpl.getInstance().clearCache();
+                App.userType = "-1";
+                SPUtils.put(GlobleConstants.Pwd,"");
+                LoginUtil.setLastUserAccount("");
+                LoginUtil.clearCache();
                 customDialog.dismiss();
             }
         });
@@ -361,7 +366,11 @@ public class MainActivity extends TranslucentActivity
     private void logout(final boolean bExist){
         final CustomDialog customDialog = new CustomDialog(this);
         customDialog.setDialogMessage("登录管理", null, null);
-        customDialog.setMessage("确认要退出登录吗？");
+        if(bExist) {
+            customDialog.setMessage("确认要退出登录吗？");
+        }else {
+            customDialog.setMessage("确认要退出应用吗？");
+        }
         customDialog.setOnConfirmClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -369,7 +378,7 @@ public class MainActivity extends TranslucentActivity
                 ScreenManager.getScreenManager().popAll();
                 if(bExist){
                     App.userType = "-1";
-                    SPUtils.put("pwd","");
+                    SPUtils.put(GlobleConstants.Pwd,"");
                     intentActivity(MainActivity.this, LoginActivity.class,
                             true, true);
                 }

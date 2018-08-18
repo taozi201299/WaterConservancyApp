@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         // TODO: 2018/4/16 在本地修改此处，此处设计到用户的初始化
         String type = App.userType;
         if("-1".equals(type)){
-            if(!SPUtils.get("pwd","").toString().isEmpty()) {
+            if(!SPUtils.get(GlobleConstants.Pwd,"").toString().isEmpty()) {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }else {
                 go2MessageActivity();

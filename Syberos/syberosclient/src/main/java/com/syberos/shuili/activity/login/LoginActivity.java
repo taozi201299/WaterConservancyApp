@@ -30,11 +30,11 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
+import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
-import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.fragment.GateWayFragment;
 import com.syberos.shuili.fragment.LoginEnvironmentVerifyEnterFragment;
@@ -52,8 +52,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 
@@ -137,7 +135,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SyberosManagerImpl.init(this);
         SyberosAidlClient.init(this);
-        if(!SPUtils.get("pwd","").toString().isEmpty()) {
+        if(!SPUtils.get(GlobleConstants.Pwd,"").toString().isEmpty()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -146,8 +144,8 @@ public class LoginActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                accountEdit.setText(App.getLastUserAccount());
-                                passwordEdit.setText(SPUtils.get("pwd","").toString());
+                                accountEdit.setText(LoginUtil.getLastUserAccount());
+                                passwordEdit.setText(SPUtils.get(GlobleConstants.Pwd,"").toString());
                                 login(true);
                             }
                         });
@@ -358,8 +356,8 @@ public class LoginActivity extends BaseActivity {
         UserExtendInfo userExtendInfo = setUserExtendInfo(info);
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
-        SPUtils.put("pwd",userExtendInfo.getPassword());
-        App.setLastUserAccount(userExtendInfo.getUserCode());
+        SPUtils.put(GlobleConstants.Pwd,userExtendInfo.getPassword());
+        LoginUtil.setLastUserAccount(userExtendInfo.getUserCode());
 
         return userExtendInfo;
 
@@ -426,7 +424,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void syncAddressList() {
-        String lastUser = App.getLastUserAccount();
+        String lastUser = LoginUtil.getLastUserAccount();
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         if (!lastUser.equals(userId)) {
@@ -591,7 +589,7 @@ public class LoginActivity extends BaseActivity {
 
         // 加载账号信息
         if (accountLogin) {
-            loginRecordsList = App.getLoginAccounts();
+            loginRecordsList = LoginUtil.getLoginAccounts();
             if (null != loginRecordsList) {
                 if (loginRecordsList.size() > 1) {
                     iv_accountMore.setVisibility(View.VISIBLE);
@@ -607,7 +605,7 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         } else {
-            loginRecordsList = App.getLoginPhones();
+            loginRecordsList = LoginUtil.getLoginPhones();
             if (null != loginRecordsList) {
                 if (loginRecordsList.size() > 1) {
                     iv_phoneNumberMore.setVisibility(View.VISIBLE);
@@ -663,11 +661,11 @@ public class LoginActivity extends BaseActivity {
 
     private boolean verifyLoginInfo() {
         if (Singleton.INSTANCE.isAccountLogin) {
-            App.recordLoginAccount(accountEdit.getText().toString());
+            LoginUtil.recordLoginAccount(accountEdit.getText().toString());
         } else {
             String phoneNum = phoneNumberEdit.getText().toString();
             if (Strings.isValidPhoneNum(phoneNum)) {
-                App.recordLoginPhone(phoneNum);
+                LoginUtil.recordLoginPhone(phoneNum);
             } else {
                 ToastUtils.show(getResources().getText(R.string.invalid_phone_number));
                 return false;

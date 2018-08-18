@@ -13,6 +13,7 @@ public class GlobleConstants {
      * for login
      */
     public static final String Login = "login";
+    public static  final String Pwd = "pwd";
     public static final String ALL_CHINA = "001111";
     public static final String ALL_PROVINCE = "001110";
     public static final String ALL_COUNTER = "001100";
