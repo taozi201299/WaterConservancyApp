@@ -78,6 +78,9 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
    public static final String DIC_UNIT_KEY = "dicUnitKey";
    public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
 
+   private int iSucessCount = 0;
+   private int iFailedCount = 0;
+
 
 
 
@@ -95,6 +98,8 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
     public void initData() {
         datas.clear();
         reportInfos.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getAccidentUnitType();
     }
@@ -248,7 +253,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
     private void parasAccidentInformation(){
         for(ObjAcci item : objAccis.dataSource){
             item.setAccidentUnitName(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
-            if(item.getPID() != null){
+            if(item.getPID() != null && !item.getPID().isEmpty()){
                 item.setRepStat("1");
                 reportInfos.add(item);
             }
@@ -261,6 +266,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         String url =  GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : objAccis.dataSource){
+            if(iFailedCount > 0)break;
             params.put("guid",item.getAcciWindGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -269,8 +275,9 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
                     orgInfo = gson.fromJson(result,OrgInfo.class);
                     if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
                         item.setAccidentUnitName(orgInfo.dataSource.get(0).getOrgName());
+                        iSucessCount ++;
                     }
-                    if(objAccis.dataSource.indexOf(item) == objAccis.dataSource.size() - 1) {
+                    if(iSucessCount  == objAccis.dataSource.size() ) {
                         closeDataDialog();
 
                     }
@@ -278,6 +285,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
 

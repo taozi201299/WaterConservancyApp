@@ -154,7 +154,7 @@ public class AccidentQueryListActivity extends BaseActivity {
     private void getAccidentList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
-        param.put("acciWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        param.put("acciWinuGuid","13B9B5C0FA6C425891A7F8DECF86A24A");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -179,7 +179,7 @@ public class AccidentQueryListActivity extends BaseActivity {
     }
     private void parasAccidentInformation(){
         for(ObjAcci item : accidentInformation.dataSource){
-            if(item.getPID() != null){
+            if(item.getPID() != null && !item.getPID().isEmpty()){
                 item.setRepStat("1");
                 reportInfos.add(item);
             }

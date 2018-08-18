@@ -38,7 +38,6 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by jidan on 18-5-22.
- * 行政版 下级单位的事故快报查询
  */
 
 public class AccidentListActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
@@ -80,6 +79,9 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
     public static final String DIC_UNIT_KEY = "dicUnitKey";
     public static final String DIC_ACCIDENT_KEY = "dicAccidentKey";
 
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
+
 
 
 
@@ -97,6 +99,8 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
     public void initData() {
         datas.clear();
         reportInfos.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getAccidentUnitType();
     }
@@ -107,13 +111,13 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);
         ll_commit.setVisibility(View.GONE);
-        accidentListAdapter =  new AccidentListAdapter(this);
-        stickyListHeadersListView.setAdapter(accidentListAdapter);
         RelativeLayout.LayoutParams layoutParams=new RelativeLayout
                 .LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        layoutParams.addRule(RelativeLayout.BELOW,R.id.layout_bar);
-        xRefreshView.setLayoutParams(layoutParams);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,R.id.layout_bar);
+
+        accidentListAdapter =  new AccidentListAdapter(this);
+        stickyListHeadersListView.setAdapter(accidentListAdapter);
         xRefreshView.setPullRefreshEnable(true);
         xRefreshView.setPullLoadEnable(false);
         xRefreshView.setMoveHeadWhenDisablePullRefresh(false);
@@ -218,6 +222,8 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
     private void getAccidentList(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
+       // param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        param.put("acciWinuGuid","13B9B5C0FA6C425891A7F8DECF86A24A");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -254,8 +260,8 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
     private void parasAccidentInformation(){
         for(ObjAcci item : objAccis.dataSource){
             item.setAccidentUnitName(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
-            if(item.getPID() != null){
-                item.setRepStat(String.valueOf(GlobleConstants.reportAcci_1));
+            if(item.getPID() != null && !item.getPID().isEmpty() ){
+                item.setRepStat("1");
                 reportInfos.add(item);
             }
         }
@@ -267,6 +273,7 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
         String url =  GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
         for(final ObjAcci item : objAccis.dataSource){
+            if(iFailedCount > 0)break;
             params.put("guid",item.getAcciWindGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -275,8 +282,9 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
                     orgInfo = gson.fromJson(result,OrgInfo.class);
                     if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
                         item.setAccidentUnitName(orgInfo.dataSource.get(0).getOrgName());
+                        iSucessCount ++;
                     }
-                    if(objAccis.dataSource.indexOf(item) == objAccis.dataSource.size() - 1) {
+                    if(iSucessCount  == objAccis.dataSource.size() ) {
                         closeDataDialog();
 
                     }
@@ -284,6 +292,7 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
 
@@ -328,9 +337,6 @@ public class AccidentListActivity extends BaseActivity implements View.OnClickLi
             if(item.getPID() != null && !item.getPID().isEmpty()){
                 datas.remove(item);
             }if(String.valueOf(GlobleConstants.reportAcci_3).equals(item.getRepStat())){
-                datas.remove(item);
-            }
-            if(String.valueOf(GlobleConstants.reportAcci_0).equalsIgnoreCase(item.getRepStat())){
                 datas.remove(item);
             }
         }

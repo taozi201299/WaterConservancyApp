@@ -357,7 +357,7 @@ public class LoginActivity extends BaseActivity {
         userExtendInfo.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
         SPUtils.put(GlobleConstants.Pwd,userExtendInfo.getPassword());
-        LoginUtil.setLastUserAccount(userExtendInfo.getUserCode());
+        LoginUtil.setLastUserAccount(accountEdit.getText().toString());
 
         return userExtendInfo;
 
