@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.shuili.callback.ErrorInfo;
@@ -22,8 +21,8 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentListAcitvity;
-import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
+import com.syberos.shuili.activity.accident.AccidentListForEntAcitvity;
+import com.syberos.shuili.activity.accident.AccidentQueryListForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepTaskForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForEnterpriseActivity;
@@ -34,7 +33,6 @@ import com.syberos.shuili.activity.reports.AccReportForEntActivity;
 import com.syberos.shuili.activity.reports.CheckReportForEntActivity;
 import com.syberos.shuili.activity.reports.HiddenReportForEntActivity;
 import com.syberos.shuili.activity.reports.WoasReportForEntActivity;
-import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.searchproject.ProjectInfoActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
@@ -45,7 +43,6 @@ import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.network.SoapUtils;
-import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PopupButton.ImportMenuView;
 import com.syberos.shuili.view.PopupButton.RippleLayout;
@@ -339,9 +336,9 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(getResources().getString(R.string.module_child_yinhuan_xiaohao))) {
                 intentActivity((Activity) mContext, InvestigationAccepTaskForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))) {
-                intentActivity((Activity) mContext, AccidentListAcitvity.class, false, true);
+                intentActivity((Activity) mContext, AccidentListForEntAcitvity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))) {
-                intentActivity((Activity) mContext, AccidentQueryListActivity.class, false, true);
+                intentActivity((Activity) mContext, AccidentQueryListForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_xuncha))) {
                 intentActivity((Activity) mContext, HazListForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_weiti))) {

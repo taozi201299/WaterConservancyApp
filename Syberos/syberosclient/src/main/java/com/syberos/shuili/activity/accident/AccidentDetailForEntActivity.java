@@ -16,7 +16,6 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -24,12 +23,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.SEND_BUNDLE_KEY;
 
 
-public class AccidentDetailActivity extends BaseActivity {
+public class AccidentDetailForEntActivity extends BaseActivity {
 
-    private final String TAG = AccidentDetailActivity.class.getSimpleName();
+    private final String TAG = AccidentDetailForEntActivity.class.getSimpleName();
     private final String Title = "快报事故详情";
     private ObjAcci accidentInformation = null;
 
@@ -149,7 +148,7 @@ public class AccidentDetailActivity extends BaseActivity {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(SEND_BUNDLE_KEY, item);
                             bundle.putSerializable("data",null);
-                            intentActivity(AccidentDetailActivity.this,AccidentDetailActivity.class
+                            intentActivity(AccidentDetailForEntActivity.this,AccidentDetailForEntActivity.class
                             ,false,bundle);
                         }
                     });

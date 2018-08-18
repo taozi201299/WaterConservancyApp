@@ -14,16 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentListAcitvity;
-import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
+import com.syberos.shuili.activity.accident.AccidentListForEntAcitvity;
+import com.syberos.shuili.activity.accident.AccidentQueryListForEntActivity;
 import com.syberos.shuili.activity.searchproject.ProjectInfoActivity;
 import com.syberos.shuili.activity.stan.DataReviewListActivity;
 import com.syberos.shuili.activity.stan.NoticeListActivity;
@@ -38,7 +36,6 @@ import com.syberos.shuili.activity.wins.InspectProjectSelectActivity;
 import com.syberos.shuili.activity.woas.InspectAssessListActivity;
 import com.syberos.shuili.activity.woas.SafetyProductionListActivity;
 import com.syberos.shuili.activity.wins.InspectQueryListActivity;
-import com.syberos.shuili.activity.wins.OnSiteInspectListActivity;
 import com.syberos.shuili.activity.suen.OnSiteLawEnforcementListActivity;
 import com.syberos.shuili.activity.suen.LawEnforcementQueryActivity;
 import com.syberos.shuili.activity.stan.FormalReviewListActivity;
@@ -47,7 +44,6 @@ import com.syberos.shuili.activity.reports.AcciReportActivity;
 import com.syberos.shuili.activity.reports.HiddenReportActivity;
 import com.syberos.shuili.activity.reports.WoasReportActivity;
 import com.syberos.shuili.activity.reports.CheckReportActivity;
-import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckQueryListActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity;
 import com.syberos.shuili.activity.securitycheck.SecurityHiddenTraceTaskActivity;
@@ -56,19 +52,14 @@ import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
-import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.network.SoapUtils;
-import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.SynchronousQueue;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.syberos.shuili.utils.CommonUtils.encrypt;
 
 /**
  * Created by jidan on 18-3-10.
@@ -354,9 +345,9 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext,InvestigationSuperviceTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
-                intentActivity((Activity)mContext,AccidentListAcitvity.class,false,true);
+                intentActivity((Activity)mContext,AccidentListForEntAcitvity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){
-                intentActivity((Activity)mContext,AccidentQueryListActivity.class,false,true);
+                intentActivity((Activity)mContext,AccidentQueryListForEntActivity.class,false,true);
             }
             else if(itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_beian))){
                 intentActivity((Activity)mContext,RecordReviewListActivity.class,false,true);

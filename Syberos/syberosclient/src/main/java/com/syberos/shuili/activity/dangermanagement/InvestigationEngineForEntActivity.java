@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -19,11 +17,10 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentNewFormActivity;
+import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHiddenActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
@@ -38,8 +35,8 @@ import butterknife.ButterKnife;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_ACCIDENT_KEY;
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_UNIT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_ACCIDENT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_UNIT_KEY;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
@@ -231,7 +228,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             bundle.putSerializable("engColls",item);
             bundle.putSerializable(DIC_UNIT_KEY,mBundle.getSerializable(DIC_UNIT_KEY));
             bundle.putSerializable(DIC_ACCIDENT_KEY,bundle.getSerializable(DIC_ACCIDENT_KEY));
-            intentActivity(InvestigationEngineForEntActivity.this, AccidentNewFormActivity.class,
+            intentActivity(InvestigationEngineForEntActivity.this, AccidentNewFormForEntActivity.class,
                     false, bundle);
             return;
         }

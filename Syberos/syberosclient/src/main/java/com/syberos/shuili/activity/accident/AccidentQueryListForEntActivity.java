@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -29,8 +27,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-public class AccidentQueryListActivity extends BaseActivity {
-    private final String TAG = AccidentQueryListActivity.class.getSimpleName();
+public class AccidentQueryListForEntActivity extends BaseActivity {
+    private final String TAG = AccidentQueryListForEntActivity.class.getSimpleName();
     /**
      * 事故单位类型
      */
@@ -314,8 +312,8 @@ public class AccidentQueryListActivity extends BaseActivity {
                         bundle.putSerializable(DICINFO_KEY,unitType);
 
                         bundle.putSerializable("data",reportInfos);
-                        intentActivity(AccidentQueryListActivity.this,
-                                AccidentDetailActivity.class,
+                        intentActivity(AccidentQueryListForEntActivity.this,
+                                AccidentDetailForEntActivity.class,
                                 false, bundle);
                     }
                 });

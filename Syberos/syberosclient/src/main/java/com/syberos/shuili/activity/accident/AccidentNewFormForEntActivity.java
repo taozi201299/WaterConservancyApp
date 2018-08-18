@@ -14,7 +14,6 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
@@ -40,13 +39,13 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.SEND_BUNDLE_KEY;
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_ACCIDENT_KEY;
-import static com.syberos.shuili.activity.accident.AccidentListAcitvity.DIC_UNIT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.SEND_BUNDLE_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_ACCIDENT_KEY;
+import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_UNIT_KEY;
 
-public class AccidentNewFormActivity extends BaseActivity implements BaseActivity.IDialogInterface {
+public class AccidentNewFormForEntActivity extends BaseActivity implements BaseActivity.IDialogInterface {
 
-    private final String TAG = AccidentNewFormActivity.class.getSimpleName();
+    private final String TAG = AccidentNewFormForEntActivity.class.getSimpleName();
 
     @BindView(R.id.ll_multimedia)
     MultimediaView ll_multimedia;
@@ -364,7 +363,7 @@ public class AccidentNewFormActivity extends BaseActivity implements BaseActivit
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK) {
             final CustomDialog customDialog = new CustomDialog(
-                    AccidentNewFormActivity.this);
+                    AccidentNewFormForEntActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
             customDialog.setMessage("当前新增事故内容未保存，确定退出？");

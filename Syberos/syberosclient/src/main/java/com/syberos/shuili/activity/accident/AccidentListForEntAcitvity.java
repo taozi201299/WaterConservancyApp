@@ -18,7 +18,6 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.App;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
@@ -40,9 +39,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by jidan on 18-5-22.
  */
 
-public class AccidentListAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class AccidentListForEntAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
-   private final String TAG = AccidentListAcitvity.class.getSimpleName();
+   private final String TAG = AccidentListForEntAcitvity.class.getSimpleName();
    private final String Title = "快报事故";
     /**
      * accident unit type
@@ -473,8 +472,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
                     bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
                     bundle.putInt("type", finalType);
-                    intentActivity(AccidentListAcitvity.this,
-                            AccidentNewFormActivity.class,
+                    intentActivity(AccidentListForEntAcitvity.this,
+                            AccidentNewFormForEntActivity.class,
                             false, bundle);
                 }
             });
@@ -486,8 +485,8 @@ public class AccidentListAcitvity extends BaseActivity implements View.OnClickLi
                     ObjAcci item = tasks.get(position);
                     bundle.putSerializable(SEND_BUNDLE_KEY, item);
                     bundle.putSerializable("data",reportInfos);
-                    intentActivity(AccidentListAcitvity.this,
-                            AccidentDetailActivity.class,
+                    intentActivity(AccidentListForEntAcitvity.this,
+                            AccidentDetailForEntActivity.class,
                             false, bundle);
                 }
             });
