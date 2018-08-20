@@ -110,7 +110,7 @@ public class NotificationDetailActivity extends BaseActivity {
         noticeIds.add(noticeInfo.getGuid());
         String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = "4444444444446774444";
+        formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
         formInfo.all = false;
         formInfo.list = noticeIds;
         Gson gson = new Gson();

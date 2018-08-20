@@ -151,7 +151,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         showDataLoadingDialog();
         String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = "4444444444446774444";
+        formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
         if(type == DeleteType.DELETE_ALL)
         formInfo.all = true;
         else formInfo.all = false;
@@ -176,8 +176,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
     private void getNotices(){
         String url = strCJIP+"/pprty/WSRest/service/notice/pagelist";
         HashMap<String,String> params = new HashMap<>();
-      //  params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("userGuid","4444444444446774444");
+        params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
