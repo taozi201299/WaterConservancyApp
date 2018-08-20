@@ -45,27 +45,52 @@ public abstract class BaseLazyFragment extends Fragment {
         mContext = context;
     }
 
+    public static int getStatus1() {
+        return status1;
+    }
+
+    public void setStatus1(int status1) {
+        this.status1 = status1;
+    }
+
+    public int getStatus2() {
+        return status2;
+    }
+
+    public void setStatus2(int status2) {
+        this.status2 = status2;
+    }
+
+   static int status1;
+    static int status2;
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         LogUtils.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         layoutInflater = LayoutInflater.from(mContext);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LogUtils.i(TAG, "onCreateView");
         View view = layoutInflater.inflate(getLayoutID(), null);
         this.view = view;
+        setStatus1(1);
         unbinder = ButterKnife.bind(this, view);
 
         initView();
-        initListener();
+
         if (getUserVisibleHint()) {
             hasStarted = true;
         }
         if (hasStarted && !isPrepared) {
             initData();
         }
+
+        initListener();
         isPrepared = true;
         return view;
     }
@@ -73,7 +98,6 @@ public abstract class BaseLazyFragment extends Fragment {
     protected abstract int getLayoutID();
 
     /**
-     *
      * 设置监听事件
      */
     protected abstract void initListener();

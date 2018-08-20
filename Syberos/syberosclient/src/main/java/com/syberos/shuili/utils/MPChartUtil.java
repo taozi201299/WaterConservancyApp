@@ -35,8 +35,9 @@ public class MPChartUtil {
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(context.getResources().getColor(R.color.pie_chart_color_level_one));
         colors.add(context.getResources().getColor(R.color.pie_chart_color_level_two));
-//        colors.add(getResources().getColor(R.color.pie_chart_color_level_three));
-//        colors.add(getResources().getColor(R.color.pie_chart_color_level_four));
+        colors.add(context.getResources().getColor(R.color.pie_chart_color_level_three));
+        colors.add(context.getResources().getColor(R.color.pie_chart_color_level_four));
+        colors.add(context.getResources().getColor(R.color.pie_chart_color_level_five));
         dataSet.setColors(colors);
         // 获取pieCahrt图列
 

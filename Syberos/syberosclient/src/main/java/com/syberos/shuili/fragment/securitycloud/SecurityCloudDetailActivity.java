@@ -1,21 +1,14 @@
 package com.syberos.shuili.fragment.securitycloud;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.syberos.shuili.R;
-import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.base.BaseFragmentActivity;
 
 import butterknife.BindView;
-
-import static okhttp3.internal.Internal.instance;
 
 /**
  * Created by BZB on 2018/8/1.

@@ -1,5 +1,6 @@
 package com.syberos.shuili.activity.thematic;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageButton;
@@ -11,6 +12,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHiddenFragment;
@@ -121,6 +123,9 @@ public class ThematicDetailActivity extends BActivity {
             case Suen:
 //                todo 安监执法
                 tvTitle.setText("安监执法");
+                Bundle bundle=new Bundle();
+                bundle.putInt("statusKey", SuenChartFragment.getStatus1());
+                fragments[7].setArguments(bundle);
                 switchFragment(fragments[7]);
                 break;
             default:

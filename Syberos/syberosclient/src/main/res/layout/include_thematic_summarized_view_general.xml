@@ -173,10 +173,23 @@
         app:layout_constraintRight_toLeftOf="@id/ll_data_2"
         app:layout_constraintTop_toBottomOf="@+id/pie_chart_hidden_summarized">
 
-        <TextView
-            android:id="@+id/tv_data_1"
-            style="@style/TextStyle_Value_Big"
-            android:text="0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_data_1"
+                style="@style/TextStyle_Value_Big"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/tv_data_unit_1"
+
+                style="@style/Style_Unit" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_data_title_1"
@@ -193,10 +206,23 @@
         app:layout_constraintLeft_toRightOf="@id/ll_data_1"
         app:layout_constraintRight_toLeftOf="@id/ll_data_3">
 
-        <TextView
-            android:id="@+id/tv_data_2"
-            style="@style/TextStyle_Value_Big"
-            android:text="0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_data_2"
+                style="@style/TextStyle_Value_Big"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/tv_data_unit_2"
+
+                style="@style/Style_Unit" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_data_title_2"
@@ -213,10 +239,23 @@
         app:layout_constraintLeft_toRightOf="@id/ll_data_2"
         app:layout_constraintRight_toLeftOf="@id/ll_data_4">
 
-        <TextView
-            android:id="@+id/tv_data_3"
-            style="@style/TextStyle_Value_Big"
-            android:text="0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_data_3"
+                style="@style/TextStyle_Value_Big"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/tv_data_unit_3"
+
+                style="@style/Style_Unit" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_data_title_3"
@@ -233,10 +272,23 @@
         app:layout_constraintLeft_toRightOf="@id/ll_data_3"
         app:layout_constraintRight_toRightOf="parent">
 
-        <TextView
-            android:id="@+id/tv_data_4"
-            style="@style/TextStyle_Value_Big"
-            android:text="0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_data_4"
+                style="@style/TextStyle_Value_Big"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/tv_data_unit_4"
+
+                style="@style/Style_Unit" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_data_title_4"

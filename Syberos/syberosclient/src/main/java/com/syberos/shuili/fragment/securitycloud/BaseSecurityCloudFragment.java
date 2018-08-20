@@ -199,7 +199,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     private YAxis yAxisLeft;         //Y坐标轴
     private LineChart lineChart;
 
-    @SuppressLint("ValidFragment")
+    public BaseSecurityCloudFragment() {
+    }
+
     public BaseSecurityCloudFragment(@Nullable String strJsonData, String type) {
 
         this.strJsonData = strJsonData;

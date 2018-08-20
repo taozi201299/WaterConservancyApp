@@ -18,7 +18,8 @@ public class RecyclerAdapterGeneral extends BaseRecyclerAdapter<RecyclerAdapterG
     private OnItemClickListener listener;
     List<ProjectEntry> list;
     HiddenViewHold holder;
-    String unit="分";
+    String unit = "分";
+
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
@@ -26,11 +27,15 @@ public class RecyclerAdapterGeneral extends BaseRecyclerAdapter<RecyclerAdapterG
     public RecyclerAdapterGeneral(List<ProjectEntry> list) {
         this.list = list;
     }
-    public RecyclerAdapterGeneral(List<ProjectEntry> list,String unit) {
-        this.list = list;
-        this.unit=unit;
-    }
 
+    public RecyclerAdapterGeneral(List<ProjectEntry> list, String unit) {
+        this.list = list;
+        this.unit = unit;
+    }
+    public void setData(List<ProjectEntry> list){
+        this.list=list;
+        notifyDataSetChanged();
+    }
     @Override
     public HiddenViewHold getViewHolder(View view) {
         return holder;
@@ -50,36 +55,29 @@ public class RecyclerAdapterGeneral extends BaseRecyclerAdapter<RecyclerAdapterG
         holder.tvNum.setText(position + "");
         holder.tvScore.setText(list.get(position).getProTroubleCount() + "");
         holder.tvUnit.setText(unit);
-        if(holder.itemView!=null){
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+        if (listener != null) {
+            holder.tvScore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(view, position);
                 }
             });
+
+            holder.tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(view, position);
+                }
+            });
+
+            holder.tvNum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(view, position);
+                }
+            });
+
         }
-        holder.tvScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view, position);
-            }
-        });
-
-        holder.tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view, position);
-            }
-        });
-
-        holder.tvNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view, position);
-            }
-        });
-
-
     }
 
     @Override

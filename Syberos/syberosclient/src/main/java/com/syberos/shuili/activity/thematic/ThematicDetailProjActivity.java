@@ -8,14 +8,11 @@ import android.widget.TextView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
-import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailAcciProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailHazProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailHiddenProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailSinsProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailStanProjFragment;
-import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailSuenProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailWinsProjFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.ThematicDetailWoasProjFragment;
 
@@ -30,7 +27,6 @@ import static com.syberos.shuili.fragment.HematicMapFragment.Stan;
 import static com.syberos.shuili.fragment.HematicMapFragment.Suen;
 import static com.syberos.shuili.fragment.HematicMapFragment.Wins;
 import static com.syberos.shuili.fragment.HematicMapFragment.Woas;
-import static com.syberos.shuili.fragment.HematicMapFragment.tabTitle;
 
 
 /**
@@ -68,13 +64,13 @@ public class ThematicDetailProjActivity extends BActivity {
     //    水利稽查
     ThematicDetailWinsProjFragment thematicDetailWinsFragment = new ThematicDetailWinsProjFragment();
     //    安检执法
-    ThematicDetailSuenProjFragment thematicDetailSuenFragment = new ThematicDetailSuenProjFragment();
+//    ThematicDetailSuenProjFragment thematicDetailSuenFragment = new ThematicDetailSuenProjFragment();
 
 
     BaseLazyFragment[] fragments = {thematicDetailHiddenFragment, thematicDetailAcciFragment,
             thematicDetailHazFragment,thematicDetailStanFragment,
             thematicDetailSinsFragment,thematicDetailWoasFragment,
-            thematicDetailWinsFragment,thematicDetailSuenFragment};
+            thematicDetailWinsFragment};
 
     @Override
     public void initData() {
@@ -114,11 +110,6 @@ public class ThematicDetailProjActivity extends BActivity {
 //                todo 水利稽察
                 tvTitle.setText("水利稽察");
                 switchFragment(fragments[6]);
-                break;
-            case Suen:
-//                todo 安监执法
-                tvTitle.setText("安监执法");
-                switchFragment(fragments[7]);
                 break;
             default:
                 switchFragment(fragments[3]);

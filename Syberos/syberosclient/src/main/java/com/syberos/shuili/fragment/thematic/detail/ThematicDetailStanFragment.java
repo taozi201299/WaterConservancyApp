@@ -129,7 +129,9 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
     protected void initData() {
 
         tvData1.setText(13 + "");
+        tvDataTitle1.setText("达标企业数量");
         tvData2.setText(42 + "");
+        tvDataTitle2.setText("开展标准化数");
         List<PieEntry> dataList = new ArrayList<>();
         dataList.add(new PieEntry(18, "一般标准化数量 " + 18));
         dataList.add(new PieEntry(6, "重大标准化数量 " + 6));

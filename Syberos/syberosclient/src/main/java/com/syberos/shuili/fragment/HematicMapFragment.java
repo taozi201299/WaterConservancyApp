@@ -85,7 +85,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     private String strCityName = "";
     MapBoundBean mapBoundBean = null;
 
-//    @OnClick(R.id.tv_action_bar_title)  点击 标题（地区名） 选择地区 —— 不需要该功能了
+    //    @OnClick(R.id.tv_action_bar_title)  点击 标题（地区名） 选择地区 —— 不需要该功能了
     public void titleOnClick() {
         ProvinceDialog provinceDialog = new ProvinceDialog(mContext, new ProvinceCall() {
             @Override
@@ -106,8 +106,10 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     void showCharView() {
 //
         int currentItem = vp_content.getCurrentItem();
-        Intent intent=new Intent(getActivity(), ThematicDetailActivity.class);
-        intent.putExtra("typeValue",tabTitle[currentItem]);
+        Intent intent = new Intent(getActivity(), ThematicDetailActivity.class);
+        intent.putExtra("typeValue", tabTitle[currentItem]);
+        intent.putExtra("ownerType", ((BaseLazyFragment) (fragments.get(currentItem))).getStatus1());
+        intent.putExtra("dutyType", ((BaseLazyFragment) (fragments.get(currentItem))).getStatus2());
 //        intent.putExtra("ownerType",);
         startActivity(intent);
     }
@@ -200,19 +202,19 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             params.put("type", "PROVINCE");
         } else if ("4".equals(App.jurdAreaType.equals("4"))) {
             params.put("type", "XZBAS");
-        }else {
+        } else {
             ToastUtils.show("机构管辖范围类型错误");
-            params.put("type","PROVINCE");
+            params.put("type", "PROVINCE");
         }
         params.put("type", "XZBAS");
-        code = code.substring(0,6);
-        params.put("guid",code);
+        code = code.substring(0, 6);
+        params.put("guid", code);
         params.put("name", "");
         params.put("targetId", "search.GetBoundsAndCenterXYLogic");
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                if(!result.isEmpty()) {
+                if (!result.isEmpty()) {
                     Gson gson = new Gson();
                     mapBoundBean = gson.fromJson(result, MapBoundBean.class);
                     if (mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0) {
@@ -221,7 +223,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                         tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
                         setMapData();
                     }
-                }else {
+                } else {
                     ToastUtils.show("getCenterXY 内容为空");
                 }
 
@@ -235,13 +237,13 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     }
 
     private void getCityName() {
-        String url = GlobleConstants.mapServer +"/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
+        String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService?targetId=search.GetXzqhByPointLogic&point=" + "" + ',' + "" + "";
         HashMap<String, String> params = new HashMap<>();
         HttpUtils.getInstance().requestGet(url, params, url, new RequestCallback<String>() {
 
             @Override
             public void onResponse(String result) {
-                if(result.isEmpty()) {
+                if (result.isEmpty()) {
                     CityInfoBean cityInfoBean = new CityInfoBean();
                     Gson gson = new Gson();
                     cityInfoBean = gson.fromJson(result, CityInfoBean.class);
@@ -254,7 +256,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                             }
                         }
                     }
-                }else {
+                } else {
                     ToastUtils.show("getCityName 为空");
                 }
 
@@ -272,20 +274,20 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         for (Fragment item : fragments) {
             if (item instanceof HiddenChartFragment) {
                 ((HiddenChartFragment) item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  AccidentChartFragment){
-                ((AccidentChartFragment)item).setMapData(mapBoundBean.result.get(0));
-            }else if (item instanceof  DanagerSourceChartFragment){
-                ((DanagerSourceChartFragment)item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  SinsChartFragment){
+            } else if (item instanceof AccidentChartFragment) {
+                ((AccidentChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof DanagerSourceChartFragment) {
+                ((DanagerSourceChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof SinsChartFragment) {
                 ((SinsChartFragment) item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  StanChartFragment){
-                ((StanChartFragment)item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  SuenChartFragment){
-                ((SuenChartFragment)item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  WinsChartFragment){
-                ((WinsChartFragment)item).setMapData(mapBoundBean.result.get(0));
-            }else if(item instanceof  WoasChartFragment){
-                ((WoasChartFragment)item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof StanChartFragment) {
+                ((StanChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof SuenChartFragment) {
+                ((SuenChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof WinsChartFragment) {
+                ((WinsChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof WoasChartFragment) {
+                ((WoasChartFragment) item).setMapData(mapBoundBean.result.get(0));
             }
         }
     }

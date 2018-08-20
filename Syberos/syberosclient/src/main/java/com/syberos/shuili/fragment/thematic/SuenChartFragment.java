@@ -1,14 +1,18 @@
 package com.syberos.shuili.fragment.thematic;
 
-import android.Manifest;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.syberos.shuili.R;
@@ -16,19 +20,36 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.map.MapBoundBean;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
-import pub.devrel.easypermissions.EasyPermissions;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2018/6/26.
  * 监督执法专题图
  */
 
-public class SuenChartFragment extends BaseLazyFragment  {
+public class SuenChartFragment extends BaseLazyFragment {
+
     @BindView(R.id.webview)
     WebView webView;
+    @BindView(R.id.radio_btn_benbu)
+    RadioButton radioBtnBenbu;
+    @BindView(R.id.radio_btn_zhiguan)
+    RadioButton radioBtnZhiguan;
+    @BindView(R.id.radio_btn_liuyu)
+    RadioButton radioBtnLiuyu;
+    @BindView(R.id.radio_btn_jianguan)
+    RadioButton radioBtnJianguan;
+    @BindView(R.id.radio_group)
+    RadioGroup radioGroup;
+    @BindView(R.id.btn_zhiguan)
+    Button btnZhiguan;
+    @BindView(R.id.btn_liuyu)
+    Button btnLiuyu;
+    @BindView(R.id.btn_jianguan)
+    Button btnJianguan;
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
@@ -64,6 +85,20 @@ public class SuenChartFragment extends BaseLazyFragment  {
     @Override
     protected void initData() {
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (radioBtnBenbu.getId() == i) {
+                    setStatus1(1);
+                } else if (radioBtnZhiguan.getId() == i) {
+                    setStatus1(2);
+                } else if (radioBtnLiuyu.getId() == i) {
+                    setStatus1(3);
+                } else if (radioBtnJianguan.getId() == i) {
+                    setStatus1(4);
+                }
+            }
+        });
 
     }
 
@@ -86,7 +121,7 @@ public class SuenChartFragment extends BaseLazyFragment  {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
-                if(!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()){
+                if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
                 }
                 addMarkInfo();
@@ -108,25 +143,28 @@ public class SuenChartFragment extends BaseLazyFragment  {
         public MyJavaScriptInterface() {
 
         }
+
         @JavascriptInterface
         public void toast(String str) {
             Toast.makeText(mContext, "map test", Toast.LENGTH_SHORT).show();
         }
 
     }
-    public void setMapData(MapBoundBean mapData){
+
+    public void setMapData(MapBoundBean mapData) {
         String center = mapData.centerXY;
-        String[]array = center.split(",");
+        String[] array = center.split(",");
         iMapLevel = 4;
         mLon = array[0];
         mLat = array[1];
-        if(bLoadFinish) {
+        if (bLoadFinish) {
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
             addMarkInfo();
         }
     }
-    private void addMarkInfo(){
-        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat +")");
+
+    private void addMarkInfo() {
+        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat + ")");
     }
 }

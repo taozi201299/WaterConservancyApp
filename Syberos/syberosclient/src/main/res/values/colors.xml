@@ -95,7 +95,8 @@
     <color name="pie_chart_color_level_one">#ff83d3ff</color>
     <color name="pie_chart_color_level_two">#ffffd140</color>
     <color name="pie_chart_color_level_three">#ffffa51e</color>
-    <color name="pie_chart_color_level_four">#ffff3232</color>
+    <color name="pie_chart_color_level_four">#ffff5252</color>
+    <color name="pie_chart_color_level_five">#ffff0000</color>
 
     <color name="button_rush_normal">#24CBC0</color>
     <color name="button_rush_0bede5">#0bede5</color>

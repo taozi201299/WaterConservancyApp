@@ -129,7 +129,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     protected void initListener() {
 
     }
-
+    
     @Override
     protected void initData() {
         tvData1.setText("11");
