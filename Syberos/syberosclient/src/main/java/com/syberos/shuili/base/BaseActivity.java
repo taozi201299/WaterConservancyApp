@@ -177,16 +177,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showDataLoadingDialog(String content){
         LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
                 .setMessage(content)
-                .setCancelable(true)
-                .setCancelOutside(true);
+                .setCancelable(false)
+                .setCancelOutside(false);
         LoadingDialog dialog=loadBuilder.create();
         dialog.show();
     }
     public void showDataLoadingDialog(){
         LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
                 .setMessage("加载中...")
-                .setCancelable(true)
-                .setCancelOutside(true);
+                .setCancelable(false)
+                .setCancelOutside(false);
         dataDialog=loadBuilder.create();
         dataDialog.show();
 

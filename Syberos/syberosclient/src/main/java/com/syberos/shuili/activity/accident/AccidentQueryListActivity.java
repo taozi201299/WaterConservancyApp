@@ -14,6 +14,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.accident.AttOrgBaseForAcci;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.accident.AccidentInformationGroup;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 public class AccidentQueryListActivity extends BaseActivity {
-    private final String TAG = AccidentQueryListActivity.class.getSimpleName();
+    private final String TAG = AccidentListActivity.class.getSimpleName();
     /**
      * 事故单位类型
      */
@@ -65,7 +66,9 @@ public class AccidentQueryListActivity extends BaseActivity {
     @BindView(R.id.recyclerView_express_accident)
     RecyclerView recyclerView;
     GroupedEnterprisesExpressAccidentListAdapter accidentInformationListAdapter;
-    ArrayList<AccidentInformationGroup> accidentInformationGroups = null;
+    ArrayList<AccidentInformationGroup> accidentInformationGroups = new ArrayList<>();
+
+    private AttOrgBaseForAcci attOrgBaseForAcci = null;
 
     private int iSucessCount = 0;
     private int iFailedCount = 0;
@@ -77,12 +80,13 @@ public class AccidentQueryListActivity extends BaseActivity {
     @Override
     public void initListener() {
 
-
     }
 
     @Override
     public void initData() {
-        groupMap.clear();
+        showDataLoadingDialog();
+        iSucessCount = 0;
+        iFailedCount = 0;
         reportInfos.clear();
         if(accidentInformationGroups != null) {
             accidentInformationGroups.clear();
@@ -138,7 +142,7 @@ public class AccidentQueryListActivity extends BaseActivity {
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else {
-                    getAccidentList();
+                    getAccidentUnit();
                 }
             }
             @Override
@@ -148,34 +152,74 @@ public class AccidentQueryListActivity extends BaseActivity {
             }
         });
     }
-    /**
-     * 获取快报事故列表
-     */
-    private void getAccidentList(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
-        HashMap<String,String>param = new HashMap<>();
-        param.put("acciWinuGuid","13B9B5C0FA6C425891A7F8DECF86A24A");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+
+    private void getAccidentUnit(){
+        String url = GlobleConstants.strIP +"/sjjk/v1/att/org/base/attOrgBases/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       // params.put("pguid","32C76583D3D84B1CA8C336829C15CAE2");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                accidentInformation = gson.fromJson(result,ObjAcci.class);
-                if(accidentInformation == null || !accidentInformation.code.equals("0")){
+                attOrgBaseForAcci = gson.fromJson(result, AttOrgBaseForAcci.class);
+                if(attOrgBaseForAcci == null || attOrgBaseForAcci.dataSource == null ){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
-                };
-                parasAccidentInformation();
-                getAccidentUnitInfo();
+                }else if(attOrgBaseForAcci.dataSource.size() == 0){
+                    closeDataDialog();
+                    ToastUtils.show("没有相关的事故信息");
+                }
+                else {
+                    getAccidentList();
+                }
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
 
-            }
+            }    private ArrayList<ObjAcci> reportInfos = new ArrayList<>();
         });
+    }
+    /**
+     * 获取快报事故列表
+     */
+    private void getAccidentList(){
+        final int count = attOrgBaseForAcci.dataSource.size();
+        for(int index = 0; index < count; index++) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
+            HashMap<String, String> param = new HashMap<>();
+            param.put("acciWinuGuid", attOrgBaseForAcci.dataSource.get(index).getGuid());
+            final int finalIndex = index;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    accidentInformation = gson.fromJson(result, ObjAcci.class);
+                    if (accidentInformation == null || !accidentInformation.code.equals("0")) {
+                        return;
+                    }
+                    parasAccidentInformation();
+                    String header = attOrgBaseForAcci.dataSource.get(finalIndex).getOrgName();
+                    for(ObjAcci item : accidentInformation.dataSource) {
+                        item.setAccidentUnitName(header);
+                    }
+                    accidentInformationGroups.add(new AccidentInformationGroup(header, (ArrayList<ObjAcci>) accidentInformation.dataSource));
+                    if(iSucessCount + iFailedCount == count){
+                        refreshUI();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == count){
+                        refreshUI();
+                    }
+                }
+            });
+        }
     }
     private void parasAccidentInformation(){
         for(ObjAcci item : accidentInformation.dataSource){
@@ -185,37 +229,6 @@ public class AccidentQueryListActivity extends BaseActivity {
             }
         }
     }
-    private void getAccidentUnitInfo(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
-        HashMap<String,String>params = new HashMap<>();
-        for(final ObjAcci item : accidentInformation.dataSource){
-            if(iFailedCount > 0)break;
-            params.put("guid",item.getAcciWindGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    orgInfo = gson.fromJson(result,OrgInfo.class);
-                    if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
-                        orgInfos.add(orgInfo.dataSource.get(0));
-                        iSucessCount ++;
-
-                    }
-                    if(iSucessCount == accidentInformation.dataSource.size()) {
-                        merageData();
-                        refreshUI(accidentInformation);
-                    }
-                }
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    iFailedCount ++;
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-
-                }
-            });
-        }
-    }
     private OrgInfo getOrgInfo(String orgId){
         for(OrgInfo item : orgInfos){
             if(item.getGuid().equals(orgId))
@@ -223,56 +236,10 @@ public class AccidentQueryListActivity extends BaseActivity {
         }
         return null;
     }
-    private void merageData(){
-        for(ObjAcci item : accidentInformation.dataSource){
-            OrgInfo info = getOrgInfo(item.getAcciWindGuid());
-            if(info != null){
-                item.setAccidentUnitName(info.getOrgName());
-            }
-        }
-    }
-    private void refreshUI(ObjAcci accidentInformation){
+    private void refreshUI(){
         closeDataDialog();
-        if(accidentInformationGroups == null){
-            accidentInformationGroups = new ArrayList<>();
-        }
-        accidentInformationGroups.clear();
-        int size = accidentInformation.dataSource.size();
-        ArrayList<ObjAcci>infos;
-        for(int i = 0; i < size ; i++){
-            ObjAcci item = accidentInformation.dataSource.get(i);
-            if(item.getPID() != null && !item.getPID().isEmpty())continue;
-            String unitType  = item.getAcciWiunType();
-            if(groupMap.containsKey(unitType)){
-                infos = groupMap.get(unitType);
-                infos.add(item);
-            }else{
-                infos = new ArrayList<>();
-                infos.add(item);
-                groupMap.put(item.getAcciWiunType(),infos);
-            }
-        }
-        Object [] headArray = groupMap.keySet().toArray();
-        int len = headArray.length;
-        for(int i = 0 ; i < len ; i ++){
-            String headCode = headArray[i].toString();
-            String head = getDicName(headCode);
-            accidentInformationGroups.add(new AccidentInformationGroup(head,(ArrayList<ObjAcci>)groupMap.get(headCode)));
-        }
         accidentInformationListAdapter.setData(accidentInformationGroups);
         accidentInformationListAdapter.notifyDataSetChanged();
-    }
-
-    private String getDicName(String dicCode){
-        String dicName = "";
-        for(DicInfo dicInfo :m_unitTypeDic.dataSource){
-            if(dicInfo.getDcItemCode().equals(dicCode)){
-                dicName = dicInfo.getDcItemName();
-                break;
-            }
-
-        }
-        return dicName;
     }
     private DicInfo getAccidentTypeItem(String dicCode){
         for(DicInfo dicInfo :m_accidentTypeDic.dataSource){
@@ -293,7 +260,6 @@ public class AccidentQueryListActivity extends BaseActivity {
     @Override
     public void initView() {
         setInitActionBar(true);
-        showDataLoadingDialog();
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -306,7 +272,8 @@ public class AccidentQueryListActivity extends BaseActivity {
                     public void onChildClick(GroupedRecyclerViewAdapter adapter,
                                              BaseViewHolder holder,
                                              int groupPosition, int childPosition) {
-
+                        if(childPosition >=accidentInformationGroups.size())
+                            return;
                         Bundle bundle = new Bundle();
                         ArrayList<ObjAcci> children
                                 = accidentInformationGroups.get(groupPosition).getChildren();
@@ -317,7 +284,13 @@ public class AccidentQueryListActivity extends BaseActivity {
                         bundle.putSerializable(DICINFO_KEY_ACCIDENT_TYPE,item);
                         bundle.putSerializable(DICINFO_KEY,unitType);
 
-                        bundle.putSerializable("data",reportInfos);
+                        ArrayList<ObjAcci> datas = new ArrayList<>();
+                        for(ObjAcci objAcci :reportInfos){
+                            if(objAcci.getId().equalsIgnoreCase(accidentInformation.getId())){
+                                datas.add(objAcci);
+                            }
+                        }
+                        bundle.putSerializable("data",datas);
                         intentActivity(AccidentQueryListActivity.this,
                                 AccidentDetailActivity.class,
                                 false, bundle);
@@ -351,6 +324,7 @@ public class AccidentQueryListActivity extends BaseActivity {
 
         @Override
         public int getChildrenCount(int groupPosition) {
+            if(groupPosition >= mGroups.size()) return 0;
             ArrayList<ObjAcci> children = mGroups.get(groupPosition).getChildren();
             return children == null ? 0 : children.size();
         }
@@ -419,7 +393,7 @@ public class AccidentQueryListActivity extends BaseActivity {
             DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());
             RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
             ll_report_after.setVisibility(View.GONE);
-            String grade = accidentInformation.getAcciGrad() == null ?"1":accidentInformation.getAcciGrad();
+            String grade = accidentInformation.getAcciGrad() == null || accidentInformation.getAcciGrad().isEmpty() ?"1":accidentInformation.getAcciGrad();
             int type = Integer.valueOf(grade);
             switch (type) {
                 case GlobleConstants.TYPE_NORMAL: {

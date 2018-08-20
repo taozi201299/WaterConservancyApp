@@ -10,6 +10,7 @@ import java.util.List;
 
 public class NoticeFormInfo implements Serializable {
     public String userGuid;
+    public String orgGuid;
     public boolean all;
     public List<String> list = new ArrayList<>();
 }

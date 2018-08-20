@@ -15,6 +15,7 @@
             android:id="@+id/fillableLoader"
             android:layout_width="100dp"
             android:layout_height="70dp"
+            android:visibility="gone"
             app:fl_fillColor="@color/main_color"
             app:fl_strokeColor="@color/main_color"
             app:fl_strokeWidth="1dp"
@@ -23,8 +24,15 @@
             app:fl_clippingTransform="plain"
             android:layout_gravity="center"
             />
+        <ImageView
+            android:layout_width="@dimen/_50dp"
+            android:layout_height="@dimen/_50dp"
+            android:src="@mipmap/login_logo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_70dp"/>
         <TextView
-            android:layout_toRightOf="@+id/fillableLoader"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_50dp"
             android:layout_centerVertical="true"
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"

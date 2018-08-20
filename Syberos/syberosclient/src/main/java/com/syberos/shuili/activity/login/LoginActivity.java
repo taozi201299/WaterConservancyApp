@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity {
      * 3 是否有角色的区分
      */
     private void login(boolean bAuto) {
-        showLoadingDialog("登录中...");
+        showLoadingDialog("正在登录中...");
         final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
         final HashMap<String, Object> params = new HashMap<>();
         params.put("arg0", accountEdit.getText().toString());
