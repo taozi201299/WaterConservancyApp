@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardViewStyle"
+    app:cardCornerRadius="@dimen/_10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_12dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:drawableLeft="@mipmap/icon_blue_short_vertical_div"
+            android:drawablePadding="@dimen/_12dp"
+            android:text="稽查问题等级统计"
+            android:textColor="@color/text_black_color" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_char_sum"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140dp"
+            android:layout_margin="@dimen/_10dp" />
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
