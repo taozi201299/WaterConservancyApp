@@ -38,6 +38,7 @@ import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckListActi
 import com.syberos.shuili.activity.securitycheck.EnterprisesOnSiteCheckListActivity;
 import com.syberos.shuili.activity.work.NotificationCenterActivity;
 import com.syberos.shuili.activity.work.TodoWorkActivity;
+import com.syberos.shuili.activity.work.TodoWorkForEntActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
@@ -118,7 +119,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
 
     @OnClick(R.id.ll_work_todo)
     void go2workTodoActivity() {
-        intentActivity(getActivity(), TodoWorkActivity.class, false, true);
+        intentActivity(getActivity(), TodoWorkForEntActivity.class, false, true);
     }
 
     @OnClick(R.id.ll_notification_center)

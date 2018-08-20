@@ -77,6 +77,20 @@ public class GlobleConstants {
     public static final String YES = "1";
     public static final String NO = "2";
 
+    /**
+     * 模块名称 for 任务代办
+     */
+
+    public static final String Module_Name_Hidd = "hidd";
+    public static final String Module_Name_Acci = "Acci";
+    public static final String Module_Name_Haz = "Haz";
+    public static final String Module_Name_Sins = "Sins";
+    public static final String Module_Name_Stan ="Stan";
+    public static final String Module_Name_Report_Hidd = "hiddMonRepPeri";
+    public static final String Module_Name_Report_Acci = "acciMonRepPeri";
+    public static final String Module_Name_Report_Check = "sinsMonRepPeri";
+
+
     public static HashMap<Integer,String>hazGradeMap = new HashMap<Integer,String>(){
 
         {

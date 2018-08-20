@@ -55,6 +55,10 @@ public class  App extends Application {
     public static String jurdAreaType = "";
 
     public static String userType = "-1";
+    /**
+     * 该用户的模块权限
+     */
+    public static ArrayList<String>moduleName = new ArrayList<>();
 
     /**
      * Log

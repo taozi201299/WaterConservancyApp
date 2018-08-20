@@ -396,6 +396,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data",investigationInfo);
+                    bundle.putString("type","0");
                     intentActivity(InvestigationAccepTaskForEntActivity.this,InvestigationAcceptFormActivity.class,false,bundle);
                 }
             });

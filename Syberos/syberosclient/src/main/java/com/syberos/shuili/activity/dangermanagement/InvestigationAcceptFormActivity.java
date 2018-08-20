@@ -1,6 +1,7 @@
 package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,13 +10,17 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
+import com.syberos.shuili.activity.work.TodoWorkForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.TodoWorkInfo;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -56,6 +61,8 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
     @BindView(R.id.et_accept_desc)
     AudioEditView et_accept_desc;
     ObjHidden investigationInfo;
+    TodoWorkInfo todoWorkInfo;
+    String type ;  // 0 生成代办 1 修改代办
     @Override
     public int getLayoutId() {
         return R.layout.activity_investigation_accept_form;
@@ -74,6 +81,10 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         investigationInfo = (ObjHidden) bundle.getSerializable("data");
+        type = bundle.getString("type");
+        if("1".equalsIgnoreCase(type)){
+            todoWorkInfo = (TodoWorkInfo) bundle.getSerializable("TodoWorkInfo");
+        }
         UserExtendInfo userExtendInfo = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         if(userExtendInfo != null){
             tv_accept_person.setText(userExtendInfo.getPersName());
@@ -103,6 +114,11 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 break;
             case R.id.tv_commitBtn:
                 submit(1);
+                if("1".equalsIgnoreCase(type)) {
+                    updateTodoTask();
+                }else if("0".equalsIgnoreCase(type)){
+                    queryTodoWork();
+                }
                 break;
         }
     }
@@ -177,6 +193,86 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
+
+    private void updateTodoTask(){
+        String url = GlobleConstants.strIP + "/pprty/WSRest/service/backlog";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("appCode",App.sCode);
+        params.put("busiCode",investigationInfo.getGuid());
+        params.put("busiName",todoWorkInfo.getBusiName());
+        params.put("busiUrl",todoWorkInfo.getBusiUrl());
+        params.put("userGuid",todoWorkInfo.getUserGuid());
+        params.put("isread","1");
+        params.put("roleCode",todoWorkInfo.getRoleCode());
+        params.put("modName",todoWorkInfo.getModName());
+        params.put("orgGuid",todoWorkInfo.getOrgGuid());
+        params.put("tableName",todoWorkInfo.getTableName());
+        params.put("nextStep",todoWorkInfo.getNextStep());
+        HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+    }
+    private void createTodoTask(){
+        String url = GlobleConstants.strIP + "/pprty/WSRest/service/backlog";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("appCode",App.sCode);
+        params.put("busiCode",investigationInfo.getGuid());
+        params.put("busiName","隐患销号");
+        params.put("busiUrl","");
+        params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("isread","1");
+        params.put("roleCode","");
+        params.put("modName",GlobleConstants.hidd);
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("tableName","");
+        params.put("nextStep","BIS_HIDD_RECT_ACCE");
+        HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+
+    }
+    private void queryTodoWork(){
+        String url = GlobleConstants.strIP + "/pprty/WSRest/service/backlog";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("busiCode",investigationInfo.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                todoWorkInfo = gson.fromJson(result,TodoWorkInfo.class);
+                if(todoWorkInfo == null || todoWorkInfo.dataSource == null || todoWorkInfo.dataSource.list.size() == 0){
+                  createTodoTask();
+                }else {
+                    todoWorkInfo = todoWorkInfo.dataSource.list.get(0);
+                    updateTodoTask();
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show("创建代办任务失败");
 
             }
         });

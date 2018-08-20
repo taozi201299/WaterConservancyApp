@@ -7,15 +7,6 @@ package com.syberos.shuili.entity;
 public class TodoWorkInfo extends HttpBaseListResponse<TodoWorkInfo> {
     String appCode;
     String busiCode;
-
-    public String getBusiName() {
-        return busiName == null ? "" : busiName;
-    }
-
-    public void setBusiName(String busiName) {
-        this.busiName = busiName;
-    }
-
     String busiName;
     String busiUrl;
     String collTime;
@@ -28,7 +19,13 @@ public class TodoWorkInfo extends HttpBaseListResponse<TodoWorkInfo> {
     String roleCode;
     String tableName;
     String userGuid;
+    public String getBusiName() {
+        return busiName == null ? "" : busiName;
+    }
 
+    public void setBusiName(String busiName) {
+        this.busiName = busiName;
+    }
     public String getAppCode() {
         return appCode == null ? "" : appCode;
     }
