@@ -117,7 +117,6 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     TextView tvListTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-//    Unbinder unbinder;
 
 
     @Override

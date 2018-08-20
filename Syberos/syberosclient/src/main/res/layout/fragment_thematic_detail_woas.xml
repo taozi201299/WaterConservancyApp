@@ -8,16 +8,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <!--专题图-detail-工作考核-->
-        <include layout="@layout/include_thematic_summarized_view_general" />
-        <!--<com.syberos.shuili.view.DialPlateView-->
-            <!--android:id="@+id/view_dial_plate"-->
-            <!--android:layout_width="@dimen/_170dp"-->
-            <!--android:layout_height="@dimen/_170dp"-->
-            <!--android:layout_marginBottom="@dimen/_15dp"-->
-            <!--android:layout_marginTop="@dimen/_60dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="@+id/tv_grade_time"-->
-            <!--app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--app:layout_constraintRight_toRightOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
+        <include layout="@layout/include_thematic_head_woas" />
+
+        <include layout="@layout/include_thematic_data_trend_woas" />
+
+        <include layout="@layout/include_thematic_data_list_view_general" />
     </LinearLayout>
 </ScrollView>

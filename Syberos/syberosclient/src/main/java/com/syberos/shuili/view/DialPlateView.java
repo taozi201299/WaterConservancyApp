@@ -95,7 +95,9 @@ public class DialPlateView extends View {
         this.percent = percent;
         this.postInvalidate();
     }
+    public void updateTitle(String title){
 
+    }
     /**
      * 画刻度盘
      */

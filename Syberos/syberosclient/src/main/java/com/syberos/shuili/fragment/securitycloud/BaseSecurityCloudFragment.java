@@ -772,8 +772,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         pieChart.setDescription(description);
 //        pieChart.setHoleRadius(0.8f);
 
-        pieChart.setHoleRadius(55f);
-        pieChart.setTransparentCircleRadius(55f);
+        pieChart.setHoleRadius(65f);
+        pieChart.setTransparentCircleRadius(65f);
         pieChart.setData(pieData);
         pieChart.setNoDataTextColor(Color.RED);
 //        pieChart.show
