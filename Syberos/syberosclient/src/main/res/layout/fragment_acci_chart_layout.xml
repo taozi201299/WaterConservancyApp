@@ -15,8 +15,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="@dimen/_15dp"-->
+
         <RadioButton
             android:id="@+id/radio_btn_benbu"
             android:layout_width="wrap_content"
@@ -27,9 +26,10 @@
             android:checked="true"
             android:gravity="center"
             android:text="本部"
-            android:visibility="gone"
             android:textColor="@color/radio_button_color"
-            android:textSize="@dimen/_16sp" />
+            android:textSize="@dimen/_16sp"
+            android:visibility="gone" />
+
         <RadioButton
             android:id="@+id/radio_btn_zhiguan"
             android:layout_width="wrap_content"
@@ -67,32 +67,47 @@
 
     </RadioGroup>
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/radio_group_area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/_10dp"
-        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/_10dp"
+        android:orientation="horizontal"
         android:visibility="gone">
 
-        <Button
-            android:id="@+id/btn_zhiguan"
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="直管工程" />
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="流域"
+            android:textColor="@color/text_black_color" />
 
-        <Button
-            android:id="@+id/btn_liuyu"
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="流域机构" />
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="监管"
+            android:textColor="@color/text_black_color" />
 
-        <Button
-            android:id="@+id/btn_jianguan"
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="监管" />
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="直管"
+            android:textColor="@color/text_black_color" />
 
+    </RadioGroup>
 
 </RelativeLayout>

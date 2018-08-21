@@ -44,12 +44,7 @@ public class SuenChartFragment extends BaseLazyFragment {
     RadioButton radioBtnJianguan;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
-    @BindView(R.id.btn_zhiguan)
-    Button btnZhiguan;
-    @BindView(R.id.btn_liuyu)
-    Button btnLiuyu;
-    @BindView(R.id.btn_jianguan)
-    Button btnJianguan;
+
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;

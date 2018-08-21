@@ -31,12 +31,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @BindView(R.id.webview)
     WebView webView;
-    @BindView(R.id.btn_zhiguan)
-    Button btn_zhiguan;
-    @BindView(R.id.btn_liuyu)
-    Button btn_liuyu;
-    @BindView(R.id.btn_jianguan)
-    Button btn_jianguan;
 
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
@@ -87,9 +81,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initListener() {
-        btn_liuyu.setOnClickListener(this);
-        btn_jianguan.setOnClickListener(this);
-        btn_zhiguan.setOnClickListener(this);
 
 //        rbtnJianguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -97,6 +88,8 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 //
 //            }
 //        });
+        bLoadFinish = false;
+        bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
@@ -178,29 +171,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        bLoadFinish = false;
-        bShowMap = false;
-        switch (v.getId()) {
-            case R.id.btn_zhiguan:
-                iMapLevel = 4;
-                type = 1;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd.html");
-                break;
-            case R.id.btn_liuyu:
-                type = 2;
-                iMapLevel = 0;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
-                break;
-            case R.id.btn_jianguan:
-                iMapLevel = 4;
-                type = 3;
-                webView.removeAllViews();
-                webView.loadUrl("file:///android_asset/chart/hidd.html");
-                break;
 
-        }
 
     }
 

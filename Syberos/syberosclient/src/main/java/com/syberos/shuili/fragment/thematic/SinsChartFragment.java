@@ -41,12 +41,7 @@ public class SinsChartFragment extends BaseLazyFragment {
     RadioButton radioBtnJianguan;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
-    @BindView(R.id.btn_zhiguan)
-    Button btnZhiguan;
-    @BindView(R.id.btn_liuyu)
-    Button btnLiuyu;
-    @BindView(R.id.btn_jianguan)
-    Button btnJianguan;
+
     @BindView(R.id.radio_btn_benbu)
     Button radioBtnBenbu;
     private String mLon = "";

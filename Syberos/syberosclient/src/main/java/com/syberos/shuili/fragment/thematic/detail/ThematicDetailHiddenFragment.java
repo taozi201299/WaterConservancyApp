@@ -166,10 +166,6 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                ThematicDetailHiddenProjFragment thematicDetailHiddenProjFragment=new ThematicDetailHiddenProjFragment();
-//                getFragmentManager().beginTransaction().add(thematicDetailHiddenProjFragment,"ddd").commitAllowingStateLoss();
-//                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
-//                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
                 Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
                 intent.putExtra("typeValue", HematicMapFragment.Hidden);
                 startActivity(intent);
@@ -191,8 +187,4 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
         llData4.setVisibility(View.GONE);
 
     }
-
-
-
-
 }
