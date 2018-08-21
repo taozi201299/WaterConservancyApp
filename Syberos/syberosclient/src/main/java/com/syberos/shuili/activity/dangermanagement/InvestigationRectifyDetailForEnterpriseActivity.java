@@ -243,7 +243,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      */
     private void getInvestigationDetail(){
 
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/bisHiddInves/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddInves/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -272,7 +272,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      * 整改进度
      */
     private void getRectifyProgress(){
-        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -301,7 +301,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      * 隐患督办信息
      */
     private void getSupserviceInfo(){
-        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/maj/bisMajHiddSups/";
+        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSups/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

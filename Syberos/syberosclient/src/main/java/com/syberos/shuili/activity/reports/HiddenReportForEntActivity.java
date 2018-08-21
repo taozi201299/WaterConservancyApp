@@ -23,22 +23,28 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.BisHiddRecRep;
 import com.syberos.shuili.entity.report.BisOrgMonRepPeri;
 import com.syberos.shuili.entity.report.HiddenDangerReport;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,10 +116,10 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
      * 根据上报单位获取本单位上报列表
      */
     private void getReortList(){
-        String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
-     //   params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
+        params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+     //   params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -140,7 +146,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         });
     }
     private  void getReportItemDetail(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rec/bisHiddRecReps/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rec/bisHiddRecReps/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<BisOrgMonRepPeri> list = (ArrayList<BisOrgMonRepPeri>) bisOrgMonRepPeri.dataSource;
         final int size = list.size();
@@ -233,10 +239,12 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         @Override
         public void convert(ViewHolder holder, final BisOrgMonRepPeri hiddenDangerReport) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(hiddenDangerReport.getRepName());
-            TextView tv_refunded = (TextView) holder.getView(R.id.tv_refunded);
-            TextView tv_report = (TextView) holder.getView(R.id.tv_report);
-            TextView tv_recall = (TextView) holder.getView(R.id.tv_recall);
+            TextView tv_refunded =  holder.getView(R.id.tv_refunded);
+            TextView tv_report =  holder.getView(R.id.tv_report);
+            TextView tv_recall =  holder.getView(R.id.tv_recall);
             tv_recall.setVisibility(View.GONE);
+            tv_report.setVisibility(View.GONE);
+            tv_refunded.setVisibility(View.GONE);
             final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
 
             // 2  未上报 本单位可以退回  1 已上报 2 被退回 3 已撤销
@@ -260,18 +268,23 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
 
                     break;
                 case HiddenDangerReport.LINK_REFUNDED:
-                    tv_refunded.setVisibility(View.VISIBLE);
-                    tv_refunded.setText("已退回");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
-                    } else {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
+                    if(hiddenDangerReport.isReportFinish()) {
+                        tv_refunded.setVisibility(View.VISIBLE);
+                        tv_refunded.setText("已退回");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
+                        } else {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
+                        }
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("重报");
+                    }else {
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("上报");
                     }
-                    tv_report.setVisibility(View.VISIBLE);
-                    tv_report.setText("重报");
-
                     break;
             }
+
 
             tv_refunded.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,7 +292,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                     int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
                     switch (linkStatus) {
                         case HiddenDangerReport.LINK_RETURNED:
-                            tv_reasonDialog_title.setText("退回原因");
+                            tv_reasonDialog_title.setText("撤销原因");
                             tv_reasonDialog_message.setText(returnedReason);
                             reasonDialog.show();
                             break;
@@ -297,13 +310,55 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                 @Override
                 public void onClick(View v) {
                     switch (linkStatus) {
+                        // 撤销和退回
+                        case HiddenDangerReport.LINK_RETURNED:
+                        case HiddenDangerReport.LINK_REFUNDED:
+                            confirmDialog = new Dialog(HiddenReportForEntActivity.this);
+                            View v1 = LayoutInflater.from(HiddenReportForEntActivity.this).inflate(
+                                    R.layout.dialog_hidden_danger_report_confirm, null);
+                            tv_confirmDialog_title = v1.findViewById(R.id.tv_title);
+                            tv_confirmDialog_title.setText("确认上报");
+                            confirmDialog.setContentView(v1);
+                            Window dialogWindow = confirmDialog.getWindow();
+                            WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
+
+                            lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.gravity = Gravity.CENTER;
+                            confirmDialog.setCancelable(false);
+                            dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+                            dialogWindow.setAttributes(lp1);
+                            Button bt_cancel = v1.findViewById(R.id.btn_cancel);
+                            bt_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            Button btn_confirm = v1.findViewById(R.id.btn_confirm);
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    report(hiddenDangerReport);
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            confirmDialog.show();
+                            break;
+                    }
+                }
+            });
+            tv_recall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (linkStatus) {
                         case HiddenDangerReport.LINK_RETURNED:
                             if(hiddenDangerReport.isReportFinish()) {
                                 confirmDialog = new Dialog(HiddenReportForEntActivity.this);
                                 View v1 = LayoutInflater.from(HiddenReportForEntActivity.this).inflate(
                                         R.layout.dialog_hidden_danger_report_confirm, null);
-                                tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
-                                tv_confirmDialog_title.setText("确认上报");
+                                tv_confirmDialog_title =  v1.findViewById(R.id.tv_title);
+                                tv_confirmDialog_title.setText("确认撤回");
                                 confirmDialog.setContentView(v1);
                                 Window dialogWindow = confirmDialog.getWindow();
                                 WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
@@ -314,18 +369,18 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                                 confirmDialog.setCancelable(false);
                                 dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
                                 dialogWindow.setAttributes(lp1);
-                                Button bt_cancel = (Button) v1.findViewById(R.id.btn_cancel);
+                                Button bt_cancel =  v1.findViewById(R.id.btn_cancel);
                                 bt_cancel.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         confirmDialog.dismiss();
                                     }
                                 });
-                                Button btn_confirm = (Button) v1.findViewById(R.id.btn_confirm);
+                                Button btn_confirm =  v1.findViewById(R.id.btn_confirm);
                                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        ToastUtils.show("TODO: 确认上报，后续处理逻辑");
+                                        cancelReport(hiddenDangerReport);
                                         confirmDialog.dismiss();
                                     }
                                 });
@@ -362,5 +417,61 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                 .build();
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
+    }
+    private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
+        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/addHiddRecRep/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("appCode", App.sCode.toLowerCase());
+        params.put("repGuid",bisOrgMonRepPeri.getGuid());
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        String time = tv_current_month.getText().toString();
+        time.replace("年","");
+        time.replace("月","");
+        params.put("yearMonth",time);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+    private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
+        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/cancelHidd";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("repGuid",bisOrgMonRepPeri.getGuid());
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
     }
 }

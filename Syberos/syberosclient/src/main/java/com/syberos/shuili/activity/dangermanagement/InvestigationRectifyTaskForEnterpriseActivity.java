@@ -17,6 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -90,7 +91,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
 
     }
     private void getHiddenList(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
         UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("hiddStat",strHiddState);
@@ -232,7 +233,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      * 获取隐患级别
      */
     private void getHiddenGrade(){
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

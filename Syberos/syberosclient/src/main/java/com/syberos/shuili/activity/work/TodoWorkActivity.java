@@ -1,6 +1,7 @@
 package com.syberos.shuili.activity.work;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -11,9 +12,12 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.dangermanagement.InvestigationAcceptFormActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.TodoWorkInfo;
+import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -106,18 +110,72 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     @Override
     public void onItemClick(int position) {
         TodoWorkInfo todoWorkInfo = datas.get(position);
-        final CustomDialog customDialog = new CustomDialog(TodoWorkActivity.this);
-        customDialog.setDialogMessage(Title, "", null);
-        customDialog.setMessage("请在电脑端进行处理");
-                customDialog.setDialogOneBtn();
+        String moduleName = todoWorkInfo.getModName();
+        String appCode = todoWorkInfo.getAppCode(); // "cjfr"
+        String busiCode = todoWorkInfo.getBusiCode();
+        String busiName = todoWorkInfo.getBusiName();
+        String nextStep = todoWorkInfo.getNextStep();
 
-        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog.dismiss();
-            }
-        });
-        customDialog.show();
+        // 隐患
+        if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName)) {
+            ObjHidden objHidden = new ObjHidden();
+            objHidden.setGuid(busiCode);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data",objHidden);
+            bundle.putSerializable("todoWork",todoWorkInfo);
+            bundle.putString("type","0");
+            intentActivity(TodoWorkActivity.this,InvestigationAcceptFormActivity.class,false,bundle);
+        }
+        // 事故
+        else if ( GlobleConstants.Module_Name_Acci.equalsIgnoreCase(moduleName)){
+
+        }
+        // 风险源
+        else if(GlobleConstants.Module_Name_Haz.equalsIgnoreCase(moduleName)){
+
+        }
+        // 安全检查
+        else if(GlobleConstants.Module_Name_Sins.equalsIgnoreCase(moduleName)){
+
+        }
+        // 安全检查报表
+        else if(GlobleConstants.Module_Name_Report_Check.equalsIgnoreCase(moduleName)){
+
+        }
+        //隐患报表
+        else if(GlobleConstants.Module_Name_Report_Hidd.equalsIgnoreCase(moduleName)){
+
+        }
+        // 事故报表
+        else if(GlobleConstants.Module_Name_Report_Acci.equalsIgnoreCase(moduleName)){
+
+        }
+        // 工作考核报表
+        else if (GlobleConstants.woas.equalsIgnoreCase(moduleName)){
+
+
+        }
+        else if(GlobleConstants.suen.equalsIgnoreCase(moduleName)){
+
+        }
+        // 新建稽查问题
+        else if(GlobleConstants.wins.equalsIgnoreCase(moduleName)){
+
+        }
+        else {
+            final CustomDialog customDialog = new CustomDialog(TodoWorkActivity.this);
+            customDialog.setDialogMessage(Title, "", null);
+            customDialog.setMessage("请在电脑端进行处理");
+            customDialog.setDialogOneBtn();
+
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+        }
     }
 
     @Override

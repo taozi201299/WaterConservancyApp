@@ -3,37 +3,25 @@ package com.syberos.shuili.activity.reports;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.report.ReportBaseEntity;
-import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
-import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
-import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.report.ObjWoas;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.PullRecyclerView;
-import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
-import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 行政端 工作考核报表 分为安全生产和水利稽查
@@ -48,8 +36,9 @@ public class WoasReportActivity extends BaseActivity{
     @BindView(R.id.recyclerView_report_woas)
     RecyclerView recyclerView_report_woas;
     private final String TAG = WoasReportActivity.class.getSimpleName();
-    private final String Title = "工作考核报表";
-    HashMap<String,ArrayList<String>> groupMap = new HashMap<>();
+    private final String Title = "考核报表";
+    private ObjWoas  objWoas = null;
+    ListAdapter listAdapter ;
     @Override
     public int getLayoutId() {
         return R.layout.activity_job_rating_report;
@@ -58,79 +47,75 @@ public class WoasReportActivity extends BaseActivity{
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void initListener() {
-
+        listAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("objWoas",objWoas.dataSource.get(position));
+                intentActivity(WoasReportActivity.this,WoasDetailActivity.class,false,bundle);
+            }
+        });
     }
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getWoasReportList();
 
     }
 
     @Override
     public void initView() {
-
+        showTitle(Title);
+        setActionBarRightVisible(View.INVISIBLE);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView_report_woas.setLayoutManager(layoutManager);
+        listAdapter = new ListAdapter(this,R.layout.activity_history_patrol_list_item);
+        recyclerView_report_woas.setAdapter(listAdapter);
     }
-    private class GroupedListAdapter extends GroupedRecyclerViewAdapter{
+    private void getWoasReportList(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/woas/selectDeployInformByMultiTable/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("orgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
+        params.put("sendStat","1");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                objWoas = gson.fromJson(result,ObjWoas.class);
+                if(objWoas != null && objWoas.dataSource != null && objWoas.dataSource.size() != 0 ){
+                    refreshUI();
+                }else {
+                    ToastUtils.show("未获取到报表内容");
+                }
 
-        private ArrayList<ReportBaseEntity<String>>mGroups;
-        public GroupedListAdapter(
-                Context context, ArrayList<ReportBaseEntity<String>> groups) {
-            super(context);
-            mGroups = groups;
-        }
-        public void setData(ArrayList<ReportBaseEntity<String>> groups){
-            mGroups = groups;
+            }
 
-        }
-        @Override
-        public int getGroupCount() {
-            return mGroups == null ? 0 : mGroups.size();
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            ArrayList<String> children = mGroups.get(groupPosition).getChildren();
-            return children == null ? 0 : children.size();
-        }
-
-        @Override
-        public boolean hasHeader(int groupPosition) {
-            return true;
-        }
-
-        @Override
-        public boolean hasFooter(int groupPosition) {
-            return false;
-        }
-
-        @Override
-        public int getHeaderLayout(int viewType) {
-            return 0;
-        }
-
-        @Override
-        public int getFooterLayout(int viewType) {
-            return 0;
-        }
-
-        @Override
-        public int getChildLayout(int viewType) {
-            return 0;
-        }
-
-        @Override
-        public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
-
-        }
-
-        @Override
-        public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
-
-        }
-
-        @Override
-        public void onBindChildViewHolder(BaseViewHolder holder, int groupPosition, int childPosition) {
-
-        }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show("未获取到报表内容");
+            }
+        });
     }
+    private void refreshUI(){
+        listAdapter.setData(objWoas.dataSource);
+        listAdapter.notifyDataSetChanged();
+    }
+    private class ListAdapter extends CommonAdapter<ObjWoas> {
+        public ListAdapter(Context context, int layoutId) {
+            super(context, layoutId);
+        }
+
+        @Override
+        public void convert(ViewHolder holder, final ObjWoas objWoas) {
+            holder.getView(R.id.arrhpli_tv_title).setVisibility(View.GONE);
+            ((TextView) holder.getView(R.id.arrhpli_tv_time)).setText(objWoas.getWoasThem());
+            ((TextView)holder.getView(R.id.arrhpli_tv_person_label)).setText("考核时间:");
+            ((TextView)holder.getView(R.id.arrhpli_tv_person)).setText(objWoas.getWOASSTARTIME() +"-"+objWoas.getWOASDEADLINE());
+        }
+}
+
 }

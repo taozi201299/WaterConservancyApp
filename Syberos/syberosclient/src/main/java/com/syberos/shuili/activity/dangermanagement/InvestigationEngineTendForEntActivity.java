@@ -16,6 +16,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.securitycheck.EnterprisesElementCheckCreateHiddenActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
@@ -111,7 +112,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
 
     private void getTendInfo(final MvEngColl item){
             // 包含标段
-            String url = "http://192.168.1.8:8080/sjjk/v1/jck/obj/objTends/";
+            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objTends/";
             HashMap<String,String> params = new HashMap<>();
             params.put("engGuid",item.getId());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
