@@ -69,6 +69,9 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
     private BisOrgMonRepPeri bisOrgMonRepPeri = null;
     private BisHiddRecRep bisHiddRecRep = null;
 
+    private int iSucessCount  = 0;
+    private int iFailedCount = 0;
+
     @BindView(R.id.recyclerView_query_accident)
     RecyclerView recyclerView;
 
@@ -107,6 +110,8 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getReortList();
 
@@ -152,6 +157,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         final int size = list.size();
         BisOrgMonRepPeri item = null;
         for(int i = 0 ; i < size ; i++){
+            if(iFailedCount > 0)break;
             item = list.get(i);
             params.put("repGuid",item.getGuid());
             final BisOrgMonRepPeri finalItem = item;
@@ -162,23 +168,26 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                     Gson gson = new Gson();
                     bisHiddRecRep = gson.fromJson(result,BisHiddRecRep.class);
                     if(bisHiddRecRep == null || bisHiddRecRep.dataSource == null){
+                        iFailedCount ++;
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
+                    iSucessCount ++;
                     if(bisHiddRecRep.dataSource.size() > 0) {
                         finalItem.setRepType(bisHiddRecRep.dataSource.get(0).getRepAct());
                         finalItem.setReportFinish(true);
                     }else {
                         finalItem.setReportFinish(false);
                     }
-                    if(finalI == size -1){
+                    if(iSucessCount == size){
                         closeDataDialog();
                         refreshUI();
                     }
                 }
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
                     closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
                 }
@@ -425,8 +434,8 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         params.put("repGuid",bisOrgMonRepPeri.getGuid());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         String time = tv_current_month.getText().toString();
-        time.replace("年","");
-        time.replace("月","");
+        time = time.replace("年","");
+        time = time.replace("月","");
         params.put("yearMonth",time);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
