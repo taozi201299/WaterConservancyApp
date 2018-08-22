@@ -20,6 +20,7 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProg;
+import com.syberos.shuili.entity.wins.BisWinsProgAll;
 import com.syberos.shuili.entity.wins.BisWinsProjAll;
 import com.syberos.shuili.entity.wins.ObjWinsPlan;
 import com.syberos.shuili.utils.ToastUtils;
@@ -54,6 +55,9 @@ public class OnSiteInspectListActivity extends BaseActivity
     TextView tv_action_bar2_title;
 
     ListAdapter listAdapter;
+    /**
+     * 稽查组对象
+     */
     private BisWinsGroupAll bisWinsGroupAll = null;
 
 
@@ -94,7 +98,7 @@ public class OnSiteInspectListActivity extends BaseActivity
                 InspectionDetailActivity.class, false, bundle);
     }
     private void getBisWinsGroup(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/prog/bisWinsProgs/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String>params = new HashMap<>();
        // params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -119,6 +123,7 @@ public class OnSiteInspectListActivity extends BaseActivity
             }
         });
     }
+
     private void refreshUI(){
         listAdapter.setData(bisWinsGroupAll.dataSource);
         listAdapter.notifyDataSetChanged();
@@ -146,7 +151,7 @@ public class OnSiteInspectListActivity extends BaseActivity
                     information.getWinsArrayCode());
             ((TextView) (holder.getView(R.id.tv_batch))).setText(
                     information.getWinsGroupNum());
-            ((TextView) (holder.getView(R.id.tv_time))).setText(information.getStartTime() +"--"+information.getEndTime());
+            ((TextView) (holder.getView(R.id.tv_time))).setText("");
         }
     }
 }

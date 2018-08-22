@@ -7,19 +7,18 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 
 public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
+
     String guid;
-    String winsPlanGuid;
+    String winsGroupNum;// 稽查组编号
+    String speStafGuid; // 特派员GUID
+    String winsProgGuid; // 稽查方案GUID
     String note;
     String collTime;
     String updTime;
     String recPers;
-    String startTime;
-    String endTime;
-    String winsArrayCode;
-    String winsGroupNum;
-    String winsProjType;
-    String winsType;
-    String reviBatc;
+    String speStafAssiGuid;
+    String winsPlanCode;  // 稽查计划编码
+    String winsArrayCode;  // 稽查批次编号
 
     public String getGuid() {
         return guid == null ? "" : guid;
@@ -29,12 +28,28 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
         this.guid = guid;
     }
 
-    public String getWinsPlanGuid() {
-        return winsPlanGuid == null ? "" : winsPlanGuid;
+    public String getWinsGroupNum() {
+        return winsGroupNum == null ? "" : winsGroupNum;
     }
 
-    public void setWinsPlanGuid(String winsPlanGuid) {
-        this.winsPlanGuid = winsPlanGuid;
+    public void setWinsGroupNum(String winsGroupNum) {
+        this.winsGroupNum = winsGroupNum;
+    }
+
+    public String getSpeStafGuid() {
+        return speStafGuid == null ? "" : speStafGuid;
+    }
+
+    public void setSpeStafGuid(String speStafGuid) {
+        this.speStafGuid = speStafGuid;
+    }
+
+    public String getWinsProgGuid() {
+        return winsProgGuid == null ? "" : winsProgGuid;
+    }
+
+    public void setWinsProgGuid(String winsProgGuid) {
+        this.winsProgGuid = winsProgGuid;
     }
 
     public String getNote() {
@@ -69,20 +84,20 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
         this.recPers = recPers;
     }
 
-    public String getStartTime() {
-        return startTime == null ? "" : startTime;
+    public String getSpeStafAssiGuid() {
+        return speStafAssiGuid == null ? "" : speStafAssiGuid;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setSpeStafAssiGuid(String speStafAssiGuid) {
+        this.speStafAssiGuid = speStafAssiGuid;
     }
 
-    public String getEndTime() {
-        return endTime == null ? "" : endTime;
+    public String getWinsPlanCode() {
+        return winsPlanCode == null ? "" : winsPlanCode;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setWinsPlanCode(String winsPlanCode) {
+        this.winsPlanCode = winsPlanCode;
     }
 
     public String getWinsArrayCode() {
@@ -91,37 +106,5 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
 
     public void setWinsArrayCode(String winsArrayCode) {
         this.winsArrayCode = winsArrayCode;
-    }
-
-    public String getWinsGroupNum() {
-        return winsGroupNum == null ? "" : winsGroupNum;
-    }
-
-    public void setWinsGroupNum(String winsGroupNum) {
-        this.winsGroupNum = winsGroupNum;
-    }
-
-    public String getWinsProjType() {
-        return winsProjType == null ? "" : winsProjType;
-    }
-
-    public void setWinsProjType(String winsProjType) {
-        this.winsProjType = winsProjType;
-    }
-
-    public String getWinsType() {
-        return winsType == null ? "" : winsType;
-    }
-
-    public void setWinsType(String winsType) {
-        this.winsType = winsType;
-    }
-
-    public String getReviBatc() {
-        return reviBatc == null ? "" : reviBatc;
-    }
-
-    public void setReviBatc(String reviBatc) {
-        this.reviBatc = reviBatc;
     }
 }

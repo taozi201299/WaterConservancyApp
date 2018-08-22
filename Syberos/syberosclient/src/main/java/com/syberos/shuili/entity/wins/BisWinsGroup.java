@@ -13,6 +13,8 @@ public class BisWinsGroup extends HttpBaseResponse<BisWinsGroup> {
     String winsGroupNum; // 2)	组编号
     String bwgGuid;
 
+
+
     public String getWinsPost() {
         return winsPost == null ? "" : winsPost;
     }
