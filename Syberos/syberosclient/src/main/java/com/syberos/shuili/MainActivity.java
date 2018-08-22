@@ -378,6 +378,8 @@ public class MainActivity extends TranslucentActivity
                 ScreenManager.getScreenManager().popAll();
                 if(bExist){
                     App.userType = "-1";
+                    App.sCodes.clear();
+                    App.sCode = "";
                     SPUtils.put(GlobleConstants.Pwd,"");
                     intentActivity(MainActivity.this, LoginActivity.class,
                             true, true);

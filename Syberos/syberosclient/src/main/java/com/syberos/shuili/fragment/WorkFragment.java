@@ -35,6 +35,7 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationSuperviceTaskAc
 import com.syberos.shuili.activity.dangersource.RecordReviewListActivity;
 import com.syberos.shuili.activity.dangersource.WriteOffVerificationListActivity;
 import com.syberos.shuili.activity.wins.InspectProjectSelectActivity;
+import com.syberos.shuili.activity.wins.OnSiteInspectListActivity;
 import com.syberos.shuili.activity.woas.InspectAssessListActivity;
 import com.syberos.shuili.activity.woas.SafetyProductionListActivity;
 import com.syberos.shuili.activity.wins.InspectQueryListActivity;
@@ -394,7 +395,7 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext, LawEnforcementQueryActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shuilijicha_xianchang))){
-                intentActivity((Activity)mContext, InspectProjectSelectActivity.class,
+                intentActivity((Activity)mContext,OnSiteInspectListActivity.class,
                         false, true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shuilijicha_wenti))){
 

@@ -85,7 +85,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        OnSiteInspectionInfo item = infoList.get(position);
+        BisWoasGrop item = bisWoasGrop.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
         intentActivity((Activity) mContext, SafetyProductionDetailActivity.class,
                 false, bundle);

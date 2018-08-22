@@ -88,6 +88,10 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     @Override
     public void onItemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bisWinsGroupAll", bisWinsGroupAll.dataSource.get(position));
+        intentActivity(OnSiteInspectListActivity.this,
+                InspectionDetailActivity.class, false, bundle);
     }
     private void getBisWinsGroup(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/prog/bisWinsProgs/";

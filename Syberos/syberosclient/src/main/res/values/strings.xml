@@ -183,8 +183,8 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="refunded"><u>被退回</u></string>
     <string name="returned"><u>已退回</u></string>
-    <string name="severity_normal">一般</string>
-    <string name="severity_big">严重</string>
+    <string name="severity_normal">一般问题</string>
+    <string name="severity_big">严重问题</string>
     <string name="severity_large">非常严重</string>
     <string name="please_select">请选择</string>
     <string name="please_input">请填写</string>

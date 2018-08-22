@@ -2,10 +2,14 @@ package com.syberos.shuili.activity.wins;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.syberos.shuili.R;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.wins.BisWinsProb;
 import com.syberos.shuili.entity.wins.InspectProblemInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
@@ -16,9 +20,9 @@ import butterknife.BindView;
 /**
  * 稽查问题详情
  */
-public class InspectProblemDetailActivity extends TranslucentActivity {
+public class InspectProblemDetailActivity extends BaseActivity {
 
-    private InspectProblemInformation problem;
+    private final String Title = "稽查问题详情";
 
     @BindView(R.id.tv_project)
     TextView tv_project;
@@ -43,6 +47,8 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
 
     @BindView(R.id.mv_multimedia)
     MultimediaView mv_multimedia;
+    private BisWinsProb bisWinsProb = null;
+    private String projName;
 
 
 
@@ -63,19 +69,22 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
 
     @Override
     public void initView() {
+        showTitle(Title);
+        setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        problem = (InspectProblemInformation)bundle.getSerializable(
-                InspectQueryGroupDetailActivity.SEND_BUNDLE_KEY);
+        bisWinsProb = (BisWinsProb) bundle.getSerializable("prob");
+        projName = bundle.getString("projName");
 
-        if (null != problem) {
-            tv_project.setText(problem.getProject());
+        if (null != bisWinsProb) {
+            tv_project.setText(projName);
 
-            tv_type.setText(problem.getType());
+            tv_type.setText(GlobleConstants.winsProbMap.get(bisWinsProb.getProbType()));
 
-            tv_department.setText(problem.getDepartment());
+            tv_department.setText(bisWinsProb.getProbDep());
+            int type = Integer.valueOf(bisWinsProb.getProbCate());
 
-            switch (problem.getSeverity()) {
-                case InspectProblemInformation.SEVERITY_NORMAL:
+            switch (type) {
+                case GlobleConstants.TYPE_NORMAL:
                     tv_severity.setText(R.string.severity_normal);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         tv_severity.setTextColor(getResources().getColor(R.color.color_inspect_type_normal, null));
@@ -83,7 +92,7 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
                         tv_severity.setTextColor(getResources().getColor(R.color.color_inspect_type_normal));
                     }
                     break;
-                case InspectProblemInformation.SEVERITY_BIG:
+                case GlobleConstants.TYPE_BIG:
                     tv_severity.setText(R.string.severity_big);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         tv_severity.setTextColor(getResources().getColor(R.color.color_inspect_type_big, null));
@@ -91,7 +100,7 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
                         tv_severity.setTextColor(getResources().getColor(R.color.color_inspect_type_big));
                     }
                     break;
-                case InspectProblemInformation.SEVERITY_LARGE:
+                case GlobleConstants.TYPE_BIGGER:
                     tv_severity.setText(R.string.severity_large);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         tv_severity.setTextColor(getResources().getColor(R.color.color_inspect_type_large, null));
@@ -104,13 +113,11 @@ public class InspectProblemDetailActivity extends TranslucentActivity {
 
             ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             ae_describe_audio.setLabelText("问题描述");
-            ae_describe_audio.setEditText("划拨维修经费5万元，对堤坝进行修整，" +
-                    "确保水库安全运行，对损坏的堤坝进行修复，加固。");
+            ae_describe_audio.setEditText(bisWinsProb.getProbDesc());
 
             ae_controls_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             ae_controls_audio.setLabelText("整改建议");
-            ae_controls_audio.setEditText("划拨维修经费5万元，对堤坝进行修整，" +
-                    "确保水库安全运行，对损坏的堤坝进行修复，加固。");
+            ae_controls_audio.setEditText(bisWinsProb.getRectSugg());
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
         }

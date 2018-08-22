@@ -2,9 +2,11 @@ package com.syberos.shuili.activity.wins;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
@@ -15,6 +17,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsProb;
 import com.syberos.shuili.entity.wins.BisWinsProj;
 import com.syberos.shuili.entity.wins.BisWinsProjAll;
 import com.syberos.shuili.utils.Strings;
@@ -30,6 +33,7 @@ import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018/4/30.
+ * 获取某稽查组下的稽查问题
  * 分组显示 每个工程下的稽查问题
  */
 
@@ -40,8 +44,12 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     RecyclerView recyclerView_inspection_prob;
     private BisWinsProjAll bisWinsProjAll = null;
     private BisWinsGroup bisWinsGroup = null;
+    private BisWinsProb bisWinsProb = null;
+    HashMap<String,ArrayList<BisWinsProb>>mapValues = new HashMap<>();
+    HashMap<String,String>mapProjValues = new HashMap<>();
 
     ArrayList<InspectionProblemGroup> groups = new ArrayList<>();
+    GroupedWinsProbListAdapter groupedWinsProbListAdapter = null;
 
     @Override
     public int getLayoutId() {
@@ -50,17 +58,30 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
     @Override
     public void initListener() {
+        groupedWinsProbListAdapter.setOnChildClickListener(new GroupedRecyclerViewAdapter.OnChildClickListener() {
+            @Override
+            public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition, int childPosition) {
+                // 显示稽查问题详情
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("prob",groups.get(groupPosition).getChildren().get(childPosition));
+                bundle.putString("projName",groups.get(groupPosition).getHeader());
+                intentActivity(InspectionProblemsAcitvity.this,InspectProblemDetailActivity.class,false,bundle);
+            }
+        });
 
     }
 
     @Override
     public void initData() {
+        groups.clear();
+        showDataLoadingDialog();
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
         if(bisWinsGroup == null){
             ToastUtils.show("参数错误");
             activityFinish();
         }
+        getInspectionProject();
     }
 
 
@@ -68,6 +89,11 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     public void initView() {
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        groupedWinsProbListAdapter = new GroupedWinsProbListAdapter(this,groups);
+        recyclerView_inspection_prob.setAdapter(groupedWinsProbListAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView_inspection_prob.setLayoutManager(layoutManager);
 
     }
 
@@ -75,9 +101,10 @@ public class InspectionProblemsAcitvity extends BaseActivity {
      * 从稽查项目表中获取稽查对象 根据稽查组ID
      */
     private void getInspectionProject(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+       // params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+        params.put("winsGroupGuid","455F9FDBBFD04B62A80C909989761E70");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -106,35 +133,61 @@ public class InspectionProblemsAcitvity extends BaseActivity {
      * 根据稽察组GUID和稽察地区名称查询稽察问题详情
      */
     private void getWinsProblems(){
-        int size = bisWinsProjAll.dataSource.size();
-        ArrayList<BisWinsProjAll>projAlls = (ArrayList<BisWinsProjAll>) bisWinsProjAll.dataSource;
-        for(int i = 0 ; i < size ; i++){
-            String  url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectDetailsInspectionQuestions/";
-            HashMap<String,String>params = new HashMap<>();
-            params.put("bwgGuid",bisWinsGroup.getBwgGuid());
-            params.put("adminWiunName",projAlls.get(i).getAdminWiunName());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prob/bisWinsProbs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWinsProb = gson.fromJson(result,BisWinsProb.class);
+                if(bisWinsProb == null || bisWinsProb.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    closeDataDialog();
+                }else if(bisWinsProb.dataSource.size() == 0){
+                    ToastUtils.show("该稽查组下没有稽查问题");
+                    closeDataDialog();
+                }
+                else {
+                    processResult();
                 }
 
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+            }
 
-                }
-            });
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
 
-
-
+            }
+        });
+    }
+    private void processResult(){
+        for(BisWinsProjAll bisWinsProjAll: bisWinsProjAll.dataSource ){
+            mapValues.put(bisWinsProjAll.getProjGuid(),new ArrayList<BisWinsProb>());
+            mapProjValues.put(bisWinsProjAll.getProjGuid(),bisWinsProjAll.getProjName());
         }
+        for(BisWinsProb bisWinsProb : bisWinsProb.dataSource){
+            ArrayList list = mapValues.get(bisWinsProb.getWinsProjGuid());
+            if(list == null)continue;
+            list.add(bisWinsProb);
+        }
+        for(String key:mapValues.keySet()){
+            InspectionProblemGroup inspectionProblemGroup = new InspectionProblemGroup(mapProjValues.get(key),mapValues.get(key));
+            groups.add(inspectionProblemGroup);
+        }
+        refreshUI();
+    }
+    private void refreshUI(){
+        closeDataDialog();
+        groupedWinsProbListAdapter.setData(groups);
+        groupedWinsProbListAdapter.notifyDataSetChanged();
+
     }
     private static class InspectionProblemGroup implements Serializable {
 
         private String header;
-        private ArrayList<ObjAcci> children;
+        private ArrayList<BisWinsProb> children;
 
-        public InspectionProblemGroup(String header, ArrayList<ObjAcci> children) {
+        public InspectionProblemGroup(String header, ArrayList<BisWinsProb> children) {
             this.header = header;
             this.children = children;
         }
@@ -147,11 +200,11 @@ public class InspectionProblemsAcitvity extends BaseActivity {
             this.header = header;
         }
 
-        public ArrayList<ObjAcci> getChildren() {
+        public ArrayList<BisWinsProb> getChildren() {
             return children;
         }
 
-        public void setChildren(ArrayList<ObjAcci> children) {
+        public void setChildren(ArrayList<BisWinsProb> children) {
             this.children = children;
         }
     }
@@ -177,7 +230,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            ArrayList<ObjAcci> children = mGroups.get(groupPosition).getChildren();
+            ArrayList<BisWinsProb> children = mGroups.get(groupPosition).getChildren();
             return children == null ? 0 : children.size();
         }
 
@@ -238,45 +291,42 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         public void onBindChildViewHolder(BaseViewHolder holder,
                                           final int groupPosition, final int childPosition) {
 
-            final ObjAcci accidentInformation
+            final BisWinsProb bisWinsProb
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
-          //  DicInfo item  = getAccidentTypeItem(accidentInformation.getAcciCate());
             RelativeLayout ll_report_after = holder.get(R.id.ll_report_after);
             ll_report_after.setVisibility(View.GONE);
-            String grade = accidentInformation.getAcciGrad() == null ?"0":accidentInformation.getAcciGrad();
+            String grade = bisWinsProb.getProbCate();
             int type = Integer.valueOf(grade);
             switch (type) {
                 case GlobleConstants.TYPE_NORMAL: {
-                    holder.setText(R.id.tv_type,R.string.accident_type_normal);
+                    holder.setText(R.id.tv_type,R.string.severity_normal);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_normal_shape);
                 }
                 break;
                 case GlobleConstants.TYPE_BIG: {
-                    holder.setText(R.id.tv_type,R.string.accident_type_big);
+                    holder.setText(R.id.tv_type,R.string.severity_big);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_big_shape);
                 }
                 break;
                 case GlobleConstants.TYPE_BIGGER: {
-                    holder.setText(R.id.tv_type,R.string.accident_type_bigger);
+                    holder.setText(R.id.tv_type,R.string.severity_large);
                     holder.setBackgroundRes(R.id.ll_type,
                             R.drawable.btn_accident_type_bigger_shape);
                 }
                 break;
-                case GlobleConstants.TYPE_LARGE: {
-                    holder.setText(R.id.tv_type,R.string.accident_type_large);
-                    holder.setTextColor(R.id.tv_type, R.color.black);
-
+                default:
+                    holder.setText(R.id.tv_type,R.string.severity_normal);
                     holder.setBackgroundRes(R.id.ll_type,
-                            R.drawable.btn_accident_type_large_shape);
-                }
+                            R.drawable.btn_accident_type_normal_shape);
                 break;
             }
 
-         //   holder.setText(R.id.tv_title, item.getDcItemName());
-            holder.setText(R.id.tv_time, accidentInformation.getOccuTime());
-            holder.setText(R.id.tv_name, accidentInformation.getAccidentUnitName());
+
+            ((TextView)holder.get(R.id.tv_name_label)).setText("问题分类");
+            holder.setText(R.id.tv_time, bisWinsProb.getCollTime());
+            holder.setText(R.id.tv_name,GlobleConstants.winsProbMap.get(bisWinsProb.getProbType()));
         }
     }
 }
