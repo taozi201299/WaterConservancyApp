@@ -34,7 +34,7 @@
                 android:id="@+id/ll_hiddlen_object_title"
                 android:layout_width="@dimen/_3dp"
                 android:layout_height="@dimen/_15dp"
-                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
                 android:background="@color/button_login_normal"
                 android:orientation="vertical" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2dp"
                 android:layout_toEndOf="@+id/ll_hiddlen_object_title"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/_16sp"
                 android:text="请选择考核对象"
                 android:textColor="@color/button_login_normal" />
         </RelativeLayout>

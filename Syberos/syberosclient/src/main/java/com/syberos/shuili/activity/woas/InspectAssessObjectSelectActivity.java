@@ -99,15 +99,16 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("woasGroupGuid",bisWoasGroup);
+        bundle.putSerializable("bisWoasGroup",bisWoasGroup);
         bundle.putSerializable("bisWoasObj",bisWoasObj.dataSource.get(position));
         intentActivity(this, InspectAssessNewDeductMarksActivity.class,
                 false, bundle);
     }
     private void getWoasObj(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/selectAssessedObjectList/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",bisWoasGroup.getGuid());
+        params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

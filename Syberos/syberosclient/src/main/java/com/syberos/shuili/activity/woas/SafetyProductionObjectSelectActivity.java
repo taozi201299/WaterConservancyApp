@@ -27,12 +27,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.microedition.khronos.opengles.GL;
+
 import butterknife.BindView;
 
 /**
- * BIS_WOAS_OBJ  工作考核对象表中通过工作考核GUID	WOAS_GUID 考核组GUID	WOAS_GROUP_GUID 获取被考核对象
+ * 工作考核-安全生产考核被检对象
+ * 8.2.2.76	考核项目（BIS_WOAS_PROJ）
+ * 考场组下的考核项目
+ * 8.2.2.72	工作考核对象（BIS_WOAS_OBJ）
  */
-
 public class SafetyProductionObjectSelectActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
@@ -53,28 +57,12 @@ public class SafetyProductionObjectSelectActivity extends BaseActivity
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_safety_production_object_select;
+        return R.layout.activity_inspect_assess_object_select;
     }
 
     @Override
     public void initListener() {
 
-    }
-
-    @Override
-    public void initView() {
-        setActionBarTitle("现场考核");
-        setActionBarRightVisible(View.INVISIBLE);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        //设置RecyclerView 布局
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
-        listAdapter = new ListAdapter(this,
-                R.layout.activity_safety_production_object_select_item);
-        recyclerView.setAdapter(listAdapter);
-        listAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -93,17 +81,34 @@ public class SafetyProductionObjectSelectActivity extends BaseActivity
     }
 
     @Override
+    public void initView() {
+        setActionBarTitle("现场考核");
+        setActionBarRightVisible(View.INVISIBLE);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
+                DividerItemDecoration.VERTICAL));
+        listAdapter = new ListAdapter(this,
+                R.layout.activity_inspect_assess_object_select_item);
+        recyclerView.setAdapter(listAdapter);
+        listAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("woasGroupGuid",bisWoasGroup);
+        bundle.putSerializable("bisWoasGroup",bisWoasGroup);
         bundle.putSerializable("bisWoasObj",bisWoasObj.dataSource.get(position));
-        intentActivity(this, InspectAssessNewDeductMarksActivity.class,
+        intentActivity(this, SafetyProductionNewDeductMarksActivity.class,
                 false, bundle);
     }
     private void getWoasObj(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/selectAssessedObjectList/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",bisWoasGroup.getGuid());
+        params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

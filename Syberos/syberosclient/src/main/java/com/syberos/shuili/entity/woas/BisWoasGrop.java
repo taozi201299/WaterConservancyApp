@@ -11,7 +11,17 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 public class BisWoasGrop extends HttpBaseResponse<BisWoasGrop> {
     String guid;;
-    String woasGuid;;
+    String woasGuid;
+
+    public String getAssePlanGuid() {
+        return assePlanGuid == null ? "" : assePlanGuid;
+    }
+
+    public void setAssePlanGuid(String assePlanGuid) {
+        this.assePlanGuid = assePlanGuid;
+    }
+
+    String assePlanGuid;
     String leadWiun;
     String woasThem;
     String woasGropName;

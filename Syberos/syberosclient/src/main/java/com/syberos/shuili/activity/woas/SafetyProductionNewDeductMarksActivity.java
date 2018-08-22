@@ -12,10 +12,12 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.BisWoasObj;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.service.dataprovider.sync.synchronizer.SynchronizerFactory;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
@@ -29,11 +31,20 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 新增安全生产考核记录
+ * 安全生产考核扣分
  */
-public class SafetyProductionNewDeductMarksActivity extends BaseActivity implements  BaseActivity.IDialogInterface {
+public class SafetyProductionNewDeductMarksActivity extends BaseActivity implements BaseActivity.IDialogInterface{
 
-    private final String Title = "新增安全生产考核记录";
+    private final String Title = "安全生产考核";
+    /**
+     * 考核组对象
+     */
+    BisWoasGrop bisWoasGrop = null;
+    /**
+     * 考核对象
+     */
+    private BisWoasObj bisWoasObj = null;
+
     @BindView(R.id.tv_woas_unit)
     TextView tv_woas_unit;
 
@@ -46,23 +57,15 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
     @BindView(R.id.mv_multimedia)
     MultimediaView mv_multimedia;
 
-    /**
-     * 考核组对象
-     */
-    BisWinsGroup bisWinsGroup = null;
-    /**
-     * 考核对象
-     */
-    private BisWoasObj bisWoasObj = null;
-
     @OnClick(R.id.tv_save)
     void onSubmitClicked() {
+        submit();
 
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_safety_production_new_deduct_marks;
+        return R.layout.activity_inspect_assess_new_deduct_marks;
     }
 
     @Override
@@ -72,11 +75,11 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
 
     @Override
     public void initData() {
-        if(bisWinsGroup == null || bisWoasObj == null) {
+        if(bisWoasGrop == null || bisWoasObj == null) {
             Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
             bisWoasObj = (BisWoasObj) bundle.getSerializable("bisWoasObj");
-            bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
-            if(bisWoasObj == null || bisWinsGroup == null){
+            bisWoasGrop = (BisWoasGrop) bundle.getSerializable("bisWoasGroup");
+            if(bisWoasObj == null || bisWoasGrop == null){
                 ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                 activityFinish();
             }
@@ -110,10 +113,10 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
         params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID
-        params.put("woasGropGuid",bisWinsGroup.getBwgGuid()); // 考核组GUID
+        params.put("woasGropGuid",bisWoasGrop.getGuid()); // 考核组GUID
         params.put("fianDeuc", (String) ce_score.getText()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
-        params.put("woasType","2");// 考核类型
+        params.put("woasType","1");// 考核类型
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

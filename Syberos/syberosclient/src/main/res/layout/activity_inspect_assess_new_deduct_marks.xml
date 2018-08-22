@@ -113,6 +113,7 @@
                             android:id="@+id/ae_describe_audio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:minHeight="@dimen/_40dp"
                             android:paddingTop="@dimen/_15dp"
                             app:view_label="扣分说明"

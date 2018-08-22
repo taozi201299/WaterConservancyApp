@@ -12,6 +12,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.BisWoasObj;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -38,7 +39,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
     /**
      * 考核组对象
      */
-    BisWinsGroup bisWinsGroup = null;
+    BisWoasGrop bisWoasGrop = null;
     /**
      * 考核对象
      */
@@ -74,11 +75,11 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
 
     @Override
     public void initData() {
-        if(bisWinsGroup == null || bisWoasObj == null) {
+        if(bisWoasGrop == null || bisWoasObj == null) {
             Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
             bisWoasObj = (BisWoasObj) bundle.getSerializable("bisWoasObj");
-            bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
-            if(bisWoasObj == null || bisWinsGroup == null){
+            bisWoasGrop = (BisWoasGrop) bundle.getSerializable("bisWoasGroup");
+            if(bisWoasObj == null || bisWoasGrop == null){
                 ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                 activityFinish();
             }
@@ -112,7 +113,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
         params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID
-        params.put("woasGropGuid",bisWinsGroup.getBwgGuid()); // 考核组GUID
+        params.put("woasGropGuid",bisWoasGrop.getGuid()); // 考核组GUID
         params.put("fianDeuc", (String) ce_score.getText()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
         params.put("woasType","1");// 考核类型

@@ -22,7 +22,6 @@ public class BisWoasObj extends HttpBaseResponse<BisWoasObj>{
     String woasWiunName;
     String evalStat;
     String asseScor;
-
     public String getAsseStat() {
         return asseStat == null ? "" : asseStat;
     }

@@ -1,34 +1,47 @@
 package com.syberos.shuili.activity.woas;
 
-import android.app.Activity;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.woas.DeductMarksInfo;
-import com.syberos.shuili.entity.woas.InspectionObjectInfo;
-import com.syberos.shuili.entity.woas.OnSiteInspectionInfo;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.woas.BisWoasGrop;
+import com.syberos.shuili.entity.woas.BisWoasObj;
+import com.syberos.shuili.entity.woas.BisWoasProg;
 import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.List;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 
 /**
- * 安全生产考核详情界面
- *
- * 1 获取考核方案信息
+ * 考核组详情  水利稽查
  */
 public class SafetyProductionDetailActivity extends BaseActivity {
-
-    public static final String SEND_BUNDLE_KEY_0 = "InspectionObjectInfo";
+    public static final String SEND_BUNDLE_KEY_0 = "InspectAssessPlanInfo";
     public static final String SEND_BUNDLE_KEY_1 = "DeductMarksInfo";
 
-    private OnSiteInspectionInfo info;
+    private BisWoasGrop info;
+    /**
+     * 考核组方案
+     */
+    private BisWoasProg bisWoasProg = null;
+
+    /**
+     * 考核对象
+     */
+    private BisWoasObj bisWoasObj = null;
 
     @BindView(R.id.tv_check_plan)
     TextView tv_check_plan;
@@ -54,14 +67,9 @@ public class SafetyProductionDetailActivity extends BaseActivity {
     @BindView(R.id.ll_container_0)
     LinearLayout ll_container_0;
 
-    @BindView(R.id.ll_container_1)
-    LinearLayout ll_container_1;
-
-
-
     @Override
     public int getLayoutId() {
-        return R.layout.activity_safety_production_detail;
+        return R.layout.activity_inspect_assess_detail;
     }
 
     @Override
@@ -73,74 +81,118 @@ public class SafetyProductionDetailActivity extends BaseActivity {
     public void initData() {
 
     }
-
     @Override
     public void initView() {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        info = (OnSiteInspectionInfo) bundle.getSerializable(
+        info = (BisWoasGrop) bundle.getSerializable(
                 SafetyProductionListActivity.SEND_BUNDLE_KEY);
         if (null != info) {
-            setActionBarTitle(info.getName());
+            setActionBarTitle(info.getWoasGropName());
             setActionBarRightVisible(View.INVISIBLE);
+        }
+        getWoasGroupInfo();
+    }
 
-            // 所属考核方案
-            tv_check_plan.setText(info.getPlan());
-            // 考核时间
-            tv_check_time.setText(info.getTime());
-            // 考核内容
-            tv_check_content.setText(info.getContent());
-            // 组长名称
-            tv_group_leader.setText(info.getGroupName());
-            // 组长单位
-            tv_group_unit.setText(info.getGroupUnit());
-            // 组员单位
-            tv_member_unit.setText(info.getChildUnit());
-            // 专家姓名
-            tv_check_person.setText(info.getExperts());
-
-            List<InspectionObjectInfo> inspectionObjectInfoList = info.getInspectionObjectInfoList();
-            for (final InspectionObjectInfo objectInfo : inspectionObjectInfoList) {
-                View view = LayoutInflater.from(mContext).inflate(
-                        R.layout.activity_safety_production_detail_check_item, null);
-
-                ((TextView) view.findViewById(R.id.tv_item_name)).setText(objectInfo.getName());
-
-                TextView btn = (TextView) view.findViewById(R.id.iv_arrow_right);
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(SEND_BUNDLE_KEY_0, objectInfo);
-                        intentActivity((Activity) mContext,
-                                SafetyProductionDetailRealSituationActivity.class,
-                                false, bundle);
-                    }
-                });
-                ll_container_0.addView(view);
+    /**
+     * 根据方案guid获取稽查组对应方案的信息
+     */
+    private void getWoasGroupInfo(){
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/woas/prog/selectSingleAssessmentPlan/";
+        HashMap<String,String>params = new HashMap<>();
+        //  params.put("guid",info.getAssePlanGuid());
+        params.put("guid","9C1664EFC34B4EFEAB0CE91F86465284");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWoasProg = gson.fromJson(result,BisWoasProg.class);
+                if(bisWoasProg == null || bisWoasProg.dataSource == null || bisWoasProg.dataSource.size() == 0){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }
+                getWoasObj();
             }
 
-            List<DeductMarksInfo> deductMarksInfoList = info.getDeductMarksInfoList();
-            for (final DeductMarksInfo marksInfo : deductMarksInfoList) {
-                View view = LayoutInflater.from(mContext).inflate(
-                        R.layout.activity_safety_production_detail_deduct_marks, null);
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
 
-                ((TextView) view.findViewById(R.id.tv_time)).setText(marksInfo.getTime());
-                ((TextView) view.findViewById(R.id.tv_unit)).setText(marksInfo.getUnit());
-                ((TextView) view.findViewById(R.id.tv_score)).setText(
-                        String.format("%s分", marksInfo.getScore()));
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(SEND_BUNDLE_KEY_1, marksInfo);
-                        intentActivity((Activity) mContext,
-                                SafetyProductionDetailDeductMarksActivity.class,
-                                false, bundle);
-                    }
-                });
-                ll_container_1.addView(view);
+            }
+        });
+    }
+    /**
+     * 获取组员信息和专家信息
+     */
+    private void getPersonInfo(){
+        String url = "http://192.168.1.8:8080/sjjk/v1/bis/woas/staff/bisWoasStaffs/";
+    }
+    /**
+     * 获取考核对象
+     */
+    private void getWoasObj(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("woasGroupGuid",info.getGuid());
+        params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisWoasObj = gson.fromJson(result,BisWoasObj.class);
+                if(bisWoasObj == null || bisWoasObj.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(bisWoasObj.dataSource.size() == 0){
+                    ToastUtils.show("未获取到考核组信息");
+                }else {
+                    refreshUI();
+                }
+
             }
 
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
+
+    private void refreshUI() {
+        // 所属考核方案
+        tv_check_plan.setText(bisWoasProg.getPROGNAME());
+        // 考核时间
+        tv_check_time.setText(bisWoasProg.getWOASSTARTIME() + "--" + bisWoasProg.getWOASDEADLINE());
+        // 考核内容
+        tv_check_content.setText("");
+        // 组长名称
+        tv_group_leader.setText("");
+        // 组长单位
+        tv_group_unit.setText("");
+        // 组员单位
+        tv_member_unit.setText("");
+        // 专家姓名
+        tv_check_person.setText("");
+        for (final BisWoasObj objectInfo : bisWoasObj.dataSource) {
+            View view = LayoutInflater.from(mContext).inflate(
+                    R.layout.activity_safety_production_detail_check_item, null);
+
+            ((TextView) view.findViewById(R.id.tv_item_name)).setText(objectInfo.getWoasWiunName());
+
+            TextView btn = view.findViewById(R.id.iv_arrow_right);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(SEND_BUNDLE_KEY_0, objectInfo);
+                    intentActivity(SafetyProductionDetailActivity.this,
+                            SafetyProductionDetailRealSituationActivity.class,
+                            false, bundle);
+                }
+            });
+            ll_container_0.addView(view);
         }
     }
+
 }

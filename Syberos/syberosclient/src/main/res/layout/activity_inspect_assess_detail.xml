@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/transparent">
 
@@ -17,6 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_10dp"
+                android:layout_margin="@dimen/_5dp">
             <LinearLayout
                 android:id="@+id/ll_base_info"
                 android:layout_width="match_parent"
@@ -26,7 +32,6 @@
                 android:paddingLeft="@dimen/_5dp"
                 android:paddingRight="@dimen/_5dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
                 android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/ll_base_info_title"
@@ -238,9 +243,53 @@
                         android:layout_centerVertical="true"
                         android:text= "李白、杜甫"/>
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:background="@color/gray_bb"
+                    android:layout_marginTop="@dimen/_2dp"/>
+                <RelativeLayout
+                    android:id="@+id/rl_prob_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/tv_problem_count_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_centerVertical="true"
+                        android:text="扣分记录"
+                        android:textColor="@color/title_1"
+                        android:textSize="@dimen/_14sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_problem_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_20dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/title_0"
+                        android:textSize="@dimen/_16sp"
+                        android:layout_toLeftOf="@+id/iv_right"
+                        android:text= "10" />
+                    <ImageView
+                        android:id="@+id/iv_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/_10dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_right"/>
+                </RelativeLayout>
             </LinearLayout>
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_10dp"
+                android:layout_margin="@dimen/_5dp">
             <LinearLayout
                 android:id="@+id/ll_check_object"
                 android:layout_width="match_parent"
@@ -250,7 +299,6 @@
                 android:paddingLeft="@dimen/_5dp"
                 android:paddingRight="@dimen/_5dp"
                 android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:id="@+id/rl__check_object_title"
@@ -262,7 +310,6 @@
                         android:layout_width="@dimen/_3dp"
                         android:layout_height="@dimen/_15dp"
                         android:background="@color/button_login_normal"
-                        android:layout_gravity="center_vertical"
                         android:orientation="vertical"/>
                     <TextView
                         android:layout_toEndOf="@+id/ll_check_object_title"
@@ -270,6 +317,7 @@
                         android:layout_height="wrap_content"
                         android:text="考核对象"
                         android:layout_marginStart="@dimen/_2dp"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/button_login_normal"/>
                     <TextView
                         android:id="@+id/tv_check_object_count"
@@ -294,52 +342,8 @@
                     android:orientation="vertical">
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_hidden_object"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_10dp"
-                android:layout_marginLeft="@dimen/_10dp"
-                android:paddingLeft="@dimen/_5dp"
-                android:paddingRight="@dimen/_5dp"
-                android:layout_marginTop="@dimen/padding_5"
-                android:background="@drawable/dialog_bg_shape"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:id="@+id/rl_hiddlen_object_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_10dp">
-                    <LinearLayout
-                        android:id="@+id/ll_hiddlen_object_title"
-                        android:layout_width="@dimen/_3dp"
-                        android:layout_height="@dimen/_15dp"
-                        android:background="@color/button_login_normal"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical"/>
-                    <TextView
-                        android:layout_toEndOf="@+id/ll_hiddlen_object_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="扣分记录"
-                        android:layout_marginStart="@dimen/_2dp"
-                        android:textColor="@color/button_login_normal"/>
-                </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:background="@color/gray_bb"
-                    android:layout_marginTop="@dimen/_2dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ll_container_1"
-                    android:divider="@drawable/div_shape"
-                    android:showDividers="middle"
-                    android:orientation="vertical">
-                </LinearLayout>
-            </LinearLayout>
+        </android.support.v7.widget.CardView>
         </LinearLayout>
+
     </com.syberos.shuili.view.CustomScrollView>
 </RelativeLayout>

@@ -85,12 +85,15 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        OnSiteInspectionInfo item = infoList.get(position);
+        BisWoasGrop item = bisWoasGrop.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
         intentActivity((Activity) mContext, InspectAssessDetailActivity.class,
                 false, bundle);
     }
 
+    /**
+     * 该接口需要返回方案Guid
+     */
     private void getWoasGroupList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
@@ -182,7 +185,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bisWoasGrop",information);
-                    intentActivity((Activity) mContext, SafetyProductionObjectSelectActivity.class,
+                    intentActivity((Activity) mContext, InspectAssessObjectSelectActivity.class,
                             false, bundle);
                 }
             });

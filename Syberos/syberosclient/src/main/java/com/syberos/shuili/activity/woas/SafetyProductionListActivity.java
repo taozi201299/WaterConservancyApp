@@ -16,7 +16,6 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.ObjWoas;
 import com.syberos.shuili.entity.woas.OnSiteInspectionInfo;
@@ -29,14 +28,16 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 工作考核 安全生产考核
- * 1 从BIS_WOAS_GROP中根据LEAD_ORG_GUID 获取所有考核组信息 woasType 水利稽查 1 安全生产 2
- *
+ * 工作考核 水利稽查
+ *  1 BIS_WOAS_GROP 考核组表
+ *  2 8.2.1.16	工作考核对象表（OBJ_WOAS）中获取详情
  */
 
-public class SafetyProductionListActivity extends  BaseActivity implements CommonAdapter.OnItemClickListener {
 
-    public static final String SEND_BUNDLE_KEY = "SafetyProductionListActivity";
+public class SafetyProductionListActivity extends BaseActivity implements CommonAdapter.OnItemClickListener {
+
+    public static final String SEND_BUNDLE_KEY = "OnSiteInspectionInfo";
+    private final String Title = "安全生产考核";
 
     private List<OnSiteInspectionInfo> infoList = null;
     private ListAdapter adapter;
@@ -46,6 +47,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
     private int iSucessCount = 0;
     private int iFailedCount = 0;
 
@@ -57,6 +59,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
     @Override
     public void initListener() {
         adapter.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -65,12 +68,11 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
         iFailedCount = 0;
         showDataLoadingDialog();
         getWoasGroupList();
-
     }
 
     @Override
     public void initView() {
-        showTitle("安全生产考核");
+        showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
@@ -91,13 +93,16 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
                 false, bundle);
     }
 
+    /**
+     * 该接口需要返回方案Guid
+     */
     private void getWoasGroupList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        // params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("leadOrgGuid","036C5D990CD14412B5D04679197AFAF4");
         // 1 水利稽查工作考核 2 安全生产工作考核
-      //  params.put("woasType","2");
+        //  params.put("woasType","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -176,7 +181,7 @@ public class SafetyProductionListActivity extends  BaseActivity implements Commo
             ((TextView) (holder.getView(R.id.tv_name))).setText(information.getLareId());
             ((TextView) (holder.getView(R.id.tv_time))).setText(information.getStartTime() +"-"+information.getEndTime());
 
-            TextView tv_assess =  holder.getView(R.id.tv_assess);
+            TextView tv_assess = (TextView) (holder.getView(R.id.tv_assess));
             tv_assess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
