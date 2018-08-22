@@ -76,7 +76,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
     }
     private void commitForm(){
        // String url = "http://192.168.1.8:8080/sjjk/v1/bis/haz/bisHazPatRec/";
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Danger/create";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Danger/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("hazGuid", itemInfo.getGuid());
         params.put("patTime", "");

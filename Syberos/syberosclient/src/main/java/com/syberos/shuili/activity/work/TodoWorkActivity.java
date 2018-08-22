@@ -29,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.syberos.shuili.config.GlobleConstants.strCJIP;
+import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 
 /**
  * Created by Administrator on 2018/4/4.
@@ -61,7 +62,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     }
 
     private void getData(){
-        String url = strCJIP+"/pprty/WSRest/service/backlog";
+        String url = strZJIP+"/pprty/WSRest/service/backlog";
         HashMap<String,String> params = new HashMap<>();
         params.put("roleCode","235407195106112745");
       //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");

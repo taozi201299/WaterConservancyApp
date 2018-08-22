@@ -149,7 +149,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      */
     private void submit(int type){
       // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
-        String url = GlobleConstants.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人

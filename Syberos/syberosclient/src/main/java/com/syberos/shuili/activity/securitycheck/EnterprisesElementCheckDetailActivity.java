@@ -311,7 +311,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             results.add(params);
         }
        // String url = "http://192.168.1.8:8080/sjjk/v1/bis/se/wiun/bisSeWiunCheck/";
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/bis/se/wiuncheck/addBisSeWiunCheck";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/bis/se/wiuncheck/addBisSeWiunCheck";
         for(final HashMap<String,String> map :results){
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;

@@ -148,7 +148,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
         });
     }
     private  void getReportItemDetail(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/acci/rec/rep/bisAcciRecReps/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/acci/rec/rep/bisAcciRecReps/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<BisOrgMonRepPeri> list = (ArrayList<BisOrgMonRepPeri>) bisOrgMonRepPeri.dataSource;
         final int size = list.size();
@@ -415,7 +415,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
     }
 
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/addAcciRecRep/";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/addAcciRecRep/";
         HashMap<String,String>params = new HashMap<>();
         params.put("appCode", App.sCode.toLowerCase());
         params.put("repGuid",bisOrgMonRepPeri.getGuid());
@@ -446,7 +446,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
         });
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/cancelAcci/";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/cancelAcci/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repGuid",bisOrgMonRepPeri.getGuid());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();

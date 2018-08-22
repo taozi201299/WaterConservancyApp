@@ -46,6 +46,7 @@ import okhttp3.RequestBody;
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ALL;
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ONE;
 import static com.syberos.shuili.config.GlobleConstants.strCJIP;
+import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 
 public class NotificationCenterActivity extends BaseActivity implements CommonAdapter.OnItemClickListener {
 
@@ -149,7 +150,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
     }
     private void deleteNotice(DeleteType type,List<String> noticeIds){
         showDataLoadingDialog();
-        String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
+        String url = strZJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
         formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
         if(type == DeleteType.DELETE_ALL)
@@ -174,7 +175,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         });
     }
     private void getNotices(){
-        String url = strCJIP+"/pprty/WSRest/service/notice/pagelist";
+        String url = strZJIP+"/pprty/WSRest/service/notice/pagelist";
         HashMap<String,String> params = new HashMap<>();
         params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {

@@ -35,6 +35,7 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 import static com.syberos.shuili.config.GlobleConstants.strCJIP;
+import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 
 public class NotificationDetailActivity extends BaseActivity {
 
@@ -108,7 +109,7 @@ public class NotificationDetailActivity extends BaseActivity {
         showDataLoadingDialog();
         ArrayList<String>noticeIds = new ArrayList<>();
         noticeIds.add(noticeInfo.getGuid());
-        String url = strCJIP+"/pprty/WSRest/service/notice/del_all";
+        String url = strZJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
         formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
         formInfo.all = false;
@@ -133,7 +134,7 @@ public class NotificationDetailActivity extends BaseActivity {
         });
     }
     private void  updateMsgStatus(){
-        String url = strCJIP + "/pprty/WSRest/service/notice/isread";
+        String url = strZJIP + "/pprty/WSRest/service/notice/isread";
         HashMap<String,String>param = new HashMap<>();
         param.put("guid",noticeInfo.getGuid());
       HttpUtils.getInstance().requestNet_put(url, param, url, new RequestCallback<String>() {

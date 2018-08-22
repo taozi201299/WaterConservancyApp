@@ -419,7 +419,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         pvTime.show();
     }
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/addHiddRecRep/";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/addHiddRecRep/";
         HashMap<String,String>params = new HashMap<>();
         params.put("appCode", App.sCode.toLowerCase());
         params.put("repGuid",bisOrgMonRepPeri.getGuid());
@@ -450,7 +450,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         });
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Report/cancelHidd";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/cancelHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("repGuid",bisOrgMonRepPeri.getGuid());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
