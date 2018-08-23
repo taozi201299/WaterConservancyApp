@@ -1,7 +1,7 @@
 package com.syberos.shuili.view.indexListView;
 
 
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 
 import java.util.Comparator;
 
@@ -10,9 +10,9 @@ import java.util.Comparator;
  * <p>
  * 根据拼音来排列HeadListView中的数据
  */
-public class PinyinComparator implements Comparator<UserExtendInfo> {
+public class PinyinComparator implements Comparator<UserExtendInformation> {
     @Override
-    public int compare(UserExtendInfo c1, UserExtendInfo c2) {
+    public int compare(UserExtendInformation c1, UserExtendInformation c2) {
 
         if (c1.getSortLetter().charAt(0) > 90 || c2.getSortLetter().charAt(0) < 65) {
             //A - Z

@@ -1,7 +1,9 @@
 package com.syberos.shuili.network;
 
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.entity.userinfo.UserInfo;
+import com.syberos.shuili.entity.userinfo.RoleExtInfo;
+import com.syberos.shuili.entity.userinfo.RoleExtInfoList;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -15,9 +17,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.logging.Handler;
 
 /**
  * Created by Administrator on 2018/5/14.
@@ -133,7 +132,7 @@ public class SoapUtils {
      * @param methodName 接口名称
      * @param callback 接口回调
      */
-    public void updateUserInfo(UserInfo info, String methodName, RequestCallback<UserInfo> callback) {
+    public void updateUserInfo(UserExtendInfo info, String methodName, RequestCallback<UserExtendInfo> callback) {
         String SOAP_ACTION = NAME_SPACE + methodName;// 命名空间+方法名称；
         SoapObject request = new SoapObject(NAME_SPACE, methodName);// 创建SoapObject实例
         // 生成调用web service 方法的soap请求消息
@@ -141,7 +140,7 @@ public class SoapUtils {
                 SoapEnvelope.VER11);
         // 设置.net web service
         envelope.dotNet = false;
-        envelope.encodingStyle = "UTF-8";
+     //   envelope.encodingStyle = "UTF-8";
         // 建立webservice连接对象
         HttpTransportSE transport = new HttpTransportSE(WSDL_URL);
         transport.debug = true;// 是否是调试模式
@@ -152,12 +151,15 @@ public class SoapUtils {
         request.addProperty(objekt);
         envelope.bodyOut = transport;
         envelope.setOutputSoapObject(request);// 设置请求参数
-        new MarshalBase64().register(envelope);
-       envelope.addMapping(NAME_SPACE, "userExtendInfo", info.getClass(),new MarshalBase64());// 传对象时必须，参数namespace是webservice中指定的，
+       // new MarshalDate().register(envelope);
+        // new MarshalBase64().register(envelope);
+        envelope.addMapping(NAME_SPACE,"RoleExtInfoList", RoleExtInfoList.class);
+        envelope.addMapping(NAME_SPACE,"RoleExtInfo", RoleExtInfo.class);
+       envelope.addMapping(NAME_SPACE, "UserExtendInfo", info.getClass());// 传对象时必须，参数namespace是webservice中指定的，
         try {
             transport.call(SOAP_ACTION, envelope);
             Object obj = envelope.getResponse();// 直接将返回值强制转换为已知对象
-            if(callback != null) callback.sendResult((UserInfo) obj);
+            if(callback != null) callback.sendResult((UserExtendInfo) obj);
         } catch (IOException e) {
             callback.sendResultFailed(-2);
             e.printStackTrace();

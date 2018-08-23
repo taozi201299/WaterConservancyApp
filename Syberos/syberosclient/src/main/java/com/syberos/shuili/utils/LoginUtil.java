@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
 import com.syberos.shuili.App;
+import com.syberos.shuili.entity.RoleBaseInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ public class LoginUtil {
     private static final String LOGIN_LAST_USER ="login_last_user";
     private static final String LAW_ENFORCEMENT_QUERY_HISTORIES = "L_E_Q_HISTORY";
     private static final int MAX_LOGIN_RECORD_COUNT = 4;
+    private static   ArrayList<RoleBaseInfo> roleList;
 
     private static SharedPreferences preferences;
     public static void recordLoginAccount(final String account) {
@@ -96,5 +99,11 @@ public class LoginUtil {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
+    }
+    public static void setRoleList( ArrayList<RoleBaseInfo> list){
+        roleList = list;
+    }
+    public static ArrayList<RoleBaseInfo> getRoleList(){
+        return roleList;
     }
 }

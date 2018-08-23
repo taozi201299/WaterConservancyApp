@@ -17,7 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
@@ -93,7 +93,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity implements Comm
     private void getHiddenList(){
         final String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
-        UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("hiddStat",strHiddState);
         params.put("orgGuid",info.getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url,new RequestCallback<String>() {

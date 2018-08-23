@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.syberos.shuili.R;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.utils.BitmapUtil;
 import com.syberos.shuili.view.TextDrawable;
 
@@ -30,15 +30,15 @@ public class AddMemberAdapter extends BaseAdapter {
     public static final int PRARENT_LAYOUT = 0;
     public static final int CHIRD_LAYOUT = 1;
 
-    private List<UserExtendInfo> data;
+    private List<UserExtendInformation> data;
     private Context mContext;
 
-    public AddMemberAdapter(List<UserExtendInfo> data, Context mContext, boolean isChoice) {
+    public AddMemberAdapter(List<UserExtendInformation> data, Context mContext, boolean isChoice) {
         this.data = data;
         this.mContext = mContext;
     }
 
-    public void setData(List<UserExtendInfo> data) {
+    public void setData(List<UserExtendInformation> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -82,7 +82,7 @@ public class AddMemberAdapter extends BaseAdapter {
                 viewHolder.ivIcon = convertView.findViewById(R.id.iv_icon);
             convertView.setTag(viewHolder);
         }
-        UserExtendInfo user = data.get(position);
+        UserExtendInformation user = data.get(position);
         viewHolder.username.setText(user.getUserName());
         loadIcon(viewHolder.ivIcon, user);
 
@@ -95,7 +95,7 @@ public class AddMemberAdapter extends BaseAdapter {
      * @param image
      * @param userInformation
      */
-    private void loadIcon(final ImageView image, final UserExtendInfo userInformation) {
+    private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getUserName())) {
             if (TextUtils.isEmpty(userInformation.getUserName())) {
                 userInformation.setUserName("未知");

@@ -8,10 +8,10 @@ import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.entity.MessageInfo;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.common.DicInfo;
-import com.syberos.shuili.entity.userinfo.UserInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInfo;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -194,6 +194,14 @@ public class SyberosManagerImpl {
             }
         });
     }
+    public void changePwd(final HashMap<String, Object> params, final String methodName, final RequestCallback<Object> callback){
+        mWorkHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                soapUtils.callWebService(params,methodName,callback,SoapUtils.SoapType.WSDL_BASE);
+            }
+        });
+    }
     public void getOrgBaseInfo(final HashMap<String,Object> params,final String methodName,final RequestCallback<Object> callback ){
         mWorkHandler.post(new Runnable() {
             @Override
@@ -202,7 +210,7 @@ public class SyberosManagerImpl {
             }
         });
     }
-    public void updateUserInfo(final UserInfo info, final String methodName, final RequestCallback<UserInfo> callback){
+    public void updateUserInfo(final UserExtendInfo info, final String methodName, final RequestCallback<UserExtendInfo> callback){
         mWorkHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -217,10 +225,10 @@ public class SyberosManagerImpl {
         return syberosAidlClient.getCurrentUserId();
     }
 
-    public UserExtendInfo getCurrentUserInfo(){
+    public UserExtendInformation getCurrentUserInfo(){
         return syberosAidlClient.getCurrentUserInfo();
     }
-    public void setCurrentUserInfo(UserExtendInfo info){
+    public void setCurrentUserInfo(UserExtendInformation info){
         syberosAidlClient.setCurrentUserInfo(info);
     }
 
@@ -230,7 +238,7 @@ public class SyberosManagerImpl {
      * @param type
      * @param callback
      */
-    private void getAddressList(HashMap<String,String> map,int type,final ResultCallback<List<UserExtendInfo>> callback){
+    private void getAddressList(HashMap<String,String> map,int type,final ResultCallback<List<UserExtendInformation>> callback){
         syberosAidlClient.getAddressList(map,type,callback);
     }
 
@@ -240,7 +248,7 @@ public class SyberosManagerImpl {
      * @param map
      * @param callback
      */
-    public void getLocalAddressList(HashMap<String,String> map,final ResultCallback<List<UserExtendInfo>>callback){
+    public void getLocalAddressList(HashMap<String,String> map,final ResultCallback<List<UserExtendInformation>>callback){
         syberosAidlClient.getAddressList(map,Local_Type,callback);
 
     }
@@ -256,7 +264,7 @@ public class SyberosManagerImpl {
      * @param map
      * @param callback
      */
-    public void searchAddressList(HashMap<String,String> map,ResultCallback<List<UserExtendInfo>> callback){
+    public void searchAddressList(HashMap<String,String> map,ResultCallback<List<UserExtendInformation>> callback){
         syberosAidlClient.getAddressList(map,Search_Type,callback);
 
     }
@@ -266,7 +274,7 @@ public class SyberosManagerImpl {
      * @param map
      * @param callback
      */
-    public void syncAddressList(HashMap<String,String> map,ResultCallback<List<UserExtendInfo>> callback ){
+    public void syncAddressList(HashMap<String,String> map,ResultCallback<List<UserExtendInformation>> callback ){
         syberosAidlClient.getAddressList(map,Sync_Type,callback);
 
     }

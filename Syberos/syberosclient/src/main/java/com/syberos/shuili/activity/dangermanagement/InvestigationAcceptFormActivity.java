@@ -1,7 +1,6 @@
 package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -17,11 +16,10 @@ import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
-import com.syberos.shuili.activity.work.TodoWorkForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.TodoWorkInfo;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -85,9 +83,9 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
         if("1".equalsIgnoreCase(type)){
             todoWorkInfo = (TodoWorkInfo) bundle.getSerializable("TodoWorkInfo");
         }
-        UserExtendInfo userExtendInfo = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-        if(userExtendInfo != null){
-            tv_accept_person.setText(userExtendInfo.getPersName());
+        UserExtendInformation userExtendInformation = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        if(userExtendInformation != null){
+            tv_accept_person.setText(userExtendInformation.getPersName());
         }
     }
 

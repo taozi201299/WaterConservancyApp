@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.utils.BitmapUtil;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.Strings;
@@ -63,7 +63,7 @@ public class MyImformationActivity extends BaseActivity {
     private File mTmpFile;
 
     private String iconUrl;
-    private UserExtendInfo userInformation;
+    private UserExtendInformation userInformation;
 
     public static String path = "/sdcard/";// sd路径
     public static String user_photo = "syberos_user.jpg";
@@ -83,7 +83,7 @@ public class MyImformationActivity extends BaseActivity {
 
     public void initData() {
         Bundle bundle = getIntent().getExtras().getBundle(Strings.DEFAULT_BUNDLE_NAME);
-        userInformation = (UserExtendInfo) bundle.getSerializable("userInfo");
+        userInformation = (UserExtendInformation) bundle.getSerializable("userInfo");
         setData(userInformation);
         if("female".equals(userInformation.getSex())){
             genderIndex = 1;
@@ -107,7 +107,7 @@ public class MyImformationActivity extends BaseActivity {
      * @param image
      * @param userInformation
      */
-    private void loadIcon(final ImageView image, final UserExtendInfo userInformation) {
+    private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
             if (TextUtils.isEmpty(userInformation.getUserName())) {
                 userInformation.setUserName("未知");
@@ -148,7 +148,7 @@ public class MyImformationActivity extends BaseActivity {
      *
      * @param userInformation
      */
-    private void setData(UserExtendInfo userInformation) {
+    private void setData(UserExtendInformation userInformation) {
         loadIcon(ivMyIcon, userInformation);
         LogUtils.d("图像url", userInformation.getIconUrl());
         tvName.setText(userInformation.getUserName());

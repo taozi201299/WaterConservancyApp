@@ -1,256 +1,254 @@
 package com.syberos.shuili.entity.userinfo;
 
-import com.syberos.shuili.entity.RoleBaseInfo;
+import org.ksoap2.serialization.KvmSerializable;
+import org.ksoap2.serialization.PropertyInfo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
- * Created by Administrator on 2018/4/9.
+ * Created by Administrator on 2018/4/14.
  */
 
-public class UserExtendInfo implements Serializable{
-     String admDutyLevel;
-     String depCode;
-     String depId;
-     String depName;
-     String id ;
-     String modifier;
-     String note;
-     String orgCode;
-     String orgId;
-     String orgName;
-     String password;
-     String persId;
-     String persName;
-     String persType;
-     String phone;
-     ArrayList<RoleBaseInfo>roleExtInfoList;
-     String status;
-     String ts;
-     String userCode;
-     String userName;
-     String userType;
-     String sex;
-     String iconUrl;
-    private String sortLetter = "";
-    public UserExtendInfo(){
+public class UserExtendInfo implements KvmSerializable {
+    public String admDutyLevel;
+    public String depCode;
+    public String depId;
+    public String depName;
+    public String id ;
+    public String modifier;
+    public String note;
+    public String orgCode;
+    public String orgId;
+    public String orgName;
+    public String password;
+    public String persId;
+    public String persName;
+    public String persType;
+    public String phone;
+    public RoleExtInfoList roleExtInfoList;
+    public String status;
+    public String ts;
+    public String userCode;
+    public String userName;
+    public String userType;
 
-    }
-    public UserExtendInfo(String admDutyLevel,String depCode,String depId,String depName,String id,String modifier,String note,String orgCode,
-                          String orgId,String orgName,String password,String persId,String persName,String persType,
-                          String phone,ArrayList roleExtInfoList,String status,String ts,String userCode,String userName,
-                          String userType){
-        this.admDutyLevel = admDutyLevel;
-        this.depCode = depCode;
-        this.depId = depId;
-        this.depName = depName;
-        this.id = id;
-        this.modifier = modifier;
-        this.note = note;
-        this.orgCode = orgCode;
-        this.orgId = orgId;
-        this.orgName = orgName;
-        this.password = password;
-        this.persId = persId;
-        this.persName = persName;
-        this.persType = persType;
-        this.phone = phone;
-        this.roleExtInfoList = roleExtInfoList;
-        this.status = status;
-        this.ts = ts;
-        this.userCode = userCode;
-        this.userName = userName;
-        this.userType = userType;
-    }
-    public String getAdmDutyLevel() {
-        return admDutyLevel == null ? "":admDutyLevel;
-    }
-
-    public void setAdmDutyLevel(String admDutyLevel) {
-        this.admDutyLevel = admDutyLevel;
-    }
-
-    public String getDepCode() {
-        return depCode == null ? "":depCode;
-    }
-
-    public void setDepCode(String depCode) {
-        this.depCode = depCode;
-    }
-
-    public String getDepId() {
-        return depId == null ?"":depId;
-    }
-
-    public void setDepId(String depId) {
-        this.depId = depId;
+    @Override
+    public Object getProperty(int arg0) {
+        switch (arg0) {
+            case 0:
+                return admDutyLevel;
+            case 1:
+                return depCode;
+            case 2:
+                return depId;
+            case 3:
+                return depName;
+            case 4:
+                return id;
+            case 5:
+                return modifier;
+            case 6:
+                return note;
+            case 7:
+                return orgCode;
+            case 8:
+                return orgId;
+            case 9:
+                return orgName;
+            case  10:
+                return password;
+            case 11:
+                return persId;
+            case 12:
+                return persName;
+            case 13:
+                return persType;
+            case 14:
+                return phone;
+            case 15:
+                return roleExtInfoList;
+            case 16:
+                return status;
+            case 17:
+                return ts;
+            case 18:
+                return userCode;
+            case 19:
+                return userName;
+            case 20:
+                return userType;
+            default:
+                break;
+        }
+        return null;
     }
 
-    public String getDepName() {
-        return depName == null ? "": depName;
+    @Override
+    public int getPropertyCount() {
+        return 21;
     }
 
-    public void setDepName(String depName) {
-        this.depName = depName;
+
+    @Override
+    public void setProperty(int arg0, Object arg1) {
+        switch (arg0) {
+            case 0:
+                admDutyLevel = arg1.toString();
+                break;
+            case 1:
+                depCode = arg1.toString();
+                break;
+            case 2:
+                depId =  arg1.toString();
+                break;
+            case 3:
+                depName = arg1.toString();
+                break;
+            case 4:
+                id = arg1.toString();
+                break;
+            case 5:
+                modifier = arg1.toString();
+                break;
+            case 6:
+                note = arg1.toString();
+                break;
+            case 7:
+                orgCode = arg1.toString();
+                break;
+            case 8:
+                orgId = arg1.toString();
+                break;
+            case 9:
+                orgName = arg1.toString();
+                break;
+            case 10:
+                password = arg1.toString();
+                break;
+            case 11:
+                persId = arg1.toString();
+                break;
+            case 12:
+                persName = arg1.toString();
+                break;
+            case 13:
+                persType = arg1.toString();
+                break;
+            case 14:
+                phone = arg1.toString();
+                break;
+            case 15:
+                roleExtInfoList = (RoleExtInfoList) arg1;
+                break;
+            case 16:
+                status = arg1.toString();
+                break;
+            case 17:
+                ts = arg1.toString();
+            case 18:
+                userCode = arg1.toString();
+                break;
+            case 19:
+                userName = arg1.toString();
+                break;
+            case 20:
+                userType = arg1.toString();
+                break;
+            default:
+                break;
+        }
+
     }
 
-    public String getId() {
-        return id == null ? "":id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getModifier() {
-        return modifier == null ? "":modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public String getNote() {
-        return note == null ?"":note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getOrgCode() {
-        return orgCode == null ? "":orgCode;
-    }
-
-    public void setOrgCode(String orgCode) {
-        this.orgCode = orgCode;
-    }
-
-    public String getOrgId() {
-        return orgId == null ? "":orgId;
-    }
-
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
-    }
-
-    public String getOrgName() {
-        return orgName == null ?"":orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
-
-    public String getPassword() {
-        return password == null ?"":password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPersId() {
-        return persId == null ?"":persId;
-    }
-
-    public void setPersId(String persId) {
-        this.persId = persId;
-    }
-
-    public String getPersName() {
-        return persName == null ? "":persName;
-    }
-
-    public void setPersName(String persName) {
-        this.persName = persName;
-    }
-
-    public String getPersType() {
-        return persType == null ? "":persType;
-    }
-
-    public void setPersType(String persType) {
-        this.persType = persType;
-    }
-
-    public String getPhone() {
-        return phone == null ? "":phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public ArrayList<RoleBaseInfo> getRoleExtInfoList() {
-        return roleExtInfoList == null ? new ArrayList<RoleBaseInfo>() : roleExtInfoList;
-    }
-
-    public void setRoleExtInfoList(ArrayList<RoleBaseInfo> roleExtInfoList) {
-        this.roleExtInfoList = roleExtInfoList;
-    }
-
-    public String getStatus() {
-        return status == null ? "":status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getTs() {
-        return ts == null ? "":ts;
-    }
-
-    public void setTs(String ts) {
-        this.ts = ts;
-    }
-
-    public String getUserCode() {
-        return userCode == null ? "":userCode;
-    }
-
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
-
-    public String getUserName() {
-        return userName == null ? "":userName;
-    }
-
-    public String getIconUrl() {
-        return iconUrl == null ?"":iconUrl ;
-    }
-
-    public String getSex() {
-        return sex == null ? "":"未知";
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserType() {
-        return userType == null ? "":userType ;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-    public String getSortLetter(){
-         return this.sortLetter;
-    }
-    public void setSortLetter(String letter){
-        this.sortLetter = letter;
-
+    @Override
+    public void getPropertyInfo(int i, Hashtable hashtable, PropertyInfo propertyInfo) {
+        switch (i) {
+            case 0:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "admDutyLevel";
+                break;
+            case 1:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "depCode";
+                break;
+            case 2:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "depId";
+                break;
+            case 3:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "depName";
+                break;
+            case 4:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "id";
+                break;
+            case 5:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "modifier";
+                break;
+            case 6:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "note";
+                break;
+            case 7:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "orgCode";
+                break;
+            case 8:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "orgId";
+                break;
+            case 9:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "orgName";
+                break;
+            case 10:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "password";
+                break;
+            case 11:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "persId";
+                break;
+            case 12:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "persName";
+                break;
+            case 13:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "persType";
+                break;
+            case 14:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "phone";
+                break;
+            case 15:
+                propertyInfo.type = PropertyInfo.VECTOR_CLASS;
+                propertyInfo.name = "roleExtInfoList";
+                break;
+            case 16:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "status";
+                break;
+            case 17:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "ts";
+                break;
+            case 18:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "userCode";
+                break;
+            case 19:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "userName";
+                break;
+            case 20:
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
+                propertyInfo.name = "userType";
+                break;
+            default:
+                break;
+        }
     }
 }

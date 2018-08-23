@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.syberos.shuili.R;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.utils.BitmapUtil;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.view.TextDrawable;
@@ -33,16 +33,16 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
  * Created by dongjunkun on 2015/7/4.
  */
 public class IndexListAdapter extends BaseAdapter implements StickyListHeadersAdapter {
-    private List<UserExtendInfo> persions;
+    private List<UserExtendInformation> persions;
 
     private Context mContext;
 
 
-    public IndexListAdapter(List<UserExtendInfo> persions, Context mContext) {
+    public IndexListAdapter(List<UserExtendInformation> persions, Context mContext) {
         this.persions = persions;
         this.mContext = mContext;
     }
-    public void setData(List<UserExtendInfo> data) {
+    public void setData(List<UserExtendInformation> data) {
         this.persions = data;
         notifyDataSetChanged();
     }
@@ -66,7 +66,7 @@ public class IndexListAdapter extends BaseAdapter implements StickyListHeadersAd
      *
      * @param persions
      */
-    public void updateList(List<UserExtendInfo> persions) {
+    public void updateList(List<UserExtendInformation> persions) {
         this.persions = persions;
         LogUtils.d("通讯录", persions.size() + "--------------------------");
         notifyDataSetChanged();
@@ -102,7 +102,7 @@ public class IndexListAdapter extends BaseAdapter implements StickyListHeadersAd
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }
-        UserExtendInfo user = persions.get(position);
+        UserExtendInformation user = persions.get(position);
         String name = user.getPersName();
         viewHolder.mName.setText(name);
         viewHolder.unitName.setText(user.getOrgName());
@@ -119,7 +119,7 @@ public class IndexListAdapter extends BaseAdapter implements StickyListHeadersAd
      * @param image
      * @param userInformation
      */
-    private void loadIcon(final ImageView image, final UserExtendInfo userInformation) {
+    private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getPersName())) {
             if (TextUtils.isEmpty(userInformation.getPersName())) {
                 userInformation.setPersName("未知");

@@ -194,9 +194,10 @@ public class CommonUtils {
     }
     public static Date stringToDate(String strTime)
             throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-d");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
-        date = formatter.parse(strTime);
+        date = formatter.parse("2016-11-21");
+
         return date;
     }
     //字符串转指定格式时间

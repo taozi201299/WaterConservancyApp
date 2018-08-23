@@ -14,13 +14,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -109,7 +108,7 @@ public class HazListForEntActivity extends BaseActivity
     private void getHazsList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
-        final UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        final UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override

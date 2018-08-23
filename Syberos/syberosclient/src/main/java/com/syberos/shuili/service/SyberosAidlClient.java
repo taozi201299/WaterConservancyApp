@@ -13,7 +13,7 @@ import android.os.RemoteException;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.entity.MessageInfo;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.accident.ObjAcci;
 
 import java.io.File;
@@ -142,7 +142,7 @@ public class SyberosAidlClient {
 
     }
 
-   public void getAddressList(final HashMap<String,String> map, final int  type, final SyberosManagerImpl.ResultCallback<List<UserExtendInfo>> callback){
+   public void getAddressList(final HashMap<String,String> map, final int  type, final SyberosManagerImpl.ResultCallback<List<UserExtendInformation>> callback){
         this.m_workHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -150,7 +150,7 @@ public class SyberosAidlClient {
                     syberosAidlClient.ILibInterface.getAddressList(type,map, new IAddressListCallback.Stub() {
                         @Override
                         public void onSuccess(List<UserInformationEntity> info) throws RemoteException {
-                            List<UserExtendInfo> information = convertInfo(info);
+                            List<UserExtendInformation> information = convertInfo(info);
                             callback.onCallback(information);
 
                         }
@@ -264,20 +264,20 @@ public class SyberosAidlClient {
            e.printStackTrace();
        }
    }
-   private List<UserExtendInfo> convertInfo(List<UserInformationEntity> infos){
+   private List<UserExtendInformation> convertInfo(List<UserInformationEntity> infos){
        if(infos == null)return null;
-       List<UserExtendInfo> informations = new ArrayList<>();
+       List<UserExtendInformation> informations = new ArrayList<>();
        int size = infos.size();
        for(int i = 0 ; i < size ; i++){
-           UserExtendInfo information =  convert2UserExtendInfo(infos.get(i));
+           UserExtendInformation information =  convert2UserExtendInfo(infos.get(i));
            informations.add(information);
 
        }
        return informations;
 
    };
-    public UserExtendInfo getCurrentUserInfo(){
-        UserExtendInfo information ;
+    public UserExtendInformation getCurrentUserInfo(){
+        UserExtendInformation information ;
         UserInformationEntity informationEntity = null;
         try {
             informationEntity = syberosAidlClient.ILibInterface.getCurrentUserInfo();
@@ -287,8 +287,8 @@ public class SyberosAidlClient {
         information = convert2UserExtendInfo(informationEntity);
         return information;
     }
-    private UserExtendInfo convert2UserExtendInfo(UserInformationEntity informationEntity){
-        UserExtendInfo information = new UserExtendInfo();
+    private UserExtendInformation convert2UserExtendInfo(UserInformationEntity informationEntity){
+        UserExtendInformation information = new UserExtendInformation();
         information.setAdmDutyLevel(informationEntity.admDutyLevel);
         information.setDepCode(informationEntity.depCode);
         information.setDepId(informationEntity.depId);
@@ -311,7 +311,7 @@ public class SyberosAidlClient {
         information.setUserType(informationEntity.userType);
         return information;
     }
-    private UserInformationEntity convert2UserInformationEntity(UserExtendInfo information){
+    private UserInformationEntity convert2UserInformationEntity(UserExtendInformation information){
          return  new UserInformationEntity(information.getAdmDutyLevel(),information.getDepCode(),information.getDepId(),
                  information.getDepName(),information.getId(),information.getModifier(),information.getNote(),information.getOrgCode(),
                  information.getOrgId(),information.getOrgName(), information.getPassword(),information.getPersId(),information.getPersName(),
@@ -370,7 +370,7 @@ public class SyberosAidlClient {
 
 
     }
-    public void setCurrentUserInfo(UserExtendInfo info){
+    public void setCurrentUserInfo(UserExtendInformation info){
         try {
             syberosAidlClient.ILibInterface.setCurrentUserInfo(convert2UserInformationEntity(info));
         } catch (RemoteException e) {

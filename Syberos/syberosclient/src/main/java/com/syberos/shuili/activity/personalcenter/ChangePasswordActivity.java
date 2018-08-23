@@ -3,23 +3,23 @@ package com.syberos.shuili.activity.personalcenter;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.cjt2325.cameralibrary.util.LogUtil;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
-import com.syberos.shuili.entity.userinfo.UserInfo;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +47,7 @@ public class ChangePasswordActivity extends BaseActivity {
     @BindView(R.id.cb_repeat_new_password)
     CheckBox cb_repeat_new_password;
 
-    private UserExtendInfo userExtendInfo;
+    private UserExtendInformation userExtendInformation;
 
     @OnClick(R.id.tv_change_password_submit)
     void changePasswordSubmit() {
@@ -101,7 +101,7 @@ public class ChangePasswordActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        userExtendInfo = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        userExtendInformation = SyberosManagerImpl.getInstance().getCurrentUserInfo();
 
     }
 
@@ -162,7 +162,7 @@ public class ChangePasswordActivity extends BaseActivity {
             ToastUtils.show("新密码和确认密码不一致");
             return bRet;
         }
-        String strPwd = userExtendInfo.getPassword();
+        String strPwd = userExtendInformation.getPassword();
         if(!strPwd.equals(CommonUtils.encrypt(originalPwd))){
             ToastUtils.show("原密码错误");
             return bRet;
@@ -171,21 +171,22 @@ public class ChangePasswordActivity extends BaseActivity {
         return bRet;
     }
     private void changePassword(){
-        UserInfo userInfo = PersonalCenterActivity.setUpdateInfo(userExtendInfo);
-        String methodName = "updateUser";
-        SyberosManagerImpl.getInstance().updateUserInfo(userInfo, methodName, new RequestCallback<UserInfo>() {
+        String methodName = "changePassword";
+        HashMap<String,Object>params = new HashMap<>();
+        params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
+        params.put("arg1",et_input_original_password.getText().toString());
+        params.put("arg2",et_input_new_password.getText().toString());
+        SyberosManagerImpl.getInstance().changePwd(params, methodName, new RequestCallback<Object>() {
             @Override
-            public void onResponse(UserInfo result) {
-                LogUtil.d(result.toString());
+            public void onResponse(Object result) {
+                ToastUtils.show("密码修改成功");
 
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
-
             }
         });
-
     }
 }

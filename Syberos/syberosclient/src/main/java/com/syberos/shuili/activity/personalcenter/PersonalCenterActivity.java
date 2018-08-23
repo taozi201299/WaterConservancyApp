@@ -13,12 +13,14 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.entity.RoleBaseInfo;
 import com.syberos.shuili.entity.userinfo.RoleExtInfo;
+import com.syberos.shuili.entity.userinfo.RoleExtInfoList;
+import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.login.SendSMSCodeCountDownTimer;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.userinfo.UserExtendInfo;
-import com.syberos.shuili.entity.userinfo.UserInfo;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -34,7 +36,7 @@ public class PersonalCenterActivity extends BaseActivity {
 
     private boolean editing = false;
     private Button btn_dialog_send_sms_code;
-    private UserExtendInfo userInfo;
+    private UserExtendInformation userInfo;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
@@ -98,6 +100,7 @@ public class PersonalCenterActivity extends BaseActivity {
                     btn_dialog_send_sms_code.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            getVerfyCode();
                             SendSMSCodeCountDownTimer timer
                                     = new SendSMSCodeCountDownTimer(btn_dialog_send_sms_code,
                                     "重新获取");
@@ -172,25 +175,31 @@ public class PersonalCenterActivity extends BaseActivity {
         et_positionName_edit.setVisibility(isEdit ? View.VISIBLE : View.GONE);
     }
 
-    public static UserInfo  setUpdateInfo(UserExtendInfo userInfo){
-        UserInfo updateUserInfo = new UserInfo();
-        updateUserInfo.setProperty(0,userInfo.getAdmDutyLevel());
-        updateUserInfo.setProperty(1,userInfo.getDepCode());
-        updateUserInfo.setProperty(2,userInfo.getDepId());
-        updateUserInfo.setProperty(3,userInfo.getDepName());
-        updateUserInfo.setProperty(4,userInfo.getId());
-        updateUserInfo.setProperty(5,userInfo.getModifier());
-        updateUserInfo.setProperty(6,userInfo.getNote());
-        updateUserInfo.setProperty(7,userInfo.getOrgCode());
-        updateUserInfo.setProperty(8,userInfo.getOrgId());
-        updateUserInfo.setProperty(9,userInfo.getOrgName());
-        updateUserInfo.setProperty(10,userInfo.getPassword());
-        updateUserInfo.setProperty(11,userInfo.getPersId());
-        updateUserInfo.setProperty(12,userInfo.getPersName());
-        updateUserInfo.setProperty(13,userInfo.getPersType());
-        updateUserInfo.setProperty(14,userInfo.getPhone());
-        ArrayList<RoleExtInfo> list = new ArrayList<>();
-        ArrayList<RoleBaseInfo> roles = userInfo.getRoleExtInfoList();
+    /**
+     * 获取手机验证码
+     */
+    private void getVerfyCode(){
+
+    }
+    public static UserExtendInfo setUpdateInfo(UserExtendInformation userInfo){
+        UserExtendInfo updateUserExtendInfo = new UserExtendInfo();
+        updateUserExtendInfo.setProperty(0,userInfo.getAdmDutyLevel());
+        updateUserExtendInfo.setProperty(1,userInfo.getDepCode());
+        updateUserExtendInfo.setProperty(2,userInfo.getDepId());
+        updateUserExtendInfo.setProperty(3,userInfo.getDepName());
+        updateUserExtendInfo.setProperty(4,userInfo.getId());
+        updateUserExtendInfo.setProperty(5,userInfo.getModifier());
+        updateUserExtendInfo.setProperty(6,userInfo.getNote());
+        updateUserExtendInfo.setProperty(7,userInfo.getOrgCode());
+        updateUserExtendInfo.setProperty(8,userInfo.getOrgId());
+        updateUserExtendInfo.setProperty(9,userInfo.getOrgName());
+        updateUserExtendInfo.setProperty(10,userInfo.getPassword());
+        updateUserExtendInfo.setProperty(11,userInfo.getPersId());
+        updateUserExtendInfo.setProperty(12,userInfo.getPersName());
+        updateUserExtendInfo.setProperty(13,userInfo.getPersType());
+        updateUserExtendInfo.setProperty(14,userInfo.getPhone());
+        RoleExtInfoList list = new RoleExtInfoList();
+        ArrayList<RoleBaseInfo> roles = LoginUtil.getRoleList();
         if(roles != null){
             for(RoleBaseInfo info : roles){
                 RoleExtInfo roleInfo = new RoleExtInfo();
@@ -206,16 +215,17 @@ public class PersonalCenterActivity extends BaseActivity {
                 roleInfo.setProperty(9,"");
                 roleInfo.setProperty(10,info.getTs());
                 roleInfo.setProperty(11,"");
-                list.add(roleInfo);
+                list.setProperty(0,roleInfo);
+                if(list.size() == 1)break;
             }
         }
-        updateUserInfo.setProperty(15,list);
-        updateUserInfo.setProperty(16,userInfo.getStatus());
-        updateUserInfo.setProperty(17,userInfo.getTs());
-        updateUserInfo.setProperty(18,userInfo.getUserCode());
-        updateUserInfo.setProperty(19,userInfo.getUserName());
-        updateUserInfo.setProperty(20,userInfo.getUserType());
-        return updateUserInfo;
+        updateUserExtendInfo.setProperty(15,list);
+        updateUserExtendInfo.setProperty(16,userInfo.getStatus());
+        updateUserExtendInfo.setProperty(17,userInfo.getTs());
+        updateUserExtendInfo.setProperty(18,userInfo.getUserCode());
+        updateUserExtendInfo.setProperty(19,userInfo.getUserName());
+        updateUserExtendInfo.setProperty(20,userInfo.getUserType());
+        return updateUserExtendInfo;
 
     }
     private void saveChange() {
@@ -225,16 +235,16 @@ public class PersonalCenterActivity extends BaseActivity {
         userInfo.setDepName(et_departmentName_edit.getText().toString());
 
         SyberosManagerImpl.getInstance().setCurrentUserInfo(userInfo);
-        UserInfo updateUserInfo = setUpdateInfo(userInfo);
-        updateUserInfo(updateUserInfo);
+        UserExtendInfo updateUserExtendInfo = setUpdateInfo(userInfo);
+        updateUserInfo(updateUserExtendInfo);
         updateShowWidgets();
     }
 
-    private void updateUserInfo(final  UserInfo userInfo){
+    private void updateUserInfo(final UserExtendInfo userExtendInfo){
         String methodName = "updateUser";
-        SyberosManagerImpl.getInstance().updateUserInfo(userInfo, methodName, new RequestCallback<UserInfo>() {
+        SyberosManagerImpl.getInstance().updateUserInfo(userExtendInfo, methodName, new RequestCallback<UserExtendInfo>() {
             @Override
-            public void onResponse(UserInfo result) {
+            public void onResponse(UserExtendInfo result) {
                 ToastUtils.show("修改成功");
                 // TODO: 2018/6/4 修改本地信息
 

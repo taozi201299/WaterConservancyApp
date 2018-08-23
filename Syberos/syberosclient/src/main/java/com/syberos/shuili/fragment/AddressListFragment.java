@@ -19,7 +19,7 @@ import com.syberos.shuili.activity.addresslist.MyImformationActivity;
 import com.syberos.shuili.activity.addresslist.OtherImformationActivity;
 import com.syberos.shuili.adapter.IndexListAdapter;
 import com.syberos.shuili.base.BaseFragment;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.StringUtils;
@@ -70,14 +70,14 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
     //汉子转换成拼音的类
     private CharacterParser characterParser;
     //数据源
-    private List<UserExtendInfo> persions = new ArrayList<UserExtendInfo>();
+    private List<UserExtendInformation> persions = new ArrayList<UserExtendInformation>();
     //根据拼音来排列listView里的数据类
     private PinyinComparator pinyinComparator;
     private View view;
     private View searchHeadView;
     private TextView tvSearchCount;
     private IndexListAdapter mSearchAdapter;
-    private List<UserExtendInfo> filterDataList = new ArrayList<>();
+    private List<UserExtendInformation> filterDataList = new ArrayList<>();
 
     private final String TAG = AddressListFragment.class.getSimpleName();
 
@@ -106,10 +106,10 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
      *
      * @param lists
      */
-    private void updateIndexListDataSource(List<UserExtendInfo> lists) {
+    private void updateIndexListDataSource(List<UserExtendInformation> lists) {
         if(lists == null)return;
         persions.clear();
-        for (UserExtendInfo userInformation : lists) {
+        for (UserExtendInformation userInformation : lists) {
             String pinyin = characterParser.getSelling(userInformation.getPersName());
             String sortString = pinyin.substring(0, 1).toUpperCase();
             if (StringUtils.judgeLetter(sortString.charAt(0))) {
@@ -131,9 +131,9 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
         mProgressBar.setVisibility(View.VISIBLE);
         HashMap<String,String>map = new HashMap<>();
         map.put("userId","11");
-        SyberosManagerImpl.getInstance().getLocalAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
+        SyberosManagerImpl.getInstance().getLocalAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
             @Override
-            public void onSuccess(List<UserExtendInfo> var1) {
+            public void onSuccess(List<UserExtendInformation> var1) {
                 updateIndexListDataSource(var1);
             }
 
@@ -161,7 +161,7 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
         llEnterpriceList = (LinearLayout) view.findViewById(R.id.ll_enterpriceList);
         mStickListHeadersListView.addHeaderView(view);
         mStickListHeadersListView.setAdapter(indexListAdapter);
-        mSearchAdapter = new IndexListAdapter(new ArrayList<UserExtendInfo>(), mContext);
+        mSearchAdapter = new IndexListAdapter(new ArrayList<UserExtendInformation>(), mContext);
         searchListView.addHeaderView(searchHeadView);
 
         searchListView.setAdapter(mSearchAdapter);
@@ -175,9 +175,9 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
             public void onRefresh() {
                 HashMap<String,String> map = new HashMap<>();
                 map.put("userId",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
-              SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
+              SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
                   @Override
-                  public void onSuccess(List<UserExtendInfo> var1) {
+                  public void onSuccess(List<UserExtendInformation> var1) {
                       xRefreshView.stopRefresh(true);
                       updateIndexListDataSource(var1);
                   }
@@ -242,9 +242,9 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
         } else {
             HashMap<String,String> map = new HashMap<>();
             map.put("searchText",s);
-             SyberosManagerImpl.getInstance().searchAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
+             SyberosManagerImpl.getInstance().searchAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
                 @Override
-                public void onSuccess(List<UserExtendInfo> var1) {
+                public void onSuccess(List<UserExtendInformation> var1) {
                     filterDataList = var1;
                     updateData();
 
@@ -345,7 +345,7 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
 
     private void getSideBar() {
         TreeSet<String> data = new TreeSet<String>();
-        for (UserExtendInfo persion : persions) {
+        for (UserExtendInformation persion : persions) {
 
             if (StringUtils.judgeLetter(persion.getSortLetter().charAt(0))) {//A-Z
                 data.add(persion.getSortLetter().charAt(0) + "");

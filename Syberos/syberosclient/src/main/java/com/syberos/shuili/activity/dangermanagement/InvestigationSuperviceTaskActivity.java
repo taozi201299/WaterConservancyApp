@@ -17,7 +17,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -94,7 +94,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity implements 
     private void getTaskList(){
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/selectObjHiddTodoList/";
         HashMap<String,String> params = new HashMap<>();
-        UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         //params.put("orgGuid",info.getOrgId());
         params.put("orgGuid","B28351744A0E4587AAB7E26CD2C5DE0E");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

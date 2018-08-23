@@ -27,7 +27,7 @@ public class RoleExtInfo implements KvmSerializable {
     public String status;
     public String modifier;
     public String appCode;
-    public Date ts;
+    public String ts;
     public String remark;
 
     @Override
@@ -101,10 +101,7 @@ public class RoleExtInfo implements KvmSerializable {
                 appCode = o.toString();
                 break;
             case 10:
-                try {ts = CommonUtils.stringToDate(o.toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                ts = o.toString();
                 break;
             case 11:
                 remark = o.toString();
@@ -159,7 +156,7 @@ public class RoleExtInfo implements KvmSerializable {
                 propertyInfo.name = "appCode";
                 break;
             case 10:
-                propertyInfo.type = MarshalDate.DATE_CLASS;
+                propertyInfo.type = PropertyInfo.STRING_CLASS;
                 propertyInfo.name = "ts";
                 break;
             case  11:

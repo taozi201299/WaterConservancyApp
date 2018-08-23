@@ -25,7 +25,7 @@ import android.widget.ImageView;
 
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.BitmapEntity;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.view.TextDrawable;
 
 import java.io.File;
@@ -235,7 +235,7 @@ public class BitmapUtil {
      * @param dp
      * @return
      */
-    public static TextDrawable drawableFactory(Context context, UserExtendInfo userInformation, int dp) {
+    public static TextDrawable drawableFactory(Context context, UserExtendInformation userInformation, int dp) {
         float density = (float) SPUtils.get(GlobleConstants.DENSITY, 1.0f);
         int px = (int) (dp * density);
         TextDrawable drawable = TextDrawable.builder().beginConfig().

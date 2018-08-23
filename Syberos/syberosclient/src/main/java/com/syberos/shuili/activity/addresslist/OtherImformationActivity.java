@@ -19,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.utils.BitmapUtil;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.Strings;
@@ -59,7 +59,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.tv_sex)
     TextView tvSex;
 
-    private UserExtendInfo userInformation;
+    private UserExtendInformation userInformation;
     private Bundle bundle;
     String fromId;
 
@@ -72,7 +72,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
 
     public void initData() {
         bundle = getIntent().getExtras().getBundle(Strings.DEFAULT_BUNDLE_NAME);
-        userInformation = (UserExtendInfo) bundle.getSerializable("userInfo");
+        userInformation = (UserExtendInformation) bundle.getSerializable("userInfo");
         setData(userInformation);
         fromId = userInformation.getPersId();
     }
@@ -100,7 +100,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
      * @param image
      * @param userInformation
      */
-    private void loadIcon(final ImageView image, final UserExtendInfo userInformation) {
+    private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
             if (TextUtils.isEmpty(userInformation.getUserName())) {
                 userInformation.setUserName("未知");
@@ -137,7 +137,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
      *
      * @param userInformation
      */
-    private void setData(UserExtendInfo userInformation) {
+    private void setData(UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getPhone())) {
             ivPhoneEmail.setVisibility(View.GONE);
             ivPhoneCall.setVisibility(View.GONE);

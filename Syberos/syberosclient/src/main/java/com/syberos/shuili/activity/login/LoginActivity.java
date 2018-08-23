@@ -35,7 +35,7 @@ import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
-import com.syberos.shuili.entity.userinfo.UserExtendInfo;
+import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.fragment.GateWayFragment;
 import com.syberos.shuili.fragment.LoginEnvironmentVerifyEnterFragment;
 import com.syberos.shuili.fragment.LoginEnvironmentVerifyFragment;
@@ -269,22 +269,22 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(Object result) {
                 closeDialog();
-                UserExtendInfo userExtendInfo = null;
+                UserExtendInformation userExtendInformation = null;
                 try {
-                    userExtendInfo = parseLoginResult(result);
+                    userExtendInformation = parseLoginResult(result);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (userExtendInfo == null) {
+                if (userExtendInformation == null) {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-3).getMessage());
                     return;
                 }
-                if (checkUserPermission(userExtendInfo)) {
+                if (checkUserPermission(userExtendInformation)) {
                     // TODO: 2018/8/1 企事业用户需要获取功能模块权限
                     /**
                      * 行政用户直接进行登录
                      */
-                    SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInfo);
+                    SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInformation);
                     go2Activity();
                     syncAddressList();
                 } else {
@@ -300,7 +300,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private boolean checkUserPermission(UserExtendInfo info) {
+    private boolean checkUserPermission(UserExtendInformation info) {
         boolean bRet = false;
         ArrayList<RoleBaseInfo> roleList = info.getRoleExtInfoList();
         if (roleList == null || roleList.size() == 0) {
@@ -328,7 +328,7 @@ public class LoginActivity extends BaseActivity {
         return bRet;
     }
 
-    private UserExtendInfo parseLoginResult(Object result) throws ParseException {
+    private UserExtendInformation parseLoginResult(Object result) throws ParseException {
         HashMap<String, String> info = new HashMap<>();
         List<HashMap<String, String>> infoList = new ArrayList<>();
         String reponse = result.toString();
@@ -353,17 +353,17 @@ public class LoginActivity extends BaseActivity {
             }
         }
         ArrayList<RoleBaseInfo> roleList = setRoleList(infoList);
-        UserExtendInfo userExtendInfo = setUserExtendInfo(info);
-        userExtendInfo.setRoleExtInfoList(roleList);
+        UserExtendInformation userExtendInformation = setUserExtendInfo(info);
+        userExtendInformation.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
-        SPUtils.put(GlobleConstants.Pwd,userExtendInfo.getPassword());
+        SPUtils.put(GlobleConstants.Pwd, userExtendInformation.getPassword());
         LoginUtil.setLastUserAccount(accountEdit.getText().toString());
-
-        return userExtendInfo;
+        LoginUtil.setRoleList(roleList);
+        return userExtendInformation;
 
     }
 
-    private UserExtendInfo setUserExtendInfo(HashMap<String, String> info) {
+    private UserExtendInformation setUserExtendInfo(HashMap<String, String> info) {
         String depId = info.get("depId") == null ? "" : info.get("depId").toString();
         String depName = info.get("depName") == null ? "" : info.get("depName").toString();
         String id = info.get("id") == null ? "" : info.get("id").toString();
@@ -380,8 +380,8 @@ public class LoginActivity extends BaseActivity {
         App.jurdAreaType = info.get("jurdAreaType") == null ? "" : info.get("jurdAreaType");
         App.orgJurd = info.get("orgJurd") == null ? "" : info.get("orgJurd");
 
-        UserExtendInfo userExtendInfo = new UserExtendInfo("", "", depId, depName, id, "", "", orgCode, orgId, orgName, userPassword, persId, persName, "", mobilenumb, null, status, "", userCode, userName, "");
-        return userExtendInfo;
+        UserExtendInformation userExtendInformation = new UserExtendInformation("", "", depId, depName, id, "", "", orgCode, orgId, orgName, userPassword, persId, persName, "", mobilenumb, null, status, "", userCode, userName, "");
+        return userExtendInformation;
     }
 
     private ArrayList setRoleList(List<HashMap<String, String>> infoList) {
@@ -426,13 +426,13 @@ public class LoginActivity extends BaseActivity {
     private void syncAddressList() {
         String lastUser = LoginUtil.getLastUserAccount();
         String userId = SyberosManagerImpl.getInstance().getCurrentUserId();
-        UserExtendInfo info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         if (!lastUser.equals(userId)) {
             HashMap<String, String> map = new HashMap<>();
             map.put("arg0", info.getOrgId());
-            SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInfo>>() {
+            SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
                 @Override
-                public void onSuccess(List<UserExtendInfo> var1) {
+                public void onSuccess(List<UserExtendInformation> var1) {
                     Singleton.INSTANCE.isLogin = true;
                 }
 
