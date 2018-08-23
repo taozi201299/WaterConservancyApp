@@ -13,12 +13,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -154,8 +156,9 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     closeDataDialog();
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+                    addMarkInfo();
                 }
-                addMarkInfo();
+
 
             }
         });
@@ -206,6 +209,25 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     private void addMarkInfo() {
-        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat + ")");
+        ArrayList<Point>list = new ArrayList<>();
+        Point point = new Point();
+        point.lat = "37.916475";
+        point.lon = "107.074607";
+        point.value = "188";
+        list.add(point);
+        Point point1 = new Point();
+        point1.lon = mLon ;
+        point1.lat = mLat;
+        point1.value = "18";
+        list.add(point1);
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(list);
+
+        webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
+    }
+    class Point {
+        String lon;
+        String lat;
+        String value;
     }
 }
