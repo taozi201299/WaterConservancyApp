@@ -123,8 +123,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
     private void getReortList(){
         String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
-        // params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repOrgGuid","BF091F20ABB448369CD40454DA295D48");
+        params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -197,6 +196,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
         }
     }
     private void refreshUI(){
+        closeDataDialog();
         listAdapter.setData(bisOrgMonRepPeri.dataSource);
         listAdapter.notifyDataSetChanged();
     }
@@ -279,15 +279,22 @@ public class AccReportForEntActivity extends TranslucentActivity {
                     tv_report.setText("重报");
                     break;
                 case HiddenDangerReport.LINK_REFUNDED:
-                    tv_refunded.setVisibility(View.VISIBLE);
-                    tv_refunded.setText("已退回");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
-                    } else {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
+                    if(hiddenDangerReport.isReportFinish()) {
+                        tv_refunded.setVisibility(View.VISIBLE);
+                        tv_refunded.setText("已退回");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color, null));
+                        } else {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.refunded_link_text_color));
+                        }
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("重报");
+                    }else {
+                        tv_recall.setVisibility(View.GONE);
+                        tv_refunded.setVisibility(View.GONE);
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("上报");
                     }
-                    tv_report.setVisibility(View.VISIBLE);
-                    tv_report.setText("重报");
                     break;
             }
 
