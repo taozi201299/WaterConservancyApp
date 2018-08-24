@@ -70,6 +70,7 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
 
     @Override
     public void initListener() {
+        setDialogInterface(this);
 
     }
 
@@ -109,12 +110,12 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         showCommitDialog("确认提交考核结果?",0);
     }
     private void commit(){
-        String url = GlobleConstants.strCJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strZJIP +"/wcsps-css/woas/mobile/bisWoasDeuc/";
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
         params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID
         params.put("woasGropGuid",bisWoasGrop.getGuid()); // 考核组GUID
-        params.put("fianDeuc", (String) ce_score.getText()); //最终扣分
+        params.put("fianDeuc",ce_score.getText().toString()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
         params.put("woasType","1");// 考核类型
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
@@ -133,7 +134,7 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
                 info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                info.bisTableName = "BIS_HIDD_RECT_ACCE";
+                info.bisTableName = "BIS_WOAS_DEUC";
                 info.bisGuid = "";
                 info.localStatus = "1";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){

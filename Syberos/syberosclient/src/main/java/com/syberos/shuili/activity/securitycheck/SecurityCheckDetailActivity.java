@@ -257,7 +257,9 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
         // 组长单位
         tv_group_unit.setText(bisSinsScheGroup.getGroupLeaderWiun());
         // 专家姓名
-        tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
+        if(objExpert.dataSource.size() > 0) {
+            tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
+        }
         // 被检对象
         ll_check_object_container.removeAllViews();
         final ArrayList<RelSinsGroupWiun>infos = (ArrayList<RelSinsGroupWiun>) relSinsGroupWiun.dataSource;
