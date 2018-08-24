@@ -206,8 +206,6 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
         listAdapter = new ListAdapter(this,
                 R.layout.activity_enterprises_hidden_danger_report_item);
         recyclerView.setAdapter(listAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
 
         refundedReason = "数据补全，请补充后重新上报数据补全" ;
         reasonDialog = new Dialog(this);
