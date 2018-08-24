@@ -299,7 +299,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
     private boolean checkUserPermission(UserExtendInformation info) {
         boolean bRet = false;
         ArrayList<RoleBaseInfo> roleList = info.getRoleExtInfoList();

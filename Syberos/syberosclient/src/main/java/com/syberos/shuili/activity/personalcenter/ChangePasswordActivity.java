@@ -173,9 +173,10 @@ public class ChangePasswordActivity extends BaseActivity {
     private void changePassword(){
         String methodName = "changePassword";
         HashMap<String,Object>params = new HashMap<>();
-        params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
-        params.put("arg1",et_input_original_password.getText().toString());
-        params.put("arg2",et_input_new_password.getText().toString());
+
+        params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserCode());
+        params.put("arg1",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
+        params.put("arg2",CommonUtils.encrypt(et_input_new_password.getText().toString()));
         SyberosManagerImpl.getInstance().changePwd(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {

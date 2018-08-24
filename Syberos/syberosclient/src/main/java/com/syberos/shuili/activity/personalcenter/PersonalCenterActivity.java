@@ -293,6 +293,7 @@ public class PersonalCenterActivity extends BaseActivity {
     public void initView() {
         setInitActionBar(false);
         userInfo = SyberosManagerImpl.getInstance().getCurrentUserInfo();
+        tv_action_bar_editStatus.setVisibility(View.GONE);
 
         tv_action_bar_title.setText("个人信息");
         tv_action_bar_editStatus.setText("编辑");
