@@ -2,7 +2,9 @@ package com.syberos.shuili.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.ProvinceJsonBean;
 import com.syberos.shuili.entity.map.CityInfoBean;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.listener.ProvinceCall;
 
@@ -41,6 +44,9 @@ import com.syberos.shuili.listener.OpenDrawerListener;
 import com.syberos.shuili.utils.ProvinceDialog;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ViewPagerSlide;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +108,23 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         provinceDialog.showProvinceDialog();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void getHiddenEntry(HiddenEntryTest hiddenEntryTest) {
+        ToastUtils.show("has getData");
+    }
+
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
 //
@@ -110,7 +133,27 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         intent.putExtra("typeValue", tabTitle[currentItem]);
         intent.putExtra("ownerType", ((BaseLazyFragment) (fragments.get(currentItem))).getStatus1());
         intent.putExtra("dutyType", ((BaseLazyFragment) (fragments.get(currentItem))).getStatus2());
-//        intent.putExtra("ownerType",);
+        switch (tabTitle[currentItem]) {
+            case Hidden:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("hiddenData", ((HiddenChartFragment) fragments.get(currentItem)).getHiddenEntryTest());
+                intent.putExtra("hiddenData", bundle);
+                break;
+            case Acci:
+                break;
+            case Haz:
+                break;
+            case Stan:
+                break;
+            case Sins:
+                break;
+            case Woas:
+                break;
+            case Wins:
+                break;
+            case Suen:
+                break;
+        }
         startActivity(intent);
     }
 

@@ -96,7 +96,7 @@ public class ThematicDetailSinsProjFragment extends BaseLazyFragment {
     PieChart pieCharHiddenRate;
     @BindView(R.id.tv_count3)
     TextView tvCount3;
-    @BindView(R.id.tv_had_rectified_value1)
+    @BindView(R.id.tv_had_no_rectified_value1)
     TextView tvHadRectifiedValue1;
     @BindView(R.id.tv_no_rectified_value1)
     TextView tvNoRectifiedValue1;

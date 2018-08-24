@@ -82,10 +82,10 @@ public class  App extends Application {
         context = getApplicationContext();
         initLog();
         OkHttpUtils.init(this);
-        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+//        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init();
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init();
 
 
     }

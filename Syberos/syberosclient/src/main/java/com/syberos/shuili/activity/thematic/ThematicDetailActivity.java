@@ -12,6 +12,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
@@ -21,6 +22,10 @@ import com.syberos.shuili.fragment.thematic.detail.ThematicDetailStanFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailSuenFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWinsFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWoasFragment;
+import com.syberos.shuili.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,6 +62,18 @@ public class ThematicDetailActivity extends BActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        EventBus.getDefault().unregister(this);
+    }
+
     //    隐患
     ThematicDetailHiddenFragment thematicDetailHiddenFragment = new ThematicDetailHiddenFragment();
     //    事故
@@ -81,6 +98,11 @@ public class ThematicDetailActivity extends BActivity {
             thematicDetailSinsFragment, thematicDetailWoasFragment,
             thematicDetailWinsFragment, thematicDetailSuenFragment};
 
+    @Subscribe
+    public void onHiddenData(HiddenEntryTest hiddenEntryTest) {
+        ToastUtils.show("ThematicDetailActivity getData");
+    }
+
     @Override
     public void initData() {
 //        tabTitle[3]
@@ -88,6 +110,8 @@ public class ThematicDetailActivity extends BActivity {
             case Hidden:
 //                todo 隐患
                 tvTitle.setText("隐患");
+                HiddenEntryTest hiddenEntryTest= (HiddenEntryTest) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
+                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntryTest(hiddenEntryTest);
                 switchFragment(fragments[0]);
                 break;
             case Acci:
@@ -123,7 +147,7 @@ public class ThematicDetailActivity extends BActivity {
             case Suen:
 //                todo 安监执法
                 tvTitle.setText("安监执法");
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt("statusKey", SuenChartFragment.getStatus1());
                 fragments[7].setArguments(bundle);
                 switchFragment(fragments[7]);

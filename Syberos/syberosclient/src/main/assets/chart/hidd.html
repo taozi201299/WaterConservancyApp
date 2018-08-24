@@ -100,20 +100,34 @@ function showMap(x, y,level) {
 var current_point_x = null;
 var current_point_y = null;
 var current_point_vector_layer = null;
-function updateCurrentPoint(x, y) {
+function updateCurrentPoint(jsonStr) {
     // 删除旧的点
     if (null != current_point_vector_layer) {
         mapDEMO.map.getCustomLayerGroup().removeLayer(current_point_vector_layer);
+		current_point_vector_layer = null;
     }
-
     // 初始化 source 源
     var vectorSource = new ol.source.Vector({ wrapX: false });
 
     // 初始化图层
     current_point_vector_layer = new ol.layer.Vector({source: vectorSource, id:'current_point_vector'});
 
+    // 图层加到容器中
+    mapDEMO.map.getCustomLayerGroup().addLayer(current_point_vector_layer);
+	_layerClear();
+var mLat ;
+var mLon ;
+var val;
+  for (var i = 0; i < jsonStr.length; i++) {
+        //result[i]表示获得第i个json对象即JSONObject
+        //result[i]通过.字段名称即可获得指定字段的值
+        mLat = jsonStr[i].lat;
+		mLon = jsonStr[i].lon;
+		val = jsonStr[i].value;
     // 初始化 feature start
-    var Coordinates = [x, y+1];
+    var Coordinates = [mLon, mLat+2];
+	alert(Coordinates[0]);
+	alert(Coordinates[1]);
     var iconFeature = new ol.Feature(
                 {
                     geometry: new ol.geom.Point(Coordinates),
@@ -135,7 +149,7 @@ function updateCurrentPoint(x, y) {
                 }
                 );
     var projectLableNum = new ol.style.Text({
-						text:'10',
+						text:val,
 						fill: new ol.style.Fill({
 							color: '#000'
 						}),
@@ -145,10 +159,9 @@ function updateCurrentPoint(x, y) {
 
     iconFeature.setStyle(style);
     current_point_vector_layer.getSource().addFeature(iconFeature);
-    // 初始化 feature end
+  }
 
-    // 图层加到容器中
-    mapDEMO.map.getCustomLayerGroup().addLayer(current_point_vector_layer);
+    // 初始化 feature end
 
     current_point_x = x;
     current_point_y = y;
@@ -159,6 +172,21 @@ function centerOnCurrentPoint() {
     mapDEMO.map.zoomTo([current_point_x, current_point_y], null);
 }
 function showInfo(){
+}
+function _stopAllController() {
+    // 为了保证对应的控制器可用，在之前先删除冗余的同id下的所有控制器
+    var getInteractions = mapDEMO.map.getInteractions().getArray();
+    for (var i = 0; i < getInteractions.length ; i++){
+        var obj = getInteractions[i];
+        if( !!obj && !!obj.id && obj.id == _thisElementsQueryID){
+            mapDEMO.map.removeInteraction(obj)
+            i--;
+        }
+    }
+}
+function _layerClear() {
+    _stopAllController();
+    current_point_vector_layer.getSource().clear();
 }
 </script>
 

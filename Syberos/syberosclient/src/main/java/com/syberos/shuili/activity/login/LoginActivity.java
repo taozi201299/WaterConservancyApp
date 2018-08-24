@@ -159,6 +159,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.activity_login;
     }
@@ -473,6 +478,7 @@ public class LoginActivity extends BaseActivity {
             intentActivity(LoginActivity.this, MainActivity.class, false, true);
             App.userType = "1";
         }
+        finish();
     }
 
     private void showGateWayFragment() {

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,13 +59,13 @@ import butterknife.BindView;
  * Package：com.syberos.shuili.fragment.securitycloud.
  */
 @SuppressLint("ValidFragment")
-public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener {
+public class __BaseSecurityCloudFragment extends BaseFragment implements AppBarLayout.OnOffsetChangedListener {
     public static final String TAG = "TestData";
     String strJsonData;//= "{\"accidentInfoEntry\":{\"accLevelFourCount\":0,\"accLevelOneCount\":0,\"accLevelThreeCount\":0,\"accLevelTwoCount\":0,\"deathCount\":0,\"score\":0,\"totalCount\":0},\"compScoreTrend\":{\"dataList\":[{\"date\":null,\"score\":0}],\"qualifiedScore\":0},\"hiddenInfoEntry\":{\"majorHadSupervisingCount\":0,\"majorHiddenCount\":0,\"majorHiddenHadRectifyCount\":0,\"majorHiddenNoRectifyCount\":0,\"majorLateNoRectifyCount\":0,\"noRectifyCount\":0,\"normalHiddenCount\":0,\"normalHiddenHadRectifyCount\":0,\"normalHiddenNoRectifyCount\":0,\"normalLateNoRectifyCount\":0,\"score\":0,\"totalHiddenCount\":0},\"rankList\":[{\"id\":null,\"name\":null,\"score\":0}],\"riskSourceEntry\":{\"hadControl\":0,\"hadRecord\":0,\"noControl\":0,\"noRecord\":0,\"score\":0},\"straightTubeManageEntry\":{\"dataList\":[{\"partReportCount\":0,\"partUnReportCount\":0}],\"perTrainingHours\":0,\"score\":0,\"trainingPersonCount\":0},\"supervisionMangeEntry\":{\"score\":0,\"standardLevelOneCount\":0,\"standardLevelThreeCount\":0,\"standardLevelTwoCount\":0,\"workAssessmentScore\":0},\"synthesisInfoEntry\":{\"chainRatio\":null,\"sameTimeRatio\":null,\"score\":0}}";
-    @BindView(R.id.app_bar)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.collapse_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
+//    @BindView(R.id.app_bar)
+//    AppBarLayout appBarLayout;
+//    @BindView(R.id.collapse_toolbar)
+//    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_score)
@@ -192,10 +191,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     private YAxis yAxisLeft;         //Y坐标轴
     private LineChart lineChart;
 
-    public BaseSecurityCloudFragment() {
+    public __BaseSecurityCloudFragment() {
     }
 
-    public BaseSecurityCloudFragment(@Nullable String strJsonData, String type) {
+    public __BaseSecurityCloudFragment(@Nullable String strJsonData, String type) {
 
         this.strJsonData = strJsonData;
         this.type = type;
@@ -222,7 +221,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     //    @Override
     public void initViewData() {
-        appBarLayout.addOnOffsetChangedListener(this);
+//        appBarLayout.addOnOffsetChangedListener(this);
         Gson gson = new Gson();
 
         securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
@@ -236,7 +235,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
         }
         tvTitle.setText(title);
-        collapsingToolbarLayout.setTitle(titleDetail);
+//        collapsingToolbarLayout.setTitle(titleDetail);
         tvScore.setText(score + "");
         viewDialPlate.updateData(score);
 
@@ -344,7 +343,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 ToastUtils.show("选择日期");
             }
         });
-        initLineCharView(lineChart, securityCloudEntry.getCompScoreTrend().getDataList());
+//        initLineCharView(lineChart, securityCloudEntry.getCompScoreTrend().getDataList());
 
     }
 
@@ -400,7 +399,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             waterView.setProgress(60);
 //            waterView.startAnimation();
-            initPieCharView(pieCharManager, list);
+//            initPieCharView(pieCharManager, list);
         }
     }
 
@@ -418,11 +417,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
             if (riskSourceEntry.getHadRecord() + riskSourceEntry.getNoRecord() == 0) {
                 PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char));
-                initPieChartNoData(pieChart, "无风险源");
+//                initPieChartNoData(pieChart, "无风险源");
             } else {
                 riskPieEntrys.add(new PieEntry(riskSourceEntry.getHadRecord(), "已备案 " + riskSourceEntry.getHadRecord()));
                 riskPieEntrys.add(new PieEntry(riskSourceEntry.getNoRecord(), "未备案 " + riskSourceEntry.getNoRecord()));
-                initPieCharView((PieChart) pieCharRisk.findViewById(R.id.pie_char_risk), riskPieEntrys);
+//                initPieCharView((PieChart) pieCharRisk.findViewById(R.id.pie_char_risk), riskPieEntrys);
             }
         } else {
             ToastUtils.show("获取风险源数据错误");
@@ -469,13 +468,13 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         List<PieEntry> accPieEntrys = new ArrayList<>();
         if (accidentInfoEntry.getAccLevelOneCount() + accidentInfoEntry.getAccLevelTwoCount() + accidentInfoEntry.getAccLevelThreeCount() + accidentInfoEntry.getAccLevelFourCount() == 0) {
             PieChart pieChart = ((PieChart) cardViewAcc.findViewById(R.id.pie_char));
-            initPieChartNoData(pieChart, "无事故发生");
+//            initPieChartNoData(pieChart, "无事故发生");
         } else {
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelOneCount(), "一般事故 " + accidentInfoEntry.getAccLevelOneCount()));
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelTwoCount(), "较大事故 " + accidentInfoEntry.getAccLevelTwoCount()));
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelThreeCount(), "重大事故 " + accidentInfoEntry.getAccLevelThreeCount()));
             accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelFourCount(), "特大事故 " + accidentInfoEntry.getAccLevelFourCount()));
-            initPieCharView((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc), accPieEntrys);
+//            initPieCharView((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc), accPieEntrys);
         }
     }
 
@@ -497,7 +496,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_security_cloud_river_area;
+        return R.layout.__fragment_security_cloud_river_area;
     }
 
     @Override

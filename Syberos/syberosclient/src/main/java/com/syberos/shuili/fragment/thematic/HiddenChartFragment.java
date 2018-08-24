@@ -13,17 +13,27 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.google.gson.Gson;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
+import com.syberos.shuili.retrofit.RetrofitApiService;
+import com.syberos.shuili.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2018/6/26.
@@ -45,7 +55,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @BindView(R.id.radio_btn_liuyu)
     RadioButton rbtnLiuyu;
-
+    private String TAG = getClass().getSimpleName();
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
@@ -68,6 +78,8 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         return R.layout.fragment_acci_chart_layout;
     }
 
+    HiddenEntryTest hiddenZhiguan, hiddenJianguan, hiddenLiuyu;
+
     @Override
     protected void initView() {
         showDataLoadingDialog();
@@ -83,13 +95,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initListener() {
-
-//        rbtnJianguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//
-//            }
-//        });
         bLoadFinish = false;
         bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -100,23 +105,69 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                     case R.id.radio_btn_zhiguan:
                         iMapLevel = 4;
                         type = 1;
-                        webView.removeAllViews();
-                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+//                        webView.removeAllViews();
+//                        webView.loadUrl("file:///android_asset/chart/hidd.html");
                         break;
                     case R.id.radio_btn_liuyu:
                         type = 2;
                         iMapLevel = 0;
-                        webView.removeAllViews();
-                        webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
+//                        webView.removeAllViews();
+//                        webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                         break;
                     case R.id.radio_btn_jianguan:
                         iMapLevel = 4;
                         type = 3;
-                        webView.removeAllViews();
-                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+//                        webView.removeAllViews();
+//                        webView.loadUrl("file:///android_asset/chart/hidd.html");
                         break;
 
                 }
+
+                RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntryTest>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(HiddenEntryTest hiddenEntryTest) {
+                        LogUtils.i(TAG + "getThematicHidden:", "onNext");
+                        List<Point> list = new ArrayList<>();
+                        list.clear();
+                        if (type == 1) {
+                            for (HiddenEntryTest.DataBean.ITEMDATABean bean :
+                                    hiddenEntryTest.getData().getITEMDATA()) {
+                                list.add(new Point(bean.getENG_LONG() + "", bean.getENG_LAT() + "", bean.getHIDDTOTALQUA() + ""));
+                            }
+                        } else {
+                            for (HiddenEntryTest.DataBean.ITEMDATABean bean :
+                                    hiddenEntryTest.getData().getITEMDATA()) {
+                                list.add(new Point(bean.getAD_LONG() + "", bean.getAD_LAT() + "", bean.getHIDDTOTALQUA() + ""));
+                            }
+
+                        }
+
+                        setHiddenEntryTest(hiddenEntryTest);
+
+                        addMarkInfo(list);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        LogUtils.i(TAG + "getThematicHidden:", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LogUtils.i(TAG + "getThematicHidden:", "onComplete");
+                    }//todo 参数
+                }, type + "", SyberosManagerImpl.getInstance().
+
+                        getCurrentUserInfo().
+                        getOrgId(), "", "");
+
+
             }
         });
 
@@ -128,6 +179,15 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     }
 
+    public HiddenEntryTest getHiddenEntryTest() {
+        return hiddenEntryTest;
+    }
+
+    public void setHiddenEntryTest(HiddenEntryTest hiddenEntryTest) {
+        this.hiddenEntryTest = hiddenEntryTest;
+    }
+
+    HiddenEntryTest hiddenEntryTest;
 
     public void webMap() {//地图定位
         webView.getSettings().setDatabaseEnabled(true);//开启数据库
@@ -156,10 +216,54 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     closeDataDialog();
                     webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-                    addMarkInfo();
+                    List<Point> list = new ArrayList<>();
+                    list.clear();
+                    list.add(new Point(mLon, mLat, ""));
+                    addMarkInfo(list);
+                    int type;
+
+                    if (rbtnZhiguan.isChecked()) {
+                        type = 1;
+                    } else if (rbtnJianguan.isChecked()) {
+                        type = 2;
+                    } else if (rbtnLiuyu.isChecked()) {
+                        type = 3;
+                    } else {
+                        type = 1;
+                    }
+                    RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntryTest>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
+                        }
+
+                        @Override
+                        public void onNext(HiddenEntryTest hiddenEntryTest) {
+                            LogUtils.i(TAG + "getThematicHidden:", "onNext");
+                            List<Point> list = new ArrayList<>();
+                            list.clear();
+                            for (HiddenEntryTest.DataBean.ITEMDATABean bean :
+                                    hiddenEntryTest.getData().getITEMDATA()) {
+                                list.add(new Point(bean.getENG_LONG() + "", bean.getENG_LAT() + "", bean.getHIDDTOTALQUA() + ""));
+                            }
+                            setHiddenEntryTest(hiddenEntryTest);
+                            addMarkInfo(list);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            LogUtils.i(TAG + "getThematicHidden:", "onError");
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            LogUtils.i(TAG + "getThematicHidden:", "onComplete");
+                        }//todo 参数
+                    }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+
+
                 }
-
-
             }
         });
 
@@ -204,28 +308,27 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             closeDataDialog();
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-            addMarkInfo();
+            List<Point> list = new ArrayList<>();
+            list.clear();
+            list.add(new Point(mLon, mLat, ""));
+            addMarkInfo(list);
         }
     }
 
-    private void addMarkInfo() {
-        ArrayList<Point>list = new ArrayList<>();
-        Point point = new Point();
-        point.lat = "37.916475";
-        point.lon = "107.074607";
-        point.value = "188";
-        list.add(point);
-        Point point1 = new Point();
-        point1.lon = mLon ;
-        point1.lat = mLat;
-        point1.value = "18";
-        list.add(point1);
+    private void addMarkInfo(List<Point> list) {
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
-
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
     }
+
+
     class Point {
+        public Point(String lon, String lat, String value) {
+            this.lon = lon;
+            this.lat = lat;
+            this.value = value;
+        }
+
         String lon;
         String lat;
         String value;

@@ -21,6 +21,8 @@ import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -63,7 +65,6 @@ public abstract class BaseLazyFragment extends Fragment {
 
    static int status1;
     static int status2;
-
 
 
     @Override

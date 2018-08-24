@@ -31,6 +31,8 @@ import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -62,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        isUserVisible= isVisibleToUser ;
+        isUserVisible = isVisibleToUser;
     }
 
     @Override
@@ -75,7 +77,20 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        LogUtils.i(TAG, "onAttach");
         mContext = context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtils.i(TAG, "onDetach");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtils.i(TAG, "onDestroy");
     }
 
     protected abstract int getLayoutID();
@@ -97,6 +112,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        LogUtils.i(TAG, "onDestroyView");
     }
 
     /**
@@ -121,16 +137,29 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         initData();
+        LogUtils.i(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LogUtils.i(TAG, "onPause");
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtils.i(TAG, "onPause");
     }
 
     /**
