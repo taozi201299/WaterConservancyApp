@@ -113,7 +113,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                relSinsGroupWiun = (RelSinsGroupWiun)gson.fromJson(result,RelSinsGroupWiun.class);
+                relSinsGroupWiun = gson.fromJson(result,RelSinsGroupWiun.class);
                 if(relSinsGroupWiun == null || relSinsGroupWiun.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
