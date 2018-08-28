@@ -280,8 +280,11 @@ public class AccidentListActivity extends BaseActivity {
                     public void onChildClick(GroupedRecyclerViewAdapter adapter,
                                              BaseViewHolder holder,
                                              int groupPosition, int childPosition) {
-                        if(childPosition >=accidentInformationGroups.size())
+                        if(groupPosition >=accidentInformationGroups.size())
                             return;
+                        if(childPosition >= accidentInformationGroups.get(groupPosition).getChildren().size()){
+                            return;
+                        }
 
                         Bundle bundle = new Bundle();
                         ArrayList<ObjAcci> children

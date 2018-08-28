@@ -44,6 +44,7 @@ public class AccidentQueryListActivity extends BaseActivity {
     HashMap<String,ArrayList<ObjAcci>> groupMap = new HashMap<>();
     private ArrayList<ObjAcci> reportInfos = new ArrayList<>();
     ArrayList<OrgInfo>orgInfos = new ArrayList<>();
+    ArrayList<ObjAcci>datas = new ArrayList<>();
     /**
      * 事故快报列表信息
      */
@@ -202,8 +203,13 @@ public class AccidentQueryListActivity extends BaseActivity {
                     }
                     parasAccidentInformation();
                     String header = attOrgBaseForAcci.dataSource.get(finalIndex).getOrgName();
-                    for(ObjAcci item : accidentInformation.dataSource) {
+                    ArrayList<ObjAcci>datas = new ArrayList<>();
+                    datas.addAll(accidentInformation.dataSource);
+                    for(ObjAcci item : accidentInformation.dataSource){
                         item.setAccidentUnitName(header);
+                        if(item.getPID() != null && !item.getPID().isEmpty()){
+                            datas.remove(item);
+                        }
                     }
                     accidentInformationGroups.add(new AccidentInformationGroup(header, (ArrayList<ObjAcci>) accidentInformation.dataSource));
                     if(iSucessCount + iFailedCount == count){
@@ -272,8 +278,11 @@ public class AccidentQueryListActivity extends BaseActivity {
                     public void onChildClick(GroupedRecyclerViewAdapter adapter,
                                              BaseViewHolder holder,
                                              int groupPosition, int childPosition) {
-                        if(childPosition >=accidentInformationGroups.size())
+                        if(groupPosition >=accidentInformationGroups.size())
                             return;
+                        if(childPosition >= accidentInformationGroups.get(groupPosition).getChildren().size()){
+                            return;
+                        }
                         Bundle bundle = new Bundle();
                         ArrayList<ObjAcci> children
                                 = accidentInformationGroups.get(groupPosition).getChildren();
