@@ -194,6 +194,14 @@ public class SyberosManagerImpl {
             }
         });
     }
+    public void changePwdForWater(final HashMap<String, Object> params, final String methodName, final RequestCallback<Object> callback){
+        mWorkHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                soapUtils.callWebService(params,methodName,callback,SoapUtils.SoapType.WSDL_BASE_FOR_WATER);
+            }
+        });
+    }
     public void changePwd(final HashMap<String, Object> params, final String methodName, final RequestCallback<Object> callback){
         mWorkHandler.post(new Runnable() {
             @Override

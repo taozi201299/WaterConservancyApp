@@ -30,9 +30,16 @@ public class SoapUtils {
     private final  String NAME_SPACE = "http://userext.service.uumsext.dhcc.com.cn/";
     private final  String NAME_SPACE_EXT ="http://orgbaseext.service.uumsext.dhcc.com.cn/";
     private final  String NAME_SPACE_WIUN = "http://orgbasewiun.service.uumsext.dhcc.com.cn/";
+    private final String NAME_SPACE_FOR_WATER = "http://uums.service.uums.dhcc.com.cn/";
 
-    /** WSDL文件的URL. */
+
+
+    /** WSDL文件的URL. 非水利用户*/
     private final  String WSDL_URL = "http://" + strIp + "/uams/ws/uumsext/UserExt?wsdl";
+    /**
+     * WSDL 文件的URL，水利用户
+     */
+    private final  String WSDL_URL_WATERINDUSTRY = "http://" + strIp + "/uams/ws/uums/?wsdl";
     private final  String WSDL_URL_EXT = "http://"+strIp +"/uams/ws/uumsext/OrgBaseExt?wsdl";
     private final  String WSDL_URL_WIUM = "http://"+strIp +"/uams/ws/uumsext/OrgBaseWiun?wsdl";
     private String strNameSpace;
@@ -45,7 +52,8 @@ public class SoapUtils {
     public static enum SoapType{
         WSDL_BASE,
         WSDL_EXT,
-        WSDL_WIUM
+        WSDL_WIUM,
+        WSDL_BASE_FOR_WATER,
     }
     private SoapUtils(){
 
@@ -79,6 +87,10 @@ public class SoapUtils {
             case WSDL_WIUM:
                 strNameSpace = NAME_SPACE_WIUN;
                 strWsdlUrl = WSDL_URL_WIUM;
+                break;
+            case WSDL_BASE_FOR_WATER:
+                strNameSpace = NAME_SPACE_FOR_WATER;
+                strWsdlUrl = WSDL_URL_WATERINDUSTRY;
                 break;
         }
         // 命名空间+方法名称；

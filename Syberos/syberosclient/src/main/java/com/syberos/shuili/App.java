@@ -104,4 +104,7 @@ public class  App extends Application {
     public static void  setUserType(int isWaterIndustry){
        app.isWaterIndustry = isWaterIndustry;
     }
+    public static int getUserType(){
+        return  isWaterIndustry;
+    }
 }

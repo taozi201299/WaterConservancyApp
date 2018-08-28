@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
@@ -52,7 +53,13 @@ public class ChangePasswordActivity extends BaseActivity {
     @OnClick(R.id.tv_change_password_submit)
     void changePasswordSubmit() {
         if(checkPwd()) {
-           changePassword();
+            if(App.getUserType() == 0){
+                changePassword();
+            }else {
+                // 水利用户
+                changeUserPassword();
+            }
+
         }
     }
 
@@ -173,11 +180,29 @@ public class ChangePasswordActivity extends BaseActivity {
     private void changePassword(){
         String methodName = "changePassword";
         HashMap<String,Object>params = new HashMap<>();
-
         params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserCode());
         params.put("arg1",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
         params.put("arg2",CommonUtils.encrypt(et_input_new_password.getText().toString()));
         SyberosManagerImpl.getInstance().changePwd(params, methodName, new RequestCallback<Object>() {
+            @Override
+            public void onResponse(Object result) {
+                ToastUtils.show("密码修改成功");
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void changeUserPassword(){
+        String methodName = "changeUserPassword";
+        HashMap<String,Object>params = new HashMap<>();
+        params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserCode());
+        params.put("arg1",et_input_original_password.getText().toString());
+        params.put("arg2",et_input_new_password.getText().toString());
+        SyberosManagerImpl.getInstance().changePwdForWater(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
                 ToastUtils.show("密码修改成功");
