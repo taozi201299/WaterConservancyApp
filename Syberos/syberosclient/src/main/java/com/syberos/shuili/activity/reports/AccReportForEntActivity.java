@@ -364,41 +364,41 @@ public class AccReportForEntActivity extends TranslucentActivity {
                 @Override
                 public void onClick(View v) {
                     switch (linkStatus) {
-                        case HiddenDangerReport.LINK_RETURNED:
-                            if(hiddenDangerReport.isReportFinish()) {
-                                confirmDialog = new Dialog(AccReportForEntActivity.this);
-                                View v1 = LayoutInflater.from(AccReportForEntActivity.this).inflate(
-                                        R.layout.dialog_hidden_danger_report_confirm, null);
-                                tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
-                                tv_confirmDialog_title.setText("确认撤回");
-                                confirmDialog.setContentView(v1);
-                                Window dialogWindow = confirmDialog.getWindow();
-                                WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
+                        case HiddenDangerReport.LINK_YES:
+//                            if(hiddenDangerReport.isReportFinish()) {
+                            confirmDialog = new Dialog(AccReportForEntActivity.this);
+                            View v1 = LayoutInflater.from(AccReportForEntActivity.this).inflate(
+                                    R.layout.dialog_hidden_danger_report_confirm, null);
+                            tv_confirmDialog_title =  v1.findViewById(R.id.tv_title);
+                            tv_confirmDialog_title.setText("确认撤回");
+                            confirmDialog.setContentView(v1);
+                            Window dialogWindow = confirmDialog.getWindow();
+                            WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
 
-                                lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                                lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                                lp1.gravity = Gravity.CENTER;
-                                confirmDialog.setCancelable(false);
-                                dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-                                dialogWindow.setAttributes(lp1);
-                                Button bt_cancel = (Button) v1.findViewById(R.id.btn_cancel);
-                                bt_cancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        confirmDialog.dismiss();
-                                    }
-                                });
-                                Button btn_confirm = (Button) v1.findViewById(R.id.btn_confirm);
-                                btn_confirm.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        cancelReport(hiddenDangerReport);
-                                        confirmDialog.dismiss();
-                                    }
-                                });
+                            lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.gravity = Gravity.CENTER;
+                            confirmDialog.setCancelable(false);
+                            dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+                            dialogWindow.setAttributes(lp1);
+                            Button bt_cancel =  v1.findViewById(R.id.btn_cancel);
+                            bt_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            Button btn_confirm =  v1.findViewById(R.id.btn_confirm);
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    cancelReport(hiddenDangerReport);
+                                    confirmDialog.dismiss();
+                                }
+                            });
 
-                                confirmDialog.show();
-                            }
+                            confirmDialog.show();
+                            //  }
                             break;
                     }
                 }
