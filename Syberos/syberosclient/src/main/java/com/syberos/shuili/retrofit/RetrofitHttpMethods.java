@@ -2,6 +2,7 @@ package com.syberos.shuili.retrofit;
 
 import android.util.Log;
 
+import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.entity.thematicchart.accident.AccidentDetailEntry;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
@@ -87,6 +89,19 @@ public class RetrofitHttpMethods {
                                   String startTime,
                                   String endTime) {
         retrofitApiService.getThematicHidden(sourceType, orgGuid, startTime, endTime)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+    /**
+     * 获取事故数据
+     */
+    public void getThematicAcci(Observer<AcciEntry> observer, String sourceType,
+                                String orgGuid,
+                                String startTime,
+                                String endTime){
+        retrofitApiService.getThematicAcci(sourceType,orgGuid,startTime,endTime)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

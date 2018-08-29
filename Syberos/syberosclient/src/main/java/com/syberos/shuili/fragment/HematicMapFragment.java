@@ -237,16 +237,17 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     }
 
     private void getCenterXY() {
+        App.jurdAreaType = "1";
+        App.orgJurd ="000000000000";
         String code = App.orgJurd;
         String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
         HashMap<String, String> params = new HashMap<>();
         params.put("templateCode", "140");
         if ("1".equals(App.jurdAreaType)) {
             params.put("type", "PROVINCE");
-        } else if ("4".equals(App.jurdAreaType.equals("4"))) {
+        } else if ("4".equals(App.jurdAreaType)) {
             params.put("type", "XZBAS");
         } else {
-            ToastUtils.show("机构管辖范围类型错误");
             params.put("type", "PROVINCE");
         }
         params.put("type", "XZBAS");
@@ -260,16 +261,23 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 if (!result.isEmpty()) {
                     Gson gson = new Gson();
                     mapBoundBean = gson.fromJson(result, MapBoundBean.class);
-                    if (mapBoundBean != null && mapBoundBean.result != null && mapBoundBean.result.size() == 0) {
+                    if (mapBoundBean == null && mapBoundBean.result == null ) {
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    } else {
-                        tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
-                        setMapData();
+                        return;
+                    }else if(mapBoundBean.result.size() == 0){
+                        if(App.orgJurd.equals("000000000000")){
+                            MapBoundBean item = new MapBoundBean();
+                            item.name = "全国";
+                            item.centerXY = "108.953098279,34.2777998978";
+                            mapBoundBean.result = new ArrayList<>();
+                            mapBoundBean.result.add(item);
+                        }
                     }
+                    tv_action_bar_title.setText(mapBoundBean.result.get(0).name);
+                    setMapData();
                 } else {
                     ToastUtils.show("getCenterXY 内容为空");
                 }
-
             }
 
             @Override

@@ -9,6 +9,12 @@ import java.util.HashMap;
  */
 public class GlobleConstants {
 
+
+    public static  int  iMinistry = 1;
+    public static  int  iProvince = 2;
+    public static  int  iCity = 3;
+    public static  int  iCounty = 4;
+
     /**
      * for login
      */

@@ -19,6 +19,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
@@ -64,6 +65,9 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     private final static long duration = 10 * 1000;
     private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
 
+    private int orgLevel = BusinessConfig.getOrgLevel();
+    private int orgType; // 1 行政区划 2 流域用户
+
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
             put("北京市", "5");
@@ -82,12 +86,44 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initView() {
+        App.jurdAreaType = "1";
+        App.orgJurd ="000000000000";
+        orgLevel = 1;
         showDataLoadingDialog();
+        rbtnJianguan.setVisibility(View.GONE);
+        rbtnLiuyu.setVisibility(View.GONE);
+        rbtnZhiguan.setVisibility(View.GONE);
         // 行政区划
         if ("1".equals(App.jurdAreaType)) {
-            type = 1;
+            orgType = 1;
         } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
-            type = 2;
+            orgType = 2;
+        }
+        if(orgType == 1) {
+            if (orgLevel == 1) {
+                // 部级用户  直管 流域 监管
+                rbtnJianguan.setVisibility(View.VISIBLE);
+                rbtnLiuyu.setVisibility(View.VISIBLE);
+                rbtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 2) {
+                // 省级  直管 监管
+                rbtnJianguan.setVisibility(View.VISIBLE);
+                rbtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 3) {
+                // 市 直管 监管
+                rbtnJianguan.setVisibility(View.VISIBLE);
+                rbtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 4) {
+                // 县  直管
+                rbtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            }
+        }else  if(orgType == 2){
+            rbtnZhiguan.setVisibility(View.VISIBLE);
+            radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
 
@@ -103,24 +139,32 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
                 switch (checkId) {
                     case R.id.radio_btn_zhiguan:
-                        iMapLevel = 4;
+                        if(orgType == 1) {
+                            iMapLevel = 4;
+                        }else if(orgType == 2){
+                            iMapLevel = 0;
+                        }
                         type = 1;
-//                        webView.removeAllViews();
-//                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+                        webView.removeAllViews();
                         break;
                     case R.id.radio_btn_liuyu:
                         type = 2;
                         iMapLevel = 0;
-//                        webView.removeAllViews();
-//                        webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                         break;
                     case R.id.radio_btn_jianguan:
                         iMapLevel = 4;
                         type = 3;
-//                        webView.removeAllViews();
-//                        webView.loadUrl("file:///android_asset/chart/hidd.html");
                         break;
-
+                }
+                if(orgType == 1) {
+                    if(type == 2)
+                    webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
+                    else {
+                        webView.loadUrl("file:///android_asset/chart/hidd.html");
+                    }
+                }
+                else if(orgType == 2){
+                    webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                 }
 
                 RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntryTest>() {
@@ -134,6 +178,10 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                         LogUtils.i(TAG + "getThematicHidden:", "onNext");
                         List<Point> list = new ArrayList<>();
                         list.clear();
+                        if(hiddenEntryTest == null || hiddenEntryTest.getData() == null){
+                            ToastUtils.show("未获取到数据");
+                            return;
+                        }
                         if (type == 1) {
                             for (HiddenEntryTest.DataBean.ITEMDATABean bean :
                                     hiddenEntryTest.getData().getITEMDATA()) {
@@ -200,10 +248,10 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        if (type == 1 || type == 3) {
+        if (orgType == 1 || orgType == 3) {
             iMapLevel = 4;
             webView.loadUrl("file:///android_asset/chart/hidd.html");
-        } else if (type == 2) {
+        } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
         }
@@ -214,55 +262,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
-                    closeDataDialog();
-                    webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-                    List<Point> list = new ArrayList<>();
-                    list.clear();
-                    list.add(new Point(mLon, mLat, ""));
-                    addMarkInfo(list);
-                    int type;
-
-                    if (rbtnZhiguan.isChecked()) {
-                        type = 1;
-                    } else if (rbtnJianguan.isChecked()) {
-                        type = 2;
-                    } else if (rbtnLiuyu.isChecked()) {
-                        type = 3;
-                    } else {
-                        type = 1;
-                    }
-                    RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntryTest>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
-                        }
-
-                        @Override
-                        public void onNext(HiddenEntryTest hiddenEntryTest) {
-                            LogUtils.i(TAG + "getThematicHidden:", "onNext");
-                            List<Point> list = new ArrayList<>();
-                            list.clear();
-                            for (HiddenEntryTest.DataBean.ITEMDATABean bean :
-                                    hiddenEntryTest.getData().getITEMDATA()) {
-                                list.add(new Point(bean.getENG_LONG() + "", bean.getENG_LAT() + "", bean.getHIDDTOTALQUA() + ""));
-                            }
-                            setHiddenEntryTest(hiddenEntryTest);
-                            addMarkInfo(list);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            e.printStackTrace();
-                            LogUtils.i(TAG + "getThematicHidden:", "onError");
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            LogUtils.i(TAG + "getThematicHidden:", "onComplete");
-                        }//todo 参数
-                    }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
-
-
+                    refreshUI();
                 }
             }
         });
@@ -297,21 +297,16 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     public void setMapData(MapBoundBean mapData) {
         String center = mapData.centerXY;
         String[] array = center.split(",");
-        if (type == 1 || type == 4) {
-            iMapLevel = 4;
+        if (orgType == 1 || orgType == 4) {
+            if(orgLevel == 1) iMapLevel = -2;
+             else iMapLevel = 4;
         } else {
             iMapLevel = 0;
         }
         mLon = array[0];
         mLat = array[1];
-        if (bLoadFinish) {
-            closeDataDialog();
-            bShowMap = true;
-            webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-            List<Point> list = new ArrayList<>();
-            list.clear();
-            list.add(new Point(mLon, mLat, ""));
-            addMarkInfo(list);
+        if (bLoadFinish && !bShowMap) {
+             refreshUI();
         }
     }
 
@@ -321,6 +316,60 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
     }
 
+    private void  refreshUI(){
+        closeDataDialog();
+        bShowMap = true;
+        webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+        List<Point> list = new ArrayList<>();
+        list.clear();
+        int type;
+
+        if (rbtnZhiguan.isChecked()) {
+            type = 1;
+        } else if (rbtnJianguan.isChecked()) {
+            type = 2;
+        } else if (rbtnLiuyu.isChecked()) {
+            type = 3;
+        } else {
+            type = 1;
+        }
+        RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntryTest>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
+            }
+
+            @Override
+            public void onNext(HiddenEntryTest hiddenEntryTest) {
+                LogUtils.i(TAG + "getThematicHidden:", "onNext");
+                List<Point> list = new ArrayList<>();
+                list.clear();
+                if(hiddenEntryTest == null || hiddenEntryTest.getData() == null){
+                    ToastUtils.show("未获取到数据");
+                    return;
+                }
+                for (HiddenEntryTest.DataBean.ITEMDATABean bean :
+                        hiddenEntryTest.getData().getITEMDATA()) {
+                    list.add(new Point(bean.getENG_LONG() + "", bean.getENG_LAT() + "", bean.getHIDDTOTALQUA() + ""));
+                }
+                setHiddenEntryTest(hiddenEntryTest);
+                addMarkInfo(list);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                LogUtils.i(TAG + "getThematicHidden:", "onError");
+            }
+
+            @Override
+            public void onComplete() {
+                LogUtils.i(TAG + "getThematicHidden:", "onComplete");
+            }//todo 参数
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+
+
+    }
 
     class Point {
         public Point(String lon, String lat, String value) {
