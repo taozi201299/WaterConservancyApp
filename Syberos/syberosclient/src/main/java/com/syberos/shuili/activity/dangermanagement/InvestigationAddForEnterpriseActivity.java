@@ -164,7 +164,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     private void commit(){
         if(!checkParam())return;
         //String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
-        String url = GlobleConstants.strCJIP +"/wcsps-api/cj/obj/hidd/addObjHidd";
+        String url = GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",objectEngine.getId()); // 所属工程

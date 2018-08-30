@@ -273,7 +273,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
     private void accidentReport() {
         int localStatus = 0;
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/yuanXin/Accident/create";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Accident/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("acciWiunType", m_unitMap.get(ev_unit_type.getCurrentDetailText())); // 事故单位类型
         params.put("acciCate",m_acciTypeMap.get(ev_type.getCurrentDetailText()) );
@@ -300,12 +300,12 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 params.put("repStat", String.valueOf(GlobleConstants.reportAcci_1));
                 params.put("pGuid",objAcci.getId());
-                url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/repay";
+                url = GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/repay";
                 localStatus = 1;
                 localCacheEntity.commitType = 0;
                 break;
             case GlobleConstants.reportAcci_0:
-                url = GlobleConstants.strCJIP +"/wcsps-api/cj/yuanXin/Accident/fastReport";
+                url = GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/fastReport";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
                 params.put("missNum","");
