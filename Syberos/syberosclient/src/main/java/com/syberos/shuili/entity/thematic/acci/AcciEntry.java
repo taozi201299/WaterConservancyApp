@@ -301,7 +301,7 @@ public class AcciEntry implements Serializable {
         String ACCITOTALCASNUM;
         String ACCIGRAD2CASNUM;
         String ACCIGRAD4ECONLOSS;
-        String ORGGUID;
+        String OBJGUID;
         String ACCIGRAD1MISSNUM;
         String ACCIGRAD4SERINJNUM;
         String ACCIGRAD1SERINJNUM;
@@ -309,7 +309,7 @@ public class AcciEntry implements Serializable {
         String ACCITGRAD4NUM;
         String ACCIGRAD3SERINJNUM;
         String ACCIGRAD4CASNUM;
-        String ORG_LAT;
+        String OBJLAT;
         String ACCITOTALSERINJNUM;
         String ACCIGRAD4MISSNUM;
         String ACCITGRAD2NUM;
@@ -321,9 +321,9 @@ public class AcciEntry implements Serializable {
         ArrayList<ACCIDATABean>ACCIDATA;
         String ACCIGRAD1CASNUM; // 总的死亡人数
         String ACCIGRAD1ECONLOSS;
-        String ORG_LONG;
+        String OBJLONG;
         String ACCIGRAD2SERINJNUM;
-        String ORGNAME;
+        String OBJNAME;
 
         public String getACCIGRAD3CASNUM() {
             return ACCIGRAD3CASNUM == null ? "" : ACCIGRAD3CASNUM;
@@ -381,14 +381,6 @@ public class AcciEntry implements Serializable {
             this.ACCIGRAD4ECONLOSS = ACCIGRAD4ECONLOSS;
         }
 
-        public String getORGGUID() {
-            return ORGGUID == null ? "" : ORGGUID;
-        }
-
-        public void setORGGUID(String ORGGUID) {
-            this.ORGGUID = ORGGUID;
-        }
-
         public String getACCIGRAD1MISSNUM() {
             return ACCIGRAD1MISSNUM == null ? "" : ACCIGRAD1MISSNUM;
         }
@@ -443,14 +435,6 @@ public class AcciEntry implements Serializable {
 
         public void setACCIGRAD4CASNUM(String ACCIGRAD4CASNUM) {
             this.ACCIGRAD4CASNUM = ACCIGRAD4CASNUM;
-        }
-
-        public String getORG_LAT() {
-            return ORG_LAT == null ? "" : ORG_LAT;
-        }
-
-        public void setORG_LAT(String ORG_LAT) {
-            this.ORG_LAT = ORG_LAT;
         }
 
         public String getACCITOTALSERINJNUM() {
@@ -544,14 +528,6 @@ public class AcciEntry implements Serializable {
             this.ACCIGRAD1ECONLOSS = ACCIGRAD1ECONLOSS;
         }
 
-        public String getORG_LONG() {
-            return ORG_LONG == null ? "" : ORG_LONG;
-        }
-
-        public void setORG_LONG(String ORG_LONG) {
-            this.ORG_LONG = ORG_LONG;
-        }
-
         public String getACCIGRAD2SERINJNUM() {
             return ACCIGRAD2SERINJNUM == null ? "" : ACCIGRAD2SERINJNUM;
         }
@@ -560,12 +536,36 @@ public class AcciEntry implements Serializable {
             this.ACCIGRAD2SERINJNUM = ACCIGRAD2SERINJNUM;
         }
 
-        public String getORGNAME() {
-            return ORGNAME == null ? "" : ORGNAME;
+        public String getOBJNAME() {
+            return OBJNAME == null ? "" : OBJNAME;
         }
 
-        public void setORGNAME(String ORGNAME) {
-            this.ORGNAME = ORGNAME;
+        public void setOBJNAME(String OBJNAME) {
+            this.OBJNAME = OBJNAME;
+        }
+
+        public String getOBJGUID() {
+            return OBJGUID == null ? "" : OBJGUID;
+        }
+
+        public void setOBJGUID(String OBJGUID) {
+            this.OBJGUID = OBJGUID;
+        }
+
+        public String getOBJLAT() {
+            return OBJLAT == null ? "" : OBJLAT;
+        }
+
+        public void setOBJLAT(String OBJLAT) {
+            this.OBJLAT = OBJLAT;
+        }
+
+        public String getOBJLONG() {
+            return OBJLONG == null ? "" : OBJLONG;
+        }
+
+        public void setOBJLONG(String OBJLONG) {
+            this.OBJLONG = OBJLONG;
         }
     }
     public static class ACCIDATABean implements Serializable{

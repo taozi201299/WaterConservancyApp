@@ -244,8 +244,8 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             Gson gson = new Gson();
             String jsonStr = "";
             for(AcciEntry.ITEMDATABean bean :acciEntry.getData().getITEMDATA()){
-                if(bean.getORGGUID().equals(orgGuid)){
-                    AcciInfo acciInfo = new AcciInfo(bean.getORGNAME(),bean.getACCITOTALCASNUM(),bean.getACCITOTALECONLOSS(),
+                if(bean.getOBJGUID().equals(orgGuid)){
+                    AcciInfo acciInfo = new AcciInfo(bean.getOBJNAME(),bean.getACCITOTALCASNUM(),bean.getACCITOTALECONLOSS(),
                             bean.getACCITOTALNUM());
                     jsonStr = gson.toJson(acciInfo);
                     break;
@@ -317,7 +317,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 }
                 for (AcciEntry.ITEMDATABean bean :
                         acciEntry.getData().getITEMDATA()) {
-                    list.add(new Point(bean.getORG_LONG(), bean.getORG_LAT(), bean.getACCITOTALNUM()));
+                    list.add(new Point(bean.getOBJLONG(), bean.getOBJLAT(), bean.getACCITOTALNUM(),bean.getOBJGUID()));
                 }
                 setData(acciEntry);
                 addMarkInfo(list);
@@ -340,14 +340,16 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     }
 
     class Point {
-        public Point(String lon, String lat, String value) {
+        public Point(String lon, String lat, String value,String guid) {
             this.lon = lon;
             this.lat = lat;
             this.value = value;
+            this.guid = guid;
         }
         String lon;
         String lat;
         String value;
+        String guid;
     }
     class AcciInfo{
         public AcciInfo(String orgName,String acciCasNum,String acciLoss,String occNum){

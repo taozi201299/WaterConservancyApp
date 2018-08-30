@@ -11,23 +11,22 @@
 <body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;left: 0;right: 0;top: 0;bottom: 0;position: absolute;display: block;">
 <div id="map" style="width: 100%;height:100%"
 ></div>
-<div id="mark" style="border-radius:8px; color:#333;height:100px;width:120px"><span id="title" style="font-size:16px; font-weight:bold;"></span><p style=" font-size:14px;">事故数量 <b style="font-size:16px; font-weight:bold;">5</b><br>死亡人数 <b style="font-size:16px; font-weight:bold;">17</b><br>经济损失 <b style="font-size:14px; font-weight:bold;">1600万</b></p><a style="font-size:12px; color:#ccc;">详情...</a></div>
+<div id="mark" style="border-radius:8px; color:#333;height:120px;width:200px"><span id="title" style="font-size:16px; font-weight:bold;"></span><p style=" font-size:14px;">事故数量 <b style="font-size:16px; font-weight:bold;">5</b><br>死亡人数 <b style="font-size:16px; font-weight:bold;">17</b><br>经济损失 <b style="font-size:14px; font-weight:bold;">1600万</b></p><a style="font-size:12px; color:#ccc;">详情...</a></div>
 <script type="text/javascript">
 function showMap(x, y,level) {
     window.mapDEMO = {};
     window.mapDEMO.map = new AJMap.Map('map',{
-                                           BaseLayer:AJMap.BASELAYER.DMZ_TDTSL,
                                            zoomLevel: level,
                                            defaultControl: {
                                                layerswitch: true
                                            },
-                                                ThemeLayers: {
-                                             [AJMap.BASELAYER.DMZ_TDTSL]:false
-                                             },
                                            centerPoint: {
                                                centerX: x,
                                                centerY: y
                                            },
+                                            ThemeLayers: {
+                [AJMap.THEMESLAYER.DMZ_TDTSL]:false
+            },
                                             annotationVisible:true,
                                        });
     var mouseEvent = mapDEMO.map.getMapMouseEvent();
@@ -57,9 +56,11 @@ function showMap(x, y,level) {
                                           });
                 mapDEMO.map.addOverlay(overlay);
             }
-			var obj = id["id"];    
+            var obj = id["id"];
+            alert(obj);     
             var acciInfo = getAcciInfoForMark(obj);
             var markInfo = JSON.parse(acciInfo);
+            alert(acciInfo);
             var divMark = document.getElementById('mark');
             var objTitle = document.getElementById('title').innerText= markInfo.orgName;
             document.getElementsByTagName('b')[0].innerHTML = markInfo.occNum;
@@ -70,150 +71,6 @@ function showMap(x, y,level) {
     }
     current_point_x = x;
     current_point_y = y;
-      var sgLySetStyle = [  //流域样式
-       {
-		ids: ['040000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]         //地图文字标注
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['030000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['020000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['010000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['050000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['060000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-		}
-	},
-	{
-		ids: ['070000'],
-		style: {
-			normal: { //默认渲染的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [190, 232, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			mouseon: { //鼠标移入的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [102, 198, 255, 1],
-				textColor: [0, 0, 0, 1]
-			},
-			selected: { //选中的颜色
-				lineColor: [123, 123, 123, 1],
-				fillColor: [60, 157, 255, 1],
-				textColor: [0, 0, 0, 1]
-			}
-
-		}
-	}
-];
-        mapDEMO.map.addQHVectorLayer(AJMap.QHVECTORLAYER.LYQH,sgLySetStyle);
 
 }
     function showMapMark(x,y,x1,y1,level) {
@@ -223,8 +80,9 @@ function showMap(x, y,level) {
     mapDEMO.mapOption = mapDEMO.mapOption || {};
     if(!mapDEMO.map){
         mapDEMO.map = new AJMap.Map('map',{
+          BaseLayer: AJMap.BASELAYER.DMZ_TDTSL,
             ThemeLayers: {
-                [AJMap.THEMESLAYER.DMZ_TDTSL]:false
+                [AJMap.BASELAYER.DMZ_TDTSL]:false
             },
             zoomLevel: level,
             defaultControl:{
@@ -242,7 +100,7 @@ function showMap(x, y,level) {
          var result = window.DEMO.getLocalUrl(id,src);
          imageTile.getImage().src = result
     }
-	function getAcciInfoForMark(orgGuid){
+    function getAcciInfoForMark(orgGuid){
         var jsonStr = window.DEMO.getAcciInfoForMark(orgGuid);
         return jsonStr;
 
@@ -277,10 +135,12 @@ var val;
 		val = jsonStr[i].value;
     // 初始化 feature start
     var Coordinates = [mLon, mLat+2];
+	alert(Coordinates[0]);
+	alert(Coordinates[1]);
     var iconFeature = new ol.Feature(
                 {
                     geometry: new ol.geom.Point(Coordinates),
-					id:jsonStr[i].guid
+                    id:'13B9B5C0FA6C425891A7F8DECF86A24A'
 
                 }
                 );
@@ -315,6 +175,13 @@ var val;
     current_point_x = x;
     current_point_y = y;
 }
+
+// 定位到我当前的位置
+function centerOnCurrentPoint() {
+    mapDEMO.map.zoomTo([current_point_x, current_point_y], null);
+}
+function showInfo(){
+}
 function _stopAllController() {
     // 为了保证对应的控制器可用，在之前先删除冗余的同id下的所有控制器
     var getInteractions = mapDEMO.map.getInteractions().getArray();
@@ -330,7 +197,6 @@ function _layerClear() {
     _stopAllController();
     current_point_vector_layer.getSource().clear();
 }
-
 </script>
 
 </body>

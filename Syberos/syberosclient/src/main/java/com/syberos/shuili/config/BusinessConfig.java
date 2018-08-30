@@ -11,13 +11,13 @@ public class BusinessConfig {
     public static  int getOrgLevel(){
         int count = getNum(App.orgJurd);
         switch (count){
-            case 12:
+            case 12:  // 部级用户
                 return 1;
-            case 10:
+            case 10:  // 省级用户
                 return 2;
-            case 8:
+            case 8:  // 市级用户
                 return 3;
-            case 6:
+            case 6:  // 县级用户
                 return 4;
             default:
                 return 1 ;

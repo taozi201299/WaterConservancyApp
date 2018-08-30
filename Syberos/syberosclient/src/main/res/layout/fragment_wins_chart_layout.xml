@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_btn_benbu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="本部"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_zhiguan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:checked="true"
+            android:text="直管工程"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+
+        <RadioButton
+            android:id="@+id/radio_btn_liuyu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:text="流域机构"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_jianguan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:text="行业监管"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radio_group_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/_10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:checked="true"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="流域"
+            android:textColor="@color/text_black_color" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="监管"
+            android:textColor="@color/text_black_color" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5dp"
+            android:gravity="center"
+            android:padding="@dimen/_2dp"
+            android:text="直管"
+            android:textColor="@color/text_black_color" />
+
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/radio_group_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_10dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+    <RadioButton
+        android:id="@+id/radio_type_liuyu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5dp"
+        android:checked="true"
+        android:gravity="center"
+        android:padding="@dimen/_2dp"
+        android:text="流域"
+        android:textColor="@color/text_black_color" />
+
+    <RadioButton
+        android:id="@+id/radio_type_jianguan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5dp"
+        android:padding="@dimen/_2dp"
+        android:text="监管"
+        android:textColor="@color/text_black_color" />
+    </RadioGroup>
+
+
+</RelativeLayout>
