@@ -115,8 +115,11 @@ public class HazListForEntActivity extends BaseActivity
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 inspectionList = (ObjHaz)gson.fromJson(result,ObjHaz.class);
-                if(inspectionList != null){
+                if(inspectionList != null && inspectionList.dataSource != null && inspectionList.dataSource.size() > 0){
                     getHazEntName();
+                }else {
+                    closeDataDialog();
+                    ToastUtils.show("没有风险源信息");
                 }
             }
 
@@ -143,6 +146,10 @@ public class HazListForEntActivity extends BaseActivity
                     Gson gson = new Gson();
                     ObjectEngine objectEngine  = null;
                     objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    if(objectEngine == null || objectEngine.dataSource == null ||
+                            objectEngine.dataSource.size() == 0){
+                        return;
+                    }
                     int index = inspectionList.dataSource.indexOf(item);
                     ObjHaz objHaz = inspectionList.dataSource.get(index);
                     objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());

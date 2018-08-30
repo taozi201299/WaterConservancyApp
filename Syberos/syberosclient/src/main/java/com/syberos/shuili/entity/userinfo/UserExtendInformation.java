@@ -128,7 +128,7 @@ public class UserExtendInformation implements Serializable{
     }
 
     public String getOrgId() {
-        return orgId == null ? "":"D7862390F88443AE87FA9DD1FE45A8B6";
+        return orgId == null ? "":orgId;
     }
 
     public void setOrgId(String orgId) {

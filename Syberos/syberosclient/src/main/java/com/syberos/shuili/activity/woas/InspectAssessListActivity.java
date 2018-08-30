@@ -98,7 +98,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
         // params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("leadOrgGuid","036C5D990CD14412B5D04679197AFAF4");
+        params.put("leadOrgGuid","B694018733574C1398AF1064371BF5C6");
         // 1 水利稽查工作考核 2 安全生产工作考核
         //  params.put("woasType","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -110,6 +110,10 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
+                }
+                if(bisWoasGrop.dataSource.size() == 0){
+                    closeDataDialog();
+                    ToastUtils.show("没有相关安全生产考核信息");
                 }
                 getObjWoasInfoByID();
             }

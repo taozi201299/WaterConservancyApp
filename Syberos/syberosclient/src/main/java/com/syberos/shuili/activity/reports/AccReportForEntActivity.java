@@ -262,8 +262,9 @@ public class AccReportForEntActivity extends TranslucentActivity {
             switch (linkStatus) {
                 case HiddenDangerReport.LINK_YES:
                     tv_refunded.setVisibility(View.GONE);
-                    tv_report.setVisibility(View.VISIBLE);
-                    tv_report.setText("已上报");
+                    tv_report.setVisibility(View.GONE);
+                    tv_refunded.setText("已上报");
+                    tv_refunded.setVisibility(View.VISIBLE);
                     tv_recall.setVisibility(View.VISIBLE);
                     break;
                 case HiddenDangerReport.LINK_RETURNED:
