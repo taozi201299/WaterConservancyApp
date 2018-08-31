@@ -136,7 +136,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         switch (tabTitle[currentItem]) {
             case Hidden:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("hiddenData", ((HiddenChartFragment) fragments.get(currentItem)).getHiddenEntryTest());
+                bundle.putSerializable("hiddenData", ((HiddenChartFragment) fragments.get(currentItem)).getHiddenEntry());
                 intent.putExtra("hiddenData", bundle);
                 break;
             case Acci:

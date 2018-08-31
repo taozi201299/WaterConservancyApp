@@ -6,23 +6,13 @@ import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
-import com.syberos.shuili.entity.thematicchart.accident.AccidentDetailEntry;
-import com.syberos.shuili.entity.thematicchart.hidden.HiddenDetailEntry;
 
-import org.reactivestreams.Subscriber;
-
-import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -85,7 +75,7 @@ public class RetrofitHttpMethods {
      *
      * @param observer
      */
-    public void getThematicHidden(Observer<HiddenEntryTest> observer, String sourceType,
+    public void getThematicHidden(Observer<HiddenEntry> observer, String sourceType,
                                   String orgGuid,
                                   String startTime,
                                   String endTime) {

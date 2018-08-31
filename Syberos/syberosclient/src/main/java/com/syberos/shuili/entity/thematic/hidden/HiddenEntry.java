@@ -1,147 +1,64 @@
 package com.syberos.shuili.entity.thematic.hidden;
 
-import com.google.gson.annotations.SerializedName;
-import com.syberos.shuili.network.MetaData;
-
 import java.io.Serializable;
 import java.util.List;
-public class HiddenEntry extends MetaData {
 
-    private HiddenItemEntry totleEntry;
-    private List<HiddenItemEntry> hiddenItemEntryList;
+public class HiddenEntry implements Serializable{
 
-    @Override
-    public String toString() {
-        return "HiddenEntry{" +
-                "totleEntry=" + totleEntry +
-                ", hiddenItemEntryList=" + hiddenItemEntryList +
-                '}';
+    /**
+     * data : {"HIDDGRAD1LATEQUA":0,"HIDDGRAD1LISTQUA":1,"HIDDGRAD1RECTQUA":0,"HIDDGRAD1TOTALQUA":380,"HIDDGRAD2LATEQUA":0,"HIDDGRAD2LISTQUA":0,"HIDDGRAD2RECTQUA":0,"HIDDGRAD2TOTALQUA":5,"HIDDLATEQUA":0,"HIDDLISTQUA":1,"HIDDRECTQUA":0,"HIDDTOTALQUA":385,"ITEMDATA":[{"HIDDGRAD1LATEQUA":0,"HIDDGRAD1LISTQUA":0,"HIDDGRAD1RECTQUA":0,"HIDDGRAD1TOTALQUA":0,"HIDDGRAD2LATEQUA":0,"HIDDGRAD2LISTQUA":0,"HIDDGRAD2RECTQUA":0,"HIDDGRAD2TOTALQUA":1,"HIDDLATEQUA":0,"HIDDLISTQUA":0,"HIDDRECTQUA":0,"HIDDTOTALQUA":1,"OBJGUID":"c98c6d7aa8784adb8684947a50101314","OBJLAT":37.916475,"OBJLONG":107.074607,"OBJNAME":"大家好，我是中国第一美女陈晓洁！"}]}
+     * meta : {"message":"ok","success":true}
+     */
+
+    private DataBean data;
+    private MetaBean meta;
+
+    public DataBean getData() {
+        return data;
     }
 
-    public HiddenItemEntry getTotleEntry() {
-        return totleEntry;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public void setTotleEntry(HiddenItemEntry totleEntry) {
-        this.totleEntry = totleEntry;
+    public MetaBean getMeta() {
+        return meta;
     }
 
-    public List<HiddenItemEntry> getHiddenItemEntryList() {
-        return hiddenItemEntryList;
+    public void setMeta(MetaBean meta) {
+        this.meta = meta;
     }
 
-    public void setHiddenItemEntryList(List<HiddenItemEntry> hiddenItemEntryList) {
-        this.hiddenItemEntryList = hiddenItemEntryList;
-    }
-
-    protected class HiddenItemEntry implements Serializable {
+    public static class DataBean implements Serializable{
         /**
-         * ENG_GUID : c98c6d7aa8784adb8684947a50101314
-         * ENG_LAT : 37.916475
-         * ENG_LONG : 107.074607
-         * ENG_NAME : 大家好，我是中国第一美女陈晓洁！
-         * HIDDGRA1RECTQUA : 0
-         * HIDDGRAD0LATEQUA : 0
-         * HIDDGRAD0LISTQUA : 0
-         * HIDDGRAD0RECTQUA : 0
-         * HIDDGRAD0TOTALQUA : 0
          * HIDDGRAD1LATEQUA : 0
-         * HIDDGRAD1LISTQUA : 0
-         * HIDDGRAD1TOTALQUA : 1
+         * HIDDGRAD1LISTQUA : 1
+         * HIDDGRAD1RECTQUA : 0
+         * HIDDGRAD1TOTALQUA : 380
+         * HIDDGRAD2LATEQUA : 0
+         * HIDDGRAD2LISTQUA : 0
+         * HIDDGRAD2RECTQUA : 0
+         * HIDDGRAD2TOTALQUA : 5
          * HIDDLATEQUA : 0
-         * HIDDLISTQUA : 0
+         * HIDDLISTQUA : 1
          * HIDDRECTQUA : 0
-         * HIDDTOTALQUA : 1
+         * HIDDTOTALQUA : 385
+         * ITEMDATA : [{"HIDDGRAD1LATEQUA":0,"HIDDGRAD1LISTQUA":0,"HIDDGRAD1RECTQUA":0,"HIDDGRAD1TOTALQUA":0,"HIDDGRAD2LATEQUA":0,"HIDDGRAD2LISTQUA":0,"HIDDGRAD2RECTQUA":0,"HIDDGRAD2TOTALQUA":1,"HIDDLATEQUA":0,"HIDDLISTQUA":0,"HIDDRECTQUA":0,"HIDDTOTALQUA":1,"OBJGUID":"c98c6d7aa8784adb8684947a50101314","OBJLAT":37.916475,"OBJLONG":107.074607,"OBJNAME":"大家好，我是中国第一美女陈晓洁！"}]
          */
 
-        private String ENG_GUID;
-        private double ENG_LAT;
-        private double ENG_LONG;
-        private String ENG_NAME;
-        private int HIDDGRA1RECTQUA;
-        private int HIDDGRAD0LATEQUA;
-        private int HIDDGRAD0LISTQUA;
-        private int HIDDGRAD0RECTQUA;
-        private int HIDDGRAD0TOTALQUA;
         private int HIDDGRAD1LATEQUA;
         private int HIDDGRAD1LISTQUA;
+        private int HIDDGRAD1RECTQUA;
         private int HIDDGRAD1TOTALQUA;
+        private int HIDDGRAD2LATEQUA;
+        private int HIDDGRAD2LISTQUA;
+        private int HIDDGRAD2RECTQUA;
+        private int HIDDGRAD2TOTALQUA;
         private int HIDDLATEQUA;
         private int HIDDLISTQUA;
         private int HIDDRECTQUA;
         private int HIDDTOTALQUA;
-
-        public String getENG_GUID() {
-            return ENG_GUID;
-        }
-
-        public void setENG_GUID(String ENG_GUID) {
-            this.ENG_GUID = ENG_GUID;
-        }
-
-        public double getENG_LAT() {
-            return ENG_LAT;
-        }
-
-        public void setENG_LAT(double ENG_LAT) {
-            this.ENG_LAT = ENG_LAT;
-        }
-
-        public double getENG_LONG() {
-            return ENG_LONG;
-        }
-
-        public void setENG_LONG(double ENG_LONG) {
-            this.ENG_LONG = ENG_LONG;
-        }
-
-        public String getENG_NAME() {
-            return ENG_NAME;
-        }
-
-        public void setENG_NAME(String ENG_NAME) {
-            this.ENG_NAME = ENG_NAME;
-        }
-
-        public int getHIDDGRA1RECTQUA() {
-            return HIDDGRA1RECTQUA;
-        }
-
-        public void setHIDDGRA1RECTQUA(int HIDDGRA1RECTQUA) {
-            this.HIDDGRA1RECTQUA = HIDDGRA1RECTQUA;
-        }
-
-        public int getHIDDGRAD0LATEQUA() {
-            return HIDDGRAD0LATEQUA;
-        }
-
-        public void setHIDDGRAD0LATEQUA(int HIDDGRAD0LATEQUA) {
-            this.HIDDGRAD0LATEQUA = HIDDGRAD0LATEQUA;
-        }
-
-        public int getHIDDGRAD0LISTQUA() {
-            return HIDDGRAD0LISTQUA;
-        }
-
-        public void setHIDDGRAD0LISTQUA(int HIDDGRAD0LISTQUA) {
-            this.HIDDGRAD0LISTQUA = HIDDGRAD0LISTQUA;
-        }
-
-        public int getHIDDGRAD0RECTQUA() {
-            return HIDDGRAD0RECTQUA;
-        }
-
-        public void setHIDDGRAD0RECTQUA(int HIDDGRAD0RECTQUA) {
-            this.HIDDGRAD0RECTQUA = HIDDGRAD0RECTQUA;
-        }
-
-        public int getHIDDGRAD0TOTALQUA() {
-            return HIDDGRAD0TOTALQUA;
-        }
-
-        public void setHIDDGRAD0TOTALQUA(int HIDDGRAD0TOTALQUA) {
-            this.HIDDGRAD0TOTALQUA = HIDDGRAD0TOTALQUA;
-        }
+        private List<ITEMDATABean> ITEMDATA;
 
         public int getHIDDGRAD1LATEQUA() {
             return HIDDGRAD1LATEQUA;
@@ -159,12 +76,52 @@ public class HiddenEntry extends MetaData {
             this.HIDDGRAD1LISTQUA = HIDDGRAD1LISTQUA;
         }
 
+        public int getHIDDGRAD1RECTQUA() {
+            return HIDDGRAD1RECTQUA;
+        }
+
+        public void setHIDDGRAD1RECTQUA(int HIDDGRAD1RECTQUA) {
+            this.HIDDGRAD1RECTQUA = HIDDGRAD1RECTQUA;
+        }
+
         public int getHIDDGRAD1TOTALQUA() {
             return HIDDGRAD1TOTALQUA;
         }
 
         public void setHIDDGRAD1TOTALQUA(int HIDDGRAD1TOTALQUA) {
             this.HIDDGRAD1TOTALQUA = HIDDGRAD1TOTALQUA;
+        }
+
+        public int getHIDDGRAD2LATEQUA() {
+            return HIDDGRAD2LATEQUA;
+        }
+
+        public void setHIDDGRAD2LATEQUA(int HIDDGRAD2LATEQUA) {
+            this.HIDDGRAD2LATEQUA = HIDDGRAD2LATEQUA;
+        }
+
+        public int getHIDDGRAD2LISTQUA() {
+            return HIDDGRAD2LISTQUA;
+        }
+
+        public void setHIDDGRAD2LISTQUA(int HIDDGRAD2LISTQUA) {
+            this.HIDDGRAD2LISTQUA = HIDDGRAD2LISTQUA;
+        }
+
+        public int getHIDDGRAD2RECTQUA() {
+            return HIDDGRAD2RECTQUA;
+        }
+
+        public void setHIDDGRAD2RECTQUA(int HIDDGRAD2RECTQUA) {
+            this.HIDDGRAD2RECTQUA = HIDDGRAD2RECTQUA;
+        }
+
+        public int getHIDDGRAD2TOTALQUA() {
+            return HIDDGRAD2TOTALQUA;
+        }
+
+        public void setHIDDGRAD2TOTALQUA(int HIDDGRAD2TOTALQUA) {
+            this.HIDDGRAD2TOTALQUA = HIDDGRAD2TOTALQUA;
         }
 
         public int getHIDDLATEQUA() {
@@ -197,6 +154,206 @@ public class HiddenEntry extends MetaData {
 
         public void setHIDDTOTALQUA(int HIDDTOTALQUA) {
             this.HIDDTOTALQUA = HIDDTOTALQUA;
+        }
+
+        public List<ITEMDATABean> getITEMDATA() {
+            return ITEMDATA;
+        }
+
+        public void setITEMDATA(List<ITEMDATABean> ITEMDATA) {
+            this.ITEMDATA = ITEMDATA;
+        }
+
+        public static class ITEMDATABean implements Serializable{
+            /**
+             * HIDDGRAD1LATEQUA : 0
+             * HIDDGRAD1LISTQUA : 0
+             * HIDDGRAD1RECTQUA : 0
+             * HIDDGRAD1TOTALQUA : 0
+             * HIDDGRAD2LATEQUA : 0
+             * HIDDGRAD2LISTQUA : 0
+             * HIDDGRAD2RECTQUA : 0
+             * HIDDGRAD2TOTALQUA : 1
+             * HIDDLATEQUA : 0
+             * HIDDLISTQUA : 0
+             * HIDDRECTQUA : 0
+             * HIDDTOTALQUA : 1
+             * OBJGUID : c98c6d7aa8784adb8684947a50101314
+             * OBJLAT : 37.916475
+             * OBJLONG : 107.074607
+             * OBJNAME : 大家好，我是中国第一美女陈晓洁！
+             */
+
+            private int HIDDGRAD1LATEQUA;
+            private int HIDDGRAD1LISTQUA;
+            private int HIDDGRAD1RECTQUA;
+            private int HIDDGRAD1TOTALQUA;
+            private int HIDDGRAD2LATEQUA;
+            private int HIDDGRAD2LISTQUA;
+            private int HIDDGRAD2RECTQUA;
+            private int HIDDGRAD2TOTALQUA;
+            private int HIDDLATEQUA;
+            private int HIDDLISTQUA;
+            private int HIDDRECTQUA;
+            private int HIDDTOTALQUA;
+            private String OBJGUID;
+            private double OBJLAT;
+            private double OBJLONG;
+            private String OBJNAME;
+
+            public int getHIDDGRAD1LATEQUA() {
+                return HIDDGRAD1LATEQUA;
+            }
+
+            public void setHIDDGRAD1LATEQUA(int HIDDGRAD1LATEQUA) {
+                this.HIDDGRAD1LATEQUA = HIDDGRAD1LATEQUA;
+            }
+
+            public int getHIDDGRAD1LISTQUA() {
+                return HIDDGRAD1LISTQUA;
+            }
+
+            public void setHIDDGRAD1LISTQUA(int HIDDGRAD1LISTQUA) {
+                this.HIDDGRAD1LISTQUA = HIDDGRAD1LISTQUA;
+            }
+
+            public int getHIDDGRAD1RECTQUA() {
+                return HIDDGRAD1RECTQUA;
+            }
+
+            public void setHIDDGRAD1RECTQUA(int HIDDGRAD1RECTQUA) {
+                this.HIDDGRAD1RECTQUA = HIDDGRAD1RECTQUA;
+            }
+
+            public int getHIDDGRAD1TOTALQUA() {
+                return HIDDGRAD1TOTALQUA;
+            }
+
+            public void setHIDDGRAD1TOTALQUA(int HIDDGRAD1TOTALQUA) {
+                this.HIDDGRAD1TOTALQUA = HIDDGRAD1TOTALQUA;
+            }
+
+            public int getHIDDGRAD2LATEQUA() {
+                return HIDDGRAD2LATEQUA;
+            }
+
+            public void setHIDDGRAD2LATEQUA(int HIDDGRAD2LATEQUA) {
+                this.HIDDGRAD2LATEQUA = HIDDGRAD2LATEQUA;
+            }
+
+            public int getHIDDGRAD2LISTQUA() {
+                return HIDDGRAD2LISTQUA;
+            }
+
+            public void setHIDDGRAD2LISTQUA(int HIDDGRAD2LISTQUA) {
+                this.HIDDGRAD2LISTQUA = HIDDGRAD2LISTQUA;
+            }
+
+            public int getHIDDGRAD2RECTQUA() {
+                return HIDDGRAD2RECTQUA;
+            }
+
+            public void setHIDDGRAD2RECTQUA(int HIDDGRAD2RECTQUA) {
+                this.HIDDGRAD2RECTQUA = HIDDGRAD2RECTQUA;
+            }
+
+            public int getHIDDGRAD2TOTALQUA() {
+                return HIDDGRAD2TOTALQUA;
+            }
+
+            public void setHIDDGRAD2TOTALQUA(int HIDDGRAD2TOTALQUA) {
+                this.HIDDGRAD2TOTALQUA = HIDDGRAD2TOTALQUA;
+            }
+
+            public int getHIDDLATEQUA() {
+                return HIDDLATEQUA;
+            }
+
+            public void setHIDDLATEQUA(int HIDDLATEQUA) {
+                this.HIDDLATEQUA = HIDDLATEQUA;
+            }
+
+            public int getHIDDLISTQUA() {
+                return HIDDLISTQUA;
+            }
+
+            public void setHIDDLISTQUA(int HIDDLISTQUA) {
+                this.HIDDLISTQUA = HIDDLISTQUA;
+            }
+
+            public int getHIDDRECTQUA() {
+                return HIDDRECTQUA;
+            }
+
+            public void setHIDDRECTQUA(int HIDDRECTQUA) {
+                this.HIDDRECTQUA = HIDDRECTQUA;
+            }
+
+            public int getHIDDTOTALQUA() {
+                return HIDDTOTALQUA;
+            }
+
+            public void setHIDDTOTALQUA(int HIDDTOTALQUA) {
+                this.HIDDTOTALQUA = HIDDTOTALQUA;
+            }
+
+            public String getOBJGUID() {
+                return OBJGUID == null ? "" : OBJGUID;
+            }
+
+            public void setOBJGUID(String OBJGUID) {
+                this.OBJGUID = OBJGUID;
+            }
+
+            public double getOBJLAT() {
+                return OBJLAT;
+            }
+
+            public void setOBJLAT(double OBJLAT) {
+                this.OBJLAT = OBJLAT;
+            }
+
+            public double getOBJLONG() {
+                return OBJLONG;
+            }
+
+            public void setOBJLONG(double OBJLONG) {
+                this.OBJLONG = OBJLONG;
+            }
+
+            public String getOBJNAME() {
+                return OBJNAME == null ? "" : OBJNAME;
+            }
+
+            public void setOBJNAME(String OBJNAME) {
+                this.OBJNAME = OBJNAME;
+            }
+        }
+    }
+
+    public static class MetaBean implements Serializable{
+        /**
+         * message : ok
+         * success : true
+         */
+
+        private String message;
+        private boolean success;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
         }
     }
 }

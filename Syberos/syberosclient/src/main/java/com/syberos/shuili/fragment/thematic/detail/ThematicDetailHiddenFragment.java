@@ -18,7 +18,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
@@ -149,7 +149,7 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        onHiddenData(getHiddenEntryTest());
+        onHiddenData(getHiddenEntry());
 
 //        List<PieEntry> listSummarise = new ArrayList<>();
 //        listSummarise.add(new PieEntry(16, "已排查单位数量"));
@@ -174,45 +174,46 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 //        EventBus.getDefault().unregister(this);
     }
 
-    public HiddenEntryTest getHiddenEntryTest() {
-        return hiddenEntryTest;
+    public HiddenEntry getHiddenEntry() {
+        return hiddenEntry;
     }
 
-    public void setHiddenEntryTest(HiddenEntryTest hiddenEntryTest) {
-        this.hiddenEntryTest = hiddenEntryTest;
+    public void setHiddenEntryTest(HiddenEntry hiddenEntryTest) {
+        this.hiddenEntry = hiddenEntry;
     }
 
-    HiddenEntryTest hiddenEntryTest;
+    HiddenEntry hiddenEntry;
 
-    public void onHiddenData(HiddenEntryTest hiddenEntryTest) {
+    public void onHiddenData(HiddenEntry hiddenEntry) {
         ToastUtils.show("also had get Data");
         tvViewTitle.setText("");
-        tvData1.setText(hiddenEntryTest.getData().getHIDDTOTALQUA() - hiddenEntryTest.getData().getHIDDRECTQUA() + "");
+        tvData1.setText(hiddenEntry.getData().getHIDDTOTALQUA() - hiddenEntry.getData().getHIDDRECTQUA() + "");
         tvDataTitle1.setText("未整改数量");
 
-        tvData2.setText(hiddenEntryTest.getData().getHIDDTOTALQUA() + "");
+        tvData2.setText(hiddenEntry.getData().getHIDDTOTALQUA() + "");
         tvDataTitle2.setText("隐患总数量");
 
         List<PieEntry> listHiddenRate = new ArrayList<>();
-        listHiddenRate.add(new PieEntry(hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA(), "一般隐患数量 " + hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() + ""));
-        listHiddenRate.add(new PieEntry(hiddenEntryTest.getData().getHIDDGRAD1TOTALQUA(), "重大隐患数量 " + hiddenEntryTest.getData().getHIDDGRAD1TOTALQUA() + ""));
+        listHiddenRate.add(new PieEntry(hiddenEntry.getData().getHIDDGRAD1TOTALQUA(), "一般隐患数量 " + hiddenEntry.getData().getHIDDGRAD1TOTALQUA() + ""));
+        listHiddenRate.add(new PieEntry(hiddenEntry.getData().getHIDDGRAD2TOTALQUA(), "重大隐患数量 " + hiddenEntry.getData().getHIDDGRAD2TOTALQUA() + ""));
 
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHiddenRate, listHiddenRate, true);
 
 
-        tvValue11.setText(hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() + "");
-        tvValue12.setText(hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() - hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() + "");
-        tvValue13.setText(hiddenEntryTest.getData().getHIDDGRAD0LATEQUA() + "");
-        tvValue14.setText(hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() == 0 ? 0 + "" : hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() / hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() * 100.0 + "%");
-        tvValue21.setText(hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() + "");
-        tvValue22.setText(hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() - hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() + "");
-        tvValue23.setText(hiddenEntryTest.getData().getHIDDGRAD0LATEQUA() + "");
-        tvValue24.setText(hiddenEntryTest.getData().getHIDDGRAD1LISTQUA()+"");
-        tvValue25.setText( hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA()== 0 ? 0 + "" :hiddenEntryTest.getData().getHIDDGRAD0RECTQUA() / hiddenEntryTest.getData().getHIDDGRAD0TOTALQUA() * 100.0 + "%");
+        tvValue11.setText(hiddenEntry.getData().getHIDDGRAD1RECTQUA() + "");
+        tvValue12.setText(hiddenEntry.getData().getHIDDGRAD1TOTALQUA() - hiddenEntry.getData().getHIDDGRAD1RECTQUA() + "");
+        tvValue13.setText(hiddenEntry.getData().getHIDDGRAD1LATEQUA() + "");
+        tvValue14.setText(hiddenEntry.getData().getHIDDGRAD1TOTALQUA() == 0 ? 0 + "" : hiddenEntry.getData().getHIDDGRAD1RECTQUA() / hiddenEntry.getData().getHIDDGRAD1TOTALQUA() * 100.0 + "%");
+
+        tvValue21.setText(hiddenEntry.getData().getHIDDGRAD2RECTQUA() + "");
+        tvValue22.setText(hiddenEntry.getData().getHIDDGRAD2TOTALQUA() - hiddenEntry.getData().getHIDDGRAD2RECTQUA() + "");
+        tvValue23.setText(hiddenEntry.getData().getHIDDGRAD2LATEQUA() + "");
+        tvValue24.setText(hiddenEntry.getData().getHIDDGRAD2LISTQUA()+"");
+        tvValue25.setText( hiddenEntry.getData().getHIDDGRAD2TOTALQUA()== 0 ? 0 + "" :hiddenEntry.getData().getHIDDGRAD2RECTQUA() / hiddenEntry.getData().getHIDDGRAD2TOTALQUA() * 100.0 + "%");
 
         List<ProjectEntry> list = new ArrayList<>();
-        for (HiddenEntryTest.DataBean.ITEMDATABean bean : hiddenEntryTest.getData().getITEMDATA())
-            list.add(new ProjectEntry(bean.getENG_GUID(), bean.getENG_NAME(), bean.getHIDDTOTALQUA()));
+        for (HiddenEntry.DataBean.ITEMDATABean bean : hiddenEntry.getData().getITEMDATA())
+            list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), bean.getHIDDTOTALQUA()));
 
         RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

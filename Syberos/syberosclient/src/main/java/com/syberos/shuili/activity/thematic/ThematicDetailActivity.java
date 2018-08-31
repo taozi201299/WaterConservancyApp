@@ -13,6 +13,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
@@ -111,8 +112,8 @@ public class ThematicDetailActivity extends BActivity {
             case Hidden:
 //                todo 隐患
                 tvTitle.setText("隐患");
-                HiddenEntryTest hiddenEntryTest= (HiddenEntryTest) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
-                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntryTest(hiddenEntryTest);
+                HiddenEntry hiddenEntry= (HiddenEntry) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
+                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntryTest(hiddenEntry);
                 switchFragment(fragments[0]);
                 break;
             case Acci:
