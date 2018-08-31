@@ -381,7 +381,9 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     private void  setData(WinsEntry winsEntry){
         this.winsEntry = winsEntry;
     }
-
+    public WinsEntry getData(){
+        return this.winsEntry;
+    }
     class Point {
         public Point(String lon, String lat, String value,String guid) {
             this.lon = lon;

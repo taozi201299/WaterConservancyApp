@@ -15,6 +15,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
+import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailHazFragment;
@@ -146,6 +147,9 @@ public class ThematicDetailActivity extends BActivity {
             case Wins:
 //                todo 水利稽察
                 tvTitle.setText("水利稽察");
+                tvTitle.setText("事故");
+                WinsEntry winsEntry = (WinsEntry)(getIntent().getBundleExtra("winsData").getSerializable("winsData"));
+                ((ThematicDetailWinsFragment)fragments[6]).setData(winsEntry);
                 switchFragment(fragments[6]);
                 break;
             case Suen:

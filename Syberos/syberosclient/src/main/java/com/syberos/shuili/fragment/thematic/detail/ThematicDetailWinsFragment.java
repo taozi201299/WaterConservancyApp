@@ -1,9 +1,13 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +18,14 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
+import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.wins.WinsEntry;
+import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.RankListFragment;
+import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -97,12 +107,16 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
     PieChart pieCharRate;
     @BindView(R.id.pie_char_sum)
     PieChart pieCharSum;
-    @BindView(R.id.tab_center)
-    SegmentTabLayout tabCenter;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+
+
+    @BindView(R.id.tv_list_title)
+    TextView tvListTitle;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     private String[] mTitles = {"流域", "直管"};
     private FragmentPagerAdapter pagerAdapter;
+
+    WinsEntry winsEntry;
 
     @Override
     protected int getLayoutID() {
@@ -111,42 +125,16 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initListener() {
-        tabCenter.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                viewPager.setCurrentItem(position);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tabCenter.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override
     protected void initData() {
-        tvData1.setText("11");
+        if(winsEntry == null)return;
+        tvData1.setText(winsEntry.getData().getWINSQUA());
         tvDataTitle1.setText("稽查次数");
-        tvData2.setText("200");
+        tvData2.setText(winsEntry.getData().getWINSPROJQUA());
         tvDataTitle2.setText("项目数量");
-        tvData3.setText("100");
+        tvData3.setText(winsEntry.getData().getWINSPROBQUA());
         tvDataTitle3.setText("问题数量");
 
         tvDataUnit1.setText("个");
@@ -160,31 +148,43 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
             fragments.clear();
         fragments.add(new RankListFragment());
         fragments.add(new RankListFragment());
-        tabCenter.setTabData(mTitles);
-        tabCenter.setCurrentTab(0);
 
 
         pagerAdapter = new RankViewPagerAdapter(getActivity().getSupportFragmentManager(), fragments);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(1);
-        viewPager.setCurrentItem(0);
 
 
         List<PieEntry> listHiddenRate = new ArrayList<>();
-        listHiddenRate.add(new PieEntry(20, "前期工作 " + 20 + ""));
-        listHiddenRate.add(new PieEntry(30, "计划方面 " + 30 + ""));
-        listHiddenRate.add(new PieEntry(40, "建设管理 " + 30 + ""));
-        listHiddenRate.add(new PieEntry(20, "财务管理 " + 30 + ""));
-        listHiddenRate.add(new PieEntry(80, "质量管理 " + 30 + ""));
+        ArrayList<WinsEntry.WinsProbTypeDataBean> datas = winsEntry.getData().getWINSPROBTYPEDATA();
+        for(WinsEntry.WinsProbTypeDataBean bean:datas){
+            PieEntry pieEntry = new PieEntry(Float.valueOf(bean.getWINSPROBQUA()),bean.getPROBCLASSNAME()+ " "+ bean.getWINSPROBQUA());
+            listHiddenRate.add(pieEntry);
+        }
 
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharRate, listHiddenRate, true);
 
         List<PieEntry> listHiddenSum = new ArrayList<>();
-        listHiddenSum.add(new PieEntry(20, "一般 " + 20 + ""));
-        listHiddenSum.add(new PieEntry(30, "严重 " + 30 + ""));
-        listHiddenSum.add(new PieEntry(40, "非常严重 " + 30 + ""));
+        ArrayList<WinsEntry.WinsProbCateDataBean> dataBeans = winsEntry.getData().getWINSPROBCATEDATA();
+        for(WinsEntry.WinsProbCateDataBean bean : dataBeans){
+            PieEntry pieEntry = new PieEntry(Float.valueOf(bean.getWINSPROBQUA()),bean.getPROBCLASSNAME() + bean.getWINSPROBQUA());
+            listHiddenSum.add(pieEntry);
+        }
 
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharSum, listHiddenSum, true);
+
+        ArrayList<ProjectEntry> list = new ArrayList<>();
+        for(WinsEntry.SubWinsDataBean bean : winsEntry.getData().getSUBWINSDATA()){
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getWINSPROBQUA()));
+            list.add(projectEntry);
+        }
+        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
+        adapter.setListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+            }
+        });
     }
 
     @Override
@@ -207,9 +207,12 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
         llData4.setVisibility(View.GONE);
         pieChartHiddenSummarized.setVisibility(View.GONE);
+
     }
 
-
+    public void setData(WinsEntry winsEntry){
+        this.winsEntry = winsEntry;
+    }
     class RankViewPagerAdapter extends FragmentPagerAdapter {
 
         List<Fragment> list;
@@ -232,8 +235,8 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
         @Override
         public int getCount() {
-            return fragments.size();
-        }
+        return fragments.size();
     }
+}
 
 }
