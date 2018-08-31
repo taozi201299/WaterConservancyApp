@@ -40,6 +40,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class AccidentChartFragment extends BaseLazyFragment implements EasyPermissions.PermissionCallbacks{
+
     @BindView(R.id.webview)
     WebView webView;
 
@@ -130,6 +131,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     @Override
     protected void initListener() {
+        setStatus1(type);
         bLoadFinish = false;
         bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -168,6 +170,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 else if(orgType == 2){
                     webView.loadUrl("file:///android_asset/chart/acci_liuyu.html");
                 }
+                setStatus1(type);
             }
         });
 
@@ -337,6 +340,9 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     }
     private void  setData(AcciEntry acciEntry){
         this.acciEntry = acciEntry;
+    }
+    public AcciEntry getData(){
+        return this.acciEntry;
     }
 
     class Point {

@@ -140,6 +140,9 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 intent.putExtra("hiddenData", bundle);
                 break;
             case Acci:
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("acciData",((AccidentChartFragment)fragments.get(currentItem)).getData());
+                intent.putExtra("acciData",bundle1);
                 break;
             case Haz:
                 break;

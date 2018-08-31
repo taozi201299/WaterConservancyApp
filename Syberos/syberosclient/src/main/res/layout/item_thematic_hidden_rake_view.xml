@@ -32,9 +32,9 @@
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:layout_weight="6"
-            android:text="北京"
+            android:text=""
             android:textColor="@color/text_normal_color"
-            android:textSize="@dimen/_18sp" />
+            android:textSize="@dimen/_15sp" />
 
         <TextView
             android:id="@+id/tv_score"

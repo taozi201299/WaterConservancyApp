@@ -1,6 +1,7 @@
 package com.syberos.shuili.service.dataprovider.localcache.dataLocalCache.impl;
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -62,15 +63,22 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
     }
 
     @Override
-    public boolean addCache(LocalCacheEntity localCacheEntity,List<AttachMentInfoEntity>attachMentInfoEntities, IResultCallback callback) {
+    public boolean addCache(LocalCacheEntity localCacheEntity, List<AttachMentInfoEntity>attachMentInfoEntities, final IResultCallback callback) {
         if(localCacheEntity == null) return false;
         writeCacheTable(localCacheEntity);
         writeBinaryTable(localCacheEntity,attachMentInfoEntities);
-        try {
-            callback.onSuccess();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    callback.onSuccess();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        },500);
+
         if(NetworkUtil.isNetworkAvailable()){
            submitLocalCache();
         }

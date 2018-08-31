@@ -222,7 +222,7 @@ public class AcciEntry implements Serializable {
         }
 
         public String getACCITGRAD2NUM() {
-            return ACCITGRAD2NUM == null ? "" : ACCITGRAD2NUM;
+            return ACCITGRAD2NUM == null ? "0" : ACCITGRAD2NUM;
         }
 
         public void setACCITGRAD2NUM(String ACCITGRAD2NUM) {
@@ -254,7 +254,7 @@ public class AcciEntry implements Serializable {
         }
 
         public String getACCITGRAD1NUM() {
-            return ACCITGRAD1NUM == null ? "" : ACCITGRAD1NUM;
+            return ACCITGRAD1NUM == null ? "0" : ACCITGRAD1NUM;
         }
 
         public void setACCITGRAD1NUM(String ACCITGRAD1NUM) {

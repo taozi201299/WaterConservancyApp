@@ -12,6 +12,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
@@ -117,6 +118,8 @@ public class ThematicDetailActivity extends BActivity {
             case Acci:
 //                todo 事故
                 tvTitle.setText("事故");
+                AcciEntry acciEntry = (AcciEntry)(getIntent().getBundleExtra("acciData").getSerializable("acciData"));
+                ((ThematicDetailAcciFragment)fragments[1]).setData(acciEntry);
                 switchFragment(fragments[1]);
                 break;
             case Haz:

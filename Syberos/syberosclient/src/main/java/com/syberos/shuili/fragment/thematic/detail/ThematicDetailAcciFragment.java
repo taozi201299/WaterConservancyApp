@@ -18,6 +18,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
@@ -118,6 +119,8 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private AcciEntry acciEntry;
+
 
     @Override
     protected int getLayoutID() {
@@ -131,56 +134,56 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     
     @Override
     protected void initData() {
-        tvData1.setText("11");
+        if(acciEntry == null)return;
+        tvData1.setText(acciEntry.getData().getACCITOTALNUM());
         tvDataTitle1.setText("事故数量");
-        tvData2.setText("11");
+        tvData2.setText(acciEntry.getData().getACCITOTALCASNUM());
         tvDataTitle2.setText("死亡人数");
 
-        tvChartValue1.setText("4");
+        tvChartValue1.setText(acciEntry.getData().getACCITGRAD1NUM());
         tvChartValueTitle1.setText("一般事故");
-        tvChartValue2.setText("16");
+        tvChartValue2.setText(acciEntry.getData().getACCITGRAD2NUM());
         tvChartValueTitle2.setText("较大事故");
-        tvChartValue3.setText("4");
+        tvChartValue3.setText(acciEntry.getData().getACCITGRAD3NUM());
         tvChartValueTitle3.setText("重大事故");
-        tvChartValue4.setText("16");
+        tvChartValue4.setText(acciEntry.getData().getACCITGRAD4NUM());
         tvChartValueTitle4.setText("特大事故");
 
 
-        tvValue11.setText("10");
-        tvValue12.setText("4");
-        tvValue13.setText("6");
-        tvValue14.setText("200 万");
+        tvValue11.setText(acciEntry.getData().getACCITGRAD1NUM());
+        tvValue12.setText(acciEntry.getData().getACCIGRAD1CASNUM());
+        tvValue13.setText(acciEntry.getData().getACCIGRAD1SERINJNUM());
+        tvValue14.setText(acciEntry.getData().getACCIGRAD1ECONLOSS());
 
-        tvValue21.setText("6");
-        tvValue22.setText("4");
-        tvValue23.setText("2");
-        tvValue24.setText("200万");
+        tvValue21.setText(acciEntry.getData().getACCITGRAD2NUM());
+        tvValue22.setText(acciEntry.getData().getACCIGRAD2CASNUM());
+        tvValue23.setText(acciEntry.getData().getACCIGRAD2SERINJNUM());
+        tvValue24.setText(acciEntry.getData().getACCIGRAD2ECONLOSS());
         List<PieEntry> pieList = new ArrayList<>();
-        pieList.add(new PieEntry(4, "1 "));
-        pieList.add(new PieEntry(16, "2 "));
-        pieList.add(new PieEntry(4, "3 "));
-        pieList.add(new PieEntry(16, "4 "));
+        pieList.add(new PieEntry(Integer.valueOf(acciEntry.getData().getACCITGRAD1NUM()), "1 "));
+        pieList.add(new PieEntry(Integer.valueOf(acciEntry.getData().getACCITGRAD2NUM()), "2 "));
+        pieList.add(new PieEntry(Integer.valueOf(acciEntry.getData().getACCITGRAD3NUM()), "3 "));
+        pieList.add(new PieEntry(Integer.valueOf(acciEntry.getData().getACCITGRAD4NUM()), "4 "));
 
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieChartHiddenSummarized, pieList, false);
 
         List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", 100));
-        list.add(new ProjectEntry("rerw", "上海", 120));
-        list.add(new ProjectEntry("rerw", "广东", 150));
+        ArrayList<AcciEntry.ITEMDATABean> datas = acciEntry.getData().getITEMDATA();
+        for(AcciEntry.ITEMDATABean bean :datas){
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getACCITOTALNUM()));
+            list.add(projectEntry);
 
-        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
+        }
+        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                ThematicDetailHiddenProjFragment thematicDetailHiddenProjFragment=new ThematicDetailHiddenProjFragment();
-//                getFragmentManager().beginTransaction().add(thematicDetailHiddenProjFragment,"ddd").commitAllowingStateLoss();
-//                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
-//                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
                 Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
                 intent.putExtra("typeValue", HematicMapFragment.Acci);
+                intent.putExtra("data",acciEntry.getData().getITEMDATA().get(position).getACCIDATA());
                 startActivity(intent);
             }
         });
@@ -191,6 +194,11 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     protected void initView() {
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
+        tvListTitle.setText("事故统计");
+    }
+
+    public void setData(AcciEntry acciEntry){
+        this.acciEntry = acciEntry;
     }
 
 }
