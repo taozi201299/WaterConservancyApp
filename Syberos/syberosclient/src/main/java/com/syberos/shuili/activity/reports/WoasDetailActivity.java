@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,9 +22,13 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.BisWoasNoti;
 import com.syberos.shuili.entity.report.ObjWoas;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import butterknife.BindView;
 
@@ -39,6 +45,10 @@ public class WoasDetailActivity extends BaseActivity {
 
     @BindView(R.id.recyclerView_query_accident)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_action_bar_title)
+    TextView tv_action_bar_title;
+    @BindView(R.id.iv_action_right)
+    LinearLayout iv_action_right;
 
     private ListAdapter listAdapter ;
 
@@ -53,10 +63,11 @@ public class WoasDetailActivity extends BaseActivity {
     }
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        getWoasNoti();
     }
     @Override
     public void initView() {
-        showDataLoadingDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
@@ -71,7 +82,8 @@ public class WoasDetailActivity extends BaseActivity {
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             activityFinish();
         }
-        getWoasNoti();
+        tv_action_bar_title.setText("考核报表");
+        iv_action_right.setVisibility(View.GONE);
 
     }
     private void getWoasNoti(){
@@ -166,20 +178,46 @@ public class WoasDetailActivity extends BaseActivity {
             tv_report.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    report(0);
+                    report(1,bisWoasNoti);
                 }
             });
             tv_recall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    report(1);
+                    report(2,bisWoasNoti);
                 }
             });
         }
     }
 
-    private void report(int type){
+    private void report(int type,BisWoasNoti bisWoasNoti){
         // 0 上报 1 申请撤回
+        String url = GlobleConstants.strZRIP + "/woas/mobile/bisWoasNoti/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisWoasNoti.getGuid());
+        params.put("operType",String.valueOf(type));
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                initData();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+
+
 
     }
 }
