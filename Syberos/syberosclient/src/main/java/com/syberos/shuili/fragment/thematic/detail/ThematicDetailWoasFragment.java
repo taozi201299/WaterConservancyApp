@@ -1,13 +1,9 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -21,21 +17,25 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
-import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
+import com.syberos.shuili.entity.publicentry.LineChartEntry;
+import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.view.DialPlateView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by BZB on 2018/8/11.
@@ -63,6 +63,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
     RecyclerView recyclerView;
     private XAxis xAxis;         //X坐标轴
     private YAxis yAxisLeft;
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_thematic_detail_woas;
@@ -75,42 +76,84 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        viewDialPlate.updateData(86);
-        tvScore.setText("86");
-        tvScoreTitle.setText("平均得分");
-        tvTitle.setText("2018年直管工程工作考核情况");
+        setUseEventBus(true);
+//        viewDialPlate.updateData(86);
+//        tvScore.setText("86");
+//        tvScoreTitle.setText("平均得分");
+//        tvTitle.setText("2018年直管工程工作考核情况");
+//
+//
+//        List<ProjectEntry> list = new ArrayList<>();
+//        list.add(new ProjectEntry("rerw", "北京", 100));
+//        list.add(new ProjectEntry("rerw", "上海", 120));
+//        list.add(new ProjectEntry("rerw", "广东", 150));
+//
+//        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+//        recyclerView.setAdapter(adapter);
+    }
 
-        List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", 100));
-        list.add(new ProjectEntry("rerw", "上海", 120));
-        list.add(new ProjectEntry("rerw", "广东", 150));
+    WoasEntry woasEntry;
 
-        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(adapter);
+    public WoasEntry getWoasEntry() {
+        return woasEntry;
+    }
+
+    public void setWoasEntry(WoasEntry woasEntry) {
+        this.woasEntry = woasEntry;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onWoasData(WoasEntry woasEntry) {
+        if (woasEntry != null) {
+            setWoasEntry(woasEntry);
+            viewDialPlate.updateData(woasEntry.getData().getAVGSCORE().getTOTALSCOR() / woasEntry.getData().getAVGSCORE().getUNUM());
+            tvScore.setText(woasEntry.getData().getAVGSCORE().getTOTALSCOR() / woasEntry.getData().getAVGSCORE().getUNUM() + "");
+            tvScoreTitle.setText("平均得分");
+            tvTitle.setText(woasEntry.getData().getWOAS().getWoasThem());
+
+
+            List<ProjectEntry> list = new ArrayList<>();
+            for (WoasEntry.DataBean.SCORERANKBean bean : woasEntry.getData().getSCORERANK()) {
+                list.add(new ProjectEntry(bean.getAWOASWIUNGUID(), bean.getORGNAME(), bean.getAFINALSCOR()));
+            }
+
+            RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
+            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+            recyclerView.setAdapter(adapter);
+            List<LineChartEntry> lineChartEntries = new ArrayList<>();
+            for (int i = 0; i < woasEntry.getData().getRECAVGSCORE().size(); i++) {
+                lineChartEntries.add(new LineChartEntry(woasEntry.getData().getRECAVGSCORE().get(i).getWOAS_STARTM(), getWoasEntry().getData().getRECAVGSCORE().get(i).getTOTALSCOR() / getWoasEntry().getData().getRECAVGSCORE().get(i).getUNUM() * 1.0f));
+            }
+            Collections.reverse(lineChartEntries);
+            initLineCharView(lineChart, lineChartEntries);
+        } else {
+            lineChart.setData(null);
+        }
     }
 
     @Override
     protected void initView() {
 
     }
-    private void initLineCharView(LineChart lineChart, List<SecurityCloudEntry.SingleMonthScore> dataList) {
+
+    private void initLineCharView(LineChart lineChart, List<LineChartEntry> dataList) {
         LineData lineData = getLineData(dataList);
         xAxis = lineChart.getXAxis();
+        xAxis.setLabelCount(5);
         yAxisLeft = lineChart.getAxisLeft();
 //        lineChart.setBackgroundColor(Color.argb(200, 173, 215, 210));// 设置图表背景 参数是个Color对象
         Description description = new Description();
         description.setText("");
         lineChart.setDescription(description); //图表默认右下方的描述，参数是String对象
         lineChart.setNoDataText("暂无数据");   //没有数据时显示在中央的字符串，参数是String对象
-
         lineChart.setDrawGridBackground(false);//设置图表内格子背景是否显示，默认是false
 //        lineChart.setGridBackgroundColor(Color.rgb(250, 0, 0));//设置格子背景色,参数是Color类型对象
-
         lineChart.setDrawBorders(false);     //设置图表内格子外的边框是否显示
         //Enabling / disabling interaction
-        lineChart.setTouchEnabled(true); // 设置是否可以触摸
+        lineChart.setTouchEnabled(false); // 设置是否可以触摸
         lineChart.setDragEnabled(false);// 是否可以拖拽
         lineChart.setScaleEnabled(false);// 是否可以缩放 x和y轴, 默认是true
         lineChart.setScaleXEnabled(false); //是否可以缩放 仅x轴
@@ -141,18 +184,21 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
 //        The Axis 坐标轴相关的,XY轴通用
         xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
-        xAxis.setDrawAxisLine(false); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
-        xAxis.setDrawGridLines(true); //是否显示X坐标轴上的刻度竖线，默认是true
+        xAxis.setDrawAxisLine(true); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
+        xAxis.setAxisLineWidth(1);
+        xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.dialog_cancel_message_color));
+        xAxis.setDrawGridLines(false); //是否显示X坐标轴上的刻度竖线，默认是true
         xAxis.setDrawLabels(true); //是否显示X坐标轴上的刻度，默认是true
-        xAxis.setTextColor(getResources().getColor(R.color.text_gray_color)); //X轴上的刻度的颜色
-        xAxis.setTextSize(12); //X轴上的刻度的字的大小 单位dp
-        xAxis.setTextColor(Color.parseColor("#004e96"));
+        xAxis.setTextColor(getResources().getColor(R.color.dialog_cancel_message_color)); //X轴上的刻度的颜色
+        xAxis.setTextSize(14); //X轴上的刻度的字的大小 单位dp
+        xAxis.setTextColor(Color.parseColor("#999999"));
 //      xAxis.setTypeface(Typeface tf); //X轴上的刻度的字体
 //        xAxis.setGridColor(getResources().getColor(R.color.color_blue_004e96)); //X轴上的刻度竖线的颜色
 //        xAxis.setGridLineWidth(1); //X轴上的刻度竖线的宽 float类型
         xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
         xAxis.isDrawLabelsEnabled();
-        final List<String> dateList = new ArrayList<>();
+        final List<String> xList = new ArrayList<>();
 //        for (int i = 0; i < 6; i++) {
 ////            Date date = new Date(Long.parseLong(dataList.get(i).getDate()));
 //            Date date = new Date(System.currentTimeMillis()+i*(1000*60*60*24*30));
@@ -162,25 +208,21 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 //            dateList.add(strDate);
 //            LogUtil.e(TAG, "initLineCharView: strDate:"+(System.currentTimeMillis()+i*(1000*60*60*24*30))+"----" );
 //        }
-        dateList.add("一月");
-        dateList.add("二月");
-        dateList.add("三月");
-        dateList.add("四月");
-        dateList.add("五月");
-        dateList.add("六月");
-//        final String[] data = new String[]{"一月", "二月", "三月", "四月", "五月", "六月"};
-        xAxis.setLabelCount(dateList.size() - 1);
+        for (int i = 0; i < dataList.size(); i++) {
+            xList.add(dataList.get(i).getDate());
+        }
+        xAxis.setLabelCount(xList.size() - 1);
 //      X轴专用
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return dateList.get((int) ((value + 0.5)));//[(int) value];
+                return xList.get((int) ((value + 0.5)));//[(int) value];
             }
         });
-        xAxis.setAvoidFirstLastClipping(false);
+        xAxis.setAvoidFirstLastClipping(true);
 //        xAxis.setSpaceBetweenLabels(4);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//把坐标轴放在上下 参数有：TOP, BOTTOM, BOTH_SIDED, TOP_INSIDE or BOTTOM_INSIDE.
-        xAxis.setLabelRotationAngle(330);
+//        xAxis.setLabelRotationAngle(330);
         xAxis.setDrawLabels(true);
         //可以设置一条警戒线，如下：
         LimitLine ll = new LimitLine(80, "（合格线：" + 80 + "分)");
@@ -190,6 +232,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         ll.setLineWidth(1f);
         ll.setTextColor(Color.WHITE);
         ll.setTextSize(12f);
+
         // .. and more styling options
 
 //      Y轴专用
@@ -197,8 +240,10 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setEnabled(false);
 
-        yAxisLeft.addLimitLine(ll);
-        yAxisLeft.setDrawAxisLine(false);
+//        yAxisLeft.addLimitLine(ll);
+        yAxisLeft.setAxisLineColor(getResources().getColor(R.color.dialog_cancel_message_color));
+        yAxisLeft.setAxisLineWidth(1);
+        yAxisLeft.setDrawAxisLine(true);
         yAxisLeft.setEnabled(true);
         yAxisLeft.setDrawLabels(false);
         yAxisLeft.setAxisMinimum(0);
@@ -235,32 +280,42 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 //        mLegend.setTextColor(Color.WHITE);// 颜色
 //      mLegend.setTypeface(mTf);// 字体
 
-        lineChart.animateX(1000); // 立即执行的动画,x轴
+        lineChart.animateX(0); // 立即执行的动画,x轴
     }
 
-    private LineData getLineData(List<SecurityCloudEntry.SingleMonthScore> dataList) {
+    private LineData getLineData(List<LineChartEntry> dataList) {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();     //坐标点的集合
 //        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-        Random random = new Random(10);
-        for (int i = 0; i < 6; i++) {
+
+        for (int i = 0; i < getWoasEntry().getData().getRECAVGSCORE().size(); i++) {
 //            Entry entry = new Entry(i, dataList.get(i).getScore());
 
-            Entry entry = new Entry(i, random.nextInt(100));
+            Entry entry = new Entry(i, dataList.get(i).getScore());
             entries.add(entry);
         }
 
-        LineDataSet lineDataSet = new LineDataSet(entries, "得分");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
+        LineDataSet lineDataSet = new LineDataSet(entries, "平均分");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
 //        lineDataSet.setCircleColor(Color.WHITE);
         lineDataSet.isDrawCircleHoleEnabled();
         lineDataSet.setDrawCircleHole(true);
-        lineDataSet.setCircleHoleRadius(5);
-        lineDataSet.setValueTextColor(Color.WHITE);
-        lineDataSet.setValueTextSize(12);
+        lineDataSet.setValueTextSize(14);
+        lineDataSet.setValueTextColor(getResources().getColor(R.color.text_gray_color));
+        lineDataSet.setCircleColor(Color.parseColor("#BAC818"));
+        lineDataSet.setCircleColorHole(Color.parseColor("#BAC818"));
+        lineDataSet.setCircleHoleRadius(8);
+        lineDataSet.setColor(Color.parseColor("#BAC818"));
         lineDataSet.setDrawValues(true);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
 //        lineDataSet.setCircleRadius(10);
         lineDataSet.setLineWidth(2);
+        lineDataSet.isDrawValuesEnabled();
+        lineDataSet.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return ((int)value)+"";
+            }
+        });
 //        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company");
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);     //以左边坐标轴为准 还是以右边坐标轴为基准
 //        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);

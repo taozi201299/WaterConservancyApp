@@ -19,11 +19,13 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
-import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
-import com.syberos.shuili.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +80,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         return R.layout.fragment_acci_chart_layout;
     }
 
-    HiddenEntryTest hiddenZhiguan, hiddenJianguan, hiddenLiuyu;
 
     @Override
     protected void initView() {
@@ -122,14 +123,13 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-        if (radioGroup.getCheckedRadioButtonId() == rbtnZhiguan.getId()) {
-            requestData(1);
-
-        } else if (radioGroup.getCheckedRadioButtonId() == rbtnJianguan.getId()) {
-            requestData(2);
-        } else if (radioGroup.getCheckedRadioButtonId() == rbtnLiuyu.getId()) {
-            requestData(3);
-        }
+//        if (radioGroup.getCheckedRadioButtonId() == rbtnZhiguan.getId()) {
+//            requestData(1);
+//        } else if (radioGroup.getCheckedRadioButtonId() == rbtnJianguan.getId()) {
+//            requestData(2);
+//        } else if (radioGroup.getCheckedRadioButtonId() == rbtnLiuyu.getId()) {
+//            requestData(3);
+//        }
 
     }
 
@@ -140,27 +140,31 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                webView.removeAllViews();
+                bShowMap = false;
                 switch (checkId) {
                     case R.id.radio_btn_zhiguan:
                         if (orgType == 1) {
-                            iMapLevel = 4;
+                            if (orgLevel == 1) iMapLevel = -1;
+                            else iMapLevel = 4;
                         } else if (orgType == 2) {
                             iMapLevel = 0;
                         }
                         type = 1;
-                        webView.removeAllViews();
                         break;
                     case R.id.radio_btn_liuyu:
-                        type = 2;
-                        iMapLevel = 0;
+                        if (orgLevel == 1) iMapLevel = -2;
+                        else iMapLevel = 0;
+                        type = 3;
                         break;
                     case R.id.radio_btn_jianguan:
-                        iMapLevel = 4;
-                        type = 3;
+                        if (orgLevel == 1) iMapLevel = -1;
+                        else iMapLevel = 4;
+                        type = 2;
                         break;
                 }
                 if (orgType == 1) {
-                    if (type == 2)
+                    if (type == 3)
                         webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                     else {
                         webView.loadUrl("file:///android_asset/chart/hidd.html");
@@ -168,60 +172,53 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 } else if (orgType == 2) {
                     webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                 }
-                requestData(type);
+//                requestData(type);
+                setStatus1(type);
             }
         });
 
     }
 
     private void requestData(int type) {
-        RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntry>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
-            }
+        RetrofitHttpMethods.getInstance().getThematicHidden(
+                new Observer<HiddenEntry>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
+                    }
 
-            @Override
-            public void onNext(HiddenEntry hiddenEntry) {
-                LogUtils.i(TAG + "getThematicHidden:", "onNext");
-                List<Point> list = new ArrayList<>();
-                list.clear();
-                if (hiddenEntry == null || hiddenEntry.getData() == null) {
-                    ToastUtils.show("未获取到数据");
-                    return;
-                }
-//                        if (type == 1) {
-                for (HiddenEntry.DataBean.ITEMDATABean bean :
-                        hiddenEntry.getData().getITEMDATA()) {
-                    list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + ""));
-                }
-//                        } else {
-//                            for (HiddenEntry.DataBean.ITEMDATABean bean :
-//                                    HiddenEntry.getData().getITEMDATA()) {
-//                                list.add(new Point(bean.getAD_LONG() + "", bean.getAD_LAT() + "", bean.getHIDDTOTALQUA() + ""));
-//                            }
-//
-//                        }
+                    @Override
+                    public void onNext(HiddenEntry hiddenEntry) {
+                        LogUtils.i(TAG + "getThematicHidden:", "onNext");
+                        List<Point> list = new ArrayList<>();
+                        list.clear();
+                        if (hiddenEntry == null || hiddenEntry.getData() == null) {
+                            ToastUtils.show("未获取到数据");
+                            return;
+                        }
+                        for (HiddenEntry.DataBean.ITEMDATABean bean :
+                                hiddenEntry.getData().getITEMDATA()) {
+                            list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + ""));
+                        }
+                        setHiddenEntry(hiddenEntry);
+                        addMarkInfo(list);
+                    }
 
-                setHiddenEntry(HiddenEntry);
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        LogUtils.i(TAG + "getThematicHidden:", "onError");
+                    }
 
-                addMarkInfo(list);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                LogUtils.i(TAG + "getThematicHidden:", "onError");
-            }
-
-            @Override
-            public void onComplete() {
-                LogUtils.i(TAG + "getThematicHidden:", "onComplete");
-            }//todo 参数
-        }, type + "", SyberosManagerImpl.getInstance().
-
-                getCurrentUserInfo().
-                getOrgId(), "", "");
+                    @Override
+                    public void onComplete() {
+                        LogUtils.i(TAG + "getThematicHidden:", "onComplete");
+                    }//todo 参数
+                },
+                type + "",
+                SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(),
+                "",
+                "");
     }
 
     @Override
@@ -231,14 +228,14 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     public HiddenEntry getHiddenEntry() {
-        return HiddenEntry;
+        return hiddenEntry;
     }
 
     public void setHiddenEntry(HiddenEntry HiddenEntry) {
-        this.HiddenEntry = HiddenEntry;
+        this.hiddenEntry = HiddenEntry;
     }
 
-    HiddenEntry HiddenEntry;
+    HiddenEntry hiddenEntry;
 
     public void webMap() {//地图定位
         webView.getSettings().setDatabaseEnabled(true);//开启数据库
@@ -252,7 +249,8 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
         if (orgType == 1 || orgType == 3) {
-            iMapLevel = 4;
+            if (orgLevel == 1) iMapLevel = -1;
+            else iMapLevel = 4;
             webView.loadUrl("file:///android_asset/chart/hidd.html");
         } else if (orgType == 2) {
             iMapLevel = 0;
@@ -295,6 +293,36 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             Toast.makeText(mContext, "map test", Toast.LENGTH_SHORT).show();
         }
 
+        @JavascriptInterface
+        public String getHiddenInfo(String orgGuid) {
+            Gson gson = new Gson();
+            String jsonStr = "";
+            HiddenEntry hiddenEntry = getHiddenEntry();
+            for (HiddenEntry.DataBean.ITEMDATABean bean : hiddenEntry.getData().getITEMDATA()) {
+                if (bean.getOBJGUID().equals(orgGuid)) {
+                    HiddenInfo hiddenInfo = new HiddenInfo(bean.getOBJNAME(), bean.getHIDDTOTALQUA(), bean.getHIDDGRAD1RECTQUA(), bean.getHIDDRECTQUA() * 100.0 / bean.getHIDDTOTALQUA() + "%");
+                    jsonStr = gson.toJson(hiddenInfo);
+                    break;
+                }
+            }
+            return jsonStr;
+        }
+
+
+    }
+
+    class HiddenInfo implements Serializable{
+        String title;
+        int totalCount;
+        int rectifyCount;
+        String rectifyRate;
+
+        public HiddenInfo(String title, int totalCount, int rectifyCount, String rectifyRate) {
+            this.title = title;
+            this.totalCount = totalCount;
+            this.rectifyCount = rectifyCount;
+            this.rectifyRate = rectifyRate;
+        }
     }
 
     public void setMapData(MapBoundBean mapData) {
@@ -347,16 +375,17 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
-                if (HiddenEntry == null || HiddenEntry.getData() == null) {
+                if (hiddenEntry == null || hiddenEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
                     return;
                 }
                 for (HiddenEntry.DataBean.ITEMDATABean bean :
-                        HiddenEntry.getData().getITEMDATA()) {
+                        hiddenEntry.getData().getITEMDATA()) {
                     list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + ""));
                 }
-                setHiddenEntry(HiddenEntry);
+                setHiddenEntry(hiddenEntry);
                 addMarkInfo(list);
+                EventBus.getDefault().postSticky(hiddenEntry);
             }
 
             @Override

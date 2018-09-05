@@ -352,7 +352,7 @@ public class SecurityCloudEntry implements Serializable {
 
     public static class CompScoreTrend implements Serializable {
         int qualifiedScore;//合格分
-        List<SingleMonthScore> dataList;
+        List<LineChartEntry> dataList;
 
         public int getQualifiedScore() {
             return qualifiedScore;
@@ -362,19 +362,19 @@ public class SecurityCloudEntry implements Serializable {
             this.qualifiedScore = qualifiedScore;
         }
 
-        public List<SingleMonthScore> getDataList() {
+        public List<LineChartEntry> getDataList() {
             if (dataList == null) {
                 return new ArrayList<>();
             }
             return dataList;
         }
 
-        public void setDataList(List<SingleMonthScore> dataList) {
+        public void setDataList(List<LineChartEntry> dataList) {
             this.dataList = dataList;
         }
     }
 
-    public static class SingleMonthScore implements Serializable {
+    public static class LineChartEntry implements Serializable {
         String date;
         int score;
 

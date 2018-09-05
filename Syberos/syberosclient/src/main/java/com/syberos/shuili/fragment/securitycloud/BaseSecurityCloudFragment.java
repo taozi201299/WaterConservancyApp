@@ -41,6 +41,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.entity.publicentry.LineChartEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
 import com.syberos.shuili.entity.securitycloud.StraightTubeManageEntry;
 import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
@@ -505,7 +506,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
-    private void initLineCharView(LineChart lineChart, List<SecurityCloudEntry.SingleMonthScore> dataList) {
+    private void initLineCharView(LineChart lineChart, List<LineChartEntry> dataList) {
         LineData lineData = getLineData(dataList);
         xAxis = lineChart.getXAxis();
         yAxisLeft = lineChart.getAxisLeft();
@@ -645,10 +646,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        mLegend.setTextColor(Color.WHITE);// 颜色
 //      mLegend.setTypeface(mTf);// 字体
 
-        lineChart.animateX(1000); // 立即执行的动画,x轴
+        lineChart.animateX(0); // 立即执行的动画,x轴
     }
 
-    private LineData getLineData(List<SecurityCloudEntry.SingleMonthScore> dataList) {
+    private LineData getLineData(List<LineChartEntry> dataList) {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();     //坐标点的集合
 //        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();

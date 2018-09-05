@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
@@ -25,10 +22,6 @@ import com.syberos.shuili.fragment.thematic.detail.ThematicDetailStanFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailSuenFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWinsFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailWoasFragment;
-import com.syberos.shuili.utils.ToastUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +34,6 @@ import static com.syberos.shuili.fragment.HematicMapFragment.Stan;
 import static com.syberos.shuili.fragment.HematicMapFragment.Suen;
 import static com.syberos.shuili.fragment.HematicMapFragment.Wins;
 import static com.syberos.shuili.fragment.HematicMapFragment.Woas;
-import static com.syberos.shuili.fragment.HematicMapFragment.tabTitle;
 
 
 /**
@@ -101,10 +93,7 @@ public class ThematicDetailActivity extends BActivity {
             thematicDetailSinsFragment, thematicDetailWoasFragment,
             thematicDetailWinsFragment, thematicDetailSuenFragment};
 
-    @Subscribe
-    public void onHiddenData(HiddenEntryTest hiddenEntryTest) {
-        ToastUtils.show("ThematicDetailActivity getData");
-    }
+
 
     @Override
     public void initData() {
@@ -113,8 +102,8 @@ public class ThematicDetailActivity extends BActivity {
             case Hidden:
 //                todo 隐患
                 tvTitle.setText("隐患");
-                HiddenEntry hiddenEntry= (HiddenEntry) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
-                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntryTest(hiddenEntry);
+//                HiddenEntry hiddenEntry= (HiddenEntry) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
+//                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntry(hiddenEntry);
                 switchFragment(fragments[0]);
                 break;
             case Acci:

@@ -1,9 +1,6 @@
 package com.syberos.shuili.fragment.thematic;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -15,15 +12,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.entity.publicentry.LocationEntry;
+import com.syberos.shuili.entity.thematic.sins.SinsEntry;
+import com.syberos.shuili.entity.thematic.woas.WoasEntry;
+import com.syberos.shuili.entity.thematicchart.PointEntry;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2018/6/26.
@@ -44,12 +54,20 @@ public class SinsChartFragment extends BaseLazyFragment {
 
     @BindView(R.id.radio_btn_benbu)
     Button radioBtnBenbu;
+    @BindView(R.id.radio_group_area)
+    RadioGroup radioGroupArea;
+
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
     private boolean bShowMap = false;
     private int iMapLevel = 0;
     private final static long duration = 10 * 1000;
+
+    private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
+
+    private int orgLevel = BusinessConfig.getOrgLevel();
+    private int orgType; // 1 行政区划 2 流域用户
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -67,29 +85,91 @@ public class SinsChartFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
-        webMap();
-
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (radioBtnBenbu.getId() == i) {
-                    setStatus1(1);
-                } else if (radioBtnZhiguan.getId() == i) {
-                    setStatus1(2);
-                } else if (radioBtnLiuyu.getId() == i) {
-                    setStatus1(3);
-                } else if (radioBtnJianguan.getId() == i) {
-                    setStatus1(4);
-                }
+        App.jurdAreaType = "1";
+        App.orgJurd = "000000000000";
+        orgLevel = 1;
+        showDataLoadingDialog();
+        radioBtnJianguan.setVisibility(View.GONE);
+        radioBtnLiuyu.setVisibility(View.GONE);
+        radioBtnZhiguan.setVisibility(View.GONE);
+        // 行政区划
+        if ("1".equals(App.jurdAreaType)) {
+            orgType = 1;
+        } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
+            orgType = 2;
+        }
+        if (orgType == 1) {
+            if (orgLevel == 1) {
+                // 部级用户  直管 流域 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnLiuyu.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 2) {
+                // 省级  直管 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 3) {
+                // 市 直管 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 4) {
+                // 县  直管
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
             }
-        });
-
+        } else if (orgType == 2) {
+            radioBtnZhiguan.setVisibility(View.VISIBLE);
+            radioGroup.check(R.id.radio_btn_zhiguan);
+        }
+        webMap();
     }
 
     @Override
     protected void initListener() {
-
+        bLoadFinish = false;
+        bShowMap = false;
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                webView.removeAllViews();
+                bShowMap = false;
+                switch (checkId) {
+                    case R.id.radio_btn_zhiguan:
+                        if (orgType == 1) {
+                            if (orgLevel == 1) iMapLevel = -1;
+                            else iMapLevel = 4;
+                        } else if (orgType == 2) {
+                            iMapLevel = 0;
+                        }
+                        type = 1;
+                        break;
+                    case R.id.radio_btn_liuyu:
+                        if (orgLevel == 1) iMapLevel = -2;
+                        else iMapLevel = 0;
+                        type = 3;
+                        break;
+                    case R.id.radio_btn_jianguan:
+                        if (orgLevel == 1) iMapLevel = -1;
+                        else iMapLevel = 4;
+                        type = 2;
+                        break;
+                }
+                if (orgType == 1) {
+                    if (type == 3)
+                        webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+                    else {
+                        webView.loadUrl("file:///android_asset/chart/woas.html");
+                    }
+                } else if (orgType == 2) {
+                    webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+                }
+//                requestData(type);
+                setStatus1(type);
+            }
+        });
     }
 
     @Override
@@ -116,11 +196,13 @@ public class SinsChartFragment extends BaseLazyFragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
-                    webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+                    refreshUI();
                 }
-                addMarkInfo();
+
 
             }
         });
@@ -133,6 +215,109 @@ public class SinsChartFragment extends BaseLazyFragment {
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
         });
+    }
+    SinsEntry sinsEntry;
+
+    public SinsEntry getSinsEntry() {
+        return sinsEntry;
+    }
+
+    public void setSinsEntry(SinsEntry sinsEntry) {
+        this.sinsEntry = sinsEntry;
+    }
+
+    private void refreshUI() {
+        closeDataDialog();
+        bShowMap = true;
+        webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+        List<HiddenChartFragment.Point> list = new ArrayList<>();
+        list.clear();
+        int type;
+
+        if (radioBtnZhiguan.isChecked()) {
+            type = 1;
+        } else if (radioBtnJianguan.isChecked()) {
+            type = 2;
+        } else if (radioBtnLiuyu.isChecked()) {
+            type = 3;
+        } else {
+            type = 1;
+        }
+//        RetrofitHttpMethods.getInstance().getThematicSins(new Observer<SinsEntry>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(SinsEntry sinsEntry) {
+////                setSinsEntry(sinsEntry);
+////
+////                List<LocationEntry> list = new ArrayList<>();
+////                list.clear();
+////                if (sinsEntry == null || sinsEntry.getData() == null) {
+////                    ToastUtils.show("未获取到数据");
+////                    return;
+////                }
+////                for (SinsEntry.DataBean.SCORERANKBean bean :
+////                        sinsEntry.getData().) {
+////                    list.add(new LocationEntry(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
+////                }
+//////                setHiddenEntry(hiddenEntry);
+////                addMarkInfo(list);
+////                EventBus.getDefault().postSticky(sinsEntry);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+        RetrofitHttpMethods.getInstance().getThematicWoas(new Observer<WoasEntry>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(WoasEntry woasEntry) {
+//                setWoasEntry(woasEntry);
+//
+//                List<WoasChartFragment.Point> list = new ArrayList<>();
+//                list.clear();
+//                if (woasEntry == null || woasEntry.getData() == null) {
+//                    ToastUtils.show("未获取到数据");
+//                    return;
+//                }
+//                for (WoasEntry.DataBean.SCORERANKBean bean :
+//                        woasEntry.getData().getSCORERANK()) {
+//                    list.add(new LocationEntry(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
+//                }
+////                setHiddenEntry(hiddenEntry);
+//                addMarkInfo(list);
+//                EventBus.getDefault().postSticky(woasEntry);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+//        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     public class MyJavaScriptInterface {
@@ -156,11 +341,13 @@ public class SinsChartFragment extends BaseLazyFragment {
         if (bLoadFinish) {
             bShowMap = true;
             webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-            addMarkInfo();
+//            todo
+//            addMarkInfo();
         }
     }
-
-    private void addMarkInfo() {
-        webView.loadUrl("javascript:updateCurrentPoint(" + mLon + ',' + mLat + ")");
+    private void addMarkInfo(List<LocationEntry> list) {
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(list);
+        webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
     }
 }

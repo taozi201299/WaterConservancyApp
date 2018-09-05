@@ -1,5 +1,7 @@
 package com.syberos.shuili.entity.securitycloud;
 
+import com.syberos.shuili.entity.publicentry.LineChartEntry;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -353,7 +355,7 @@ public class SecurityCloudEntry implements Serializable {
 
     public static class CompScoreTrend implements Serializable {
         int qualifiedScore;//合格分
-        List<SingleMonthScore> dataList;
+        List<LineChartEntry> dataList;
 
         public int getQualifiedScore() {
             return qualifiedScore;
@@ -363,38 +365,18 @@ public class SecurityCloudEntry implements Serializable {
             this.qualifiedScore = qualifiedScore;
         }
 
-        public List<SingleMonthScore> getDataList() {
+        public List<LineChartEntry> getDataList() {
             if (dataList == null) {
                 return new ArrayList<>();
             }
             return dataList;
         }
 
-        public void setDataList(List<SingleMonthScore> dataList) {
+        public void setDataList(List<LineChartEntry> dataList) {
             this.dataList = dataList;
         }
     }
 
-    public static class SingleMonthScore implements Serializable {
-        String date;
-        int score;
-
-        public String getDate() {
-            return date == null ? "" : date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public int getScore() {
-            return score;
-        }
-
-        public void setScore(int score) {
-            this.score = score;
-        }
-    }
 
     public static class AreaRank implements Serializable {
         String id;

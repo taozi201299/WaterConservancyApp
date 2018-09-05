@@ -1,13 +1,10 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +20,6 @@ import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
-import com.syberos.shuili.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by BZB on 2018/8/11.
@@ -149,7 +143,7 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        onHiddenData(getHiddenEntry());
+//        onHiddenData(getHiddenEntry());
 
 //        List<PieEntry> listSummarise = new ArrayList<>();
 //        listSummarise.add(new PieEntry(16, "已排查单位数量"));
@@ -165,27 +159,32 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
     @Override
     public void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     public HiddenEntry getHiddenEntry() {
         return hiddenEntry;
     }
 
-    public void setHiddenEntryTest(HiddenEntry hiddenEntryTest) {
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getData(HiddenEntry hiddenEntry) {
+        onHiddenData(hiddenEntry);
+    }
+
+    public void setHiddenEntry(HiddenEntry hiddenEntry) {
         this.hiddenEntry = hiddenEntry;
     }
 
     HiddenEntry hiddenEntry;
 
     public void onHiddenData(HiddenEntry hiddenEntry) {
-        ToastUtils.show("also had get Data");
+//        ToastUtils.show("also had get Data");
         tvViewTitle.setText("");
         tvData1.setText(hiddenEntry.getData().getHIDDTOTALQUA() - hiddenEntry.getData().getHIDDRECTQUA() + "");
         tvDataTitle1.setText("未整改数量");
@@ -208,8 +207,8 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
         tvValue21.setText(hiddenEntry.getData().getHIDDGRAD2RECTQUA() + "");
         tvValue22.setText(hiddenEntry.getData().getHIDDGRAD2TOTALQUA() - hiddenEntry.getData().getHIDDGRAD2RECTQUA() + "");
         tvValue23.setText(hiddenEntry.getData().getHIDDGRAD2LATEQUA() + "");
-        tvValue24.setText(hiddenEntry.getData().getHIDDGRAD2LISTQUA()+"");
-        tvValue25.setText( hiddenEntry.getData().getHIDDGRAD2TOTALQUA()== 0 ? 0 + "" :hiddenEntry.getData().getHIDDGRAD2RECTQUA() / hiddenEntry.getData().getHIDDGRAD2TOTALQUA() * 100.0 + "%");
+        tvValue24.setText(hiddenEntry.getData().getHIDDGRAD2LISTQUA() + "");
+        tvValue25.setText(hiddenEntry.getData().getHIDDGRAD2TOTALQUA() == 0 ? 0 + "" : hiddenEntry.getData().getHIDDGRAD2RECTQUA() / hiddenEntry.getData().getHIDDGRAD2TOTALQUA() * 100.0 + "%");
 
         List<ProjectEntry> list = new ArrayList<>();
         for (HiddenEntry.DataBean.ITEMDATABean bean : hiddenEntry.getData().getITEMDATA())

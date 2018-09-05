@@ -45,6 +45,31 @@ public abstract class BaseLazyFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        setUseEventBus(false);
+    }
+
+    private boolean isUseEventBus = false;
+
+    protected boolean isUseEventBus() {
+        return isUseEventBus;
+    }
+
+    protected void setUseEventBus(boolean useEventBus) {
+        isUseEventBus = useEventBus;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isUseEventBus())
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (isUseEventBus())
+            EventBus.getDefault().unregister(this);
     }
 
     public static int getStatus1() {
@@ -63,7 +88,7 @@ public abstract class BaseLazyFragment extends Fragment {
         this.status2 = status2;
     }
 
-   static int status1;
+    static int status1;
     static int status2;
 
 

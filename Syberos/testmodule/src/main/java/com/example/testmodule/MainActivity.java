@@ -148,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
         SupervisionMangeEntry supervisionMangeEntry = new SupervisionMangeEntry();//监管 和 流域的 “管理”数据
 
         SecurityCloudEntry.CompScoreTrend compScoreTrend = new SecurityCloudEntry.CompScoreTrend();  //综合得分 趋势
-        SecurityCloudEntry.SingleMonthScore singleMonthScore = new SecurityCloudEntry.SingleMonthScore();
-        List<SecurityCloudEntry.SingleMonthScore> singleMonthScoreList = new ArrayList<>();
-        singleMonthScoreList.add(singleMonthScore);
-        compScoreTrend.setDataList(singleMonthScoreList);
+        LineChartEntry LineChartEntry = new LineChartEntry();
+        List<LineChartEntry> LineChartEntryList = new ArrayList<>();
+        LineChartEntryList.add(LineChartEntry);
+        compScoreTrend.setDataList(LineChartEntryList);
 
         List<SecurityCloudEntry.AreaRank> rankList = new ArrayList<>();    //排名
         SecurityCloudEntry.AreaRank areaRank = new SecurityCloudEntry.AreaRank();

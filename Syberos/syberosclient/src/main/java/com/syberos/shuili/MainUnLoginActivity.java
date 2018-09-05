@@ -40,7 +40,7 @@ public class MainUnLoginActivity extends TranslucentActivity {
     @Override
     public void initView() {
         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }

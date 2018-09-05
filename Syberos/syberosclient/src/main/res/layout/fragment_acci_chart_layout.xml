@@ -46,17 +46,6 @@
 
 
         <RadioButton
-            android:id="@+id/radio_btn_liuyu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5dp"
-            android:background="@drawable/radio_button_bg"
-            android:button="@null"
-            android:text="流域机构"
-            android:textColor="@color/radio_button_color"
-            android:textSize="@dimen/_16sp" />
-
-        <RadioButton
             android:id="@+id/radio_btn_jianguan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +53,17 @@
             android:background="@drawable/radio_button_bg"
             android:button="@null"
             android:text="行业监管"
+            android:textColor="@color/radio_button_color"
+            android:textSize="@dimen/_16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_liuyu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5dp"
+            android:background="@drawable/radio_button_bg"
+            android:button="@null"
+            android:text="流域机构"
             android:textColor="@color/radio_button_color"
             android:textSize="@dimen/_16sp" />
 

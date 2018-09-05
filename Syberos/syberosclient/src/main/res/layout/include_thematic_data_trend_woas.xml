@@ -18,11 +18,13 @@
             android:textSize="@dimen/font_size_14" />
 
         <com.github.mikephil.charting.charts.LineChart
+
+            android:layout_margin="@dimen/_10dp"
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_gravity="center"
-            android:padding="@dimen/_10dp" />
+            android:padding="@dimen/_20dp" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

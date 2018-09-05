@@ -1,8 +1,5 @@
 package com.syberos.shuili.fragment.thematic;
 
-import android.Manifest;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -22,7 +19,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
-import com.syberos.shuili.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -254,7 +251,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                     break;
                 }
             }
-
             return jsonStr;
 
         }

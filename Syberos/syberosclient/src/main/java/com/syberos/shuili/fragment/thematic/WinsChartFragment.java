@@ -18,9 +18,8 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
-import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
-import com.syberos.shuili.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
