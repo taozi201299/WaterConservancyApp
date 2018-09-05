@@ -117,7 +117,7 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         params.put("woasGropGuid",bisWoasGrop.getGuid()); // 考核组GUID
         params.put("fianDeuc",ce_score.getText().toString()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
-        params.put("woasType","1");// 考核类型
+        params.put("woasType","2");// 考核类型
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

@@ -82,7 +82,7 @@ public class SafetyProductionObjectSelectActivity extends BaseActivity
 
     @Override
     public void initView() {
-        setActionBarTitle("现场考核");
+        showTitle("考核对象");
         setActionBarRightVisible(View.INVISIBLE);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -107,8 +107,8 @@ public class SafetyProductionObjectSelectActivity extends BaseActivity
     private void getWoasObj(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("woasGroupGuid",bisWoasGroup.getGuid());
-        params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
+      //  params.put("woasGroupGuid",bisWoasGroup.getGuid());
+        params.put("woasGroupGuid","5848107dbdd545189833ab487b41bd32");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

@@ -109,7 +109,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         showCommitDialog("确认提交考核结果?",0);
     }
     private void commit(){
-        String url = GlobleConstants.strZJIP +"/wcsps-api/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strZRIP +"/woas/mobile/bisWoasDeuc/";
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
         params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID

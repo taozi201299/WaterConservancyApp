@@ -10,8 +10,6 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
-import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
-import com.syberos.shuili.entity.thematic.hidden.HiddenEntryTest;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
