@@ -93,6 +93,22 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
         mv_multimedia.onActivityResult(requestCode, requestCode, data);
     }
 
+    private int getProbType(String value){
+        for(int key : GlobleConstants.winsProbMap.keySet()){
+            if(GlobleConstants.winsProbMap.get(key).equals(value)){
+                return key;
+            }
+        }
+        return 1;
+    }
+    private int getProbCate(String value){
+        for(int key : GlobleConstants.winsProbTypeMap.keySet()){
+            if(GlobleConstants.winsProbTypeMap.get(key).equals(value)){
+                return key;
+            }
+        }
+        return 1;
+    }
     @Override
     public void dialogClick() {
         commit();
@@ -108,12 +124,13 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
     private void commit(){
         String url = GlobleConstants.strZRIP +"/wins/mobile/bisWinsProb/";
         HashMap<String,String> params = new HashMap<>();
-        params.put("winProjGuid",bisWinsProj.dataSource.get(0).getPROJGUID());// 稽察项目GUID
-        params.put("probType",ll_problems_type.getCurrentDetailText()); // 问题分类
-        params.put("probCate",ll_severity_level.getCurrentDetailText()); // 严重程度
+        params.put("winsProjGuid",bisWinsProj.getProjGuid());// 稽察项目GUID
+        params.put("probType", String.valueOf(getProbType(ll_problems_type.getCurrentDetailText()))); // 问题分类
+        params.put("probCate", String.valueOf(getProbCate(ll_severity_level.getCurrentDetailText()))); // 严重程度
         params.put("probDep",""); //对应司局
         params.put("probDesc",ae_describe_audio.getEditText());  //问题详情描述
         params.put("rectSugg",ae_rect_audio.getEditText());// 整改建议
+        params.put("rectConc","");
         params.put("unrecReson",""); // 整改结论
         params.put("rectMeas",""); // 未整改原因
         params.put("rectLed",""); // 整改负责人

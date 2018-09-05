@@ -100,7 +100,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     private void getBisWinsGroup(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
+      //  params.put("speStafGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

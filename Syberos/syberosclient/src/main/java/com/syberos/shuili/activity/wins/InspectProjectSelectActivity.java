@@ -50,14 +50,14 @@ public class InspectProjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
-//        if(bisWinsGroupAll == null){
-//            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-//            bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroupAll");
-//        }
-//        if(bisWinsGroupAll == null){
-//            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-//            activityFinish();
-//        }
+        if(bisWinsGroupAll == null){
+            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
+            bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroupAll");
+        }
+        if(bisWinsGroupAll == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            activityFinish();
+        }
          showDataLoadingDialog();
          getInspectionProject();
     }
@@ -77,8 +77,7 @@ public class InspectProjectSelectActivity extends BaseActivity
     private void getInspectionProject(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectInspectionTeamAllProjectNames/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("bwgGuid","455F9FDBBFD04B62A80C909989761E70");
-       // params.put("bwgGuid",bisWinsGroupAll.dataSource.get(0).getGuid());
+        params.put("bwgGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -111,7 +110,7 @@ private void refreshUI(){
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("inspectionProjects",inspectionProjects);
+        bundle.putSerializable("inspectionProjects",inspectionProjects.dataSource.get(position));
         intentActivity(this, InspectNewProblemActivity.class, false, bundle);
     }
 
@@ -123,7 +122,7 @@ private void refreshUI(){
         @Override
         public void convert(ViewHolder holder, final BisWinsProj information) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getPROJNAME());
+                    information.getProjName());
         }
     }
 

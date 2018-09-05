@@ -7,23 +7,23 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 
 public class BisWinsProj extends HttpBaseResponse<BisWinsProj>{
-    String PROJNAME;
 
-    public String getPROJNAME() {
-        return PROJNAME == null ? "" : PROJNAME;
+    public String getProjGuid() {
+        return projGuid == null ? "" : projGuid;
     }
 
-    public void setPROJNAME(String PROJNAME) {
-        this.PROJNAME = PROJNAME;
+    public void setProjGuid(String projGuid) {
+        this.projGuid = projGuid;
     }
 
-    public String getPROJGUID() {
-        return PROJGUID == null ? "" : PROJGUID;
+    public String getProjName() {
+        return projName == null ? "" : projName;
     }
 
-    public void setPROJGUID(String PROJGUID) {
-        this.PROJGUID = PROJGUID;
+    public void setProjName(String projName) {
+        this.projName = projName;
     }
 
-    String PROJGUID;
+    private String projGuid;
+    private String projName;
 }
