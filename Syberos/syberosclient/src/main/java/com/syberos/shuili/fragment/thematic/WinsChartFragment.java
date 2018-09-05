@@ -68,7 +68,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     private int iMapLevel = 0;
     private final static long duration = 10 * 1000;
     private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
-    private int subType = 1; // 1 流域 2 监管
+    private String subType = "1"; // 1 流域 2 监管
 
     private int orgLevel = BusinessConfig.getOrgLevel();
     private int orgType; // 1 行政区划 2 流域用户
@@ -146,13 +146,13 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                 webView.removeAllViews();
                 switch (checkedId){
                     case R.id.radio_type_jianguan:
-                        subType = 2;
+                        subType = "2";
                         if(orgLevel == 1) iMapLevel= -1;
                         else  iMapLevel = 4;
                         webView.loadUrl("file:///android_asset/chart/wins.html");
                         break;
                     case R.id.radio_type_liuyu:
-                        subType= 1;
+                        subType= "1";
                         if(orgLevel == 1) iMapLevel = -2 ;
                         else  iMapLevel = 0;
                         webView.loadUrl("file:///android_asset/chart/wins_liuyu.html");
@@ -168,7 +168,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                     case R.id.radio_btn_zhiguan:
                         if(orgLevel == 1) {
                             radio_group_type.setVisibility(View.VISIBLE);
-                            subType = 1;
+                            subType = "1";
                             radio_group_type.check(R.id.radio_type_jianguan);
                         }
                         type = 1;
@@ -176,9 +176,9 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                             if(orgLevel == 1) iMapLevel= -1;
                             else  iMapLevel = 4;
                             if(rbTypeLiuyu.isChecked()) {
-                                subType = 1;
+                                subType = "1";
                             }else if(rbtnJianguan.isChecked()){
-                                subType = 2;
+                                subType = "2";
                             }
                         }
                         webView.removeAllViews();
@@ -339,20 +339,24 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         } else {
             type = 1;
         }
-        if(rbTypeJianguan.isChecked()){
-            subType = 2;
-        }else if(rbTypeLiuyu.isChecked()){
-            subType = 1;
+        if(type == 1) {
+            if (rbTypeJianguan.isChecked()) {
+                subType = "2";
+            } else if (rbTypeLiuyu.isChecked()) {
+                subType = "1";
+            }
+        }else {
+            subType = "";
         }
         RetrofitHttpMethods.getInstance().getThematicWins(new Observer<WinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
-                LogUtils.i(TAG + "getThematicAcci:", "onSubscribe");
+                LogUtils.i(TAG, "onSubscribe");
             }
 
             @Override
             public void onNext(WinsEntry winsEntry) {
-                LogUtils.i(TAG + "getThematicAcci:", "onNext");
+                LogUtils.i(TAG, "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if(winsEntry == null || winsEntry.getData() == null){
@@ -369,14 +373,14 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                LogUtils.i(TAG + "getThematicAcci:", "onError");
+                LogUtils.i(TAG, "onError");
             }
 
             @Override
             public void onComplete() {
-                LogUtils.i(TAG + "getThematicAcci:", "onComplete");
+                LogUtils.i(TAG, "onComplete");
             }//todo 参数
-        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), subType+"", "","");
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), subType, "","");
     }
     private void  setData(WinsEntry winsEntry){
         this.winsEntry = winsEntry;

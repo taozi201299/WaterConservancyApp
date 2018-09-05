@@ -57,10 +57,8 @@ function showMap(x, y,level) {
                 mapDEMO.map.addOverlay(overlay);
             }
             var obj = id["id"];
-            alert(obj);     
             var acciInfo = getAcciInfoForMark(obj);
             var markInfo = JSON.parse(acciInfo);
-            alert(acciInfo);
             var divMark = document.getElementById('mark');
             var objTitle = document.getElementById('title').innerText= markInfo.orgName;
             document.getElementsByTagName('b')[0].innerHTML = markInfo.occNum;
@@ -135,8 +133,6 @@ var val;
 		val = jsonStr[i].value;
     // 初始化 feature start
     var Coordinates = [mLon, mLat+2];
-	alert(Coordinates[0]);
-	alert(Coordinates[1]);
     var iconFeature = new ol.Feature(
                 {
                     geometry: new ol.geom.Point(Coordinates),

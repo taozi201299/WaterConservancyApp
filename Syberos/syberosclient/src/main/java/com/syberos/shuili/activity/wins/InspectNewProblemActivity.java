@@ -106,7 +106,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
         showCommitDialog("确认提交稽查问题?",0);
     }
     private void commit(){
-        String url = GlobleConstants.strZJIP +"/wcsps-css/wins/mobile/bisWinsProb/";
+        String url = GlobleConstants.strZRIP +"/wins/mobile/bisWinsProb/";
         HashMap<String,String> params = new HashMap<>();
         params.put("winProjGuid",bisWinsProj.dataSource.get(0).getPROJGUID());// 稽察项目GUID
         params.put("probType",ll_problems_type.getCurrentDetailText()); // 问题分类

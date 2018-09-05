@@ -34,6 +34,7 @@ public class GlobleConstants {
     public static String strIP ="http://192.168.1.8:8080";
     public static String strCJIP = "http://192.168.1.11:7080";
     public static String strZJIP = "http://192.168.1.11:9080";
+    public static String strZRIP = " http://192.168.1.11:6080";
 
     /**
      * 1 大中型已建工程运行管理单位 CJYJ

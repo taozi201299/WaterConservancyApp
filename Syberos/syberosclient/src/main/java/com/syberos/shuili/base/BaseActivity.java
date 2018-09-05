@@ -39,6 +39,8 @@ import com.syberos.shuili.view.CustomDialog;
 
 import butterknife.ButterKnife;
 
+import static com.syberos.shuili.base.BActivity.Allow_ScreenShot;
+
 
 public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
@@ -63,7 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         mContext = this;
         ScreenManager.getScreenManager().pushActivity(this);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
         setContentView(getLayoutId());
        // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         ButterKnife.bind(this);

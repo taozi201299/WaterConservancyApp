@@ -37,6 +37,8 @@ public abstract class BActivity extends AppCompatActivity {
         ScreenManager.getScreenManager().pushActivity(this);
         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
         setContentView(getLayoutId());
         // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
