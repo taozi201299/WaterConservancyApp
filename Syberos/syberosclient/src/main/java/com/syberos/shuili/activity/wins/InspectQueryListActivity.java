@@ -71,7 +71,7 @@ public class InspectQueryListActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setActionBarTitle(Title);
+        showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
@@ -106,7 +106,8 @@ public class InspectQueryListActivity extends BaseActivity {
     private void getObjWinsPlan(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInformation/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("planOrgGuid","21260E691D454685B61086E7F2074B71");
+        params.put("planOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("planOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

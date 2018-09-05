@@ -104,7 +104,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     private void  getWinsGroupByWinsProgGuid(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectWinsGroupInfoByWinsProgGuid/";
         HashMap<String,String> params = new HashMap<>();
-        params.put("winsProgGuid",bisWinsGroupAll.getWinsProgGuid());
+        params.put("bwpGuid",bisWinsGroupAll.getWinsProgGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -137,8 +137,9 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
                 if(bisWinsProgAll == null || bisWinsProgAll.dataSource == null || bisWinsProgAll.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    refreshUI();
+                    return;
                 }
+                refreshUI();
             }
 
             @Override

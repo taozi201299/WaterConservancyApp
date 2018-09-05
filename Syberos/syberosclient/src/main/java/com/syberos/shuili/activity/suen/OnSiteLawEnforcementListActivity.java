@@ -92,7 +92,7 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
     }
     @Override
     public void initView() {
-        setActionBarTitle(Title);
+        showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

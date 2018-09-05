@@ -101,6 +101,7 @@ public class OnSiteInspectListActivity extends BaseActivity
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String>params = new HashMap<>();
       //  params.put("speStafGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+      //  params.put("speStafAssiGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -148,10 +149,10 @@ public class OnSiteInspectListActivity extends BaseActivity
             });
 
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getWinsArrayCode());
-            ((TextView) (holder.getView(R.id.tv_batch))).setText(
                     information.getWinsGroupNum());
-            ((TextView) (holder.getView(R.id.tv_time))).setText("");
+            ((TextView) (holder.getView(R.id.tv_batch))).setText(
+                    information.getWinsArrayCode());
+            ((TextView) (holder.getView(R.id.tv_time))).setText(information.getCollTime());
         }
     }
 }

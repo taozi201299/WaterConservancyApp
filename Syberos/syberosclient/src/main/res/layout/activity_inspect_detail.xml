@@ -177,7 +177,7 @@
                             android:minHeight="@dimen/_40dp"
                             android:textColor="@color/title_0"
                             android:textSize="@dimen/_16sp"
-                            android:text="杜甫" />
+                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -205,7 +205,7 @@
                             android:minHeight="@dimen/_40dp"
                             android:textColor="@color/title_0"
                             android:textSize="@dimen/_16sp"
-                            android:text="苏轼" />
+                            android:text="" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
