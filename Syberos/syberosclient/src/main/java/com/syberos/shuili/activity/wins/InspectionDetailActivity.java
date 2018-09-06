@@ -16,9 +16,11 @@ import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProg;
 import com.syberos.shuili.entity.wins.BisWinsProgAll;
+import com.syberos.shuili.entity.wins.BisWinsStaff;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -65,14 +67,10 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
      */
     private BisWinsGroupAll bisWinsGroupAll = null;
     /**
-     * 获取的稽查组信息
-     */
-    private BisWinsGroup bisWinsGroup = null;
-
-    /**
      * 稽查方案详情对象
      */
     private BisWinsProgAll bisWinsProgAll = null;
+    private BisWinsStaff bisWinsStaff = null;
     @Override
     public int getLayoutId() {
         return R.layout.activity_inspect_detail;
@@ -96,34 +94,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
             activityFinish();
         }
-        getWinsGroupByWinsProgGuid();
-    }
-    /**
-     * 根据稽查方案GUID 获取稽查组信息
-     */
-    private void  getWinsGroupByWinsProgGuid(){
-        String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectWinsGroupInfoByWinsProgGuid/";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("bwpGuid",bisWinsGroupAll.getWinsProgGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                bisWinsGroup = gson.fromJson(result,BisWinsGroup.class);
-                if(bisWinsGroup == null || bisWinsGroup.dataSource == null){
-                    ToastUtils.show("获取稽查组信息错误");
-                }else {
-                    getWinsProgByGUID();
-                }
-
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show("获取稽查组信息错误");
-            }
-        });
+        getWinsProgByGUID();
     }
     private void getWinsProgByGUID(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/prog/bisWinsProgs/";
@@ -139,7 +110,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                refreshUI();
+          getSpecStaffName();
             }
 
             @Override
@@ -149,14 +120,90 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
             }
         });
     }
+    private void  getSpecStaffName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisWinsGroupAll.getSpeStafGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    bisWinsGroupAll.setSpecStaffName(bisWinsStaff.dataSource.get(0).getPersExpertName());
+                }
 
+                getSpecStafAssiName();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+
+
+    }
+    private void getSpecStafAssiName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisWinsGroupAll.getSpeStafAssiGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    bisWinsGroupAll.setSpecStaffAssiName(bisWinsStaff.dataSource.get(0).getPersExpertName());
+                }
+                getExportName();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+    }
+    private void getExportName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                ArrayList<String> exportName = new ArrayList<>();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    for(BisWinsStaff item : bisWinsStaff.dataSource){
+                        if(!exportName.contains(item.getPersExpertName())){
+                            exportName.add(item.getPersExpertName());
+                        }
+                    }
+                }
+                String name = exportName.toString();
+                name = name.replace("[","");
+                name = name.replace("]","");
+                bisWinsGroupAll.setSpecExportName(name);
+                refreshUI();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+
+    }
     private void refreshUI(){
         tv_batch.setText(bisWinsGroupAll.getWinsArrayCode());
-        tv_time.setText(bisWinsProgAll.getStartTime() +"--"+bisWinsProgAll.getEndTime());
-        tv_projType.setText(winsProjType.get(bisWinsProgAll.getWinsProjType()));
-        tv_special.setText(bisWinsGroup.getSpeStafName());
-        tv_assistant.setText("");
-        tv_winsType.setText(winsTypeMap.get(bisWinsProgAll.getWinsType()));
+        tv_time.setText(bisWinsProgAll.dataSource.get(0).getStartTime() +"--"+bisWinsProgAll.dataSource.get(0).getEndTime());
+        tv_projType.setText("");
+        tv_special.setText(bisWinsGroupAll.getSpecStaffName());
+        tv_assistant.setText(bisWinsGroupAll.getSpecStaffAssiName());
+        tv_winsType.setText(bisWinsGroupAll.getSpecExportName());
 
     }
     @Override
@@ -170,7 +217,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     }
     private void go2ProblemsActivity(){
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bisWinsGroup",bisWinsGroup);
+        bundle.putSerializable("bisWinsGroup",bisWinsGroupAll);
         intentActivity(InspectionDetailActivity.this,InspectionProblemsAcitvity.class,false,bundle);
 
     }

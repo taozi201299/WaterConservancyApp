@@ -20,6 +20,35 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
     String winsPlanCode;  // 稽查计划编码
     String winsArrayCode;  // 稽查批次编号
 
+    String specStaffName;
+
+    public String getSpecStaffName() {
+        return specStaffName == null ? "" : specStaffName;
+    }
+
+    public void setSpecStaffName(String specStaffName) {
+        this.specStaffName = specStaffName;
+    }
+
+    public String getSpecStaffAssiName() {
+        return specStaffAssiName == null ? "" : specStaffAssiName;
+    }
+
+    public void setSpecStaffAssiName(String specStaffAssiName) {
+        this.specStaffAssiName = specStaffAssiName;
+    }
+
+    public String getSpecExportName() {
+        return specExportName == null ? "" : specExportName;
+    }
+
+    public void setSpecExportName(String specExportName) {
+        this.specExportName = specExportName;
+    }
+
+    String specStaffAssiName;
+    String specExportName;
+
     public String getGuid() {
         return guid == null ? "" : guid;
     }

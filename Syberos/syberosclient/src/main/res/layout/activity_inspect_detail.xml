@@ -100,14 +100,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/padding_10"
-                            android:text="稽察项目类型"
+                            android:text="项目所属单位"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp"/>
 
@@ -135,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/padding_10"
-                            android:text="稽察类型"
+                            android:text="稽察专家"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp" />
 
@@ -246,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/padding_10"
                             android:layout_centerVertical="true"
-                            android:text="问题数量"
+                            android:text="稽查问题汇总"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp"/>
 
@@ -259,6 +260,7 @@
                             android:textColor="@color/title_0"
                             android:textSize="@dimen/_16sp"
                             android:layout_toLeftOf="@+id/iv_right"
+                            android:visibility="gone"
                             android:text= "10" />
                         <ImageView
                             android:id="@+id/iv_right"

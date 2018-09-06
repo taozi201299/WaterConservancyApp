@@ -10,85 +10,115 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 
 public class ObjWinsPlan extends HttpBaseResponse<ObjWinsPlan>{
-    String ORGGUID;  // orgGuid
-    String FEEDSTAT; // feedStat
-    String DOWNSTAT;  // downStat
-    String STAT;;  // stat
-    String OWPGUID; // owpGuid
-    String WINSARRAYNUM;
-    String COLLTIME;
-    String ROWNO;
-    String WINSPLANNAME;
 
-    public String getORGGUID() {
-        return ORGGUID == null ? "" : ORGGUID;
+
+    private String adminWiunName;
+    private String bwpGuid;
+    private String winsPlanName;
+    private int winsArrayCode;
+    private int rowno;
+    private String projName;
+    private int bwpWinsGroupNum;
+    private String owpGuid;
+    private int winsArrayNum;
+    private String feedStat;
+    private String downStat;
+    private int stat;
+
+
+    public String getAdminWiunName() {
+        return adminWiunName == null ? "" : adminWiunName;
     }
 
-    public void setORGGUID(String ORGGUID) {
-        this.ORGGUID = ORGGUID;
+    public void setAdminWiunName(String adminWiunName) {
+        this.adminWiunName = adminWiunName;
     }
 
-    public String getFEEDSTAT() {
-        return FEEDSTAT == null ? "" : FEEDSTAT;
+    public String getBwpGuid() {
+        return bwpGuid == null ? "" : bwpGuid;
     }
 
-    public void setFEEDSTAT(String FEEDSTAT) {
-        this.FEEDSTAT = FEEDSTAT;
+    public void setBwpGuid(String bwpGuid) {
+        this.bwpGuid = bwpGuid;
     }
 
-    public String getDOWNSTAT() {
-        return DOWNSTAT == null ? "" : DOWNSTAT;
+    public String getWinsPlanName() {
+        return winsPlanName == null ? "" : winsPlanName;
     }
 
-    public void setDOWNSTAT(String DOWNSTAT) {
-        this.DOWNSTAT = DOWNSTAT;
+    public void setWinsPlanName(String winsPlanName) {
+        this.winsPlanName = winsPlanName;
     }
 
-    public String getSTAT() {
-        return STAT == null ? "" : STAT;
+    public int getWinsArrayCode() {
+        return winsArrayCode;
     }
 
-    public void setSTAT(String STAT) {
-        this.STAT = STAT;
+    public void setWinsArrayCode(int winsArrayCode) {
+        this.winsArrayCode = winsArrayCode;
     }
 
-    public String getOWPGUID() {
-        return OWPGUID == null ? "" : OWPGUID;
+    public int getRowno() {
+        return rowno;
     }
 
-    public void setOWPGUID(String OWPGUID) {
-        this.OWPGUID = OWPGUID;
+    public void setRowno(int rowno) {
+        this.rowno = rowno;
     }
 
-    public String getWINSARRAYNUM() {
-        return WINSARRAYNUM == null ? "" : WINSARRAYNUM;
+    public String getProjName() {
+        return projName == null ? "" : projName;
     }
 
-    public void setWINSARRAYNUM(String WINSARRAYNUM) {
-        this.WINSARRAYNUM = WINSARRAYNUM;
+    public void setProjName(String projName) {
+        this.projName = projName;
     }
 
-    public String getCOLLTIME() {
-        return COLLTIME == null ? "" : COLLTIME;
+    public int getBwpWinsGroupNum() {
+        return bwpWinsGroupNum;
     }
 
-    public void setCOLLTIME(String COLLTIME) {
-        this.COLLTIME = COLLTIME;
+    public void setBwpWinsGroupNum(int bwpWinsGroupNum) {
+        this.bwpWinsGroupNum = bwpWinsGroupNum;
     }
 
-    public String getROWNO() {
-        return ROWNO == null ? "" : ROWNO;
+    public String getOwpGuid() {
+        return owpGuid == null ? "" : owpGuid;
     }
 
-    public void setROWNO(String ROWNO) {
-        this.ROWNO = ROWNO;
+    public void setOwpGuid(String owpGuid) {
+        this.owpGuid = owpGuid;
     }
 
-    public String getWINSPLANNAME() {
-        return WINSPLANNAME == null ? "" : WINSPLANNAME;
+    public int getWinsArrayNum() {
+        return winsArrayNum;
     }
 
-    public void setWINSPLANNAME(String WINSPLANNAME) {
-        this.WINSPLANNAME = WINSPLANNAME;
+    public void setWinsArrayNum(int winsArrayNum) {
+        this.winsArrayNum = winsArrayNum;
+    }
+
+    public String getFeedStat() {
+        return feedStat == null ? "" : feedStat;
+    }
+
+    public void setFeedStat(String feedStat) {
+        this.feedStat = feedStat;
+    }
+
+    public String getDownStat() {
+        return downStat == null ? "" : downStat;
+    }
+
+    public void setDownStat(String downStat) {
+        this.downStat = downStat;
+    }
+
+    public int getStat() {
+        return stat;
+    }
+
+    public void setStat(int stat) {
+        this.stat = stat;
     }
 }

@@ -59,6 +59,8 @@ public class OnSiteInspectListActivity extends BaseActivity
      * 稽查组对象
      */
     private BisWinsGroupAll bisWinsGroupAll = null;
+    private BisWinsGroupAll bisWinsGroupAll1 = null;
+    ArrayList<BisWinsGroupAll>datas = new ArrayList<>();
 
 
     @Override
@@ -73,8 +75,9 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     @Override
     public void initData() {
+        datas.clear();
         showDataLoadingDialog();
-        getBisWinsGroup();
+        getBisWinsGroupBySepStafGuid();
     }
 
     @Override
@@ -97,11 +100,11 @@ public class OnSiteInspectListActivity extends BaseActivity
         intentActivity(OnSiteInspectListActivity.this,
                 InspectionDetailActivity.class, false, bundle);
     }
-    private void getBisWinsGroup(){
+    private void getBisWinsGroupBySepStafGuid(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String>params = new HashMap<>();
-      //  params.put("speStafGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-      //  params.put("speStafAssiGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("speStafGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("speStafGuid","fbeaf0e2014d43b180246d3419584acd");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -110,11 +113,40 @@ public class OnSiteInspectListActivity extends BaseActivity
                 bisWinsGroupAll = gson.fromJson(result, BisWinsGroupAll.class);
                 if(bisWinsGroupAll == null || bisWinsGroupAll.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                }else if(bisWinsGroupAll.dataSource.size() == 0){
-                    ToastUtils.show("未获取到稽查组信息");
+                    return;
                 }else {
-                    refreshUI();
+                    datas.addAll(bisWinsGroupAll.dataSource);
+                    getBisWinsGroupBySepStafAssiGuid();
                 }
+            }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+    private void getBisWinsGroupBySepStafAssiGuid(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("speStafAssiGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("speStafAssiGuid","fbeaf0e2014d43b180246d3419584acd");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                bisWinsGroupAll1 = gson.fromJson(result, BisWinsGroupAll.class);
+                if(bisWinsGroupAll1 == null || bisWinsGroupAll1.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }
+                datas.addAll(bisWinsGroupAll1.dataSource);
+                if(datas.size() == 0){
+                    ToastUtils.show("未获取到稽查任务");
+                }
+                refreshUI();
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
@@ -126,7 +158,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     }
 
     private void refreshUI(){
-        listAdapter.setData(bisWinsGroupAll.dataSource);
+        listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
     private class ListAdapter extends CommonAdapter<BisWinsGroupAll> {

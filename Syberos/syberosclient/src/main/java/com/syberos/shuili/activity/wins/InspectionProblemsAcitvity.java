@@ -15,10 +15,9 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProb;
-import com.syberos.shuili.entity.wins.BisWinsProj;
 import com.syberos.shuili.entity.wins.BisWinsProjAll;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -43,7 +42,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     @BindView(R.id.recyclerView_inspection_prob)
     RecyclerView recyclerView_inspection_prob;
     private BisWinsProjAll bisWinsProjAll = null;
-    private BisWinsGroup bisWinsGroup = null;
+    private BisWinsGroupAll bisWinsGroupAll = null;
     private BisWinsProb bisWinsProb = null;
     HashMap<String,ArrayList<BisWinsProb>>mapValues = new HashMap<>();
     HashMap<String,String>mapProjValues = new HashMap<>();
@@ -76,8 +75,8 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         groups.clear();
         showDataLoadingDialog();
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
-        if(bisWinsGroup == null){
+        bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroup");
+        if(bisWinsGroupAll == null){
             ToastUtils.show("参数错误");
             activityFinish();
         }
@@ -103,7 +102,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     private void getInspectionProject(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+        params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -134,7 +133,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     private void getWinsProblems(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prob/bisWinsProbs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("winsGroupGuid",bisWinsGroup.getBwgGuid());
+        params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -162,14 +161,15 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     private void processResult(){
         for(BisWinsProjAll bisWinsProjAll: bisWinsProjAll.dataSource ){
             mapValues.put(bisWinsProjAll.getProjGuid(),new ArrayList<BisWinsProb>());
-            mapProjValues.put(bisWinsProjAll.getProjGuid(),bisWinsProjAll.getProjName());
+            mapProjValues.put(bisWinsProjAll.getProjGuid(),bisWinsProjAll.getProjName() +"("+ bisWinsProjAll.getAdminWiunName() +")");
         }
         for(BisWinsProb bisWinsProb : bisWinsProb.dataSource){
             ArrayList list = mapValues.get(bisWinsProb.getWinsProjGuid());
-            if(list == null)continue;
+            if(list == null )continue;
             list.add(bisWinsProb);
         }
         for(String key:mapValues.keySet()){
+            if(mapValues.get(key).size() == 0)continue;
             InspectionProblemGroup inspectionProblemGroup = new InspectionProblemGroup(mapProjValues.get(key),mapValues.get(key));
             groups.add(inspectionProblemGroup);
         }

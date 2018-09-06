@@ -10,7 +10,16 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 public class BisWinsGroup extends HttpBaseResponse<BisWinsGroup> {
     String winsPost;
     String speStafName; //特派员姓名
-    String winsGroupNum; // 2)	组编号
+
+    public String getBwgWinsGroupNum() {
+        return bwgWinsGroupNum == null ? "" : bwgWinsGroupNum;
+    }
+
+    public void setBwgWinsGroupNum(String bwgWinsGroupNum) {
+        this.bwgWinsGroupNum = bwgWinsGroupNum;
+    }
+
+    String bwgWinsGroupNum; // 2)	组编号
     String bwgGuid;
 
 
@@ -31,13 +40,6 @@ public class BisWinsGroup extends HttpBaseResponse<BisWinsGroup> {
         this.speStafName = speStafName;
     }
 
-    public String getWinsGroupNum() {
-        return winsGroupNum == null ? "" : winsGroupNum;
-    }
-
-    public void setWinsGroupNum(String winsGroupNum) {
-        this.winsGroupNum = winsGroupNum;
-    }
 
     public String getBwgGuid() {
         return bwgGuid == null ? "" : bwgGuid;

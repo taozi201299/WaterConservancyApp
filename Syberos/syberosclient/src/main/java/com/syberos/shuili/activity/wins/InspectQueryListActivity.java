@@ -104,7 +104,7 @@ public class InspectQueryListActivity extends BaseActivity {
     }
 
     private void getObjWinsPlan(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInformation/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInfo/";
         HashMap<String,String>params = new HashMap<>();
         params.put("planOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("planOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
@@ -136,7 +136,7 @@ public class InspectQueryListActivity extends BaseActivity {
             item = objWinsPlan.dataSource.get(i);
             String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectCheckProgramDetailsByAuditPlan/";
             HashMap<String,String> params = new HashMap<>();
-            params.put("owpGuid",item.getOWPGUID());
+            params.put("owpGuid",item.getOwpGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
@@ -145,7 +145,7 @@ public class InspectQueryListActivity extends BaseActivity {
                     bisWinsProg = gson.fromJson(result,BisWinsProg.class);
                     if(bisWinsProg == null || bisWinsProg.dataSource == null || bisWinsProg.dataSource.size() == 0){
                     }else {
-                        inspectPlanGroups.add(new InspectPlanGroup(item.getWINSPLANNAME(),bisWinsProg.dataSource));
+                        inspectPlanGroups.add(new InspectPlanGroup(item.getWinsPlanName(),bisWinsProg.dataSource));
                     }
                     if(iSucessCount + iFailedCount == size){
                         refreshUI();

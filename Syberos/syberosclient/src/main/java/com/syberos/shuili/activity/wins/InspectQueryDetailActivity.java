@@ -14,6 +14,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProg;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
@@ -29,13 +30,17 @@ import butterknife.BindView;
 public class InspectQueryDetailActivity extends TranslucentActivity {
 
     private BisWinsProg bisWinsProg;
-    private BisWinsGroup bisWinsGroup ;
+    private BisWinsGroupAll bisWinsGroup ;
 
     @BindView(R.id.ll_groups)
     LinearLayout ll_groups;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
+    @BindView(R.id.tv_batch)
+    TextView tv_batch;
 
 
     @Override
@@ -51,6 +56,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
     @Override
     public void initData() {
         showDataLoadingDialog();
+
         getWinsGroupByWinsProgGuid();
 
     }
@@ -63,7 +69,9 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
                 InspectQueryListActivity.SEND_BUNDLE_KEY);
 
         if (null != bisWinsProg) {
-            tv_action_bar_title.setText(bisWinsProg.getWinsProjType());
+            tv_action_bar_title.setText(bisWinsProg.getWinsArrayCode());
+            tv_batch.setText(bisWinsProg.getWinsArrayCode());
+            tv_time.setText(bisWinsProg.getStartTime()+"-"+bisWinsProg.getEndTime());
         }
     }
 
@@ -71,7 +79,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
      * 根据稽查方案GUID 获取稽查组信息
      */
     private void  getWinsGroupByWinsProgGuid(){
-        String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectWinsGroupInfoByWinsProgGuid/";
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String> params = new HashMap<>();
         params.put("winsProgGuid",bisWinsProg.getBwpGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -79,7 +87,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                bisWinsGroup = gson.fromJson(result,BisWinsGroup.class);
+                bisWinsGroup = gson.fromJson(result,BisWinsGroupAll.class);
                 if(bisWinsGroup == null || bisWinsGroup.dataSource == null){
                     ToastUtils.show("获取稽查组信息错误");
                 }else {
@@ -95,7 +103,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
             }
         });
     }
-    private void addGroupItems(final List<BisWinsGroup> groups) {
+    private void addGroupItems(final List<BisWinsGroupAll> groups) {
         ll_groups.removeAllViews();
         int size = groups.size();
         for(int i = 0; i< size; i++) {

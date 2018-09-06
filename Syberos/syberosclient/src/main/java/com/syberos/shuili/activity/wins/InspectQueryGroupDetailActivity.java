@@ -5,12 +5,22 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProg;
+import com.syberos.shuili.entity.wins.BisWinsStaff;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -27,7 +37,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     /**
      * 稽查组
      */
-    private BisWinsGroup bisWinsGroup = null;
+    private BisWinsGroupAll bisWinsGroupAll = null;
 
     /**
      * 稽查方案
@@ -62,6 +72,8 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     RelativeLayout rl_prob_count;
 
 
+    private BisWinsStaff bisWinsStaff = null;
+
 
     @Override
     public int getLayoutId() {
@@ -84,22 +96,98 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        bisWinsGroup = (BisWinsGroup) bundle.getSerializable("bisWinsGroup");
+        bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroup");
         bisWinsProg = (BisWinsProg)bundle.getSerializable("bisWinsProg");
-        if(bisWinsGroup == null || bisWinsProg == null){
+        if(bisWinsGroupAll == null || bisWinsProg == null){
             ToastUtils.show("参数错误");
             activityFinish();
         }
-        refreshUI();
+        getSpecStaffName();
     }
+    private void  getSpecStaffName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("guid",bisWinsGroupAll.getSpeStafGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    bisWinsGroupAll.setSpecStaffName(bisWinsStaff.dataSource.get(0).getPersExpertName());
+                }
 
+                getSpecStafAssiName();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+
+
+    }
+    private void getSpecStafAssiName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisWinsGroupAll.getSpeStafAssiGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    bisWinsGroupAll.setSpecStaffAssiName(bisWinsStaff.dataSource.get(0).getPersExpertName());
+                }
+                getExportName();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+    }
+    private void getExportName(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                ArrayList<String> exportName = new ArrayList<>();
+                bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff!= null && bisWinsStaff.dataSource!= null && bisWinsStaff.dataSource.size() > 0){
+                    for(BisWinsStaff item : bisWinsStaff.dataSource){
+                        if(!exportName.contains(item.getPersExpertName())){
+                            exportName.add(item.getPersExpertName());
+                        }
+                    }
+                }
+                String name = exportName.toString();
+                name = name.replace("[","");
+                name = name.replace("]","");
+                bisWinsGroupAll.setSpecExportName(name);
+                refreshUI();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+
+    }
     private void refreshUI(){
         tv_batch.setText(bisWinsProg.getWinsArrayCode());
         tv_time.setText(bisWinsProg.getStartTime() +"--"+bisWinsProg.getEndTime());
         tv_projType.setText(winsProjType.get(bisWinsProg.getWinsProjType()));
-        tv_special.setText(bisWinsGroup.getSpeStafName());
-        tv_assistant.setText("");
-        tv_winsType.setText(winsTypeMap.get(bisWinsProg.getWinsType()));
+        tv_special.setText(bisWinsGroupAll.getSpecStaffName());
+        tv_assistant.setText(bisWinsGroupAll.getSpecStaffAssiName());
+        tv_winsType.setText(bisWinsGroupAll.getSpecExportName());
 
     }
     @Override
@@ -113,7 +201,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     }
     private void go2ProblemsActivity(){
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bisWinsGroup",bisWinsGroup);
+        bundle.putSerializable("bisWinsGroup",bisWinsGroupAll);
         intentActivity(InspectQueryGroupDetailActivity.this,InspectionProblemsAcitvity.class,false,bundle);
 
     }
