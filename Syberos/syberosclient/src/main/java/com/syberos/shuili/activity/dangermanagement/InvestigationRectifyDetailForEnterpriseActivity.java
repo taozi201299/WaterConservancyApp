@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
-import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
@@ -39,7 +38,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivity implements View.OnClickListener {
 
-    private final String TAG = InvestigationAcceptFormActivity.class.getSimpleName();
+    private final String TAG = InvestigationRectifyDetailForEnterpriseActivity.class.getSimpleName();
     @BindView(R.id.rl_accept_detail)
     RelativeLayout rl_accept_detail;
     @BindView(R.id.ll_commit)
@@ -203,7 +202,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_commit:
-                intentActivity(this,InvestigationAcceptFormActivity.class,false,true);
+                intentActivity(this,InvestigationAcceptFormForEntActivity.class,false,true);
                 break;
         }
     }

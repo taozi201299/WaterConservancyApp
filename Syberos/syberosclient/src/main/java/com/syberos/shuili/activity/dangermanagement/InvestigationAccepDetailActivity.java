@@ -8,11 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
-import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
@@ -41,7 +39,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 public class InvestigationAccepDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private final String TAG = InvestigationAcceptFormActivity.class.getSimpleName();
+    private final String TAG = InvestigationAcceptFormForEntActivity.class.getSimpleName();
     @BindView(R.id.rl_accept_detail)
     RelativeLayout rl_accept_detail;
     @BindView(R.id.ll_commit)
@@ -173,19 +171,18 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
 
     @Override
     public void initView() {
-        showTitle("隐患详情");
-
+        setActionBarTitle("隐患详情");
         scrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);
         setActionBarRightVisible(View.INVISIBLE);
-        ((ImageView)findViewById(R.id.iv_action_bar2_right)).setVisibility(View.INVISIBLE);
-        ll_check_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_check_info);
-        ll_supervise_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_supervice_info);
+        (findViewById(R.id.iv_action_bar2_right)).setVisibility(View.INVISIBLE);
+        ll_check_info = rl_accept_detail.findViewById(R.id.layout_check_info);
+        ll_supervise_info = rl_accept_detail.findViewById(R.id.layout_supervice_info);
         ll_supervise_info.setVisibility(View.GONE);
-        ll_rectify_container = (LinearLayout)rl_accept_detail.findViewById(R.id.ll_rectify_container);
-        iv_location = (ImageView)ll_check_info.findViewById(R.id.iv_location);
-        ev_des_audio = (AudioEditView)ll_check_info.findViewById(R.id.ev_des_audio);
-        ll_multimedia = (MultimediaView)ll_check_info.findViewById(R.id.ll_multimedia);
+        ll_rectify_container = rl_accept_detail.findViewById(R.id.ll_rectify_container);
+        iv_location = ll_check_info.findViewById(R.id.iv_location);
+        ev_des_audio = ll_check_info.findViewById(R.id.ev_des_audio);
+        ll_multimedia = ll_check_info.findViewById(R.id.ll_multimedia);
         iv_location.setVisibility(View.GONE);
         ev_des_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
@@ -198,7 +195,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_commit:
-                intentActivity(this,InvestigationAcceptFormActivity.class,false,true);
+                intentActivity(this,InvestigationAcceptFormForEntActivity.class,false,true);
                 break;
         }
     }

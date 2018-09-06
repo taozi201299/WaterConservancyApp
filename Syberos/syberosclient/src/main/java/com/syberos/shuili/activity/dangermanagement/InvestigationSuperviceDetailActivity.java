@@ -15,7 +15,6 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
-import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
 import com.syberos.shuili.entity.hidden.HiddenRectifyPlanInfo;
 import com.syberos.shuili.entity.hidden.HiddenRectifyProgerssInfo;
@@ -38,7 +37,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
  */
 
 public class InvestigationSuperviceDetailActivity extends TranslucentActivity implements View.OnClickListener {
-    private final String TAG = InvestigationAcceptFormActivity.class.getSimpleName();
+    private final String TAG = InvestigationSuperviceDetailActivity.class.getSimpleName();
     @BindView(R.id.rl_accept_detail)
     RelativeLayout rl_accept_detail;
     @BindView(R.id.ll_commit)

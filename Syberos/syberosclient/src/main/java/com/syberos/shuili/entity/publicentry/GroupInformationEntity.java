@@ -1,5 +1,7 @@
 package com.syberos.shuili.entity.publicentry;
 
+import com.syberos.shuili.entity.hidden.HiddenSupervice;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

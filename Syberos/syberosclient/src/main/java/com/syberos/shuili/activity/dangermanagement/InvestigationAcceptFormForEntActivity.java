@@ -13,15 +13,14 @@ import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.TodoWorkInfo;
-import com.syberos.shuili.entity.hidden.HiddenSupervice;
-import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
+import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
@@ -41,10 +40,10 @@ import butterknife.BindView;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
- * Created by Administrator on 2018/9/6.
+ * Created by jidan on 18-3-23.
  */
 
-public class InvestigationAcceptFormActivity extends BaseActivity implements View.OnClickListener {
+public class InvestigationAcceptFormForEntActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.ll_multimedia)
     MultimediaView ll_multimedia;
     @BindView(R.id.tv_accept_person)
@@ -59,7 +58,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
     RelativeLayout rl_time;
     @BindView(R.id.et_accept_desc)
     AudioEditView et_accept_desc;
-    HiddenSupervice investigationInfo;
+    ObjHidden investigationInfo;
     TodoWorkInfo todoWorkInfo;
     String type ;  // 0 生成代办 1 修改代办
     @Override
@@ -79,7 +78,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
     @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        investigationInfo = (HiddenSupervice) bundle.getSerializable("data");
+        investigationInfo = (ObjHidden) bundle.getSerializable("data");
         type = bundle.getString("type");
         if("1".equalsIgnoreCase(type)){
             todoWorkInfo = (TodoWorkInfo) bundle.getSerializable("TodoWorkInfo");
@@ -147,9 +146,9 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      * @param type
      */
     private void submit(int type){
-        // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
+      // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
-        HashMap<String,String> params = new HashMap<>();
+        HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
         params.put("accepDate",tv_time.getText().toString()); // 验收时间
@@ -201,7 +200,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
     private void updateTodoTask(){
         String url = GlobleConstants.strIP + "/pprty/WSRest/service/backlog";
         HashMap<String,String>params = new HashMap<>();
-        params.put("appCode", App.sCode);
+        params.put("appCode",App.sCode);
         params.put("busiCode",investigationInfo.getGuid());
         params.put("busiName",todoWorkInfo.getBusiName());
         params.put("busiUrl",todoWorkInfo.getBusiUrl());
@@ -261,7 +260,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 Gson gson = new Gson();
                 todoWorkInfo = gson.fromJson(result,TodoWorkInfo.class);
                 if(todoWorkInfo == null || todoWorkInfo.dataSource == null || todoWorkInfo.dataSource.list.size() == 0){
-                    createTodoTask();
+                  createTodoTask();
                 }else {
                     todoWorkInfo = todoWorkInfo.dataSource.list.get(0);
                     updateTodoTask();

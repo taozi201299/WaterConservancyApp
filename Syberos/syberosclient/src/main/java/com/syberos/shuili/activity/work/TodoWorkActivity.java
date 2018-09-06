@@ -12,7 +12,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.dangermanagement.InvestigationAcceptFormActivity;
+import com.syberos.shuili.activity.dangermanagement.InvestigationAcceptFormForEntActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
@@ -28,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.syberos.shuili.config.GlobleConstants.strCJIP;
 import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 
 /**
@@ -125,7 +124,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
             bundle.putSerializable("data",objHidden);
             bundle.putSerializable("todoWork",todoWorkInfo);
             bundle.putString("type","0");
-            intentActivity(TodoWorkActivity.this,InvestigationAcceptFormActivity.class,false,bundle);
+            intentActivity(TodoWorkActivity.this,InvestigationAcceptFormForEntActivity.class,false,bundle);
         }
         // 事故
         else if ( GlobleConstants.Module_Name_Acci.equalsIgnoreCase(moduleName)){

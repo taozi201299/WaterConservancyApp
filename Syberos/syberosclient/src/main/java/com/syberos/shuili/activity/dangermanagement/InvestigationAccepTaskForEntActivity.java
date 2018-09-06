@@ -40,7 +40,7 @@ import butterknife.BindView;
  */
 
 public class InvestigationAccepTaskForEntActivity extends BaseActivity implements CommonAdapter.OnItemClickListener,PullRecyclerView.OnPullRefreshListener {
-    private final String TAG = InvestigationAccepTaskActivity.class.getSimpleName();
+    private final String TAG = InvestigationAccepTaskForEntActivity.class.getSimpleName();
     public static final String Title = "隐患销号";
     private final String btnText = "销号";
     /**
@@ -396,7 +396,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data",investigationInfo);
                     bundle.putString("type","0");
-                    intentActivity(InvestigationAccepTaskForEntActivity.this,InvestigationAcceptFormActivity.class,false,bundle);
+                    intentActivity(InvestigationAccepTaskForEntActivity.this,InvestigationAcceptFormForEntActivity.class,false,bundle);
                 }
             });
             ShapeDrawable bgShape = null;

@@ -16,16 +16,12 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.accident.AccidentInformationGroup;
 import com.syberos.shuili.entity.hidden.HiddenSupervice;
 import com.syberos.shuili.entity.publicentry.GroupInformationEntity;
-import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.PullRecyclerView;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
@@ -46,8 +42,6 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
     private final String Title = "隐患督办";
     @BindView(R.id.recyclerView_investigation)
     RecyclerView recyclerView;
-    HiddenInvestigationTaskInfo hiddenInvestigationTaskInfo;
-
     GroupedEnterprisesExpressAccidentListAdapter groupedEnterprisesExpressAccidentListAdapter = null;
     HiddenSupervice hiddenSupervice = null;
     HiddenSupervice hiddenSupervice1 = null ; // 下级水行政
@@ -109,8 +103,19 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
+                ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice.dataSource.size() > 0) {
-                    accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("直属单位", (ArrayList<HiddenSupervice>) hiddenSupervice.dataSource));
+                    if(hiddenSupervice.dataSource.size() > 0) {
+                        for(HiddenSupervice item: hiddenSupervice.dataSource){
+                            if(item.getBisMajHiddSupID() == null || item.getBisMajHiddSupID().isEmpty()){
+                                if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
+                                    datas.add(item);
+                                }
+
+                            }
+                        }
+                        accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("直属单位", datas));
+                    }
                 }
                 getLowerWaterList();
             }
@@ -136,8 +141,16 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                if(hiddenSupervice.dataSource.size() > 0) {
-                    accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("下级水行政", (ArrayList<HiddenSupervice>) hiddenSupervice.dataSource));
+                ArrayList<HiddenSupervice>datas = new ArrayList<>();
+                if(hiddenSupervice1.dataSource.size() > 0) {
+                    for(HiddenSupervice item: hiddenSupervice1.dataSource){
+                        if(item.getBisMajHiddSupID() == null || item.getBisMajHiddSupID().isEmpty()){
+                            if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
+                                datas.add(item);
+                            }
+                        }
+                    }
+                    accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("下级水行政", datas));
                 }
                 refreshUI();
 
