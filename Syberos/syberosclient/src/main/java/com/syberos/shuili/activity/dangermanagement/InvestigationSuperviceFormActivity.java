@@ -16,7 +16,9 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
+import com.syberos.shuili.entity.hidden.HiddenSupervice;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
@@ -55,8 +57,10 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
     AudioEditView et_supervise_desc;
     @BindView(R.id.ll_commit)
     LinearLayout ll_commit;
+    @BindView(R.id.tv_time_label)
+    TextView tv_time_label;
 
-    HiddenInvestigationTaskInfo hiddenInvestigationTaskInfo;
+    HiddenSupervice hiddenInvestigationTaskInfo;
 
 
     @Override
@@ -66,13 +70,15 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
 
     @Override
     public void initListener() {
+        rl_time.setOnClickListener(this);
+        ll_commit.setOnClickListener(this);
 
     }
 
     @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        hiddenInvestigationTaskInfo = (HiddenInvestigationTaskInfo) bundle.getSerializable("data");
+        hiddenInvestigationTaskInfo = (HiddenSupervice) bundle.getSerializable("data");
         tv_time.setText(CommonUtils.getCurrentDate());
     }
 
@@ -87,7 +93,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_commit:
-             //   submit();
+                submit();
                 break;
             case R.id.rl_time:
                 setTime();
@@ -116,40 +122,42 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         pvTime.show();
     }
     private void submit(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/maj/bisMajHiddSups/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSup/";
         HashMap<String,String>params = new HashMap<>();
         // 隐患GUID
-        params.put("hiddGuid",hiddenInvestigationTaskInfo.getHiddGuid());
+        params.put("hiddGuid",hiddenInvestigationTaskInfo.getGuid());
         //是否挂牌督办
         if(rg_supervice_listing.getCheckedRadioButtonId() == R.id.rb_accident_liability_yes) {
-            params.put("isList", "0");
+            params.put("isList", "1");
         }else{
-            params.put("isList","1");
+            params.put("isList","2");
         }
         //整改期限
-        params.put("rectPeri","");
+        params.put("rectPeri",tv_time.getText().toString());
         // 督办文号
         params.put("supLareId",tv_supervise_code.getText().toString());
         //督办日期
-        params.put("supDate",tv_time.getText().toString());
+        params.put("supDate",CommonUtils.getCurrentDate());
         //督办单位
         params.put("supWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         //督办负责人
-        params.put("supLegPers","");
+        params.put("supLegPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
         //督办意见
         params.put("supOpin",et_supervise_desc.getEditText());
         //备注
         params.put("note","");
         //采集时间
-        params.put("collTime","");
+        params.put("collTime",CommonUtils.getCurrentDate());
         //更新时间
         params.put("updTime","");
         //记录人员
-        params.put("recPers","");
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
+
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.type = 1;
         localCacheEntity.params = params;
+        localCacheEntity.commitType = 0;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {

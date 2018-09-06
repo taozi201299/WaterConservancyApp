@@ -149,12 +149,10 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         params.put("regOrgGuid",bisHazRegDetail.dataSource.get(0).orgGuid); // 报备单位GUID
         if(titleType == 0) {
             params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
-            params.put("regCode", ce_code.getText().toString()); // 备案编号
             params.put("hazStat", "2");
         }
         if(titleType == 1) {
         params.put("writeOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId()); // 核销单位GUID
-        params.put("writeCode",ce_code.getText().toString()); //核销号
         params.put("writeOffTime",CommonUtils.getCurrentDate()); // 核销时间
             params.put("hazStat","4");
         }

@@ -64,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
+                    android:visibility="gone"
                     android:background="@color/gray_bb" />
 
                 <RelativeLayout
@@ -71,7 +72,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
                     android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:paddingStart="@dimen/_5dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_code_label"
@@ -96,13 +98,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
+                    android:background="@color/gray_bb"
+                    android:visibility="gone"/>
                 <RelativeLayout
                     android:id="@+id/rl_accident_liability"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
                     android:paddingEnd="@dimen/_5dp"
-                    android:paddingStart="@dimen/_5dp">
+                    android:paddingStart="@dimen/_5dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_accident_liability_label"

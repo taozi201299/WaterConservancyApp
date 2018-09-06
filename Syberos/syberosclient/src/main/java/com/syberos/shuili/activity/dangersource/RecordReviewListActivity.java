@@ -36,7 +36,7 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
  * 行政版危险源备案审核 重大危险源备案核销表
- * 需要修改
+ * 需要修改  直管单位列表
  */
 public class RecordReviewListActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {

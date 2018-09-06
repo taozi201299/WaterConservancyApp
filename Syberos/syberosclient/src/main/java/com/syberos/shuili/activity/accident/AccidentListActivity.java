@@ -268,7 +268,7 @@ public class AccidentListActivity extends BaseActivity {
     @Override
     public void initView() {
         setInitActionBar(true);
-        setActionBarTitle(Title);
+        showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局

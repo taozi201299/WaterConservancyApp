@@ -19,6 +19,7 @@ import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
 import com.syberos.shuili.entity.hidden.HiddenRectifyPlanInfo;
 import com.syberos.shuili.entity.hidden.HiddenRectifyProgerssInfo;
+import com.syberos.shuili.entity.hidden.HiddenSupervice;
 import com.syberos.shuili.entity.hidden.HiddenSupserviceInfo;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
@@ -110,7 +111,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     /**
      * 接受传递过来的参数
      */
-    private HiddenInvestigationTaskInfo investigationInfo;
+    private HiddenSupervice investigationInfo;
     /**
      * 核实信息
      */
@@ -151,7 +152,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        investigationInfo = (HiddenInvestigationTaskInfo) bundle.getSerializable("data");
+        investigationInfo = (HiddenSupervice) bundle.getSerializable("data");
         if(investigationInfo == null){
             return;
         }
@@ -212,7 +213,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidds/";
         HashMap<String,String> params = new HashMap<>();
-        params.put("guid",investigationInfo.getHiddGuid());
+        params.put("guid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -238,7 +239,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
         String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/bisHiddInves/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getHiddGuid());
+        params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -263,7 +264,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getRectifyProgress(){
        String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
        HashMap<String,String>params = new HashMap<>();
-       params.put("hiddGuid",investigationInfo.getHiddGuid());
+       params.put("hiddGuid",investigationInfo.getGuid());
        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
            @Override
            public void onResponse(String result) {
@@ -288,7 +289,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getSupserviceInfo(){
         String url =  "http://192.168.1.8:8080/sjjk/v1/bis/maj/bisMajHiddSups/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getHiddGuid());
+        params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -313,7 +314,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getRectifyInfo(){
         String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectImpls/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getHiddGuid());
+        params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -338,7 +339,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getRectifyAcceptInfo(){
         String url =  "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getHiddGuid());
+        params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -370,7 +371,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             tv_level.setText(hiddenProjectInfo.getHiddGrad());
             tv_type.setText(hiddenProjectInfo.getHiddClas());
             tv_location.setText(hiddenProjectInfo.getProPart());
-            tv_measure_info.setText("不存在该字段");
+            tv_measure_info.setText("");
             ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
         }
         // 隐患排查

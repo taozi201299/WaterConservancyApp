@@ -87,7 +87,7 @@ public class SafetyProductionDetailActivity extends BaseActivity {
         info = (BisWoasGrop) bundle.getSerializable(
                 SafetyProductionListActivity.SEND_BUNDLE_KEY);
         if (null != info) {
-            setActionBarTitle(info.getWoasGropName());
+            showTitle(info.getWoasGropName());
             setActionBarRightVisible(View.INVISIBLE);
         }
         getWoasGroupInfo();
@@ -99,8 +99,7 @@ public class SafetyProductionDetailActivity extends BaseActivity {
     private void getWoasGroupInfo(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/woas/prog/selectSingleAssessmentPlan/";
         HashMap<String,String>params = new HashMap<>();
-        //  params.put("guid",info.getAssePlanGuid());
-        params.put("guid","9C1664EFC34B4EFEAB0CE91F86465284");
+        params.put("guid",info.getAssePlanGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -115,7 +114,7 @@ public class SafetyProductionDetailActivity extends BaseActivity {
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                ToastUtils.show(errorInfo.getMessage());
             }
         });
     }
@@ -132,7 +131,7 @@ public class SafetyProductionDetailActivity extends BaseActivity {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",info.getGuid());
-        params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
+     //   params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
