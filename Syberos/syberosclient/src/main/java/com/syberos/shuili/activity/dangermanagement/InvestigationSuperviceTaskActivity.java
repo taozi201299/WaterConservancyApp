@@ -114,6 +114,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
 
                             }
                         }
+                        if(datas.size() > 0)
                         accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("直属单位", datas));
                     }
                 }
@@ -150,7 +151,9 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                             }
                         }
                     }
-                    accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("下级水行政", datas));
+                    if(datas.size() > 0) {
+                        accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("下级水行政", datas));
+                    }
                 }
                 refreshUI();
 

@@ -103,7 +103,6 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                 }
                 ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice.dataSource.size() > 0) {
-                    if(hiddenSupervice.dataSource.size() > 0) {
                         for(HiddenSupervice item: hiddenSupervice.dataSource){
                             if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
                                 continue;
@@ -111,8 +110,8 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                                 datas.add(item);
                             }
                         }
+                        if(datas.size() > 0)
                         accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("直属单位", datas));
-                    }
                 }
                 getLowerWaterList();
             }
@@ -147,6 +146,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                             datas.add(item);
                         }
                     }
+                    if(datas.size() >0)
                     accidentInformationGroups.add(new GroupInformationEntity<HiddenSupervice>("下级水行政", datas));
                 }
                 refreshUI();
@@ -288,7 +288,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                             InvestigationAcceptFormActivity.class, false, bundle);
                 }
             });
-            btnSupervice.setText("验收");
+            btnSupervice.setText(btnText);
 
         }
     }
