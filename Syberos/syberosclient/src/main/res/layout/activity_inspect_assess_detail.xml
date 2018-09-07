@@ -143,7 +143,8 @@
                     android:layout_width="match_parent"
                     android:layout_height= "wrap_content"
                     android:minHeight="@dimen/_40dp"
-                    android:layout_marginTop="@dimen/_5dp">
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:visibility="gone">
                     <TextView
                         android:id="@+id/tv_group_leader_label"
                         android:layout_width="wrap_content"
@@ -164,7 +165,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:background="@color/gray_bb"
-                    android:layout_marginTop="@dimen/_2dp"/>
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:visibility="gone"/>
                 <RelativeLayout
                     android:id="@+id/rl_group_unit"
                     android:layout_width="match_parent"
@@ -196,7 +198,6 @@
                     android:id="@+id/rl_member_unit"
                     android:layout_width="match_parent"
                     android:layout_height= "wrap_content"
-                    android:visibility="gone"
                     android:minHeight="@dimen/_40dp"
                     android:layout_marginTop="@dimen/_5dp">
                     <TextView
@@ -216,7 +217,6 @@
                         android:text= ""/>
                 </RelativeLayout>
                 <View
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:background="@color/gray_bb"
@@ -226,7 +226,8 @@
                     android:layout_width="match_parent"
                     android:layout_height= "wrap_content"
                     android:minHeight="@dimen/_40dp"
-                    android:layout_marginTop="@dimen/_5dp">
+                    android:layout_marginTop="@dimen/_5dp"
+                    android:visibility="gone">
                     <TextView
                         android:id="@+id/tv_check_person_label"
                         android:layout_width="wrap_content"
@@ -247,7 +248,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:background="@color/gray_bb"
-                    android:layout_marginTop="@dimen/_2dp"/>
+                    android:layout_marginTop="@dimen/_2dp"
+                    android:visibility="gone"/>
                 <RelativeLayout
                     android:id="@+id/rl_prob_count"
                     android:layout_width="match_parent"
@@ -258,10 +260,8 @@
                         android:id="@+id/tv_problem_count_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/padding_10"
                         android:layout_centerVertical="true"
                         android:text="扣分记录"
-                        android:textColor="@color/title_1"
                         android:textSize="@dimen/_14sp"/>
 
                     <TextView
@@ -273,7 +273,7 @@
                         android:textColor="@color/title_0"
                         android:textSize="@dimen/_16sp"
                         android:layout_toLeftOf="@+id/iv_right"
-                        android:text= "10" />
+                        android:text= "" />
                     <ImageView
                         android:id="@+id/iv_right"
                         android:layout_width="wrap_content"
@@ -309,6 +309,7 @@
                         android:id="@+id/ll_check_object_title"
                         android:layout_width="@dimen/_3dp"
                         android:layout_height="@dimen/_15dp"
+                        android:layout_centerVertical="true"
                         android:background="@color/button_login_normal"
                         android:orientation="vertical"/>
                     <TextView

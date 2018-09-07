@@ -62,12 +62,12 @@ public class InspectAssessDetailDeductMarksActivity extends TranslucentActivity 
                 InspectAssessDetailActivity.SEND_BUNDLE_KEY_1);
 
         if (null != info) {
-            tv_unit.setText(info.getUnit());
-            tv_time.setText(info.getTime());
-            tv_score.setText(info.getScore());
+            tv_unit.setText(info.getWoasWiunGuid());
+            tv_time.setText(info.getCollTime());
+            tv_score.setText(String.valueOf(info.getFianDeuc()));
 
             ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-            ae_describe_audio.setEditText(info.getDescription());
+            ae_describe_audio.setEditText(info.getDeucNote());
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
         }

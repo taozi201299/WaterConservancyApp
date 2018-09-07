@@ -9,44 +9,104 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 public class DeductMarksInfo extends HttpBaseResponse<DeductMarksInfo> {
 
-    private String unit;                // 被考核单位
-    private String time;                // 扣分时间
-    private String score;               // 考核扣分
-    private String description;         // 扣分说明
+    private String guid;
+    private String woasWiunGuid;
+    private String woasGuid;
+    private String woasGropGuid;
+    private int fianDeuc;
+    private String deucNote;
+    private String woasType;
+    private String note;
+    private String collTime;
+    private Object updTime;
+    private String recPers;
 
-    // TODO: 18-4-23 现场情况信息
 
-
-    public String getUnit() {
-        return unit;
+    public String getGuid() {
+        return guid == null ? "" : guid;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
-    public String getTime() {
-        return time;
+    public String getWoasWiunGuid() {
+        return woasWiunGuid == null ? "" : woasWiunGuid;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setWoasWiunGuid(String woasWiunGuid) {
+        this.woasWiunGuid = woasWiunGuid;
     }
 
-    public String getScore() {
-        return score;
+    public String getWoasGuid() {
+        return woasGuid == null ? "" : woasGuid;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public void setWoasGuid(String woasGuid) {
+        this.woasGuid = woasGuid;
     }
 
-    public String getDescription() {
-        return description;
+    public String getWoasGropGuid() {
+        return woasGropGuid == null ? "" : woasGropGuid;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setWoasGropGuid(String woasGropGuid) {
+        this.woasGropGuid = woasGropGuid;
     }
 
+    public int getFianDeuc() {
+        return fianDeuc;
+    }
+
+    public void setFianDeuc(int fianDeuc) {
+        this.fianDeuc = fianDeuc;
+    }
+
+    public String getDeucNote() {
+        return deucNote == null ? "" : deucNote;
+    }
+
+    public void setDeucNote(String deucNote) {
+        this.deucNote = deucNote;
+    }
+
+    public String getWoasType() {
+        return woasType == null ? "" : woasType;
+    }
+
+    public void setWoasType(String woasType) {
+        this.woasType = woasType;
+    }
+
+    public String getNote() {
+        return note == null ? "" : note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getCollTime() {
+        return collTime == null ? "" : collTime;
+    }
+
+    public void setCollTime(String collTime) {
+        this.collTime = collTime;
+    }
+
+    public Object getUpdTime() {
+        return updTime;
+    }
+
+    public void setUpdTime(Object updTime) {
+        this.updTime = updTime;
+    }
+
+    public String getRecPers() {
+        return recPers == null ? "" : recPers;
+    }
+
+    public void setRecPers(String recPers) {
+        this.recPers = recPers;
+    }
 }

@@ -3,10 +3,15 @@ package com.syberos.shuili.activity.woas;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.entity.wins.BisWinsGroup;
+import com.syberos.shuili.entity.woas.BisWoasGrop;
+import com.syberos.shuili.entity.woas.BisWoasObj;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;
 
@@ -19,6 +24,8 @@ import butterknife.OnClick;
 public class SafetyProductionDetailDeductMarksActivity extends TranslucentActivity {
 
     private DeductMarksInfo info = null;
+    private String objName ;
+
 
     @BindView(R.id.tv_unit)
     TextView tv_unit;
@@ -58,18 +65,21 @@ public class SafetyProductionDetailDeductMarksActivity extends TranslucentActivi
     @Override
     public void initView() {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        info = (DeductMarksInfo) bundle.getSerializable(
-                SafetyProductionDetailActivity.SEND_BUNDLE_KEY_1);
+        info = (DeductMarksInfo) bundle.getSerializable("deductMarksInfo");
+        objName = bundle.getString("objName");
 
         if (null != info) {
-            tv_unit.setText(info.getUnit());
-            tv_time.setText(info.getTime());
-            tv_score.setText(info.getScore());
+            tv_unit.setText(objName);
+            tv_time.setText(info.getCollTime());
+            tv_score.setText(String.valueOf(info.getFianDeuc()));
 
             ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-            ae_describe_audio.setEditText(info.getDescription());
+            ae_describe_audio.setEditText(String.valueOf(info.getDeucNote()));
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+        }else {
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            activityFinish();
         }
     }
 }
