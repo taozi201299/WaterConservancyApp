@@ -13,6 +13,7 @@ public class BisWoasGrop extends HttpBaseResponse<BisWoasGrop> {
     String guid;;
     String woasGuid;
 
+
     public String getAssePlanGuid() {
         return assePlanGuid == null ? "" : assePlanGuid;
     }

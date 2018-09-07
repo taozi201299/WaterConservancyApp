@@ -11,67 +11,67 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  * 考核方案对象
  */
 public class BisWoasProg extends HttpBaseResponse<BisWoasProg> {
-    String GUID;
-    String PROGNAME;
-    String WOASDEADLINE;
-    String LAREID;
-    String WOASSTARTIME;
-    String WOASTHEM;
-    String WOASGUID;
+    String guid;
+    String progName;
+    String endTime;
+    String lareId;
+    String startTime;
+    String woasThem;
+    String woasGuid;
 
-    public String getGUID() {
-        return GUID == null ? "" : GUID;
+    public String getGuid() {
+        return guid == null ? "" : guid;
     }
 
-    public void setGUID(String GUID) {
-        this.GUID = GUID;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
-    public String getPROGNAME() {
-        return PROGNAME == null ? "" : PROGNAME;
+    public String getProgName() {
+        return progName == null ? "" : progName;
     }
 
-    public void setPROGNAME(String PROGNAME) {
-        this.PROGNAME = PROGNAME;
+    public void setProgName(String progName) {
+        this.progName = progName;
     }
 
-    public String getWOASDEADLINE() {
-        return WOASDEADLINE == null ? "" : WOASDEADLINE;
+    public String getEndTime() {
+        return endTime == null ? "" : endTime;
     }
 
-    public void setWOASDEADLINE(String WOASDEADLINE) {
-        this.WOASDEADLINE = WOASDEADLINE;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    public String getLAREID() {
-        return LAREID == null ? "" : LAREID;
+    public String getLareId() {
+        return lareId == null ? "" : lareId;
     }
 
-    public void setLAREID(String LAREID) {
-        this.LAREID = LAREID;
+    public void setLareId(String lareId) {
+        this.lareId = lareId;
     }
 
-    public String getWOASSTARTIME() {
-        return WOASSTARTIME == null ? "" : WOASSTARTIME;
+    public String getStartTime() {
+        return startTime == null ? "" : startTime;
     }
 
-    public void setWOASSTARTIME(String WOASSTARTIME) {
-        this.WOASSTARTIME = WOASSTARTIME;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getWOASTHEM() {
-        return WOASTHEM == null ? "" : WOASTHEM;
+    public String getWoasThem() {
+        return woasThem == null ? "" : woasThem;
     }
 
-    public void setWOASTHEM(String WOASTHEM) {
-        this.WOASTHEM = WOASTHEM;
+    public void setWoasThem(String woasThem) {
+        this.woasThem = woasThem;
     }
 
-    public String getWOASGUID() {
-        return WOASGUID == null ? "" : WOASGUID;
+    public String getWoasGuid() {
+        return woasGuid == null ? "" : woasGuid;
     }
 
-    public void setWOASGUID(String WOASGUID) {
-        this.WOASGUID = WOASGUID;
+    public void setWoasGuid(String woasGuid) {
+        this.woasGuid = woasGuid;
     }
 }

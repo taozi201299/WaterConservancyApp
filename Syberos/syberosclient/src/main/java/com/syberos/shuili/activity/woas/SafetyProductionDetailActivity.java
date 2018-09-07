@@ -131,7 +131,7 @@ public class SafetyProductionDetailActivity extends BaseActivity {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",info.getGuid());
-     //   params.put("woasGroupGuid","10503b7348f9401588428a546e18bfce");
+        params.put("woasGroupGuid","7a967a72a577495dacc07d2525df97cd");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -159,16 +159,17 @@ public class SafetyProductionDetailActivity extends BaseActivity {
     }
 
     private void refreshUI() {
+        BisWoasProg data = bisWoasProg.dataSource.get(0);
         // 所属考核方案
-        tv_check_plan.setText(bisWoasProg.getPROGNAME());
+        tv_check_plan.setText(data.getProgName());
         // 考核时间
-        tv_check_time.setText(bisWoasProg.getWOASSTARTIME() + "--" + bisWoasProg.getWOASDEADLINE());
+        tv_check_time.setText(data.getStartTime() + "--" + data.getEndTime());
         // 考核内容
         tv_check_content.setText("");
         // 组长名称
         tv_group_leader.setText("");
         // 组长单位
-        tv_group_unit.setText("");
+        tv_group_unit.setText(info.getLeadWiun());
         // 组员单位
         tv_member_unit.setText("");
         // 专家姓名

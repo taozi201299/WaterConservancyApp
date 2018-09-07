@@ -160,16 +160,17 @@ public class InspectAssessDetailActivity extends BaseActivity {
     }
 
     private void refreshUI() {
+        BisWoasProg data = bisWoasProg.dataSource.get(0);
         // 所属考核方案
-        tv_check_plan.setText(bisWoasProg.getPROGNAME());
+        tv_check_plan.setText(data.getProgName());
         // 考核时间
-        tv_check_time.setText(bisWoasProg.getWOASSTARTIME() + "--" + bisWoasProg.getWOASDEADLINE());
+        tv_check_time.setText(data.getStartTime() + "--" + data.getEndTime());
         // 考核内容
         tv_check_content.setText("");
         // 组长名称
         tv_group_leader.setText("");
         // 组长单位
-        tv_group_unit.setText("");
+        tv_group_unit.setText(info.getLeadWiun());
         // 组员单位
         tv_member_unit.setText("");
         // 专家姓名
