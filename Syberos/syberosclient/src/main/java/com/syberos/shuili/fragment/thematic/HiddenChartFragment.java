@@ -19,6 +19,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -181,7 +182,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     private void requestData(int type) {
         RetrofitHttpMethods.getInstance().getThematicHidden(
-                new Observer<HiddenEntry>() {
+                new BaseObserver<HiddenEntry>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
@@ -364,7 +365,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         } else {
             type = 1;
         }
-        RetrofitHttpMethods.getInstance().getThematicHidden(new Observer<HiddenEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicHidden(new BaseObserver<HiddenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
                 LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");

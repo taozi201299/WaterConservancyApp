@@ -19,6 +19,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -347,7 +348,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else {
             subType = "";
         }
-        RetrofitHttpMethods.getInstance().getThematicWins(new Observer<WinsEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicWins(new BaseObserver<WinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
                 LogUtils.i(TAG, "onSubscribe");

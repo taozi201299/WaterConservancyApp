@@ -242,13 +242,8 @@ public class MainActivity extends TranslucentActivity
                 break;
             case R.id.btn_securityCloudFragment:
                 if (securityCloudFragment == null) {
-                    long time1,time2;
-
-                    time1=System.currentTimeMillis();
                     securityCloudFragment = new SecurityCloudFragment();
                     transaction.add(R.id.container, securityCloudFragment);
-                    time2=System.currentTimeMillis();
-                    Log.e(TAG, "switchFragment: time"+(time2-time1));
                 } else {
                     transaction.show(securityCloudFragment);
                 }

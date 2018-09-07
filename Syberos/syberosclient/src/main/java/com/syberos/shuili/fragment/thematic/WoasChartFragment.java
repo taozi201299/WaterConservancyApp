@@ -15,10 +15,12 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -250,7 +252,7 @@ public class WoasChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
-        RetrofitHttpMethods.getInstance().getThematicWoas(new Observer<WoasEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicWoas(new BaseObserver<WoasEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -284,8 +286,8 @@ public class WoasChartFragment extends BaseLazyFragment {
             public void onComplete() {
 
             }
-//        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
-        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+//        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
     }
 
     class Point {

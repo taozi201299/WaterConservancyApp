@@ -29,7 +29,7 @@ public class DialPlateView extends View {
     //进度条的底色
     private static final int PROGRESS_COLOR = 0x55000000;
     Canvas canvas;
-    int percent = 1;
+    double percent = 1;
     //画普通的线用的笔
     private Paint linePaint;
     //里面半圆的半径
@@ -91,7 +91,7 @@ public class DialPlateView extends View {
         canvas.drawOval(rect,linePaint);
     }
 
-    public void updateData(int percent) {
+    public void updateData(double percent) {
         this.percent = percent;
         this.postInvalidate();
     }
@@ -102,7 +102,7 @@ public class DialPlateView extends View {
      * 画刻度盘
      */
 
-    private void drawDial(int startAngle, int allAngle, int dialCount, int per, int longLength, int shortLength, int radius, Canvas canvas) {
+    private void drawDial(int startAngle, double allAngle, double dialCount, int per, int longLength, int shortLength, int radius, Canvas canvas) {
 
         int length;
         int angle;
@@ -136,7 +136,7 @@ public class DialPlateView extends View {
      * @param radius
      * @return
      */
-    private int[] getPointFromAngleAndRadius(int angle, int radius) {
+    private int[] getPointFromAngleAndRadius(double angle, int radius) {
         //根据三角函数公式可以知道，横坐标值为（刻度条＋innnerradius）也就是刻度条对应圆的半径
         //乘以一个cos（angle），因为我们是以（getWidth() / 2，控件的高度）位置建的坐标系
         //而真正的坐标系的位置为控件左上角，所以算出的值后需要＋getWidth() / 2或者getHeight()

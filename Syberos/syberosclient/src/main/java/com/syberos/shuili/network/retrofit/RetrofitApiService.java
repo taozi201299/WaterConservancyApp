@@ -1,5 +1,7 @@
 package com.syberos.shuili.network.retrofit;
 
+import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
+import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
@@ -72,5 +74,20 @@ public interface RetrofitApiService {
                                           @Query("orgGuid") String orgGuid,
                                           @Query("startTime") String startTime,
                                           @Query("endTime") String endTime);
+
+    //   安全云
+    @POST("/desu/serv/v1/getAqpgData")
+    Observable<SecurityCloudOrgEntry> getSecurityOrgData(@Query("sourceType") String sourceType,
+                                                         @Query("orgGuid") String orgGuid,
+                                                         @Query("safaType") String safaType,
+                                                         @Query("startTime") String startTime,
+                                                         @Query("endTime") String endTime);
+       //   安全云
+    @POST("/desu/serv/v1/getAqpgData")
+    Observable<SecurityCloudAreaEntry> getSecurityAreaData(@Query("sourceType") String sourceType,
+                                                           @Query("orgGuid") String orgGuid,
+                                                           @Query("safaType") String safaType,
+                                                           @Query("startTime") String startTime,
+                                                           @Query("endTime") String endTime);
 
 }

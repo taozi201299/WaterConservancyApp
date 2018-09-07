@@ -12,7 +12,9 @@
 
         <include layout="@layout/include_thematic_rate_view_general" />
 
-            <include layout="@layout/include_thematic_viewpager_data_list_general" />
+        <include layout="@layout/include_thematic_data_list_view_general" />
+
+        <!--<include layout="@layout/include_thematic_viewpager_data_list_general" />-->
 
     </LinearLayout>
 </ScrollView>

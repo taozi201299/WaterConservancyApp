@@ -83,7 +83,7 @@
                     android:includeFontPadding="false"
                     android:text="0"
                     android:textColor="@color/white"
-                    android:textSize="90sp"
+                    android:textSize="45sp"
                     app:layout_constraintBottom_toBottomOf="@id/view_dial_plate"
                     app:layout_constraintLeft_toLeftOf="@id/view_dial_plate"
                     app:layout_constraintRight_toRightOf="@id/view_dial_plate"

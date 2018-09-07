@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
@@ -22,6 +23,7 @@ import com.syberos.shuili.entity.publicentry.LocationEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 import com.syberos.shuili.entity.thematicchart.PointEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -243,64 +245,27 @@ public class SinsChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
-//        RetrofitHttpMethods.getInstance().getThematicSins(new Observer<SinsEntry>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(SinsEntry sinsEntry) {
-////                setSinsEntry(sinsEntry);
-////
-////                List<LocationEntry> list = new ArrayList<>();
-////                list.clear();
-////                if (sinsEntry == null || sinsEntry.getData() == null) {
-////                    ToastUtils.show("未获取到数据");
-////                    return;
-////                }
-////                for (SinsEntry.DataBean.SCORERANKBean bean :
-////                        sinsEntry.getData().) {
-////                    list.add(new LocationEntry(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
-////                }
-//////                setHiddenEntry(hiddenEntry);
-////                addMarkInfo(list);
-////                EventBus.getDefault().postSticky(sinsEntry);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-        RetrofitHttpMethods.getInstance().getThematicWoas(new Observer<WoasEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicSins(new BaseObserver<SinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(WoasEntry woasEntry) {
-//                setWoasEntry(woasEntry);
-//
-//                List<WoasChartFragment.Point> list = new ArrayList<>();
-//                list.clear();
-//                if (woasEntry == null || woasEntry.getData() == null) {
-//                    ToastUtils.show("未获取到数据");
-//                    return;
-//                }
-//                for (WoasEntry.DataBean.SCORERANKBean bean :
-//                        woasEntry.getData().getSCORERANK()) {
-//                    list.add(new LocationEntry(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
-//                }
-////                setHiddenEntry(hiddenEntry);
-//                addMarkInfo(list);
-//                EventBus.getDefault().postSticky(woasEntry);
+            public void onNext(SinsEntry sinsEntry) {
+                setSinsEntry(sinsEntry);
+
+                List<LocationEntry> list = new ArrayList<>();
+                list.clear();
+                if (sinsEntry == null || sinsEntry.getData() == null) {
+                    ToastUtils.show("未获取到数据");
+                    return;
+                }
+                for (SinsEntry.DataBean.SUBSINSDATABean bean : sinsEntry.getData().getSUBSINSDATA()) {
+                    list.add(new LocationEntry(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getSINSQUA()+ ""));
+                }
+                addMarkInfo(list);
+                EventBus.getDefault().postSticky(sinsEntry);
             }
 
             @Override
@@ -312,8 +277,44 @@ public class SinsChartFragment extends BaseLazyFragment {
             public void onComplete() {
 
             }
-//        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
-        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
+//        },type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+        },type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
+//        RetrofitHttpMethods.getInstance().getThematicWoas(new Observer<WoasEntry>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(WoasEntry woasEntry) {
+////                setWoasEntry(woasEntry);
+////
+////                List<WoasChartFragment.Point> list = new ArrayList<>();
+////                list.clear();
+////                if (woasEntry == null || woasEntry.getData() == null) {
+////                    ToastUtils.show("未获取到数据");
+////                    return;
+////                }
+////                for (WoasEntry.DataBean.SCORERANKBean bean :
+////                        woasEntry.getData().getSCORERANK()) {
+////                    list.add(new LocationEntry(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
+////                }
+//////                setHiddenEntry(hiddenEntry);
+////                addMarkInfo(list);
+////                EventBus.getDefault().postSticky(woasEntry);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+////        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+//        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
     }
     @Override
     public void onDestroyView() {

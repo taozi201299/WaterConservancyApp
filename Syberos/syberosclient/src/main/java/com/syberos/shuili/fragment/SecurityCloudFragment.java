@@ -45,9 +45,9 @@ public class SecurityCloudFragment extends BaseFragment {
     }
 
     public void initViewAndData() {
-        straightTubeFragment = new BaseSecurityCloudFragment(strJsonData, "1");
-        riverFragment = new BaseSecurityCloudFragment(strJsonData, "2");
-        supervisionFragment = new BaseSecurityCloudFragment(null, "3");
+        straightTubeFragment = new BaseSecurityCloudFragment(strJsonData, "1");//直管
+        riverFragment = new BaseSecurityCloudFragment(strJsonData, "2");//流域
+        supervisionFragment = new BaseSecurityCloudFragment(null, "3");//监管
 
         fragments = new Fragment[]{straightTubeFragment, riverFragment, supervisionFragment};
         mPageAdapter = new MyViewPagerAdapter(getChildFragmentManager());

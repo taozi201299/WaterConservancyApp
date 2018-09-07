@@ -38,13 +38,18 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.gson.Gson;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.publicentry.LineChartEntry;
+import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
+import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
 import com.syberos.shuili.entity.securitycloud.StraightTubeManageEntry;
 import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.network.retrofit.RxApiManager;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.DialPlateView;
 import com.syberos.shuili.view.WaterView;
@@ -54,6 +59,7 @@ import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by BZB on 2018/7/20.
@@ -184,7 +190,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     @BindView(R.id.tv_date)
     TextView tvDate;
     String type;
-    String title;
+    String title = "";
     String titleDetail;
     SecurityCloudEntry securityCloudEntry;
     RecyclerAdapter recyclerAdapter;
@@ -192,6 +198,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     private XAxis xAxis;         //X坐标轴
     private YAxis yAxisLeft;         //Y坐标轴
     private LineChart lineChart;
+    int safaType = 0;
+    SecurityCloudOrgEntry securityCloudOrgEntry = null;
+    private int orgLevel = BusinessConfig.getOrgLevel();
+
 
     public BaseSecurityCloudFragment() {
     }
@@ -221,19 +231,135 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        RxApiManager.get().cancel(SecurityCloudOrgEntry.class);
+        RxApiManager.get().cancel(SecurityCloudAreaEntry.class);
+    }
     //    @Override
+
     public void initViewData() {
         appBarLayout.addOnOffsetChangedListener(this);
-        Gson gson = new Gson();
-
-        securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
-
+//        Gson gson = new Gson();
+//
+//        securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
+//
         initTitleAndView(type);
-        int score = securityCloudEntry.getSynthesisInfoEntry().getScore();
+
+
+    }
+
+    int sourceType = 1;
+
+    private void initTitleAndView(String type) {
+
+
+//        initAccView(securityCloudEntry.getAccidentInfoEntry());
+//
+//        initHiddenView(securityCloudEntry.getHiddenInfoEntry());
+//
+//        initRiskResource(securityCloudEntry.getRiskSourceEntry());
+//
+//        initTrendView(securityCloudEntry.getCompScoreTrend());
+//
+//        initTrendView(securityCloudEntry.getCompScoreTrend());
+
+        switch (type) {
+            case "1":
+                title = "直管工程";
+                cardViewManagerDirect.setVisibility(View.VISIBLE);
+                sourceType = 1;
+                if (orgLevel == 4) {
+                    //
+                    safaType = 0;
+                } else {
+                    safaType = 1;
+                }
+//                getDataZhiGuan();
+//                initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
+//                initRankView(securityCloudEntry.getRankList());
+                break;
+            case "2":
+                title = "流域机构";
+                cardViewManager.setVisibility(View.VISIBLE);
+                sourceType = 3;
+                safaType = 0;
+//                getDataLiuYu();
+//                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
+//                initRankView(securityCloudEntry.getRankList());
+                break;
+            case "3":
+                title = "行业监管";
+                cardViewManager.setVisibility(View.VISIBLE);
+                safaType = 0;
+                sourceType = 2;
+                tvTitle.setText(title);
+//                getDataJianGuan();
+//                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
+//                initRankView(securityCloudEntry.getRankList());
+                break;
+        }
+        getSecuritData(sourceType, safaType);
+//        RetrofitHttpMethods.getInstance().
+    }
+    private void getSecuritData(int sourceType, int safaType) {
+        RxApiManager.get().cancel(SecurityCloudOrgEntry.class);
+        if (safaType == 1) {
+            RetrofitHttpMethods.getInstance().getSecurityOrgData(new BaseObserver<SecurityCloudOrgEntry>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                }
+
+                @Override
+                public void onNext(SecurityCloudOrgEntry securityCloudOrgEntry) {
+                    securityCloudOrgEntry = securityCloudOrgEntry;
+                    if (tvTitle != null) {
+                        updateView(securityCloudOrgEntry);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onComplete() {
+                }
+//            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
+            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
+        } else if (safaType == 0) {
+            RxApiManager.get().cancel(SecurityCloudAreaEntry.class);
+            RetrofitHttpMethods.getInstance().getSecurityAreaData(new BaseObserver<SecurityCloudAreaEntry>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                }
+
+                @Override
+                public void onNext(SecurityCloudAreaEntry securityCloudAreaEntry) {
+                    if (tvTitle != null) {
+                        updateView(securityCloudAreaEntry);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onComplete() {
+                }
+//            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
+            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
+
+        }
+    }
+
+    private void updateView(SecurityCloudAreaEntry securityCloudAreaEntry) {
+        double score = securityCloudAreaEntry.getData().getAqpgScore().getAQPG();
         if (title.isEmpty()) {
             titleDetail = new String(new StringBuilder("安全评分·").append(score).append("分"));
         } else {
-
             titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
         }
         tvTitle.setText(title);
@@ -241,64 +367,31 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         tvScore.setText(score + "");
         viewDialPlate.updateData(score);
 
-
     }
 
-    long time1, time2;
+    private void updateView(SecurityCloudOrgEntry securityCloudOrgEntry) {
+//        private YhxxBean yhxx;
+//        private AqpgScoreBean aqpgScore;
+//        private List<GzkhBean> gzkh;
+//        private List<FxyxxBean> fxyxx;
+//        private List<BzhBean> bzh;
+//        private List<AqpgPmBean> aqpgPm;
+//        private List<AqpgMonthBean> aqpgMonth;
+//        private List<SgxxBean> sgxx;
 
-    private void initTitleAndView(String type) {
-
-
-        initAccView(securityCloudEntry.getAccidentInfoEntry());
-
-
-        initHiddenView(securityCloudEntry.getHiddenInfoEntry());
-
-
-        initRiskResource(securityCloudEntry.getRiskSourceEntry());
-
-
-        initTrendView(securityCloudEntry.getCompScoreTrend());
-
-        initTrendView(securityCloudEntry.getCompScoreTrend());
-
-        switch (type) {
-            case "1":
-                title = "直管工程";
-                cardViewManagerDirect.setVisibility(View.VISIBLE);
-                initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
-
-                initRankView(securityCloudEntry.getRankList());
-                break;
-            case "2":
-                title = "流域机构";
-                cardViewManager.setVisibility(View.VISIBLE);
-                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
-                initRankView(securityCloudEntry.getRankList());
-
-
-                break;
-            case "3":
-                title = "行业监管";
-                cardViewManager.setVisibility(View.VISIBLE);
-                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
-
-                initRankView(securityCloudEntry.getRankList());
-                break;
-            case "4"://具体区域 或河流
-                title = "";
-                cardViewManager.setVisibility(View.VISIBLE);
-                viewRank.setVisibility(View.GONE);
-                ivBackToolBar.setVisibility(View.VISIBLE);
-                ivBackToolBar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getActivity().finish();
-                    }
-                });
-                break;
+        double score = securityCloudOrgEntry.getData().getAqpgScore().getAQPG();
+        if (title.isEmpty()) {
+            titleDetail = new String(new StringBuilder("安全评分·").append(score).append("分"));
+        } else {
+            titleDetail = new String(new StringBuilder(title).append("·安全评分·").append(score).append("分"));
         }
+        tvTitle.setText(title);
+        collapsingToolbarLayout.setTitle(titleDetail);
+        tvScore.setText(score + "");
+        viewDialPlate.updateData(score);
+
     }
+
 
     /**
      * 初始化 排名
@@ -564,15 +657,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
         xAxis.isDrawLabelsEnabled();
         final List<String> dateList = new ArrayList<>();
-//        for (int i = 0; i < 6; i++) {
-////            Date date = new Date(Long.parseLong(dataList.get(i).getDate()));
-//            Date date = new Date(System.currentTimeMillis()+i*(1000*60*60*24*30));
-//            @SuppressLint("SimpleDateFormat")
-//            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-//            String strDate=format.format(date);
-//            dateList.add(strDate);
-//            LogUtil.e(TAG, "initLineCharView: strDate:"+(System.currentTimeMillis()+i*(1000*60*60*24*30))+"----" );
-//        }
+
         dateList.add("一月");
         dateList.add("二月");
         dateList.add("三月");
@@ -624,14 +709,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  //参数是INSIDE_CHART(Y轴坐标在内部) 或 OUTSIDE_CHART(在外部（默认是这个）)
 //        yAxis.setValueFormatter(new IAxisValueFormatter() {
         yAxisLeft.setDrawGridLines(false);
-//            @Override
-//            public String getFormattedValue(float value, AxisBase axis) {
-//                return null;
-//            }
-//        });
-//              Sets a custom ValueFormatter for this axis. This interface allows to format/modify
-//              the original label text and instead return a customized text.
-
 
         // add data
         lineChart.setData(lineData); // 设置数据
@@ -745,11 +822,15 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     @Override
     public void onResume() {
         super.onResume();
-        if (strJsonData != null) {
+//        if (strJsonData != null) {
+
+//        }
+        if (getUserVisibleHint()) {
             initViewData();
         }
 
     }
+
 
     @Override
     protected void initView() {
@@ -830,26 +911,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                     listener.onItemClick(view, position);
                 }
             });
-//            holder.tvRank.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    listener.onItemClick(view, position);
-//                }
-//            });
-//
-//            holder.tvName.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    listener.onItemClick(view, position);
-//                }
-//            });
-//
-//            holder.tvScore.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    listener.onItemClick(view, position);
-//                }
-//            });
             holder.ivRank.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
