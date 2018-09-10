@@ -11,6 +11,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.BisHiddRecRep;
 import com.syberos.shuili.entity.report.BisOrgMonRepPeri;
 import com.syberos.shuili.entity.report.ReportForAdmin;
@@ -67,10 +68,10 @@ public class HiddenReportActivity extends BaseActivity{
         groupedReportListAdapter = new GroupedReportListAdapter(mContext,null);
     }
     private void getReportUnitID(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/att/org/base/attOrgBases/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
         HashMap<String,String>params = new HashMap<>();
       //  params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("pguid","790DC1A2EAD7429292CEFC3CE10B95F7");
+        params.put("pguid","160AFBA102DF4D709301E5FC77645941");
         params.put("orgType","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
@@ -92,7 +93,7 @@ public class HiddenReportActivity extends BaseActivity{
         });
     }
     private void getReportUnitInfo(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/att/org/ext/attOrgExts/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/ext/attOrgExts/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<AttOrgBase>list = (ArrayList<AttOrgBase>) orgBase.dataSource;
         final int size =list.size();
@@ -129,7 +130,7 @@ public class HiddenReportActivity extends BaseActivity{
     }
     private void getUnitReportStatus(){
         // 2 未上报 1 已上报 已上报需要查看具体状态 上报后可以申请撤回
-        String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","1");
@@ -164,7 +165,7 @@ public class HiddenReportActivity extends BaseActivity{
         }
     }
     private void getStatusDetail(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/acci/rec/rep/hazy-bisAcciRecReps/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/acci/rec/rep/hazy-bisAcciRecReps/";
         HashMap<String,String>params = new HashMap<>();
         ArrayList<ReportForAdmin>list = (ArrayList<ReportForAdmin>) reportForAdmin.dataSource;
         final int size = list.size();
