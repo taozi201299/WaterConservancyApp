@@ -97,8 +97,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     private void getScheGroupIdByUserId(){
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("persGuid","C9C14B0BD81D4900940114AADD8491A0");
+        params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -108,6 +107,10 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                     closeDataDialog();
                     String errMsg  = ErrorInfo.ErrorCode.valueOf(-5).getMessage();
                     ToastUtils.show(errMsg);
+                }
+                if(relSinsGroupPers.dataSource.size() == 0){
+                    ToastUtils.show("未发现相关任务");
+                    closeDataDialog();
                 }
                 getScheGroupList();
             }
@@ -161,8 +164,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
-          //  params.put("sinsGuid",item.getScheGuid());
-            params.put("sinsGuid","1C30B5F7C3C14B41862C31BC588ABAD0");
+            params.put("sinsGuid",item.getScheGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {

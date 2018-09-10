@@ -460,7 +460,7 @@ public class LoginActivity extends BaseActivity {
         String url = GlobleConstants.strIP +"/cjapi/cj/yuanXin/collresobase/getCollByPersIdAndSysCode";
         HashMap<String,String>params = new HashMap<>();
         params.put("personID",perID);
-        params.put("app_guid","");
+        params.put("app_guid",App.sCode);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

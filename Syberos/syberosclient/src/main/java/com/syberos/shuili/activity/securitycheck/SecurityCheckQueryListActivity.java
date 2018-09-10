@@ -143,7 +143,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     private void getObjSins(){
         String url = strIP +"/sjjk/v1/obj/sis/objSinss/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("notIssuGuid","02BF29A11A1346308BC71B4692EFA4B8");
+        params.put("notIssuGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -178,7 +178,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
                     iSucessCount ++;
                     Gson gson = new Gson();
                     bisSinsSche = gson.fromJson(result,BisSinsSche.class);
-                    if(bisSinsSche != null && bisSinsSche.dataSource != null && bisSinsSche.dataSource.size() != 0){
+                    if(bisSinsSche != null && bisSinsSche.dataSource != null){
                         map.put(item.getGuid(),bisSinsSche);
                     }
                     if(iSucessCount + iFailedCount == infos.size()){

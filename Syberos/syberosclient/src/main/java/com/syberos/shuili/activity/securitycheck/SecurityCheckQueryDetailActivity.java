@@ -40,6 +40,8 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_area)
     TextView tv_area;
+    @BindView(R.id.tv_check_plan)
+    TextView tv_check_plan;
 
     @BindView(R.id.ll_child_groups_container)
     LinearLayout ll_child_groups_container;
@@ -76,6 +78,10 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
             return;
         }
         showTitle(bisSinsSche.getScheName());
+        tv_check_content.setText(bisSinsSche.getScheCont());
+        tv_check_plan.setText(bisSinsSche.getScheName());
+        tv_check_time.setText(bisSinsSche.getScheMakeTime());
+
         showDataLoadingDialog();
         /**
          * 1 检查方案信息
@@ -92,14 +98,13 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
     private void getGroupByPlanId(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
         HashMap<String, String> params = new HashMap<>();
-     //   params.put("scheGuid",bisSinsSche.getGuid());
-        params.put("scheGuid","4F8AF0316E6343A3BC3FA926E44F3E62");
+        params.put("scheGuid",bisSinsSche.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                bisSinsScheGroup = (BisSinsScheGroup)gson.fromJson(result,BisSinsScheGroup.class);
+                bisSinsScheGroup = gson.fromJson(result,BisSinsScheGroup.class);
                 if(bisSinsScheGroup == null || bisSinsScheGroup.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -134,6 +139,7 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
                     // TODO: 2018/4/26  检查组下的详情信息
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(SEND_BUNDLE_KEY,item);
+                    bundle.putSerializable("bisSinsSche",bisSinsSche);
                     intentActivity(SecurityCheckQueryDetailActivity.this,SecurityCheckDetailActivity.class,
                             false,bundle);
                 }

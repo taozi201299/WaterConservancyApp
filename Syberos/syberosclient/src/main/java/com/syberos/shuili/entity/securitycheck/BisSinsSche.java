@@ -61,8 +61,9 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
      */
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -70,7 +71,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getSinsGuid() {
-        return sinsGuid;
+        return sinsGuid == null ? "" : sinsGuid;
     }
 
     public void setSinsGuid(String sinsGuid) {
@@ -78,7 +79,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheName() {
-        return scheName;
+        return scheName == null ? "" : scheName;
     }
 
     public void setScheName(String scheName) {
@@ -86,7 +87,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheStartTime() {
-        return scheStartTime;
+        return scheStartTime == null ? "" : scheStartTime;
     }
 
     public void setScheStartTime(String scheStartTime) {
@@ -94,7 +95,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheCompTime() {
-        return scheCompTime;
+        return scheCompTime == null ? "" : scheCompTime;
     }
 
     public void setScheCompTime(String scheCompTime) {
@@ -102,7 +103,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheCont() {
-        return scheCont;
+        return scheCont == null ? "" : scheCont;
     }
 
     public void setScheCont(String scheCont) {
@@ -110,7 +111,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheMakeTime() {
-        return scheMakeTime;
+        return scheMakeTime == null ? "" : scheMakeTime;
     }
 
     public void setScheMakeTime(String scheMakeTime) {
@@ -118,7 +119,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheMakeWiun() {
-        return scheMakeWiun;
+        return scheMakeWiun == null ? "" : scheMakeWiun;
     }
 
     public void setScheMakeWiun(String scheMakeWiun) {
@@ -126,7 +127,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getScheIsComp() {
-        return scheIsComp;
+        return scheIsComp == null ? "" : scheIsComp;
     }
 
     public void setScheIsComp(String scheIsComp) {
@@ -134,7 +135,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -142,7 +143,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -150,7 +151,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -158,7 +159,7 @@ public class BisSinsSche extends HttpBaseResponse<BisSinsSche> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
