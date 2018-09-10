@@ -1,10 +1,14 @@
 package com.syberos.shuili.activity.reports;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
@@ -12,19 +16,22 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.report.BisHiddRecRep;
-import com.syberos.shuili.entity.report.BisOrgMonRepPeri;
-import com.syberos.shuili.entity.report.ReportForAdmin;
-import com.syberos.shuili.entity.report.ReportGroup;
-import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
+import com.syberos.shuili.entity.publicentry.GroupInformationEntity;
+import com.syberos.shuili.entity.report.BisOrgMonRepPeriForAdmin;
+import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class HiddenReportActivity extends BaseActivity{
 
@@ -34,19 +41,21 @@ public class HiddenReportActivity extends BaseActivity{
     TextView tv_current_month;
 
 
-    final String Tag = HiddenReportActivity.class.getSimpleName();
-    final String title = "隐患报表";
+    final String Tag = AcciReportActivity.class.getSimpleName();
+    final String title = "事故报表";
     String header[] = {"本单位","直管单位","监管单位"};
-    ArrayList<ReportForAdmin>directUnit = new ArrayList<>();
-    ArrayList<ReportForAdmin>supervisionUnit = new ArrayList<>();
-    ArrayList<ReportGroup> mGroups = new ArrayList<>();
     GroupedReportListAdapter groupedReportListAdapter;
-    ReportForAdmin reportForAdmin;
-    ArrayList<ReportForAdmin>reportForAdmins = new ArrayList<>();
-    BisOrgMonRepPeri bisOrgMonRepPeri;
-    BisHiddRecRep bisHiddRecRep;
-    AttOrgBase orgBase ;
+    ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups = new ArrayList<>();
 
+    @OnClick(R.id.tv_current_month)
+    void onCurrentMonthClicked() {
+        onSelectMonthClicked();
+    }
+
+    @OnClick(R.id.iv_action_right)
+    void onActionBarRightClicked() {
+        onSelectMonthClicked();
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_report_header_layout;
@@ -54,195 +63,131 @@ public class HiddenReportActivity extends BaseActivity{
 
     @Override
     public void initListener() {
-
+        tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
     }
 
     @Override
     public void initData() {
-        getReportUnitID();
+        mGroups.clear();
+        getDirectUnit();
     }
 
     @Override
     public void initView() {
         setInitActionBar(false);
-        groupedReportListAdapter = new GroupedReportListAdapter(mContext,null);
+        LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        reportRecycleView.setLayoutManager(layoutmanager);
+        groupedReportListAdapter = new GroupedReportListAdapter(mContext,mGroups);
     }
-    private void getReportUnitID(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+
+    /**
+     * 获取直属单位上报情况
+     */
+
+    /**
+     * 获取下一级单位上报情况
+     */
+
+    private void getSubUnitReportList(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectSubordinateMonthlyByTimeAndGuid/";
         HashMap<String,String>params = new HashMap<>();
-      //  params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("pguid","160AFBA102DF4D709301E5FC77645941");
-        params.put("orgType","1");
+        params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("repTime",tv_current_month.getText().toString());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                orgBase = gson.fromJson(result,AttOrgBase.class);
-                if(orgBase == null || orgBase.dataSource == null){
-                    closeDataDialog();
+                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result,BisOrgMonRepPeriForAdmin.class);
+                if(bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                }else {
-                    getReportUnitInfo();
+                    return;
                 }
+                if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
+                    mGroups.add(new GroupInformationEntity<>(header[2], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                }
+                refreshUI();
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
+
             }
         });
     }
-    private void getReportUnitInfo(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/ext/attOrgExts/";
-        HashMap<String,String>params = new HashMap<>();
-        ArrayList<AttOrgBase>list = (ArrayList<AttOrgBase>) orgBase.dataSource;
-        final int size =list.size();
-        if(size == 0){
-            processResult();
-        }else {
-            for( int i = 0; i< size; i++) {
-                AttOrgBase item = list.get(i);
-                params.put("orgGuid", item.getGuid());
-                final int finalI = i;
-                SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                    @Override
-                    public void onResponse(String result) {
-                        Gson gson = new Gson();
-                        reportForAdmin = gson.fromJson(result, ReportForAdmin.class);
-                        if (reportForAdmin == null || reportForAdmin.dataSource == null || reportForAdmin.dataSource.size() == 0) {
-                            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                            return;
-                        }else {
-                            reportForAdmins.add(reportForAdmin.dataSource.get(0));
-                        }
-                        if(finalI == size -1) {
-                            processResult();
-                        }
-                    }
-                    @Override
-                    public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                        closeDataDialog();
-                        ToastUtils.show(errorInfo.getMessage());
-                    }
-                });
-            }
-        }
-    }
-    private void getUnitReportStatus(){
-        // 2 未上报 1 已上报 已上报需要查看具体状态 上报后可以申请撤回
-        String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("repTime",tv_current_month.getText().toString());
-        params.put("repType","1");
-        final int size = reportForAdmins.size();
-        for(int i = 0; i< size;i++) {
-            //params.put("repOrgGuid", "F83199FDD35E49FF9643A6C394DBBF45");
-            final ReportForAdmin item = reportForAdmins.get(i);
-            params.put("repOrgGuid",item.getOrgGuid());
-            final int finalI = i;
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    bisOrgMonRepPeri = gson.fromJson(result, BisOrgMonRepPeri.class);
-                    if (bisOrgMonRepPeri == null || bisOrgMonRepPeri.dataSource == null || bisOrgMonRepPeri.dataSource.size() == 0) {
-                        item.setReportStatus("2");
-                        item.setReportDone(false);
-                    }else {
-                        item.setReportStatus("1");
-                        item.setReportDone(true);
-                    }
-                    if(finalI == size -1){
-                        getStatusDetail();
-                    }
-                }
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
-    }
-    private void getStatusDetail(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/acci/rec/rep/hazy-bisAcciRecReps/";
-        HashMap<String,String>params = new HashMap<>();
-        ArrayList<ReportForAdmin>list = (ArrayList<ReportForAdmin>) reportForAdmin.dataSource;
-        final int size = list.size();
-        ReportForAdmin item = null;
-        for(int i = 0 ; i < size ; i++){
-            item = list.get(i);
-            if("2".equals(item.getReportStatus()))continue;
-            params.put("repGuid",item.getOrgGuid());
-            final ReportForAdmin finalItem = item;
-            final int finalI = i;
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    Gson gson = new Gson();
-                    bisHiddRecRep = gson.fromJson(result,BisHiddRecRep.class);
-                    if(bisHiddRecRep == null || bisHiddRecRep.dataSource == null){
-                        closeDataDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
-                    }
-                    if(bisHiddRecRep.dataSource.size() > 0) {
-                        finalItem.setReportStatus(bisHiddRecRep.dataSource.get(0).getRepAct());
-                    }
-                    if(finalI == size -1){
-                        closeDataDialog();
-                        refreshUI();
-                    }
-                }
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
-    }
-    private void processResult() {
-        if(reportForAdmin != null && reportForAdmin.dataSource != null) {
-            for (ReportForAdmin item : reportForAdmin.dataSource) {
-                if ("1".equals(item.getIfMiniDire())) {
-                    directUnit.add(item);
-                } else if ("2".equals(item.getIfMiniDire())) {
-                    supervisionUnit.add(item);
-                }
-            }
-        }
-        ReportForAdmin reportForAdmin = new ReportForAdmin();
-        reportForAdmin.setOrgGuid(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        reportForAdmin.setWiunName(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
-        ArrayList<ReportForAdmin>units = new ArrayList<>();
-        units.add(reportForAdmin);
-        mGroups.add(new ReportGroup(header[0],units));
-        mGroups.add(new ReportGroup(header[1],directUnit));
-        mGroups.add(new ReportGroup(header[2],supervisionUnit));
-        if(reportForAdmin.dataSource != null) {
-            reportForAdmin.dataSource.add(reportForAdmin);
-        }
-        getUnitReportStatus();
 
+    private void getDirectUnit(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectMonthlyReportListByTimeAndGuid/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("adminWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("repTime",tv_current_month.getText().toString());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result,BisOrgMonRepPeriForAdmin.class);
+                if(bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }
+                if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
+                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                }
+                getSubUnitReportList();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
     }
+
     private void refreshUI(){
         groupedReportListAdapter.setData(mGroups);
         reportRecycleView.setAdapter(groupedReportListAdapter);
         groupedReportListAdapter.notifyDataSetChanged();
     }
+    private void onSelectMonthClicked() {
+        //时间选择器
+        boolean[] type = {true, true, false, false, false, false};
+
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                if (date.getTime() > System.currentTimeMillis()) {
+                    ToastUtils.show("提示：所选月份不应大于系统当前月份");
+                    return;
+                }
+                String time = Strings.formatDate(date);
+                String[] arrayTime = time.split("-");
+                tv_current_month.setText(arrayTime[0]+"年"+arrayTime[1]+"月");
+                // TODO: 2018/4/10 处理时间设置之后的逻辑
+                initData();
+            }
+        })
+                .isDialog(true)
+                .setType(type)
+                .build();
+        pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.show();
+    }
     private class GroupedReportListAdapter extends GroupedRecyclerViewAdapter {
 
 
-        private ArrayList<ReportGroup> mGroups;
+        private ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups;
 
         public GroupedReportListAdapter(
-                Context context, ArrayList<ReportGroup> groups) {
+                Context context, ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> groups) {
             super(context);
             mGroups = groups;
         }
 
-        public void setData(ArrayList<ReportGroup> groups) {
+        public void setData(ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> groups) {
             mGroups = groups;
 
         }
@@ -254,7 +199,7 @@ public class HiddenReportActivity extends BaseActivity{
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            ArrayList<ReportForAdmin> children = mGroups.get(groupPosition).getChilden();
+            ArrayList<BisOrgMonRepPeriForAdmin> children = mGroups.get(groupPosition).getChildren();
             return children == null ? 0 : children.size();
         }
 
@@ -307,8 +252,7 @@ public class HiddenReportActivity extends BaseActivity{
 
         @Override
         public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
-            ReportGroup entity = mGroups.get(groupPosition);
-            holder.setText(R.id.tv_header, entity.getHeader());
+            holder.setText(R.id.tv_header, mGroups.get(groupPosition).getHeader());
         }
 
         @Override
@@ -329,10 +273,10 @@ public class HiddenReportActivity extends BaseActivity{
             tv_report.setVisibility(View.GONE);
             tv_reported.setVisibility(View.GONE);
 
-            final ReportForAdmin reportForAdmin
-                    = mGroups.get(groupPosition).getChilden().get(childPosition);
-            if(reportForAdmin.getReportStatus().equals("2")){
-                if(reportForAdmin.isReportDone()){
+            final BisOrgMonRepPeriForAdmin reportForAdmin
+                    = mGroups.get(groupPosition).getChildren().get(childPosition);
+            if(reportForAdmin.getStatus().equals("2")){
+                if(true){
                     // /退回
                     tv_returned.setVisibility(View.VISIBLE);
                     if(groupPosition == 0){
@@ -349,27 +293,29 @@ public class HiddenReportActivity extends BaseActivity{
                     }
                 }
             }
-            else if(reportForAdmin.getReportStatus().equals("1")){
+            else if(reportForAdmin.getStatus().equals("1")){
                 tv_reported.setVisibility(View.VISIBLE);
                 //  已上报
-            }else if(reportForAdmin.getReportStatus().equals("3")){
+            }else if(reportForAdmin.getStatus().equals("3")){
                 if(groupPosition == 0)
                     tv_repetition.setVisibility(View.VISIBLE);
                 else {
                     tv_rush.setVisibility(View.VISIBLE);
                 }
                 // 已撤销 重报
-            }else if(reportForAdmin.getReportStatus().equals("4")){
+            }else if(reportForAdmin.getStatus().equals("4")){
                 // 申请撤销中
-            }else if(reportForAdmin.getReportStatus().equals("5")){
+            }else if(reportForAdmin.getStatus().equals("5")){
                 //同意撤销
                 if(groupPosition == 0)
                     tv_repetition.setVisibility(View.VISIBLE);
                 else {
                     tv_rush.setVisibility(View.VISIBLE);
                 }
-            }else if(reportForAdmin.getReportStatus().equals("6")){
+            }else if(reportForAdmin.getStatus().equals("6")){
                 // 不同意撤销
+            }else {
+                tv_rush.setVisibility(View.VISIBLE);
             }
         }
     }
