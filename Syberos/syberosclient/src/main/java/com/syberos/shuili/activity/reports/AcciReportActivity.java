@@ -15,10 +15,12 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.publicentry.GroupInformationEntity;
 import com.syberos.shuili.entity.report.BisOrgMonRepPeriForAdmin;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
@@ -43,7 +45,7 @@ public class AcciReportActivity extends BaseActivity{
 
     final String Tag = AcciReportActivity.class.getSimpleName();
     final String title = "事故报表";
-    String header[] = {"本单位","直管单位","监管单位"};
+    String header[] = {"直管单位","监管单位"};
     GroupedReportListAdapter groupedReportListAdapter;
     ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups = new ArrayList<>();
 
@@ -104,7 +106,7 @@ public class AcciReportActivity extends BaseActivity{
                     return;
                 }
                 if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
-                    mGroups.add(new GroupInformationEntity<>(header[2], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 refreshUI();
             }
@@ -133,7 +135,7 @@ public class AcciReportActivity extends BaseActivity{
                     return;
                 }
                 if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
-                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                    mGroups.add(new GroupInformationEntity<>(header[0], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 getSubUnitReportList();
             }
@@ -275,6 +277,7 @@ public class AcciReportActivity extends BaseActivity{
 
             final BisOrgMonRepPeriForAdmin reportForAdmin
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
+            tv_sub_unit.setText(reportForAdmin.getWiunName());
             if(reportForAdmin.getStatus().equals("2")){
                 if(true){
                     // /退回

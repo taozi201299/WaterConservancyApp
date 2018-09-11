@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,9 +13,15 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
 import com.syberos.shuili.utils.Strings;
@@ -24,6 +31,7 @@ import com.syberos.shuili.view.PullRecyclerView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,16 +40,16 @@ import butterknife.OnClick;
 /**
  * 安全检查报表
  */
-public class CheckReportActivity extends TranslucentActivity
-        implements PullRecyclerView.OnPullRefreshListener, CommonAdapter.OnItemClickListener{
+public class CheckReportActivity extends TranslucentActivity implements CommonAdapter.OnItemClickListener{
 
-    private int pageIndex = 1;
     private ListAdapter adapter;
     List<SecurityCheckInformation> infos = new ArrayList<>();
     public static final String SEND_BUNDLE_KEY = "SecurityCheckInformation";
 
     @BindView(R.id.pullRecylerView)
-    PullRecyclerView pullRecyclerView;
+    RecyclerView pullRecyclerView;
+
+    private ObjSins objSins ;
 
     @BindView(R.id.tv_current_month)
     TextView tv_current_month;
@@ -78,26 +86,45 @@ public class CheckReportActivity extends TranslucentActivity
 
     @Override
     public void initData() {
-
+       showDataLoadingDialog();
+        getObjSinsList();
     }
 
+    private void getObjSinsList(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/sis/objSinss/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("notIssuGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("ifSendDown","1");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                objSins = gson.fromJson(result,ObjSins.class);
+                if(objSins == null ||objSins.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }else if(objSins.dataSource.size() == 0){
+                    ToastUtils.show("未获取到报表任务");
+                }else {
+                    refreshUI();
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+
+    }
     @Override
     public void initView() {
-
-        infos.clear();
-
-        for (int i = 0; i < 10; ++i) {
-            SecurityCheckInformation information = new SecurityCheckInformation();
-            information.setTitle("北京市水利部署通知" + (i+1));
-            information.setDate("2017-12-1" + i);
-            infos.add(information);
-        }
-
-        adapter = new ListAdapter(mContext, R.layout.layout_security_check_report_item, infos);
-        pullRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
+        adapter = new ListAdapter(mContext, R.layout.layout_security_check_report_item,new ArrayList<ObjSins>());
         pullRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         pullRecyclerView.setAdapter(adapter);
-        pullRecyclerView.setOnPullRefreshListener(this);
         adapter.setOnItemClickListener(this);
     }
 
@@ -127,31 +154,24 @@ public class CheckReportActivity extends TranslucentActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        SecurityCheckInformation information = infos.get(position);
-        bundle.putSerializable(SEND_BUNDLE_KEY, information);
+        bundle.putSerializable(SEND_BUNDLE_KEY, objSins.dataSource.get(position));
 
-        intentActivity(this, CheckDetailActivity.class, false, bundle);
+    //    intentActivity(this, CheckDetailActivity.class, false, bundle);
     }
 
-    @Override
-    public void onRefresh() {
-
+    private void refreshUI(){
+        adapter.setData(objSins.dataSource);
+        adapter.notifyDataSetChanged();
     }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    private class ListAdapter extends CommonAdapter<SecurityCheckInformation> {
-        public ListAdapter(Context context, int layoutId, List<SecurityCheckInformation> datas) {
+    private class ListAdapter extends CommonAdapter<ObjSins> {
+        public ListAdapter(Context context, int layoutId, List<ObjSins> datas) {
             super(context, layoutId, datas);
         }
 
         @Override
-        public void convert(ViewHolder holder, SecurityCheckInformation information) {
-            ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(information.getDate());
-            ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(information.getTitle());
+        public void convert(ViewHolder holder, ObjSins objSins) {
+            ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(objSins.getSinsStartTime()+"-"+objSins.getSinsCompTime());
+            ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(objSins.getSinsDeplName());
         }
     }
 }

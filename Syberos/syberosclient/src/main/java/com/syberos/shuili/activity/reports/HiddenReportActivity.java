@@ -43,7 +43,7 @@ public class HiddenReportActivity extends BaseActivity{
 
     final String Tag = AcciReportActivity.class.getSimpleName();
     final String title = "事故报表";
-    String header[] = {"本单位","直管单位","监管单位"};
+    String header[] = {"直管单位","监管单位"};
     GroupedReportListAdapter groupedReportListAdapter;
     ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups = new ArrayList<>();
 
@@ -104,7 +104,7 @@ public class HiddenReportActivity extends BaseActivity{
                     return;
                 }
                 if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
-                    mGroups.add(new GroupInformationEntity<>(header[2], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 refreshUI();
             }
@@ -133,7 +133,7 @@ public class HiddenReportActivity extends BaseActivity{
                     return;
                 }
                 if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
-                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                    mGroups.add(new GroupInformationEntity<>(header[0], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 getSubUnitReportList();
             }
@@ -275,6 +275,7 @@ public class HiddenReportActivity extends BaseActivity{
 
             final BisOrgMonRepPeriForAdmin reportForAdmin
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
+            tv_sub_unit.setText(reportForAdmin.getWiunName());
             if(reportForAdmin.getStatus().equals("2")){
                 if(true){
                     // /退回
