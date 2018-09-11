@@ -150,9 +150,10 @@ public class RetrofitHttpMethods {
     //    专题图——安全检查
     public void getThematicSins(BaseObserver<SinsEntry> observer, String sourceType,
                                 String orgGuid,
+                                String subSourceType,
                                 String startTime,
                                 String endTime) {
-        Observable<SinsEntry> observable = retrofitApiService.getThematicSins(sourceType, orgGuid, startTime, endTime);
+        Observable<SinsEntry> observable = retrofitApiService.getThematicSins(sourceType, orgGuid, subSourceType,startTime, endTime);
         observable
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

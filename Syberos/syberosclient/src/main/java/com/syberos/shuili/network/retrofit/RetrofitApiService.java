@@ -72,6 +72,7 @@ public interface RetrofitApiService {
     @POST("/desu/serv/v1/sins")
     Observable<SinsEntry> getThematicSins(@Query("sourceType") String sourceType,
                                           @Query("orgGuid") String orgGuid,
+                                          @Query("subSourceType") String subSourceType,
                                           @Query("startTime") String startTime,
                                           @Query("endTime") String endTime);
 

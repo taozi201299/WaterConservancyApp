@@ -42,70 +42,16 @@ public class SinsEntry implements Serializable {
          * SUBSINSDATA : [{"OBJGUID":"440000","OBJLAT":22.86848363,"OBJLONG":113.48059109,"OBJNAME":"广东省","SINSHIDDGRAD1QUA":4260,"SINSHIDDGRAD2QUA":76,"SINSHIDDQUA":4336,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":47,"SINSOBJQUA":47,"SINSQUA":1},{"OBJGUID":"120000","OBJLAT":39.40334844,"OBJLONG":117.33696174,"OBJNAME":"天津市","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"330000","OBJLAT":29.17412406,"OBJLONG":119.79132691,"OBJNAME":"浙江省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"140000","OBJLAT":37.66436048,"OBJLONG":112.45892226,"OBJNAME":"山西省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"310000","OBJLAT":31.27676454,"OBJLONG":121.46659107,"OBJNAME":"上海市","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"500000","OBJLAT":30.18369894,"OBJLONG":107.86711063,"OBJNAME":"重庆市","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"610000","OBJLAT":35.64603571,"OBJLONG":109.56550263,"OBJNAME":"陕西省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"210000","OBJLAT":41.10441197,"OBJLONG":122.39240742,"OBJNAME":"辽宁省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"370000","OBJLAT":36.34547905,"OBJLONG":118.04478661,"OBJNAME":"山东省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"420000","OBJLAT":31.15276964,"OBJLONG":112.88212829,"OBJNAME":"湖北省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"460000","OBJLAT":19.16095687,"OBJLONG":109.62831135,"OBJNAME":"海南省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"530000","OBJLAT":25.1838847,"OBJLONG":101.26685933,"OBJNAME":"云南省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"640000","OBJLAT":37.31320926,"OBJLONG":105.960992,"OBJNAME":"宁夏","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"130000","OBJLAT":39.33219326,"OBJLONG":115.67215655,"OBJNAME":"河北省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"630000","OBJLAT":35.40683703,"OBJLONG":95.94785687,"OBJNAME":"青海省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"350000","OBJLAT":25.96133254,"OBJLONG":118.01870611,"OBJNAME":"福建省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"230000","OBJLAT":48.49233333,"OBJLONG":127.57490952,"OBJNAME":"黑龙江","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"340000","OBJLAT":32.02375561,"OBJLONG":117.15520444,"OBJNAME":"安徽省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"360000","OBJLAT":27.28331977,"OBJLONG":115.51220985,"OBJNAME":"江西省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"620000","OBJLAT":37.69545032,"OBJLONG":102.89800812,"OBJNAME":"甘肃省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"540000","OBJLAT":31.66895364,"OBJLONG":87.47374901,"OBJNAME":"西藏","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"320000","OBJLAT":32.9436311,"OBJLONG":120.01272712,"OBJNAME":"江苏省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"430000","OBJLAT":27.38391986,"OBJLONG":111.35473282,"OBJNAME":"湖南省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"510000","OBJLAT":30.18147777,"OBJLONG":102.26163186,"OBJNAME":"四川省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"450000","OBJLAT":23.87837719,"OBJLONG":109.00317267,"OBJNAME":"广西","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"150000","OBJLAT":45.37024337,"OBJLONG":118.34013112,"OBJNAME":"内蒙古","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"220000","OBJLAT":43.58036722,"OBJLONG":126.1279252,"OBJNAME":"吉林省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"520000","OBJLAT":26.92300484,"OBJLONG":106.62654329,"OBJNAME":"贵州省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"110000","OBJLAT":40.25079116,"OBJLONG":116.6276579,"OBJNAME":"北京市","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"650000","OBJLAT":41.75689652,"OBJLONG":87.16690809,"OBJNAME":"新疆","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0},{"OBJGUID":"410000","OBJLAT":33.87558911,"OBJLONG":113.0730524,"OBJNAME":"河南省","SINSHIDDGRAD1QUA":0,"SINSHIDDGRAD2QUA":0,"SINSHIDDQUA":0,"SINSHIDDRECTQUA":0,"SINSOBJCOMPQUA":0,"SINSOBJQUA":0,"SINSQUA":0}]
          */
 
-        private int SINSHIDDGRAD1QUA;
-        private int SINSHIDDGRAD2QUA;
-        private int SINSHIDDQUA;
-        private int SINSHIDDRECTQUA;
-        private int SINSOBJCOMPQUA;
-        private int SINSOBJQUA;
-        private int SINSQUA;
+        private String  SINSHIDDGRAD1QUA;
+        private String SINSHIDDGRAD2QUA;
+        private String SINSHIDDQUA;
+        private String SINSHIDDRECTQUA;
+        private String SINSOBJCOMPQUA;
+        private String SINSOBJQUA;
+        private String SINSQUA;
         private List<SUBSINSDATABean> SUBSINSDATA;
 
-        public int getSINSHIDDGRAD1QUA() {
-            return SINSHIDDGRAD1QUA;
-        }
 
-        public void setSINSHIDDGRAD1QUA(int SINSHIDDGRAD1QUA) {
-            this.SINSHIDDGRAD1QUA = SINSHIDDGRAD1QUA;
-        }
-
-        public int getSINSHIDDGRAD2QUA() {
-            return SINSHIDDGRAD2QUA;
-        }
-
-        public void setSINSHIDDGRAD2QUA(int SINSHIDDGRAD2QUA) {
-            this.SINSHIDDGRAD2QUA = SINSHIDDGRAD2QUA;
-        }
-
-        public int getSINSHIDDQUA() {
-            return SINSHIDDQUA;
-        }
-
-        public void setSINSHIDDQUA(int SINSHIDDQUA) {
-            this.SINSHIDDQUA = SINSHIDDQUA;
-        }
-
-        public int getSINSHIDDRECTQUA() {
-            return SINSHIDDRECTQUA;
-        }
-
-        public void setSINSHIDDRECTQUA(int SINSHIDDRECTQUA) {
-            this.SINSHIDDRECTQUA = SINSHIDDRECTQUA;
-        }
-
-        public int getSINSOBJCOMPQUA() {
-            return SINSOBJCOMPQUA;
-        }
-
-        public void setSINSOBJCOMPQUA(int SINSOBJCOMPQUA) {
-            this.SINSOBJCOMPQUA = SINSOBJCOMPQUA;
-        }
-
-        public int getSINSOBJQUA() {
-            return SINSOBJQUA;
-        }
-
-        public void setSINSOBJQUA(int SINSOBJQUA) {
-            this.SINSOBJQUA = SINSOBJQUA;
-        }
-
-        public int getSINSQUA() {
-            return SINSQUA;
-        }
-
-        public void setSINSQUA(int SINSQUA) {
-            this.SINSQUA = SINSQUA;
-        }
 
         public List<SUBSINSDATABean> getSUBSINSDATA() {
             if (SUBSINSDATA == null) {
@@ -116,6 +62,62 @@ public class SinsEntry implements Serializable {
 
         public void setSUBSINSDATA(List<SUBSINSDATABean> SUBSINSDATA) {
             this.SUBSINSDATA = SUBSINSDATA;
+        }
+
+        public String getSINSHIDDGRAD1QUA() {
+            return SINSHIDDGRAD1QUA == null ? "" : SINSHIDDGRAD1QUA;
+        }
+
+        public void setSINSHIDDGRAD1QUA(String SINSHIDDGRAD1QUA) {
+            this.SINSHIDDGRAD1QUA = SINSHIDDGRAD1QUA;
+        }
+
+        public String getSINSHIDDGRAD2QUA() {
+            return SINSHIDDGRAD2QUA == null ? "" : SINSHIDDGRAD2QUA;
+        }
+
+        public void setSINSHIDDGRAD2QUA(String SINSHIDDGRAD2QUA) {
+            this.SINSHIDDGRAD2QUA = SINSHIDDGRAD2QUA;
+        }
+
+        public String getSINSHIDDQUA() {
+            return SINSHIDDQUA == null ? "" : SINSHIDDQUA;
+        }
+
+        public void setSINSHIDDQUA(String SINSHIDDQUA) {
+            this.SINSHIDDQUA = SINSHIDDQUA;
+        }
+
+        public String getSINSHIDDRECTQUA() {
+            return SINSHIDDRECTQUA == null ? "" : SINSHIDDRECTQUA;
+        }
+
+        public void setSINSHIDDRECTQUA(String SINSHIDDRECTQUA) {
+            this.SINSHIDDRECTQUA = SINSHIDDRECTQUA;
+        }
+
+        public String getSINSOBJCOMPQUA() {
+            return SINSOBJCOMPQUA == null ? "" : SINSOBJCOMPQUA;
+        }
+
+        public void setSINSOBJCOMPQUA(String SINSOBJCOMPQUA) {
+            this.SINSOBJCOMPQUA = SINSOBJCOMPQUA;
+        }
+
+        public String getSINSOBJQUA() {
+            return SINSOBJQUA == null ? "" : SINSOBJQUA;
+        }
+
+        public void setSINSOBJQUA(String SINSOBJQUA) {
+            this.SINSOBJQUA = SINSOBJQUA;
+        }
+
+        public String getSINSQUA() {
+            return SINSQUA == null ? "" : SINSQUA;
+        }
+
+        public void setSINSQUA(String SINSQUA) {
+            this.SINSQUA = SINSQUA;
         }
 
         public static class SUBSINSDATABean {
@@ -134,40 +136,17 @@ public class SinsEntry implements Serializable {
              */
 
             private String OBJGUID;
-            private double OBJLAT;
-            private double OBJLONG;
+            private String OBJLAT;
+            private String OBJLONG;
             private String OBJNAME;
-            private int SINSHIDDGRAD1QUA;
-            private int SINSHIDDGRAD2QUA;
-            private int SINSHIDDQUA;
-            private int SINSHIDDRECTQUA;
-            private int SINSOBJCOMPQUA;
-            private int SINSOBJQUA;
-            private int SINSQUA;
+            private String SINSHIDDGRAD1QUA;
+            private String SINSHIDDGRAD2QUA;
+            private String SINSHIDDQUA;
+            private String SINSHIDDRECTQUA;
+            private String SINSOBJCOMPQUA;
+            private String SINSOBJQUA;
+            private String SINSQUA;
 
-            public String getOBJGUID() {
-                return OBJGUID == null ? "" : OBJGUID;
-            }
-
-            public void setOBJGUID(String OBJGUID) {
-                this.OBJGUID = OBJGUID;
-            }
-
-            public double getOBJLAT() {
-                return OBJLAT;
-            }
-
-            public void setOBJLAT(double OBJLAT) {
-                this.OBJLAT = OBJLAT;
-            }
-
-            public double getOBJLONG() {
-                return OBJLONG;
-            }
-
-            public void setOBJLONG(double OBJLONG) {
-                this.OBJLONG = OBJLONG;
-            }
 
             public String getOBJNAME() {
                 return OBJNAME == null ? "" : OBJNAME;
@@ -177,59 +156,83 @@ public class SinsEntry implements Serializable {
                 this.OBJNAME = OBJNAME;
             }
 
-            public int getSINSHIDDGRAD1QUA() {
-                return SINSHIDDGRAD1QUA;
+            public String getOBJGUID() {
+                return OBJGUID == null ? "" : OBJGUID;
             }
 
-            public void setSINSHIDDGRAD1QUA(int SINSHIDDGRAD1QUA) {
+            public void setOBJGUID(String OBJGUID) {
+                this.OBJGUID = OBJGUID;
+            }
+
+            public String getOBJLAT() {
+                return OBJLAT == null ? "" : OBJLAT;
+            }
+
+            public void setOBJLAT(String OBJLAT) {
+                this.OBJLAT = OBJLAT;
+            }
+
+            public String getOBJLONG() {
+                return OBJLONG == null ? "" : OBJLONG;
+            }
+
+            public void setOBJLONG(String OBJLONG) {
+                this.OBJLONG = OBJLONG;
+            }
+
+            public String getSINSHIDDGRAD1QUA() {
+                return SINSHIDDGRAD1QUA == null ? "" : SINSHIDDGRAD1QUA;
+            }
+
+            public void setSINSHIDDGRAD1QUA(String SINSHIDDGRAD1QUA) {
                 this.SINSHIDDGRAD1QUA = SINSHIDDGRAD1QUA;
             }
 
-            public int getSINSHIDDGRAD2QUA() {
-                return SINSHIDDGRAD2QUA;
+            public String getSINSHIDDGRAD2QUA() {
+                return SINSHIDDGRAD2QUA == null ? "" : SINSHIDDGRAD2QUA;
             }
 
-            public void setSINSHIDDGRAD2QUA(int SINSHIDDGRAD2QUA) {
+            public void setSINSHIDDGRAD2QUA(String SINSHIDDGRAD2QUA) {
                 this.SINSHIDDGRAD2QUA = SINSHIDDGRAD2QUA;
             }
 
-            public int getSINSHIDDQUA() {
-                return SINSHIDDQUA;
+            public String getSINSHIDDQUA() {
+                return SINSHIDDQUA == null ? "" : SINSHIDDQUA;
             }
 
-            public void setSINSHIDDQUA(int SINSHIDDQUA) {
+            public void setSINSHIDDQUA(String SINSHIDDQUA) {
                 this.SINSHIDDQUA = SINSHIDDQUA;
             }
 
-            public int getSINSHIDDRECTQUA() {
-                return SINSHIDDRECTQUA;
+            public String getSINSHIDDRECTQUA() {
+                return SINSHIDDRECTQUA == null ? "" : SINSHIDDRECTQUA;
             }
 
-            public void setSINSHIDDRECTQUA(int SINSHIDDRECTQUA) {
+            public void setSINSHIDDRECTQUA(String SINSHIDDRECTQUA) {
                 this.SINSHIDDRECTQUA = SINSHIDDRECTQUA;
             }
 
-            public int getSINSOBJCOMPQUA() {
-                return SINSOBJCOMPQUA;
+            public String getSINSOBJCOMPQUA() {
+                return SINSOBJCOMPQUA == null ? "" : SINSOBJCOMPQUA;
             }
 
-            public void setSINSOBJCOMPQUA(int SINSOBJCOMPQUA) {
+            public void setSINSOBJCOMPQUA(String SINSOBJCOMPQUA) {
                 this.SINSOBJCOMPQUA = SINSOBJCOMPQUA;
             }
 
-            public int getSINSOBJQUA() {
-                return SINSOBJQUA;
+            public String getSINSOBJQUA() {
+                return SINSOBJQUA == null ? "" : SINSOBJQUA;
             }
 
-            public void setSINSOBJQUA(int SINSOBJQUA) {
+            public void setSINSOBJQUA(String SINSOBJQUA) {
                 this.SINSOBJQUA = SINSOBJQUA;
             }
 
-            public int getSINSQUA() {
-                return SINSQUA;
+            public String getSINSQUA() {
+                return SINSQUA == null ? "" : SINSQUA;
             }
 
-            public void setSINSQUA(int SINSQUA) {
+            public void setSINSQUA(String SINSQUA) {
                 this.SINSQUA = SINSQUA;
             }
         }
