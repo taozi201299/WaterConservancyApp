@@ -83,8 +83,7 @@ public class DataReviewListActivity extends TranslucentActivity
     private void getobjStanRevisList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String> param = new HashMap<>();
-       // param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        param.put("applOrgGuid","D6B99E42B16141409698EEEC6ED5646E");
+        param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("veriConc","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override

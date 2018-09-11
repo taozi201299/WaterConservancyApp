@@ -8,6 +8,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.ReviewItemInformation;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -146,7 +147,7 @@ public class SceneReviewDetailActivity extends TranslucentActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","3");
         if(currentLevel == ReviewItemInformation.LEVEL_3)

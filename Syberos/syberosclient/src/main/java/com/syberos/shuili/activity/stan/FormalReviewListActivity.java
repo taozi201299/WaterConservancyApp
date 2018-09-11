@@ -129,8 +129,7 @@ public class FormalReviewListActivity extends TranslucentActivity
     private void getobjStanRevisList() {
        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String>param = new HashMap<>();
-      //  param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        param.put("applOrgGuid","13B9B5C0FA6C425891A7F8DECF86A24A");
+        param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("veriConc","0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override

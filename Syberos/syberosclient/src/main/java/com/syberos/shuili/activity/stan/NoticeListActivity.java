@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.microedition.khronos.opengles.GL;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -207,7 +209,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
      * 提交到公示公告表
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/puno/objPuno/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/objPuno/";
         HashMap<String,String> params= new HashMap<>();
         params.put("titl","");    // 标题
         params.put("cont","");  //内容

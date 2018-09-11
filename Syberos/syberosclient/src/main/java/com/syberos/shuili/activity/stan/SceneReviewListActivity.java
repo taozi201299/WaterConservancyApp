@@ -61,8 +61,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","2");
-       // param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        param.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
+        param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("ifAgre","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
