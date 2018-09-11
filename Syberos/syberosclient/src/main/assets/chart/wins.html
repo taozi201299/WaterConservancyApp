@@ -56,8 +56,8 @@ function showMap(x, y,level) {
                                           });
                 mapDEMO.map.addOverlay(overlay);
             }
-            var obj = id["id"];
-            var acciInfo = getAcciInfoForMark(obj);
+            var obj = id["id"];    
+            var acciInfo = getHiddenInfoForMark(obj);
             var markInfo = JSON.parse(acciInfo);
             var divMark = document.getElementById('mark');
             var objTitle = document.getElementById('title').innerText= markInfo.orgName;
@@ -98,8 +98,8 @@ function showMap(x, y,level) {
          var result = window.DEMO.getLocalUrl(id,src);
          imageTile.getImage().src = result
     }
-    function getAcciInfoForMark(orgGuid){
-        var jsonStr = window.DEMO.getAcciInfoForMark(orgGuid);
+    function getHiddenInfoForMark(orgGuid){
+        var jsonStr = window.DEMO.getHiddenInfo(orgGuid);
         return jsonStr;
 
     }
@@ -125,18 +125,23 @@ function updateCurrentPoint(jsonStr) {
 var mLat ;
 var mLon ;
 var val;
+
+var itemID;
   for (var i = 0; i < jsonStr.length; i++) {
         //result[i]表示获得第i个json对象即JSONObject
         //result[i]通过.字段名称即可获得指定字段的值
         mLat = jsonStr[i].lat;
 		mLon = jsonStr[i].lon;
 		val = jsonStr[i].value;
+        alert(val);
+        itemID = jsonStr[i].guid;
+        alert(itemID)
     // 初始化 feature start
     var Coordinates = [mLon, mLat+2];
     var iconFeature = new ol.Feature(
                 {
                     geometry: new ol.geom.Point(Coordinates),
-                    id:'13B9B5C0FA6C425891A7F8DECF86A24A'
+                    id:itemID
 
                 }
                 );

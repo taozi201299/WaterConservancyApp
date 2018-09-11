@@ -12,7 +12,7 @@
 
 <body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;left: 0;right: 0;top: 0;bottom: 0;position: absolute;display: block;">
 	<div id="map" style="width: 100%;height:100%"></div>
-	<div id="mark" style="border-radius:8px; color:#333;height:100px;width:120px"><span id="title" style="font-size:16px; font-weight:bold;"></span><p
+	<div id="mark" style="border-radius:8px; color:#333;height:200px;width:150px"><span id="title" style="font-size:16px; font-weight:bold;"></span><p
 		 style=" font-size:14px;">隐患数量 <b style="font-size:16px; font-weight:bold;">5</b><br>整改数量 <b style="font-size:16px; font-weight:bold;">17</b><br>隐患整改率
 			<b style="font-size:14px; font-weight:bold;">1600万</b></p><a style="font-size:12px; color:#ccc;">详情...</a></div>
 	<script type="text/javascript">
@@ -276,12 +276,14 @@
 			var mLat;
 			var mLon;
 			var val;
+			var itemID;
 			for (var i = 0; i < jsonStr.length; i++) {
 				//result[i]表示获得第i个json对象即JSONObject
 				//result[i]通过.字段名称即可获得指定字段的值
 				mLat = jsonStr[i].lat;
 				mLon = jsonStr[i].lon;
 				val = jsonStr[i].value;
+                itemID = jsonStr[i].guid;
 				// 初始化 feature start
 				var Coordinates = [mLon, mLat + 2];
 				// alert(Coordinates[0]);
@@ -289,7 +291,7 @@
 				var iconFeature = new ol.Feature(
 					{
 						geometry: new ol.geom.Point(Coordinates),
-						id: 'current_point_vector_feature'
+						id:itemID
 
 					}
 				);

@@ -140,12 +140,14 @@
             var mLat;
             var mLon;
             var val;
+            var itemID;
             for (var i = 0; i < jsonStr.length; i++) {
                 //result[i]表示获得第i个json对象即JSONObject
                 //result[i]通过.字段名称即可获得指定字段的值
                 mLat = jsonStr[i].lat;
                 mLon = jsonStr[i].lon;
                 val = jsonStr[i].value;
+                itemID = jsonStr[i].guid;
                 // 初始化 feature start
                 var Coordinates = [mLon, mLat + 2];
                 // alert(Coordinates[0]);
@@ -153,7 +155,7 @@
                 var iconFeature = new ol.Feature(
                     {
                         geometry: new ol.geom.Point(Coordinates),
-                        id: '13B9B5C0FA6C425891A7F8DECF86A24A'
+                        id: itemID
 
                     }
                 );
