@@ -57,15 +57,6 @@ function showMap(x, y,level) {
                                           });
                 mapDEMO.map.addOverlay(overlay);
             }
-			var obj = id["id"];
-            var acciInfo = getAcciInfoForMark(obj);
-            var markInfo = JSON.parse(acciInfo);
-            var divMark = document.getElementById('mark');
-            var objTitle = document.getElementById('title').innerText= markInfo.orgName;
-            document.getElementsByTagName('b')[0].innerHTML = markInfo.occNum;
-            document.getElementsByTagName('b')[1].innerHTML = markInfo.acciCasNum;
-            document.getElementsByTagName('b')[2].innerHTML = markInfo.acciLoss;
-            overlay.show(feature.getGeometry().getCoordinates(),divMark);
         }
     }
     current_point_x = x;

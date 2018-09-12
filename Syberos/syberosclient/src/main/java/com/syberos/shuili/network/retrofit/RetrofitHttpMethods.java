@@ -7,6 +7,8 @@ import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
+import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
+import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 
@@ -112,6 +114,33 @@ public class RetrofitHttpMethods {
                 .subscribe(observer);
 //        tag = "getThematicAcci";
 //        RxApiManager.get().add(tag, observable.subscribe());
+    }
+    /**
+     *  获取风险源数据
+     */
+    /**
+     * 获取标准化数据 -- 监管数据
+     */
+    public void getThematicStans(BaseObserver<StanSuperviseEntry> observer, String sourceType,
+                                 String orgGuid) {
+        Observable<StanSuperviseEntry> observable = retrofitApiService.getThematicStan(sourceType, orgGuid);
+        observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+    /**
+     * 获取标准化数据 -- 直管数据
+     */
+    public void getThematicStansDirect(BaseObserver<StanDirectEntry> observer, String sourceType,
+                                       String orgGuid) {
+        Observable<StanDirectEntry> observable = retrofitApiService.getThematicStanDirect(sourceType, orgGuid);
+        observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     /**
