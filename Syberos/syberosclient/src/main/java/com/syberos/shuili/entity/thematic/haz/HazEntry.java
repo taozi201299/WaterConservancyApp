@@ -33,7 +33,7 @@ public class HazEntry implements Serializable {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable{
     }
 
     public static class DataBean implements Serializable {

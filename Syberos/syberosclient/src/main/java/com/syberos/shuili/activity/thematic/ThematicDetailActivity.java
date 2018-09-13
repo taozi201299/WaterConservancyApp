@@ -10,6 +10,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
+import com.syberos.shuili.entity.thematic.haz.HazEntry;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
@@ -112,8 +113,9 @@ public class ThematicDetailActivity extends BActivity {
                 switchFragment(fragments[1]);
                 break;
             case Haz:
-//                todo 危险源
                 tvTitle.setText("危险源");
+                HazEntry hazEntry = (HazEntry)(getIntent().getBundleExtra("hazData").getSerializable("hazData"));
+                ((ThematicDetailHazFragment)fragments[2]).setData(hazEntry);
                 switchFragment(fragments[2]);
                 break;
             case Stan:

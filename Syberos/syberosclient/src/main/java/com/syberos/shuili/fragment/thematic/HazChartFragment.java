@@ -68,6 +68,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     private int orgLevel = BusinessConfig.getOrgLevel();
     private int orgType; // 1 行政区划 2 流域用户
 
+
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
             put("北京市", "5");
@@ -345,7 +346,12 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
 
 
     }
-
+    private void  setData(HazEntry hazEntry){
+        this.hazEntry = hazEntry;
+    }
+    public HazEntry getData(){
+        return this.hazEntry;
+    }
     class Point {
         public Point(String lon, String lat, String value,String guid) {
             this.lon = lon;

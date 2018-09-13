@@ -1,7 +1,5 @@
-package com.syberos.shuili.fragment.thematic.detail;
+package com.syberos.shuili.activity.thematic;
 
-import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,12 +9,8 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
-import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
-import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.thematic.haz.HazEntry;
-import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -26,14 +20,10 @@ import butterknife.BindView;
 import butterknife.Unbinder;
 
 /**
- * Created by BZB on 2018/8/11.
- * Project: Syberos.
- * Package：com.syberos.shuili.fragment.thematic.detail.
- *
- * 危险源
+ * Created by Administrator on 2018/9/13.
  */
-public class ThematicDetailHazFragment extends BaseLazyFragment {
 
+public class ThematicHazItemDetailActivity extends BaseActivity {
     @BindView(R.id.tv_view_title)
     TextView tvViewTitle;
     @BindView(R.id.iv_mark_pot_2)
@@ -124,42 +114,40 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     RecyclerView recyclerView;
     Unbinder unbinder;
 
-    private HazEntry hazEntry = null;
+    private HazEntry.EveryEngBean hazEntry = null;
+
 
     @Override
-    protected int getLayoutID() {
-        return R.layout.fragment_thematic_detail_haz;
+    public int getLayoutId() {
+         return R.layout.fragment_thematic_detail_haz;
     }
 
     @Override
-    protected void initListener() {
+    public void initListener() {
 
     }
 
     @Override
-    protected void initData() {
-
-        ArrayList<HazEntry.CountBean> list  = (ArrayList<HazEntry.CountBean>) hazEntry.getData().getCountEngList();
-        HazEntry.CountBean bean = list.get(0);
-        tvData1.setText(bean.getYGK()+"");
+    public void initData() {
+        hazEntry = (HazEntry.EveryEngBean) getIntent().getSerializableExtra("hazData");
         tvDataTitle1.setText("已管控数量");
-        tvData2.setText(bean.getWGK()+"");
+        tvData2.setText(hazEntry.getWGK()+"");
         tvDataTitle2.setText("未管控数量");
 
         List<PieEntry> dataList=new ArrayList<>();
-        dataList.add(new PieEntry(bean.getGENERALNOTREG(),"一般危险源数量 "+bean.getGENERALNOTREG()));
-        dataList.add(new PieEntry(bean.getGENERALNOTREG(),"重大危险源数量 "+bean.getGENERALNOTREG()));
+        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"一般危险源数量 "+hazEntry.getGENERALNOTREG()));
+        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"重大危险源数量 "+hazEntry.getGENERALNOTREG()));
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext,pieCharHazRate,dataList,true);
 
-        tvValue11.setText(bean.getGENERALHAVECONTROL()+"");
-        tvValue12.setText(bean.getGENERALNOTCONTROL()+"");
-        tvValue13.setText(bean.getGENERALCONTROLRATE());
+        tvValue11.setText(hazEntry.getGENERALHAVECONTROL()+"");
+        tvValue12.setText(hazEntry.getGENERALNOTCONTROL()+"");
+        tvValue13.setText(hazEntry.getGENERALCONTROLRATE());
 
-        tvValue21.setText(bean.getMAJORHAVECONTROL()+"");
-        tvValue22.setText(bean.getMAJORNOTCONTROL()+"");
-        tvValue23.setText(bean.getMAJORCONTROLRATE());
-        tvValue24.setText(bean.getMAJORHAVEREG()+"");
-        tvValue25.setText(bean.getMAJORREGRATE());
+        tvValue21.setText(hazEntry.getMAJORHAVECONTROL()+"");
+        tvValue22.setText(hazEntry.getMAJORNOTCONTROL()+"");
+        tvValue23.setText(hazEntry.getMAJORCONTROLRATE());
+        tvValue24.setText(hazEntry.getMAJORHAVEREG()+"");
+        tvValue25.setText(hazEntry.getMAJORREGRATE());
 
         tvValue31.setText(10+"");
         tvValue32.setText(4+"");
@@ -167,26 +155,10 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         tvValue34.setText(10+"");
         tvValue35.setText("80%");
 
-        List<ProjectEntry> projectEntryArrayList = new ArrayList<>();
-        for(HazEntry.EveryEngBean everyEngBean : hazEntry.getData().getEveryEngList()) {
-            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), "100"));
-        }
-        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(projectEntryArrayList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(adapterGeneral);
-        adapterGeneral.setListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
-                intent.putExtra("hazData",hazEntry.getData().getEveryEngList().get(position));
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         ivMarkPot1.setVisibility(View.GONE);
         tvChartValue1.setVisibility(View.GONE);
         tvChartValueTitle1.setVisibility(View.GONE);
@@ -207,10 +179,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
 
-
-    }
-    public void setData(HazEntry hazEntry){
-        this.hazEntry = hazEntry;
     }
 }
