@@ -27,7 +27,7 @@ import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.fragment.thematic.AccidentChartFragment;
-import com.syberos.shuili.fragment.thematic.DanagerSourceChartFragment;
+import com.syberos.shuili.fragment.thematic.HazChartFragment;
 import com.syberos.shuili.fragment.thematic.HiddenChartFragment;
 import com.syberos.shuili.fragment.thematic.SinsChartFragment;
 import com.syberos.shuili.fragment.thematic.StanChartFragment;
@@ -201,7 +201,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                     fragment = new AccidentChartFragment();
                     break;
                 case Haz:
-                    fragment = new DanagerSourceChartFragment();
+                    fragment = new HazChartFragment();
                     break;
                 case Stan:
                     fragment = new StanChartFragment();
@@ -328,8 +328,8 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 ((HiddenChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof AccidentChartFragment) {
                 ((AccidentChartFragment) item).setMapData(mapBoundBean.result.get(0));
-            } else if (item instanceof DanagerSourceChartFragment) {
-                ((DanagerSourceChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof HazChartFragment) {
+                ((HazChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof SinsChartFragment) {
                 ((SinsChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof StanChartFragment) {

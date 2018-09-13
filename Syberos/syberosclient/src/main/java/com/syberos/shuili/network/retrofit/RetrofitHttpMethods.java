@@ -5,6 +5,7 @@ import android.util.Log;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
+import com.syberos.shuili.entity.thematic.haz.HazEntry;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
@@ -94,8 +95,6 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getThematicHidden";
-//        RxApiManager.get().add(tag, observable.subscribe());
     }
 
 
@@ -112,12 +111,19 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getThematicAcci";
-//        RxApiManager.get().add(tag, observable.subscribe());
     }
     /**
      *  获取风险源数据
      */
+    public void getThematicHaz(BaseObserver<HazEntry> observer, String sourceType,
+                                 String orgGuid) {
+        Observable<HazEntry> observable = retrofitApiService.getThematicHaz(sourceType, orgGuid);
+        observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
     /**
      * 获取标准化数据 -- 监管数据
      */
@@ -157,12 +163,11 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getThematicWins";
-//
-//        RxApiManager.get().add(tag, observable.subscribe());
     }
 
-    //    专题图——工作考核
+    /**
+     * 工作考核 专题图
+     */
     public void getThematicWoas(BaseObserver<WoasEntry> observer, String sourceType,
                                 String orgGuid,
                                 String startTime,
@@ -172,11 +177,11 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getThematicWoas";
-//        RxApiManager.get().add(tag, observable.subscribe());
     }
 
-    //    专题图——安全检查
+    /**
+     * 安全检查 专题图
+     */
     public void getThematicSins(BaseObserver<SinsEntry> observer, String sourceType,
                                 String orgGuid,
                                 String subSourceType,
@@ -188,10 +193,19 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getThematicSins";
-//        RxApiManager.get().add(tag, observable.subscribe());
     }
-
+    /**
+     * 监督执法 专题图
+     */
+    public void getThematicSuen(BaseObserver<WoasEntry> observer, String sourceType,
+                                 String orgGuid) {
+        Observable<WoasEntry> observable = retrofitApiService.getThematicSuen(sourceType, orgGuid);
+        observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 
     //    安全云-工程的
     public void getSecurityOrgData(BaseObserver<SecurityCloudOrgEntry> observer, String sourceType,
@@ -205,10 +219,9 @@ public class RetrofitHttpMethods {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        tag = "getSecurityOrgData";
-//        RxApiManager.get().add(tag, observable.subscribe());
 
-    } //    安全云-区域的
+    }
+    //    安全云-区域的
 
     public void getSecurityAreaData(BaseObserver<SecurityCloudAreaEntry> observer, String sourceType,
                                     String orgGuid,

@@ -36,7 +36,7 @@ public class HazEntry implements Serializable {
     public static class MetaBean {
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         private List<CountBean> countEngList;
         private List<EveryEngBean> everyEngList;
 
@@ -57,7 +57,7 @@ public class HazEntry implements Serializable {
         }
     }
 
-    private class CountBean implements Serializable{
+    public class CountBean implements Serializable{
 
         private int GENERALHAVECONTROL;
         private String GENERALCONTROLRATE;
@@ -214,7 +214,7 @@ public class HazEntry implements Serializable {
             this.MAJORREGCOUNT = MAJORREGCOUNT;
         }
     }
-    private class EveryEngBean implements Serializable{
+    public class EveryEngBean implements Serializable{
 
         /**
          * GENERALHAVECONTROL : 121
@@ -254,7 +254,7 @@ public class HazEntry implements Serializable {
         private int GENERALNOTCONTROL;
         private String MAJORCONTROLRATE;
         private int GENERALHAVEREG;
-        private double AD_LAT;
+        private double Y;
         private int GENERALNOTREG;
         private int MAJORNOTCONTROL;
         private int MAJORCONTROLCOUNT;
@@ -368,12 +368,12 @@ public class HazEntry implements Serializable {
             this.GENERALHAVEREG = GENERALHAVEREG;
         }
 
-        public double getAD_LAT() {
-            return AD_LAT;
+        public void setY(double y) {
+            Y = y;
         }
 
-        public void setAD_LAT(double AD_LAT) {
-            this.AD_LAT = AD_LAT;
+        public double getY() {
+            return Y;
         }
 
         public int getGENERALNOTREG() {

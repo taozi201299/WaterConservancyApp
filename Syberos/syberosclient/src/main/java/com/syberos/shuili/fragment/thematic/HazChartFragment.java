@@ -40,7 +40,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2018/6/26.
  */
 
-public class DanagerSourceChartFragment extends BaseLazyFragment implements View.OnClickListener {
+public class HazChartFragment extends BaseLazyFragment implements View.OnClickListener {
 
     @BindView(R.id.webview)
     WebView webView;
@@ -178,12 +178,14 @@ public class DanagerSourceChartFragment extends BaseLazyFragment implements View
 
     }
 
-    public HazEntry getHiddenEntry() {
+    public HazEntry getHazEntry() {
         return hazEntry;
     }
-    public void setHiddenEntry(HazEntry hazEntry) {
-        this.hazEntry = hazEntry ;
+
+    public void setHazEntry(HazEntry hazEntry) {
+        this.hazEntry = hazEntry;
     }
+
     HazEntry hazEntry;
 
     public void webMap() {//地图定位
@@ -242,20 +244,28 @@ public class DanagerSourceChartFragment extends BaseLazyFragment implements View
             Toast.makeText(mContext, "map test", Toast.LENGTH_SHORT).show();
         }
 
+        @JavascriptInterface
+        public String getHazInfo(String orgGuid) {
+            Gson gson = new Gson();
+            String jsonStr = "";
+            HazEntry hazEntry = getHazEntry();
+            HazInfo hazInfo ;
+            for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
+                if(orgGuid.equals(bean.getORGCODE())){
+                    hazInfo = new HazInfo();
+                    hazInfo.name = bean.getORGNAME();
+                    hazInfo.hazCount = String.valueOf(bean.getGENERALCONTROLCOUNT());
+                    jsonStr = gson.toJson(hazInfo);
+                    break;
+                }
+            }
+            return jsonStr;
+        }
     }
 
-    class HiddenInfo implements Serializable{
-        String title;
-        int totalCount;
-        int rectifyCount;
-        String rectifyRate;
-
-        public HiddenInfo(String title, int totalCount, int rectifyCount, String rectifyRate) {
-            this.title = title;
-            this.totalCount = totalCount;
-            this.rectifyCount = rectifyCount;
-            this.rectifyRate = rectifyRate;
-        }
+    public static class HazInfo{
+        String  name;
+        String  hazCount;
     }
 
     public void setMapData(MapBoundBean mapData) {
@@ -297,41 +307,41 @@ public class DanagerSourceChartFragment extends BaseLazyFragment implements View
         } else {
             type = 1;
         }
-        RetrofitHttpMethods.getInstance().getThematicHidden(new BaseObserver<HiddenEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicHaz(new BaseObserver<HazEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
                 LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
             }
 
             @Override
-            public void onNext(HiddenEntry hiddenEntry) {
+            public void onNext(HazEntry hazEntry) {
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
-                if (hiddenEntry == null || hiddenEntry.getData() == null) {
+                if (hazEntry == null || hazEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
                     return;
                 }
-                for (HiddenEntry.DataBean.ITEMDATABean bean :
-                        hiddenEntry.getData().getITEMDATA()) {
-                    list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + "",bean.getOBJGUID()));
+                for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
+                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALHAVECONTROL()),bean.getORGCODE());
+                    list.add(point);
                 }
-                //setHiddenEntry(hiddenEntry);
+                setHazEntry(hazEntry);
                 addMarkInfo(list);
-                EventBus.getDefault().postSticky(hiddenEntry);
+                EventBus.getDefault().postSticky(hazEntry);
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                LogUtils.i(TAG + "getThematicHidden:", "onError");
+                LogUtils.i(TAG + "getThematicHaz:", "onError");
             }
 
             @Override
             public void onComplete() {
-                LogUtils.i(TAG + "getThematicHidden:", "onComplete");
+                LogUtils.i(TAG + "getThematicHaz:", "onComplete");
             }//todo 参数
-        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
 
 
     }

@@ -13,8 +13,7 @@
 <body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;left: 0;right: 0;top: 0;bottom: 0;position: absolute;display: block;">
 <div id="map" style="width: 100%;height:100%"></div>
 <div id="mark" style="border-radius:8px; color:#333;height:100px;width:120px"><span id="title" style="font-size:16px; font-weight:bold;"></span><p
-        style=" font-size:14px;">隐患数量 <b style="font-size:16px; font-weight:bold;">0</b><br>整改数量 <b style="font-size:16px; font-weight:bold;">0</b><br>隐患整改率
-    <b style="font-size:14px; font-weight:bold;">0%</b></p><a style="font-size:12px; color:#ccc;"></a></div>
+        style=" font-size:14px;">风险源数量 <b style="font-size:16px; font-weight:bold;">0</b></p><a style="font-size:12px; color:#ccc;"></a></div>
 <script type="text/javascript">
         function showMap(x, y, level) {
             window.mapDEMO = {};
@@ -61,14 +60,13 @@
                     }
                     var obj = id["id"];
 
-                    var hiddenInfo = getHiddenInfo(obj);
-                    var markInfo = JSON.parse(hiddenInfo);
+                    var hazInfo = getHazInfo(obj);
+                    var markInfo = JSON.parse(hazInfo);
 
                     var divMark = document.getElementById('mark');
                     var objTitle = document.getElementById('title').innerText = markInfo.title;
-                    document.getElementsByTagName('b')[0].innerHTML = markInfo.totalCount;
-                    document.getElementsByTagName('b')[1].innerHTML = markInfo.rectifyCount;
-                    document.getElementsByTagName('b')[2].innerHTML = markInfo.rectifyRate;
+                    document.getElementsByTagName('b')[0].innerHTML = markInfo.name;
+                    document.getElementsByTagName('b')[1].innerHTML = markInfo.count;
                     overlay.show(feature.getGeometry().getCoordinates(), divMark);
                 }
             }
@@ -76,15 +74,11 @@
             current_point_y = y;
 
         }
-        function getHiddenInfo(orgGuid) {
-            var jsonStr = window.DEMO.getHiddenInfo(orgGuid);
+        function getHazInfo(orgGuid) {
+            var jsonStr = window.DEMO.getHazInfo(orgGuid);
             return jsonStr;
         }
-        // function getAcciInfoForMark(orgGuid){
-        //     var jsonStr = window.DEMO.getAcciInfoForMark(orgGuid);
-        //     return jsonStr;
-
-        // }
+ 
         function showMapMark(x, y, x1, y1, level) {
             // 初始化全局地图变量
             window.mapDEMO = window.mapDEMO || {};
