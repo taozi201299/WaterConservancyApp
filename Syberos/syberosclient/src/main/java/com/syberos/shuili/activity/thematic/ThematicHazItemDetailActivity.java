@@ -135,8 +135,8 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
         tvDataTitle2.setText("未管控数量");
 
         List<PieEntry> dataList=new ArrayList<>();
-        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"一般危险源数量 "+hazEntry.getGENERALNOTREG()));
-        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"重大危险源数量 "+hazEntry.getGENERALNOTREG()));
+        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"一般危险源数量 "+hazEntry.getGENERALCONTROLRATE()));
+        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(),"重大危险源数量 "+hazEntry.getMAJORREGCOUNT()));
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext,pieCharHazRate,dataList,true);
 
         tvValue11.setText(hazEntry.getGENERALHAVECONTROL()+"");

@@ -103,18 +103,15 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     @Override
     public void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
-//
         int currentItem = vp_content.getCurrentItem();
         Intent intent = new Intent(getActivity(), ThematicDetailActivity.class);
         intent.putExtra("typeValue", tabTitle[currentItem]);

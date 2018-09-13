@@ -169,7 +169,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
         List<ProjectEntry> projectEntryArrayList = new ArrayList<>();
         for(HazEntry.EveryEngBean everyEngBean : hazEntry.getData().getEveryEngList()) {
-            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), "100"));
+            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), everyEngBean.getGENERALCONTROLRATE() + everyEngBean.getMAJORREGCOUNT()));
         }
         RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(projectEntryArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

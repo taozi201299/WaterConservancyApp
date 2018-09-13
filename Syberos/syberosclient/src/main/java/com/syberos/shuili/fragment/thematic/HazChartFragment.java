@@ -324,7 +324,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
                     return;
                 }
                 for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
-                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALHAVECONTROL()),bean.getORGCODE());
+                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALREGCOUNT() + bean.getMAJORREGCOUNT()),bean.getORGCODE());
                     list.add(point);
                 }
                 setHazEntry(hazEntry);
