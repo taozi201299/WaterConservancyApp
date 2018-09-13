@@ -173,7 +173,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
         ArrayList<ProjectEntry> list = new ArrayList<>();
         for(WinsEntry.SubWinsDataBean bean : winsEntry.getData().getSUBWINSDATA()){
-            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getWINSPROBQUA()));
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),bean.getWINSPROBQUA());
             list.add(projectEntry);
         }
         RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");

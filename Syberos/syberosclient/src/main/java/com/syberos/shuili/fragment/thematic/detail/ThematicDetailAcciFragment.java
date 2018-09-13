@@ -170,7 +170,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
         List<ProjectEntry> list = new ArrayList<>();
         ArrayList<AcciEntry.ITEMDATABean> datas = acciEntry.getData().getITEMDATA();
         for(AcciEntry.ITEMDATABean bean :datas){
-            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getACCITOTALNUM()));
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),bean.getACCITOTALNUM());
             list.add(projectEntry);
 
         }

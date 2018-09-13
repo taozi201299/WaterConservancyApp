@@ -162,9 +162,9 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         tvValue35.setText("80%");
 
         List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", 100));
-        list.add(new ProjectEntry("rerw", "上海", 120));
-        list.add(new ProjectEntry("rerw", "广东", 150));
+        list.add(new ProjectEntry("rerw", "北京", "100"));
+        list.add(new ProjectEntry("rerw", "上海", "120"));
+        list.add(new ProjectEntry("rerw", "广东", "150"));
 
         RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

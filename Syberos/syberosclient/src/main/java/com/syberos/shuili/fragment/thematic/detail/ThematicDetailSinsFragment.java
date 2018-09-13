@@ -190,7 +190,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
             List<ProjectEntry> list = new ArrayList<>();
             for (SinsEntry.DataBean.SUBSINSDATABean bean : sinsEntry.getData().getSUBSINSDATA()) {
-                list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), Integer.valueOf(bean.getSINSHIDDQUA())));
+                list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), bean.getSINSHIDDQUA()));
             }
             RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

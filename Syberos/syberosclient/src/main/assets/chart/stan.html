@@ -33,6 +33,7 @@
             });
             var mouseEvent = mapDEMO.map.getMapMouseEvent();
             mouseEvent.on("AJMouseClick", test);
+            // 点击弹窗
             function test(e) {
                 var features = e.target.data.customFeature;
                 for (var i = 0; i < features.length; i++) {
@@ -108,11 +109,7 @@
         var current_point_y = null;
         var current_point_vector_layer = null;
 
-        // 事故相关属性定义
-        var acciName;
-        var acciLoss; // 事故损失
-        var acciCasNum; // 事故死亡人数
-        var acciNum; // 事故数量
+         // 添加标记
         function updateCurrentPoint(jsonStr) {
             // 删除旧的点
             if (null != current_point_vector_layer) {

@@ -134,6 +134,14 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             case Haz:
                 break;
             case Stan:
+                Bundle bundle3 = new Bundle();
+                int status = ((BaseLazyFragment)fragments.get(currentItem)).getStatus1();
+                if(status == 1) {
+                    bundle3.putSerializable("stanData", ((StanChartFragment) fragments.get(currentItem)).getStanDirectEntry());
+                }else {
+                    bundle3.putSerializable("stanData", ((StanChartFragment) fragments.get(currentItem)).getStanEntry());
+                }
+                intent.putExtra("stanData",bundle3);
                 break;
             case Sins:
                 break;

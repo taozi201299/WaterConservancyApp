@@ -62,7 +62,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     private boolean bShowMap = false;
     private int iMapLevel = 0;
     private final static long duration = 10 * 1000;
-    private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
+    private int type = 1;// 1 获取直管工程数据 2 监管数据 3 获取流域数据
 
     private int orgLevel = BusinessConfig.getOrgLevel();
     private int orgType; // 1 行政区划 2 流域用户
@@ -131,6 +131,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
     @Override
     protected void initListener() {
+        setStatus1(type);
         bLoadFinish = false;
         bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

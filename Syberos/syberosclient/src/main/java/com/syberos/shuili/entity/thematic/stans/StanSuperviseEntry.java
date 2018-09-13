@@ -34,7 +34,7 @@ public class StanSuperviseEntry implements Serializable {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable {
         /**
          * success : true
          * message : ok
