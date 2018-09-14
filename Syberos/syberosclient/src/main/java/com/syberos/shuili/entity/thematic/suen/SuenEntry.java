@@ -33,7 +33,7 @@ public class SuenEntry implements Serializable {
         this.data = data;
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements Serializable {
         /**
          * success : true
          * message : ok
@@ -59,7 +59,7 @@ public class SuenEntry implements Serializable {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         private List<EveryOrgBean> everyOrgList;
         private List<CountOrgBean> countOrgList;
 

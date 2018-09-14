@@ -1,12 +1,9 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,16 +12,13 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-import com.syberos.shuili.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by BZB on 2018/8/11.
  * Project: Sybe    ros.
@@ -90,6 +84,7 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private SuenEntry suenEntry;
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_thematic_detail_suen;
@@ -103,33 +98,20 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
 
-        Bundle bundle = getArguments();
-        int statusKey = bundle.getInt("statusKey");
-        if (statusKey == 3 || statusKey == 4) {
-            llData3.setVisibility(View.VISIBLE);
-            tvData3.setText(5 + "");
-            tvDataTitle3.setText("已整改单位数");
-        }
-        tvData1.setText(2 + "");
-        tvDataTitle1.setText("被处罚单位数");
-        tvData2.setText(5 + "");
-        tvDataTitle2.setText("已整改单位数");
+        tvData1.setText(suenEntry.getData().getCountOrgList().get(0).getCOUNT() + "");
+        tvDataTitle1.setText("执法数量");
+        tvData2.setText(suenEntry.getData().getCountOrgList().get(0).getVALUE() + "");
+        tvDataTitle2.setText("整改数量");
 
 
         List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", "100"));
-
-
-        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
+        for(SuenEntry.EveryOrgBean bean:suenEntry.getData().getEveryOrgList()) {
+            list.add(new ProjectEntry(bean.getJURD(), bean.getORG_NAME(), String.valueOf(bean.getZGL())));
+        }
+        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"%");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
-//        adapter.setListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -154,6 +136,9 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
 
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
+    }
+    public void setData(SuenEntry suenEntry){
+        this.suenEntry = suenEntry;
     }
 
 }

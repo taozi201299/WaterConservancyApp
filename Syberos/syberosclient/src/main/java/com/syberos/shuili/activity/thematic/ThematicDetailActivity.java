@@ -13,6 +13,7 @@ import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematic.haz.HazEntry;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
@@ -155,6 +156,8 @@ public class ThematicDetailActivity extends BActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt("statusKey", SuenChartFragment.getStatus1());
                 fragments[7].setArguments(bundle);
+                SuenEntry suenEntry = (SuenEntry)(getIntent().getBundleExtra("suenData").getSerializable("suenData"));
+                ((ThematicDetailSuenFragment)fragments[7]).setData(suenEntry);
                 switchFragment(fragments[7]);
                 break;
             default:

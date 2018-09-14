@@ -126,6 +126,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
+
     }
 
     @Override
@@ -174,6 +175,8 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
     @Override
     protected void initData() {
+
+
     }
 
     public HazEntry getHazEntry() {
@@ -321,7 +324,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
                     return;
                 }
                 for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
-                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALREGCOUNT() + bean.getMAJORREGCOUNT()),bean.getORGCODE());
+                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALREGCOUNT()),bean.getORGCODE());
                     list.add(point);
                 }
                 setHazEntry(hazEntry);

@@ -227,6 +227,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         tabAdapter = new TabAdapter(getChildFragmentManager(), fragments, tabTitle);
 
         //给ViewPager设置适配器
+        vp_content.setOffscreenPageLimit(0);
         vp_content.setAdapter(tabAdapter);
 
         //将TabLayout和ViewPager关联起来。

@@ -113,10 +113,10 @@ public abstract class BaseLazyFragment extends Fragment {
             hasStarted = true;
         }
         if (hasStarted && !isPrepared) {
+            initListener();
             initData();
         }
 
-        initListener();
         isPrepared = true;
         return view;
     }
@@ -140,6 +140,7 @@ public abstract class BaseLazyFragment extends Fragment {
         if (isVisibleToUser) {
             hasStarted = true;
             if (hasStarted && isPrepared) {
+                initListener();
                 initData();
             }
         } else {
