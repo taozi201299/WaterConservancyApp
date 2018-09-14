@@ -153,6 +153,9 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 intent.putExtra("winsData",winsBundle);
                 break;
             case Suen:
+                Bundle suenBundle = new Bundle();
+                suenBundle.putSerializable("suenData",((SuenChartFragment)fragments.get(currentItem)).getData());
+                intent.putExtra("suenData",suenBundle);
                 break;
         }
         startActivity(intent);

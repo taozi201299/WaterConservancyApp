@@ -124,7 +124,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-
     }
 
     @Override
@@ -176,8 +175,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     @Override
     protected void initData() {
-
-
     }
 
     public void webMap() {//地图定位

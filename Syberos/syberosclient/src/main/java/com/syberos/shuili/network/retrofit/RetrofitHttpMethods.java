@@ -10,6 +10,7 @@ import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 
@@ -197,9 +198,9 @@ public class RetrofitHttpMethods {
     /**
      * 监督执法 专题图
      */
-    public void getThematicSuen(BaseObserver<WoasEntry> observer, String sourceType,
-                                 String orgGuid) {
-        Observable<WoasEntry> observable = retrofitApiService.getThematicSuen(sourceType, orgGuid);
+    public void getThematicSuen(BaseObserver<SuenEntry> observer, String sourceType,
+                                String orgGuid) {
+        Observable<SuenEntry> observable = retrofitApiService.getThematicSuen(sourceType, orgGuid);
         observable
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

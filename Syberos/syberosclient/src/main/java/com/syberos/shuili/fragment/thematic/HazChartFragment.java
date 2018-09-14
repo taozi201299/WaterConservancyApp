@@ -126,7 +126,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-
     }
 
     @Override
@@ -175,8 +174,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
     @Override
     protected void initData() {
-
-
     }
 
     public HazEntry getHazEntry() {

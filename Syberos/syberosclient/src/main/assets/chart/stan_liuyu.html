@@ -33,7 +33,7 @@
 				annotationVisible: true,
 			});
 			var mouseEvent = mapDEMO.map.getMapMouseEvent();
-			mouseEvent.on("AJMouseClick", test);
+		//	mouseEvent.on("AJMouseClick", test);
 
 			function test(e) {
 				var features = e.target.data.customFeature;
@@ -60,15 +60,6 @@
 						});
 						mapDEMO.map.addOverlay(overlay);
 					}
-					var obj = id["id"];
-
-				    var obj = id["id"];
-                    var stanInfo = getStanInfo(obj);
-                    var markInfo = JSON.parse(stanInfo);
-
-                    var divMark = document.getElementById('mark');
-                    var objTitle = document.getElementById('title').innerText = markInfo.name;
-                    document.getElementsByTagName('b')[0].innerHTML = markInfo.value;
 					overlay.show(feature.getGeometry().getCoordinates(), divMark);
 				}
 			}

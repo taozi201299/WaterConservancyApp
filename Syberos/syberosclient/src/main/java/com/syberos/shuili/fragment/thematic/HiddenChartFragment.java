@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -40,7 +41,6 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class HiddenChartFragment extends BaseLazyFragment implements View.OnClickListener {
-
     @BindView(R.id.webview)
     WebView webView;
 
@@ -84,6 +84,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initView() {
+        Log.d(TAG,"--------------initView()");
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -124,11 +125,11 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-
     }
 
     @Override
     protected void initListener() {
+        Log.d(TAG,"--------------initListener()");
         bLoadFinish = false;
         bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -173,8 +174,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
     @Override
     protected void initData() {
-
-
+        Log.d(TAG,"--------------initData()");
     }
 
     public HiddenEntry getHiddenEntry() {

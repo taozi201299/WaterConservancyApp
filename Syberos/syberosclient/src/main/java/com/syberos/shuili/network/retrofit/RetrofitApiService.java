@@ -8,6 +8,7 @@ import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 import com.syberos.shuili.fragment.thematic.HazChartFragment;
@@ -67,7 +68,7 @@ public interface RetrofitApiService {
 
     //    专题图—— 监督执法
     @POST("/desu/serv/v1/getCaseCount")
-    Observable<WoasEntry> getThematicSuen(@Query("sourceType") String sourceType,
+    Observable<SuenEntry> getThematicSuen(@Query("sourceType") String sourceType,
                                           @Query("orgGuid") String orgGuid);
 
     //    专题图—— 安全检查

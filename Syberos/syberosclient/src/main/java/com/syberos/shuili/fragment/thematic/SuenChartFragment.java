@@ -19,6 +19,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
@@ -161,14 +162,13 @@ public class SuenChartFragment extends BaseLazyFragment {
                 }
                 if (orgType == 1) {
                     if (type == 3)
-                        webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+                        webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
                     else {
-                        webView.loadUrl("file:///android_asset/chart/woas.html");
+                        webView.loadUrl("file:///android_asset/chart/suen.html");
                     }
                 } else if (orgType == 2) {
-                    webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+                    webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
                 }
-//                requestData(type);
                 setStatus1(type);
             }
         });
@@ -177,9 +177,7 @@ public class SuenChartFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
 
-
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     public void webMap() {//地图定位
@@ -196,10 +194,10 @@ public class SuenChartFragment extends BaseLazyFragment {
         if (orgType == 1 || orgType == 3) {
             if (orgLevel == 1) iMapLevel = -1;
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/woas.html");
+            webView.loadUrl("file:///android_asset/chart/suen.html");
         } else if (orgType == 2) {
             iMapLevel = 0;
-            webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+            webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
         }
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
         webView.setWebViewClient(new WebViewClient() {
@@ -224,16 +222,14 @@ public class SuenChartFragment extends BaseLazyFragment {
             }
         });
     }
-
-    WoasEntry woasEntry;
-
-    public WoasEntry getWoasEntry() {
-        return woasEntry;
+    public SuenEntry getData(){
+        return this.suenEntry;
     }
+    SuenEntry suenEntry;
 
-    public void setWoasEntry(WoasEntry woasEntry) {
-        this.woasEntry = woasEntry;
-    }
+
+    public void setSuenEntry(SuenEntry suenEntry) {
+        this.suenEntry = suenEntry;}
 
     private void refreshUI() {
         closeDataDialog();
@@ -252,29 +248,26 @@ public class SuenChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
-        RetrofitHttpMethods.getInstance().getThematicWoas(new BaseObserver<WoasEntry>() {
+        RetrofitHttpMethods.getInstance().getThematicSuen(new BaseObserver<SuenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(WoasEntry woasEntry) {
-                setWoasEntry(woasEntry);
-
+            public void onNext(SuenEntry suenEntry) {
+                setSuenEntry(suenEntry);
                 List<Point> list = new ArrayList<>();
                 list.clear();
-                if (woasEntry == null || woasEntry.getData() == null) {
+                if (suenEntry == null || suenEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
                     return;
                 }
-                for (WoasEntry.DataBean.SCORERANKBean bean :
-                        woasEntry.getData().getSCORERANK()) {
-                    list.add(new Point(bean.getORGLONG() + "", bean.getORGLAT() + "", bean.getAFINALSCOR() + ""));
+                for(SuenEntry.EveryOrgBean bean :suenEntry.getData().getEveryOrgList()){
+                    list.add(new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getCOUNT()),bean.getJURD()));
                 }
-//                setHiddenEntry(hiddenEntry);
                 addMarkInfo(list);
-                EventBus.getDefault().postSticky(woasEntry);
+                EventBus.getDefault().postSticky(suenEntry);
             }
 
             @Override
@@ -286,20 +279,22 @@ public class SuenChartFragment extends BaseLazyFragment {
             public void onComplete() {
 
             }
-        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), "", "");
-//        }, type + "", "D7862390F88443AE87FA9DD1FE45A8B6", "", "");
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
     }
 
     class Point {
-        public Point(String lon, String lat, String value) {
+        public Point(String lon, String lat, String value,String guid) {
             this.lon = lon;
             this.lat = lat;
             this.value = value;
+            this.guid = guid;
+
         }
 
         String lon;
         String lat;
         String value;
+        String guid;
     }
 
     private void addMarkInfo(List<Point> list) {
