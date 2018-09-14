@@ -101,7 +101,6 @@ public class ThematicDetailActivity extends BActivity {
     public void initData() {
         switch (getIntent().getStringExtra("typeValue")) {
             case Hidden:
-//                todo 隐患
                 tvTitle.setText("隐患");
 //                HiddenEntry hiddenEntry= (HiddenEntry) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
 //                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntry(hiddenEntry);
@@ -129,21 +128,17 @@ public class ThematicDetailActivity extends BActivity {
                     StanSuperviseEntry stanSuperviseEntry = (StanSuperviseEntry)(getIntent().getBundleExtra("stanData").getSerializable("stanData"));
                     ((ThematicDetailStanFragment)fragments[3]).setData_Supervise(stanSuperviseEntry);
                 }
-
                 switchFragment(fragments[3]);
                 break;
             case Sins:
-//                todo 安全检查
                 tvTitle.setText("安全检查");
                 switchFragment(fragments[4]);
                 break;
             case Woas:
-//                todo 工作考核
                 tvTitle.setText("工作考核");
                 switchFragment(fragments[5]);
                 break;
             case Wins:
-//                todo 水利稽察
                 tvTitle.setText("水利稽察");
                 tvTitle.setText("事故");
                 WinsEntry winsEntry = (WinsEntry)(getIntent().getBundleExtra("winsData").getSerializable("winsData"));
@@ -151,7 +146,6 @@ public class ThematicDetailActivity extends BActivity {
                 switchFragment(fragments[6]);
                 break;
             case Suen:
-//                todo 安监执法
                 tvTitle.setText("安监执法");
                 Bundle bundle = new Bundle();
                 bundle.putInt("statusKey", SuenChartFragment.getStatus1());

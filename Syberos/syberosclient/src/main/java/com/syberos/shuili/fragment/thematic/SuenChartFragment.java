@@ -226,11 +226,8 @@ public class SuenChartFragment extends BaseLazyFragment {
         return this.suenEntry;
     }
     SuenEntry suenEntry;
-
-
     public void setSuenEntry(SuenEntry suenEntry) {
         this.suenEntry = suenEntry;}
-
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
@@ -238,7 +235,6 @@ public class SuenChartFragment extends BaseLazyFragment {
         List<HiddenChartFragment.Point> list = new ArrayList<>();
         list.clear();
         int type;
-
         if (radioBtnZhiguan.isChecked()) {
             type = 1;
         } else if (radioBtnJianguan.isChecked()) {

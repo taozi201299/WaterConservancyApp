@@ -133,9 +133,7 @@ var itemID;
         mLat = jsonStr[i].lat;
 		mLon = jsonStr[i].lon;
 		val = jsonStr[i].value;
-        alert(val);
         itemID = jsonStr[i].guid;
-        alert(itemID)
     // 初始化 feature start
     var Coordinates = [mLon, mLat+2];
     var iconFeature = new ol.Feature(
