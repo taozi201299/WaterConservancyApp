@@ -111,7 +111,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/selectStanrdReview/";
         HashMap<String,String> param = new HashMap<>();
         param.put("reviType","3");
-        param.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
+        param.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String response) {

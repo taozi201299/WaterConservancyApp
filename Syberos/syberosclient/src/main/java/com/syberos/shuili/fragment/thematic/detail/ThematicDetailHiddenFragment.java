@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
+import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
@@ -212,7 +212,7 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 
         List<ProjectEntry> list = new ArrayList<>();
         for (HiddenEntry.DataBean.ITEMDATABean bean : hiddenEntry.getData().getITEMDATA())
-            list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), bean.getHIDDTOTALQUA()));
+            list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), String.valueOf(bean.getHIDDTOTALQUA())));
 
         RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -221,7 +221,7 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
+                Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
                 intent.putExtra("typeValue", HematicMapFragment.Hidden);
                 startActivity(intent);
             }

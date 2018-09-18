@@ -71,7 +71,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
 
     @Override
     public void initView() {
-        setActionBarTitle("安全检查对象");
+        showTitle("安全检查对象");
         setActionBarRightVisible(View.INVISIBLE);
 
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);

@@ -116,7 +116,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
             List<ProjectEntry> list = new ArrayList<>();
             for (WoasEntry.DataBean.SCORERANKBean bean : woasEntry.getData().getSCORERANK()) {
-                list.add(new ProjectEntry(bean.getAWOASWIUNGUID(), bean.getORGNAME(), bean.getAFINALSCOR()));
+                list.add(new ProjectEntry(bean.getAWOASWIUNGUID(), bean.getORGNAME(), String.valueOf(bean.getAFINALSCOR())));
             }
 
             RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);

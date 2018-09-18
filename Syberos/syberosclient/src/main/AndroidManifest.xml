@@ -52,6 +52,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.TestActivity1"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".activity.TestFormActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -65,12 +71,10 @@
             android:name=".activity.TestActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.TestMapActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.thematic.ThematicDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.thematic.ThematicDetailProjActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -213,6 +217,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".media.PreviewActivity" />
+
+
         <activity
             android:name=".activity.securitycheck.SecurityCheckTaskActivity"
             android:screenOrientation="portrait"
@@ -524,6 +530,11 @@
             android:name=".amap.ShowNearlyInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
+
+
+
+        <activity android:name=".activity.thematic.ThematicHazItemDetailActivity"/>
 
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data

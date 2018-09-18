@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -40,7 +41,6 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class HiddenChartFragment extends BaseLazyFragment implements View.OnClickListener {
-
     @BindView(R.id.webview)
     WebView webView;
 
@@ -84,6 +84,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
     @Override
     protected void initView() {
+        Log.d(TAG,"--------------initView()");
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -124,18 +125,11 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-//        if (radioGroup.getCheckedRadioButtonId() == rbtnZhiguan.getId()) {
-//            requestData(1);
-//        } else if (radioGroup.getCheckedRadioButtonId() == rbtnJianguan.getId()) {
-//            requestData(2);
-//        } else if (radioGroup.getCheckedRadioButtonId() == rbtnLiuyu.getId()) {
-//            requestData(3);
-//        }
-
     }
 
     @Override
     protected void initListener() {
+        Log.d(TAG,"--------------initListener()");
         bLoadFinish = false;
         bShowMap = false;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -173,59 +167,14 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 } else if (orgType == 2) {
                     webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
                 }
-//                requestData(type);
                 setStatus1(type);
             }
         });
 
     }
-
-    private void requestData(int type) {
-        RetrofitHttpMethods.getInstance().getThematicHidden(
-                new BaseObserver<HiddenEntry>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(HiddenEntry hiddenEntry) {
-                        LogUtils.i(TAG + "getThematicHidden:", "onNext");
-                        List<Point> list = new ArrayList<>();
-                        list.clear();
-                        if (hiddenEntry == null || hiddenEntry.getData() == null) {
-                            ToastUtils.show("未获取到数据");
-                            return;
-                        }
-                        for (HiddenEntry.DataBean.ITEMDATABean bean :
-                                hiddenEntry.getData().getITEMDATA()) {
-                            list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + ""));
-                        }
-                        setHiddenEntry(hiddenEntry);
-                        addMarkInfo(list);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        LogUtils.i(TAG + "getThematicHidden:", "onError");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        LogUtils.i(TAG + "getThematicHidden:", "onComplete");
-                    }//todo 参数
-                },
-                type + "",
-                SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(),
-                "",
-                "");
-    }
-
     @Override
     protected void initData() {
-
-
+        Log.d(TAG,"--------------initData()");
     }
 
     public HiddenEntry getHiddenEntry() {
@@ -382,7 +331,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 }
                 for (HiddenEntry.DataBean.ITEMDATABean bean :
                         hiddenEntry.getData().getITEMDATA()) {
-                    list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + ""));
+                    list.add(new Point(bean.getOBJLONG() + "", bean.getOBJLAT() + "", bean.getHIDDTOTALQUA() + "",bean.getOBJGUID()));
                 }
                 setHiddenEntry(hiddenEntry);
                 addMarkInfo(list);
@@ -405,14 +354,16 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     class Point {
-        public Point(String lon, String lat, String value) {
+        public Point(String lon, String lat, String value,String guid) {
             this.lon = lon;
             this.lat = lat;
             this.value = value;
+            this.guid = guid;
         }
 
         String lon;
         String lat;
         String value;
+        String guid;
     }
 }

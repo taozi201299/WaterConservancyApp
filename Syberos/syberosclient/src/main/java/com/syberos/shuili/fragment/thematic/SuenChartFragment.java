@@ -1,29 +1,40 @@
 package com.syberos.shuili.fragment.thematic;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.map.MapBoundBean;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
+import com.syberos.shuili.entity.thematic.woas.WoasEntry;
+import com.syberos.shuili.network.retrofit.BaseObserver;
+import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
+import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2018/6/26.
@@ -38,19 +49,27 @@ public class SuenChartFragment extends BaseLazyFragment {
     RadioButton radioBtnBenbu;
     @BindView(R.id.radio_btn_zhiguan)
     RadioButton radioBtnZhiguan;
-    @BindView(R.id.radio_btn_liuyu)
-    RadioButton radioBtnLiuyu;
     @BindView(R.id.radio_btn_jianguan)
     RadioButton radioBtnJianguan;
+    @BindView(R.id.radio_btn_liuyu)
+    RadioButton radioBtnLiuyu;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
-
+    @BindView(R.id.radio_group_area)
+    RadioGroup radioGroupArea;
+    Unbinder unbinder;
     private String mLon = "";
     private String mLat = "";
     private boolean bLoadFinish = false;
     private boolean bShowMap = false;
     private int iMapLevel = 0;
     private final static long duration = 10 * 1000;
+
+    private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
+
+    private int orgLevel = BusinessConfig.getOrgLevel();
+    private int orgType; // 1 行政区划 2 流域用户
+
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -68,36 +87,99 @@ public class SuenChartFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
+        App.jurdAreaType = "1";
+        App.orgJurd = "000000000000";
+        orgLevel = 1;
+        showDataLoadingDialog();
+        radioBtnJianguan.setVisibility(View.GONE);
+        radioBtnLiuyu.setVisibility(View.GONE);
+        radioBtnZhiguan.setVisibility(View.GONE);
+        // 行政区划
+        if ("1".equals(App.jurdAreaType)) {
+            orgType = 1;
+        } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
+            orgType = 2;
+        }
+        if (orgType == 1) {
+            if (orgLevel == 1) {
+                // 部级用户  直管 流域 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnLiuyu.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 2) {
+                // 省级  直管 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 3) {
+                // 市 直管 监管
+                radioBtnJianguan.setVisibility(View.VISIBLE);
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            } else if (orgLevel == 4) {
+                // 县  直管
+                radioBtnZhiguan.setVisibility(View.VISIBLE);
+                radioGroup.check(R.id.radio_btn_zhiguan);
+            }
+        } else if (orgType == 2) {
+            radioBtnZhiguan.setVisibility(View.VISIBLE);
+            radioGroup.check(R.id.radio_btn_zhiguan);
+        }
         webMap();
 
     }
 
     @Override
     protected void initListener() {
-
+        bLoadFinish = false;
+        bShowMap = false;
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                webView.removeAllViews();
+                bShowMap = false;
+                switch (checkId) {
+                    case R.id.radio_btn_zhiguan:
+                        if (orgType == 1) {
+                            if (orgLevel == 1) iMapLevel = -1;
+                            else iMapLevel = 4;
+                        } else if (orgType == 2) {
+                            iMapLevel = 0;
+                        }
+                        type = 1;
+                        break;
+                    case R.id.radio_btn_liuyu:
+                        if (orgLevel == 1) iMapLevel = -2;
+                        else iMapLevel = 0;
+                        type = 3;
+                        break;
+                    case R.id.radio_btn_jianguan:
+                        if (orgLevel == 1) iMapLevel = -1;
+                        else iMapLevel = 4;
+                        type = 2;
+                        break;
+                }
+                if (orgType == 1) {
+                    if (type == 3)
+                        webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
+                    else {
+                        webView.loadUrl("file:///android_asset/chart/suen.html");
+                    }
+                } else if (orgType == 2) {
+                    webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
+                }
+                setStatus1(type);
+            }
+        });
     }
 
     @Override
     protected void initData() {
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (radioBtnBenbu.getId() == i) {
-                    setStatus1(1);
-                } else if (radioBtnZhiguan.getId() == i) {
-                    setStatus1(2);
-                } else if (radioBtnLiuyu.getId() == i) {
-                    setStatus1(3);
-                } else if (radioBtnJianguan.getId() == i) {
-                    setStatus1(4);
-                }
-            }
-        });
-
     }
 
-
+    @SuppressLint("SetJavaScriptEnabled")
     public void webMap() {//地图定位
         webView.getSettings().setDatabaseEnabled(true);//开启数据库
         webView.setFocusable(true);//获取焦点
@@ -109,17 +191,24 @@ public class SuenChartFragment extends BaseLazyFragment {
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        webView.loadUrl("file:///android_asset/chart/hidd.html");
+        if (orgType == 1 || orgType == 3) {
+            if (orgLevel == 1) iMapLevel = -1;
+            else iMapLevel = 4;
+            webView.loadUrl("file:///android_asset/chart/suen.html");
+        } else if (orgType == 2) {
+            iMapLevel = 0;
+            webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
+        }
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
-                    webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+                    refreshUI();
                 }
-                addMarkInfo();
 
             }
         });
@@ -132,6 +221,82 @@ public class SuenChartFragment extends BaseLazyFragment {
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
         });
+    }
+    public SuenEntry getData(){
+        return this.suenEntry;
+    }
+    SuenEntry suenEntry;
+    public void setSuenEntry(SuenEntry suenEntry) {
+        this.suenEntry = suenEntry;}
+    private void refreshUI() {
+        closeDataDialog();
+        bShowMap = true;
+        webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
+        List<HiddenChartFragment.Point> list = new ArrayList<>();
+        list.clear();
+        int type;
+        if (radioBtnZhiguan.isChecked()) {
+            type = 1;
+        } else if (radioBtnJianguan.isChecked()) {
+            type = 2;
+        } else if (radioBtnLiuyu.isChecked()) {
+            type = 3;
+        } else {
+            type = 1;
+        }
+        RetrofitHttpMethods.getInstance().getThematicSuen(new BaseObserver<SuenEntry>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(SuenEntry suenEntry) {
+                setSuenEntry(suenEntry);
+                List<Point> list = new ArrayList<>();
+                list.clear();
+                if (suenEntry == null || suenEntry.getData() == null) {
+                    ToastUtils.show("未获取到数据");
+                    return;
+                }
+                for(SuenEntry.EveryOrgBean bean :suenEntry.getData().getEveryOrgList()){
+                    list.add(new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getCOUNT()),bean.getJURD()));
+                }
+                addMarkInfo(list);
+                EventBus.getDefault().postSticky(suenEntry);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+    }
+
+    class Point {
+        public Point(String lon, String lat, String value,String guid) {
+            this.lon = lon;
+            this.lat = lat;
+            this.value = value;
+            this.guid = guid;
+
+        }
+
+        String lon;
+        String lat;
+        String value;
+        String guid;
+    }
+
+    private void addMarkInfo(List<Point> list) {
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(list);
+        webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
     }
 
     public class MyJavaScriptInterface {

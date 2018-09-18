@@ -159,9 +159,9 @@ public class ThematicDetailWoasProjFragment extends BaseLazyFragment {
 
 
         List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", 100));
-        list.add(new ProjectEntry("rerw", "上海", 120));
-        list.add(new ProjectEntry("rerw", "广东", 150));
+        list.add(new ProjectEntry("rerw", "北京", "100"));
+        list.add(new ProjectEntry("rerw", "上海", "120"));
+        list.add(new ProjectEntry("rerw", "广东", "150"));
 
 //        HiddenRecyclerAdapter adapter = new HiddenRecyclerAdapter(list);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

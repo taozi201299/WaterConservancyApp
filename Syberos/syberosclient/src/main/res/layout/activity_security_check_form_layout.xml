@@ -79,7 +79,7 @@
                     android:layout_toEndOf="@+id/tv_check_plan_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "检查方案名称"/>
+                    android:text= ""/>
             </RelativeLayout>
 
             <View
@@ -105,7 +105,7 @@
                     android:layout_toEndOf="@+id/tv_check_time_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "2017-07-20 至 2018-07-20"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                     android:layout_toEndOf="@+id/tv_check_content_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "水库、农村水电站、於地段、在建功能、勘察设计和水温监测"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                     android:layout_toEndOf="@+id/tv_group_leader_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "赵某"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -186,7 +186,7 @@
                     android:layout_toEndOf="@+id/tv_group_unit_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "A大队"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -214,7 +214,7 @@
                     android:layout_toEndOf="@+id/tv_member_unit_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "朝阳区双桥水管所"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:visibility="gone"
@@ -242,7 +242,7 @@
                     android:layout_toEndOf="@+id/tv_check_person_label"
                     android:layout_marginStart="@dimen/padding_20"
                     android:layout_centerVertical="true"
-                    android:text= "李白、杜甫"/>
+                    android:text= ""/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"

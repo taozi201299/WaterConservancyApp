@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -84,6 +85,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     @Override
     protected void initView() {
+        Log.d(TAG,"---------------initView");
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
@@ -124,7 +126,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
         webMap();
-
     }
 
     @Override
@@ -176,8 +177,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     @Override
     protected void initData() {
-
-
     }
 
     public void webMap() {//地图定位

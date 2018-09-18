@@ -24,6 +24,7 @@ public class TabAdapter extends FragmentPagerAdapter {
         super(fm);
         this.fragments = fragments;
         this.tabTitle = tabTitle;
+
     }
 
     @Override

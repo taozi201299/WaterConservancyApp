@@ -273,7 +273,6 @@ public class LoginActivity extends BaseActivity {
         SyberosManagerImpl.getInstance().login(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
-                closeDialog();
                 UserExtendInformation userExtendInformation = null;
                 try {
                     userExtendInformation = parseLoginResult(result);
@@ -290,8 +289,13 @@ public class LoginActivity extends BaseActivity {
                      * 行政用户直接进行登录
                      */
                     SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInformation);
-                    go2Activity();
-                    syncAddressList();
+                    if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
+                        getSysCode(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
+                    }else {
+                        go2Activity();
+                        syncAddressList();
+                    }
+
                 } else {
                     ToastUtils.show("该用户无权限使用本系统");
                 }
@@ -452,25 +456,28 @@ public class LoginActivity extends BaseActivity {
     /**
      * 获取orgClienType 单位类型
      */
-    private void getOrgBaseInfo() {
-        final String methodName = "isUamsValidPhoneUserByPhoneOrCodeOrName";
-        final HashMap<String, Object> params = new HashMap<>();
-        params.put("arg0", accountEdit.getText().toString());
-        params.put("arg1", encrypt(passwordEdit.getText().toString()));
-        SyberosManagerImpl.getInstance().getOrgBaseInfo(params, methodName, new RequestCallback<Object>() {
+    private void getSysCode(String perID) {
+        String url = GlobleConstants.strIP +"/cjapi/cj/yuanXin/collresobase/getCollByPersIdAndSysCode";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("personID",perID);
+        params.put("app_guid",App.sCode);
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
-            public void onResponse(Object result) {
+            public void onResponse(String result) {
                 go2Activity();
+                syncAddressList();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                go2Activity();
+                syncAddressList();
             }
         });
     }
 
     private void go2Activity() {
+        closeDialog();
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
             App.userType = "0";

@@ -10,6 +10,10 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BActivity;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
+import com.syberos.shuili.entity.thematic.haz.HazEntry;
+import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
+import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.fragment.thematic.SuenChartFragment;
 import com.syberos.shuili.fragment.thematic.detail.ThematicDetailAcciFragment;
@@ -95,44 +99,46 @@ public class ThematicDetailActivity extends BActivity {
 
     @Override
     public void initData() {
-//        tabTitle[3]
         switch (getIntent().getStringExtra("typeValue")) {
             case Hidden:
-//                todo 隐患
                 tvTitle.setText("隐患");
 //                HiddenEntry hiddenEntry= (HiddenEntry) getIntent().getBundleExtra("hiddenData").getSerializable("hiddenData");
 //                ((ThematicDetailHiddenFragment)fragments[0]).setHiddenEntry(hiddenEntry);
                 switchFragment(fragments[0]);
                 break;
             case Acci:
-//                todo 事故
                 tvTitle.setText("事故");
                 AcciEntry acciEntry = (AcciEntry)(getIntent().getBundleExtra("acciData").getSerializable("acciData"));
                 ((ThematicDetailAcciFragment)fragments[1]).setData(acciEntry);
                 switchFragment(fragments[1]);
                 break;
             case Haz:
-//                todo 危险源
                 tvTitle.setText("危险源");
+                HazEntry hazEntry = (HazEntry)(getIntent().getBundleExtra("hazData").getSerializable("hazData"));
+                ((ThematicDetailHazFragment)fragments[2]).setData(hazEntry);
                 switchFragment(fragments[2]);
                 break;
             case Stan:
-//                todo 标准化
                 tvTitle.setText("标准化");
+                int type = getIntent().getIntExtra("ownerType",1);
+                if(type == 1) {
+                    StanDirectEntry stanDirectEntry = (StanDirectEntry) (getIntent().getBundleExtra("stanData").getSerializable("stanData"));
+                    ((ThematicDetailStanFragment)fragments[3]).setData_Direct(stanDirectEntry);
+                }else {
+                    StanSuperviseEntry stanSuperviseEntry = (StanSuperviseEntry)(getIntent().getBundleExtra("stanData").getSerializable("stanData"));
+                    ((ThematicDetailStanFragment)fragments[3]).setData_Supervise(stanSuperviseEntry);
+                }
                 switchFragment(fragments[3]);
                 break;
             case Sins:
-//                todo 安全检查
                 tvTitle.setText("安全检查");
                 switchFragment(fragments[4]);
                 break;
             case Woas:
-//                todo 工作考核
                 tvTitle.setText("工作考核");
                 switchFragment(fragments[5]);
                 break;
             case Wins:
-//                todo 水利稽察
                 tvTitle.setText("水利稽察");
                 tvTitle.setText("事故");
                 WinsEntry winsEntry = (WinsEntry)(getIntent().getBundleExtra("winsData").getSerializable("winsData"));
@@ -140,11 +146,12 @@ public class ThematicDetailActivity extends BActivity {
                 switchFragment(fragments[6]);
                 break;
             case Suen:
-//                todo 安监执法
                 tvTitle.setText("安监执法");
                 Bundle bundle = new Bundle();
                 bundle.putInt("statusKey", SuenChartFragment.getStatus1());
                 fragments[7].setArguments(bundle);
+                SuenEntry suenEntry = (SuenEntry)(getIntent().getBundleExtra("suenData").getSerializable("suenData"));
+                ((ThematicDetailSuenFragment)fragments[7]).setData(suenEntry);
                 switchFragment(fragments[7]);
                 break;
             default:

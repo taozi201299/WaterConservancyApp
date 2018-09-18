@@ -1,13 +1,10 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +12,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
+import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.acci.AcciEntry;
@@ -28,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by BZB on 2018/8/11.
@@ -170,7 +165,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
         List<ProjectEntry> list = new ArrayList<>();
         ArrayList<AcciEntry.ITEMDATABean> datas = acciEntry.getData().getITEMDATA();
         for(AcciEntry.ITEMDATABean bean :datas){
-            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getACCITOTALNUM()));
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),bean.getACCITOTALNUM());
             list.add(projectEntry);
 
         }
@@ -181,7 +176,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
+                Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
                 intent.putExtra("typeValue", HematicMapFragment.Acci);
                 intent.putExtra("data",acciEntry.getData().getITEMDATA().get(position).getACCIDATA());
                 startActivity(intent);

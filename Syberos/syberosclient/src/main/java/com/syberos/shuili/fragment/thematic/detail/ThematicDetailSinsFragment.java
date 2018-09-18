@@ -183,8 +183,8 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
 
             List<PieEntry> listHiddenRate = new ArrayList<>();
-            listHiddenRate.add(new PieEntry(sinsEntry.getData().getSINSHIDDRECTQUA(), "已检查 " + sinsEntry.getData().getSINSHIDDRECTQUA() + ""));
-            listHiddenRate.add(new PieEntry(sinsEntry.getData().getSINSHIDDQUA() - sinsEntry.getData().getSINSHIDDRECTQUA(), "未检查 " + (sinsEntry.getData().getSINSHIDDQUA() - sinsEntry.getData().getSINSHIDDRECTQUA()) + ""));
+            listHiddenRate.add(new PieEntry(Float.valueOf(sinsEntry.getData().getSINSHIDDRECTQUA()), "已检查 " + sinsEntry.getData().getSINSHIDDRECTQUA() + ""));
+            listHiddenRate.add(new PieEntry(Float.valueOf(sinsEntry.getData().getSINSHIDDQUA()) - Float.valueOf(sinsEntry.getData().getSINSHIDDRECTQUA()), "未检查 " + (Integer.valueOf(sinsEntry.getData().getSINSHIDDQUA())- Integer.valueOf(sinsEntry.getData().getSINSHIDDRECTQUA())) + ""));
 
             MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharSinsRate, listHiddenRate, true);
 

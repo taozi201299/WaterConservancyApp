@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Package：com.syberos.shuili.entity.thematicchart.hidden.
  */
 public class ProjectEntry implements Serializable {
-    public ProjectEntry(String proId, String proName, int proTroubleCount) {
+    public ProjectEntry(String proId, String proName, String proTroubleCount) {
         this.proId = proId;
         this.proName = proName;
         this.proTroubleCount = proTroubleCount;
@@ -19,7 +19,7 @@ public class ProjectEntry implements Serializable {
     //    工程名字
     String proName;
     //    工程中隐患数
-    int proTroubleCount;
+    String proTroubleCount;
 
     public String getProId() {
         return proId == null ? "" : proId;
@@ -37,11 +37,12 @@ public class ProjectEntry implements Serializable {
         this.proName = proName;
     }
 
-    public int getProTroubleCount() {
-        return proTroubleCount;
+
+    public String getProTroubleCount() {
+        return proTroubleCount == null ? "" : proTroubleCount;
     }
 
-    public void setProTroubleCount(int proTroubleCount) {
+    public void setProTroubleCount(String proTroubleCount) {
         this.proTroubleCount = proTroubleCount;
     }
 }

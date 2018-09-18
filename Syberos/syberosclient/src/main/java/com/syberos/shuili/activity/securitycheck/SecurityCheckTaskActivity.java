@@ -88,6 +88,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         Bundle bundle = new Bundle();
         BisSinsScheGroup item = bisSinsScheGroup.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
+        bundle.putSerializable("bisSinsSche",bisSinsSches.get(position).dataSource.get(position));
         intentActivity((Activity) mContext, SecurityCheckDetailActivity.class, false, bundle);
     }
 
@@ -97,8 +98,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     private void getScheGroupIdByUserId(){
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("persGuid","C9C14B0BD81D4900940114AADD8491A0");
+        params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("persGuid","46669F8D50294BD5A4E59B74E21EBCD5");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -108,6 +109,10 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                     closeDataDialog();
                     String errMsg  = ErrorInfo.ErrorCode.valueOf(-5).getMessage();
                     ToastUtils.show(errMsg);
+                }
+                if(relSinsGroupPers.dataSource.size() == 0){
+                    ToastUtils.show("未发现相关任务");
+                    closeDataDialog();
                 }
                 getScheGroupList();
             }
@@ -161,8 +166,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
-          //  params.put("sinsGuid",item.getScheGuid());
-            params.put("sinsGuid","1C30B5F7C3C14B41862C31BC588ABAD0");
+            params.put("sinsGuid",item.getScheGuid());
+            params.put("sinsGuid","B68DA990FA4043DD9C0045740E9E59D2");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {

@@ -16,6 +16,7 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActi
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
+import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
 import com.syberos.shuili.entity.securitycheck.ObjExpert;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupExpert;
@@ -59,6 +60,8 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
      * 检查组和检查对象关系信息
      */
     private RelSinsGroupWiun relSinsGroupWiun;
+
+    private BisSinsSche bisSinsSche  = null;
 
     /**
      * 隐患信息表
@@ -106,11 +109,14 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
 
     @Override
     public void initData() {
+        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         if(bisSinsScheGroup == null){
-            Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
             bisSinsScheGroup = (BisSinsScheGroup) bundle.getSerializable(SEND_BUNDLE_KEY);
         }
-        if(bisSinsScheGroup == null){
+        if(bisSinsSche == null ){
+            bisSinsSche = (BisSinsSche)bundle.getSerializable("bisSinsSche");
+        }
+        if(bisSinsScheGroup == null || bisSinsSche == null){
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             return;
         }
@@ -126,8 +132,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getExpertGuid(){
         String url = strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
         HashMap<String,String>params = new HashMap<>();
-        //params.put("groupGuid",bisSinsScheGroup.getGuid());
-        params.put("groupGuid","0E42146FDABD44688DACC34893E3D1F0");
+        params.put("groupGuid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -135,6 +140,8 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 relSinsGroupExpert = (RelSinsGroupExpert)gson.fromJson(result,RelSinsGroupExpert.class);
                 if(relSinsGroupExpert != null && relSinsGroupExpert.dataSource.size() > 0){
                     getExpertInfo();
+                }else {
+                    getCheckObject();
                 }
             }
 
@@ -148,8 +155,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getExpertInfo(){
         String url = strIP +"/sjjk/v1/obj/expert/objExperts/";
         HashMap<String,String> params = new HashMap<>();
-       // params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
-        params.put("persGuid","24fb0a96e79947a99fe1a272a8c4a16a");
+        params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -174,14 +180,13 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getCheckObject(){
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
         HashMap<String,String>params = new HashMap<>();
-     //   params.put("guid",bisSinsScheGroup.getGuid());
-        params.put("guid","0E42146FDABD44688DACC34893E3D1F0");
+        params.put("guid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                relSinsGroupWiun = (RelSinsGroupWiun)gson.fromJson(result,RelSinsGroupWiun.class);
+                relSinsGroupWiun = gson.fromJson(result,RelSinsGroupWiun.class);
                 if(relSinsGroupWiun != null && relSinsGroupWiun.dataSource != null){
                  //   getCheckObjectInfo();
                     refreshUI();
@@ -247,17 +252,17 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void refreshUI(){
         customScrollView.setVisibility(View.VISIBLE);
         // 检查方案名称
-        tv_check_plan.setText(bisSinsScheGroup.getScheName());
+        tv_check_plan.setText(bisSinsSche.getScheName());
         // 检查时间
-        tv_check_time.setText(bisSinsScheGroup.getScheStartTime() +"-- " +bisSinsScheGroup.getScheCompTime());
+        tv_check_time.setText(bisSinsSche.getScheStartTime() +"-- " +bisSinsSche.getScheCompTime());
         // 检查内容
-        tv_check_content.setText(bisSinsScheGroup.getScheCont());
+        tv_check_content.setText(bisSinsSche.getScheCont());
         // 组长名称
         tv_group_leader.setText(bisSinsScheGroup.getGroupLeader());
         // 组长单位
         tv_group_unit.setText(bisSinsScheGroup.getGroupLeaderWiun());
         // 专家姓名
-        if(objExpert.dataSource.size() > 0) {
+        if(objExpert!= null && objExpert.dataSource != null &&objExpert.dataSource.size() > 0) {
             tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
         }
         // 被检对象
@@ -283,34 +288,36 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
         }
 
         // 隐患类别
-        for(final ObjHidden item:objHidden.dataSource){
-            if(!item.isbExist()) continue;
-            View view = LayoutInflater.from(mContext).inflate(R.layout.activity_investigation_task_item,null);
-            TextView tv_type = (TextView)view.findViewById(R.id.tv_type);
-            TextView tv_title = (TextView)view.findViewById(R.id.tv_title);
-            TextView tv_time = (TextView)view.findViewById(R.id.tv_time);
-            TextView tv_name = (TextView)view.findViewById(R.id.tv_name);
-            TextView tv_content = (TextView)view.findViewById(R.id.tv_content);
-            LinearLayout ll_type = (LinearLayout)view.findViewById(R.id.ll_type);
-            if(item.getHiddGrad().equals("0")){
-                tv_type.setText(getResources().getString(R.string.normal));
-                ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
-            }else if(item.getHiddGrad().equals("1")){
-                tv_type.setText(getResources().getString(R.string.danger));
-                ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
-            }
-            tv_title.setText(item.getHiddName());
-            tv_time.setText(item.getCollTime());
-            tv_name.setText(item.getEngName());
-            tv_content.setText(item.getHiddDesc());
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("data",item);
-                    intentActivity(SecurityCheckDetailActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
+        if(objHidden != null) {
+            for (final ObjHidden item : objHidden.dataSource) {
+                if (!item.isbExist()) continue;
+                View view = LayoutInflater.from(mContext).inflate(R.layout.activity_investigation_task_item, null);
+                TextView tv_type = (TextView) view.findViewById(R.id.tv_type);
+                TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+                TextView tv_time = (TextView) view.findViewById(R.id.tv_time);
+                TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+                TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
+                LinearLayout ll_type = (LinearLayout) view.findViewById(R.id.ll_type);
+                if (item.getHiddGrad().equals("0")) {
+                    tv_type.setText(getResources().getString(R.string.normal));
+                    ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
+                } else if (item.getHiddGrad().equals("1")) {
+                    tv_type.setText(getResources().getString(R.string.danger));
+                    ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
                 }
-            });
+                tv_title.setText(item.getHiddName());
+                tv_time.setText(item.getCollTime());
+                tv_name.setText(item.getEngName());
+                tv_content.setText(item.getHiddDesc());
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data", item);
+                        intentActivity(SecurityCheckDetailActivity.this, InvestigationAccepDetailActivity.class, false, bundle);
+                    }
+                });
+            }
         }
 
     }

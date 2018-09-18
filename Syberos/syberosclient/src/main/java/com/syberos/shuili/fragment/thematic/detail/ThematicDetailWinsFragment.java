@@ -1,10 +1,8 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,17 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flyco.tablayout.SegmentTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.RankListFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
@@ -173,7 +167,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
         ArrayList<ProjectEntry> list = new ArrayList<>();
         for(WinsEntry.SubWinsDataBean bean : winsEntry.getData().getSUBWINSDATA()){
-            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),Integer.valueOf(bean.getWINSPROBQUA()));
+            ProjectEntry projectEntry = new ProjectEntry(bean.getOBJGUID(),bean.getOBJNAME(),bean.getWINSPROBQUA());
             list.add(projectEntry);
         }
         RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
@@ -228,8 +222,6 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
         @Override
         public Fragment getItem(int position) {
-//            RankListFragment fragment=new RankListFragment();
-//            return  fragment;
             return fragments.get(position);
         }
 

@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicDetailProjActivity;
+import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
+import com.syberos.shuili.entity.thematic.haz.HazEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
@@ -124,6 +124,8 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     RecyclerView recyclerView;
     Unbinder unbinder;
 
+    private HazEntry hazEntry = null;
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_thematic_detail_haz;
@@ -137,23 +139,27 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
 
-        tvData1.setText(13+"");
-        tvData2.setText(42+"");
+        ArrayList<HazEntry.CountBean> list  = (ArrayList<HazEntry.CountBean>) hazEntry.getData().getCountEngList();
+        HazEntry.CountBean bean = list.get(0);
+        tvData1.setText(bean.getYGK()+"");
+        tvDataTitle1.setText("已管控数量");
+        tvData2.setText(bean.getWGK()+"");
+        tvDataTitle2.setText("未管控数量");
 
         List<PieEntry> dataList=new ArrayList<>();
-        dataList.add(new PieEntry(18,"一般危险源数量 "+18));
-        dataList.add(new PieEntry(6,"一般危险源数量 "+6));
+        dataList.add(new PieEntry(bean.getGENERALNOTREG(),"一般危险源数量 "+bean.getGENERALNOTREG()));
+        dataList.add(new PieEntry(bean.getGENERALNOTREG(),"重大危险源数量 "+bean.getGENERALNOTREG()));
         MPChartUtil.getInstance().initPieCharHiddenRate(mContext,pieCharHazRate,dataList,true);
 
-        tvValue11.setText(10+"");
-        tvValue12.setText(4+"");
-        tvValue13.setText("45%");
+        tvValue11.setText(bean.getGENERALHAVECONTROL()+"");
+        tvValue12.setText(bean.getGENERALNOTCONTROL()+"");
+        tvValue13.setText(bean.getGENERALCONTROLRATE());
 
-        tvValue21.setText(10+"");
-        tvValue22.setText(4+"");
-        tvValue23.setText("21%");
-        tvValue24.setText(10+"");
-        tvValue25.setText("61%");
+        tvValue21.setText(bean.getMAJORHAVECONTROL()+"");
+        tvValue22.setText(bean.getMAJORNOTCONTROL()+"");
+        tvValue23.setText(bean.getMAJORCONTROLRATE());
+        tvValue24.setText(bean.getMAJORHAVEREG()+"");
+        tvValue25.setText(bean.getMAJORREGRATE());
 
         tvValue31.setText(10+"");
         tvValue32.setText(4+"");
@@ -161,23 +167,18 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         tvValue34.setText(10+"");
         tvValue35.setText("80%");
 
-        List<ProjectEntry> list = new ArrayList<>();
-        list.add(new ProjectEntry("rerw", "北京", 100));
-        list.add(new ProjectEntry("rerw", "上海", 120));
-        list.add(new ProjectEntry("rerw", "广东", 150));
-
-        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(list);
+        List<ProjectEntry> projectEntryArrayList = new ArrayList<>();
+        for(HazEntry.EveryEngBean everyEngBean : hazEntry.getData().getEveryEngList()) {
+            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), everyEngBean.getGENERALCONTROLRATE() + everyEngBean.getMAJORREGCOUNT()));
+        }
+        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(projectEntryArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapterGeneral);
         adapterGeneral.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                ThematicDetailHiddenProjFragment thematicDetailHiddenProjFragment=new ThematicDetailHiddenProjFragment();
-//                getFragmentManager().beginTransaction().add(thematicDetailHiddenProjFragment,"ddd").commitAllowingStateLoss();
-//                FragmentTransaction transaction=mContext.getSupportFragmentManager().beginTransaction();
-//                transaction.add(thematicDetailHiddenProjFragment,thematicDetailHiddenProjFragment.getClass().getName()).commit();
-                Intent intent = new Intent(getActivity(), ThematicDetailProjActivity.class);
-                intent.putExtra("typeValue", HematicMapFragment.Haz);
+                Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
+                intent.putExtra("hazData",hazEntry.getData().getEveryEngList().get(position));
                 startActivity(intent);
             }
         });
@@ -208,5 +209,8 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         llData4.setVisibility(View.GONE);
 
 
+    }
+    public void setData(HazEntry hazEntry){
+        this.hazEntry = hazEntry;
     }
 }

@@ -38,7 +38,7 @@ public class GlobleConstants {
 
     //专题图 - 地址
     public static final String BASE_URL = "http://192.168.1.11:7080/";
-//    public static final String BASE_URL = "http://192.168.1.212:8080/";
+
 
     /**
      * 1 大中型已建工程运行管理单位 CJYJ

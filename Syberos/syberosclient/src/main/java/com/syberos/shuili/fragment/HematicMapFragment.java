@@ -27,7 +27,7 @@ import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.fragment.thematic.AccidentChartFragment;
-import com.syberos.shuili.fragment.thematic.DanagerSourceChartFragment;
+import com.syberos.shuili.fragment.thematic.HazChartFragment;
 import com.syberos.shuili.fragment.thematic.HiddenChartFragment;
 import com.syberos.shuili.fragment.thematic.SinsChartFragment;
 import com.syberos.shuili.fragment.thematic.StanChartFragment;
@@ -103,18 +103,15 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     @Override
     public void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.iv_action_bar_right_1)
     void showCharView() {
-//
         int currentItem = vp_content.getCurrentItem();
         Intent intent = new Intent(getActivity(), ThematicDetailActivity.class);
         intent.putExtra("typeValue", tabTitle[currentItem]);
@@ -122,9 +119,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         intent.putExtra("dutyType", ((BaseLazyFragment) (fragments.get(currentItem))).getStatus2());
         switch (tabTitle[currentItem]) {
             case Hidden:
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("hiddenData", ((HiddenChartFragment) fragments.get(currentItem)).getHiddenEntry());
-//                intent.putExtra("hiddenData", bundle);
+                // EventBus
                 break;
             case Acci:
                 Bundle bundle1 = new Bundle();
@@ -132,8 +127,19 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 intent.putExtra("acciData",bundle1);
                 break;
             case Haz:
+                Bundle hazBundle = new Bundle();
+                hazBundle.putSerializable("hazData",((HazChartFragment)fragments.get(currentItem)).getData());
+                intent.putExtra("hazData",hazBundle);
                 break;
             case Stan:
+                Bundle bundle3 = new Bundle();
+                int status = ((BaseLazyFragment)fragments.get(currentItem)).getStatus1();
+                if(status == 1) {
+                    bundle3.putSerializable("stanData", ((StanChartFragment) fragments.get(currentItem)).getStanDirectEntry());
+                }else {
+                    bundle3.putSerializable("stanData", ((StanChartFragment) fragments.get(currentItem)).getStanEntry());
+                }
+                intent.putExtra("stanData",bundle3);
                 break;
             case Sins:
                 break;
@@ -145,6 +151,9 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 intent.putExtra("winsData",winsBundle);
                 break;
             case Suen:
+                Bundle suenBundle = new Bundle();
+                suenBundle.putSerializable("suenData",((SuenChartFragment)fragments.get(currentItem)).getData());
+                intent.putExtra("suenData",suenBundle);
                 break;
         }
         startActivity(intent);
@@ -193,7 +202,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                     fragment = new AccidentChartFragment();
                     break;
                 case Haz:
-                    fragment = new DanagerSourceChartFragment();
+                    fragment = new HazChartFragment();
                     break;
                 case Stan:
                     fragment = new StanChartFragment();
@@ -216,6 +225,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         tabAdapter = new TabAdapter(getChildFragmentManager(), fragments, tabTitle);
 
         //给ViewPager设置适配器
+        vp_content.setOffscreenPageLimit(0);
         vp_content.setAdapter(tabAdapter);
 
         //将TabLayout和ViewPager关联起来。
@@ -320,8 +330,8 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 ((HiddenChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof AccidentChartFragment) {
                 ((AccidentChartFragment) item).setMapData(mapBoundBean.result.get(0));
-            } else if (item instanceof DanagerSourceChartFragment) {
-                ((DanagerSourceChartFragment) item).setMapData(mapBoundBean.result.get(0));
+            } else if (item instanceof HazChartFragment) {
+                ((HazChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof SinsChartFragment) {
                 ((SinsChartFragment) item).setMapData(mapBoundBean.result.get(0));
             } else if (item instanceof StanChartFragment) {

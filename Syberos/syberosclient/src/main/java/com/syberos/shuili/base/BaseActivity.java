@@ -31,6 +31,8 @@ import com.github.jorgecastillo.listener.OnStateChangeListener;
 import com.syberos.shuili.R;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.config.Paths;
+import com.syberos.shuili.utils.LogUtils;
+import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.Strings;
@@ -123,13 +125,27 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        LogUtils.d("1111","--------------onResume");
         super.onResume();
         initData();
     }
 
     @Override
     protected void onPause() {
+        LogUtils.d("1111","--------------onPause");
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        LogUtils.d("1111","--------------onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        LogUtils.d("1111","--------------onStart");
+        super.onStart();
     }
 
     @Override

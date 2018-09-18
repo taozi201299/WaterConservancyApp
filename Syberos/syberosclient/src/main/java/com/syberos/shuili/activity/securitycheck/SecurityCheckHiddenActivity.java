@@ -101,13 +101,16 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
 
     private void getCheckHidden(){
         final int size = relSinsGroupWiun.dataSource.size();
+        if(size == 0){
+            closeDataDialog();
+            return;
+        }
         for(int i =0 ; i < size ; i++){
             final RelSinsGroupWiun item = relSinsGroupWiun.dataSource.get(i);
             final String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
             HashMap<String,String> params = new HashMap<>();
-            params.put("engGuid","6837D159F6BF40858FBD5A8C09C02DA6");
-           // params.put("engGuid",item.getGuid());
-           // params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
+            params.put("engGuid",item.getGuid());
+            params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url,new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
