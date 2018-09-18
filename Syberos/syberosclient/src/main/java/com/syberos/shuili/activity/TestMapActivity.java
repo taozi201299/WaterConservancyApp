@@ -136,7 +136,7 @@ public class TestMapActivity extends BaseActivity {
             return;
         }
         Bundle bundle = new Bundle();
-        bundle.putSerializable("item",engineInfo);
+        bundle.putSerializable("item",item);
         intentActivity(TestMapActivity.this,TestFormActivity.class,false,bundle);
 
     }

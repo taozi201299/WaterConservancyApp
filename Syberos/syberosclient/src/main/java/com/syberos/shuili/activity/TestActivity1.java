@@ -74,7 +74,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
             case R.id.btn_search:
                 query();
                 break;
-            case R.id.iv_action_bar_right_1:
+            case R.id.iv_action_bar_right_2:
                 go2Map();
                 break;
         }
@@ -91,7 +91,13 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     @Override
     public void initListener() {
         btn_search.setOnClickListener(this);
-        iv_action_bar_right_1.setOnClickListener(this);
+        iv_action_bar_right_2.setOnClickListener(this);
+        iv_action_bar_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityFinish();
+            }
+        });
         listAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -111,8 +117,9 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     @Override
     public void initView() {
         tv_action_bar_title.setText("溢洪道监测");
-        iv_action_bar_left.setVisibility(View.INVISIBLE);
-        iv_action_bar_right_2.setVisibility(View.INVISIBLE);
+        iv_action_bar_left.setImageResource(R.mipmap.back);
+        iv_action_bar_right_1.setVisibility(View.GONE);
+        iv_action_bar_right_2.setImageResource(R.mipmap.icon_loc);
         listAdapter = new ListAdapter(this,R.layout.test_list_item_layout);
         engine_pullRecycleView.setAdapter(listAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
