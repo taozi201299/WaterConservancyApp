@@ -104,10 +104,17 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
     @Override
     public void initListener() {
+        setDialogInterface(this);
         ll_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 commit();
+            }
+        });
+        ivActionBar2Left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityFinish();
             }
         });
 
@@ -123,13 +130,11 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         }
         updateView();
     }
-
     @Override
     public void initView() {
         read_only_mv.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
         showTitle("详细信息");
         setActionBarRightVisible(View.INVISIBLE);
-
     }
     private void updateView(){
         tv_provice_value.setText(engineBean.getPROVINCE() + engineBean.getCITY() + engineBean.getCOUNTRY());
@@ -164,26 +169,6 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         }
     }
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode==KeyEvent.KEYCODE_BACK) {
-            final CustomDialog customDialog = new CustomDialog(
-                    TestFormActivity.this);
-            customDialog.setDialogMessage(null, null,
-                    null);
-            customDialog.setMessage("当前新增事故内容未保存，确定退出？");
-            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    activityFinish();
-                    customDialog.dismiss();
-                }
-            });
-            customDialog.show();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mvMultimedia.onActivityResult(requestCode, requestCode, data);
     }
@@ -191,7 +176,6 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         String message = "确认提交数据?";
         showCommitDialog(message,0);
     }
-
     @Override
     public void dialogClick() {
         report();
@@ -202,7 +186,7 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
     }
     private void report(){
-        String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = "";
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",engineBean.getGUID());//隐患GUID
         params.put("note",aeDescribeAudio.getEditText().toString());  //备注
@@ -243,7 +227,6 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 ToastUtils.show(errorInfo.getMessage());
-
             }
         });
 

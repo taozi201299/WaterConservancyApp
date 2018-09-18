@@ -128,6 +128,7 @@ public class TestMapActivity extends BaseActivity {
         @Override
         public void onInfoWindowClick(Marker marker) {
             go2Activity(marker);
+            marker.destroy();
         }
     }
     private void go2Activity(Marker marker){

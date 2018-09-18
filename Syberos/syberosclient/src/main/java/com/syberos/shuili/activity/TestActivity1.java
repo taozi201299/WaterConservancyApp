@@ -67,6 +67,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     private final int size = 10;
     ArrayList<ProviceNameBean>proviceNameBeans = null;
     HashMap<Integer,String>liuYuName = new HashMap<>();
+    HashMap<Integer,String>nameValue = new HashMap<>();
 
     @Override
     public void onClick(View v) {
@@ -116,6 +117,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initView() {
+        ArrayList<String>nameList = new ArrayList<>();
         tv_action_bar_title.setText("溢洪道监测");
         iv_action_bar_left.setImageResource(R.mipmap.back);
         iv_action_bar_right_1.setVisibility(View.GONE);
@@ -126,18 +128,19 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         //设置RecyclerView 布局
         engine_pullRecycleView.setLayoutManager(layoutManager);
         //  获取json数据
-        HashMap<Integer,String>nameValue = new HashMap<>();
         nameValue.put(0,"全部");
+        nameList.add("全部");
         Gson gson = new Gson();
         String jsonData = JsonFileReader.getJson(this, "province_data_shuili.json");
         proviceNameBeans = gson.fromJson(jsonData,new TypeToken<List<ProviceNameBean>>(){}.getType());
         if(proviceNameBeans != null){
             for(ProviceNameBean bean : proviceNameBeans){
                 nameValue.put(Integer.valueOf(bean.getAD_CODE()),bean.getPATHNAME());
+                nameList.add(bean.getPATHNAME());
             }
         }
-        ev_unit_type.setEntries(nameValue);
-        ev_unit_type.setCurrentDetailText(nameValue.get(0));
+        ev_unit_type.setEntries(nameList);
+        ev_unit_type.setCurrentDetailText(nameList.get(0));
         liuYuName.put(0,"全部");
         liuYuName.put(010000,"长江水利委员会");
         liuYuName.put(020000,"黄河水利委员会");
@@ -162,9 +165,9 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         params.put("start","");
         params.put("length","");
         params.put("resName",ce_engine_name.getText().toString());
-        params.put("baadCode",getAdCode(ev_type_liuyu.getCurrentDetailText())); // 流域编码
+        params.put("baadCode",getAdCode(ev_type_liuyu.getCurrentIndex())); // 流域编码
         params.put("adCode",getProviceCode(ev_unit_type.getCurrentIndex()));  // 政区编码
-        params.put("ifSpillway","");
+        params.put("ifSpillway",ev_type_other.getCurrentIndex() == 2 ?"1":"0");
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -189,26 +192,23 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         listAdapter.notifyDataSetChanged();
     }
     private String getProviceCode(int index){
+        if(index == 0)return "";
         String proviceCode = "";
-        if(index !=0){
-            proviceCode = proviceNameBeans.get(index -1).getAD_CODE();
-        }else {
-
+        for(Integer key :nameValue.keySet()){
+            if(index == key){
+                proviceCode = String.valueOf(key);
+            }
         }
         return proviceCode;
     }
-    private String getAdCode(String name){
+    private String getAdCode(int  index){
+        if(index == 0)return "";
         String adCode = "";
         for(Integer key :liuYuName.keySet()){
-            if(liuYuName.get(key).equals(name)){
-               adCode = String.valueOf(key);
-               break;
+            if(index == key){
+                adCode = String.valueOf(key);
             }
         }
-        if("0".equals(adCode)){
-            adCode = "";
-        }
-
         return adCode;
 
     }
