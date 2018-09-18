@@ -22,12 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andview.refreshview.recyclerview.BaseRecyclerAdapter;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -41,7 +41,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.BusinessConfig;
-import com.syberos.shuili.entity.publicentry.LineChartEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
@@ -50,11 +49,13 @@ import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
 import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.network.retrofit.RxApiManager;
+import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.DialPlateView;
 import com.syberos.shuili.view.WaterView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -156,8 +157,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     //管理
     @BindView(R.id.tv_score_manage)
     TextView tvScoreManage;
-    @BindView(R.id.pie_char_manager)
-    PieChart pieCharManager;
+    @BindView(R.id.pie_chart_manager)
+    PieChart pieChartManager;
 
     //    管理 -直管
     @BindView(R.id.tv_count_trainer)
@@ -199,7 +200,16 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     private YAxis yAxisLeft;         //Y坐标轴
     private LineChart lineChart;
     int safaType = 0;
-    SecurityCloudOrgEntry securityCloudOrgEntry = null;
+
+    public SecurityCloudOrgEntry getSecurityCloudOrgEntry() {
+        return securityCloudOrgEntry;
+    }
+
+    public void setSecurityCloudOrgEntry(SecurityCloudOrgEntry securityCloudOrgEntry) {
+        this.securityCloudOrgEntry = securityCloudOrgEntry;
+    }
+
+    public SecurityCloudOrgEntry securityCloudOrgEntry = null;
     private int orgLevel = BusinessConfig.getOrgLevel();
 
 
@@ -303,32 +313,60 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         getSecuritData(sourceType, safaType);
 //        RetrofitHttpMethods.getInstance().
     }
+
+
+    /**
+     * 监管和流域的  管理 返回数据
+     *
+     * @param supervisionMangeEntry
+     */
+    private void initSupervisionManage(SupervisionMangeEntry supervisionMangeEntry) {
+        List<PieEntry> list = new ArrayList<>();
+        int levelOne = supervisionMangeEntry.getStandardLevelOneCount();
+        int levelTwo = supervisionMangeEntry.getStandardLevelTwoCount();
+        int levelThree = supervisionMangeEntry.getStandardLevelThreeCount();
+        if (levelOne + levelTwo + levelThree == 0) {
+            initPieChartNoData(pieChartManager, "暂无数据");
+        } else {
+            list.add(new PieEntry(levelOne, "标准化一级" + String.format("%.1f", (levelOne * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+            list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+            list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+            waterView.setProgress(supervisionMangeEntry.getWorkAssessmentScore());
+//            waterView.startAnimation();
+            initPieCharView(pieChartManager, list);
+        }
+    }
+
     private void getSecuritData(int sourceType, int safaType) {
         RxApiManager.get().cancel(SecurityCloudOrgEntry.class);
-        if (safaType == 1) {
+        if (safaType == 1) {//工程
             RetrofitHttpMethods.getInstance().getSecurityOrgData(new BaseObserver<SecurityCloudOrgEntry>() {
                 @Override
                 public void onSubscribe(Disposable d) {
+
                 }
 
                 @Override
                 public void onNext(SecurityCloudOrgEntry securityCloudOrgEntry) {
-                    securityCloudOrgEntry = securityCloudOrgEntry;
-                    if (tvTitle != null) {
+                    setSecurityCloudOrgEntry(securityCloudOrgEntry);
+                    if (tvTitle != null && securityCloudOrgEntry != null) {
                         updateView(securityCloudOrgEntry);
                     }
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    LogUtils.i("SecurityCloudOrgEntry ","onError");
+                    e.printStackTrace();
                 }
 
                 @Override
                 public void onComplete() {
+                    LogUtils.i("SecurityCloudOrgEntry ","onComplete");
                 }
 //            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
             }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
-        } else if (safaType == 0) {
+        } else if (safaType == 0) {//区域
             RxApiManager.get().cancel(SecurityCloudAreaEntry.class);
             RetrofitHttpMethods.getInstance().getSecurityAreaData(new BaseObserver<SecurityCloudAreaEntry>() {
                 @Override
@@ -337,7 +375,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
                 @Override
                 public void onNext(SecurityCloudAreaEntry securityCloudAreaEntry) {
-                    if (tvTitle != null) {
+                    if (tvTitle != null && securityCloudAreaEntry != null) {
                         updateView(securityCloudAreaEntry);
                     }
                 }
@@ -356,6 +394,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     }
 
     private void updateView(SecurityCloudAreaEntry securityCloudAreaEntry) {
+//        监管 流域 数据
         double score = securityCloudAreaEntry.getData().getAqpgScore().getAQPG();
         if (title.isEmpty()) {
             titleDetail = new String(new StringBuilder("安全评分·").append(score).append("分"));
@@ -366,7 +405,112 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         collapsingToolbarLayout.setTitle(titleDetail);
         tvScore.setText(score + "");
         viewDialPlate.updateData(score);
+        tvDate.setText("");
+        SecurityCloudAreaEntry.DataBean.AqpgScoreBean aqpgScoreBean = securityCloudAreaEntry.getData().getAqpgScore();
+        SecurityCloudAreaEntry.DataBean.SgxxBean sgxxBean = securityCloudAreaEntry.getData().getSgxx().get(0);
+        if (sgxxBean != null) {
+            tvCountAcc.setText(sgxxBean.getSGQS() + "");
+            tvDeathAccCount.setText(sgxxBean.getSWRS() + "");
 
+            List<PieEntry> accPieEntrys = new ArrayList<>();
+            PieChart pieChart = (PieChart) cardViewAcc.findViewById(R.id.pie_char_acc);
+            if (sgxxBean.getZDSG() + sgxxBean.getYBSG() + sgxxBean.getJDSG() + sgxxBean.getTDSG() == 0) {
+
+                initPieChartNoData(pieChart, "无事故发生");
+            } else {
+                accPieEntrys.add(new PieEntry(sgxxBean.getYBSG(), "一般事故 " + sgxxBean.getYBSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getJDSG(), "较大事故 " + sgxxBean.getJDSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getZDSG(), "重大事故 " + sgxxBean.getZDSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getTDSG(), "特大事故 " + sgxxBean.getTDSG()));
+                initPieCharView(pieChart, accPieEntrys);
+            }
+        }
+        if (aqpgScoreBean != null) {
+            tvScoreAcc.setText(aqpgScoreBean.getSG() + "");
+            tvScoreHidden.setText(aqpgScoreBean.getYH() + "");
+            tvScoreRiskSource.setText(aqpgScoreBean.getWXY() + "");
+            tvScoreManage.setText(aqpgScoreBean.getGLZB1() + "");
+        }
+        SecurityCloudAreaEntry.DataBean.YhxxBean yhxxBean = securityCloudAreaEntry.getData().getYhxx();
+        if (yhxxBean != null) {
+            tvCount1Hidden.setText(yhxxBean.getWZG() + "");
+            tvCount2Hidden.setText(yhxxBean.getYHZS() + "");
+            SecurityCloudAreaEntry.DataBean.YhxxBean.YHXXBean yhxxBean1 = yhxxBean.getYHXX().get(0);
+            if (yhxxBean1 != null) {
+
+                tvCount3Hidden.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
+                tvHadRectifiedValue1.setText(yhxxBean1.getYZG() + "");
+                tvNoRectifiedValue1.setText(yhxxBean1.getWZG() + "");
+                tvLateValue1.setText(yhxxBean1.getYQWG() + "");
+            }
+
+            SecurityCloudAreaEntry.DataBean.YhxxBean.YHXXBean yhxxBean2 = yhxxBean.getYHXX().get(1);
+            if (yhxxBean2 != null) {
+
+                tvCount4.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
+                tvHadRectifiedValue2.setText(yhxxBean2.getYZG() + "");
+                tvNoRectifiedValue2.setText(yhxxBean2.getWZG() + "");
+                tvLateValue2.setText(yhxxBean2.getYQWG() + "");
+                tvHadSuperviseValue.setText(yhxxBean2.getGPDB() + "");
+            }
+        }
+
+        SecurityCloudAreaEntry.DataBean.FxyxxBean fxyxxBean = securityCloudAreaEntry.getData().getFxyxx().get(0);
+        if (fxyxxBean != null) {
+            tvCountRisk.setText(fxyxxBean.getYGK() + "");
+            tvCount2.setText(fxyxxBean.getWGK() + "");
+
+            List<PieEntry> riskPieEntrys = new ArrayList<>();
+
+            PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char_risk));
+            if (fxyxxBean.getYBA() + fxyxxBean.getWBA() == 0) {
+                initPieChartNoData(pieChart, "无风险源");
+            } else {
+                riskPieEntrys.add(new PieEntry(fxyxxBean.getYBA(), "已备案 " + fxyxxBean.getYBA()));
+                riskPieEntrys.add(new PieEntry(fxyxxBean.getWGK(), "未备案 " + fxyxxBean.getWGK()));
+                initPieCharView(pieChart, riskPieEntrys);
+            }
+        }
+        SupervisionMangeEntry supervisionMangeEntry = new SupervisionMangeEntry();
+        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
+//        supervisionMangeEntry.setScore();
+        if (bzhBean != null) {
+            supervisionMangeEntry.setStandardLevelOneCount(bzhBean.getYJ());
+            supervisionMangeEntry.setStandardLevelTwoCount(bzhBean.getEJ());
+            supervisionMangeEntry.setStandardLevelThreeCount(bzhBean.getSJ());
+            supervisionMangeEntry.setWorkAssessmentScore(securityCloudAreaEntry.getData().getGzkh().get(0).getAVGSCORE());
+//            initSupervisionManage(supervisionMangeEntry);
+        }
+//        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
+//        if (bzhBean != null) {
+//            List<PieEntry> list = new ArrayList<>();
+//            int levelOne = bzhBean.getYJ();
+//            int levelTwo = bzhBean.getEJ();
+//            int levelThree = bzhBean.getSJ();
+//            if (levelOne + levelTwo + levelThree == 0) {
+//                initPieChartNoData(pieChartManager, "暂无数据");
+//            } else {
+//                list.add(new PieEntry(levelOne, "标准化一级" + String.format("%.1f", (levelOne * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+//                list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+//                list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
+//                waterView.setProgress(60);
+//                initPieCharView(pieChartManager, list);
+//            }
+//        }
+
+
+        List<SecurityCloudAreaEntry.DataBean.AqpgMonthBean> list = securityCloudAreaEntry.getData().getAqpgMonth();
+        lineChart = viewGradeTrend.findViewById(R.id.line_chart);
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.show("选择日期");
+            }
+        });
+
+        initLineCharView(lineChart, list);
+
+        initRankView(securityCloudAreaEntry.getData().getAqpgPm());
     }
 
     private void updateView(SecurityCloudOrgEntry securityCloudOrgEntry) {
@@ -389,25 +533,134 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         collapsingToolbarLayout.setTitle(titleDetail);
         tvScore.setText(score + "");
         viewDialPlate.updateData(score);
+//        // TODO:   时间
+        tvDate.setText("");
+        SecurityCloudOrgEntry.DataBean.AqpgScoreBean aqpgScoreBean = securityCloudOrgEntry.getData().getAqpgScore();
+        SecurityCloudOrgEntry.DataBean.SgxxBean sgxxBean = securityCloudOrgEntry.getData().getSgxx().get(0);
+        if (sgxxBean != null) {
+            tvCountAcc.setText(sgxxBean.getSGQS() + "");
+            tvDeathAccCount.setText(sgxxBean.getSWRS() + "");
+            List<PieEntry> accPieEntrys = new ArrayList<>();
+//            PieChart pieChart = ((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc));
+            if (sgxxBean.getZDSG() + sgxxBean.getYBSG() + sgxxBean.getJDSG() + sgxxBean.getTDSG() == 0) {
 
+                initPieChartNoData(pieCharAcc, "无事故发生");
+            } else {
+                accPieEntrys.add(new PieEntry(sgxxBean.getYBSG(), "一般事故 " + sgxxBean.getYBSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getJDSG(), "较大事故 " + sgxxBean.getJDSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getZDSG(), "重大事故 " + sgxxBean.getZDSG()));
+                accPieEntrys.add(new PieEntry(sgxxBean.getTDSG(), "特大事故 " + sgxxBean.getTDSG()));
+                initPieCharView(pieCharAcc, accPieEntrys);
+            }
+        }
+        if (aqpgScoreBean != null) {
+            tvScoreAcc.setText(aqpgScoreBean.getSG() + "");
+            tvScoreHidden.setText(aqpgScoreBean.getYH() + "");
+            tvScoreRiskSource.setText(aqpgScoreBean.getWXY() + "");
+            tvScoreManage.setText(aqpgScoreBean.getGLZB2() + "");
+        }
+        SecurityCloudOrgEntry.DataBean.YhxxBean yhxxBean = securityCloudOrgEntry.getData().getYhxx();
+        if (yhxxBean != null) {
+            tvCount1Hidden.setText(yhxxBean.getWZG() + "");
+            tvCount2Hidden.setText(yhxxBean.getYHZS() + "");
+            SecurityCloudOrgEntry.DataBean.YhxxBean.YHXXBean yhxxBean1 = yhxxBean.getYHXX().get(0);
+            if (yhxxBean1 != null) {
+
+                tvCount3Hidden.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
+                tvHadRectifiedValue1.setText(yhxxBean1.getYZG() + "");
+                tvNoRectifiedValue1.setText(yhxxBean1.getWZG() + "");
+                tvLateValue1.setText(yhxxBean1.getYQWG() + "");
+            }
+
+            SecurityCloudOrgEntry.DataBean.YhxxBean.YHXXBean yhxxBean2 = yhxxBean.getYHXX().get(1);
+            if (yhxxBean2 != null) {
+
+                tvCount4.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
+                tvHadRectifiedValue2.setText(yhxxBean2.getYZG() + "");
+                tvNoRectifiedValue2.setText(yhxxBean2.getWZG() + "");
+                tvLateValue2.setText(yhxxBean2.getYQWG() + "");
+                tvHadSuperviseValue.setText(yhxxBean2.getGPDB() + "");
+            }
+        }
+
+        SecurityCloudOrgEntry.DataBean.FxyxxBean fxyxxBean = securityCloudOrgEntry.getData().getFxyxx().get(0);
+        if (fxyxxBean != null) {
+            tvCountRisk.setText(fxyxxBean.getYGK() + "");
+            tvCount2.setText(fxyxxBean.getWGK() + "");
+
+            List<PieEntry> riskPieEntrys = new ArrayList<>();
+
+//            PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char_risk));
+            if (fxyxxBean.getYBA() + fxyxxBean.getWBA() == 0) {
+                initPieChartNoData(pieCharRisk, "无风险源");
+            } else {
+                riskPieEntrys.add(new PieEntry(fxyxxBean.getYBA(), "已备案 " + fxyxxBean.getYBA()));
+                riskPieEntrys.add(new PieEntry(fxyxxBean.getWGK(), "未备案 " + fxyxxBean.getWGK()));
+                initPieCharView(pieCharRisk, riskPieEntrys);
+            }
+        }
+//        todo 直管工程的 管理
+        StraightTubeManageEntry straightTubeManageEntry = new StraightTubeManageEntry();
+//        straightTubeManageEntry.set
+//        initStraightTubeManage();
+        List<SecurityCloudOrgEntry.DataBean.AqpgMonthBean> list = securityCloudOrgEntry.getData().getAqpgMonth();
+        lineChart = viewGradeTrend.findViewById(R.id.line_chart);
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.show("选择日期");
+            }
+        });
+
+        initLineCharOrgView(lineChart, list);
+
+        initRankOrgView(securityCloudOrgEntry.getData().getAqpgPm());
     }
-
 
     /**
      * 初始化 排名
      *
-     * @param rankList
+     * @param beans
      */
-    private void initRankView(List<SecurityCloudEntry.AreaRank> rankList) {
-        for (int i = 0; i < 10; i++) {
+    private void initRankOrgView(List<SecurityCloudOrgEntry.DataBean.AqpgPmBean> beans) {
+        List<SecurityCloudEntry.AreaRank> rankList = new ArrayList<>();
+        for (int i = 0; i < beans.size(); i++) {
             SecurityCloudEntry.AreaRank rank = new SecurityCloudEntry.AreaRank();
             rank.setId("11");
-            rank.setName("测试" + i);
-            rank.setScore((10 - i) * 10);
+            rank.setName(beans.get(i).getORG_NAME());
+            rank.setScore(beans.get(i).getSAFA_SCORE());
             rankList.add(rank);
         }
+        Collections.reverse(rankList);
+        RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerAdapter = new RecyclerAdapter(rankList);
+        recyclerAdapter.setListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+//                Bundle bundle=new Bundle();
+                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
+////                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
+//                String title = securityCloudEntry.getRankList().get(position).getName();
+//                String id = securityCloudEntry.getRankList().get(position).getId();
+                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
+            }
 
-        final RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
+        });
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    private void initRankView(List<SecurityCloudAreaEntry.DataBean.AqpgPmBean> beans) {
+        List<SecurityCloudEntry.AreaRank> rankList = new ArrayList<>();
+        for (int i = 0; i < beans.size(); i++) {
+            SecurityCloudEntry.AreaRank rank = new SecurityCloudEntry.AreaRank();
+            rank.setId("11");
+            rank.setName(beans.get(i).getORG_NAME());
+            rank.setScore((int) beans.get(i).getSAFA_SCORE());
+            rankList.add(rank);
+        }
+        Collections.reverse(rankList);
+        RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerAdapter = new RecyclerAdapter(rankList);
         recyclerAdapter.setListener(new OnItemClickListener() {
@@ -438,7 +691,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 ToastUtils.show("选择日期");
             }
         });
-        initLineCharView(lineChart, securityCloudEntry.getCompScoreTrend().getDataList());
+//        initLineCharView(lineChart, securityCloudEntry.getCompScoreTrend().getDataList());
 
     }
 
@@ -450,7 +703,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     private void initStraightTubeManage(StraightTubeManageEntry straightTubeManageEntry) {
         List<StraightTubeManageEntry.ReportInfoItemEntry> dataList = new ArrayList<>();
         dataList.clear();
-        tvScoreManageDirect.setText(straightTubeManageEntry.getScore() + "");
         tvCountTrainer.setText(straightTubeManageEntry.getTrainingPersonCount() + "");
         tvCountHours.setText(straightTubeManageEntry.getPerTrainingHours() + "");
 
@@ -474,104 +726,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
-    /**
-     * 监管和流域的  管理 返回数据
-     *
-     * @param supervisionMangeEntry
-     */
-    @SuppressLint("DefaultLocale")
-    private void initSupervisionManage(SupervisionMangeEntry supervisionMangeEntry) {
-        tvScoreManage.setText(supervisionMangeEntry.getScore() + "");
-        List<PieEntry> list = new ArrayList<>();
-        int levelOne = supervisionMangeEntry.getStandardLevelOneCount();
-        int levelTwo = supervisionMangeEntry.getStandardLevelTwoCount();
-        int levelThree = supervisionMangeEntry.getStandardLevelThreeCount();
-        if (levelOne + levelTwo + levelThree == 0) {
-            initPieChartNoData(pieCharManager, "暂无数据");
-        } else {
-            list.add(new PieEntry(levelOne, "标准化一级" + String.format("%.1f", (levelOne * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
-            list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
-            list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
-            waterView.setProgress(60);
-//            waterView.startAnimation();
-            initPieCharView(pieCharManager, list);
-        }
-    }
-
-    /**
-     * 初始化风险源数据
-     *
-     * @param riskSourceEntry
-     */
-    private void initRiskResource(SecurityCloudEntry.RiskSourceEntry riskSourceEntry) {
-        if (riskSourceEntry != null) {
-            tvScoreRiskSource.setText(riskSourceEntry.getScore() + "");
-            tvCountRisk.setText(riskSourceEntry.getHadControl() + "");
-            tvCount2.setText(riskSourceEntry.getNoControl() + "");
-            List<PieEntry> riskPieEntrys = new ArrayList<>();
-
-            if (riskSourceEntry.getHadRecord() + riskSourceEntry.getNoRecord() == 0) {
-                PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char));
-                initPieChartNoData(pieChart, "无风险源");
-            } else {
-                riskPieEntrys.add(new PieEntry(riskSourceEntry.getHadRecord(), "已备案 " + riskSourceEntry.getHadRecord()));
-                riskPieEntrys.add(new PieEntry(riskSourceEntry.getNoRecord(), "未备案 " + riskSourceEntry.getNoRecord()));
-                initPieCharView((PieChart) pieCharRisk.findViewById(R.id.pie_char_risk), riskPieEntrys);
-            }
-        } else {
-            ToastUtils.show("获取风险源数据错误");
-        }
-    }
-
-    /**
-     * 初始化隐患数据
-     *
-     * @param hiddenInfoEntry
-     */
-    @SuppressLint("SetTextI18n")
-    private void initHiddenView(SecurityCloudEntry.HiddenInfoEntry hiddenInfoEntry) {
-        if (hiddenInfoEntry != null) {
-            tvScoreHidden.setText(hiddenInfoEntry.getScore() + "");
-            tvCount1Hidden.setText(hiddenInfoEntry.getNoRectifyCount() + "");
-            tvCount2Hidden.setText(hiddenInfoEntry.getTotalHiddenCount() + "");
-            tvCount3Hidden.setText(hiddenInfoEntry.getNormalHiddenCount() + "");
-            tvHadRectifiedValue1.setText(hiddenInfoEntry.getNormalHiddenHadRectifyCount() + "");
-            tvNoRectifiedValue1.setText(hiddenInfoEntry.getNormalHiddenNoRectifyCount() + "");
-            tvLateValue1.setText(hiddenInfoEntry.getNormalLateNoRectifyCount() + "");
-            tvLateValue2.setText(hiddenInfoEntry.getMajorLateNoRectifyCount() + "");
-            tvHadSuperviseValue.setText(hiddenInfoEntry.getMajorHadSupervisingCount() + "");
-
-            tvCount4.setText(hiddenInfoEntry.getMajorHiddenCount() + "");
-            tvHadRectifiedValue2.setText(hiddenInfoEntry.getMajorHiddenHadRectifyCount() + "");
-
-        } else {
-            ToastUtils.show("获取隐患数据错误");
-        }
-
-    }
-
-    /**
-     * 初始化事故数据
-     *
-     * @param accidentInfoEntry
-     */
-    private void initAccView(SecurityCloudEntry.AccidentInfoEntry accidentInfoEntry) {
-        tvScoreAcc.setText(accidentInfoEntry.getScore() + "");
-        tvDeathAccCount.setText(accidentInfoEntry.getDeathCount() + "");
-        tvCountAcc.setText(accidentInfoEntry.getTotalCount() + "");
-
-        List<PieEntry> accPieEntrys = new ArrayList<>();
-        if (accidentInfoEntry.getAccLevelOneCount() + accidentInfoEntry.getAccLevelTwoCount() + accidentInfoEntry.getAccLevelThreeCount() + accidentInfoEntry.getAccLevelFourCount() == 0) {
-            PieChart pieChart = ((PieChart) cardViewAcc.findViewById(R.id.pie_char));
-            initPieChartNoData(pieChart, "无事故发生");
-        } else {
-            accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelOneCount(), "一般事故 " + accidentInfoEntry.getAccLevelOneCount()));
-            accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelTwoCount(), "较大事故 " + accidentInfoEntry.getAccLevelTwoCount()));
-            accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelThreeCount(), "重大事故 " + accidentInfoEntry.getAccLevelThreeCount()));
-            accPieEntrys.add(new PieEntry(accidentInfoEntry.getAccLevelFourCount(), "特大事故 " + accidentInfoEntry.getAccLevelFourCount()));
-            initPieCharView((PieChart) cardViewAcc.findViewById(R.id.pie_char_acc), accPieEntrys);
-        }
-    }
 
     private void initPieChartNoData(PieChart pieChart, String str) {
 
@@ -581,12 +735,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         pieChart.setTouchEnabled(false);
         pieChart.setNoDataTextColor(R.color.text_black_color);
         cardViewAcc.postInvalidateDelayed(100);
-    }
-
-    public void updateData(String title, String strJsonData) {
-        this.title = title;
-        this.strJsonData = strJsonData;
-//        initData();
     }
 
     @Override
@@ -599,8 +747,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     }
 
-    private void initLineCharView(LineChart lineChart, List<LineChartEntry> dataList) {
-        LineData lineData = getLineData(dataList);
+    private void initLineCharOrgView(LineChart lineChart, List<SecurityCloudOrgEntry.DataBean.AqpgMonthBean> beans) {
+        LineData lineData = getLineOrgData(beans);
         xAxis = lineChart.getXAxis();
         yAxisLeft = lineChart.getAxisLeft();
 //        lineChart.setBackgroundColor(Color.argb(200, 173, 215, 210));// 设置图表背景 参数是个Color对象
@@ -657,14 +805,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
         xAxis.isDrawLabelsEnabled();
         final List<String> dateList = new ArrayList<>();
+        for (int i = 0; i < beans.size(); i++) {
+            dateList.add(beans.get(i).getCOUNTDATE());
+        }
 
-        dateList.add("一月");
-        dateList.add("二月");
-        dateList.add("三月");
-        dateList.add("四月");
-        dateList.add("五月");
-        dateList.add("六月");
-//        final String[] data = new String[]{"一月", "二月", "三月", "四月", "五月", "六月"};
         xAxis.setLabelCount(dateList.size() - 1);
 //      X轴专用
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -679,13 +823,14 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.setLabelRotationAngle(330);
         xAxis.setDrawLabels(true);
         //可以设置一条警戒线，如下：
-        LimitLine ll = new LimitLine(80, "（合格线：" + securityCloudEntry.getCompScoreTrend().getQualifiedScore() + "分)");
-        ll.enableDashedLine(10, 8, 0);
-        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        ll.setLineColor(getResources().getColor(R.color.button_rush_0bede5));
-        ll.setLineWidth(1f);
-        ll.setTextColor(Color.WHITE);
-        ll.setTextSize(12f);
+
+//        LimitLine ll = new LimitLine(80, "（合格线：" + securityCloudEntry.getCompScoreTrend().getQualifiedScore() + "分)");
+//        ll.enableDashedLine(10, 8, 0);
+//        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+//        ll.setLineColor(getResources().getColor(R.color.button_rush_0bede5));
+//        ll.setLineWidth(1f);
+//        ll.setTextColor(Color.WHITE);
+//        ll.setTextSize(12f);
         // .. and more styling options
 
 //      Y轴专用
@@ -693,7 +838,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setEnabled(false);
 
-        yAxisLeft.addLimitLine(ll);
+//        yAxisLeft.addLimitLine(ll);
         yAxisLeft.setDrawAxisLine(false);
         yAxisLeft.setEnabled(true);
         yAxisLeft.setDrawLabels(false);
@@ -726,15 +871,174 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         lineChart.animateX(0); // 立即执行的动画,x轴
     }
 
-    private LineData getLineData(List<LineChartEntry> dataList) {
+    private void initLineCharView(LineChart lineChart, List<SecurityCloudAreaEntry.DataBean.AqpgMonthBean> beans) {
+        LineData lineData = getLineData(beans);
+        xAxis = lineChart.getXAxis();
+        yAxisLeft = lineChart.getAxisLeft();
+//        lineChart.setBackgroundColor(Color.argb(200, 173, 215, 210));// 设置图表背景 参数是个Color对象
+        Description description = new Description();
+        description.setText("");
+        lineChart.setDescription(description); //图表默认右下方的描述，参数是String对象
+        lineChart.setNoDataText("暂无数据");   //没有数据时显示在中央的字符串，参数是String对象
+
+        lineChart.setDrawGridBackground(false);//设置图表内格子背景是否显示，默认是false
+//        lineChart.setGridBackgroundColor(Color.rgb(250, 0, 0));//设置格子背景色,参数是Color类型对象
+
+        lineChart.setDrawBorders(false);     //设置图表内格子外的边框是否显示
+        //Enabling / disabling interaction
+        lineChart.setTouchEnabled(true); // 设置是否可以触摸
+        lineChart.setDragEnabled(false);// 是否可以拖拽
+        lineChart.setScaleEnabled(false);// 是否可以缩放 x和y轴, 默认是true
+        lineChart.setScaleXEnabled(false); //是否可以缩放 仅x轴
+        lineChart.setScaleYEnabled(false); //是否可以缩放 仅y轴
+//        lineChart.setMarker();
+        lineChart.setPinchZoom(false);  //设置x轴和y轴能否同时缩放。默认是否
+        lineChart.setDoubleTapToZoomEnabled(false);//设置是否可以通过双击屏幕放大图表。默认是true
+//        lineChart.setHighlightEnabled(false);  //If set to true, highlighting/selecting values via touch is possible for all underlying DataSets.
+        lineChart.setHighlightPerDragEnabled(false);//能否拖拽高亮线(数据点与坐标的提示线)，默认是true
+        lineChart.setAutoScaleMinMaxEnabled(false);
+        // Chart fling / deceleration
+        lineChart.setDragDecelerationEnabled(true);//拖拽滚动时，手放开是否会持续滚动，默认是true（false是拖到哪是哪，true拖拽之后还会有缓冲）
+        lineChart.setDragDecelerationFrictionCoef(0.99f);//与上面那个属性配合，持续滚动时的速度快慢，[0,1) 0代表立即停止。
+
+        //Highlighting programmatically
+
+//        highlightValues(Highlight[] highs)
+//               Highlights the values at the given indices in the given DataSets. Provide null or an empty array to undo all highlighting.
+//        highlightValue(int xIndex, int dataSetIndex)
+//               Highlights the value at the given x-index in the given DataSet. Provide -1 as the x-index or dataSetIndex to undo all highlighting.
+//        getHighlighted()
+//               Returns an Highlight[] array that contains information about all highlighted entries, their x-index and dataset-index.
+
+
+        //其他请参考https://github.com/PhilJay/MPAndroidChart/wiki/Interaction-with-the-Chart
+        //如手势相关方法，选择回调方法
+
+
+//        The Axis 坐标轴相关的,XY轴通用
+        xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
+        xAxis.setDrawAxisLine(false); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
+        xAxis.setDrawGridLines(true); //是否显示X坐标轴上的刻度竖线，默认是true
+        xAxis.setDrawLabels(true); //是否显示X坐标轴上的刻度，默认是true
+        xAxis.setTextColor(getResources().getColor(R.color.text_gray_color)); //X轴上的刻度的颜色
+        xAxis.setTextSize(12); //X轴上的刻度的字的大小 单位dp
+        xAxis.setTextColor(Color.parseColor("#004e96"));
+//      xAxis.setTypeface(Typeface tf); //X轴上的刻度的字体
+//        xAxis.setGridColor(getResources().getColor(R.color.color_blue_004e96)); //X轴上的刻度竖线的颜色
+//        xAxis.setGridLineWidth(1); //X轴上的刻度竖线的宽 float类型
+        xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
+        xAxis.isDrawLabelsEnabled();
+        final List<String> dateList = new ArrayList<>();
+        for (int i = 0; i < beans.size(); i++) {
+            dateList.add(beans.get(i).getCOUNTDATE());
+        }
+
+        xAxis.setLabelCount(dateList.size() - 1);
+//      X轴专用
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return dateList.get((int) ((value + 0.5)));//[(int) value];
+            }
+        });
+        xAxis.setAvoidFirstLastClipping(false);
+//        xAxis.setSpaceBetweenLabels(4);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//把坐标轴放在上下 参数有：TOP, BOTTOM, BOTH_SIDED, TOP_INSIDE or BOTTOM_INSIDE.
+        xAxis.setLabelRotationAngle(330);
+        xAxis.setDrawLabels(true);
+        //可以设置一条警戒线，如下：
+//        LimitLine ll = new LimitLine(80, "（合格线：" + securityCloudEntry.getCompScoreTrend().getQualifiedScore() + "分)");
+//        ll.enableDashedLine(10, 8, 0);
+//        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+//        ll.setLineColor(getResources().getColor(R.color.button_rush_0bede5));
+//        ll.setLineWidth(1f);
+//        ll.setTextColor(Color.WHITE);
+//        ll.setTextSize(12f);
+        // .. and more styling options
+
+//      Y轴专用
+
+        YAxis yAxisRight = lineChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+//        yAxisLeft.addLimitLine(ll);
+        yAxisLeft.setDrawAxisLine(false);
+        yAxisLeft.setEnabled(true);
+        yAxisLeft.setDrawLabels(false);
+        yAxisLeft.setAxisMinimum(0);
+        yAxisLeft.setAxisMaximum(100);
+//        yAxis.resetAxisMaxValue();    //重新设置Y轴坐标最大为多少，自动调整
+//        yAxis.resetAxisMinValue();    //重新设置Y轴坐标，自动调整
+        yAxisLeft.setInverted(false);    //Y轴坐标反转,默认是false,即下小上大
+        yAxisLeft.setSpaceTop(0);    //Y轴坐标距顶有多少距离，即留白
+        yAxisLeft.setSpaceBottom(10);    //Y轴坐标距底有多少距离，即留白
+//        yAxis.setShowOnlyMinMax(false);    //参数如果为true Y轴坐标只显示最大值和最小值
+        yAxisLeft.setLabelCount(100, false);    //第一个参数是Y轴坐标的个数，第二个参数是 是否不均匀分布，true是不均匀分布
+        yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  //参数是INSIDE_CHART(Y轴坐标在内部) 或 OUTSIDE_CHART(在外部（默认是这个）)
+//        yAxis.setValueFormatter(new IAxisValueFormatter() {
+        yAxisLeft.setDrawGridLines(false);
+
+        // add data
+        lineChart.setData(lineData); // 设置数据
+
+        // get the legend (only possible after setting data)
+        Legend mLegend = lineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
+        mLegend.setEnabled(false);
+        // modify the legend ...
+        // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
+//        mLegend.setForm(Legend.LegendForm.CIRCLE);// 样式
+//        mLegend.setFormSize(2f);// 字体
+//        mLegend.setTextColor(Color.WHITE);// 颜色
+//      mLegend.setTypeface(mTf);// 字体
+
+        lineChart.animateX(0); // 立即执行的动画,x轴
+    }
+
+    private LineData getLineOrgData(List<SecurityCloudOrgEntry.DataBean.AqpgMonthBean> beans) {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();     //坐标点的集合
 //        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
         Random random = new Random(10);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < beans.size(); i++) {
 //            Entry entry = new Entry(i, dataList.get(i).getScore());
 
-            Entry entry = new Entry(i, random.nextInt(100));
+            Entry entry = new Entry(i, (float) beans.get(i).getAQPG());
+            entries.add(entry);
+        }
+
+        LineDataSet lineDataSet = new LineDataSet(entries, "得分");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
+//        lineDataSet.setCircleColor(Color.WHITE);
+        lineDataSet.isDrawCircleHoleEnabled();
+        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setCircleHoleRadius(5);
+        lineDataSet.setValueTextColor(Color.WHITE);
+        lineDataSet.setValueTextSize(12);
+        lineDataSet.setDrawValues(true);
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//        lineDataSet.setCircleRadius(10);
+        lineDataSet.setLineWidth(2);
+//        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company");
+        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);     //以左边坐标轴为准 还是以右边坐标轴为基准
+//        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>(); //坐标线的集合。
+        dataSets.add(lineDataSet);
+
+        LineData data = new LineData(dataSets);  //LineData(X坐标轴的集合, 坐标线的集合);
+        lineChart.setData(data);   //为图表添加 数据
+        lineChart.invalidate(); // 重新更新显示
+
+        return data;
+    }
+
+    private LineData getLineData(List<SecurityCloudAreaEntry.DataBean.AqpgMonthBean> beans) {
+
+        ArrayList<Entry> entries = new ArrayList<Entry>();     //坐标点的集合
+//        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+        Random random = new Random(10);
+        for (int i = 0; i < beans.size(); i++) {
+//            Entry entry = new Entry(i, dataList.get(i).getScore());
+
+            Entry entry = new Entry(i, (float) beans.get(i).getAQPG());
             entries.add(entry);
         }
 

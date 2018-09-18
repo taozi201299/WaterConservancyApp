@@ -12,7 +12,7 @@ public class SupervisionMangeEntry implements Serializable {
     private int standardLevelOneCount;//标准化 一级 数
     private int standardLevelTwoCount;//标准化 二级 数
     private int standardLevelThreeCount;//标准化 三级 数
-    private int workAssessmentScore;//工作考核平均分
+    private double workAssessmentScore;//工作考核平均分
 
     public int getScore() {
         return score;
@@ -46,11 +46,11 @@ public class SupervisionMangeEntry implements Serializable {
         this.standardLevelThreeCount = standardLevelThreeCount;
     }
 
-    public int getWorkAssessmentScore() {
+    public double getWorkAssessmentScore() {
         return workAssessmentScore;
     }
 
-    public void setWorkAssessmentScore(int workAssessmentScore) {
+    public void setWorkAssessmentScore(double workAssessmentScore) {
         this.workAssessmentScore = workAssessmentScore;
     }
 }

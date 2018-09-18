@@ -36,7 +36,7 @@ public class WaterView extends View {
     Paint paintWater2;
     Paint paintWater3;
     Point startPoint;
-    int progress = 30;
+    double progress = 30;
     int startX=0;
     private float radius;
 
@@ -71,7 +71,7 @@ public class WaterView extends View {
 //        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.cat);
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(double progress) {
         this.progress = progress;
         invalidate();
     }

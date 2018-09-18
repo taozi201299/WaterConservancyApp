@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:textColor="@color/text_black_color"
-            android:textSize="@dimen/text_value_big_33sp"
+            android:textSize="@dimen/_18sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_score_title"
             app:layout_constraintLeft_toRightOf="@id/tv_score_title"
             app:layout_constraintTop_toTopOf="@id/tv_score_title" />

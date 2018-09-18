@@ -57,7 +57,7 @@
                     android:layout_marginLeft="@dimen/_5dp"
                     android:text="80"
                     android:textColor="@color/text_black_color"
-                    android:textSize="@dimen/text_value_big_33sp" />
+                    android:textSize="@dimen/_18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:background="@color/div" />
 
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pie_char_manager"
+            android:id="@+id/pie_chart_manager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_140dp"
             android:layout_margin="@dimen/_15dp" />
