@@ -20,6 +20,7 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.TestActivity1;
 import com.syberos.shuili.activity.accident.AccidentListActivity;
 import com.syberos.shuili.activity.accident.AccidentListForEntAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
@@ -82,7 +83,7 @@ public class WorkFragment extends BaseFragment {
     @OnClick(R.id.iv_action_bar_right_1)
     void go2locationActivity() {
         ToastUtils.show("TODO：请求打开查附近功能");
-        intentActivity((Activity) mContext,ShowNearlyInfoActivity.class,false,true);
+        intentActivity((Activity) mContext,TestActivity1.class,false,true);
     }
 
     @OnClick(R.id.iv_action_bar_right_2)
