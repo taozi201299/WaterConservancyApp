@@ -65,6 +65,8 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     ListAdapter listAdapter = null;
     EngineInfoBean engineInfo = null;
     private final int size = 10;
+    ArrayList<ProviceNameBean>proviceNameBeans = null;
+    HashMap<Integer,String>liuYuName = new HashMap<>();
 
     @Override
     public void onClick(View v) {
@@ -89,6 +91,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     @Override
     public void initListener() {
         btn_search.setOnClickListener(this);
+        iv_action_bar_right_1.setOnClickListener(this);
         listAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -102,7 +105,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initData() {
-
+      query();
     }
 
     @Override
@@ -120,7 +123,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         nameValue.put(0,"全部");
         Gson gson = new Gson();
         String jsonData = JsonFileReader.getJson(this, "province_data_shuili.json");
-        ArrayList<ProviceNameBean>proviceNameBeans = gson.fromJson(jsonData,new TypeToken<List<ProviceNameBean>>(){}.getType());
+        proviceNameBeans = gson.fromJson(jsonData,new TypeToken<List<ProviceNameBean>>(){}.getType());
         if(proviceNameBeans != null){
             for(ProviceNameBean bean : proviceNameBeans){
                 nameValue.put(Integer.valueOf(bean.getAD_CODE()),bean.getPATHNAME());
@@ -128,15 +131,14 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         }
         ev_unit_type.setEntries(nameValue);
         ev_unit_type.setCurrentDetailText(nameValue.get(0));
-        ArrayList<String>liuYuName = new ArrayList<>();
-        liuYuName.add("全部");
-        liuYuName.add("长江水利委员会");
-        liuYuName.add("黄河水利委员会");
-        liuYuName.add("淮河水利委员会");
-        liuYuName.add("海河水利委员会");
-        liuYuName.add("珠江水利委员会");
-        liuYuName.add("松江水利委员会");
-        liuYuName.add("太湖水利委员会");
+        liuYuName.put(0,"全部");
+        liuYuName.put(010000,"长江水利委员会");
+        liuYuName.put(020000,"黄河水利委员会");
+        liuYuName.put(030000,"淮河水利委员会");
+        liuYuName.put(040000,"海河水利委员会");
+        liuYuName.put(050000,"珠江水利委员会");
+        liuYuName.put(060000,"松江水利委员会");
+        liuYuName.put(070000,"太湖水利委员会");
         ev_type_liuyu.setEntries(liuYuName);
         ev_type_liuyu.setCurrentDetailText(liuYuName.get(0));
         ArrayList<String>otherName = new ArrayList<>();
@@ -151,10 +153,10 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         String url = "http://192.168.1.11:7080/desu/serv/v1/getSpillway";
         HashMap<String,String>params = new HashMap<>();
         params.put("start","");
-        params.put("lengthr","");
-        params.put("resName","");
-        params.put("adCode","");
-        params.put("baadCode","");
+        params.put("length","");
+        params.put("resName",ce_engine_name.getText().toString());
+        params.put("baadCode",getAdCode(ev_type_liuyu.getCurrentDetailText())); // 流域编码
+        params.put("adCode",getProviceCode(ev_unit_type.getCurrentIndex()));  // 政区编码
         params.put("ifSpillway","");
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
@@ -179,7 +181,34 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         listAdapter.setData(engineInfo.getData().getData());
         listAdapter.notifyDataSetChanged();
     }
+    private String getProviceCode(int index){
+        String proviceCode = "";
+        if(index !=0){
+            proviceCode = proviceNameBeans.get(index -1).getAD_CODE();
+        }else {
+
+        }
+        return proviceCode;
+    }
+    private String getAdCode(String name){
+        String adCode = "";
+        for(Integer key :liuYuName.keySet()){
+            if(liuYuName.get(key).equals(name)){
+               adCode = String.valueOf(key);
+               break;
+            }
+        }
+        if("0".equals(adCode)){
+            adCode = "";
+        }
+
+        return adCode;
+
+    }
     private void go2Activity(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("item",engineInfo);
+        intentActivity(TestActivity1.this,TestMapActivity.class,false,bundle);
 
     }
     public static class ProviceNameBean implements Serializable{

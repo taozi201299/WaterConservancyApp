@@ -1,350 +1,152 @@
 package com.syberos.shuili.activity;
-
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.GeolocationPermissions;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.syberos.shuili.App;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.R;
-import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.config.BusinessConfig;
-import com.syberos.shuili.entity.map.MapBoundBean;
-import com.syberos.shuili.entity.thematic.haz.HazEntry;
-import com.syberos.shuili.fragment.thematic.HazChartFragment;
-import com.syberos.shuili.network.retrofit.BaseObserver;
-import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
-import com.syberos.shuili.utils.LogUtils;
+import com.syberos.shuili.entity.test.EngineInfoBean;
 import com.syberos.shuili.utils.ToastUtils;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.disposables.Disposable;
 
-/**
- * Created by Administrator on 2018/9/17.
- */
+import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
+
 
 public class TestMapActivity extends BaseActivity {
-    @BindView(R.id.webview)
-    WebView webView;
-
-    @BindView(R.id.radio_group)
-    RadioGroup radioGroup;
-
-    @BindView(R.id.radio_btn_jianguan)
-    RadioButton rbtnJianguan;
-
-    @BindView(R.id.radio_btn_zhiguan)
-    RadioButton rbtnZhiguan;
-
-    @BindView(R.id.radio_btn_liuyu)
-    RadioButton rbtnLiuyu;
-    private String TAG = getClass().getSimpleName();
-    private String mLon = "";
-    private String mLat = "";
-    private boolean bLoadFinish = false;
-    private boolean bShowMap = false;
-    private int iMapLevel = 0;
-    private final static long duration = 10 * 1000;
-    private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
-
-    private int orgLevel = BusinessConfig.getOrgLevel();
-    private int orgType; // 1 行政区划 2 流域用户
-
-
-    private HashMap<String, String> levels = new HashMap<String, String>() {
-        {
-            put("北京市", "5");
-            put("上海市", "5");
-            put("天津市", "5");
-            put("重庆市", "5");
-        }
-    };
-
+    @BindView(R.id.view_gdmap)
+    MapView view_gdmap;
+    AMap aMap ;
+    EngineInfoBean engineInfo = null;
     @Override
-    public void initView() {
-        App.jurdAreaType = "1";
-        App.orgJurd = "000000000000";
-        orgLevel = 1;
-        showDataLoadingDialog();
-        rbtnJianguan.setVisibility(View.GONE);
-        rbtnLiuyu.setVisibility(View.GONE);
-        rbtnZhiguan.setVisibility(View.GONE);
-        // 行政区划
-        if ("1".equals(App.jurdAreaType)) {
-            orgType = 1;
-        } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
-            orgType = 2;
-        }
-        if (orgType == 1) {
-            if (orgLevel == 1) {
-                // 部级用户  直管 流域 监管
-                rbtnJianguan.setVisibility(View.VISIBLE);
-                rbtnLiuyu.setVisibility(View.VISIBLE);
-                rbtnZhiguan.setVisibility(View.VISIBLE);
-                radioGroup.check(R.id.radio_btn_zhiguan);
-            } else if (orgLevel == 2) {
-                // 省级  直管 监管
-                rbtnJianguan.setVisibility(View.VISIBLE);
-                rbtnZhiguan.setVisibility(View.VISIBLE);
-                radioGroup.check(R.id.radio_btn_zhiguan);
-            } else if (orgLevel == 3) {
-                // 市 直管 监管
-                rbtnJianguan.setVisibility(View.VISIBLE);
-                rbtnZhiguan.setVisibility(View.VISIBLE);
-                radioGroup.check(R.id.radio_btn_zhiguan);
-            } else if (orgLevel == 4) {
-                // 县  直管
-                rbtnZhiguan.setVisibility(View.VISIBLE);
-                radioGroup.check(R.id.radio_btn_zhiguan);
-            }
-        } else if (orgType == 2) {
-            rbtnZhiguan.setVisibility(View.VISIBLE);
-            radioGroup.check(R.id.radio_btn_zhiguan);
-        }
-        webMap();
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        view_gdmap.onCreate(savedInstanceState);
+        initMap();
     }
 
-    @Override
     public int getLayoutId() {
-        return R.layout.fragment_acci_chart_layout;
+        return R.layout.test_map_activity;
     }
 
     @Override
     public void initListener() {
-        bLoadFinish = false;
-        bShowMap = false;
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
-                webView.removeAllViews();
-                bShowMap = false;
-                switch (checkId) {
-                    case R.id.radio_btn_zhiguan:
-                        if (orgType == 1) {
-                            if (orgLevel == 1) iMapLevel = -1;
-                            else iMapLevel = 4;
-                        } else if (orgType == 2) {
-                            iMapLevel = 0;
-                        }
-                        type = 1;
-                        break;
-                    case R.id.radio_btn_liuyu:
-                        if (orgLevel == 1) iMapLevel = -2;
-                        else iMapLevel = 0;
-                        type = 3;
-                        break;
-                    case R.id.radio_btn_jianguan:
-                        if (orgLevel == 1) iMapLevel = -1;
-                        else iMapLevel = 4;
-                        type = 2;
-                        break;
-                }
-                if (orgType == 1) {
-                    if (type == 3)
-                        webView.loadUrl("file:///android_asset/chart/haz_liuyu.html");
-                    else {
-                        webView.loadUrl("file:///android_asset/chart/haz.html");
-                    }
-                } else if (orgType == 2) {
-                    webView.loadUrl("file:///android_asset/chart/haz_liuyu.html");
-                }
-            }
-        });
 
     }
+
     @Override
     public void initData() {
-
-
-    }
-
-    public HazEntry getHazEntry() {
-        return hazEntry;
-    }
-
-    public void setHazEntry(HazEntry hazEntry) {
-        this.hazEntry = hazEntry;
-    }
-
-    HazEntry hazEntry;
-
-    public void webMap() {//地图定位
-        webView.getSettings().setDatabaseEnabled(true);//开启数据库
-        webView.setFocusable(true);//获取焦点
-        webView.requestFocus();
-        webView.getSettings().setBlockNetworkImage(false);//显示网络图像
-        webView.getSettings().setLoadsImagesAutomatically(true);//显示网络图像
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);//插件支持
-        webView.getSettings().setSupportZoom(false);//设置是否支持变焦
-        webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
-        webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        if (orgType == 1 || orgType == 3) {
-            if (orgLevel == 1) iMapLevel = -1;
-            else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/haz.html");
-        } else if (orgType == 2) {
-            iMapLevel = 0;
-            webView.loadUrl("file:///android_asset/chart/haz_liuyu.html");
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        engineInfo = (EngineInfoBean) bundle.getSerializable("item");
+        if(engineInfo == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+            activityFinish();
         }
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                bLoadFinish = true;
-                if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
-                    refreshUI();
-                }
+        List<EngineInfoBean.EngineBean> engineInfoBeans = engineInfo.getData().getData();
+        int size = engineInfoBeans.size();
+        for (int i = 0; i < size; i++) {
+            aMap.addMarker(new MarkerOptions().anchor(1.5f, 3.5f)
+                    .position(new LatLng(Double.valueOf(engineInfoBeans.get(i).getY()),//设置纬度
+                            Double.valueOf(engineInfoBeans.get(i).getX())))//设置经度
+                    .title(engineInfoBeans.get(i).getRES_NAME())
+                    .snippet(engineInfoBeans.get(i).getRES_TYPE() + "&" +engineInfoBeans.get(i).getDEAD_LEV())
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.default_avatar_background)));
+        }
+    }
+    @Override
+    public void initView() {
+
+    }
+    public void initMap() {
+        if (aMap == null) {
+            aMap = view_gdmap.getMap();
+            aMap.getUiSettings().setMyLocationButtonEnabled(false); // 是否显示定位按钮
+            aMap.setMyLocationEnabled(false);//显示定位层并且可以触发定位,默认是flase
+            aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+            aMap.moveCamera(CameraUpdateFactory.zoomTo(0));//设置地图缩放级别
+            //设置自定义弹窗
+            aMap.setInfoWindowAdapter(new WindowAdapter(this));
+            //绑定信息窗点击事件
+            aMap.setOnInfoWindowClickListener(new WindowAdapter(this));
+            aMap.setOnMarkerClickListener(new WindowAdapter(this));
+        }
+    }
+    public class WindowAdapter implements AMap.InfoWindowAdapter, AMap.OnMarkerClickListener,
+            AMap.OnInfoWindowClickListener{
+
+        private Context context;
+        private static final String TAG = "WindowAdapter";
+
+        public WindowAdapter(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            //关联布局
+            View view = LayoutInflater.from(context).inflate(R.layout.test_map_info_item_layout, null);
+            //标题
+            TextView title =  view.findViewById(R.id.info_title);
+            String content = marker.getSnippet();
+            String[] values = content.split("&");
+            //工程类型
+            TextView type =  view.findViewById(R.id.info_type);
+            //工程级别
+            TextView level =  view.findViewById(R.id.info_grade);
+            title.setText(marker.getTitle());
+            type.setText(values[0]);
+            level.setText(values[1]);
+            return view;
+        }
+
+        //如果用自定义的布局，不用管这个方法,返回null即可
+        @Override
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
+
+        // marker 对象被点击时回调的接口
+        // 返回 true 则表示接口已响应事件，否则返回false
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            return false;
+        }
+
+        //绑定信息窗点击事件
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            go2Activity(marker);
+        }
+    }
+    private void go2Activity(Marker marker){
+        EngineInfoBean.EngineBean item = getItem(marker.getPosition().longitude,marker.getPosition().latitude);
+        if(item == null){
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("item",engineInfo);
+        intentActivity(TestMapActivity.this,TestFormActivity.class,false,bundle);
+
+    }
+    private EngineInfoBean.EngineBean getItem(double x,double y){
+        for(EngineInfoBean.EngineBean bean:engineInfo.getData().getData()){
+            if(bean.getX().equals(String.valueOf(x)) && bean.getY().equals(String.valueOf(y))){
+                return bean;
             }
-        });
-
-        webView.setWebChromeClient(new WebChromeClient() {
-            //重写WebChromeClient的onGeolocationPermissionsShowPrompt
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-                super.onGeolocationPermissionsShowPrompt(origin, callback);
-            }
-        });
-    }
-
-    public class MyJavaScriptInterface {
-        public MyJavaScriptInterface() {
-
         }
+        return null;
 
-        @JavascriptInterface
-        public void toast(String str) {
-            Toast.makeText(mContext, "map test", Toast.LENGTH_SHORT).show();
-        }
-
-        @JavascriptInterface
-        public String getHazInfo(String orgGuid) {
-            Gson gson = new Gson();
-            String jsonStr = "";
-            HazEntry hazEntry = getHazEntry();
-            HazChartFragment.HazInfo hazInfo ;
-            for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
-            }
-            return jsonStr;
-        }
-    }
-
-    public static class HazInfo{
-        String  name;
-        String  hazCount;
-    }
-
-    public void setMapData(MapBoundBean mapData) {
-        String center = mapData.centerXY;
-        String[] array = center.split(",");
-        if (orgType == 1 || orgType == 4) {
-            if (orgLevel == 1) iMapLevel = -2;
-            else iMapLevel = 4;
-        } else {
-            iMapLevel = 0;
-        }
-        mLon = array[0];
-        mLat = array[1];
-        if (bLoadFinish && !bShowMap) {
-            refreshUI();
-        }
-    }
-
-    private void addMarkInfo(List<Point> list) {
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(list);
-        webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
-    }
-
-    private void refreshUI() {
-        closeDataDialog();
-        bShowMap = true;
-        webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-        List<Point> list = new ArrayList<>();
-        list.clear();
-        int type;
-
-        if (rbtnZhiguan.isChecked()) {
-            type = 1;
-        } else if (rbtnJianguan.isChecked()) {
-            type = 2;
-        } else if (rbtnLiuyu.isChecked()) {
-            type = 3;
-        } else {
-            type = 1;
-        }
-        RetrofitHttpMethods.getInstance().getThematicHaz(new BaseObserver<HazEntry>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                LogUtils.i(TAG + "getThematicHidden:", "onSubscribe");
-            }
-
-            @Override
-            public void onNext(HazEntry hazEntry) {
-                LogUtils.i(TAG + "getThematicHidden:", "onNext");
-                List<Point> list = new ArrayList<>();
-                list.clear();
-                if (hazEntry == null || hazEntry.getData() == null) {
-                    ToastUtils.show("未获取到数据");
-                    return;
-                }
-                for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
-                    Point point = new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getGENERALREGCOUNT()),bean.getORGCODE());
-                    list.add(point);
-                }
-                setHazEntry(hazEntry);
-                addMarkInfo(list);
-                EventBus.getDefault().postSticky(hazEntry);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                LogUtils.i(TAG + "getThematicHaz:", "onError");
-            }
-
-            @Override
-            public void onComplete() {
-                LogUtils.i(TAG + "getThematicHaz:", "onComplete");
-            }//todo 参数
-        }, type + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-
-
-    }
-    private void  setData(HazEntry hazEntry){
-        this.hazEntry = hazEntry;
-    }
-    public HazEntry getData(){
-        return this.hazEntry;
-    }
-    class Point {
-        public Point(String lon, String lat, String value,String guid) {
-            this.lon = lon;
-            this.lat = lat;
-            this.value = value;
-            this.guid = guid;
-        }
-
-        String lon;
-        String lat;
-        String value;
-        String guid;
     }
 }

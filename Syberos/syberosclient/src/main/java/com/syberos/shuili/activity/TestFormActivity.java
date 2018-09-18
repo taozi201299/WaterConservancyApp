@@ -1,6 +1,5 @@
 package com.syberos.shuili.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,11 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.test.EngineInfoBean;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
@@ -24,6 +26,8 @@ import com.syberos.shuili.view.indexListView.ClearEditText;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -152,6 +156,12 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         ArrayList<MultimediaView.LocalAttachment> localAttachments = new ArrayList<>();
         localAttachments.add(localAttachment);
         read_only_mv.setData(localAttachments);
+        if("1".equals(engineBean.getIFCHECK())) {
+            aeDescribeAudio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
+            aeDescribeAudio.setEditText(engineBean.getCHECKOPIN());
+            mvMultimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+            ll_commit.setVisibility(View.GONE);
+        }
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -192,6 +202,50 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
     }
     private void report(){
+        String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("guid",engineBean.getGUID());//隐患GUID
+        params.put("note",aeDescribeAudio.getEditText().toString());  //备注
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        ArrayList<MultimediaView.LocalAttachment> list =  mvMultimedia.getBinaryFile();
+
+        if(list != null){
+            for(MultimediaView.LocalAttachment item :list){
+                AttachMentInfoEntity info = new AttachMentInfoEntity();
+                info.medName = item.localFile.getName();
+                info.medPath = item.localFile.getPath();
+                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                info.bisTableName = "BIS_HIDD_RECT_ACCE";
+                info.bisGuid = engineBean.getGUID();
+                info.localStatus = "1";
+                if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
+                    info.medType = "0";
+                }else {
+                    info.medType = "1";
+                }
+                info.seriesKey = localCacheEntity.seriesKey;
+                attachMentInfoEntities.add(info);
+            }
+        }
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
 
     }
 }

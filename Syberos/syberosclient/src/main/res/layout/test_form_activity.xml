@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/_5dp"
-    android:layout_marginTop="@dimen/padding_2"
     xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -387,7 +386,7 @@
     <LinearLayout
         android:id="@+id/ll_commit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50dp"
+        android:layout_height="@dimen/_40dp"
         android:gravity="center"
         android:layout_marginBottom="@dimen/_5dp"
         android:paddingLeft="@dimen/_10dp"
@@ -397,7 +396,7 @@
         <TextView
             android:id="@+id/tv_commmit"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50dp"
+            android:layout_height="@dimen/_40dp"
             android:layout_margin="@dimen/_6dp"
             android:background="@drawable/button_login_normal"
             android:gravity="center"

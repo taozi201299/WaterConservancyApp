@@ -71,6 +71,8 @@
             android:name=".activity.TestActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.TestMapActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.thematic.ThematicDetailActivity"
             android:screenOrientation="portrait"
