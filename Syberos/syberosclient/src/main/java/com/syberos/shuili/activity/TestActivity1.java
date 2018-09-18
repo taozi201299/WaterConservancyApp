@@ -153,8 +153,10 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         ev_type_liuyu.setCurrentDetailText(liuYuName.get(0));
         ArrayList<String>otherName = new ArrayList<>();
         otherName.add("全部");
-        otherName.add("疑似无");
         otherName.add("待定");
+        otherName.add("疑似无");
+        otherName.add("疑似有");
+
         ev_type_other.setEntries(otherName);
         ev_type_other.setCurrentDetailText(otherName.get(0));
     }
@@ -166,8 +168,9 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         params.put("length","");
         params.put("resName",ce_engine_name.getText().toString());
         params.put("baadCode",getAdCode(ev_type_liuyu.getCurrentIndex())); // 流域编码
-        params.put("adCode",getProviceCode(ev_unit_type.getCurrentIndex()));  // 政区编码
-        params.put("ifSpillway",ev_type_other.getCurrentIndex() == 2 ?"1":"0");
+        params.put("adCode",getProviceCode(ev_unit_type.getCurrentDetailText()));  // 政区编码
+        int index = ev_unit_type.getCurrentIndex();
+        params.put("ifSpillway",index == -1 ?"":String.valueOf(index +1));
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -191,25 +194,38 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         listAdapter.setData(engineInfo.getData().getData());
         listAdapter.notifyDataSetChanged();
     }
-    private String getProviceCode(int index){
-        if(index == 0)return "";
+    private String getProviceCode(String name){
+        if(name== null)return "";
         String proviceCode = "";
         for(Integer key :nameValue.keySet()){
-            if(index == key){
+            if(name.equals(nameValue.get(key))){
                 proviceCode = String.valueOf(key);
             }
         }
+        if("0".equals(proviceCode)){
+            proviceCode = "";
+        }
         return proviceCode;
     }
-    private String getAdCode(int  index){
-        if(index == 0)return "";
-        String adCode = "";
-        for(Integer key :liuYuName.keySet()){
-            if(index == key){
-                adCode = String.valueOf(key);
-            }
+    private String getAdCode(int index){
+        if(index== 0)return "";
+        if(index == 1){
+            return "010000";
+        }else if(index == 2){
+            return "020000";
+        }else if(index == 3){
+            return  "030000";
         }
-        return adCode;
+        if(index == 4){
+            return "040000";
+        }else if(index == 5){
+            return "050000";
+        }else if(index == 6){
+            return  "060000";
+        }else if(index == 7){
+            return  "070000";
+        }
+        return "";
 
     }
     private void go2Activity(){

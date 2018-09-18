@@ -26,8 +26,7 @@
     <com.syberos.shuili.view.indexListView.ClearEditText
         android:layout_gravity="center_vertical"
         android:id="@+id/clearEditText"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/_10dp"
         android:layout_height="@dimen/_30dp"
         android:background="@drawable/search_border"

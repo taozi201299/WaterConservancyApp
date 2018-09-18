@@ -48,6 +48,7 @@ public class TestMapActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        aMap.getMapScreenMarkers().clear();
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         engineInfo = (EngineInfoBean) bundle.getSerializable("item");
         if(engineInfo == null){
@@ -128,7 +129,9 @@ public class TestMapActivity extends BaseActivity {
         @Override
         public void onInfoWindowClick(Marker marker) {
             go2Activity(marker);
-            marker.destroy();
+            if(marker != null){
+                marker.remove();
+            }
         }
     }
     private void go2Activity(Marker marker){
