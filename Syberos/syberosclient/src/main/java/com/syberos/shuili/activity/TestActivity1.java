@@ -68,6 +68,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     ArrayList<ProviceNameBean>proviceNameBeans = null;
     HashMap<Integer,String>liuYuName = new HashMap<>();
     HashMap<Integer,String>nameValue = new HashMap<>();
+    ArrayList<String>otherName = new ArrayList<>();
 
     @Override
     public void onClick(View v) {
@@ -151,7 +152,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         liuYuName.put(070000,"太湖水利委员会");
         ev_type_liuyu.setEntries(liuYuName);
         ev_type_liuyu.setCurrentDetailText(liuYuName.get(0));
-        ArrayList<String>otherName = new ArrayList<>();
+
         otherName.add("全部");
         otherName.add("待定");
         otherName.add("疑似无");
@@ -164,13 +165,13 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         showDataLoadingDialog();
         String url = "http://192.168.1.11:7080/desu/serv/v1/getSpillway";
         HashMap<String,String>params = new HashMap<>();
-        params.put("start","");
-        params.put("length","");
+        params.put("start","0");
+        params.put("length","99999");
         params.put("resName",ce_engine_name.getText().toString());
         params.put("baadCode",getAdCode(ev_type_liuyu.getCurrentIndex())); // 流域编码
         params.put("adCode",getProviceCode(ev_unit_type.getCurrentDetailText()));  // 政区编码
-        int index = ev_unit_type.getCurrentIndex();
-        params.put("ifSpillway",index == -1 ?"":String.valueOf(index +1));
+        int index = getIndex(ev_type_other.getCurrentDetailText());
+        params.put("ifSpillway",index == -1 ?"":String.valueOf(index -1));
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -193,6 +194,19 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         closeDataDialog();
         listAdapter.setData(engineInfo.getData().getData());
         listAdapter.notifyDataSetChanged();
+    }
+    private int getIndex(String name){
+        int index = -1;
+        for(String item :otherName ){
+            if(item.equals(name)){
+                index = otherName.indexOf(item);
+            }
+        }
+        if(index == 0){
+            index = -1;
+        }
+        return index;
+
     }
     private String getProviceCode(String name){
         if(name== null)return "";
