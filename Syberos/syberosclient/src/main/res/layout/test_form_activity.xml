@@ -23,7 +23,7 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50dp"
+                android:layout_height="@dimen/_30dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 >
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省 某某市 某某县"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="无"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -226,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -298,7 +298,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -334,7 +334,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5dp"
                     android:singleLine="true"
-                    android:text="辽宁省"/>
+                    android:text=""/>
             </LinearLayout>
             <com.syberos.shuili.view.MultimediaView
                 android:id="@+id/read_only_mv"

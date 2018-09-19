@@ -186,10 +186,11 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
     }
     private void report(){
-        String url = "";
+        String url = "http://192.168.1.11:7080/desu/serv/v1/updateSpillwayCheck";
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",engineBean.getGUID());//隐患GUID
-        params.put("note",aeDescribeAudio.getEditText().toString());  //备注
+        params.put("ifSpillway","1");
+        params.put("checkOpin",aeDescribeAudio.getEditText().toString());  //备注
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

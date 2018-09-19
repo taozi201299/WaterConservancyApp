@@ -457,7 +457,7 @@ public class LoginActivity extends BaseActivity {
      * 获取orgClienType 单位类型
      */
     private void getSysCode(String perID) {
-        String url = GlobleConstants.strIP +"/cjapi/cj/yuanXin/collresobase/getCollByPersIdAndSysCode";
+        String url = GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/collresobase/getCollByPersIdAndSysCode";
         HashMap<String,String>params = new HashMap<>();
         params.put("personID",perID);
         params.put("app_guid",App.sCode);
