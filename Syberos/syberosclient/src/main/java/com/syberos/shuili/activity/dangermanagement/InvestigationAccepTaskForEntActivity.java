@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
     private ArrayList<ObjectEngine> objectEngines = new ArrayList<>();
     private ArrayList<ObjProject>objProjects = new ArrayList<>();
     @BindView(R.id.recyclerView_investigation)
-    PullRecyclerView recyclerView;
+    RecyclerView recyclerView;
     InvestigationAdapter investigationAdapter ;
     ObjHidden investigationTaskInfo;
     ArrayList<ObjHidden> results = new ArrayList<>();
@@ -75,8 +76,6 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
 
     @Override
     public void initListener() {
-        recyclerView.setOnPullRefreshListener(this);
-        recyclerView.setHasMore(false);
     }
 
     /**
@@ -90,7 +89,6 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
     }
     private void closeLoadingDialog(){
         closeDataDialog();
-        recyclerView.refreshOrLoadComplete();
     }
 
     /**

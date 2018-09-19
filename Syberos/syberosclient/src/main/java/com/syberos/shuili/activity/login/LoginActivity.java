@@ -276,19 +276,22 @@ public class LoginActivity extends BaseActivity {
                 UserExtendInformation userExtendInformation = null;
                 try {
                     userExtendInformation = parseLoginResult(result);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 if (userExtendInformation == null) {
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-3).getMessage());
                     return;
                 }
+                SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInformation);
                 if (checkUserPermission(userExtendInformation)) {
                     // TODO: 2018/8/1 企事业用户需要获取功能模块权限
                     /**
                      * 行政用户直接进行登录
                      */
-                    SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInformation);
+
                     if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
                         getSysCode(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
                     }else {

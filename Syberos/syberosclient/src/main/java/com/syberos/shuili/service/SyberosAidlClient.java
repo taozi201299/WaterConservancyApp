@@ -288,6 +288,7 @@ public class SyberosAidlClient {
         return information;
     }
     private UserExtendInformation convert2UserExtendInfo(UserInformationEntity informationEntity){
+        if(informationEntity == null) return null;
         UserExtendInformation information = new UserExtendInformation();
         information.setAdmDutyLevel(informationEntity.admDutyLevel == null ?"":informationEntity.admDutyLevel);
         information.setDepCode(informationEntity.depCode);
