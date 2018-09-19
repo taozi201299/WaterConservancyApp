@@ -3,7 +3,6 @@ package com.syberos.shuili.activity.reports;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,12 +20,11 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.securitycheck.ObjSins;
+import com.syberos.shuili.entity.report.ObjSins;
 import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.PullRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,10 +89,10 @@ public class CheckReportActivity extends TranslucentActivity implements CommonAd
     }
 
     private void getObjSinsList(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/sis/objSinss/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/rel/sins/org/selectCheckDeploymentList/";
         HashMap<String,String>params = new HashMap<>();
         params.put("notIssuGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("ifSendDown","1");
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -114,6 +112,7 @@ public class CheckReportActivity extends TranslucentActivity implements CommonAd
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -154,9 +153,8 @@ public class CheckReportActivity extends TranslucentActivity implements CommonAd
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(SEND_BUNDLE_KEY, objSins.dataSource.get(position));
-
-    //    intentActivity(this, CheckDetailActivity.class, false, bundle);
+        bundle.putSerializable("objSins", objSins.dataSource.get(position));
+        intentActivity(this, CheckDetailActivity.class, false, bundle);
     }
 
     private void refreshUI(){
@@ -170,8 +168,9 @@ public class CheckReportActivity extends TranslucentActivity implements CommonAd
 
         @Override
         public void convert(ViewHolder holder, ObjSins objSins) {
-            ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(objSins.getSinsStartTime()+"-"+objSins.getSinsCompTime());
+            ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(objSins.getCheckTime());
             ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(objSins.getSinsDeplName());
+            ((TextView)holder.getView(R.id.tv_check_value)).setText(objSins.getSinsRange());
         }
     }
 }

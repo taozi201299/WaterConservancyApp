@@ -1,391 +1,179 @@
 package com.syberos.shuili.activity.reports;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.R;
+import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
-import com.syberos.shuili.entity.securitycheck.SecurityCheckInformation;
-import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.entity.report.ObjSins;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.CustomEdit;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.OnClick;
+
+import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 public class CheckDetailActivity extends TranslucentActivity {
 
-    private String refundedReason = ""; // 被退回原因
-    private String returnedReason = ""; // 退回原因
-    private Dialog reasonDialog;
-    private Dialog confirmDialog;
-    private TextView tv_reasonDialog_title;
-    private TextView tv_reasonDialog_message;
-    private TextView tv_confirmDialog_title;
-    private ScrollView sv_reasonDialog_message_view;
-    private SecurityCheckInformation information = null;
+    private ObjSins objSins = null;
 
-    @BindView(R.id.tv_self_unit)
-    TextView tv_self_unit;
-
-    @BindView(R.id.tv_date)
-    TextView tv_date;
-
+    @BindView(R.id.recyclerView_query_accident)
+    RecyclerView recyclerView;
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
+    @BindView(R.id.iv_action_right)
+    LinearLayout iv_action_right;
 
-    @BindView(R.id.ll_directly_under_units)
-    LinearLayout ll_directly_under_units;
-
-    @BindView(R.id.ll_other_under_units)
-    LinearLayout ll_other_under_units;
-
-    @OnClick(R.id.tv_refunded)
-    void onRefundedClicked() {
-        tv_reasonDialog_title.setText("被退回原因");
-        tv_reasonDialog_message.setText(refundedReason);
-        reasonDialog.show();
-    }
-
-    @OnClick(R.id.tv_report)
-    void onReportClicked() {
-        confirmDialog = new Dialog(this);
-        View v1 = LayoutInflater.from(this).inflate(
-                R.layout.dialog_hidden_danger_report_confirm, null);
-        tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
-        tv_confirmDialog_title.setText("确认上报");
-        confirmDialog.setContentView(v1);
-        Window dialogWindow = confirmDialog.getWindow();
-        WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
-
-        lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.gravity = Gravity.CENTER;
-        confirmDialog.setCancelable(false);
-        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-        dialogWindow.setAttributes(lp1);
-        Button bt_cancel = (Button)v1.findViewById(R.id.btn_cancel);
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmDialog.dismiss();
-            }
-        });
-        Button btn_confirm = (Button)v1.findViewById(R.id.btn_confirm);
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 确认上报，后续处理逻辑");
-                confirmDialog.dismiss();
-            }
-        });
-
-        confirmDialog.show();
-    }
-
-    @OnClick(R.id.tv_recall)
-    void onRecallClicked() {
-        confirmDialog = new Dialog(this);
-        View v1 = LayoutInflater.from(this).inflate(
-                R.layout.dialog_hidden_danger_report_confirm, null);
-        tv_confirmDialog_title = (TextView) v1.findViewById(R.id.tv_title);
-        tv_confirmDialog_title.setText("确认撤回");
-        confirmDialog.setContentView(v1);
-        Window dialogWindow = confirmDialog.getWindow();
-        WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
-
-        lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.gravity = Gravity.CENTER;
-        confirmDialog.setCancelable(false);
-        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-        dialogWindow.setAttributes(lp1);
-        Button bt_cancel = (Button)v1.findViewById(R.id.btn_cancel);
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmDialog.dismiss();
-            }
-        });
-        Button btn_confirm = (Button)v1.findViewById(R.id.btn_confirm);
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 确认撤回，后续处理逻辑");
-                confirmDialog.dismiss();
-            }
-        });
-
-        confirmDialog.show();
-    }
-
-    @OnClick(R.id.iv_action_bar_back)
-    void onBackClicked() {
-        activityFinish();
-    }
+    private ListAdapter listAdapter ;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_security_check_detail;
+        return R.layout.activity_enterprises_hidden_danger_report;
     }
 
     @Override
     public void initListener() {
 
     }
-
     @Override
     public void initData() {
-
+        refreshUI();
     }
-
     @Override
     public void initView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView.setLayoutManager(layoutManager);
+        listAdapter = new ListAdapter(this,
+                R.layout.activity_enterprises_hidden_danger_report_item);
+        recyclerView.setAdapter(listAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
+                DividerItemDecoration.HORIZONTAL));
+        Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
+        objSins = (ObjSins) bundle.getSerializable("objSins");
+        if(objSins == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
+            activityFinish();
+        }
+        tv_action_bar_title.setText("检查报表");
+        iv_action_right.setVisibility(View.GONE);
 
-        Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        information = (SecurityCheckInformation)bundle.getSerializable(
-                CheckReportActivity.SEND_BUNDLE_KEY);
+    }
+    private void refreshUI(){
+        ArrayList<CheckDetailBean>checkDetailBeans = new ArrayList<>();
+        if(objSins.getSwen().contains(",")){
+            String [] values = objSins.getSwen().split(",");
+            int size = values.length;
+            for(int i = 0 ; i<size;i++){
+                CheckDetailBean checkDetailBean = new CheckDetailBean();
+                checkDetailBean.guid = objSins.getGuid();
+                checkDetailBean.unitName = values[i];
+                checkDetailBean.repStatus = objSins.getIfSendDown();
+                checkDetailBeans.add(checkDetailBean);
+            }
+        }
+        else {
+            CheckDetailBean checkDetailBean = new CheckDetailBean();
+            checkDetailBean.guid = objSins.getGuid();
+            checkDetailBean.unitName = objSins.getSwen();
+            checkDetailBean.repStatus = objSins.getIfSendDown();
+            checkDetailBeans.add(checkDetailBean);
+        }
+        listAdapter.setData(checkDetailBeans);
+        listAdapter.notifyDataSetChanged();
 
-        if (null != information) {
-            tv_action_bar_title.setText(String.format("安全检查报表|%s", information.getTitle()));
+    }
+
+    private class  CheckDetailBean implements Serializable{
+       public String guid;
+       public String unitName;
+       public String repStatus;
+
+        public String getGuid() {
+            return guid == null ? "" : guid;
         }
 
-        refundedReason = "0 数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报";
+        public void setGuid(String guid) {
+            this.guid = guid;
+        }
 
-        returnedReason = "1 数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报" +
-                "上报数据补全，请补充后重新上报数据补全，请补充后重新上报数据补全，请补充后重新上报";
+        public String getUnitName() {
+            return unitName == null ? "" : unitName;
+        }
 
-        reasonDialog = new Dialog(this);
-        View v = LayoutInflater.from(this).inflate(
-                R.layout.dialog_hidden_danger_report_refunded_reason, null);
-        tv_reasonDialog_title = (TextView) v.findViewById(R.id.tv_title);
-        tv_reasonDialog_message = (TextView) v.findViewById(R.id.tv_content);
-        sv_reasonDialog_message_view = (ScrollView) v.findViewById(R.id.message_view);
-        reasonDialog.setContentView(v);
-        Window dialogWindow = reasonDialog.getWindow();
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        public void setUnitName(String unitName) {
+            this.unitName = unitName;
+        }
 
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-        reasonDialog.setCancelable(false);
-        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-        dialogWindow.setAttributes(lp);
-        Button bt_cancel = (Button)v.findViewById(R.id.btn_cancel);
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                sv_reasonDialog_message_view.setFocusable(false);
-                sv_reasonDialog_message_view.fullScroll(View.FOCUS_UP);
-                reasonDialog.dismiss();
+        public String getRepStatus() {
+            return repStatus == null ? "" : repStatus;
+        }
+
+        public void setRepStatus(String repStatus) {
+            this.repStatus = repStatus;
+        }
+    }
+    private class ListAdapter extends CommonAdapter<CheckDetailBean> {
+        public ListAdapter(Context context, int layoutId) {
+            super(context, layoutId);
+        }
+
+        @Override
+        public void convert(ViewHolder holder, final CheckDetailBean checkDetailBean) {
+            ((TextView) (holder.getView(R.id.tv_title))).setText(checkDetailBean.unitName);
+            TextView tv_refunded =  holder.getView(R.id.tv_refunded);
+            TextView tv_report =  holder.getView(R.id.tv_report);
+            TextView tv_recall =  holder.getView(R.id.tv_recall);
+            tv_recall.setVisibility(View.GONE);
+            tv_refunded.setVisibility(View.GONE);
+            // 0 未上报 1 已上报
+            final int linkStatus = Integer.valueOf(checkDetailBean.repStatus);
+            // 上报和撤回功能
+            switch (linkStatus) {
+                case 0:
+                    tv_report.setVisibility(View.VISIBLE);
+                    tv_report.setText("上报");
+                    break;
+                case 1:
+                    tv_report.setVisibility(View.GONE);
+                    tv_recall.setVisibility(View.VISIBLE);
+                    tv_refunded.setVisibility(View.GONE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
+                    } else {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
+                    }
+                    break;
             }
-        });
-
-        // TODO: 2018/4/10 可能需要一个用于唯一标识各个单位的标志量，用于标记分辨点击事件
-
-        ll_directly_under_units.removeAllViews();
-        addDirectlyUnderUnit("北京水利发展有限公司","001", "2017-12-12");
-        addDirectlyUnderUnit("北京水利四方有限公司","002","2017-12-13");
-        addDirectlyUnderUnit("北京水利方源科技有限公司","003","2017-12-14");
-
-        ll_other_under_units.removeAllViews();
-        addOtherUnderUnit("北京水利发展有限公司","004", "2017-12-12");
-        addOtherUnderUnit("北京水利四方有限公司","005","2017-12-13");
-        addOtherUnderUnit("北京水利方源科技有限公司","006","2017-12-14");
-        addOtherUnderUnit("北京水利发展有限公司","007", "2017-12-12");
-        addOtherUnderUnit("北京水利四方有限公司","008","2017-12-13");
-        addOtherUnderUnit("北京水利方源科技有限公司","009","2017-12-14");
+            tv_report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    report(1,objSins);
+                }
+            });
+            tv_recall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    report(2,objSins);
+                }
+            });
+        }
     }
 
-    private void onUnitReturnedClicked(final String unitCode) {
-        // TODO: 2018/4/10 获取退回原因
-        tv_reasonDialog_title.setText("退回原因");
-        tv_reasonDialog_message.setText(returnedReason);
-        reasonDialog.show();
+    private void report(int type,ObjSins objSins){
+        // 0 上报 1 申请撤回
     }
-
-    private void onUnitRepetitionClicked(final String unitCode) {
-        final Dialog repetitionDialog = new Dialog(this);
-        View v1 = LayoutInflater.from(this).inflate(
-                R.layout.dialog_hidden_danger_report_input_confirm, null);
-        final CustomEdit customEdit = (CustomEdit) v1.findViewById(R.id.et_content);
-        repetitionDialog.setContentView(v1);
-        Window dialogWindow = repetitionDialog.getWindow();
-        WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
-
-        lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.gravity = Gravity.CENTER;
-        repetitionDialog.setCancelable(false);
-        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-        dialogWindow.setAttributes(lp1);
-        Button bt_cancel = (Button)v1.findViewById(R.id.btn_cancel);
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                repetitionDialog.dismiss();
-            }
-        });
-        Button btn_confirm = (Button)v1.findViewById(R.id.btn_confirm);
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 退回重报，后续处理逻辑: " + customEdit.getText().toString());
-                repetitionDialog.dismiss();
-            }
-        });
-
-        repetitionDialog.show();
-    }
-
-    private void onUnitRushClicked(final String unitCode) {
-        ToastUtils.show("单位编码： " + unitCode + "的催报选项被点击");
-    }
-
-    ////////////////////////////////////// addDirectlyUnderUnit ///////////////////////////////
-
-    private void addDirectlyUnderUnit(final String subUnit, final String unitCode,
-                                      final String date) {
-        addDirectlyUnderUnit(subUnit, unitCode, date,true);
-    }
-
-    private void addDirectlyUnderUnit(final String subUnit, final String unitCode,
-                                      final String date, final boolean isReturned) {
-        addDirectlyUnderUnit(subUnit, unitCode, date, isReturned,true);
-    }
-
-    private void addDirectlyUnderUnit(final String subUnit, final String unitCode,
-                                      final String date, final boolean isReturned,
-                                      final boolean isRepetition) {
-        addDirectlyUnderUnit(subUnit, unitCode, date, isReturned, isRepetition, true);
-    }
-
-    private void addDirectlyUnderUnit(final String subUnit, final String unitCode,
-                                      final String date, final boolean isReturned,
-                                      final boolean isRepetition, final boolean isRush) {
-
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_sub_unit_item,
-                ll_directly_under_units, false);
-
-        TextView textView = (TextView) layout.findViewById(R.id.tv_sub_unit);
-        textView.setText(subUnit);
-
-        textView = (TextView) layout.findViewById(R.id.tv_date);
-        textView.setText(date);
-
-        textView = (TextView) layout.findViewById(R.id.tv_returned);
-        textView.setVisibility(isReturned ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitReturnedClicked(unitCode);
-            }
-        });
-
-        textView = (TextView) layout.findViewById(R.id.tv_repetition);
-        textView.setVisibility(isRepetition ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitRepetitionClicked(unitCode);
-            }
-        });
-
-        textView = (TextView) layout.findViewById(R.id.tv_rush);
-        textView.setVisibility(isRush ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitRushClicked(unitCode);
-            }
-        });
-
-        ll_directly_under_units.addView(layout);
-    }
-
-    ////////////////////////////////////// addDirectlyUnderUnit ///////////////////////////////
-
-    ////////////////////////////////////// addOtherUnderUnit ///////////////////////////////
-
-    private void addOtherUnderUnit(final String subUnit, final String unitCode,
-                                   final String date) {
-        addOtherUnderUnit(subUnit, unitCode, date,true);
-    }
-
-    private void addOtherUnderUnit(final String subUnit, final String unitCode,
-                                   final String date, final boolean isReturned) {
-        addOtherUnderUnit(subUnit, unitCode, date, isReturned,true);
-    }
-
-    private void addOtherUnderUnit(final String subUnit, final String unitCode,
-                                   final String date, final boolean isReturned,
-                                   final boolean isRepetition) {
-        addOtherUnderUnit(subUnit, unitCode, date, isReturned, isRepetition, true);
-    }
-
-    private void addOtherUnderUnit(final String subUnit, final String unitCode,
-                                   final String date, final boolean isReturned,
-                                   final boolean isRepetition, final boolean isRush) {
-
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_sub_unit_item,
-                ll_other_under_units, false);
-
-        TextView textView = (TextView) layout.findViewById(R.id.tv_sub_unit);
-        textView.setText(subUnit);
-
-        textView = (TextView) layout.findViewById(R.id.tv_date);
-        textView.setText(date);
-
-        textView = (TextView) layout.findViewById(R.id.tv_returned);
-        textView.setVisibility(isReturned ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitReturnedClicked(unitCode);
-            }
-        });
-
-        textView = (TextView) layout.findViewById(R.id.tv_repetition);
-        textView.setVisibility(isRepetition ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitRepetitionClicked(unitCode);
-            }
-        });
-
-        textView = (TextView) layout.findViewById(R.id.tv_rush);
-        textView.setVisibility(isRush ? View.VISIBLE : View.GONE);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onUnitRushClicked(unitCode);
-            }
-        });
-
-        ll_other_under_units.addView(layout);
-    }
-
-    ////////////////////////////////////// addOtherUnderUnit ///////////////////////////////
 
 }
