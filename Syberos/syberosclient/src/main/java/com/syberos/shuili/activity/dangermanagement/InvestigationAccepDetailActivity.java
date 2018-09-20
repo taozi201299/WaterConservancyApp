@@ -282,7 +282,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                hiddenInvesInfo.setUnitName(attOrgBase.dataSource.get(0).getOrgName());
+                hiddenInvesInfo.dataSource.get(0).setUnitName(attOrgBase.dataSource.get(0).getOrgName());
                 getRectifyProgress();
             }
 
@@ -306,8 +306,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 hiddenRectifyProgerssInfo = gson.fromJson(result,HiddenRectifyProgerssInfo.class);
-                if(hiddenRectifyProgerssInfo == null || hiddenRectifyProgerssInfo.dataSource == null ||
-                        hiddenRectifyProgerssInfo.dataSource.size() ==0){
+                if(hiddenRectifyProgerssInfo == null || hiddenRectifyProgerssInfo.dataSource == null ){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else {
@@ -335,7 +334,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenSupserviceInfo = (HiddenSupserviceInfo) gson.fromJson(result,HiddenSupserviceInfo.class);
+                hiddenSupserviceInfo = gson.fromJson(result,HiddenSupserviceInfo.class);
                 if(hiddenSupserviceInfo == null || hiddenSupserviceInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -389,7 +388,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                hiddenAcceptInfo = (HiddenAcceptInfo) gson.fromJson(result,HiddenAcceptInfo.class);
+                hiddenAcceptInfo = (gson.fromJson(result,HiddenAcceptInfo.class));
                 if(hiddenAcceptInfo == null || hiddenAcceptInfo.dataSource == null){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
@@ -414,6 +413,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
         tv_level.setText(investigationInfo.getHiddGradName());
         tv_type.setText(investigationInfo.getHiddClassName());
         tv_location.setText(investigationInfo.getProPart());
+        ev_des_audio.setEditText(investigationInfo.getHiddDesc());
 //        // 1 隐患核实信息
 //        if("1".equals(this.hiddenProjectInfo.totalCount)) {
 //            hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);

@@ -69,6 +69,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     HashMap<Integer,String>liuYuName = new HashMap<>();
     HashMap<Integer,String>nameValue = new HashMap<>();
     ArrayList<String>otherName = new ArrayList<>();
+    public static final String TestIP = "http://192.168.1.11:7080";
 
     @Override
     public void onClick(View v) {
@@ -163,7 +164,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     }
     private void query(){
         showDataLoadingDialog();
-        String url = "http://192.168.1.11:7080/desu/serv/v1/getSpillway";
+        String url = TestIP + "/desu/serv/v1/getSpillway";
         HashMap<String,String>params = new HashMap<>();
         params.put("start","0");
         params.put("length","99999");
@@ -175,6 +176,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 engineInfo = gson.fromJson(result,EngineInfoBean.class);
                 if(engineInfo == null){
@@ -186,12 +188,12 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
     }
     private void  refreshUI(){
-        closeDataDialog();
         listAdapter.setData(engineInfo.getData().getData());
         listAdapter.notifyDataSetChanged();
     }

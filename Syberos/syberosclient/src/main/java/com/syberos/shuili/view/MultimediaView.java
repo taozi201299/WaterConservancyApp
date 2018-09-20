@@ -30,11 +30,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.cjt2325.cameralibrary.CameraActivity;
 import com.cjt2325.cameralibrary.JCameraView;
 import com.imnjh.imagepicker.PickerConfig;
@@ -92,6 +89,8 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
     private static final int RC_RECORD_PERM = 124;
 
     private static final int RC_FLODER_PERM = 125;
+
+    private static final int MEDIA_MAX_SIZE = 5;
 
     public MultimediaView(Context context) {
         this(context, null);
@@ -324,7 +323,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 attachment.localFile = new File(list.get(i));
                 attachment.filePath = list.get(i);
                 images.add(attachment);
-                if(images.size() >= 5){
+                if(images.size() >= MEDIA_MAX_SIZE){
                     break;
                 }
             }
@@ -402,10 +401,10 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
         return true;
     }
     private boolean checkAttachSize(){
-        if(images.size() >= 5){
-            ToastUtils.show("最多支持5个附件");
+        if(images.size() >= MEDIA_MAX_SIZE){
+            ToastUtils.show("最多支持3个附件");
         }
-        return  images.size()< 5;
+        return  images.size()< MEDIA_MAX_SIZE;
     }
     public class AudioViewHolder extends CommonAdapter.ViewHolder{
         private TextView tv_audio_text;

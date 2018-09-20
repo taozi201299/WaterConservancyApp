@@ -2,6 +2,7 @@ package com.syberos.shuili.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.test.EngineDetailBean;
 import com.syberos.shuili.entity.test.EngineInfoBean;
+import com.syberos.shuili.entity.test.PostBean;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.BitmapUtil;
@@ -178,12 +180,14 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         }
     }
     private void getImageInfo(){
-        String url = "http://192.168.1.11:7080/desu/serv/v1/getSpillwayCheck";
+        showDataLoadingDialog();
+        String url = TestActivity1.TestIP +"/desu/serv/v1/getSpillwayCheck";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",engineBean.getGUID());
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
                 EngineDetailBean engineDetailBean = gson.fromJson(result,EngineDetailBean.class);
                 ArrayList<MultimediaView.LocalAttachment> images = new ArrayList<>();
@@ -204,6 +208,7 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -219,9 +224,16 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
     }
     @Override
     public void dialogClick() {
-        showDataLoadingDialog();
+        showDataLoadingDialog("正在提交数据");
         ll_commit.setEnabled(false);
-        report();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                report();
+            }
+        },300);
+
     }
 
     @Override
@@ -229,7 +241,7 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
 
     }
     private void report(){
-        String url = "http://192.168.1.11:7080/desu/serv/v1/updateSpillwayCheck";
+        String url = TestActivity1.TestIP + "/desu/serv/v1/updateSpillwayCheck";
         HashMap<String,Object> params = new HashMap<>();
         params.put("guid",engineBean.getGUID());
         params.put("ifSpillway","1");
@@ -245,17 +257,24 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
                 images.add(fileInfo);
             }
         }
-        Gson gson = new Gson();
+        final Gson gson = new Gson();
         params.put("checkImages",images);
         String json = gson.toJson(params);
-        HashMap<String,String>param = new HashMap<>();
+        final HashMap<String,String>param = new HashMap<>();
         param.put("param",json);
         HttpUtils.getInstance().requestNet_post(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 ll_commit.setEnabled(true);
                 closeDataDialog();
-                ToastUtils.show("提交成功");
+                Gson gson1 = new Gson();
+                PostBean postBean = gson1.fromJson(result,PostBean.class);
+                if(postBean == null || !postBean.getMeta().isSuccess()){
+                    ToastUtils.show("提交失败");
+                    return;
+                }else {
+                    ToastUtils.show("提交成功");
+                }
                 activityFinish();
             }
 
