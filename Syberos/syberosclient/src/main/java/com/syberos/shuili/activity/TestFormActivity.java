@@ -153,14 +153,14 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         tvValue5.setText(engineBean.getRES_PART());
         tvValue6.setText(engineBean.getSTART_DATE());
         tvValue7.setText(engineBean.getCOMP_DATE());
-        tvValue8.setText(engineBean.getENG_STAT());
-        tvValue9.setText(engineBean.getSTAT());
+        tvValue8.setText("2".equals(engineBean.getENG_STAT()) ?"已建":"在建");
+        tvValue9.setText("0".equals(engineBean.getSTAT()) ?"停用":"启用");
         tvValue10.setText(engineBean.getDAM_SIZE_HIG());
         tvValue11.setText(engineBean.getDES_FL_STAND());
         tvValue12.setText(engineBean.getDES_FL_STAG());
         tvValue13.setText(engineBean.getDEAD_LEV());
         tvValue14.setText(engineBean.getDEAD_CAP());
-        tvValue15.setText(engineBean.getIFCHECK());
+        tvValue15.setText("0".equals(engineBean.getIFCHECK())? "否":"是");
         MultimediaView.LocalAttachment localAttachment = new MultimediaView.LocalAttachment();
         localAttachment.fileName = engineBean.getGUID()+"-1"+".png";
         localAttachment.filePath = "static/images/yhd/";
@@ -168,7 +168,7 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
         localAttachment.type = IMAGE;
         ArrayList<MultimediaView.LocalAttachment> localAttachments = new ArrayList<>();
         localAttachments.add(localAttachment);
-        read_only_mv.setData(localAttachments);
+    //    read_only_mv.setData(localAttachments);
         if("1".equals(engineBean.getIFCHECK())) {
             aeDescribeAudio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             aeDescribeAudio.setEditText(engineBean.getCHECKOPIN());
