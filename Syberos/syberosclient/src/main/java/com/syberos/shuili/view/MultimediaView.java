@@ -322,6 +322,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             for (int i = 0; i < list.size(); i++) {
                 LocalAttachment attachment = new LocalAttachment();
                 attachment.localFile = new File(list.get(i));
+                attachment.filePath = list.get(i);
                 images.add(attachment);
                 if(images.size() >= 5){
                     break;
