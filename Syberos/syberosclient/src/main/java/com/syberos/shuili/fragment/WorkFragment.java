@@ -82,7 +82,6 @@ public class WorkFragment extends BaseFragment {
     private ModuleChildViewHolder moduleChildViewHolder;
     @OnClick(R.id.iv_action_bar_right_1)
     void go2locationActivity() {
-        ToastUtils.show("TODO：请求打开查附近功能");
         intentActivity((Activity) mContext,TestActivity1.class,false,true);
     }
 

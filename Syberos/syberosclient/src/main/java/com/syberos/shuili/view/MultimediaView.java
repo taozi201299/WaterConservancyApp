@@ -90,7 +90,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
 
     private static final int RC_FLODER_PERM = 125;
 
-    private static final int MEDIA_MAX_SIZE = 5;
+    private static final int MEDIA_MAX_SIZE = 3;
 
     public MultimediaView(Context context) {
         this(context, null);
