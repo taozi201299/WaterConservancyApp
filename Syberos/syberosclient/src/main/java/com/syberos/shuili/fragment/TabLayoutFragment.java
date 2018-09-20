@@ -115,6 +115,7 @@ public abstract class TabLayoutFragment extends BaseLazyFragment implements Pull
 
     @Override
     public void onRefresh() {
+        recyclerViewLayout.refreshOrLoadComplete();
         LogUtils.i(TAG,"onRefresh");
 
 
@@ -122,6 +123,7 @@ public abstract class TabLayoutFragment extends BaseLazyFragment implements Pull
 
     @Override
     public void onLoadMore() {
+        recyclerViewLayout.refreshOrLoadComplete();
         LogUtils.i(TAG,"onLoadMore");
 
     }

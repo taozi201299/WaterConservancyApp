@@ -5,7 +5,7 @@
     android:layout_height="@dimen/_40dp"
     android:paddingLeft="@dimen/_15dp"
     android:padding="@dimen/_10dp"
-    android:background="@color/white">
+    android:background="@color/color_bg">
 
     <TextView
         android:id="@+id/tv_name"

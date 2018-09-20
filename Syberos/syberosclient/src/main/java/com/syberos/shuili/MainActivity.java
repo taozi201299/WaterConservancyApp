@@ -130,7 +130,7 @@ public class MainActivity extends TranslucentActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SPUtils.put(Allow_ScreenShot,isChecked);
                 if(isChecked) {
-                    //getWindow().setFlags(//getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);, //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE););
+                   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
                 }else {
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 }
@@ -174,7 +174,7 @@ public class MainActivity extends TranslucentActivity
     public void initView() {
 //        securityCloudFragment = new SecurityCloudFragment();
         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
-            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }

@@ -48,7 +48,6 @@ public class GetJsonDataTask extends AsyncTask<String, Void, String> {
 
             OutputStream os = conn.getOutputStream();
             PrintWriter pw = new PrintWriter(os);
-            String str = "{\"requestData\":{\"typeList\":[\"CWS\",\"DIKE\",\"HYST\",\"IRR\",\"PUST\",\"SD\",\"WAGA\"],\"radius\":0,\"targetId\":\"search.GeoSearchLogic\",\"geo\":'" + urls[0] + "'}}";
             pw.print("{\"requestData\":{\"typeList\":[\"CWS\",\"DIKE\",\"HYST\",\"IRR\",\"PUST\",\"SD\",\"WAGA\"],\"radius\":0,\"targetId\":\"search.GeoSearchLogic\",\"geo\":'"+ urls[0] +"'}}");
             pw.flush();
             pw.close();

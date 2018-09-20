@@ -47,7 +47,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
     /**
      * 0 未落实整改 1正在整改
      */
-    private final String strHiddState = "1";
+    private final String strHiddState = "2";
     private ObjectEngine objectEngine;
     private ArrayList<ObjectEngine> objectEngines = new ArrayList<>();
     private ArrayList<ObjProject>objProjects = new ArrayList<>();
@@ -189,17 +189,17 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                             if(failedCount >0){
                                 break;
                             }
-                            if((acceptInfo.getRequCompDate() != null && !acceptInfo.getRequCompDate().isEmpty()) ||
-                                    (acceptInfo.getAccepLegPers() != null && !acceptInfo.getAccepLegPers().isEmpty())){
-                                item.setAccept(true);
-                                break;
-                            }else if((acceptInfo.getAccepDate() != null && !acceptInfo.getAccepDate().isEmpty()
+                             if((acceptInfo.getAccepDate() != null && !acceptInfo.getAccepDate().isEmpty()
                             ||(acceptInfo.getAccepPers() != null && !acceptInfo.getAccepPers().isEmpty())
                             || (acceptInfo.getAccepOpin() != null && !acceptInfo.getAccepOpin().isEmpty()) )) {
                                 item.setAccept(true);
                                 break;
                             }else {
-                                item.setAccept(false);
+                                if(acceptInfo.getRequCompDate() == null && acceptInfo.getRequCompDate().isEmpty()){
+                                    item.setAccept(true);
+                                }else {
+                                    item.setAccept(false);
+                                }
                             }
                         }
                     }

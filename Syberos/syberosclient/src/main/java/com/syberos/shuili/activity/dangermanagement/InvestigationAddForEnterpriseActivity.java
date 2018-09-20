@@ -95,6 +95,8 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         hasTend = bundle.getBoolean("hasTend");
         if(hasTend){
             if (objectTend == null) {
+                ll_project_tend.setVisibility(View.VISIBLE);
+                line.setVisibility(View.VISIBLE);
                 objectTend = (ObjectTend) bundle.getSerializable("tend");
                 tv_tend.setText(objectTend.getTendName());
             }
@@ -121,7 +123,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         ll_multimedia.onActivityResult(requestCode,requestCode,data);
     }
     private void getHiddenDic(){
-        String url  = "http://192.168.1.8:8080/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");
@@ -163,7 +165,6 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     }
     private void commit(){
         if(!checkParam())return;
-        //String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
         String url = GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称

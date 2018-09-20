@@ -212,7 +212,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      * 隐患核实信息
      */
     private void getHiddenCheckDetail(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/bisHiddVeris/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddVeris/";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

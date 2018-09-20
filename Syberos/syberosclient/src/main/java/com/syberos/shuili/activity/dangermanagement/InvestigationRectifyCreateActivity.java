@@ -95,7 +95,6 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
 
     }
     private void commit(){
-      //  String  url =  App.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectProg/";
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID

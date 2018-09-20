@@ -362,7 +362,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else {
                 // scanResult 为获取到的字符串
                 String scanResult = intentResult.getContents();
-                scanResult = "type=0&guid=123445";
                 if(scanResult.contains("?")){
                     String[] array  = intentResult.getContents().split("\'?");
                     if(array.length == 2){

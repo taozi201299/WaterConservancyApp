@@ -146,7 +146,6 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
      * @param type
      */
     private void submit(int type){
-      // String  url = "http://192.168.1.8:8080/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
