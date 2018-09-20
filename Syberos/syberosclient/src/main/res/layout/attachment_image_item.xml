@@ -88,7 +88,7 @@
         android:layout_alignEnd="@+id/attachment_image"
         android:layout_centerVertical="true"
         android:drawableTop="@color/gray"
-        android:text="下载中"
+        android:text=""
         android:gravity="center"
         android:visibility="gone"
         tools:visibility="visible" />

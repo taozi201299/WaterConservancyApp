@@ -115,6 +115,7 @@ public class HttpUtils {
         }
         url = processUrl(url, callback);
         if (url == null) return;
+        OkHttpUtils.getInstance().setConnectTimeout(20000);
         OkHttpUtils
                 .post(url)//
                 .params(httpParams)//

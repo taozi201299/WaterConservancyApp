@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.ResolutionNode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
@@ -29,6 +30,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.cjt2325.cameralibrary.CameraActivity;
 import com.cjt2325.cameralibrary.JCameraView;
 import com.imnjh.imagepicker.PickerConfig;
@@ -52,6 +58,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -334,6 +341,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
         String desc = data.getStringExtra("desc") ;
         if (TextUtils.isEmpty(path)) return;
         attachment.localFile = new File(path);
+        attachment.filePath = path;
         attachment.desc = desc == null ?"":desc;
         if(path.endsWith("mp4")){
             attachment.type = LocalAttachmentType.VIDEO;
@@ -492,11 +500,11 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
 //            params.height=200;
 //            params.width =200;
 //            iv_attachImage.setLayoutParams(params);
-            ImageView iv_attachVideo = (ImageView)holder.getView(R.id.attachment_video);
-            ImageView iv_delete = (ImageView)holder.getView(R.id.attachment_image_delete);
-            TextView tv_attachment_text = (TextView)holder.getView(R.id.attachment_text);
-            TextView tv_attach_time = (TextView)holder.getView(R.id.tv_attach_time);
-            TextView tv_attach_desc = (TextView)holder.getView(R.id.tv_attach_desc);
+            ImageView iv_attachVideo = holder.getView(R.id.attachment_video);
+            ImageView iv_delete = holder.getView(R.id.attachment_image_delete);
+            TextView tv_attachment_text = holder.getView(R.id.attachment_text);
+            TextView tv_attach_time = holder.getView(R.id.tv_attach_time);
+            TextView tv_attach_desc = holder.getView(R.id.tv_attach_desc);
 
             if(runningMode == RunningMode.ADD_EDIT_MODE) {
                 Glide.with(mContext).load(localAttachment.localFile).into(iv_attachImage);
@@ -510,7 +518,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 if(localAttachment.bExist) {
                     iv_attachImage.setEnabled(true);
                     tv_attachment_text.setVisibility(GONE);
-                    Glide.with(mContext).load(localAttachment.localFile).into(iv_attachImage);
+                    Glide.with(mContext).load(localAttachment.filePath).into(iv_attachImage);
                     iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
 
                 }else {
@@ -537,16 +545,27 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                         intent.setClass(mContext, PreviewActivity.class);
                         ((Activity)mContext).startActivity(intent);
                     }else {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localAttachment.localFile.getAbsolutePath());
-                        ImageDialog imageDialog = new ImageDialog(mContext,0,0,0,bitmap);
-                        imageDialog.show();
+                        loadImageSimpleTarget(localAttachment.filePath);
                     }
                 }
             });
 
         }
     }
+    private SimpleTarget<Bitmap> mSimpleTarget = new SimpleTarget<Bitmap>() {
+        @Override
+        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> animation) {
+            ImageDialog imageDialog = new ImageDialog(mContext,0,0,0, resource);
+            imageDialog.show();
+        }
+    };
 
+    private void loadImageSimpleTarget(String url) {
+        Glide.with( mContext)
+                .load( url )
+                .asBitmap()
+                .into(mSimpleTarget);
+    }
     /**
      * 运行模式
      */
@@ -591,7 +610,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
         for (LocalAttachment item : data) {
             if(item.type == LocalAttachmentType.VIDEO || item.type == LocalAttachmentType.IMAGE){
                 Intent intent = new Intent();
-                intent.putExtra("path",item.localFile.getAbsolutePath());
+                intent.putExtra("path",item.filePath);
                 addFromCamera(intent,item);
             }else {
                 saveAudio(item.localFile.getPath(),(int)item.size);

@@ -8,15 +8,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cjt2325.cameralibrary.util.LogUtil;
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.test.EngineDetailBean;
 import com.syberos.shuili.entity.test.EngineInfoBean;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.BitmapUtil;
+import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
@@ -25,8 +31,10 @@ import com.syberos.shuili.view.MultimediaView;
 import com.syberos.shuili.view.indexListView.ClearEditText;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -166,7 +174,40 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
             aeDescribeAudio.setEditText(engineBean.getCHECKOPIN());
             mvMultimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
             ll_commit.setVisibility(View.GONE);
+            getImageInfo();
         }
+    }
+    private void getImageInfo(){
+        String url = "http://192.168.1.11:7080/desu/serv/v1/getSpillwayCheck";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",engineBean.getGUID());
+        HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                EngineDetailBean engineDetailBean = gson.fromJson(result,EngineDetailBean.class);
+                ArrayList<MultimediaView.LocalAttachment> images = new ArrayList<>();
+                ArrayList<EngineDetailBean.CheckFileBean>list = (ArrayList<EngineDetailBean.CheckFileBean>) engineDetailBean.getData().getCHECKFILE();
+                if(list != null){
+                    for(EngineDetailBean.CheckFileBean item :list){
+                        MultimediaView.LocalAttachment localAttachment = new MultimediaView.LocalAttachment();
+                        localAttachment.fileName = item.getMedName();
+                        localAttachment.filePath = item.getMedPath();
+                        localAttachment.localFile = new File(item.getMedPath());
+                        localAttachment.type = IMAGE;
+                        localAttachment.bExist = true;
+                        images.add(localAttachment);
+                    }
+                }
+           mvMultimedia.setData(images);
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -178,6 +219,8 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
     }
     @Override
     public void dialogClick() {
+        showDataLoadingDialog();
+        ll_commit.setEnabled(false);
         report();
     }
 
@@ -187,49 +230,45 @@ public class TestFormActivity extends BaseActivity implements BaseActivity.IDial
     }
     private void report(){
         String url = "http://192.168.1.11:7080/desu/serv/v1/updateSpillwayCheck";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("guid",engineBean.getGUID());//隐患GUID
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("guid",engineBean.getGUID());
         params.put("ifSpillway","1");
         params.put("checkOpin",aeDescribeAudio.getEditText().toString());  //备注
-        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
-        localCacheEntity.url = url;
-        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
-        localCacheEntity.params = params;
-        localCacheEntity.type = 1;
-        localCacheEntity.commitType = 0;
-        localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  mvMultimedia.getBinaryFile();
-
+        List<FileInfo> images = new ArrayList<>();
         if(list != null){
             for(MultimediaView.LocalAttachment item :list){
-                AttachMentInfoEntity info = new AttachMentInfoEntity();
-                info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
-                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                info.bisTableName = "BIS_HIDD_RECT_ACCE";
-                info.bisGuid = engineBean.getGUID();
-                info.localStatus = "1";
-                if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
-                }
-                info.seriesKey = localCacheEntity.seriesKey;
-                attachMentInfoEntities.add(info);
+                FileInfo fileInfo = new FileInfo();
+                fileInfo.medName = item.localFile.getPath();
+                String base64 = BitmapUtil.imageToBase64(item.localFile.getPath());
+                fileInfo.imageStr = base64;
+                images.add(fileInfo);
             }
         }
-        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+        Gson gson = new Gson();
+        params.put("checkImages",images);
+        String json = gson.toJson(params);
+        HashMap<String,String>param = new HashMap<>();
+        param.put("param",json);
+        HttpUtils.getInstance().requestNet_post(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                ll_commit.setEnabled(true);
+                closeDataDialog();
                 ToastUtils.show("提交成功");
-                finish();
+                activityFinish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                ToastUtils.show(errorInfo.getMessage());
+                ll_commit.setEnabled(true);
+                closeDataDialog();
+                ToastUtils.show("提交失败");
             }
         });
-
+    }
+    class FileInfo implements Serializable{
+        String medName;
+        String imageStr;
     }
 }
