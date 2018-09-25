@@ -173,6 +173,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle("隐患详情");
         scrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);

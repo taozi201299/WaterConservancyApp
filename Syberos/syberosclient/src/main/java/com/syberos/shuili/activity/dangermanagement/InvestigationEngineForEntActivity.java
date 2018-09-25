@@ -103,6 +103,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);
         mBundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
@@ -116,7 +117,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         }
         else {
             // 隐患模块
-            type = "hidden";
+          //  type = "hidden";
         }
         /**
          * 根据type获取不同的参数信息

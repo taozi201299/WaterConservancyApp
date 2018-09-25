@@ -118,6 +118,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

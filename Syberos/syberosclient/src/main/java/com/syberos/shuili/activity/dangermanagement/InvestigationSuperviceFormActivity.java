@@ -85,6 +85,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
     @Override
     public void initView() {
         showTitle("隐患督办");
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
 
     }

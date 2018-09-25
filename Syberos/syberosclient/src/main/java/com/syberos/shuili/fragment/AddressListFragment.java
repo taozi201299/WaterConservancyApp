@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -65,6 +66,8 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
     XRefreshView xRefreshView;
     @BindView(R.id.action_bar)
     LinearLayout ll_action_bar;
+    @BindView(R.id.iv_action_bar2_left)
+    ImageView iv_action_bar2_left;
     private IndexListAdapter indexListAdapter;
 
     //汉子转换成拼音的类
@@ -146,6 +149,7 @@ public class AddressListFragment extends BaseFragment implements SideBar.OnTouch
 
     @Override
     protected void initView() {
+        iv_action_bar2_left.setVisibility(View.GONE);
         etSearch.clearFocus();
         ll_action_bar.findViewById(R.id.iv_action_bar2_right).setVisibility(View.INVISIBLE);
         ll_action_bar.findViewById(R.id.iv_action_bar2_left).setVisibility(View.INVISIBLE);

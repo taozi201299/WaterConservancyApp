@@ -112,6 +112,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("新建隐患");
         setActionBarRightVisible(View.INVISIBLE);
         ev_des_audio.setLabelText("隐患描述");

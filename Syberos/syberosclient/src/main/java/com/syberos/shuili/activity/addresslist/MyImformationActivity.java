@@ -95,6 +95,7 @@ public class MyImformationActivity extends BaseActivity {
     @Override
     public void initView() {
         showTitle("个人信息");
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         ivPhoneCall.setVisibility(View.GONE);
         ivPhoneEmail.setVisibility(View.GONE);

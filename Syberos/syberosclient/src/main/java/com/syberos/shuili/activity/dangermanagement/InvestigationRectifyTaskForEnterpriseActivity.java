@@ -278,6 +278,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
     }
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);

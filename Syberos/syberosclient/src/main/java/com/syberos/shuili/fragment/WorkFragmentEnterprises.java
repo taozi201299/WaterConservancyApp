@@ -348,7 +348,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 intentActivity((Activity) mContext,EnterprisesOnSiteCheckListActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_paicha))) {
                 Bundle bundle = new Bundle();
-                bundle.putString("type",strResource.getString(R.string.module_child_yinhuan_paicha));
+                bundle.putString("type","hidden");
                 intentActivity((Activity) mContext, InvestigationEngineForEntActivity.class, false,bundle);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_yinhuan_zhenggai))) {
                 intentActivity((Activity) mContext, InvestigationRectifyTaskForEnterpriseActivity.class, false, true);

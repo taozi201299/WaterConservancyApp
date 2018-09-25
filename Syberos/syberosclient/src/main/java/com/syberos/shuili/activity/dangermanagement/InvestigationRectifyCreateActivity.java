@@ -68,6 +68,7 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
     @Override
     public void initView() {
         showTitle("隐患整改");
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         ev_rectify_des.setLabelText("整改描述");
 

@@ -171,7 +171,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
 
     @Override
     public void initView() {
-
+        setInitActionBar(true);
         scrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);
         ((TextView)findViewById(R.id.tv_action_bar2_title)).setText("隐患详情");

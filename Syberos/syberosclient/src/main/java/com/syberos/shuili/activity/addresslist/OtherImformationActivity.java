@@ -84,6 +84,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
     }
 
     public void initListener() {
+        setInitActionBar(true);
         ivPhoneCall.setOnClickListener(this);
         ivPhoneEmail.setOnClickListener(this);
         ivSendEmail.setOnClickListener(this);

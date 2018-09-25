@@ -142,6 +142,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
     @Override
     public void initView() {
         showTitle(Title);
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         ll_commit.setVisibility(View.GONE);
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);

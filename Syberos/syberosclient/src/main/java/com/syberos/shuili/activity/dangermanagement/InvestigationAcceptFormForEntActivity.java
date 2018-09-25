@@ -91,6 +91,7 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(InvestigationAccepTaskActivity.Title);
         setActionBarRightVisible(View.INVISIBLE);
         tv_time.setText(CommonUtils.getCurrentDate());
