@@ -43,6 +43,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.userinfo.ModuleBean;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PopupButton.ImportMenuView;
@@ -151,7 +152,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
     @Override
     protected void initView() {
         tv_action_bar_title.setText(getResources().getString(R.string.title_work));
-        moduleNames = getResources().getStringArray(R.array.module_enterprise);
         moduleChildReportCheckNames = getResources().getStringArray(R.array.module_child_enterprise_baobiao);
         moduleChildSecurityCheckNames = getResources().getStringArray(R.array.module_child_enterprise_anquan);
         moduleChildHiddenDangerNames = getResources().getStringArray(R.array.module_child_enterprise_yinhuan);
@@ -159,22 +159,41 @@ public class WorkFragmentEnterprises extends BaseFragment {
         moduleChildDangerName = getResources().getStringArray(R.array.module_child_enterprise_weixianyuan);
 
         ArrayList<String>moduleNameList = new ArrayList<>();
+
+        ArrayList<String>moduleIds = new ArrayList<>();
+        if(GlobleConstants.moduleBean != null){
+            for(ModuleBean.ModuleInfoBean bean : GlobleConstants.moduleBean.getData().getData()){
+                moduleIds.add(bean.getGuid());
+            }
+        }
+        ArrayList<String>names = new ArrayList<>();
+        for(String guid : moduleIds){
+            if(GlobleConstants.moduleMap.get(guid) != null && !GlobleConstants.moduleMap.get(guid).isEmpty()) {
+                names.add(GlobleConstants.moduleMap.get(guid));
+            }
+        }
         /**
          * 监理和施工没有事故模块
          */
         if(GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) ||GlobleConstants.CJSG.equalsIgnoreCase(App.sCode)){
-            int index = moduleNames.length;
-            for(int i = 0 ; i < index ; i++){
-                if(getResources().getString(R.string.module_shigu).equals(moduleNames[i])){
-                    continue;
-                }else{
-                    moduleNameList.add(moduleNames[i]);
+            int count  = names.size();
+            int index = -1;
+            for(int i = 0 ; i < count ; i++){
+                if(getResources().getString(R.string.module_shigu).equals(names.get(i))) {
+                    index = i;
+                   break;
                 }
             }
-            moduleNames = new String[moduleNameList.size()];
-            moduleNameList.toArray(moduleNames);
+            if(index != -1) {
+                names.remove(index);
+            }
         }
-
+        if( names.size() != 0 ) {
+            moduleNames = new String[names.size()];
+            names.toArray(moduleNames);
+        }else {
+            moduleNames = getResources().getStringArray(R.array.module_enterprise);
+        }
         int moduleCount = moduleNames.length;
 
         for (int i = 0; i < moduleCount; i++) {
@@ -266,6 +285,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
     }
 
     private String[] getModuleNames(String parentName) {
+        if(parentName == null)return null;
         String[] moduleChild = {};
         if (parentName.equals(getResources().getString(R.string.module_baobiao))) {
             moduleChild = moduleChildReportCheckNames;

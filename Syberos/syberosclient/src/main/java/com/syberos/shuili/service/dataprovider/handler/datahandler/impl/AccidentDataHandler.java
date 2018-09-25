@@ -3,6 +3,7 @@ package com.syberos.shuili.service.dataprovider.handler.datahandler.impl;
 import android.content.Context;
 import android.os.RemoteException;
 
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.service.AccidentInformationEntity;
 import com.syberos.shuili.service.IAccidentListCallback;
 import com.syberos.shuili.service.dataprovider.dbconfig.def.DBDefinition;
@@ -39,7 +40,7 @@ public class AccidentDataHandler extends DataHandlerBase {
     }
     private List<AccidentInformationEntity> getAccidentList() {
         List<AccidentInformationEntity> infoList = new ArrayList<>();
-        String strSql = "select * from " + DBDefinition.COMMIT_TABLE + " where  url = http://192.168.1.8:8080/sjjk/v1/bis/obj/objAcci/ " +
+        String strSql = "select * from " + DBDefinition.COMMIT_TABLE + " where  url = " + GlobleConstants.strIP + "/sjjk/v1/bis/obj/objAcci/ " +
       "and " + DBDefinition.LocalStatus + " = 0";
         String []selectionArgs = new String[]{};
         ArrayList<HashMap<String,String>> info = dbHelper.rawQuery(strSql, selectionArgs);

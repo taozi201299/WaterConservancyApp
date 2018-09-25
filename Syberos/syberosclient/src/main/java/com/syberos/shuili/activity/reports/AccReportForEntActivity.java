@@ -121,7 +121,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
      * 根据上报单位获取本单位上报列表
      */
     private void getReortList(){
-        String url= "http://192.168.1.8:8080/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("repTime",tv_current_month.getText().toString());

@@ -245,7 +245,7 @@ public class FormalReviewListActivity extends TranslucentActivity
      * 提交到标准化评审对象表
      */
     private void commit(int result,String opinion){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/objStanRevi/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevi/";
         HashMap <String,String>params= new HashMap<>();
         int size = selectedReviewItemInformationList.size();
         for(ObjStanRevis item : selectedReviewItemInformationList){

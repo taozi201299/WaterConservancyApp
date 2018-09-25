@@ -105,7 +105,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         for(AttachMentInfoEntity info : attachMentInfoEntities){
             ContentValues values = new ContentValues();
             values.put("seriesKey",localCacheEntity.seriesKey);
-            values.put("url",info.url == null ?"http://192.168.1.8:8080/sjjk/v1/jck/attMedBase/":info.url);
+            values.put("url",info.url == null ?GlobleConstants.strIP+"/sjjk/v1/jck/attMedBase/":info.url);
             values.put("medName", info.medName);
             values.put("medType", info.medType);
             values.put("medPath", info.medPath);

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.MainActivity;
@@ -30,6 +31,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
+import com.syberos.shuili.entity.userinfo.ModuleBean;
 import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
@@ -291,7 +293,6 @@ public class LoginActivity extends BaseActivity {
                     /**
                      * 行政用户直接进行登录
                      */
-
                     if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
                         getSysCode(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
                     }else {
@@ -301,6 +302,7 @@ public class LoginActivity extends BaseActivity {
 
                 } else {
                     ToastUtils.show("该用户无权限使用本系统");
+                    closeDataDialog();
                 }
             }
 
@@ -328,12 +330,23 @@ public class LoginActivity extends BaseActivity {
             if (GlobleConstants.CJYJ.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.CJFR.equalsIgnoreCase(roleInfo.getScode())
                     || GlobleConstants.CJFW.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.CJSG.equalsIgnoreCase(roleInfo.getScode())
                     || GlobleConstants.CJJL.equalsIgnoreCase(roleInfo.getScode())) {
-                App.sCode = roleInfo.getScode();
-                bRet = true;
-                break;
+                if(App.sCode.isEmpty()) {
+                    App.sCode = roleInfo.getScode();
+                    bRet = true;
+                }
             } else if (GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())) {
                 App.sCodes.add(roleInfo.getScode());
                 bRet = true;
+            }
+            if(roleInfo.getRoleCode()!= null && !roleInfo.getRoleCode().isEmpty()){
+                String roleCode = roleInfo.getRoleCode();
+                if(GlobleConstants.CJFR002.equalsIgnoreCase(roleCode) || GlobleConstants.CJFR005.equalsIgnoreCase(roleCode)
+                        || GlobleConstants.CJYJ002.equalsIgnoreCase(roleCode) ||GlobleConstants.CJJL005.equalsIgnoreCase(roleCode)
+                        || GlobleConstants.CJFW002.equalsIgnoreCase(roleCode) ||GlobleConstants.CJFW005.equalsIgnoreCase(roleCode)
+                        || GlobleConstants.CJSG002.equalsIgnoreCase(roleCode) || GlobleConstants.CJSG005.equalsIgnoreCase(roleCode)
+                        || GlobleConstants.CJJL002.equalsIgnoreCase(roleCode) || GlobleConstants.CJJL.equalsIgnoreCase(roleCode)){
+                    App.roleCode = roleCode;
+                }
             }
         }
         return bRet;
@@ -464,9 +477,12 @@ public class LoginActivity extends BaseActivity {
         HashMap<String,String>params = new HashMap<>();
         params.put("personID",perID);
         params.put("app_guid",App.sCode);
+        params.put("appCode",App.roleCode);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                Gson gson = new Gson();
+                GlobleConstants.moduleBean = gson.fromJson(result, ModuleBean.class);
                 go2Activity();
                 syncAddressList();
             }

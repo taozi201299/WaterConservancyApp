@@ -37,7 +37,8 @@ public class  App extends Application {
 
      */
     private static int orgType = 1;
-    /**
+
+    /** appGuid
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR
      * 3 小型工程管理单位和技术服务单位CJFW
@@ -45,6 +46,12 @@ public class  App extends Application {
      * 5 大中型在建工程监理单位 CJJL
      */
     public static String sCode = "";
+    /**
+     * appCode
+     * 002 系统管理员
+     * 005 一般用户
+     */
+    public static String roleCode;
     public static ArrayList<String>sCodes = new ArrayList<>();
     public static String orgJurd = "";
 

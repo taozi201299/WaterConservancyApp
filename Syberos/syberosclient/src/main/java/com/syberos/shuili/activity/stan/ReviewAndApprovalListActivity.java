@@ -212,7 +212,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
      * 提交到标准化评审记录表
      */
     private void  commit(){
-        String url = "http://192.168.1.8:8080/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviType","4");
         // 审定意见

@@ -1,5 +1,7 @@
 package com.syberos.shuili.config;
 
+import com.syberos.shuili.entity.userinfo.ModuleBean;
+
 import java.util.HashMap;
 
 /**
@@ -29,17 +31,27 @@ public class GlobleConstants {
     public static final int HIDD_TYPE_NORMAL = 1;
     public static final int HIDD_TYPE_BIGER = 2;
 
+//    // 地图服务器地址
+//    public static final String mapServer = "http://192.168.1.11:8088";
+//    public static String strIP = "http://192.168.1.8:8080";
+//    public static String strCJIP = "http://192.168.1.11:7080";
+//    public static String strZJIP = "http://192.168.1.11:9080";
+//    public static String strZRIP = " http://192.168.1.11:6080";
+//
+//    //专题图 - 地址
+//    public static final String BASE_URL = "http://192.168.1.11:7080/";
+
+
+
     // 地图服务器地址
     public static final String mapServer = "http://192.168.1.11:8088";
-    public static String strIP = "http://192.168.1.8:8080";
-    public static String strCJIP = "http://192.168.1.11:7080";
-    public static String strZJIP = "http://192.168.1.11:9080";
-    public static String strZRIP = " http://192.168.1.11:6080";
+    public static String strIP = "http://10.1.194.92";
+    public static String strCJIP = "http://10.1.194.90:7080";
+    public static String strZJIP = "http://10.1.194.90";
+    public static String strZRIP = "http://10.1.194.91:7080";
 
-    //专题图 - 地址
-    public static final String BASE_URL = "http://192.168.1.11:7080/";
-
-
+    //专题图 - 地址 决策
+    public static final String BASE_URL = "http://10.1.194.89";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR
@@ -53,6 +65,18 @@ public class GlobleConstants {
     public static final String CJFW = "CJFW";
     public static final String CJSG = "CJSG";
     public static final String CJJL = "CJJL";
+
+    public static final String CJYJ002 ="CJYJ002";
+    public static final String CJYJ005 = "CJYJ005";
+    public static final String CJFR002 = "CJFR002";
+    public static final String CJFR005 = "CJFR005";
+    public static final String CJSG002 = "CJSG002";
+    public static final String CJSG005 = "CJSG005";
+    public static final String CJJL002 ="CJJL002";
+    public static final String CJJL005 = "CJJL005";
+    public static final String CJFW002 = "CJFW002";
+    public static final String CJFW005 = "CJFW005";
+
     /**
      * 行政用户角色
      */
@@ -64,6 +88,22 @@ public class GlobleConstants {
     public static final String suen = "suen"; // 安监-监督执法
     public static final String wins = "wins"; // 安监-水利稽察
     public static final String hidd = "hidd"; // 安监-隐患监管
+
+
+    /**
+     * 企事业模块
+     */
+    public static final HashMap<String,String>moduleMap = new HashMap<String,String>() {
+        {
+            put("5814CCBC947CCCCBB64321348D7CB6BE", "报表管理");
+            put("BCB22F06B30747A49B14267AEE543608", "安全检查");
+            put("FE44F5A0763146D59274FD5021AE5F43", "风险源");
+            put("20D0CB88979944FA96946C2A938CC3D1", "事故");
+            put("4A25B41885D94D0F941F6EF0118D768A", "隐患");
+        }
+    };
+
+    public static ModuleBean moduleBean = null;
     /**
      * 事故快报状态
      */

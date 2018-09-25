@@ -211,7 +211,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
-                info.url = "http://192.168.1.8:8080/sjjk/v1/jck/attMedBase/";
+                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";
                 info.localStatus = "0";
