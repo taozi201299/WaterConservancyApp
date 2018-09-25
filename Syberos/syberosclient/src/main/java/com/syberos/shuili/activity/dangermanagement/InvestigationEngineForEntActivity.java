@@ -116,6 +116,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         }
         else {
             // 隐患模块
+            type = "hidden";
         }
         /**
          * 根据type获取不同的参数信息

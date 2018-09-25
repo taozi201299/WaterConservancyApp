@@ -136,6 +136,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
+        tvListTitle.setText("工作考核统计");
 
     }
 

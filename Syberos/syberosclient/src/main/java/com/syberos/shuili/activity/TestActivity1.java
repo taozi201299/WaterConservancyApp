@@ -69,7 +69,7 @@ public class TestActivity1 extends BaseActivity implements View.OnClickListener 
     HashMap<Integer,String>liuYuName = new HashMap<>();
     HashMap<Integer,String>nameValue = new HashMap<>();
     ArrayList<String>otherName = new ArrayList<>();
-    public static final String TestIP = "http://10.1.194.89";
+    public static final String TestIP = "http://192.168.1.11:7080";
 
     @Override
     public void onClick(View v) {

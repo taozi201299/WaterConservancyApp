@@ -1,5 +1,6 @@
 package com.syberos.shuili.activity.woas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -92,6 +93,11 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
     public void initView() {
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mv_multimedia.onActivityResult(requestCode, resultCode, data);
     }
 
     private void updateView(){

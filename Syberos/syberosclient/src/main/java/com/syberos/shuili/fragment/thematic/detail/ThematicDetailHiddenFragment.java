@@ -214,7 +214,7 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
         for (HiddenEntry.DataBean.ITEMDATABean bean : hiddenEntry.getData().getITEMDATA())
             list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), String.valueOf(bean.getHIDDTOTALQUA())));
 
-        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
+        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);

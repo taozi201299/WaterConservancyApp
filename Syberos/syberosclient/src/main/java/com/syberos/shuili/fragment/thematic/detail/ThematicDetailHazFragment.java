@@ -166,20 +166,21 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         tvValue33.setText( "66%");
         tvValue34.setText(10+"");
         tvValue35.setText("80%");
+        tvListTitle.setText("风险源统计");
 
         List<ProjectEntry> projectEntryArrayList = new ArrayList<>();
         for(HazEntry.EveryEngBean everyEngBean : hazEntry.getData().getEveryEngList()) {
-            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), everyEngBean.getGENERALCONTROLRATE() + everyEngBean.getMAJORREGCOUNT()));
+            projectEntryArrayList.add(new ProjectEntry(everyEngBean.getORGCODE(), everyEngBean.getORGNAME(), everyEngBean.getGENERALREGCOUNT()+""));
         }
-        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(projectEntryArrayList);
+        RecyclerAdapterGeneral adapterGeneral=new RecyclerAdapterGeneral(projectEntryArrayList,"个");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapterGeneral);
         adapterGeneral.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
-                intent.putExtra("hazData",hazEntry.getData().getEveryEngList().get(position));
-                startActivity(intent);
+                intent.putExtra("data",hazEntry.getData().getEveryEngList().get(position));
+             //   startActivity(intent);
             }
         });
 

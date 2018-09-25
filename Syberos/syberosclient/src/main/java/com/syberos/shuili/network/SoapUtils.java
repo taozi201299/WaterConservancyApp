@@ -25,8 +25,8 @@ import java.util.HashMap;
 
 public class SoapUtils {
     private final String TAG = SoapUtils.class.getSimpleName();
-   // private final String strIp = "192.168.1.11:9080";
-   private final String strIp = "10.1.195.18";
+    private final String strIp = "192.168.1.11:9080";
+  // private final String strIp = "10.1.195.18";
 
 
     /** 命名空间. */

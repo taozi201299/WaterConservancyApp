@@ -183,6 +183,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
+        tvListTitle.setText("水利稽查统计");
         ivMarkPot1.setVisibility(View.GONE);
         tvChartValue1.setVisibility(View.GONE);
         tvChartValueTitle1.setVisibility(View.GONE);

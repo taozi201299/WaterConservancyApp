@@ -1,5 +1,6 @@
 package com.syberos.shuili.activity.woas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -60,6 +61,11 @@ public class SafetyProductionDetailDeductMarksActivity extends TranslucentActivi
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mv_multimedia.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override

@@ -180,6 +180,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
             tvData4.setVisibility(View.GONE);
             tvDataTitle4.setVisibility(View.GONE);
+            tvListTitle.setText("安全检查统计");
 
 
             List<PieEntry> listHiddenRate = new ArrayList<>();

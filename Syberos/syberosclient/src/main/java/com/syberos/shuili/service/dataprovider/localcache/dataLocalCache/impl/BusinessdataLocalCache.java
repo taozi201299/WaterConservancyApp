@@ -77,7 +77,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                     e.printStackTrace();
                 }
             }
-        },2000);
+        },3000);
 
         if(NetworkUtil.isNetworkAvailable()){
            submitLocalCache();

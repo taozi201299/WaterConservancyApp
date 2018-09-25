@@ -179,7 +179,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
                 Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
                 intent.putExtra("typeValue", HematicMapFragment.Acci);
                 intent.putExtra("data",acciEntry.getData().getITEMDATA().get(position).getACCIDATA());
-                startActivity(intent);
+            //    startActivity(intent);
             }
         });
 

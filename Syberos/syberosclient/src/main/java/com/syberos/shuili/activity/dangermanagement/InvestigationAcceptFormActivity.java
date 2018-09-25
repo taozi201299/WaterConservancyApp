@@ -251,7 +251,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
 
     }
     private void queryTodoWork(){
-        String url = GlobleConstants.strIP + "/pprty/WSRest/service/backlog";
+        String url = GlobleConstants.strZJIP + "/pprty/WSRest/service/backlog";
         HashMap<String,String> params = new HashMap<>();
         params.put("busiCode",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -270,7 +270,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                ToastUtils.show("创建代办任务失败");
+            //    ToastUtils.show("创建代办任务失败");
 
             }
         });
