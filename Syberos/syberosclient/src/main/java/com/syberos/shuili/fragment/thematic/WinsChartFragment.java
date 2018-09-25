@@ -95,7 +95,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -131,7 +130,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else  if(orgType == 2){
               // 本流域的水利稽查信息
         }
-        webMap();
 
     }
 
@@ -213,7 +211,8 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     @Override
     protected void initData() {
-
+        showDataLoadingDialog();
+        webMap();
 
     }
 
@@ -326,6 +325,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     private void  refreshUI(){
         closeDataDialog();
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

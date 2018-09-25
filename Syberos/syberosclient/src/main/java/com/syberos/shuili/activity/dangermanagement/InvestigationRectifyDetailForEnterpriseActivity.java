@@ -386,9 +386,16 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         scrollView.setVisibility(View.VISIBLE);
         // 工程基本信息
         tv_projectName.setText(investigationInfo.getEngName() == null ?"":investigationInfo.getEngName());
-        tv_level.setText(investigationInfo.getHiddGradName() == null ?"":investigationInfo.getHiddGradName());
+        if("0".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
+            tv_level.setText(R.string.normal);
+        }else if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())){
+            tv_level.setText(R.string.danger);
+        }else {
+            tv_level.setText(R.string.normal);
+        }
         tv_type.setText(investigationInfo.getHiddClassName() == null ?"":investigationInfo.getHiddClassName());
         tv_location.setText(investigationInfo.getProPart() == null ?"":investigationInfo.getProPart());
+        ev_des_audio.setEditText(investigationInfo.getHiddDesc());
 //        // 1 隐患核实信息
 //        if("1".equals(this.hiddenProjectInfo.totalCount)) {
 //            hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);

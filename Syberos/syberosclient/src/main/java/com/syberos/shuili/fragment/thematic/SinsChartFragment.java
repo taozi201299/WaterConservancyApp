@@ -105,7 +105,6 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -144,7 +143,6 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
             // 本流域的安全检查信息
             subType ="1";
         }
-        webMap();
 
     }
 
@@ -229,7 +227,8 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     @Override
     protected void initData() {
-
+        showDataLoadingDialog();
+        webMap();
 
     }
 
@@ -325,6 +324,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     private void  refreshUI(){
         closeDataDialog();
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

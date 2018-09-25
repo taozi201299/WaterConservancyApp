@@ -89,7 +89,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -125,7 +124,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-        webMap();
     }
 
     @Override
@@ -177,6 +175,8 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     @Override
     protected void initData() {
+        showDataLoadingDialog();
+        webMap();
     }
 
     public void webMap() {//地图定位
@@ -285,6 +285,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
     private void  refreshUI(){
         closeDataDialog();
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

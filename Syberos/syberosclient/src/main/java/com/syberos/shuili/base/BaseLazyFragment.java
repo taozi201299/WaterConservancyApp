@@ -204,6 +204,15 @@ public abstract class BaseLazyFragment extends Fragment {
         dataDialog.show();
 
     }
+    public void showDataLoadingDialog(String text) {
+        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(mContext)
+                .setMessage(text)
+                .setCancelable(true)
+                .setCancelOutside(true);
+        dataDialog = loadBuilder.create();
+        dataDialog.show();
+
+    }
 
     public void closeDataDialog() {
         if (dataDialog != null && dataDialog.isShowing()) {

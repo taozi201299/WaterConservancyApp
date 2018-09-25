@@ -89,7 +89,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -125,7 +124,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-        webMap();
 
     }
 
@@ -175,7 +173,8 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
     @Override
     protected void initData() {
-
+        showDataLoadingDialog();
+        webMap();
 
     }
 
@@ -294,6 +293,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

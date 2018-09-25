@@ -88,7 +88,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -124,7 +123,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-        webMap();
     }
 
     @Override
@@ -175,6 +173,8 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     @Override
     protected void initData() {
         Log.d(TAG,"--------------initData()");
+        showDataLoadingDialog();
+        webMap();
     }
 
     public HiddenEntry getHiddenEntry() {
@@ -300,6 +300,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

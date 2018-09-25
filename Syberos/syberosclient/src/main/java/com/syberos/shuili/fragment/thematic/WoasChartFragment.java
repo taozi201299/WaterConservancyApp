@@ -89,7 +89,6 @@ public class WoasChartFragment extends BaseLazyFragment {
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         radioBtnJianguan.setVisibility(View.GONE);
         radioBtnLiuyu.setVisibility(View.GONE);
         radioBtnZhiguan.setVisibility(View.GONE);
@@ -125,7 +124,6 @@ public class WoasChartFragment extends BaseLazyFragment {
             radioBtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-        webMap();
 
     }
 
@@ -176,8 +174,8 @@ public class WoasChartFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-
-
+        showDataLoadingDialog();
+        webMap();
     }
 
 
@@ -238,6 +236,7 @@ public class WoasChartFragment extends BaseLazyFragment {
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<HiddenChartFragment.Point> list = new ArrayList<>();
         list.clear();
@@ -326,10 +325,9 @@ public class WoasChartFragment extends BaseLazyFragment {
         iMapLevel = 4;
         mLon = array[0];
         mLat = array[1];
-        if (bLoadFinish) {
+        if (bLoadFinish && !bShowMap) {
             bShowMap = true;
-            webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
-            addMarkInfo();
+            refreshUI();
         }
     }
 

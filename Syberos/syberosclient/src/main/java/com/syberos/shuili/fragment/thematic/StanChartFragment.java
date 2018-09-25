@@ -89,7 +89,6 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
-        showDataLoadingDialog();
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);
@@ -125,8 +124,6 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-        webMap();
-
     }
 
     @Override
@@ -176,8 +173,8 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     }
     @Override
     protected void initData() {
-
-
+        showDataLoadingDialog();
+        webMap();
     }
 
     public StanSuperviseEntry getStanEntry() {
@@ -369,6 +366,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
+        if(webView == null)return;
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

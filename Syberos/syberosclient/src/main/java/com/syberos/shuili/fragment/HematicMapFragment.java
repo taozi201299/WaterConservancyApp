@@ -179,17 +179,17 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     @Override
     protected void initListener() {
+
+
     }
 
     @Override
     protected void initData() {
 
-
     }
 
     @Override
     protected void initView() {
-//        tv_action_bar_title.setVisibility(View.INVISIBLE);
         requestMulti();
         fragments = new ArrayList<>();
         BaseLazyFragment fragment = null;
@@ -232,6 +232,22 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         tl_tab.setupWithViewPager(vp_content);
         //设置可以滑动
         tl_tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tl_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                getCenterXY();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -239,7 +255,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         this.openDrawerListener = openDrawerListener;
     }
 
-    private void getCenterXY() {
+    public void getCenterXY() {
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         String code = App.orgJurd;

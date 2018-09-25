@@ -37,36 +37,11 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     String hiddClassName;
     boolean isAccept;
 
-    public boolean isbExist() {
-        return bExist;
-    }
-
-    public void setbExist(boolean bExist) {
-        this.bExist = bExist;
-    }
 
     boolean bExist;
 
-    public void setAccept(boolean accept) {
-        isAccept = accept;
-    }
-
-    public boolean isAccept() {
-        return isAccept;
-    }
-
-    public String getEngName() {
-        return engName;
-    }
-
-    public void setEngName(String engName) {
-        this.engName = engName;
-    }
-
-
-
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -74,7 +49,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddName() {
-        return hiddName;
+        return hiddName == null ? "" : hiddName;
     }
 
     public void setHiddName(String hiddName) {
@@ -82,7 +57,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getEngGuid() {
-        return engGuid;
+        return engGuid == null ? "" : engGuid;
     }
 
     public void setEngGuid(String engGuid) {
@@ -90,7 +65,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getTendGuid() {
-        return tendGuid;
+        return tendGuid == null ? "" : tendGuid;
     }
 
     public void setTendGuid(String tendGuid) {
@@ -98,7 +73,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getSeGuid() {
-        return seGuid;
+        return seGuid == null ? "" : seGuid;
     }
 
     public void setSeGuid(String seGuid) {
@@ -106,7 +81,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -114,7 +89,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddSour() {
-        return hiddSour;
+        return hiddSour == null ? "" : hiddSour;
     }
 
     public void setHiddSour(String hiddSour) {
@@ -122,7 +97,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddGrad() {
-        return hiddGrad;
+        return hiddGrad == null ? "" : hiddGrad;
     }
 
     public void setHiddGrad(String hiddGrad) {
@@ -130,7 +105,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddClas() {
-        return hiddClas;
+        return hiddClas == null ? "" : hiddClas;
     }
 
     public void setHiddClas(String hiddClas) {
@@ -138,7 +113,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getIfFound() {
-        return ifFound;
+        return ifFound == null ? "" : ifFound;
     }
 
     public void setIfFound(String ifFound) {
@@ -146,7 +121,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getProPart() {
-        return proPart;
+        return proPart == null ? "" : proPart;
     }
 
     public void setProPart(String proPart) {
@@ -154,7 +129,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getPartLong() {
-        return partLong;
+        return partLong == null ? "" : partLong;
     }
 
     public void setPartLong(String partLong) {
@@ -162,7 +137,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getPartLat() {
-        return partLat;
+        return partLat == null ? "" : partLat;
     }
 
     public void setPartLat(String partLat) {
@@ -170,7 +145,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddDesc() {
-        return hiddDesc;
+        return hiddDesc == null ? "" : hiddDesc;
     }
 
     public void setHiddDesc(String hiddDesc) {
@@ -178,7 +153,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getInspRecGuid() {
-        return inspRecGuid;
+        return inspRecGuid == null ? "" : inspRecGuid;
     }
 
     public void setInspRecGuid(String inspRecGuid) {
@@ -186,7 +161,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getSeCheckItemGuid() {
-        return seCheckItemGuid;
+        return seCheckItemGuid == null ? "" : seCheckItemGuid;
     }
 
     public void setSeCheckItemGuid(String seCheckItemGuid) {
@@ -194,7 +169,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddStat() {
-        return hiddStat;
+        return hiddStat == null ? "" : hiddStat;
     }
 
     public void setHiddStat(String hiddStat) {
@@ -202,7 +177,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddMergGuid() {
-        return hiddMergGuid;
+        return hiddMergGuid == null ? "" : hiddMergGuid;
     }
 
     public void setHiddMergGuid(String hiddMergGuid) {
@@ -210,7 +185,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getRecOrgGuid() {
-        return recOrgGuid;
+        return recOrgGuid == null ? "" : recOrgGuid;
     }
 
     public void setRecOrgGuid(String recOrgGuid) {
@@ -218,7 +193,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -226,7 +201,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -234,7 +209,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -242,7 +217,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -250,7 +225,7 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddsGuid() {
-        return hiddsGuid;
+        return hiddsGuid == null ? "" : hiddsGuid;
     }
 
     public void setHiddsGuid(String hiddsGuid) {
@@ -258,15 +233,23 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getOccuNum() {
-        return occuNum;
+        return occuNum == null ? "" : occuNum;
     }
 
     public void setOccuNum(String occuNum) {
         this.occuNum = occuNum;
     }
 
+    public String getEngName() {
+        return engName == null ? "" : engName;
+    }
+
+    public void setEngName(String engName) {
+        this.engName = engName;
+    }
+
     public String getHiddGradName() {
-        return hiddGradName;
+        return hiddGradName == null ? "" : hiddGradName;
     }
 
     public void setHiddGradName(String hiddGradName) {
@@ -274,10 +257,26 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     }
 
     public String getHiddClassName() {
-        return hiddClassName;
+        return hiddClassName == null ? "" : hiddClassName;
     }
 
     public void setHiddClassName(String hiddClassName) {
         this.hiddClassName = hiddClassName;
+    }
+
+    public boolean isAccept() {
+        return isAccept;
+    }
+
+    public void setAccept(boolean accept) {
+        isAccept = accept;
+    }
+
+    public boolean isbExist() {
+        return bExist;
+    }
+
+    public void setbExist(boolean bExist) {
+        this.bExist = bExist;
     }
 }
