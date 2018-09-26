@@ -1,6 +1,10 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -69,6 +73,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
     private StanSuperviseEntry stanSuperviseEntry;
     private StanDirectEntry stanDirectEntry;
+    private boolean bFirst = true;
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
             put("北京市", "5");
@@ -124,6 +129,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
+        webMap();
     }
 
     @Override
@@ -173,10 +179,26 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     }
     @Override
     protected void initData() {
-        showDataLoadingDialog();
-        webMap();
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
     }
 
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        bFirst = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
     public StanSuperviseEntry getStanEntry() {
         return stanSuperviseEntry;
     }
@@ -305,6 +327,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     }
 
     private void addMarkInfo(List<Point> list) {
+        if(webView == null)return;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
@@ -313,6 +336,10 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     private void refreshUI_Direct(){
         closeDataDialog();
         bShowMap = true;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();
@@ -366,7 +393,10 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
-        if(webView == null)return;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

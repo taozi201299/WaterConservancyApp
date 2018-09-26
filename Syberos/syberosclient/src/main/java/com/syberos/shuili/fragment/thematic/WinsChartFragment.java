@@ -1,6 +1,10 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -74,6 +78,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     private int orgType; // 1 行政区划 2 流域用户
 
     private WinsEntry winsEntry;
+    private boolean bFirst = true;
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -130,7 +135,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else  if(orgType == 2){
               // 本流域的水利稽查信息
         }
-
+        webMap();
     }
 
     @Override
@@ -141,7 +146,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 bShowMap = false;
-                webView.removeAllViews();
                 switch (checkedId){
                     case R.id.radio_type_jianguan:
                         subType = "2";
@@ -162,6 +166,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
                 bShowMap = false;
+                webView.removeAllViews();
                 switch (checkId) {
                     case R.id.radio_btn_zhiguan:
                         if(orgLevel == 1) {
@@ -179,7 +184,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                                 subType = "2";
                             }
                         }
-                        webView.removeAllViews();
                         break;
                     case R.id.radio_btn_liuyu:
                         radio_group_type.setVisibility(View.GONE);
@@ -211,11 +215,26 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     @Override
     protected void initData() {
-        showDataLoadingDialog();
-        webMap();
-
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
     }
 
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        bFirst = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
     public void webMap() {//地图定位
         webView.getSettings().setDatabaseEnabled(true);//开启数据库
         webView.setFocusable(true);//获取焦点
@@ -318,6 +337,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     }
 
     private void addMarkInfo(List<Point> list) {
+        if(webView == null)return;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
@@ -325,7 +345,10 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     private void  refreshUI(){
         closeDataDialog();
-        if(webView == null)return;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

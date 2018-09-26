@@ -108,12 +108,13 @@ public abstract class BaseLazyFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         initView();
+        initListener();
 
         if (getUserVisibleHint()) {
             hasStarted = true;
         }
         if (hasStarted && !isPrepared) {
-            initListener();
+
             initData();
         }
 

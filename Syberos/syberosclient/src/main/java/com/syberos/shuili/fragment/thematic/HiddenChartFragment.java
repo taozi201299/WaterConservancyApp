@@ -1,7 +1,10 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -61,6 +64,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     private boolean bLoadFinish = false;
     private boolean bShowMap = false;
     private int iMapLevel = 0;
+    private  boolean bFirst = true;
     private final static long duration = 10 * 1000;
     private int type = 1;// 1 获取直管工程数据 2 获取流域数据 3 获取监管工程数据
 
@@ -123,6 +127,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
+        webMap();
     }
 
     @Override
@@ -172,9 +177,26 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
     @Override
     protected void initData() {
-        Log.d(TAG,"--------------initData()");
-        showDataLoadingDialog();
-        webMap();
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        super.onDestroyView();
+        bFirst = true;
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public HiddenEntry getHiddenEntry() {
@@ -292,6 +314,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     private void addMarkInfo(List<Point> list) {
+        if(webView == null)return;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
@@ -300,7 +323,9 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
-        if(webView == null)return;
+        if(webView == null){
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

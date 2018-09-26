@@ -1,7 +1,11 @@
 package com.syberos.shuili.fragment.thematic;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -41,6 +45,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class WoasChartFragment extends BaseLazyFragment {
+    private final String TAG = getClass().getSimpleName();
 
     @BindView(R.id.webview)
     WebView webView;
@@ -68,6 +73,7 @@ public class WoasChartFragment extends BaseLazyFragment {
 
     private int orgLevel = BusinessConfig.getOrgLevel();
     private int orgType; // 1 行政区划 2 流域用户
+    private boolean bFirst = true;
 
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
@@ -124,7 +130,7 @@ public class WoasChartFragment extends BaseLazyFragment {
             radioBtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-
+        webMap();
     }
 
     @Override
@@ -171,11 +177,27 @@ public class WoasChartFragment extends BaseLazyFragment {
             }
         });
     }
-
     @Override
     protected void initData() {
-        showDataLoadingDialog();
-        webMap();
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        bFirst = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 
@@ -236,7 +258,10 @@ public class WoasChartFragment extends BaseLazyFragment {
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
-        if(webView == null)return;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<HiddenChartFragment.Point> list = new ArrayList<>();
         list.clear();
@@ -302,6 +327,7 @@ public class WoasChartFragment extends BaseLazyFragment {
     }
 
     private void addMarkInfo(List<Point> list) {
+        if(webView == null)return;
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");

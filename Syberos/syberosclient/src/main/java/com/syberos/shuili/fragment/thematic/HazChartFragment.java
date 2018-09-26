@@ -1,6 +1,10 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -68,6 +72,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     private int orgLevel = BusinessConfig.getOrgLevel();
     private int orgType; // 1 行政区划 2 流域用户
 
+    private boolean bFirst = true;
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -124,7 +129,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
-
+        webMap();
     }
 
     @Override
@@ -173,9 +178,25 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
     @Override
     protected void initData() {
-        showDataLoadingDialog();
-        webMap();
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
+    }
 
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        bFirst = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public HazEntry getHazEntry() {
@@ -287,13 +308,17 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     private void addMarkInfo(List<Point> list) {
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
+        if(webView == null)return;
         webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
     }
 
     private void refreshUI() {
         closeDataDialog();
         bShowMap = true;
-        if(webView == null)return;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();

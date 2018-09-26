@@ -1,7 +1,11 @@
 package com.syberos.shuili.fragment.thematic;
 
+import android.nfc.Tag;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -67,6 +71,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     private int orgType; // 1 行政区划 2 流域用户
 
     private AcciEntry acciEntry;
+    private  boolean bFirst = true;
 
     private HashMap<String, String> levels = new HashMap<String, String>() {
         {
@@ -124,6 +129,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             rbtnZhiguan.setVisibility(View.VISIBLE);
             radioGroup.check(R.id.radio_btn_zhiguan);
         }
+        webMap();
     }
 
     @Override
@@ -135,6 +141,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
                 bShowMap = false;
+                webView.removeAllViews();
                 switch (checkId) {
                     case R.id.radio_btn_zhiguan:
                         if(orgType == 1) {
@@ -144,7 +151,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                             iMapLevel = 0;
                         }
                         type = 1;
-                        webView.removeAllViews();
                         break;
                     case R.id.radio_btn_liuyu:
                         if(orgLevel == 1) iMapLevel = -2 ;
@@ -170,13 +176,29 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 setStatus1(type);
             }
         });
-
     }
 
     @Override
     protected void initData() {
-        showDataLoadingDialog();
-        webMap();
+        Log.d(TAG,"----------------initData");
+        if(!bFirst) {
+            showDataLoadingDialog();
+            webMap();
+        }
+        bFirst = false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"---------------destoryView");
+        bFirst = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"-----------------oncreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public void webMap() {//地图定位
@@ -280,12 +302,17 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     private void addMarkInfo(List<Point> list) {
         Gson gson = new Gson();
         String jsonStr = gson.toJson(list);
-        webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
+        if(webView != null) {
+            webView.loadUrl("javascript:updateCurrentPoint(" + jsonStr + ")");
+        }
     }
 
     private void  refreshUI(){
         closeDataDialog();
-        if(webView == null)return;
+        if(webView == null){
+            webMap();
+            return;
+        }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
         List<Point> list = new ArrayList<>();
         list.clear();
