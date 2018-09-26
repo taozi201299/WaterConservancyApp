@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.thematic.ThematicAcciItemActivity;
 import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
@@ -176,10 +177,11 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
-                intent.putExtra("typeValue", HematicMapFragment.Acci);
+                Intent intent = new Intent(getActivity(), ThematicAcciItemActivity.class);
                 intent.putExtra("data",acciEntry.getData().getITEMDATA().get(position).getACCIDATA());
-            //    startActivity(intent);
+                intent.putExtra("num",acciEntry.getData().getITEMDATA().get(position).getACCITOTALNUM());
+                intent.putExtra("name",acciEntry.getData().getITEMDATA().get(position).getOBJNAME());
+                startActivity(intent);
             }
         });
 

@@ -18,6 +18,7 @@
         android:textSize="@dimen/text_sub_title_normal_14sp" />
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1dp"
         android:background="@color/div" />

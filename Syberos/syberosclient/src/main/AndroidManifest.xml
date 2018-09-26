@@ -534,7 +534,18 @@
 
 
 
-        <activity android:name=".activity.thematic.ThematicHazItemDetailActivity"/>
+        <activity android:name=".activity.thematic.ThematicHazItemDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.thematic.ThematicHiddenItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.thematic.ThematicAcciItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.thematic.ThematicSinsItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.thematic.ThematicStansItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.thematic.ThematicWinsItemActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data

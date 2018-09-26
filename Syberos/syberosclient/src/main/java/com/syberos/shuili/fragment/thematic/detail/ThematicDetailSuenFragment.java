@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.thematic.ThematicStansItemActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

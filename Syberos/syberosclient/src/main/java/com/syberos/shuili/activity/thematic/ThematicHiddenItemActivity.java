@@ -11,7 +11,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.entity.thematic.haz.HazEntry;
+import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -19,13 +19,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
- * Created by Administrator on 2018/9/13.
+ * Created by Administrator on 2018/9/26.
  */
 
-public class ThematicHazItemDetailActivity extends BaseActivity {
+public class ThematicHiddenItemActivity extends BaseActivity {
     @BindView(R.id.tv_view_title)
     TextView tvViewTitle;
     @BindView(R.id.iv_mark_pot_2)
@@ -56,38 +55,46 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
     PieChart pieChartHiddenSummarized;
     @BindView(R.id.tv_data_1)
     TextView tvData1;
+    @BindView(R.id.tv_data_unit_1)
+    TextView tvDataUnit1;
     @BindView(R.id.tv_data_title_1)
     TextView tvDataTitle1;
     @BindView(R.id.ll_data_1)
     LinearLayout llData1;
     @BindView(R.id.tv_data_2)
     TextView tvData2;
+    @BindView(R.id.tv_data_unit_2)
+    TextView tvDataUnit2;
     @BindView(R.id.tv_data_title_2)
     TextView tvDataTitle2;
     @BindView(R.id.ll_data_2)
     LinearLayout llData2;
     @BindView(R.id.tv_data_3)
     TextView tvData3;
+    @BindView(R.id.tv_data_unit_3)
+    TextView tvDataUnit3;
     @BindView(R.id.tv_data_title_3)
     TextView tvDataTitle3;
     @BindView(R.id.ll_data_3)
     LinearLayout llData3;
     @BindView(R.id.tv_data_4)
     TextView tvData4;
+    @BindView(R.id.tv_data_unit_4)
+    TextView tvDataUnit4;
     @BindView(R.id.tv_data_title_4)
     TextView tvDataTitle4;
     @BindView(R.id.ll_data_4)
     LinearLayout llData4;
-    @BindView(R.id.pie_char_haz_rate)
-    PieChart pieCharHazRate;
+    @BindView(R.id.pie_char_hidden_rate)
+    PieChart pieCharHiddenRate;
     @BindView(R.id.tv_value_1_1)
     TextView tvValue11;
     @BindView(R.id.tv_value_1_2)
     TextView tvValue12;
     @BindView(R.id.tv_value_1_3)
     TextView tvValue13;
-    @BindView(R.id.tv_late_value1)
-    TextView tvLateValue1;
+    @BindView(R.id.tv_value_1_4)
+    TextView tvValue14;
     @BindView(R.id.div)
     View div;
     @BindView(R.id.tv_value_2_1)
@@ -100,38 +107,18 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
     TextView tvValue24;
     @BindView(R.id.tv_value_2_5)
     TextView tvValue25;
-    @BindView(R.id.tv_value_3_1)
-    TextView tvValue31;
-    @BindView(R.id.tv_value_3_2)
-    TextView tvValue32;
-    @BindView(R.id.tv_value_3_3)
-    TextView tvValue33;
-    @BindView(R.id.tv_value_3_4)
-    TextView tvValue34;
-    @BindView(R.id.tv_value_3_5)
-    TextView tvValue35;
     @BindView(R.id.tv_list_title)
     TextView tvListTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    Unbinder unbinder;
-    @BindView(R.id.tv_data_unit_1)
-    TextView tvDataUnit1;
-    @BindView(R.id.tv_data_unit_2)
-    TextView tvDataUnit2;
-    @BindView(R.id.tv_data_unit_3)
-    TextView tvDataUnit3;
-    @BindView(R.id.tv_data_unit_4)
-    TextView tvDataUnit4;
     @BindView(R.id.line)
     View line;
 
-    private HazEntry.EveryEngBean hazEntry = null;
-
+    private HiddenEntry.DataBean.ITEMDATABean itemdataBean;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_thematic_detail_haz;
+        return R.layout.fragment_thematic_detail_hidden;
     }
 
     @Override
@@ -141,32 +128,31 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        hazEntry = (HazEntry.EveryEngBean) getIntent().getSerializableExtra("data");
-        tvViewTitle.setText(hazEntry.getORGNAME());
-        tvDataTitle1.setText("已管控数量");
-        tvData2.setText(hazEntry.getWGK() + "");
-        tvDataTitle2.setText("未管控数量");
+        itemdataBean = (HiddenEntry.DataBean.ITEMDATABean) getIntent().getSerializableExtra("data");
+        tvViewTitle.setText(itemdataBean.getOBJNAME());
+        tvData1.setText(itemdataBean.getHIDDTOTALQUA() - itemdataBean.getHIDDRECTQUA() + "");
+        tvDataTitle1.setText("未整改数量");
 
-        List<PieEntry> dataList = new ArrayList<>();
-        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(), "一般危险源数量 " + hazEntry.getGENERALCONTROLRATE()));
-        dataList.add(new PieEntry(hazEntry.getGENERALNOTREG(), "重大危险源数量 " + hazEntry.getMAJORREGCOUNT()));
-        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHazRate, dataList, true);
+        tvData2.setText(itemdataBean.getHIDDTOTALQUA() + "");
+        tvDataTitle2.setText("隐患总数量");
 
-        tvValue11.setText(hazEntry.getGENERALHAVECONTROL() + "");
-        tvValue12.setText(hazEntry.getGENERALNOTCONTROL() + "");
-        tvValue13.setText(hazEntry.getGENERALCONTROLRATE());
+        List<PieEntry> listHiddenRate = new ArrayList<>();
+        listHiddenRate.add(new PieEntry(itemdataBean.getHIDDGRAD1TOTALQUA(), "一般隐患数量 " + itemdataBean.getHIDDGRAD1TOTALQUA() + ""));
+        listHiddenRate.add(new PieEntry(itemdataBean.getHIDDGRAD2TOTALQUA(), "重大隐患数量 " + itemdataBean.getHIDDGRAD2TOTALQUA() + ""));
 
-        tvValue21.setText(hazEntry.getMAJORHAVECONTROL() + "");
-        tvValue22.setText(hazEntry.getMAJORNOTCONTROL() + "");
-        tvValue23.setText(hazEntry.getMAJORCONTROLRATE());
-        tvValue24.setText(hazEntry.getMAJORHAVEREG() + "");
-        tvValue25.setText(hazEntry.getMAJORREGRATE());
+        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHiddenRate, listHiddenRate, true);
 
-        tvValue31.setText(10 + "");
-        tvValue32.setText(4 + "");
-        tvValue33.setText("66%");
-        tvValue34.setText(10 + "");
-        tvValue35.setText("80%");
+
+        tvValue11.setText(itemdataBean.getHIDDGRAD1RECTQUA() + "");
+        tvValue12.setText(itemdataBean.getHIDDGRAD1TOTALQUA() - itemdataBean.getHIDDGRAD1RECTQUA() + "");
+        tvValue13.setText(itemdataBean.getHIDDGRAD1LATEQUA() + "");
+        tvValue14.setText(itemdataBean.getHIDDGRAD1TOTALQUA() == 0 ? 0 + "" : itemdataBean.getHIDDGRAD1RECTQUA() / itemdataBean.getHIDDGRAD1TOTALQUA() * 100.0 + "%");
+
+        tvValue21.setText(itemdataBean.getHIDDGRAD2RECTQUA() + "");
+        tvValue22.setText(itemdataBean.getHIDDGRAD2TOTALQUA() - itemdataBean.getHIDDGRAD2RECTQUA() + "");
+        tvValue23.setText(itemdataBean.getHIDDGRAD2LATEQUA() + "");
+        tvValue24.setText(itemdataBean.getHIDDGRAD2LISTQUA() + "");
+        tvValue25.setText(itemdataBean.getHIDDGRAD2TOTALQUA() == 0 ? 0 + "" : itemdataBean.getHIDDGRAD2RECTQUA() / itemdataBean.getHIDDGRAD2TOTALQUA() * 100.0 + "%");
 
     }
 
@@ -187,7 +173,6 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
         ivMarkPot4.setVisibility(View.GONE);
         tvChartValue4.setVisibility(View.GONE);
         tvChartValueTitle4.setVisibility(View.GONE);
-
         pieChartHiddenSummarized.setVisibility(View.GONE);
 
         llData3.setVisibility(View.GONE);
@@ -195,7 +180,6 @@ public class ThematicHazItemDetailActivity extends BaseActivity {
         recyclerView.setVisibility(View.GONE);
         tvListTitle.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-
     }
 
     @Override

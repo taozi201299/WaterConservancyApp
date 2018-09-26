@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.thematic.ThematicSinsItemActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -165,7 +168,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onSinsData(SinsEntry sinsEntry) {
+    public void onSinsData(final SinsEntry sinsEntry) {
         if (sinsEntry != null) {
             setSinsEntry(sinsEntry);
             tvViewTitle.setText("");
@@ -197,6 +200,14 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
             recyclerView.setAdapter(adapter);
+            adapter.setListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent = new Intent(getActivity(), ThematicSinsItemActivity.class);
+                    intent.putExtra("data",sinsEntry.getData().getSUBSINSDATA().get(position));
+                    startActivity(intent);
+                }
+            });
 
         }
     }

@@ -30,7 +30,7 @@ public class SinsEntry implements Serializable {
         this.meta = meta;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * SINSHIDDGRAD1QUA : 4260
          * SINSHIDDGRAD2QUA : 76
@@ -120,7 +120,7 @@ public class SinsEntry implements Serializable {
             this.SINSQUA = SINSQUA;
         }
 
-        public static class SUBSINSDATABean {
+        public static class SUBSINSDATABean implements Serializable{
             /**
              * OBJGUID : 440000
              * OBJLAT : 22.86848363
@@ -238,7 +238,7 @@ public class SinsEntry implements Serializable {
         }
     }
 
-    public static class MetaBean {
+    public static class MetaBean implements  Serializable{
         /**
          * message : ok
          * success : true

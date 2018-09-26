@@ -1,5 +1,6 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
+import com.syberos.shuili.activity.thematic.ThematicWinsItemActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.wins.WinsEntry;
@@ -179,6 +181,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
             public void onItemClick(View view, int position) {
             }
         });
+
     }
 
     @Override

@@ -180,7 +180,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), ThematicHazItemDetailActivity.class);
                 intent.putExtra("data",hazEntry.getData().getEveryEngList().get(position));
-             //   startActivity(intent);
+                startActivity(intent);
             }
         });
 
