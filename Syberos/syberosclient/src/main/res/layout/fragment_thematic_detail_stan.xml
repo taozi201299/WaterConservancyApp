@@ -13,7 +13,6 @@
     <include layout="@layout/include_thematic_stan_rate_view" />
 
     <include
-        android:id="@+id/view_recycler_view"
         layout="@layout/include_thematic_data_list_view_general" />
   </LinearLayout>
 </ScrollView>

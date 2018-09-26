@@ -181,7 +181,7 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
                 intent.putExtra("data",acciEntry.getData().getITEMDATA().get(position).getACCIDATA());
                 intent.putExtra("num",acciEntry.getData().getITEMDATA().get(position).getACCITOTALNUM());
                 intent.putExtra("name",acciEntry.getData().getITEMDATA().get(position).getOBJNAME());
-                startActivity(intent);
+             //   startActivity(intent);
             }
         });
 

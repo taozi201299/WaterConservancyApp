@@ -77,21 +77,6 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
         setUseEventBus(true);
-//        viewDialPlate.updateData(86);
-//        tvScore.setText("86");
-//        tvScoreTitle.setText("平均得分");
-//        tvTitle.setText("2018年直管工程工作考核情况");
-//
-//
-//        List<ProjectEntry> list = new ArrayList<>();
-//        list.add(new ProjectEntry("rerw", "北京", 100));
-//        list.add(new ProjectEntry("rerw", "上海", 120));
-//        list.add(new ProjectEntry("rerw", "广东", 150));
-//
-//        RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-//        recyclerView.setAdapter(adapter);
     }
 
     WoasEntry woasEntry;
@@ -145,13 +130,11 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         xAxis = lineChart.getXAxis();
         xAxis.setLabelCount(5);
         yAxisLeft = lineChart.getAxisLeft();
-//        lineChart.setBackgroundColor(Color.argb(200, 173, 215, 210));// 设置图表背景 参数是个Color对象
         Description description = new Description();
         description.setText("");
         lineChart.setDescription(description); //图表默认右下方的描述，参数是String对象
         lineChart.setNoDataText("暂无数据");   //没有数据时显示在中央的字符串，参数是String对象
         lineChart.setDrawGridBackground(false);//设置图表内格子背景是否显示，默认是false
-//        lineChart.setGridBackgroundColor(Color.rgb(250, 0, 0));//设置格子背景色,参数是Color类型对象
         lineChart.setDrawBorders(false);     //设置图表内格子外的边框是否显示
         //Enabling / disabling interaction
         lineChart.setTouchEnabled(false); // 设置是否可以触摸
@@ -159,7 +142,6 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         lineChart.setScaleEnabled(false);// 是否可以缩放 x和y轴, 默认是true
         lineChart.setScaleXEnabled(false); //是否可以缩放 仅x轴
         lineChart.setScaleYEnabled(false); //是否可以缩放 仅y轴
-//        lineChart.setMarker();
         lineChart.setPinchZoom(false);  //设置x轴和y轴能否同时缩放。默认是否
         lineChart.setDoubleTapToZoomEnabled(false);//设置是否可以通过双击屏幕放大图表。默认是true
 //        lineChart.setHighlightEnabled(false);  //If set to true, highlighting/selecting values via touch is possible for all underlying DataSets.
@@ -168,21 +150,6 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         // Chart fling / deceleration
         lineChart.setDragDecelerationEnabled(true);//拖拽滚动时，手放开是否会持续滚动，默认是true（false是拖到哪是哪，true拖拽之后还会有缓冲）
         lineChart.setDragDecelerationFrictionCoef(0.99f);//与上面那个属性配合，持续滚动时的速度快慢，[0,1) 0代表立即停止。
-
-        //Highlighting programmatically
-
-//        highlightValues(Highlight[] highs)
-//               Highlights the values at the given indices in the given DataSets. Provide null or an empty array to undo all highlighting.
-//        highlightValue(int xIndex, int dataSetIndex)
-//               Highlights the value at the given x-index in the given DataSet. Provide -1 as the x-index or dataSetIndex to undo all highlighting.
-//        getHighlighted()
-//               Returns an Highlight[] array that contains information about all highlighted entries, their x-index and dataset-index.
-
-
-        //其他请参考https://github.com/PhilJay/MPAndroidChart/wiki/Interaction-with-the-Chart
-        //如手势相关方法，选择回调方法
-
-
 //        The Axis 坐标轴相关的,XY轴通用
         xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
         xAxis.setDrawAxisLine(true); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
@@ -194,21 +161,9 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         xAxis.setTextColor(getResources().getColor(R.color.dialog_cancel_message_color)); //X轴上的刻度的颜色
         xAxis.setTextSize(14); //X轴上的刻度的字的大小 单位dp
         xAxis.setTextColor(Color.parseColor("#999999"));
-//      xAxis.setTypeface(Typeface tf); //X轴上的刻度的字体
-//        xAxis.setGridColor(getResources().getColor(R.color.color_blue_004e96)); //X轴上的刻度竖线的颜色
-//        xAxis.setGridLineWidth(1); //X轴上的刻度竖线的宽 float类型
         xAxis.enableGridDashedLine(10, 3, 0); //虚线表示X轴上的刻度竖线(float lineLength, float spaceLength, float phase)三个参数，1.线长，2.虚线间距，3.虚线开始坐标
         xAxis.isDrawLabelsEnabled();
         final List<String> xList = new ArrayList<>();
-//        for (int i = 0; i < 6; i++) {
-////            Date date = new Date(Long.parseLong(dataList.get(i).getDate()));
-//            Date date = new Date(System.currentTimeMillis()+i*(1000*60*60*24*30));
-//            @SuppressLint("SimpleDateFormat")
-//            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-//            String strDate=format.format(date);
-//            dateList.add(strDate);
-//            LogUtil.e(TAG, "initLineCharView: strDate:"+(System.currentTimeMillis()+i*(1000*60*60*24*30))+"----" );
-//        }
         for (int i = 0; i < dataList.size(); i++) {
             xList.add(dataList.get(i).getDate());
         }
@@ -259,13 +214,6 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  //参数是INSIDE_CHART(Y轴坐标在内部) 或 OUTSIDE_CHART(在外部（默认是这个）)
 //        yAxis.setValueFormatter(new IAxisValueFormatter() {
         yAxisLeft.setDrawGridLines(false);
-//            @Override
-//            public String getFormattedValue(float value, AxisBase axis) {
-//                return null;
-//            }
-//        });
-//              Sets a custom ValueFormatter for this axis. This interface allows to format/modify
-//              the original label text and instead return a customized text.
 
 
         // add data
@@ -274,12 +222,6 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         // get the legend (only possible after setting data)
         Legend mLegend = lineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
         mLegend.setEnabled(false);
-        // modify the legend ...
-        // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
-//        mLegend.setForm(Legend.LegendForm.CIRCLE);// 样式
-//        mLegend.setFormSize(2f);// 字体
-//        mLegend.setTextColor(Color.WHITE);// 颜色
-//      mLegend.setTypeface(mTf);// 字体
 
         lineChart.animateX(0); // 立即执行的动画,x轴
     }

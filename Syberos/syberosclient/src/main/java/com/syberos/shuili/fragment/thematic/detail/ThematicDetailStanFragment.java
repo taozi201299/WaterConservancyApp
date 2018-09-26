@@ -1,9 +1,12 @@
 package com.syberos.shuili.fragment.thematic.detail;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,14 +14,12 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
 import com.syberos.shuili.R;
-import com.syberos.shuili.activity.thematic.ThematicHazItemDetailActivity;
 import com.syberos.shuili.activity.thematic.ThematicStansItemActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
-import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -110,9 +112,16 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
     TextView tvValue23;
     @BindView(R.id.tv_list_title)
     TextView tvListTitle;
+    Unbinder unbinder;
+    @BindView(R.id.tv_data_unit_2)
+    TextView tvDataUnit2;
+    @BindView(R.id.tv_data_unit_3)
+    TextView tvDataUnit3;
+    @BindView(R.id.tv_data_unit_4)
+    TextView tvDataUnit4;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    Unbinder unbinder;
+    Unbinder unbinder1;
 
     private StanSuperviseEntry stanSuperviseEntry = null;
     private StanDirectEntry stanDirectEntry = null;
@@ -129,15 +138,15 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        int yJCount = 0 ; // 一级达标数量
+        int yJCount = 0; // 一级达标数量
         int eRCount = 0;  // 二级达标数量
-        int sJCount  = 0; // 三级达标数量
+        int sJCount = 0; // 三级达标数量
 
-        int cXCount ; // 证书撤销
+        int cXCount; // 证书撤销
         int zCCount;  //  证书正常
-        int cQCount ; // 证书超期
+        int cQCount; // 证书超期
         ArrayList<ProjectEntry> projectEntryArrayList = new ArrayList<>();
-        if(stanSuperviseEntry != null){
+        if (stanSuperviseEntry != null) {
             ArrayList<StanSuperviseEntry.CountOrg> list = (ArrayList<StanSuperviseEntry.CountOrg>) stanSuperviseEntry.getData().getCountOrgList();
             ArrayList<StanSuperviseEntry.BookOrg> list1 = (ArrayList<StanSuperviseEntry.BookOrg>) stanSuperviseEntry.getData().getBookOrgList();
             yJCount = Integer.valueOf(list.get(0).getYJ());
@@ -146,7 +155,7 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
             cXCount = Integer.valueOf(list1.get(0).getCX());
             zCCount = Integer.valueOf(list1.get(0).getZC());
             cQCount = Integer.valueOf(list1.get(0).getCQ());
-            tvData1.setText(yJCount + eRCount + sJCount +"");
+            tvData1.setText(yJCount + eRCount + sJCount + "");
             tvDataTitle1.setText("达标企业数量");
             tvData2.setVisibility(View.GONE);
             tvDataTitle2.setVisibility(View.GONE);
@@ -159,13 +168,13 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
             dataList.add(new PieEntry(Float.valueOf(String.valueOf(sJCount)), "三级达标数量 " + sJCount));
             MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHazRate, dataList, true);
 
-           ArrayList<StanSuperviseEntry.EveryOrgBean>  list2 = (ArrayList<StanSuperviseEntry.EveryOrgBean>) stanSuperviseEntry.getData().getEveryOrgList();
+            ArrayList<StanSuperviseEntry.EveryOrgBean> list2 = (ArrayList<StanSuperviseEntry.EveryOrgBean>) stanSuperviseEntry.getData().getEveryOrgList();
 
-           for(StanSuperviseEntry.EveryOrgBean bean :list2) {
-               projectEntryArrayList.add(new ProjectEntry(bean.getAD_CODE(), bean.getNAME(), bean.getCOUNT()));
-           }
+            for (StanSuperviseEntry.EveryOrgBean bean : list2) {
+                projectEntryArrayList.add(new ProjectEntry(bean.getAD_CODE(), bean.getNAME(), bean.getCOUNT()));
+            }
 
-        }else if(stanDirectEntry != null){
+        } else if (stanDirectEntry != null) {
             ArrayList<StanDirectEntry.CountOrgBean> list = (ArrayList<StanDirectEntry.CountOrgBean>) stanDirectEntry.getData().getCountOrgList();
             ArrayList<StanDirectEntry.BookOrgBean> list1 = (ArrayList<StanDirectEntry.BookOrgBean>) stanDirectEntry.getData().getBookOrgList();
             yJCount = Integer.valueOf(list.get(0).getYJ());
@@ -174,7 +183,7 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
             cXCount = Integer.valueOf(list1.get(0).getCX());
             zCCount = Integer.valueOf(list1.get(0).getZC());
             cQCount = Integer.valueOf(list1.get(0).getCQ());
-            tvData1.setText(yJCount + eRCount + sJCount +"");
+            tvData1.setText(yJCount + eRCount + sJCount + "");
             tvDataTitle1.setText("达标企业数量");
             tvData2.setVisibility(View.GONE);
             tvDataTitle2.setVisibility(View.GONE);
@@ -187,15 +196,12 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
             dataList.add(new PieEntry(Float.valueOf(String.valueOf(sJCount)), "三级达标数量 " + sJCount));
             MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieCharHazRate, dataList, true);
 
-            ArrayList<StanDirectEntry.EveryOrgBean>  list2 = (ArrayList<StanDirectEntry.EveryOrgBean>) stanDirectEntry.getData().getEveryOrgList();
+            ArrayList<StanDirectEntry.EveryOrgBean> list2 = (ArrayList<StanDirectEntry.EveryOrgBean>) stanDirectEntry.getData().getEveryOrgList();
 
-            for(StanDirectEntry.EveryOrgBean bean :list2) {
+            for (StanDirectEntry.EveryOrgBean bean : list2) {
                 projectEntryArrayList.add(new ProjectEntry(bean.getGUID(), bean.getORG_NAME(), bean.getSTAN_GRAD_NAME()));
             }
         }
-
-
-
 
         RecyclerAdapterGeneral adapterGeneral = new RecyclerAdapterGeneral(projectEntryArrayList, "");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -203,6 +209,21 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
         adapterGeneral.setListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), ThematicStansItemActivity.class);
+                if (stanDirectEntry != null) {
+                    intent.putExtra("book", stanDirectEntry.getData().getBookOrgList().get(0));
+                    intent.putExtra("count", stanDirectEntry.getData().getCountOrgList().get(0));
+                    intent.putExtra("every", stanDirectEntry.getData().getEveryOrgList().get(position));
+                    intent.putExtra("type", "0");
+
+
+                } else if (stanSuperviseEntry != null) {
+                    intent.putExtra("book", stanSuperviseEntry.getData().getBookOrgList().get(0));
+                    intent.putExtra("count", stanSuperviseEntry.getData().getCountOrgList().get(0));
+                    intent.putExtra("every", stanSuperviseEntry.getData().getEveryOrgList().get(position));
+                    intent.putExtra("type", "1");
+                }
+                startActivity(intent);
             }
         });
 
@@ -233,11 +254,12 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
 
     }
 
-    public void setData_Direct(StanDirectEntry stanDirectEntry){
+    public void setData_Direct(StanDirectEntry stanDirectEntry) {
         this.stanDirectEntry = stanDirectEntry;
 
     }
-    public void setData_Supervise(StanSuperviseEntry stanSuperviseEntry){
+
+    public void setData_Supervise(StanSuperviseEntry stanSuperviseEntry) {
         this.stanSuperviseEntry = stanSuperviseEntry;
 
     }

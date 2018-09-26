@@ -23,6 +23,7 @@ import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.MPChartUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -112,10 +113,6 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
     private RankViewPagerAdapter pagerAdapter;
     List<Fragment> fragments = new ArrayList<>();
 
-//    @BindView(R.id.recycler_view)
-
-//    RecyclerView recyclerView;
-
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_thematic_detail_sins;
@@ -128,33 +125,6 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initListener() {
-//        tabCenter.setOnTabSelectListener(new OnTabSelectListener() {
-//            @Override
-//            public void onTabSelect(int position) {
-//                viewPager.setCurrentItem(position);
-//            }
-//
-//            @Override
-//            public void onTabReselect(int position) {
-//
-//            }
-//        });
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                tabCenter.setCurrentTab(position);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
     SinsEntry sinsEntry=null;
@@ -176,8 +146,6 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
             tvDataTitle1.setText("检查次数");
             tvData2.setText(sinsEntry.getData().getSINSOBJQUA() + "");
             tvDataTitle2.setText("检查工程数量");
-//            tvData3.setText(sinsEntry.getData().getSINSOBJCOMPQUA() + "");
-//            tvDataTitle3.setText("问题数量");
             tvData3.setText(sinsEntry.getData().getSINSHIDDQUA() + "");
             tvDataTitle3.setText("隐患数量");
 
@@ -214,10 +182,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-//        if(sinsEntry==null){
-
-//        }
-
+        setUseEventBus(true);
     }
 
     @Override
@@ -232,8 +197,16 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
         setSinsEntry(sinsEntry);
         tvViewTitle.setText("");
         tvData1.setText("");
+        tvDataTitle1.setText("检查次数");
         tvData2.setText("");
+        tvDataTitle2.setText("检查工程数量");
         tvData3.setText("");
+        tvDataTitle3.setText("隐患数量");
+
+        tvData4.setVisibility(View.GONE);
+        tvDataTitle4.setVisibility(View.GONE);
+        tvListTitle.setText("安全检查统计");
+
 
         tvData4.setVisibility(View.GONE);
         tvDataTitle4.setVisibility(View.GONE);
@@ -270,9 +243,6 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
         pieChartHiddenSummarized.setVisibility(View.GONE);
 
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
     }
 
     class RankViewPagerAdapter extends FragmentPagerAdapter {
@@ -290,8 +260,6 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
         @Override
         public Fragment getItem(int position) {
-//            RankListFragment fragment=new RankListFragment();
-//            return  fragment;
             return fragments.get(position);
         }
 

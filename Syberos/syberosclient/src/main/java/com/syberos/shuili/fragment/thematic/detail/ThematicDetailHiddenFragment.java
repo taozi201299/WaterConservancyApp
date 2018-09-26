@@ -144,16 +144,6 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-//        onHiddenData(getHiddenEntry());
-
-//        List<PieEntry> listSummarise = new ArrayList<>();
-//        listSummarise.add(new PieEntry(16, "已排查单位数量"));
-//        listSummarise.add(new PieEntry(16, "为排查单位数量"));
-//        MPChartUtil.getInstance().initPieCharHiddenRate(mContext, pieChartSummarized, listSummarise, false);
-//        tvChartValue1.setText(16 + "");
-//        tvChartValueTitle1.setText("已排查单位数量");
-//        tvChartValue2.setText(16 + "");
-//        tvChartValueTitle2.setText("为排查单位数量");
 
     }
 

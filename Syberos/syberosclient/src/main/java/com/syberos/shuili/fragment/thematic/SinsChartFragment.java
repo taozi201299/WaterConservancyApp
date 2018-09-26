@@ -29,6 +29,8 @@ import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -393,6 +395,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                 }
                 setData(sinsEntry);
                 addMarkInfo(list);
+                EventBus.getDefault().postSticky(sinsEntry);
             }
 
             @Override
