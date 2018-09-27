@@ -42,7 +42,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
 
 
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -50,7 +50,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -58,7 +58,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -66,7 +66,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -74,7 +74,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -82,7 +82,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -90,7 +90,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -98,7 +98,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getHiddGuid() {
-        return hiddGuid;
+        return hiddGuid == null ? "" : hiddGuid;
     }
 
     public void setHiddGuid(String hiddGuid) {
@@ -106,7 +106,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getRectProg() {
-        return rectProg;
+        return rectProg == null ? "" : rectProg;
     }
 
     public void setRectProg(String rectProg) {
@@ -114,7 +114,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -122,7 +122,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -130,7 +130,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -138,7 +138,7 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

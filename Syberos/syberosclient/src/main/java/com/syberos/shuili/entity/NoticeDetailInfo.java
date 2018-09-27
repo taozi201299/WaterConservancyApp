@@ -15,8 +15,9 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     public String toDate;
     public String userGuid;
 
+
     public String getAppGuid() {
-        return appGuid;
+        return appGuid == null ? "" : appGuid;
     }
 
     public void setAppGuid(String appGuid) {
@@ -24,7 +25,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -32,7 +33,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -40,7 +41,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getIsRead() {
-        return isRead;
+        return isRead == null ? "" : isRead;
     }
 
     public void setIsRead(String isRead) {
@@ -48,7 +49,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getNoticeCode() {
-        return noticeCode;
+        return noticeCode == null ? "" : noticeCode;
     }
 
     public void setNoticeCode(String noticeCode) {
@@ -56,7 +57,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getNoticeContent() {
-        return noticeContent;
+        return noticeContent == null ? "" : noticeContent;
     }
 
     public void setNoticeContent(String noticeContent) {
@@ -64,7 +65,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getNoticeTitle() {
-        return noticeTitle;
+        return noticeTitle == null ? "" : noticeTitle;
     }
 
     public void setNoticeTitle(String noticeTitle) {
@@ -72,7 +73,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {
@@ -80,7 +81,7 @@ public class NoticeDetailInfo extends HttpBaseOneResponse<NoticeDetailInfo> {
     }
 
     public String getUserGuid() {
-        return userGuid;
+        return userGuid == null ? "" : userGuid;
     }
 
     public void setUserGuid(String userGuid) {

@@ -15,8 +15,9 @@ public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
     private String time;                // 培训时间
     private String content;             // 培训内容
 
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -24,7 +25,7 @@ public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
     }
 
     public String getCount() {
-        return count;
+        return count == null ? "" : count;
     }
 
     public void setCount(String count) {
@@ -32,7 +33,7 @@ public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
     }
 
     public String getType() {
-        return type;
+        return type == null ? "" : type;
     }
 
     public void setType(String type) {
@@ -40,7 +41,7 @@ public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -48,11 +49,10 @@ public class TrainingRecordInfo extends HttpBaseResponse<TrainingRecordInfo> {
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-
 }

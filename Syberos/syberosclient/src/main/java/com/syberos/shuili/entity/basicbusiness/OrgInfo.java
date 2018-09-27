@@ -12,7 +12,7 @@ public class OrgInfo extends HttpBaseResponse<OrgInfo> {
 
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -20,7 +20,7 @@ public class OrgInfo extends HttpBaseResponse<OrgInfo> {
     }
 
     public String getOrgName() {
-        return orgName;
+        return orgName == null ? "" : orgName;
     }
 
     public void setOrgName(String orgName) {

@@ -12,7 +12,7 @@ public class RelSinsGroupWiun extends HttpBaseResponse<RelSinsGroupWiun> {
    String engName;
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -20,7 +20,7 @@ public class RelSinsGroupWiun extends HttpBaseResponse<RelSinsGroupWiun> {
     }
 
     public String getEngName() {
-        return engName;
+        return engName == null ? "" : engName;
     }
 
     public void setEngName(String engName) {

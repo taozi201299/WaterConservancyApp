@@ -17,8 +17,9 @@ public class MessageInfo implements Serializable {
     String serverDate;
     String organizationId;
 
+
     public String getMessageId() {
-        return messageId;
+        return messageId == null ? "" : messageId;
     }
 
     public void setMessageId(String messageId) {
@@ -26,7 +27,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -34,7 +35,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
@@ -42,7 +43,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getPublisher() {
-        return publisher;
+        return publisher == null ? "" : publisher;
     }
 
     public void setPublisher(String publisher) {
@@ -50,7 +51,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getPublishDate() {
-        return publishDate;
+        return publishDate == null ? "" : publishDate;
     }
 
     public void setPublishDate(String publishDate) {
@@ -58,7 +59,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getReadStatus() {
-        return readStatus;
+        return readStatus == null ? "" : readStatus;
     }
 
     public void setReadStatus(String readStatus) {
@@ -66,7 +67,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getServerDate() {
-        return serverDate;
+        return serverDate == null ? "" : serverDate;
     }
 
     public void setServerDate(String serverDate) {
@@ -74,7 +75,7 @@ public class MessageInfo implements Serializable {
     }
 
     public String getOrganizationId() {
-        return organizationId;
+        return organizationId == null ? "" : organizationId;
     }
 
     public void setOrganizationId(String organizationId) {

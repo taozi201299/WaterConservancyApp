@@ -1,6 +1,7 @@
 package com.syberos.shuili.entity.wins;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +24,9 @@ public class OnSiteInspectInformation implements Serializable {
     private List<String> projects = null; // 稽查项目
     private List<InspectProblemInformation> inspectProblems = null; // 稽察问题
 
+
     public String getGroup() {
-        return group;
+        return group == null ? "" : group;
     }
 
     public void setGroup(String group) {
@@ -32,7 +34,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getBatch() {
-        return batch;
+        return batch == null ? "" : batch;
     }
 
     public void setBatch(String batch) {
@@ -40,7 +42,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -48,7 +50,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getArea() {
-        return area;
+        return area == null ? "" : area;
     }
 
     public void setArea(String area) {
@@ -56,7 +58,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getSpecial() {
-        return special;
+        return special == null ? "" : special;
     }
 
     public void setSpecial(String special) {
@@ -64,7 +66,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getAssistant() {
-        return assistant;
+        return assistant == null ? "" : assistant;
     }
 
     public void setAssistant(String assistant) {
@@ -72,7 +74,7 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public String getExperts() {
-        return experts;
+        return experts == null ? "" : experts;
     }
 
     public void setExperts(String experts) {
@@ -80,6 +82,9 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public List<String> getProjects() {
+        if (projects == null) {
+            return new ArrayList<>();
+        }
         return projects;
     }
 
@@ -88,11 +93,13 @@ public class OnSiteInspectInformation implements Serializable {
     }
 
     public List<InspectProblemInformation> getInspectProblems() {
+        if (inspectProblems == null) {
+            return new ArrayList<>();
+        }
         return inspectProblems;
     }
 
     public void setInspectProblems(List<InspectProblemInformation> inspectProblems) {
         this.inspectProblems = inspectProblems;
     }
-
 }

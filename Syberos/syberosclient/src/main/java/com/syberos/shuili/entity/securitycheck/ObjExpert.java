@@ -44,8 +44,9 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     String updTime;
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -53,7 +54,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getPersGuid() {
-        return persGuid;
+        return persGuid == null ? "" : persGuid;
     }
 
     public void setPersGuid(String persGuid) {
@@ -61,7 +62,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getCitNum() {
-        return citNum;
+        return citNum == null ? "" : citNum;
     }
 
     public void setCitNum(String citNum) {
@@ -69,7 +70,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getPersName() {
-        return persName;
+        return persName == null ? "" : persName;
     }
 
     public void setPersName(String persName) {
@@ -77,7 +78,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -85,7 +86,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getSex() {
-        return sex;
+        return sex == null ? "" : sex;
     }
 
     public void setSex(String sex) {
@@ -93,7 +94,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getBornDate() {
-        return bornDate;
+        return bornDate == null ? "" : bornDate;
     }
 
     public void setBornDate(String bornDate) {
@@ -101,7 +102,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getMajor() {
-        return major;
+        return major == null ? "" : major;
     }
 
     public void setMajor(String major) {
@@ -109,7 +110,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getCurMajor() {
-        return curMajor;
+        return curMajor == null ? "" : curMajor;
     }
 
     public void setCurMajor(String curMajor) {
@@ -117,7 +118,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getCurMajorYear() {
-        return curMajorYear;
+        return curMajorYear == null ? "" : curMajorYear;
     }
 
     public void setCurMajorYear(String curMajorYear) {
@@ -125,7 +126,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getAdmDuty() {
-        return admDuty;
+        return admDuty == null ? "" : admDuty;
     }
 
     public void setAdmDuty(String admDuty) {
@@ -133,7 +134,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getTechTit() {
-        return techTit;
+        return techTit == null ? "" : techTit;
     }
 
     public void setTechTit(String techTit) {
@@ -141,7 +142,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getPoafCode() {
-        return poafCode;
+        return poafCode == null ? "" : poafCode;
     }
 
     public void setPoafCode(String poafCode) {
@@ -149,7 +150,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getAddr() {
-        return addr;
+        return addr == null ? "" : addr;
     }
 
     public void setAddr(String addr) {
@@ -157,7 +158,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getZip() {
-        return zip;
+        return zip == null ? "" : zip;
     }
 
     public void setZip(String zip) {
@@ -165,7 +166,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getOffiTel() {
-        return offiTel;
+        return offiTel == null ? "" : offiTel;
     }
 
     public void setOffiTel(String offiTel) {
@@ -173,7 +174,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getMoph() {
-        return moph;
+        return moph == null ? "" : moph;
     }
 
     public void setMoph(String moph) {
@@ -181,7 +182,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getHomeTel() {
-        return homeTel;
+        return homeTel == null ? "" : homeTel;
     }
 
     public void setHomeTel(String homeTel) {
@@ -189,7 +190,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getExpertGrad() {
-        return expertGrad;
+        return expertGrad == null ? "" : expertGrad;
     }
 
     public void setExpertGrad(String expertGrad) {
@@ -197,7 +198,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getExpertResid() {
-        return expertResid;
+        return expertResid == null ? "" : expertResid;
     }
 
     public void setExpertResid(String expertResid) {
@@ -205,7 +206,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getWorkResum() {
-        return workResum;
+        return workResum == null ? "" : workResum;
     }
 
     public void setWorkResum(String workResum) {
@@ -213,7 +214,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getWinsJobEava() {
-        return winsJobEava;
+        return winsJobEava == null ? "" : winsJobEava;
     }
 
     public void setWinsJobEava(String winsJobEava) {
@@ -221,7 +222,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getApplInsPost() {
-        return applInsPost;
+        return applInsPost == null ? "" : applInsPost;
     }
 
     public void setApplInsPost(String applInsPost) {
@@ -229,7 +230,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getSinsExpertType() {
-        return sinsExpertType;
+        return sinsExpertType == null ? "" : sinsExpertType;
     }
 
     public void setSinsExpertType(String sinsExpertType) {
@@ -237,7 +238,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getSinsJobEava() {
-        return sinsJobEava;
+        return sinsJobEava == null ? "" : sinsJobEava;
     }
 
     public void setSinsJobEava(String sinsJobEava) {
@@ -245,7 +246,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getBankCode() {
-        return bankCode;
+        return bankCode == null ? "" : bankCode;
     }
 
     public void setBankCode(String bankCode) {
@@ -253,7 +254,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getBankDepo() {
-        return bankDepo;
+        return bankDepo == null ? "" : bankDepo;
     }
 
     public void setBankDepo(String bankDepo) {
@@ -261,7 +262,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getBankCardNum() {
-        return bankCardNum;
+        return bankCardNum == null ? "" : bankCardNum;
     }
 
     public void setBankCardNum(String bankCardNum) {
@@ -269,7 +270,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -277,7 +278,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -285,7 +286,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -293,7 +294,7 @@ public class ObjExpert extends HttpBaseResponse<ObjExpert> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

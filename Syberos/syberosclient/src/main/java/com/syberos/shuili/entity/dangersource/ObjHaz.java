@@ -51,27 +51,12 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     String updTime;
     String recPers;
 
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
-
     String orgName;
 
-    public String getEngineName() {
-        return engineName;
-    }
-
-    public void setEngineName(String engineName) {
-        this.engineName = engineName;
-    }
-
     String engineName;
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -79,7 +64,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -87,7 +72,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -95,7 +80,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -103,7 +88,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -111,7 +96,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -119,7 +104,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -127,7 +112,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getHazCode() {
-        return hazCode;
+        return hazCode == null ? "" : hazCode;
     }
 
     public void setHazCode(String hazCode) {
@@ -135,7 +120,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getHazName() {
-        return hazName;
+        return hazName == null ? "" : hazName;
     }
 
     public void setHazName(String hazName) {
@@ -143,7 +128,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -151,7 +136,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getEngGuid() {
-        return engGuid;
+        return engGuid == null ? "" : engGuid;
     }
 
     public void setEngGuid(String engGuid) {
@@ -159,7 +144,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getTendGuid() {
-        return tendGuid;
+        return tendGuid == null ? "" : tendGuid;
     }
 
     public void setTendGuid(String tendGuid) {
@@ -167,15 +152,23 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getHiddGrad() {
-        return hiddGrad;
+        return hiddGrad == null ? "" : hiddGrad;
     }
 
     public void setHiddGrad(String hiddGrad) {
         this.hiddGrad = hiddGrad;
     }
 
+    public String getHiddGradName() {
+        return hiddGradName == null ? "" : hiddGradName;
+    }
+
+    public void setHiddGradName(String hiddGradName) {
+        this.hiddGradName = hiddGradName;
+    }
+
     public String getProPart() {
-        return proPart;
+        return proPart == null ? "" : proPart;
     }
 
     public void setProPart(String proPart) {
@@ -183,7 +176,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getPartLong() {
-        return partLong;
+        return partLong == null ? "" : partLong;
     }
 
     public void setPartLong(String partLong) {
@@ -191,7 +184,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getPartLat() {
-        return partLat;
+        return partLat == null ? "" : partLat;
     }
 
     public void setPartLat(String partLat) {
@@ -199,7 +192,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getHarmRisk() {
-        return harmRisk;
+        return harmRisk == null ? "" : harmRisk;
     }
 
     public void setHarmRisk(String harmRisk) {
@@ -207,7 +200,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getMoniPrec() {
-        return moniPrec;
+        return moniPrec == null ? "" : moniPrec;
     }
 
     public void setMoniPrec(String moniPrec) {
@@ -215,7 +208,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getOffiTel() {
-        return offiTel;
+        return offiTel == null ? "" : offiTel;
     }
 
     public void setOffiTel(String offiTel) {
@@ -223,7 +216,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getPatPers() {
-        return patPers;
+        return patPers == null ? "" : patPers;
     }
 
     public void setPatPers(String patPers) {
@@ -231,7 +224,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getSupPers() {
-        return supPers;
+        return supPers == null ? "" : supPers;
     }
 
     public void setSupPers(String supPers) {
@@ -239,7 +232,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getIfLiceNoti() {
-        return ifLiceNoti;
+        return ifLiceNoti == null ? "" : ifLiceNoti;
     }
 
     public void setIfLiceNoti(String ifLiceNoti) {
@@ -247,7 +240,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -255,7 +248,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -263,7 +256,7 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -271,18 +264,26 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
         this.recPers = recPers;
     }
 
-    public String getHiddGradName() {
-        return hiddGradName;
+    public String getOrgName() {
+        return orgName == null ? "" : orgName;
     }
 
-    public void setHiddGradName(String hiddGradName) {
-        this.hiddGradName = hiddGradName;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getEngineName() {
+        return engineName == null ? "" : engineName;
+    }
+
+    public void setEngineName(String engineName) {
+        this.engineName = engineName;
     }
 }

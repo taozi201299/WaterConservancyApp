@@ -12,8 +12,9 @@ public class BisStanReviRec extends HttpBaseResponse<BisStanReviRec> {
     String guid;
     String wiunName;
 
+
     public String getApplGrade() {
-        return applGrade;
+        return applGrade == null ? "" : applGrade;
     }
 
     public void setApplGrade(String applGrade) {
@@ -21,7 +22,7 @@ public class BisStanReviRec extends HttpBaseResponse<BisStanReviRec> {
     }
 
     public String getApplTime() {
-        return applTime;
+        return applTime == null ? "" : applTime;
     }
 
     public void setApplTime(String applTime) {
@@ -29,7 +30,7 @@ public class BisStanReviRec extends HttpBaseResponse<BisStanReviRec> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -37,7 +38,7 @@ public class BisStanReviRec extends HttpBaseResponse<BisStanReviRec> {
     }
 
     public String getWiunName() {
-        return wiunName;
+        return wiunName == null ? "" : wiunName;
     }
 
     public void setWiunName(String wiunName) {

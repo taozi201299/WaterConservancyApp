@@ -51,8 +51,9 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
      */
     String recPers;
 
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -60,7 +61,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getTimestam() {
-        return timestam;
+        return timestam == null ? "" : timestam;
     }
 
     public void setTimestam(String timestam) {
@@ -68,7 +69,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -76,7 +77,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -84,7 +85,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -92,7 +93,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -100,7 +101,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -108,7 +109,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getHazGuid() {
-        return hazGuid;
+        return hazGuid == null ? "" : hazGuid;
     }
 
     public void setHazGuid(String hazGuid) {
@@ -116,7 +117,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getPatTime() {
-        return patTime;
+        return patTime == null ? "" : patTime;
     }
 
     public void setPatTime(String patTime) {
@@ -124,7 +125,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getPatPers() {
-        return patPers;
+        return patPers == null ? "" : patPers;
     }
 
     public void setPatPers(String patPers) {
@@ -132,7 +133,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getProbFound() {
-        return probFound;
+        return probFound == null ? "" : probFound;
     }
 
     public void setProbFound(String probFound) {
@@ -140,7 +141,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getTreaMeas() {
-        return treaMeas;
+        return treaMeas == null ? "" : treaMeas;
     }
 
     public void setTreaMeas(String treaMeas) {
@@ -148,7 +149,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -156,7 +157,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -164,7 +165,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -172,7 +173,7 @@ public class InspectionPartolInfo extends HttpBaseResponse<InspectionPartolInfo>
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

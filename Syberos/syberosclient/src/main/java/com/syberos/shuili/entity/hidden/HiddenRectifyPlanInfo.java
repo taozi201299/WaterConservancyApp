@@ -63,8 +63,9 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
      */
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -72,7 +73,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getHiddGuid() {
-        return hiddGuid;
+        return hiddGuid == null ? "" : hiddGuid;
     }
 
     public void setHiddGuid(String hiddGuid) {
@@ -80,7 +81,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getGoverRespWiunGuid() {
-        return goverRespWiunGuid;
+        return goverRespWiunGuid == null ? "" : goverRespWiunGuid;
     }
 
     public void setGoverRespWiunGuid(String goverRespWiunGuid) {
@@ -88,7 +89,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getGoverRespWiunName() {
-        return goverRespWiunName;
+        return goverRespWiunName == null ? "" : goverRespWiunName;
     }
 
     public void setGoverRespWiunName(String goverRespWiunName) {
@@ -96,7 +97,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getRectLegPers() {
-        return rectLegPers;
+        return rectLegPers == null ? "" : rectLegPers;
     }
 
     public void setRectLegPers(String rectLegPers) {
@@ -104,7 +105,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getRectPersOffiTel() {
-        return rectPersOffiTel;
+        return rectPersOffiTel == null ? "" : rectPersOffiTel;
     }
 
     public void setRectPersOffiTel(String rectPersOffiTel) {
@@ -112,7 +113,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getRequCompDate() {
-        return requCompDate;
+        return requCompDate == null ? "" : requCompDate;
     }
 
     public void setRequCompDate(String requCompDate) {
@@ -120,7 +121,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getAcimpGoverFund() {
-        return acimpGoverFund;
+        return acimpGoverFund == null ? "" : acimpGoverFund;
     }
 
     public void setAcimpGoverFund(String acimpGoverFund) {
@@ -128,7 +129,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getGoveObjeTasks() {
-        return goveObjeTasks;
+        return goveObjeTasks == null ? "" : goveObjeTasks;
     }
 
     public void setGoveObjeTasks(String goveObjeTasks) {
@@ -136,7 +137,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getEmerPlanSame() {
-        return emerPlanSame;
+        return emerPlanSame == null ? "" : emerPlanSame;
     }
 
     public void setEmerPlanSame(String emerPlanSame) {
@@ -144,7 +145,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getCorrMeas() {
-        return corrMeas;
+        return corrMeas == null ? "" : corrMeas;
     }
 
     public void setCorrMeas(String corrMeas) {
@@ -152,7 +153,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -160,7 +161,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -168,7 +169,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -176,7 +177,7 @@ public class HiddenRectifyPlanInfo extends HttpBaseResponse<HiddenRectifyPlanInf
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

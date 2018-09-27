@@ -31,8 +31,57 @@ public class ReportForAdmin extends HttpBaseResponse<ReportForAdmin> {
     String reportStatus;
     boolean reportDone;
 
+
+    public String getOrgGuid() {
+        return orgGuid == null ? "" : orgGuid;
+    }
+
+    public void setOrgGuid(String orgGuid) {
+        this.orgGuid = orgGuid;
+    }
+
+    public String getWiunName() {
+        return wiunName == null ? "" : wiunName;
+    }
+
+    public void setWiunName(String wiunName) {
+        this.wiunName = wiunName;
+    }
+
+    public String getOrgClientType() {
+        return orgClientType == null ? "" : orgClientType;
+    }
+
+    public void setOrgClientType(String orgClientType) {
+        this.orgClientType = orgClientType;
+    }
+
+    public String getLegRep() {
+        return legRep == null ? "" : legRep;
+    }
+
+    public void setLegRep(String legRep) {
+        this.legRep = legRep;
+    }
+
+    public String getStanGrad() {
+        return stanGrad == null ? "" : stanGrad;
+    }
+
+    public void setStanGrad(String stanGrad) {
+        this.stanGrad = stanGrad;
+    }
+
+    public String getIfMiniDire() {
+        return IfMiniDire == null ? "" : IfMiniDire;
+    }
+
+    public void setIfMiniDire(String ifMiniDire) {
+        IfMiniDire = ifMiniDire;
+    }
+
     public String getReportStatus() {
-        return reportStatus;
+        return reportStatus == null ? "" : reportStatus;
     }
 
     public void setReportStatus(String reportStatus) {
@@ -45,53 +94,5 @@ public class ReportForAdmin extends HttpBaseResponse<ReportForAdmin> {
 
     public void setReportDone(boolean reportDone) {
         this.reportDone = reportDone;
-    }
-
-    public String getOrgGuid() {
-        return orgGuid;
-    }
-
-    public void setOrgGuid(String orgGuid) {
-        this.orgGuid = orgGuid;
-    }
-
-    public String getWiunName() {
-        return wiunName;
-    }
-
-    public void setWiunName(String wiunName) {
-        this.wiunName = wiunName;
-    }
-
-    public String getOrgClientType() {
-        return orgClientType;
-    }
-
-    public void setOrgClientType(String orgClientType) {
-        this.orgClientType = orgClientType;
-    }
-
-    public String getLegRep() {
-        return legRep;
-    }
-
-    public void setLegRep(String legRep) {
-        this.legRep = legRep;
-    }
-
-    public String getStanGrad() {
-        return stanGrad;
-    }
-
-    public void setStanGrad(String stanGrad) {
-        this.stanGrad = stanGrad;
-    }
-
-    public String getIfMiniDire() {
-        return IfMiniDire;
-    }
-
-    public void setIfMiniDire(String ifMiniDire) {
-        IfMiniDire = ifMiniDire;
     }
 }

@@ -58,7 +58,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
 
 
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -66,7 +66,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -74,7 +74,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -82,7 +82,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -90,7 +90,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -98,7 +98,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -106,7 +106,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -114,7 +114,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getHiddGuid() {
-        return hiddGuid;
+        return hiddGuid == null ? "" : hiddGuid;
     }
 
     public void setHiddGuid(String hiddGuid) {
@@ -122,7 +122,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getRequCompDate() {
-        return requCompDate;
+        return requCompDate == null ? "" : requCompDate;
     }
 
     public void setRequCompDate(String requCompDate) {
@@ -130,7 +130,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAccepLegPers() {
-        return accepLegPers;
+        return accepLegPers == null ? "" : accepLegPers;
     }
 
     public void setAccepLegPers(String accepLegPers) {
@@ -138,7 +138,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAccepPers() {
-        return accepPers;
+        return accepPers == null ? "" : accepPers;
     }
 
     public void setAccepPers(String accepPers) {
@@ -146,7 +146,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAccepDate() {
-        return accepDate;
+        return accepDate == null ? "" : accepDate;
     }
 
     public void setAccepDate(String accepDate) {
@@ -154,7 +154,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getAccepOpin() {
-        return accepOpin;
+        return accepOpin == null ? "" : accepOpin;
     }
 
     public void setAccepOpin(String accepOpin) {
@@ -162,7 +162,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -170,7 +170,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -178,7 +178,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -186,7 +186,7 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

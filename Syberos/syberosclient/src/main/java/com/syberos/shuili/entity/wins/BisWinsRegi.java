@@ -19,7 +19,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     String recPers;
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -27,7 +27,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -35,7 +35,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getAreaName() {
-        return areaName;
+        return areaName == null ? "" : areaName;
     }
 
     public void setAreaName(String areaName) {
@@ -43,7 +43,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getWinsProgGuid() {
-        return winsProgGuid;
+        return winsProgGuid == null ? "" : winsProgGuid;
     }
 
     public void setWinsProgGuid(String winsProgGuid) {
@@ -51,7 +51,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getWinsGroupGuid() {
-        return winsGroupGuid;
+        return winsGroupGuid == null ? "" : winsGroupGuid;
     }
 
     public void setWinsGroupGuid(String winsGroupGuid) {
@@ -59,7 +59,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -67,7 +67,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -75,7 +75,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -83,12 +83,13 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
         this.recPers = recPers;
     }
+
 
     /**
      * Created by Administrator on 2018/4/30.
@@ -126,8 +127,9 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         String updTime;
         String recPers;
 
+
         public String getGuid() {
-            return guid;
+            return guid == null ? "" : guid;
         }
 
         public void setGuid(String guid) {
@@ -135,7 +137,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getPersGuid() {
-            return persGuid;
+            return persGuid == null ? "" : persGuid;
         }
 
         public void setPersGuid(String persGuid) {
@@ -143,7 +145,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getPersExpertGuid() {
-            return persExpertGuid;
+            return persExpertGuid == null ? "" : persExpertGuid;
         }
 
         public void setPersExpertGuid(String persExpertGuid) {
@@ -151,7 +153,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getWinsGroupGuid() {
-            return winsGroupGuid;
+            return winsGroupGuid == null ? "" : winsGroupGuid;
         }
 
         public void setWinsGroupGuid(String winsGroupGuid) {
@@ -159,7 +161,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getWinsPost() {
-            return winsPost;
+            return winsPost == null ? "" : winsPost;
         }
 
         public void setWinsPost(String winsPost) {
@@ -167,7 +169,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getPersExpertName() {
-            return persExpertName;
+            return persExpertName == null ? "" : persExpertName;
         }
 
         public void setPersExpertName(String persExpertName) {
@@ -175,7 +177,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getPersExpertPost() {
-            return persExpertPost;
+            return persExpertPost == null ? "" : persExpertPost;
         }
 
         public void setPersExpertPost(String persExpertPost) {
@@ -183,7 +185,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getNote() {
-            return note;
+            return note == null ? "" : note;
         }
 
         public void setNote(String note) {
@@ -191,7 +193,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getCollTime() {
-            return collTime;
+            return collTime == null ? "" : collTime;
         }
 
         public void setCollTime(String collTime) {
@@ -199,7 +201,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getUpdTime() {
-            return updTime;
+            return updTime == null ? "" : updTime;
         }
 
         public void setUpdTime(String updTime) {
@@ -207,7 +209,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
         }
 
         public String getRecPers() {
-            return recPers;
+            return recPers == null ? "" : recPers;
         }
 
         public void setRecPers(String recPers) {

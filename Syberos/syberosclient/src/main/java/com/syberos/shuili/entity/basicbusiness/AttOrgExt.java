@@ -30,8 +30,9 @@ public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
      */
     String IfMiniDire;
 
+
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -39,7 +40,7 @@ public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
     }
 
     public String getWiunName() {
-        return wiunName;
+        return wiunName == null ? "" : wiunName;
     }
 
     public void setWiunName(String wiunName) {
@@ -47,7 +48,7 @@ public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
     }
 
     public String getOrgClientType() {
-        return orgClientType;
+        return orgClientType == null ? "" : orgClientType;
     }
 
     public void setOrgClientType(String orgClientType) {
@@ -55,7 +56,7 @@ public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
     }
 
     public String getLegRep() {
-        return legRep;
+        return legRep == null ? "" : legRep;
     }
 
     public void setLegRep(String legRep) {
@@ -63,18 +64,18 @@ public class AttOrgExt extends HttpBaseResponse<AttOrgExt> {
     }
 
     public String getStanGrad() {
-        return stanGrad;
+        return stanGrad == null ? "" : stanGrad;
     }
 
     public void setStanGrad(String stanGrad) {
         this.stanGrad = stanGrad;
     }
 
-    public void setIfMiniDire(String ifMiniDire) {
-        IfMiniDire = ifMiniDire;
+    public String getIfMiniDire() {
+        return IfMiniDire == null ? "" : IfMiniDire;
     }
 
-    public String getIfMiniDire() {
-        return IfMiniDire;
+    public void setIfMiniDire(String ifMiniDire) {
+        IfMiniDire = ifMiniDire;
     }
 }

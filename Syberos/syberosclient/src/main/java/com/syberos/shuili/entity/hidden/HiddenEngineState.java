@@ -9,8 +9,9 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 public class HiddenEngineState extends HttpBaseResponse<HiddenEngineState> {
     String engStat;
 
+
     public String getEngStat() {
-        return engStat;
+        return engStat == null ? "" : engStat;
     }
 
     public void setEngStat(String engStat) {

@@ -9,11 +9,12 @@ import java.io.Serializable;
 public class AppUpdateEntity  extends BaseResponse<AppUpdateEntity> {
     String appinfo;
 
-    public void setAppinfo(String appinfo) {
-        this.appinfo = appinfo;
-    }
 
     public String getAppinfo() {
-        return appinfo;
+        return appinfo == null ? "" : appinfo;
+    }
+
+    public void setAppinfo(String appinfo) {
+        this.appinfo = appinfo;
     }
 }

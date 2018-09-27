@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.woas;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class OnSiteInspectionInfo
 
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -40,7 +41,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getPlan() {
-        return plan;
+        return plan == null ? "" : plan;
     }
 
     public void setPlan(String plan) {
@@ -48,7 +49,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -56,7 +57,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
@@ -64,7 +65,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getGroupName() {
-        return groupName;
+        return groupName == null ? "" : groupName;
     }
 
     public void setGroupName(String groupName) {
@@ -72,7 +73,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getGroupUnit() {
-        return groupUnit;
+        return groupUnit == null ? "" : groupUnit;
     }
 
     public void setGroupUnit(String groupUnit) {
@@ -80,7 +81,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getChildUnit() {
-        return childUnit;
+        return childUnit == null ? "" : childUnit;
     }
 
     public void setChildUnit(String childUnit) {
@@ -88,7 +89,7 @@ public class OnSiteInspectionInfo
     }
 
     public String getExperts() {
-        return experts;
+        return experts == null ? "" : experts;
     }
 
     public void setExperts(String experts) {
@@ -96,6 +97,9 @@ public class OnSiteInspectionInfo
     }
 
     public List<InspectionObjectInfo> getInspectionObjectInfoList() {
+        if (inspectionObjectInfoList == null) {
+            return new ArrayList<>();
+        }
         return inspectionObjectInfoList;
     }
 
@@ -104,6 +108,9 @@ public class OnSiteInspectionInfo
     }
 
     public List<DeductMarksInfo> getDeductMarksInfoList() {
+        if (deductMarksInfoList == null) {
+            return new ArrayList<>();
+        }
         return deductMarksInfoList;
     }
 
@@ -112,6 +119,9 @@ public class OnSiteInspectionInfo
     }
 
     public List<InspectAssessInfo> getInspectAssessInfoList() {
+        if (inspectAssessInfoList == null) {
+            return new ArrayList<>();
+        }
         return inspectAssessInfoList;
     }
 

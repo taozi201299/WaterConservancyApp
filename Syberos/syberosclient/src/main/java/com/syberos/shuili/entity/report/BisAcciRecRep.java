@@ -19,8 +19,9 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     String updTime;
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -28,7 +29,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getAcciGuid() {
-        return acciGuid;
+        return acciGuid == null ? "" : acciGuid;
     }
 
     public void setAcciGuid(String acciGuid) {
@@ -36,7 +37,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getRepGuid() {
-        return repGuid;
+        return repGuid == null ? "" : repGuid;
     }
 
     public void setRepGuid(String repGuid) {
@@ -44,7 +45,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getRepOrgGuid() {
-        return repOrgGuid;
+        return repOrgGuid == null ? "" : repOrgGuid;
     }
 
     public void setRepOrgGuid(String repOrgGuid) {
@@ -52,7 +53,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getRepAct() {
-        return repAct;
+        return repAct == null ? "" : repAct;
     }
 
     public void setRepAct(String repAct) {
@@ -60,7 +61,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getReturnDesc() {
-        return returnDesc;
+        return returnDesc == null ? "" : returnDesc;
     }
 
     public void setReturnDesc(String returnDesc) {
@@ -68,7 +69,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -76,7 +77,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -84,7 +85,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -92,7 +93,7 @@ public class BisAcciRecRep extends HttpBaseResponse<BisAcciRecRep> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

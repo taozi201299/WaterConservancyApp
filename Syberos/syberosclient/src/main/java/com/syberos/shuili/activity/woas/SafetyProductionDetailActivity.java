@@ -169,7 +169,6 @@ public class SafetyProductionDetailActivity extends BaseActivity implements View
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",info.getGuid());
-        params.put("woasGroupGuid","7a967a72a577495dacc07d2525df97cd");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

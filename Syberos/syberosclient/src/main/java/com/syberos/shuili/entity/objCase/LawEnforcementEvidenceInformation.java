@@ -20,8 +20,6 @@ public class LawEnforcementEvidenceInformation implements Serializable {
     private String remark;          // 备注说明
     private String time;            // 时间
 
-    // TODO: 18-4-16 需要添加照片、视频内容记录
-
     public int getType() {
         return type;
     }
@@ -31,7 +29,7 @@ public class LawEnforcementEvidenceInformation implements Serializable {
     }
 
     public String getRemark() {
-        return remark;
+        return remark == null ? "" : remark;
     }
 
     public void setRemark(String remark) {
@@ -39,11 +37,15 @@ public class LawEnforcementEvidenceInformation implements Serializable {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
+
+    // TODO: 18-4-16 需要添加照片、视频内容记录
+
+
 
 }

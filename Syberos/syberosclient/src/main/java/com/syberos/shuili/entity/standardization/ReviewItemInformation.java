@@ -19,8 +19,25 @@ public class ReviewItemInformation implements Serializable {
     private String higher;          // 上级主管部门
     private String time;            // 申请时间
 
+
+    public static int getLevel0() {
+        return LEVEL_0;
+    }
+
+    public static int getLevel1() {
+        return LEVEL_1;
+    }
+
+    public static int getLevel2() {
+        return LEVEL_2;
+    }
+
+    public static int getLevel3() {
+        return LEVEL_3;
+    }
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -36,7 +53,7 @@ public class ReviewItemInformation implements Serializable {
     }
 
     public String getHigher() {
-        return higher;
+        return higher == null ? "" : higher;
     }
 
     public void setHigher(String higher) {
@@ -44,11 +61,10 @@ public class ReviewItemInformation implements Serializable {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
-
 }

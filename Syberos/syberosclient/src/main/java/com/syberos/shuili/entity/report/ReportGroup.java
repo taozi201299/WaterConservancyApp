@@ -15,8 +15,9 @@ public class ReportGroup implements Serializable{
         this.childen = childen;
     }
 
+
     public String getHeader() {
-        return header;
+        return header == null ? "" : header;
     }
 
     public void setHeader(String header) {
@@ -24,6 +25,9 @@ public class ReportGroup implements Serializable{
     }
 
     public ArrayList<ReportForAdmin> getChilden() {
+        if (childen == null) {
+            return new ArrayList<>();
+        }
         return childen;
     }
 

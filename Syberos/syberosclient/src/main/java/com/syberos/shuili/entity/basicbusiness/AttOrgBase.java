@@ -14,8 +14,9 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     String orgType;
     String orgClientType;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -23,7 +24,7 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     }
 
     public String getPguid() {
-        return pguid;
+        return pguid == null ? "" : pguid;
     }
 
     public void setPguid(String pguid) {
@@ -31,7 +32,7 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     }
 
     public String getOrgCode() {
-        return orgCode;
+        return orgCode == null ? "" : orgCode;
     }
 
     public void setOrgCode(String orgCode) {
@@ -39,7 +40,7 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     }
 
     public String getOrgName() {
-        return orgName;
+        return orgName == null ? "" : orgName;
     }
 
     public void setOrgName(String orgName) {
@@ -47,7 +48,7 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     }
 
     public String getOrgType() {
-        return orgType;
+        return orgType == null ? "" : orgType;
     }
 
     public void setOrgType(String orgType) {
@@ -55,7 +56,7 @@ public class AttOrgBase extends HttpBaseResponse<AttOrgBase> {
     }
 
     public String getOrgClientType() {
-        return orgClientType;
+        return orgClientType == null ? "" : orgClientType;
     }
 
     public void setOrgClientType(String orgClientType) {

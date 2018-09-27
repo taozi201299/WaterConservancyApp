@@ -17,8 +17,9 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     String updDate;
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -26,7 +27,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getSeWiunGuid() {
-        return seWiunGuid;
+        return seWiunGuid == null ? "" : seWiunGuid;
     }
 
     public void setSeWiunGuid(String seWiunGuid) {
@@ -34,7 +35,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getLegPersGuid() {
-        return legPersGuid;
+        return legPersGuid == null ? "" : legPersGuid;
     }
 
     public void setLegPersGuid(String legPersGuid) {
@@ -42,7 +43,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getDepPersGuid() {
-        return depPersGuid;
+        return depPersGuid == null ? "" : depPersGuid;
     }
 
     public void setDepPersGuid(String depPersGuid) {
@@ -50,7 +51,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getCharPersGuid() {
-        return charPersGuid;
+        return charPersGuid == null ? "" : charPersGuid;
     }
 
     public void setCharPersGuid(String charPersGuid) {
@@ -58,7 +59,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -66,7 +67,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getCollDate() {
-        return collDate;
+        return collDate == null ? "" : collDate;
     }
 
     public void setCollDate(String collDate) {
@@ -74,7 +75,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getUpdDate() {
-        return updDate;
+        return updDate == null ? "" : updDate;
     }
 
     public void setUpdDate(String updDate) {
@@ -82,7 +83,7 @@ public class BisSeWiunDeco extends HttpBaseResponse<BisSeWiunDeco> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.woas;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class InspectAssessPlanInfo extends HttpBaseResponse<InspectAssessPlanInf
 
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -25,7 +26,7 @@ public class InspectAssessPlanInfo extends HttpBaseResponse<InspectAssessPlanInf
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -33,12 +34,13 @@ public class InspectAssessPlanInfo extends HttpBaseResponse<InspectAssessPlanInf
     }
 
     public List<InspectAssessPlanBatchInfo> getInspectAssessPlanBatchInfoList() {
+        if (inspectAssessPlanBatchInfoList == null) {
+            return new ArrayList<>();
+        }
         return inspectAssessPlanBatchInfoList;
     }
 
-    public void setInspectAssessPlanBatchInfoList(
-            List<InspectAssessPlanBatchInfo> inspectAssessPlanBatchInfoList) {
+    public void setInspectAssessPlanBatchInfoList(List<InspectAssessPlanBatchInfo> inspectAssessPlanBatchInfoList) {
         this.inspectAssessPlanBatchInfoList = inspectAssessPlanBatchInfoList;
     }
-
 }

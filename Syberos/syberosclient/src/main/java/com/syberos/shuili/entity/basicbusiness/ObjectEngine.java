@@ -35,18 +35,12 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
      */
     String toDate;
 
-    public String getEngStat() {
-        return engStat;
-    }
-
-    public void setEngStat(String engStat) {
-        this.engStat = engStat;
-    }
 
     String engStat;
 
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -54,7 +48,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -62,7 +56,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -70,7 +64,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -78,7 +72,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -86,7 +80,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -94,7 +88,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -102,7 +96,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getEngCode() {
-        return engCode;
+        return engCode == null ? "" : engCode;
     }
 
     public void setEngCode(String engCode) {
@@ -110,7 +104,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getEngName() {
-        return engName;
+        return engName == null ? "" : engName;
     }
 
     public void setEngName(String engName) {
@@ -118,7 +112,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getEngType() {
-        return engType;
+        return engType == null ? "" : engType;
     }
 
     public void setEngType(String engType) {
@@ -126,7 +120,7 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -134,10 +128,18 @@ public class ObjectEngine extends HttpBaseResponse<ObjectEngine> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {
         this.toDate = toDate;
+    }
+
+    public String getEngStat() {
+        return engStat == null ? "" : engStat;
+    }
+
+    public void setEngStat(String engStat) {
+        this.engStat = engStat;
     }
 }

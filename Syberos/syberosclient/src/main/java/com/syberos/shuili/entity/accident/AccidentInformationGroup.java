@@ -13,8 +13,9 @@ public class AccidentInformationGroup implements Serializable {
         this.children = children;
     }
 
+
     public String getHeader() {
-        return header;
+        return header == null ? "" : header;
     }
 
     public void setHeader(String header) {
@@ -22,6 +23,9 @@ public class AccidentInformationGroup implements Serializable {
     }
 
     public ArrayList<ObjAcci> getChildren() {
+        if (children == null) {
+            return new ArrayList<>();
+        }
         return children;
     }
 

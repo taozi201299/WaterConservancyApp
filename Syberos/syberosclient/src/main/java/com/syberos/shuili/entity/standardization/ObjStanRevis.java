@@ -64,8 +64,9 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
      */
     String updTime;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -73,7 +74,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getApplOrgGuid() {
-        return applOrgGuid;
+        return applOrgGuid == null ? "" : applOrgGuid;
     }
 
     public void setApplOrgGuid(String applOrgGuid) {
@@ -81,7 +82,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getApplProp() {
-        return applProp;
+        return applProp == null ? "" : applProp;
     }
 
     public void setApplProp(String applProp) {
@@ -89,7 +90,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getApplGrade() {
-        return applGrade;
+        return applGrade == null ? "" : applGrade;
     }
 
     public void setApplGrade(String applGrade) {
@@ -97,7 +98,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getBefoStanSitu() {
-        return befoStanSitu;
+        return befoStanSitu == null ? "" : befoStanSitu;
     }
 
     public void setBefoStanSitu(String befoStanSitu) {
@@ -105,7 +106,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getSelfEvaConc() {
-        return selfEvaConc;
+        return selfEvaConc == null ? "" : selfEvaConc;
     }
 
     public void setSelfEvaConc(String selfEvaConc) {
@@ -113,7 +114,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getApplTime() {
-        return applTime;
+        return applTime == null ? "" : applTime;
     }
 
     public void setApplTime(String applTime) {
@@ -121,7 +122,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getVeriWiunCode() {
-        return veriWiunCode;
+        return veriWiunCode == null ? "" : veriWiunCode;
     }
 
     public void setVeriWiunCode(String veriWiunCode) {
@@ -129,7 +130,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getVeriTime() {
-        return veriTime;
+        return veriTime == null ? "" : veriTime;
     }
 
     public void setVeriTime(String veriTime) {
@@ -137,7 +138,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getVeriOpin() {
-        return veriOpin;
+        return veriOpin == null ? "" : veriOpin;
     }
 
     public void setVeriOpin(String veriOpin) {
@@ -145,7 +146,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getVeriConc() {
-        return veriConc;
+        return veriConc == null ? "" : veriConc;
     }
 
     public void setVeriConc(String veriConc) {
@@ -153,7 +154,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -161,7 +162,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -169,7 +170,7 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {

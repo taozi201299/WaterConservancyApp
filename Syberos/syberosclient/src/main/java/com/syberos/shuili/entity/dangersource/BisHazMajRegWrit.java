@@ -23,8 +23,9 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     String recPers;
     String reviOpin;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -32,7 +33,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getHazGuid() {
-        return hazGuid;
+        return hazGuid == null ? "" : hazGuid;
     }
 
     public void setHazGuid(String hazGuid) {
@@ -40,7 +41,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getRegOrgGuid() {
-        return regOrgGuid;
+        return regOrgGuid == null ? "" : regOrgGuid;
     }
 
     public void setRegOrgGuid(String regOrgGuid) {
@@ -48,7 +49,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getRegTime() {
-        return regTime;
+        return regTime == null ? "" : regTime;
     }
 
     public void setRegTime(String regTime) {
@@ -56,7 +57,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getRegCode() {
-        return regCode;
+        return regCode == null ? "" : regCode;
     }
 
     public void setRegCode(String regCode) {
@@ -64,7 +65,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getWriteOrgGuid() {
-        return writeOrgGuid;
+        return writeOrgGuid == null ? "" : writeOrgGuid;
     }
 
     public void setWriteOrgGuid(String writeOrgGuid) {
@@ -72,7 +73,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getWriteCode() {
-        return writeCode;
+        return writeCode == null ? "" : writeCode;
     }
 
     public void setWriteCode(String writeCode) {
@@ -80,7 +81,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getWriteOffTime() {
-        return writeOffTime;
+        return writeOffTime == null ? "" : writeOffTime;
     }
 
     public void setWriteOffTime(String writeOffTime) {
@@ -88,7 +89,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getHazStat() {
-        return hazStat;
+        return hazStat == null ? "" : hazStat;
     }
 
     public void setHazStat(String hazStat) {
@@ -96,7 +97,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -104,7 +105,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -112,7 +113,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -120,7 +121,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -128,7 +129,7 @@ public class BisHazMajRegWrit extends HttpBaseResponse<BisHazMajRegWrit> {
     }
 
     public String getReviOpin() {
-        return reviOpin;
+        return reviOpin == null ? "" : reviOpin;
     }
 
     public void setReviOpin(String reviOpin) {

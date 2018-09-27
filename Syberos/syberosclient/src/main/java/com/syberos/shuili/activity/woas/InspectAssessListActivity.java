@@ -114,7 +114,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                 }
                 if(bisWoasGrop.dataSource.size() == 0){
                     closeDataDialog();
-                    ToastUtils.show("没有相关安全生产考核信息");
+                    ToastUtils.show("没有相关水利稽查考核信息");
                 }
                 getObjWoasInfoByID();
             }

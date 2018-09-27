@@ -13,8 +13,9 @@ public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     String fromDate;
     String toDate;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -22,7 +23,7 @@ public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     }
 
     public String getGroupGuid() {
-        return groupGuid;
+        return groupGuid == null ? "" : groupGuid;
     }
 
     public void setGroupGuid(String groupGuid) {
@@ -30,7 +31,7 @@ public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     }
 
     public String getPersGuid() {
-        return persGuid;
+        return persGuid == null ? "" : persGuid;
     }
 
     public void setPersGuid(String persGuid) {
@@ -38,7 +39,7 @@ public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -46,7 +47,7 @@ public class RelSinsGroupPers extends HttpBaseResponse<RelSinsGroupPers> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {

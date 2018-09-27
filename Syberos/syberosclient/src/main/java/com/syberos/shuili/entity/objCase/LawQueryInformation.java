@@ -12,8 +12,9 @@ public class LawQueryInformation implements Serializable {
     private String title;       // 标题
     private String content;     // 内容
 
+
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -21,11 +22,10 @@ public class LawQueryInformation implements Serializable {
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-
 }

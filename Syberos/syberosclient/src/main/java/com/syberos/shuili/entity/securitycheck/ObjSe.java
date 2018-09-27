@@ -18,18 +18,9 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     String pGuid;
     Boolean isGroup;
 
-    public Boolean getGroup() {
-        return isGroup;
-    }
-
-    public void setGroup(Boolean group) {
-        isGroup = group;
-    }
-
-
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -37,7 +28,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getSeName() {
-        return seName;
+        return seName == null ? "" : seName;
     }
 
     public void setSeName(String seName) {
@@ -45,7 +36,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getSeCode() {
-        return seCode;
+        return seCode == null ? "" : seCode;
     }
 
     public void setSeCode(String seCode) {
@@ -53,7 +44,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getSeType() {
-        return seType;
+        return seType == null ? "" : seType;
     }
 
     public void setSeType(String seType) {
@@ -61,7 +52,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -69,7 +60,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -77,7 +68,7 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -85,10 +76,18 @@ public class ObjSe extends HttpBaseResponse<ObjSe> {
     }
 
     public String getpGuid() {
-        return pGuid;
+        return pGuid == null ? "" : pGuid;
     }
 
     public void setpGuid(String pGuid) {
         this.pGuid = pGuid;
+    }
+
+    public Boolean getGroup() {
+        return isGroup;
+    }
+
+    public void setGroup(Boolean group) {
+        isGroup = group;
     }
 }

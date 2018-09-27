@@ -14,7 +14,7 @@ public class InspectAssessPlanBatchInfo extends HttpBaseResponse<InspectAssessPl
 
 
     public String getBatch() {
-        return batch;
+        return batch == null ? "" : batch;
     }
 
     public void setBatch(String batch) {
@@ -22,7 +22,7 @@ public class InspectAssessPlanBatchInfo extends HttpBaseResponse<InspectAssessPl
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -30,12 +30,10 @@ public class InspectAssessPlanBatchInfo extends HttpBaseResponse<InspectAssessPl
     }
 
     public String getProjects() {
-        return projects;
+        return projects == null ? "" : projects;
     }
 
     public void setProjects(String projects) {
         this.projects = projects;
     }
-
-
 }

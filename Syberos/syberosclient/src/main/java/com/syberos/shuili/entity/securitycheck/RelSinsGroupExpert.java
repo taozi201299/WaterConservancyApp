@@ -26,8 +26,9 @@ public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
      */
     String toDate;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -35,7 +36,7 @@ public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
     }
 
     public String getGroupGuid() {
-        return groupGuid;
+        return groupGuid == null ? "" : groupGuid;
     }
 
     public void setGroupGuid(String groupGuid) {
@@ -43,7 +44,7 @@ public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
     }
 
     public String getExpeGuid() {
-        return expeGuid;
+        return expeGuid == null ? "" : expeGuid;
     }
 
     public void setExpeGuid(String expeGuid) {
@@ -51,7 +52,7 @@ public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -59,7 +60,7 @@ public class RelSinsGroupExpert extends HttpBaseResponse<RelSinsGroupExpert> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {

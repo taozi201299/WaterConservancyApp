@@ -35,8 +35,9 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     String updTime;
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -44,7 +45,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getHiddGuid() {
-        return hiddGuid;
+        return hiddGuid == null ? "" : hiddGuid;
     }
 
     public void setHiddGuid(String hiddGuid) {
@@ -52,7 +53,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getRepGuid() {
-        return repGuid;
+        return repGuid == null ? "" : repGuid;
     }
 
     public void setRepGuid(String repGuid) {
@@ -60,7 +61,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getRepOrgGuid() {
-        return repOrgGuid;
+        return repOrgGuid == null ? "" : repOrgGuid;
     }
 
     public void setRepOrgGuid(String repOrgGuid) {
@@ -68,7 +69,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getRepAct() {
-        return repAct;
+        return repAct == null ? "" : repAct;
     }
 
     public void setRepAct(String repAct) {
@@ -76,7 +77,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getReturnDesc() {
-        return returnDesc;
+        return returnDesc == null ? "" : returnDesc;
     }
 
     public void setReturnDesc(String returnDesc) {
@@ -84,7 +85,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -92,7 +93,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -100,7 +101,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -108,7 +109,7 @@ public class BisHiddRecRep extends HttpBaseResponse<BisHiddRecRep> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

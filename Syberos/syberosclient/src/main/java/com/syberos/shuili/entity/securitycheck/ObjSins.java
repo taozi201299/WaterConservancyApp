@@ -61,8 +61,9 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
       String ifSendDown;
       String pGuid;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -70,7 +71,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsDeplName() {
-        return sinsDeplName;
+        return sinsDeplName == null ? "" : sinsDeplName;
     }
 
     public void setSinsDeplName(String sinsDeplName) {
@@ -78,7 +79,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsStartTime() {
-        return sinsStartTime;
+        return sinsStartTime == null ? "" : sinsStartTime;
     }
 
     public void setSinsStartTime(String sinsStartTime) {
@@ -86,7 +87,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsCompTime() {
-        return sinsCompTime;
+        return sinsCompTime == null ? "" : sinsCompTime;
     }
 
     public void setSinsCompTime(String sinsCompTime) {
@@ -94,7 +95,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsRange() {
-        return sinsRange;
+        return sinsRange == null ? "" : sinsRange;
     }
 
     public void setSinsRange(String sinsRange) {
@@ -102,7 +103,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsLareId() {
-        return sinsLareId;
+        return sinsLareId == null ? "" : sinsLareId;
     }
 
     public void setSinsLareId(String sinsLareId) {
@@ -110,7 +111,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getSinsNotTime() {
-        return sinsNotTime;
+        return sinsNotTime == null ? "" : sinsNotTime;
     }
 
     public void setSinsNotTime(String sinsNotTime) {
@@ -118,7 +119,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getNotIssuWiun() {
-        return notIssuWiun;
+        return notIssuWiun == null ? "" : notIssuWiun;
     }
 
     public void setNotIssuWiun(String notIssuWiun) {
@@ -126,7 +127,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -134,7 +135,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -142,7 +143,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -150,7 +151,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -158,7 +159,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getIfSendDown() {
-        return ifSendDown;
+        return ifSendDown == null ? "" : ifSendDown;
     }
 
     public void setIfSendDown(String ifSendDown) {
@@ -166,7 +167,7 @@ public class ObjSins extends HttpBaseResponse<ObjSins> {
     }
 
     public String getpGuid() {
-        return pGuid;
+        return pGuid == null ? "" : pGuid;
     }
 
     public void setpGuid(String pGuid) {

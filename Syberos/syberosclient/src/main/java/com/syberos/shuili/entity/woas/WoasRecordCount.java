@@ -1,6 +1,7 @@
 package com.syberos.shuili.entity.woas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class WoasRecordCount implements Serializable{
     private int totalCount;
     private List<String> data;
 
+
     public int getCode() {
         return code;
     }
@@ -29,7 +31,7 @@ public class WoasRecordCount implements Serializable{
     }
 
     public String getMsg() {
-        return msg;
+        return msg == null ? "" : msg;
     }
 
     public void setMsg(String msg) {
@@ -45,6 +47,9 @@ public class WoasRecordCount implements Serializable{
     }
 
     public List<String> getData() {
+        if (data == null) {
+            return new ArrayList<>();
+        }
         return data;
     }
 

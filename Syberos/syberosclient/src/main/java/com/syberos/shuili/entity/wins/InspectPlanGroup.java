@@ -1,6 +1,7 @@
 package com.syberos.shuili.entity.wins;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public class InspectPlanGroup implements Serializable {
         this.children = children;
     }
 
+
     public String getHeader() {
-        return header;
+        return header == null ? "" : header;
     }
 
     public void setHeader(String header) {
@@ -28,11 +30,13 @@ public class InspectPlanGroup implements Serializable {
     }
 
     public List<BisWinsProg> getChildren() {
+        if (children == null) {
+            return new ArrayList<>();
+        }
         return children;
     }
 
     public void setChildren(List<BisWinsProg> children) {
         this.children = children;
     }
-
 }

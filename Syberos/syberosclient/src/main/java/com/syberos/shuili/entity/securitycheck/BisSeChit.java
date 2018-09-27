@@ -43,8 +43,9 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     String recPers;
     String ifReasLack;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -52,7 +53,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getSeChitName() {
-        return seChitName;
+        return seChitName == null ? "" : seChitName;
     }
 
     public void setSeChitName(String seChitName) {
@@ -60,7 +61,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getSeGuid() {
-        return seGuid;
+        return seGuid == null ? "" : seGuid;
     }
 
     public void setSeGuid(String seGuid) {
@@ -68,7 +69,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getIfUnStan() {
-        return ifUnStan;
+        return ifUnStan == null ? "" : ifUnStan;
     }
 
     public void setIfUnStan(String ifUnStan) {
@@ -76,7 +77,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getDeduScore() {
-        return deduScore;
+        return deduScore == null ? "" : deduScore;
     }
 
     public void setDeduScore(String deduScore) {
@@ -84,7 +85,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getReviItemCode() {
-        return reviItemCode;
+        return reviItemCode == null ? "" : reviItemCode;
     }
 
     public void setReviItemCode(String reviItemCode) {
@@ -92,7 +93,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getDeduRegu() {
-        return deduRegu;
+        return deduRegu == null ? "" : deduRegu;
     }
 
     public void setDeduRegu(String deduRegu) {
@@ -100,7 +101,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getIfWhit() {
-        return ifWhit;
+        return ifWhit == null ? "" : ifWhit;
     }
 
     public void setIfWhit(String ifWhit) {
@@ -108,7 +109,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -116,7 +117,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getCollDate() {
-        return collDate;
+        return collDate == null ? "" : collDate;
     }
 
     public void setCollDate(String collDate) {
@@ -124,7 +125,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getUpdDate() {
-        return updDate;
+        return updDate == null ? "" : updDate;
     }
 
     public void setUpdDate(String updDate) {
@@ -132,7 +133,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -140,7 +141,7 @@ public class BisSeChit extends HttpBaseResponse<BisSeChit> {
     }
 
     public String getIfReasLack() {
-        return ifReasLack;
+        return ifReasLack == null ? "" : ifReasLack;
     }
 
     public void setIfReasLack(String ifReasLack) {

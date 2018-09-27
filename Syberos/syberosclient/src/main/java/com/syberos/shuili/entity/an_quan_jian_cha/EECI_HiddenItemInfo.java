@@ -15,10 +15,9 @@ public class EECI_HiddenItemInfo
     private String time;            //
     private int level;              // 隐患级别
     private String describe;        // 隐患描述
-    // 现场情况
 
     public String getProject() {
-        return project;
+        return project == null ? "" : project;
     }
 
     public void setProject(String project) {
@@ -26,7 +25,7 @@ public class EECI_HiddenItemInfo
     }
 
     public String getTarget() {
-        return target;
+        return target == null ? "" : target;
     }
 
     public void setTarget(String target) {
@@ -34,7 +33,7 @@ public class EECI_HiddenItemInfo
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -42,7 +41,7 @@ public class EECI_HiddenItemInfo
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -58,11 +57,13 @@ public class EECI_HiddenItemInfo
     }
 
     public String getDescribe() {
-        return describe;
+        return describe == null ? "" : describe;
     }
 
     public void setDescribe(String describe) {
         this.describe = describe;
     }
+    // 现场情况
+
 
 }

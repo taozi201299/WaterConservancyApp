@@ -28,8 +28,9 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
      String updTime;
      String recPers;
 
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -37,7 +38,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -45,7 +46,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -53,7 +54,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getAppkey() {
-        return appkey;
+        return appkey == null ? "" : appkey;
     }
 
     public void setAppkey(String appkey) {
@@ -61,7 +62,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getAppsecret() {
-        return appsecret;
+        return appsecret == null ? "" : appsecret;
     }
 
     public void setAppsecret(String appsecret) {
@@ -69,7 +70,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -77,7 +78,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -85,7 +86,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getTendName() {
-        return tendName;
+        return tendName == null ? "" : tendName;
     }
 
     public void setTendName(String tendName) {
@@ -93,7 +94,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -101,7 +102,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getOrgProjDeptGuid() {
-        return orgProjDeptGuid;
+        return orgProjDeptGuid == null ? "" : orgProjDeptGuid;
     }
 
     public void setOrgProjDeptGuid(String orgProjDeptGuid) {
@@ -109,7 +110,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getEngGuid() {
-        return engGuid;
+        return engGuid == null ? "" : engGuid;
     }
 
     public void setEngGuid(String engGuid) {
@@ -117,7 +118,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getLegTel() {
-        return legTel;
+        return legTel == null ? "" : legTel;
     }
 
     public void setLegTel(String legTel) {
@@ -125,7 +126,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getConAmout() {
-        return conAmout;
+        return conAmout == null ? "" : conAmout;
     }
 
     public void setConAmout(String conAmout) {
@@ -133,7 +134,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getTotalSpc() {
-        return totalSpc;
+        return totalSpc == null ? "" : totalSpc;
     }
 
     public void setTotalSpc(String totalSpc) {
@@ -141,7 +142,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getConsCont() {
-        return consCont;
+        return consCont == null ? "" : consCont;
     }
 
     public void setConsCont(String consCont) {
@@ -149,7 +150,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -157,7 +158,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -165,7 +166,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -173,7 +174,7 @@ public class ObjectTend extends HttpBaseResponse<ObjectTend> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

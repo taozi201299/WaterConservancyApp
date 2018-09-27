@@ -13,15 +13,17 @@ public class BisSeWiun extends HttpBaseResponse<BisSeWiun> {
     String seCode;
     String seStat;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
         this.guid = guid;
     }
+
     public String getpGuid() {
-        return pGuid;
+        return pGuid == null ? "" : pGuid;
     }
 
     public void setpGuid(String pGuid) {
@@ -29,7 +31,7 @@ public class BisSeWiun extends HttpBaseResponse<BisSeWiun> {
     }
 
     public String getSeGuid() {
-        return seGuid;
+        return seGuid == null ? "" : seGuid;
     }
 
     public void setSeGuid(String seGuid) {
@@ -37,7 +39,7 @@ public class BisSeWiun extends HttpBaseResponse<BisSeWiun> {
     }
 
     public String getSeCode() {
-        return seCode;
+        return seCode == null ? "" : seCode;
     }
 
     public void setSeCode(String seCode) {
@@ -45,7 +47,7 @@ public class BisSeWiun extends HttpBaseResponse<BisSeWiun> {
     }
 
     public String getSeStat() {
-        return seStat;
+        return seStat == null ? "" : seStat;
     }
 
     public void setSeStat(String seStat) {

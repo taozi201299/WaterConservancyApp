@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.an_quan_jian_cha;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class EnterprisesOnSiteCheckInfo
 
 
     public String getStartTime() {
-        return startTime;
+        return startTime == null ? "" : startTime;
     }
 
     public void setStartTime(String startTime) {
@@ -29,7 +30,7 @@ public class EnterprisesOnSiteCheckInfo
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime == null ? "" : endTime;
     }
 
     public void setEndTime(String endTime) {
@@ -37,7 +38,7 @@ public class EnterprisesOnSiteCheckInfo
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
@@ -45,12 +46,13 @@ public class EnterprisesOnSiteCheckInfo
     }
 
     public List<EECI_HiddenItemInfo> getHiddenItemInfos() {
+        if (hiddenItemInfos == null) {
+            return new ArrayList<>();
+        }
         return hiddenItemInfos;
     }
 
     public void setHiddenItemInfos(List<EECI_HiddenItemInfo> hiddenItemInfos) {
         this.hiddenItemInfos = hiddenItemInfos;
     }
-
-
 }

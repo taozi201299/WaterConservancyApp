@@ -49,8 +49,9 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
      * 是否曾经上报过
      */
     boolean isReportFinish;
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -58,7 +59,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRepName() {
-        return repName;
+        return repName == null ? "" : repName;
     }
 
     public void setRepName(String repName) {
@@ -66,7 +67,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRepAct() {
-        return repAct;
+        return repAct == null ? "" : repAct;
     }
 
     public void setRepAct(String repAct) {
@@ -74,7 +75,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getUrl() {
-        return url;
+        return url == null ? "" : url;
     }
 
     public void setUrl(String url) {
@@ -82,7 +83,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRepType() {
-        return repType;
+        return repType == null ? "" : repType;
     }
 
     public void setRepType(String repType) {
@@ -90,7 +91,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRepTime() {
-        return repTime;
+        return repTime == null ? "" : repTime;
     }
 
     public void setRepTime(String repTime) {
@@ -98,7 +99,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getStartDate() {
-        return startDate;
+        return startDate == null ? "" : startDate;
     }
 
     public void setStartDate(String startDate) {
@@ -106,7 +107,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getEndDate() {
-        return endDate;
+        return endDate == null ? "" : endDate;
     }
 
     public void setEndDate(String endDate) {
@@ -114,7 +115,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRepOrgGuid() {
-        return repOrgGuid;
+        return repOrgGuid == null ? "" : repOrgGuid;
     }
 
     public void setRepOrgGuid(String repOrgGuid) {
@@ -122,7 +123,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -130,7 +131,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -138,7 +139,7 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -146,18 +147,18 @@ public class BisOrgMonRepPeri extends HttpBaseResponse<BisOrgMonRepPeri> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
         this.recPers = recPers;
     }
 
-    public void setReportFinish(boolean reportFinish) {
-        isReportFinish = reportFinish;
-    }
-
     public boolean isReportFinish() {
         return isReportFinish;
+    }
+
+    public void setReportFinish(boolean reportFinish) {
+        isReportFinish = reportFinish;
     }
 }

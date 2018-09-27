@@ -25,6 +25,7 @@ public class AttOrgBaseForAcci extends HttpBaseResponse<AttOrgBaseForAcci>{
     String areaType;
     String nodeCode;
 
+
     public String getGuid() {
         return guid == null ? "" : guid;
     }

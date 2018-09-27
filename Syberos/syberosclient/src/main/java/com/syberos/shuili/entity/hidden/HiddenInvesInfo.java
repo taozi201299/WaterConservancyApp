@@ -51,8 +51,9 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     String recPers;
     String unitName;
 
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -60,7 +61,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -68,7 +69,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -76,7 +77,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -84,7 +85,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -92,7 +93,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getHiddGuid() {
-        return hiddGuid;
+        return hiddGuid == null ? "" : hiddGuid;
     }
 
     public void setHiddGuid(String hiddGuid) {
@@ -100,7 +101,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getInspOrgGuid() {
-        return inspOrgGuid;
+        return inspOrgGuid == null ? "" : inspOrgGuid;
     }
 
     public void setInspOrgGuid(String inspOrgGuid) {
@@ -108,7 +109,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getInspDate() {
-        return inspDate;
+        return inspDate == null ? "" : inspDate;
     }
 
     public void setInspDate(String inspDate) {
@@ -116,7 +117,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getInspLeader() {
-        return inspLeader;
+        return inspLeader == null ? "" : inspLeader;
     }
 
     public void setInspLeader(String inspLeader) {
@@ -124,7 +125,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getInspLeaderPost() {
-        return inspLeaderPost;
+        return inspLeaderPost == null ? "" : inspLeaderPost;
     }
 
     public void setInspLeaderPost(String inspLeaderPost) {
@@ -132,7 +133,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getInspMem() {
-        return inspMem;
+        return inspMem == null ? "" : inspMem;
     }
 
     public void setInspMem(String inspMem) {
@@ -140,7 +141,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -148,7 +149,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -156,7 +157,7 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -164,18 +165,18 @@ public class HiddenInvesInfo extends HttpBaseResponse<HiddenInvesInfo> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
         this.recPers = recPers;
     }
 
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
+    public String getUnitName() {
+        return unitName == null ? "" : unitName;
     }
 
-    public String getUnitName() {
-        return unitName;
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 }

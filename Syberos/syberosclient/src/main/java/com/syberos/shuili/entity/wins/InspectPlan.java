@@ -1,6 +1,7 @@
 package com.syberos.shuili.entity.wins;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +24,16 @@ public class InspectPlan implements Serializable {
     private String problemCount;    // 问题数量
 
 
+    public String getName() {
+        return name == null ? "" : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getBatch() {
-        return batch;
+        return batch == null ? "" : batch;
     }
 
     public void setBatch(String batch) {
@@ -32,21 +41,17 @@ public class InspectPlan implements Serializable {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<String> getGroups() {
+        if (groups == null) {
+            return new ArrayList<>();
+        }
         return groups;
     }
 
@@ -55,7 +60,7 @@ public class InspectPlan implements Serializable {
     }
 
     public String getSpecial() {
-        return special;
+        return special == null ? "" : special;
     }
 
     public void setSpecial(String special) {
@@ -63,7 +68,7 @@ public class InspectPlan implements Serializable {
     }
 
     public String getAssistant() {
-        return assistant;
+        return assistant == null ? "" : assistant;
     }
 
     public void setAssistant(String assistant) {
@@ -71,14 +76,15 @@ public class InspectPlan implements Serializable {
     }
 
     public String getExperts() {
-        return experts;
+        return experts == null ? "" : experts;
     }
 
     public void setExperts(String experts) {
         this.experts = experts;
     }
+
     public String getProject() {
-        return project;
+        return project == null ? "" : project;
     }
 
     public void setProject(String project) {
@@ -86,11 +92,10 @@ public class InspectPlan implements Serializable {
     }
 
     public String getProblemCount() {
-        return problemCount;
+        return problemCount == null ? "" : problemCount;
     }
 
     public void setProblemCount(String problemCount) {
         this.problemCount = problemCount;
     }
-
 }

@@ -113,8 +113,17 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
      */
     String hiddsGuid;
 
+
+    public static int getLevelNormal() {
+        return LEVEL_NORMAL;
+    }
+
+    public static int getLevelBig() {
+        return LEVEL_BIG;
+    }
+
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public void setUsername(String username) {
@@ -122,7 +131,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -130,7 +139,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getNonce() {
-        return nonce;
+        return nonce == null ? "" : nonce;
     }
 
     public void setNonce(String nonce) {
@@ -138,7 +147,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {
@@ -146,7 +155,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -154,7 +163,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddName() {
-        return hiddName;
+        return hiddName == null ? "" : hiddName;
     }
 
     public void setHiddName(String hiddName) {
@@ -162,7 +171,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getEngGuid() {
-        return engGuid;
+        return engGuid == null ? "" : engGuid;
     }
 
     public void setEngGuid(String engGuid) {
@@ -170,7 +179,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getTendGuid() {
-        return tendGuid;
+        return tendGuid == null ? "" : tendGuid;
     }
 
     public void setTendGuid(String tendGuid) {
@@ -178,7 +187,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getSeGuid() {
-        return seGuid;
+        return seGuid == null ? "" : seGuid;
     }
 
     public void setSeGuid(String seGuid) {
@@ -186,7 +195,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -194,7 +203,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddSour() {
-        return hiddSour;
+        return hiddSour == null ? "" : hiddSour;
     }
 
     public void setHiddSour(String hiddSour) {
@@ -202,7 +211,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddGrad() {
-        return hiddGrad;
+        return hiddGrad == null ? "" : hiddGrad;
     }
 
     public void setHiddGrad(String hiddGrad) {
@@ -210,7 +219,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddClas() {
-        return hiddClas;
+        return hiddClas == null ? "" : hiddClas;
     }
 
     public void setHiddClas(String hiddClas) {
@@ -218,7 +227,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getIfFound() {
-        return ifFound;
+        return ifFound == null ? "" : ifFound;
     }
 
     public void setIfFound(String ifFound) {
@@ -226,7 +235,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getProPart() {
-        return proPart;
+        return proPart == null ? "" : proPart;
     }
 
     public void setProPart(String proPart) {
@@ -234,7 +243,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getPartLong() {
-        return partLong;
+        return partLong == null ? "" : partLong;
     }
 
     public void setPartLong(String partLong) {
@@ -242,7 +251,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getPartLat() {
-        return partLat;
+        return partLat == null ? "" : partLat;
     }
 
     public void setPartLat(String partLat) {
@@ -250,7 +259,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddDesc() {
-        return hiddDesc;
+        return hiddDesc == null ? "" : hiddDesc;
     }
 
     public void setHiddDesc(String hiddDesc) {
@@ -258,7 +267,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getInspRecGuid() {
-        return inspRecGuid;
+        return inspRecGuid == null ? "" : inspRecGuid;
     }
 
     public void setInspRecGuid(String inspRecGuid) {
@@ -266,7 +275,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getSeCheckItemGuid() {
-        return seCheckItemGuid;
+        return seCheckItemGuid == null ? "" : seCheckItemGuid;
     }
 
     public void setSeCheckItemGuid(String seCheckItemGuid) {
@@ -274,7 +283,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddStat() {
-        return hiddStat;
+        return hiddStat == null ? "" : hiddStat;
     }
 
     public void setHiddStat(String hiddStat) {
@@ -282,7 +291,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddMergGuid() {
-        return hiddMergGuid;
+        return hiddMergGuid == null ? "" : hiddMergGuid;
     }
 
     public void setHiddMergGuid(String hiddMergGuid) {
@@ -290,7 +299,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getRecOrgGuid() {
-        return recOrgGuid;
+        return recOrgGuid == null ? "" : recOrgGuid;
     }
 
     public void setRecOrgGuid(String recOrgGuid) {
@@ -298,7 +307,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -306,7 +315,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -314,7 +323,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -322,7 +331,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -330,7 +339,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getOccuNum() {
-        return occuNum;
+        return occuNum == null ? "" : occuNum;
     }
 
     public void setOccuNum(String occuNum) {
@@ -338,7 +347,7 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
     }
 
     public String getHiddsGuid() {
-        return hiddsGuid;
+        return hiddsGuid == null ? "" : hiddsGuid;
     }
 
     public void setHiddsGuid(String hiddsGuid) {

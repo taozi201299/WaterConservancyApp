@@ -23,7 +23,7 @@ public class NoticeInfo extends HttpBaseListResponse<NoticeInfo> {
 
 
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -31,7 +31,7 @@ public class NoticeInfo extends HttpBaseListResponse<NoticeInfo> {
     }
 
     public String getNoticeTitle() {
-        return noticeTitle;
+        return noticeTitle == null ? "" : noticeTitle;
     }
 
     public void setNoticeTitle(String noticeTitle) {
@@ -39,7 +39,7 @@ public class NoticeInfo extends HttpBaseListResponse<NoticeInfo> {
     }
 
     public String getIsRead() {
-        return isRead;
+        return isRead == null ? "" : isRead;
     }
 
     public void setIsRead(String isRead) {
@@ -47,7 +47,7 @@ public class NoticeInfo extends HttpBaseListResponse<NoticeInfo> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {

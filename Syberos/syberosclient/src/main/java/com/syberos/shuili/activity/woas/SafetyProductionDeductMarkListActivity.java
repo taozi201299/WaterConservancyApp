@@ -103,13 +103,15 @@ public class SafetyProductionDeductMarkListActivity extends BaseActivity {
     }
     private void getRecords(){
         final int size = bisWoasObj.dataSource.size();
+        if(size == 0){
+            closeDataDialog();
+            return;
+        }
         for(int i = 0; i< size ; i++){
             String url= GlobleConstants.strIP + "/sjjk/v1/bis/woas/deuc/bisWoasDeucs/";
             HashMap<String,String>params = new HashMap<>();
-            params.put("woasWiunGuid",bisWoasObj.dataSource.get(i).getWoasWiunGuid());
+            params.put("woasWiunGuid",bisWoasObj.dataSource.get(i).getGuid());
             params.put("woasGropGuid",bisWoasGrop.getGuid());
-//            params.put("woasWiunGuid","0fc29017b24841e88c05975f42822b3c");
-//            params.put("woasGropGuid","1e7d59ce9f3d4e789dd0907bfccfd476");
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override

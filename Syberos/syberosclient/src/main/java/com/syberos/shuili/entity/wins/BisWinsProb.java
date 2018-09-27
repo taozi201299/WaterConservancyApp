@@ -38,8 +38,9 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     String updTime;
     String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -47,7 +48,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getProbType() {
-        return probType;
+        return probType == null ? "" : probType;
     }
 
     public void setProbType(String probType) {
@@ -55,7 +56,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getProbCate() {
-        return probCate;
+        return probCate == null ? "" : probCate;
     }
 
     public void setProbCate(String probCate) {
@@ -63,7 +64,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getProbDep() {
-        return probDep;
+        return probDep == null ? "" : probDep;
     }
 
     public void setProbDep(String probDep) {
@@ -71,7 +72,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getProbDesc() {
-        return probDesc;
+        return probDesc == null ? "" : probDesc;
     }
 
     public void setProbDesc(String probDesc) {
@@ -79,7 +80,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getRectSugg() {
-        return rectSugg;
+        return rectSugg == null ? "" : rectSugg;
     }
 
     public void setRectSugg(String rectSugg) {
@@ -87,7 +88,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getRectConc() {
-        return rectConc;
+        return rectConc == null ? "" : rectConc;
     }
 
     public void setRectConc(String rectConc) {
@@ -95,7 +96,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getUnrecReson() {
-        return unrecReson;
+        return unrecReson == null ? "" : unrecReson;
     }
 
     public void setUnrecReson(String unrecReson) {
@@ -103,7 +104,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getRectMeas() {
-        return rectMeas;
+        return rectMeas == null ? "" : rectMeas;
     }
 
     public void setRectMeas(String rectMeas) {
@@ -111,7 +112,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getRectLed() {
-        return rectLed;
+        return rectLed == null ? "" : rectLed;
     }
 
     public void setRectLed(String rectLed) {
@@ -119,7 +120,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getIsRect() {
-        return isRect;
+        return isRect == null ? "" : isRect;
     }
 
     public void setIsRect(String isRect) {
@@ -127,7 +128,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getTrackPeop() {
-        return trackPeop;
+        return trackPeop == null ? "" : trackPeop;
     }
 
     public void setTrackPeop(String trackPeop) {
@@ -135,7 +136,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getWinsProjGuid() {
-        return winsProjGuid;
+        return winsProjGuid == null ? "" : winsProjGuid;
     }
 
     public void setWinsProjGuid(String winsProjGuid) {
@@ -143,7 +144,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -151,7 +152,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -159,7 +160,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -167,7 +168,7 @@ public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

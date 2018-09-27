@@ -23,8 +23,21 @@ public class InspectProblemInformation implements Serializable {
     private String advice;      // 整改建议
     private String time;        // 时间
 
+
+    public static int getSeverityNormal() {
+        return SEVERITY_NORMAL;
+    }
+
+    public static int getSeverityBig() {
+        return SEVERITY_BIG;
+    }
+
+    public static int getSeverityLarge() {
+        return SEVERITY_LARGE;
+    }
+
     public String getProject() {
-        return project;
+        return project == null ? "" : project;
     }
 
     public void setProject(String project) {
@@ -32,7 +45,7 @@ public class InspectProblemInformation implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return type == null ? "" : type;
     }
 
     public void setType(String type) {
@@ -40,7 +53,7 @@ public class InspectProblemInformation implements Serializable {
     }
 
     public String getDepartment() {
-        return department;
+        return department == null ? "" : department;
     }
 
     public void setDepartment(String department) {
@@ -56,7 +69,7 @@ public class InspectProblemInformation implements Serializable {
     }
 
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     public void setContent(String content) {
@@ -64,7 +77,7 @@ public class InspectProblemInformation implements Serializable {
     }
 
     public String getAdvice() {
-        return advice;
+        return advice == null ? "" : advice;
     }
 
     public void setAdvice(String advice) {
@@ -72,11 +85,10 @@ public class InspectProblemInformation implements Serializable {
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
-
 }

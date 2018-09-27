@@ -47,8 +47,9 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
      String updTime;
      String recPers;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -56,7 +57,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -64,7 +65,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrThem() {
-        return eutrThem;
+        return eutrThem == null ? "" : eutrThem;
     }
 
     public void setEutrThem(String eutrThem) {
@@ -72,7 +73,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrType() {
-        return eutrType;
+        return eutrType == null ? "" : eutrType;
     }
 
     public void setEutrType(String eutrType) {
@@ -80,7 +81,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrNum() {
-        return eutrNum;
+        return eutrNum == null ? "" : eutrNum;
     }
 
     public void setEutrNum(String eutrNum) {
@@ -88,7 +89,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrStartDate() {
-        return eutrStartDate;
+        return eutrStartDate == null ? "" : eutrStartDate;
     }
 
     public void setEutrStartDate(String eutrStartDate) {
@@ -96,7 +97,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrEndDate() {
-        return eutrEndDate;
+        return eutrEndDate == null ? "" : eutrEndDate;
     }
 
     public void setEutrEndDate(String eutrEndDate) {
@@ -104,7 +105,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrHuor() {
-        return eutrHuor;
+        return eutrHuor == null ? "" : eutrHuor;
     }
 
     public void setEutrHuor(String eutrHuor) {
@@ -112,7 +113,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrLoc() {
-        return eutrLoc;
+        return eutrLoc == null ? "" : eutrLoc;
     }
 
     public void setEutrLoc(String eutrLoc) {
@@ -120,7 +121,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getEutrCont() {
-        return eutrCont;
+        return eutrCont == null ? "" : eutrCont;
     }
 
     public void setEutrCont(String eutrCont) {
@@ -128,7 +129,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -136,7 +137,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -144,7 +145,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -152,7 +153,7 @@ public class BisEutrOfflRec  extends HttpBaseResponse<BisEutrOfflRec> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {

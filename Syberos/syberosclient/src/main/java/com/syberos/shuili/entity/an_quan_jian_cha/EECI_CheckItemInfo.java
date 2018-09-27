@@ -14,8 +14,9 @@ public class EECI_CheckItemInfo
     private boolean isNOChecked = false;    // “否” 选项是否选中
     private int count = -1;                 // 数量
 
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -45,5 +46,4 @@ public class EECI_CheckItemInfo
     public void setCount(int count) {
         this.count = count;
     }
-
 }

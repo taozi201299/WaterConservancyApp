@@ -10,12 +10,8 @@ import java.io.Serializable;
  */
 public class SecurityCheckInformation implements Serializable {
 
-    private String id = "";
-    private String title = "";
-    private String date = "";
-
     public String getId() {
-        return id;
+        return id == null ? "" : id;
     }
 
     public void setId(String id) {
@@ -23,7 +19,7 @@ public class SecurityCheckInformation implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -31,11 +27,17 @@ public class SecurityCheckInformation implements Serializable {
     }
 
     public String getDate() {
-        return date;
+        return date == null ? "" : date;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
+
+    private String id = "";
+    private String title = "";
+    private String date = "";
+
+
 
 }

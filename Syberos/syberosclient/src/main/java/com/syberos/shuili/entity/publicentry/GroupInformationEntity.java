@@ -19,19 +19,23 @@ public class GroupInformationEntity<T>implements Serializable {
             this.children = children;
         }
 
-        public String getHeader() {
-            return header;
-        }
 
-        public void setHeader(String header) {
-            this.header = header;
-        }
+    public String getHeader() {
+        return header == null ? "" : header;
+    }
 
-        public ArrayList<T> getChildren() {
-            return children;
-        }
+    public void setHeader(String header) {
+        this.header = header;
+    }
 
-        public void setChildren(ArrayList<T> children) {
-            this.children = children;
+    public ArrayList<T> getChildren() {
+        if (children == null) {
+            return new ArrayList<>();
         }
+        return children;
+    }
+
+    public void setChildren(ArrayList<T> children) {
+        this.children = children;
+    }
 }

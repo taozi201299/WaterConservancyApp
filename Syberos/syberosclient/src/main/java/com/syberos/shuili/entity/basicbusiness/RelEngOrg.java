@@ -14,8 +14,9 @@ public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     String fromDate;
     String toDate;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -23,7 +24,7 @@ public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     }
 
     public String getEngGuid() {
-        return engGuid;
+        return engGuid == null ? "" : engGuid;
     }
 
     public void setEngGuid(String engGuid) {
@@ -31,7 +32,7 @@ public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     }
 
     public String getOrgGuid() {
-        return orgGuid;
+        return orgGuid == null ? "" : orgGuid;
     }
 
     public void setOrgGuid(String orgGuid) {
@@ -39,7 +40,7 @@ public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -47,7 +48,7 @@ public class RelEngOrg extends HttpBaseResponse<RelEngOrg> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {

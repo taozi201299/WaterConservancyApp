@@ -13,8 +13,9 @@ public class ObjProject extends HttpBaseResponse<ObjProject> {
     String fromDate;
     String toDate;
 
+
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -22,7 +23,7 @@ public class ObjProject extends HttpBaseResponse<ObjProject> {
     }
 
     public String getProjCode() {
-        return projCode;
+        return projCode == null ? "" : projCode;
     }
 
     public void setProjCode(String projCode) {
@@ -30,7 +31,7 @@ public class ObjProject extends HttpBaseResponse<ObjProject> {
     }
 
     public String getEngName() {
-        return engName;
+        return engName == null ? "" : engName;
     }
 
     public void setEngName(String engName) {
@@ -38,7 +39,7 @@ public class ObjProject extends HttpBaseResponse<ObjProject> {
     }
 
     public String getFromDate() {
-        return fromDate;
+        return fromDate == null ? "" : fromDate;
     }
 
     public void setFromDate(String fromDate) {
@@ -46,7 +47,7 @@ public class ObjProject extends HttpBaseResponse<ObjProject> {
     }
 
     public String getToDate() {
-        return toDate;
+        return toDate == null ? "" : toDate;
     }
 
     public void setToDate(String toDate) {

@@ -27,8 +27,44 @@ public class HiddenDangerReport extends HttpBaseResponse<HiddenDangerReport> {
     private int linkStatus;             // 链接状态
 
 
+    public static int getButtonReport() {
+        return BUTTON_REPORT;
+    }
+
+    public static int getButtonRecall() {
+        return BUTTON_RECALL;
+    }
+
+    public static int getButtonReported() {
+        return BUTTON_REPORTED;
+    }
+
+    public static int getButtonReturn() {
+        return BUTTON_RETURN;
+    }
+
+    public static int getButtonUrged() {
+        return BUTTON_URGED;
+    }
+
+    public static int getLinkYes() {
+        return LINK_YES;
+    }
+
+    public static int getLinkReturned() {
+        return LINK_RETURNED;
+    }
+
+    public static int getLinkRefunded() {
+        return LINK_REFUNDED;
+    }
+
+    public static int getLinkNo() {
+        return LINK_NO;
+    }
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -50,5 +86,4 @@ public class HiddenDangerReport extends HttpBaseResponse<HiddenDangerReport> {
     public void setLinkStatus(int linkStatus) {
         this.linkStatus = linkStatus;
     }
-
 }

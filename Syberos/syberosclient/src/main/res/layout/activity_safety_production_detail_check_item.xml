@@ -27,6 +27,7 @@
         android:layout_marginStart="@dimen/_6dp"
         android:gravity="center"
         android:text="考前摸底"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/_14sp" />
 

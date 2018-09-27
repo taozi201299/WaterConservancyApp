@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.woas;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public class InspectAssessInfo extends HttpBaseResponse<InspectAssessInfo> {
     // 被稽察历史情况
     private List<InspectAssessHistory> inspectAssessHistoryList;
 
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -28,20 +30,24 @@ public class InspectAssessInfo extends HttpBaseResponse<InspectAssessInfo> {
     }
 
     public List<InspectAssessPlanInfo> getInspectAssessPlanInfoList() {
+        if (inspectAssessPlanInfoList == null) {
+            return new ArrayList<>();
+        }
         return inspectAssessPlanInfoList;
     }
 
-    public void setInspectAssessPlanInfoList(
-            List<InspectAssessPlanInfo> inspectAssessPlanInfoList) {
+    public void setInspectAssessPlanInfoList(List<InspectAssessPlanInfo> inspectAssessPlanInfoList) {
         this.inspectAssessPlanInfoList = inspectAssessPlanInfoList;
     }
 
     public List<InspectAssessHistory> getInspectAssessHistoryList() {
+        if (inspectAssessHistoryList == null) {
+            return new ArrayList<>();
+        }
         return inspectAssessHistoryList;
     }
 
     public void setInspectAssessHistoryList(List<InspectAssessHistory> inspectAssessHistoryList) {
         this.inspectAssessHistoryList = inspectAssessHistoryList;
     }
-
 }

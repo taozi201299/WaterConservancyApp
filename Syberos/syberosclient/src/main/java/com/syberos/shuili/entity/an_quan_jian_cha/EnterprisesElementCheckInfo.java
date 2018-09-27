@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.an_quan_jian_cha;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,26 @@ public class EnterprisesElementCheckInfo
     private List<EECI_HiddenItemInfo> hiddenItemInfos;  // 可能存在隐患
 
 
+    public static int getLevelNormal() {
+        return LEVEL_NORMAL;
+    }
+
+    public static int getLevelCommon() {
+        return LEVEL_COMMON;
+    }
+
+    public static int getLevelNotSure() {
+        return LEVEL_NOT_SURE;
+    }
+
+    public static int getLevelLarge() {
+        return LEVEL_LARGE;
+    }
+
+    public static int getLevelOther() {
+        return LEVEL_OTHER;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -33,7 +54,7 @@ public class EnterprisesElementCheckInfo
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -41,6 +62,9 @@ public class EnterprisesElementCheckInfo
     }
 
     public List<EECI_CheckItemInfo> getCheckItemInfos() {
+        if (checkItemInfos == null) {
+            return new ArrayList<>();
+        }
         return checkItemInfos;
     }
 
@@ -49,11 +73,13 @@ public class EnterprisesElementCheckInfo
     }
 
     public List<EECI_HiddenItemInfo> getHiddenItemInfos() {
+        if (hiddenItemInfos == null) {
+            return new ArrayList<>();
+        }
         return hiddenItemInfos;
     }
 
     public void setHiddenItemInfos(List<EECI_HiddenItemInfo> hiddenItemInfos) {
         this.hiddenItemInfos = hiddenItemInfos;
     }
-
 }

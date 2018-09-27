@@ -37,42 +37,11 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
      */
     String scheStartTime;
 
-    public String getScheCont() {
-        return scheCont;
-    }
-
-    public void setScheCont(String scheCont) {
-        this.scheCont = scheCont;
-    }
 
     /**
      * 检查内容
      */
     String scheCont;
-
-    public String getScheName() {
-        return scheName;
-    }
-
-    public void setScheName(String scheName) {
-        this.scheName = scheName;
-    }
-
-    public String getScheStartTime() {
-        return scheStartTime;
-    }
-
-    public void setScheStartTime(String scheStartTime) {
-        this.scheStartTime = scheStartTime;
-    }
-
-    public String getScheCompTime() {
-        return scheCompTime;
-    }
-
-    public void setScheCompTime(String scheCompTime) {
-        this.scheCompTime = scheCompTime;
-    }
 
     /**
      * 检查结束时间
@@ -80,9 +49,8 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     String scheCompTime;
 
 
-
     public String getGuid() {
-        return guid;
+        return guid == null ? "" : guid;
     }
 
     public void setGuid(String guid) {
@@ -90,7 +58,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getScheGuid() {
-        return scheGuid;
+        return scheGuid == null ? "" : scheGuid;
     }
 
     public void setScheGuid(String scheGuid) {
@@ -98,7 +66,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getGroupName() {
-        return groupName;
+        return groupName == null ? "" : groupName;
     }
 
     public void setGroupName(String groupName) {
@@ -106,7 +74,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getGroupLeader() {
-        return groupLeader;
+        return groupLeader == null ? "" : groupLeader;
     }
 
     public void setGroupLeader(String groupLeader) {
@@ -114,7 +82,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getGroupLeaderWiun() {
-        return groupLeaderWiun;
+        return groupLeaderWiun == null ? "" : groupLeaderWiun;
     }
 
     public void setGroupLeaderWiun(String groupLeaderWiun) {
@@ -122,7 +90,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getScheModel() {
-        return scheModel;
+        return scheModel == null ? "" : scheModel;
     }
 
     public void setScheModel(String scheModel) {
@@ -130,7 +98,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getSchePath() {
-        return schePath;
+        return schePath == null ? "" : schePath;
     }
 
     public void setSchePath(String schePath) {
@@ -138,7 +106,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getSchePathDetl() {
-        return schePathDetl;
+        return schePathDetl == null ? "" : schePathDetl;
     }
 
     public void setSchePathDetl(String schePathDetl) {
@@ -146,7 +114,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getNote() {
-        return note;
+        return note == null ? "" : note;
     }
 
     public void setNote(String note) {
@@ -154,7 +122,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getCollTime() {
-        return collTime;
+        return collTime == null ? "" : collTime;
     }
 
     public void setCollTime(String collTime) {
@@ -162,7 +130,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getUpdTime() {
-        return updTime;
+        return updTime == null ? "" : updTime;
     }
 
     public void setUpdTime(String updTime) {
@@ -170,7 +138,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getRecPers() {
-        return recPers;
+        return recPers == null ? "" : recPers;
     }
 
     public void setRecPers(String recPers) {
@@ -178,7 +146,7 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getCurrentPage() {
-        return currentPage;
+        return currentPage == null ? "" : currentPage;
     }
 
     public void setCurrentPage(String currentPage) {
@@ -186,10 +154,42 @@ public class BisSinsScheGroup extends HttpBaseResponse<BisSinsScheGroup> {
     }
 
     public String getPageSize() {
-        return pageSize;
+        return pageSize == null ? "" : pageSize;
     }
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getScheName() {
+        return scheName == null ? "" : scheName;
+    }
+
+    public void setScheName(String scheName) {
+        this.scheName = scheName;
+    }
+
+    public String getScheStartTime() {
+        return scheStartTime == null ? "" : scheStartTime;
+    }
+
+    public void setScheStartTime(String scheStartTime) {
+        this.scheStartTime = scheStartTime;
+    }
+
+    public String getScheCont() {
+        return scheCont == null ? "" : scheCont;
+    }
+
+    public void setScheCont(String scheCont) {
+        this.scheCont = scheCont;
+    }
+
+    public String getScheCompTime() {
+        return scheCompTime == null ? "" : scheCompTime;
+    }
+
+    public void setScheCompTime(String scheCompTime) {
+        this.scheCompTime = scheCompTime;
     }
 }

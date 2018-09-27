@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.hidden;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +21,9 @@ public class HiddenInvestigationTaskInfoGroup
         this.children = children;
     }
 
+
     public String getHeader() {
-        return header;
+        return header == null ? "" : header;
     }
 
     public void setHeader(String header) {
@@ -29,6 +31,9 @@ public class HiddenInvestigationTaskInfoGroup
     }
 
     public List<HiddenInvestigationTaskInfo> getChildren() {
+        if (children == null) {
+            return new ArrayList<>();
+        }
         return children;
     }
 

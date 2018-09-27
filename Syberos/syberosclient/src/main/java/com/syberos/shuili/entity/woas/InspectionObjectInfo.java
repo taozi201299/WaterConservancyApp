@@ -2,6 +2,7 @@ package com.syberos.shuili.entity.woas;
 
 import com.syberos.shuili.entity.HttpBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,9 +36,8 @@ public class InspectionObjectInfo extends HttpBaseResponse<InspectionObjectInfo>
     private int score;                  // 评分
 
 
-
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -117,6 +117,9 @@ public class InspectionObjectInfo extends HttpBaseResponse<InspectionObjectInfo>
     }
 
     public List<TrainingRecordInfo> getTrainingRecordInfoList() {
+        if (trainingRecordInfoList == null) {
+            return new ArrayList<>();
+        }
         return trainingRecordInfoList;
     }
 
@@ -131,5 +134,4 @@ public class InspectionObjectInfo extends HttpBaseResponse<InspectionObjectInfo>
     public void setScore(int score) {
         this.score = score;
     }
-
 }

@@ -13,7 +13,7 @@ public class InspectAssessHistory extends HttpBaseResponse<InspectAssessHistory>
 
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -21,11 +21,10 @@ public class InspectAssessHistory extends HttpBaseResponse<InspectAssessHistory>
     }
 
     public String getScore() {
-        return score;
+        return score == null ? "" : score;
     }
 
     public void setScore(String score) {
         this.score = score;
     }
-
 }

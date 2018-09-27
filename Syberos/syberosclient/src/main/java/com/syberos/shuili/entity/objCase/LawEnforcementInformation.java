@@ -1,6 +1,7 @@
 package com.syberos.shuili.entity.objCase;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +19,9 @@ public class LawEnforcementInformation implements Serializable{
 
     private List<LawEnforcementEvidenceInformation> evidenceInformationList;   // 现场执法证据
 
+
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -27,7 +29,7 @@ public class LawEnforcementInformation implements Serializable{
     }
 
     public String getLitigant() {
-        return litigant;
+        return litigant == null ? "" : litigant;
     }
 
     public void setLitigant(String litigant) {
@@ -35,7 +37,7 @@ public class LawEnforcementInformation implements Serializable{
     }
 
     public String getTime() {
-        return time;
+        return time == null ? "" : time;
     }
 
     public void setTime(String time) {
@@ -43,7 +45,7 @@ public class LawEnforcementInformation implements Serializable{
     }
 
     public String getUndertaker() {
-        return undertaker;
+        return undertaker == null ? "" : undertaker;
     }
 
     public void setUndertaker(String undertaker) {
@@ -51,7 +53,7 @@ public class LawEnforcementInformation implements Serializable{
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setDescription(String description) {
@@ -59,12 +61,13 @@ public class LawEnforcementInformation implements Serializable{
     }
 
     public List<LawEnforcementEvidenceInformation> getEvidenceInformationList() {
+        if (evidenceInformationList == null) {
+            return new ArrayList<>();
+        }
         return evidenceInformationList;
     }
 
-    public void setEvidenceInformationList(
-            List<LawEnforcementEvidenceInformation> evidenceInformationList) {
+    public void setEvidenceInformationList(List<LawEnforcementEvidenceInformation> evidenceInformationList) {
         this.evidenceInformationList = evidenceInformationList;
     }
-
 }
