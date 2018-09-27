@@ -107,7 +107,7 @@ public class InspectQueryListActivity extends BaseActivity {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInfo/";
         HashMap<String,String>params = new HashMap<>();
         params.put("planOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("planOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
+     //   params.put("planOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

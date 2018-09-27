@@ -263,18 +263,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     int sourceType = 1;
 
     private void initTitleAndView(String type) {
-
-
-//        initAccView(securityCloudEntry.getAccidentInfoEntry());
-//
-//        initHiddenView(securityCloudEntry.getHiddenInfoEntry());
-//
-//        initRiskResource(securityCloudEntry.getRiskSourceEntry());
-//
-//        initTrendView(securityCloudEntry.getCompScoreTrend());
-//
-//        initTrendView(securityCloudEntry.getCompScoreTrend());
-
         switch (type) {
             case "1":
                 title = "直管工程";
@@ -295,23 +283,16 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 cardViewManager.setVisibility(View.VISIBLE);
                 sourceType = 3;
                 safaType = 0;
-//                getDataLiuYu();
-//                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
-//                initRankView(securityCloudEntry.getRankList());
                 break;
             case "3":
                 title = "行业监管";
                 cardViewManager.setVisibility(View.VISIBLE);
                 safaType = 0;
                 sourceType = 2;
-                tvTitle.setText(title);
-//                getDataJianGuan();
-//                initSupervisionManage(securityCloudEntry.getSupervisionMangeEntry());
-//                initRankView(securityCloudEntry.getRankList());
                 break;
         }
+        tvTitle.setText(title);
         getSecuritData(sourceType, safaType);
-//        RetrofitHttpMethods.getInstance().
     }
 
 
@@ -479,7 +460,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             supervisionMangeEntry.setStandardLevelTwoCount(bzhBean.getEJ());
             supervisionMangeEntry.setStandardLevelThreeCount(bzhBean.getSJ());
             supervisionMangeEntry.setWorkAssessmentScore(securityCloudAreaEntry.getData().getGzkh().get(0).getAVGSCORE());
-//            initSupervisionManage(supervisionMangeEntry);
+//            if(sourceType != 1) {
+//                initSupervisionManage(supervisionMangeEntry);
+//            }
         }
 //        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
 //        if (bzhBean != null) {
@@ -779,18 +762,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
         //Highlighting programmatically
 
-//        highlightValues(Highlight[] highs)
-//               Highlights the values at the given indices in the given DataSets. Provide null or an empty array to undo all highlighting.
-//        highlightValue(int xIndex, int dataSetIndex)
-//               Highlights the value at the given x-index in the given DataSet. Provide -1 as the x-index or dataSetIndex to undo all highlighting.
-//        getHighlighted()
-//               Returns an Highlight[] array that contains information about all highlighted entries, their x-index and dataset-index.
-
-
-        //其他请参考https://github.com/PhilJay/MPAndroidChart/wiki/Interaction-with-the-Chart
-        //如手势相关方法，选择回调方法
-
-
 //        The Axis 坐标轴相关的,XY轴通用
         xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
         xAxis.setDrawAxisLine(false); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
@@ -824,15 +795,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.setDrawLabels(true);
         //可以设置一条警戒线，如下：
 
-//        LimitLine ll = new LimitLine(80, "（合格线：" + securityCloudEntry.getCompScoreTrend().getQualifiedScore() + "分)");
-//        ll.enableDashedLine(10, 8, 0);
-//        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-//        ll.setLineColor(getResources().getColor(R.color.button_rush_0bede5));
-//        ll.setLineWidth(1f);
-//        ll.setTextColor(Color.WHITE);
-//        ll.setTextSize(12f);
-        // .. and more styling options
-
 //      Y轴专用
 
         YAxis yAxisRight = lineChart.getAxisRight();
@@ -861,13 +823,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         // get the legend (only possible after setting data)
         Legend mLegend = lineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
         mLegend.setEnabled(false);
-        // modify the legend ...
-        // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
-//        mLegend.setForm(Legend.LegendForm.CIRCLE);// 样式
-//        mLegend.setFormSize(2f);// 字体
-//        mLegend.setTextColor(Color.WHITE);// 颜色
-//      mLegend.setTypeface(mTf);// 字体
-
         lineChart.animateX(0); // 立即执行的动画,x轴
     }
 
@@ -901,20 +856,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         lineChart.setDragDecelerationEnabled(true);//拖拽滚动时，手放开是否会持续滚动，默认是true（false是拖到哪是哪，true拖拽之后还会有缓冲）
         lineChart.setDragDecelerationFrictionCoef(0.99f);//与上面那个属性配合，持续滚动时的速度快慢，[0,1) 0代表立即停止。
 
-        //Highlighting programmatically
-
-//        highlightValues(Highlight[] highs)
-//               Highlights the values at the given indices in the given DataSets. Provide null or an empty array to undo all highlighting.
-//        highlightValue(int xIndex, int dataSetIndex)
-//               Highlights the value at the given x-index in the given DataSet. Provide -1 as the x-index or dataSetIndex to undo all highlighting.
-//        getHighlighted()
-//               Returns an Highlight[] array that contains information about all highlighted entries, their x-index and dataset-index.
-
-
-        //其他请参考https://github.com/PhilJay/MPAndroidChart/wiki/Interaction-with-the-Chart
-        //如手势相关方法，选择回调方法
-
-
 //        The Axis 坐标轴相关的,XY轴通用
         xAxis.setEnabled(true);     //是否显示X坐标轴 及 对应的刻度竖线，默认是true
         xAxis.setDrawAxisLine(false); //是否绘制坐标轴的线，即含有坐标的那条线，默认是true
@@ -947,14 +888,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.setLabelRotationAngle(330);
         xAxis.setDrawLabels(true);
         //可以设置一条警戒线，如下：
-//        LimitLine ll = new LimitLine(80, "（合格线：" + securityCloudEntry.getCompScoreTrend().getQualifiedScore() + "分)");
-//        ll.enableDashedLine(10, 8, 0);
-//        ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-//        ll.setLineColor(getResources().getColor(R.color.button_rush_0bede5));
-//        ll.setLineWidth(1f);
-//        ll.setTextColor(Color.WHITE);
-//        ll.setTextSize(12f);
-        // .. and more styling options
 
 //      Y轴专用
 
@@ -984,13 +917,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         // get the legend (only possible after setting data)
         Legend mLegend = lineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
         mLegend.setEnabled(false);
-        // modify the legend ...
-        // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
-//        mLegend.setForm(Legend.LegendForm.CIRCLE);// 样式
-//        mLegend.setFormSize(2f);// 字体
-//        mLegend.setTextColor(Color.WHITE);// 颜色
-//      mLegend.setTypeface(mTf);// 字体
-
         lineChart.animateX(0); // 立即执行的动画,x轴
     }
 

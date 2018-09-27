@@ -112,8 +112,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
     private void getUnitInfo(){
        String url = strIP +"/sjjk/v1/att/org/ext/attOrgExts/";
        HashMap<String,String>params = new HashMap<>();
-      // params.put("orgGuid",relEngOrg.dataSource.get(0).getOrgGuid());
-        params.put("orgGuid","9A1223ACDF57405DB2C3D374AD1BAEEA");
+       params.put("orgGuid",relEngOrg.dataSource.get(0).getOrgGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -137,8 +136,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
     private void getBisEutrOfflRecs(){
         String url = strIP +"/sjjk/v1/bis/eutr/bisEutrOfflRecs/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("orgGuid",attOrgExt.getOrgGuid());
-        params.put("orgGuid","F83199FDD35E49FF9643A6C394DBBF45");
+        params.put("orgGuid",attOrgExt.getOrgGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

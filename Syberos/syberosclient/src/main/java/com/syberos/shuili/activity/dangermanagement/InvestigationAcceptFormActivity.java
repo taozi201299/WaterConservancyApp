@@ -16,6 +16,7 @@ import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.TodoWorkInfo;
@@ -148,12 +149,13 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      * @param type
      */
     private void submit(int type){
-        String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
         params.put("accepDate",tv_time.getText().toString()); // 验收时间
         params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
+        params.put("collTime", CommonUtils.getCurrentDate());
         params.put("note","移动端接口测试");  //备注
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

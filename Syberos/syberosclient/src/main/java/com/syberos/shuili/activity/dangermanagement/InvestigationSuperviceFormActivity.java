@@ -146,7 +146,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         //督办意见
         params.put("supOpin",et_supervise_desc.getEditText());
         //备注
-        params.put("note","");
+        params.put("note","移动客户端测试数据");
         //采集时间
         params.put("collTime",CommonUtils.getCurrentDate());
         //更新时间

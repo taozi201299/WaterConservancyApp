@@ -9,8 +9,51 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 
 public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
+
+    /**
+     * INSP_DATE : 1537891200000
+     * supOrgName : 中华人民共和国水利部
+     * hiddSour : null
+     * xhGuid : b5dffdfc4cad4434981ea59a9c7b714b
+     * proPart : 隐患部位
+     * recPers : null
+     * partLong : null
+     * ROWNO : 15
+     * supWiunCode : D7862390F88443AE87FA9DD1FE45A8B6
+     * bisHiddInveID : d584ee16c89a4a8c85cd72b3fd030d32
+     * seGuid : null
+     * hiddStat : 2
+     * seCheckItemGuid : null
+     * orgCode : QQQQQQ140107000016
+     * supStat : null
+     * bisMajHiddSupID : 50400910a198457d8f6bca20d5ae15ef
+     * accepDate : 1538102206000
+     * veriResu : null
+     * note : null
+     * orgGuid : 0ADC8B975E4B4F0685F16594F4625A1A
+     * ifFound : null
+     * inspRecGuid : null
+     * bisHiddRectAcceID : 575cf06f03c9464f9293c85ca59cec2e
+     * hiddDesc : 隐患情况描述
+     * collTime : 2018-09-26 11:33:22
+     * orgName : 黄河万家寨水利枢纽有限公司
+     * requCompDate : null
+     * hiddGrad : 2
+     * tendGuid : null
+     * guid : 460c881cbf0a45bfa7463034e448827d
+     * partLat : null
+     * updTime : 2018-09-26 20:03:16
+     * bisHiddMajVeriID : null
+     * hiddClas : 02
+     * engGuid : 8da6dc3316434965bb3773886c42537c
+     * hiddName : 识别、获取、评审、更新等环节要求未齐全。
+     * engName : 测试工程
+     */
+
+    private String INSP_DATE;
     private String supOrgName;
     private String hiddSour;
+    private String xhGuid;
     private String proPart;
     private String recPers;
     private String partLong;
@@ -21,9 +64,10 @@ public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
     private String hiddStat;
     private String seCheckItemGuid;
     private String orgCode;
+    private String supStat;
     private String bisMajHiddSupID;
+    private String accepDate;
     private String veriResu;
-    private String inspDate;
     private String note;
     private String orgGuid;
     private String ifFound;
@@ -45,6 +89,14 @@ public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
     private String engName;
 
 
+    public String getINSP_DATE() {
+        return INSP_DATE == null ? "" : INSP_DATE;
+    }
+
+    public void setINSP_DATE(String INSP_DATE) {
+        this.INSP_DATE = INSP_DATE;
+    }
+
     public String getSupOrgName() {
         return supOrgName == null ? "" : supOrgName;
     }
@@ -59,6 +111,14 @@ public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
 
     public void setHiddSour(String hiddSour) {
         this.hiddSour = hiddSour;
+    }
+
+    public String getXhGuid() {
+        return xhGuid == null ? "" : xhGuid;
+    }
+
+    public void setXhGuid(String xhGuid) {
+        this.xhGuid = xhGuid;
     }
 
     public String getProPart() {
@@ -141,6 +201,14 @@ public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
         this.orgCode = orgCode;
     }
 
+    public String getSupStat() {
+        return supStat == null ? "" : supStat;
+    }
+
+    public void setSupStat(String supStat) {
+        this.supStat = supStat;
+    }
+
     public String getBisMajHiddSupID() {
         return bisMajHiddSupID == null ? "" : bisMajHiddSupID;
     }
@@ -149,20 +217,20 @@ public class HiddenSupervice  extends HttpBaseResponse<HiddenSupervice>{
         this.bisMajHiddSupID = bisMajHiddSupID;
     }
 
+    public String getAccepDate() {
+        return accepDate == null ? "" : accepDate;
+    }
+
+    public void setAccepDate(String accepDate) {
+        this.accepDate = accepDate;
+    }
+
     public String getVeriResu() {
         return veriResu == null ? "" : veriResu;
     }
 
     public void setVeriResu(String veriResu) {
         this.veriResu = veriResu;
-    }
-
-    public String getInspDate() {
-        return inspDate == null ? "" : inspDate;
-    }
-
-    public void setInspDate(String inspDate) {
-        this.inspDate = inspDate;
     }
 
     public String getNote() {

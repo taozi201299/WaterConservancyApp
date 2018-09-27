@@ -75,6 +75,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
     @Override
     public void initData() {
         showDataLoadingDialog();
+        accidentInformationGroups.clear();
         getDirectUnit();
 
     }
@@ -107,11 +108,10 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                 if(hiddenSupervice.dataSource.size() > 0) {
                     if(hiddenSupervice.dataSource.size() > 0) {
                         for(HiddenSupervice item: hiddenSupervice.dataSource){
-                            if(item.getBisMajHiddSupID() == null || item.getBisMajHiddSupID().isEmpty()){
-                                if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
+                            if(item.getSupStat() == null || item.getSupStat().isEmpty()){
+                                if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
                                     datas.add(item);
                                 }
-
                             }
                         }
                         if(datas.size() > 0)
@@ -146,8 +146,8 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                 ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice1.dataSource.size() > 0) {
                     for(HiddenSupervice item: hiddenSupervice1.dataSource){
-                        if(item.getBisMajHiddSupID() == null || item.getBisMajHiddSupID().isEmpty()){
-                            if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
+                        if(item.getSupStat() == null || item.getSupStat().isEmpty()){
+                            if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
                                 datas.add(item);
                             }
                         }
@@ -170,6 +170,10 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
     }
     private void refreshUI(){
         closeDataDialog();
+        if(accidentInformationGroups.size() == 0){
+            ToastUtils.show("没有待督办任务");
+            return;
+        }
         groupedEnterprisesExpressAccidentListAdapter.setData(accidentInformationGroups);
         groupedEnterprisesExpressAccidentListAdapter.notifyDataSetChanged();
 

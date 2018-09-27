@@ -108,7 +108,7 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/obj/bisWoasObjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGroupGuid",bisWoasGroup.getGuid());
-        params.put("woasGroupGuid","5848107dbdd545189833ab487b41bd32");
+      //  params.put("woasGroupGuid","5848107dbdd545189833ab487b41bd32");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

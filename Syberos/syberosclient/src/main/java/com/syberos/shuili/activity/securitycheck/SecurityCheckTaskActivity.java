@@ -99,7 +99,6 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
         params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("persGuid","46669F8D50294BD5A4E59B74E21EBCD5");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -167,7 +166,6 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
             params.put("sinsGuid",item.getScheGuid());
-            params.put("sinsGuid","B68DA990FA4043DD9C0045740E9E59D2");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {

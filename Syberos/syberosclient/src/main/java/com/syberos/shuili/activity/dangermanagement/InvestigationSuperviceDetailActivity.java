@@ -167,7 +167,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         showDataLoadingDialog();
         customScrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.tv_action_bar2_title)).setText("隐患督办");
+        ((TextView)findViewById(R.id.tv_action_bar2_title)).setText("隐患详情");
         ((ImageView)findViewById(R.id.iv_action_bar2_left)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -73,6 +73,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
     @Override
     public void initData() {
         showDataLoadingDialog();
+        accidentInformationGroups.clear();
         getDirectUnit();
 
     }
@@ -104,10 +105,12 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                 ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice.dataSource.size() > 0) {
                         for(HiddenSupervice item: hiddenSupervice.dataSource){
-                            if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
-                                continue;
+                            if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
+                                if(item.getRequCompDate() != null && !item.getRequCompDate().isEmpty()) {
+                                    datas.add(item);
+                                }
                             }else {
-                                datas.add(item);
+                              continue;
                             }
                         }
                         if(datas.size() > 0)
@@ -141,10 +144,12 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                 ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice1.dataSource.size() > 0) {
                     for(HiddenSupervice item: hiddenSupervice1.dataSource){
-                        if(item.getBisHiddRectAcceID() == null || item.getBisHiddRectAcceID().isEmpty()){
-                            continue;
+                        if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
+                            if(item.getRequCompDate() != null && !item.getRequCompDate().isEmpty()) {
+                                datas.add(item);
+                            }
                         }else {
-                            datas.add(item);
+                          continue;
                         }
                     }
                     if(datas.size() >0)
@@ -164,6 +169,10 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
     }
     private void refreshUI(){
         closeDataDialog();
+        if(accidentInformationGroups.size() == 0){
+            ToastUtils.show("没有待销号任务");
+            return;
+        }
         groupedEnterprisesExpressAccidentListAdapter.setData(accidentInformationGroups);
         groupedEnterprisesExpressAccidentListAdapter.notifyDataSetChanged();
 
@@ -262,12 +271,12 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
             RelativeLayout rl_supervice = holder.get(R.id.ll_supervise);
             ShapeDrawable bgShape = null;
             switch (type) {
-                case "0": {
+                case "1": {
                     ((TextView) (holder.get(R.id.tv_type))).setText(R.string.normal);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
                 }
                 break;
-                case "1": {
+                case "2": {
                     ((TextView) (holder.get(R.id.tv_type))).setText(R.string.danger);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
                 }

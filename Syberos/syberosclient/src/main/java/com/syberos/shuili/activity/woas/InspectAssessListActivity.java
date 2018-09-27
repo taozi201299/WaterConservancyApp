@@ -98,7 +98,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
         params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("leadOrgGuid","B694018733574C1398AF1064371BF5C6");
+   //     params.put("leadOrgGuid","B694018733574C1398AF1064371BF5C6");
         // 1 水利稽查工作考核 2 安全生产工作考核
         params.put("woasType","1");
         params.put("sendStat","1");
