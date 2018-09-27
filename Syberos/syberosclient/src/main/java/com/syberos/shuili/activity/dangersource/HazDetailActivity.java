@@ -95,8 +95,8 @@ public class HazDetailActivity extends BaseActivity
     private void getBisHazRegDetail(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
         HashMap<String,String>param = new HashMap<>();
-        param.put("guid",information.guid);
-        param.put("hazGuid",information.guid);
+        param.put("guid",information.getGuid());
+        param.put("hazGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

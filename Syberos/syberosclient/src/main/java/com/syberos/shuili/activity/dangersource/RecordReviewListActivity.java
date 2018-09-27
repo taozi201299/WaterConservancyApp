@@ -60,7 +60,7 @@ public class RecordReviewListActivity extends BaseActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        BisHazReg information = bisHazReg.dataSource.get(position);
+        BisHazReg information = datas.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, HazDetailActivity.class, false, bundle);
     }
