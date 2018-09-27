@@ -86,6 +86,7 @@ public class NotificationDetailActivity extends BaseActivity {
         tv_action_bar2_title.setText("通知详情");
         tv_action_bar2_title.setGravity(Gravity.LEFT);
         iv_action_bar2_right.setImageResource(R.mipmap.icon_delete);
+        iv_action_bar2_right.setVisibility(View.GONE);
         iv_action_bar2_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +112,7 @@ public class NotificationDetailActivity extends BaseActivity {
         noticeIds.add(noticeInfo.getGuid());
         String url = strZJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
+        formInfo.orgGuid = SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId();
         formInfo.all = false;
         formInfo.list = noticeIds;
         Gson gson = new Gson();

@@ -111,6 +111,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         setInitActionBar(false);
         tv_action_bar_title.setText("通知提醒");
         tv_action_bar_editStatus.setText("清空");
+        tv_action_bar_editStatus.setVisibility(View.GONE);
         tv_action_bar_editStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +153,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         showDataLoadingDialog();
         String url = strZJIP+"/pprty/WSRest/service/notice/del_all";
         NoticeFormInfo formInfo = new NoticeFormInfo();
-        formInfo.userGuid = SyberosManagerImpl.getInstance().getCurrentUserId();
+        formInfo.orgGuid = SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId();
         if(type == DeleteType.DELETE_ALL)
         formInfo.all = true;
         else formInfo.all = false;
@@ -177,7 +178,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
     private void getNotices(){
         String url = strZJIP+"/pprty/WSRest/service/notice/pagelist";
         HashMap<String,String> params = new HashMap<>();
-        params.put("userGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

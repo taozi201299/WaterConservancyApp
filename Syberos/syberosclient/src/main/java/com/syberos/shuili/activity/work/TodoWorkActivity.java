@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
@@ -16,8 +17,11 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationAcceptFormForEn
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.RoleBaseInfo;
 import com.syberos.shuili.entity.TodoWorkInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
+import com.syberos.shuili.entity.userinfo.RoleExtInfoList;
+import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -44,6 +48,8 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     List<TodoWorkInfo> datas = new ArrayList<>();
 
     private int pageIndex = 1;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public int getLayoutId() {
@@ -57,35 +63,60 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
 
     @Override
     public void initData() {
+         showDataLoadingDialog();
+         iSucessCount = 0;
+         iFailedCount = 0;
+        datas.clear();
          getData();
     }
 
     private void getData(){
-        String url = strZJIP+"/pprty/WSRest/service/backlog";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("roleCode","235407195106112745");
-      //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                datas.clear();
-                pullRecyclerView.refreshOrLoadComplete();
-                pageIndex ++ ;
-                Gson gson = new Gson();
-                TodoWorkInfo todoWorkInfo = gson.fromJson(result, TodoWorkInfo.class);
-                if(todoWorkInfo.dataSource.list!=null) {
-                    datas = todoWorkInfo.dataSource.list;
-                }
-                refreshUI();
-                pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore=="true");
-            }
+        final int size = LoginUtil.getRoleList().size();
+        ArrayList<RoleBaseInfo>roleBaseInfos = LoginUtil.getRoleList();
+        if(size == 0)closeDataDialog();
+        for(int i = 0; i<size; i++) {
+            String url = strZJIP + "/pprty/WSRest/service/backlog";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("roleCode", roleBaseInfos.get(i).getRoleCode());
+            //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    pullRecyclerView.refreshOrLoadComplete();
+                    pageIndex++;
+                    Gson gson = new Gson();
+                    TodoWorkInfo todoWorkInfo = gson.fromJson(result, TodoWorkInfo.class);
+                    boolean bExist = false;
+                    if (todoWorkInfo.dataSource.list != null) {
+                        for(TodoWorkInfo info : todoWorkInfo.dataSource.list){
+                            for(TodoWorkInfo item: datas){
+                                if(item.getGuid().equals(info.getGuid())) {
+                                    bExist = true;
+                                    break;
+                                }
+                            }
+                            if(!bExist){
+                                datas.add(info);
+                            }
+                        }
+                    }
+                    if(iSucessCount + iFailedCount == size) {
+                        refreshUI();
+                        pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore == "true");
+                    }
 
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-            }
-        });
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    if(iSucessCount + iFailedCount == size) {
+                        refreshUI();
+                    }
+                    ToastUtils.show(errorInfo.getMessage());
+                }
+            });
+        }
     }
     @Override
     public void initView() {
@@ -104,6 +135,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
      * 根据权限模块进行过滤
      */
     private void refreshUI(){
+        closeDataDialog();
         adapter.setData(datas);
         adapter.notifyDataSetChanged();
     }
