@@ -192,6 +192,11 @@ public class CommonUtils {
         Date curDate = new Date(System.currentTimeMillis());
         return  formatter.format(curDate);
     }
+    public static String getCurrentDateYMD(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());
+        return  formatter.format(curDate);
+    }
     public static Date stringToDate(String strTime)
             throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -5,8 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
@@ -34,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.syberos.shuili.activity.securitycheck.SecurityCheckTaskActivity.SEND_BUNDLE_KEY;
@@ -44,6 +47,8 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
  * 安全检查对象表（OBJ_SINS）
  */
 public class SecurityCheckQueryListActivity extends TranslucentActivity {
+    @BindView(R.id.checkbox)
+    CheckBox checkbox;
     private GroupedListAdapter groupedListAdapter;
 
     @BindView(R.id.recyclerView_query_accident)
@@ -78,7 +83,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
      * 安全检查方案表信息
      */
     private BisSinsSche bisSinsSche;
-    private HashMap<String,BisSinsSche> map = new HashMap<>();
+    private HashMap<String, BisSinsSche> map = new HashMap<>();
 
     private int iSucessCount;
     private int iFailedCount;
@@ -93,10 +98,18 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     public void initListener() {
         tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
         iv_action_right.setOnTouchListener(new ItemClickedAlphaChangeListener());
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                initData();
+            }
+        });
     }
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        map.clear();
         iSucessCount = 0;
         iFailedCount = 0;
         getObjSins();
@@ -121,9 +134,9 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
                                              int groupPosition, int childPosition) {
 
                         Bundle bundle = new Bundle();
-                        Object [] heads = groupedListAdapter.getHeads();
+                        Object[] heads = groupedListAdapter.getHeads();
                         List<BisSinsSche> children = map.get(heads[groupPosition]).dataSource;
-                          BisSinsSche item = children.get(childPosition);
+                        BisSinsSche item = children.get(childPosition);
                         bundle.putSerializable(SEND_BUNDLE_KEY, item);
 
                         intentActivity(SecurityCheckQueryListActivity.this,
@@ -133,6 +146,10 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
                 });
 
         recyclerView.setAdapter(groupedListAdapter);
+        tv_current_month.setText(CommonUtils.getCurrentDateYMD());
+        checkbox.setVisibility(View.VISIBLE);
+        checkbox.setChecked(false);
+
 
 
     }
@@ -140,22 +157,26 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     /**
      * 获取单位的部署通知信息
      */
-    private void getObjSins(){
-        String url = strIP +"/sjjk/v1/obj/sis/objSinss/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("notIssuGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+    private void getObjSins() {
+        String url = strIP + "/sjjk/v1/obj/sis/objSinss/";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("notIssuGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        if(checkbox.isChecked()) {
+            params.put("sinsStartTime", tv_current_month.getText() + " 00:00:00");
+        }
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                objSins = gson.fromJson(result,ObjSins.class);
-                if(objSins != null && objSins.dataSource != null){
+                objSins = gson.fromJson(result, ObjSins.class);
+                if (objSins != null && objSins.dataSource != null) {
                     getPlanInfo();
 
-                }else {
+                } else {
                     closeDataDialog();
                 }
             }
+
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
@@ -163,25 +184,26 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
             }
         });
     }
-    private void  getPlanInfo(){
+
+    private void getPlanInfo() {
         // 外键 检查部署guid
-        final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
-        String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
-        HashMap<String,String>params = new HashMap<>();
-        int size =infos.size();
-        for(int i = 0; i < size ;i ++){
+        final ArrayList<ObjSins> infos = (ArrayList<ObjSins>) objSins.dataSource;
+        String url = strIP + "/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        HashMap<String, String> params = new HashMap<>();
+        int size = infos.size();
+        for (int i = 0; i < size; i++) {
             final ObjSins item = infos.get(i);
-            params.put("sinsGuid",item.getGuid());
+            params.put("sinsGuid", item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    iSucessCount ++;
+                    iSucessCount++;
                     Gson gson = new Gson();
-                    bisSinsSche = gson.fromJson(result,BisSinsSche.class);
-                    if(bisSinsSche != null && bisSinsSche.dataSource != null){
-                        map.put(item.getGuid(),bisSinsSche);
+                    bisSinsSche = gson.fromJson(result, BisSinsSche.class);
+                    if (bisSinsSche != null && bisSinsSche.dataSource != null) {
+                        map.put(item.getGuid(), bisSinsSche);
                     }
-                    if(iSucessCount + iFailedCount == infos.size()){
+                    if (iSucessCount + iFailedCount == infos.size()) {
                         closeDataDialog();
                         refreshUI();
                     }
@@ -189,8 +211,8 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    iFailedCount ++;
-                    if(iSucessCount + iFailedCount == infos.size()){
+                    iFailedCount++;
+                    if (iSucessCount + iFailedCount == infos.size()) {
                         closeDataDialog();
                         refreshUI();
                     }
@@ -198,15 +220,17 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
             });
         }
     }
-    private String getHeaderName(String id){
-        for(ObjSins item : objSins.dataSource){
-            if(item.getGuid().equals(id)){
+
+    private String getHeaderName(String id) {
+        for (ObjSins item : objSins.dataSource) {
+            if (item.getGuid().equals(id)) {
                 return item.getSinsDeplName();
             }
         }
         return "未知";
 
     }
+
     private void refreshUI() {
         groupedListAdapter.setData(map);
         groupedListAdapter.notifyDataSetChanged();
@@ -214,7 +238,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
 
     private void onSelectMonthClicked() {
         //时间选择器
-        boolean[] type = {true, true, false, false, false, false};
+        boolean[] type = {true, true, true, false, false, false};
 
         TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -223,8 +247,10 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
                     ToastUtils.show("提示：所选月份不应大于系统当前月份");
                     return;
                 }
-                tv_current_month.setText(Strings.formatYearMonth(date));
-                // TODO: 2018/4/10 处理时间设置之后的逻辑
+                tv_current_month.setText(Strings.formatDate(date));
+                if(checkbox.isChecked()) {
+                    initData();
+                }
             }
         })
                 .isDialog(true)
@@ -233,9 +259,8 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
-
     private class GroupedListAdapter extends GroupedRecyclerViewAdapter {
-       private HashMap<String,BisSinsSche> mGroups;
+        private HashMap<String, BisSinsSche> mGroups;
 
         public GroupedListAdapter(
                 Context context, HashMap groups) {
@@ -247,7 +272,8 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
             mGroups = groups;
 
         }
-        private Object[]getHeads (){
+
+        private Object[] getHeads() {
             Object[] heads = (Object[]) mGroups.keySet().toArray();
             return heads;
         }
@@ -259,7 +285,8 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            Object [] heads = getHeads();
+            Object[] heads = getHeads();
+            if(groupPosition >= heads.length)return  0;
             List<BisSinsSche> children = mGroups.get(heads[groupPosition]).dataSource;
             return children == null ? 0 : children.size();
         }
@@ -313,16 +340,18 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
 
         @Override
         public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
-            Object [] heads = (Object[]) mGroups.keySet().toArray();
+            Object[] heads = (Object[]) mGroups.keySet().toArray();
+            if(groupPosition >= heads.length) return;
             holder.setText(R.id.tv_header, getHeaderName(heads[groupPosition].toString()));
         }
 
         @Override
         public void onBindChildViewHolder(BaseViewHolder holder,
                                           int groupPosition, int childPosition) {
-            Object [] heads = getHeads();
+            Object[] heads = getHeads();
+            if(groupPosition >= heads.length)return;
             List<BisSinsSche> children = mGroups.get(heads[groupPosition]).dataSource;
-            if(children.size() != 0) {
+            if (children.size() != 0) {
                 holder.setText(R.id.tv_title, children.get(childPosition).getScheName());
                 holder.setText(R.id.tv_time, children.get(childPosition).getScheStartTime() + "--" + children.get(childPosition).getScheCompTime());
             }

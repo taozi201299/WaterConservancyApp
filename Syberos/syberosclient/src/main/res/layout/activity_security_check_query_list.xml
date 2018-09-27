@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/transparent"
     android:orientation="vertical">
 
@@ -10,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/button_login_normal"
-        android:padding="@dimen/padding_10">
+        android:paddingBottom="@dimen/_10dp"
+        android:paddingTop="@dimen/_10dp">
 
         <ImageView
             android:id="@+id/iv_action_bar_back"
@@ -29,22 +31,22 @@
             android:text="检查查询"
             android:textColor="@color/white" />
 
+
         <LinearLayout
             android:id="@+id/iv_action_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/padding_10"
-            >
+            android:layout_marginEnd="@dimen/padding_5"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_current_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/padding_5"
                 android:text="2017.11"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
@@ -54,6 +56,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/ic_arrow_down" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox_style"
+                android:layout_marginLeft="@dimen/_5dp"
+                android:button="@null"
+                android:checked="true"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
         </LinearLayout>
 
     </RelativeLayout>
