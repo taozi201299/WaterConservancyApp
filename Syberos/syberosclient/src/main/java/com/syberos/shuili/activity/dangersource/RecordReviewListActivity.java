@@ -21,6 +21,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
+import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -50,7 +51,11 @@ public class RecordReviewListActivity extends BaseActivity
     RecyclerView recyclerView;
     DangerousListAdapter listAdapter;
     BisHazReg bisHazReg = null;
-    private ArrayList<OrgInfo>orgInfos = new ArrayList<>();
+    BisHazMajRegWrit bisHazMajRegWrit = null;
+    ArrayList<String>regOrgGuid = new ArrayList<>();
+    ArrayList<BisHazReg>datas = new ArrayList<>();
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public void onItemClick(int position) {
@@ -69,44 +74,85 @@ public class RecordReviewListActivity extends BaseActivity
     public void initListener() {
 
     }
-    public void getHazList(){
-        String url = strIP + "/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
+
+    public void getAllRegOrgGUID(){
+        String url = strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrits/";
         HashMap<String,String>params = new HashMap<>();
-       // params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("orgGuid","21260E691D454685B61086E7F2074B71");
-        params.put("hazStat","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDataDialog();
-                Gson gson  = new Gson();
-                bisHazReg = gson.fromJson(result,BisHazReg.class);
-                if(bisHazReg == null || bisHazReg.dataSource == null){
+                Gson gson = new Gson();
+                bisHazMajRegWrit = gson.fromJson(result,BisHazMajRegWrit.class);
+                if(bisHazMajRegWrit == null || bisHazMajRegWrit.dataSource == null){
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                }else if(bisHazReg.dataSource.size() == 0){
-                    ToastUtils.show("没有相关数据");
-                }else {
-                    refreshUI();
+                    return;
                 }
+                for(BisHazMajRegWrit bisHazMajRegWrit :bisHazMajRegWrit.dataSource){
+                    if(!regOrgGuid.contains(bisHazMajRegWrit.getRegOrgGuid())){
+                        regOrgGuid.add(bisHazMajRegWrit.getRegOrgGuid());
+                    }
+                }
+                getHazList();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
+
             }
         });
     }
-    private void refreshUI(){
-        if(bisHazReg != null){
-            listAdapter.setData(bisHazReg.dataSource);
-            listAdapter.notifyDataSetChanged();
+    public void getHazList(){
+        final int size = regOrgGuid.size();
+        for(int i = 0; i <size;i++) {
+            String url = strIP + "/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("orgGuid",regOrgGuid.get(i));
+            params.put("hazStat", "1");
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    bisHazReg = gson.fromJson(result, BisHazReg.class);
+                    if (bisHazReg == null || bisHazReg.dataSource == null) {
+                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    } else if (bisHazReg.dataSource.size() == 0) {
+                    } else {
+                       for(BisHazReg item : bisHazReg.dataSource){
+                           datas.add(item);
+                       }
+                    }
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
+                }
+            });
         }
+    }
+    private void refreshUI(){
+        closeDataDialog();
+            listAdapter.setData(datas);
+            listAdapter.notifyDataSetChanged();
     }
     @Override
     public void initData() {
         showDataLoadingDialog();
-        getHazList();
+        iSucessCount = 0;
+        iFailedCount =0;
+        datas.clear();
+        regOrgGuid.clear();
+        getAllRegOrgGUID();
     }
 
     @Override

@@ -189,7 +189,7 @@
         <TextView
             android:id="@+id/tv_passed"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30dp"
+            android:layout_height="@dimen/_50dp"
             android:layout_margin="@dimen/_6dp"
             android:background="@drawable/button_login_normal"
             android:gravity="center"
