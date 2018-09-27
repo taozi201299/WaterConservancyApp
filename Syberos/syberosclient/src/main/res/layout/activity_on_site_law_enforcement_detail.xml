@@ -162,22 +162,19 @@
                 android:layout_marginTop="@dimen/_2dp"
                 android:background="@color/gray_bb" />
 
-            <RelativeLayout
-                android:id="@+id/rl_describe"
+            <com.syberos.shuili.view.AudioEditView
+                android:id="@+id/ae_describe_audio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/_5dp"
-                android:paddingStart="@dimen/_5dp">
-
-                <com.syberos.shuili.view.AudioEditView
-                    android:id="@+id/ae_describe_audio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/_50dp"
-                    android:paddingTop="@dimen/_15dp"
-                    app:view_label="案件基本情况"
-                    app:view_labelWidth="@dimen/_60dp" />
-            </RelativeLayout>
+                android:minHeight="@dimen/_50dp"
+                android:paddingTop="@dimen/_15dp"
+                android:paddingLeft="@dimen/_10dp"
+                app:view_label="案件基本情况" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1dp"
+                android:layout_marginTop="@dimen/_2dp"
+                android:background="@color/gray_bb" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -189,6 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6dp"
+                    android:layout_marginTop="@dimen/_5dp"
                     >
 
                     <LinearLayout
