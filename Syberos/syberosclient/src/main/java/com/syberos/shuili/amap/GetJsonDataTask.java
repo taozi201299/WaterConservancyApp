@@ -3,7 +3,13 @@ package com.syberos.shuili.amap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.map.MapPointBean;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,6 +18,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * @author: ZhaoDongshuang
@@ -45,10 +52,14 @@ public class GetJsonDataTask extends AsyncTask<String, Void, String> {
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
-
             OutputStream os = conn.getOutputStream();
             PrintWriter pw = new PrintWriter(os);
-            pw.print("{\"requestData\":{\"typeList\":[\"CWS\",\"DIKE\",\"HYST\",\"IRR\",\"PUST\",\"SD\",\"WAGA\"],\"radius\":0,\"targetId\":\"search.GeoSearchLogic\",\"geo\":'"+ urls[0] +"'}}");
+            MapPointBean mapPointBean ;
+            Gson gson = new Gson();
+            mapPointBean = gson.fromJson(urls[0],MapPointBean.class);
+            String radius = mapPointBean.getRadius();
+            String point = "[" + mapPointBean.getLon() + "," +mapPointBean.getLat() +"]";
+            pw.print("{\"requestData\":{\"typeList\":[\"CWS\"],\"radius\":"+ radius +"," +"\"targetId\":\"search.GeoSearchLogic\",\"geo\":\"{\\\"type\\\":\\\"Point\\\",\\\"coordinates\\\":" + point + "}\"}}");
             pw.flush();
             pw.close();
             os.close();

@@ -38,9 +38,7 @@ function showMap(x, y) {
             var feature = features[i];
             var id = feature.getProperties();
             var objName = id["name"];
-            alert(objName);
             var objGuid = feature.getId();
-            alert(objGuid);
             if(id == undefined) return;
             if(objName == undefined) return;
             //此处应该加判断是否存在弹窗

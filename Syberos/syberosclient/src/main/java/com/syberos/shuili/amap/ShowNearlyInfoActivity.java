@@ -39,6 +39,7 @@ import com.google.gson.Gson;
 import com.syberos.shuili.R;
 import com.syberos.shuili.activity.searchproject.ProjectDetailsActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.entity.map.MapPointBean;
 import com.syberos.shuili.entity.map.NearbyEngInfoBean;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -108,7 +109,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
 
     private List<String> types;
     private OptionsPickerView typePicker = null;
-    private int currentShowRange = 10;
+    public static int currentShowRange = 30;
 
     private  final int RC_PERM = 110;
     public static final String[] requestPermissions = {
@@ -144,19 +145,19 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 switch (options1) {
                     case 0:
-                        currentShowRange = 10;
-                        break;
-                    case 1:
-                        currentShowRange = 15;
-                        break;
-                    case 2:
-                        currentShowRange = 20;
-                        break;
-                    case 3:
                         currentShowRange = 30;
                         break;
+                    case 1:
+                        currentShowRange = 50;
+                        break;
+                    case 2:
+                        currentShowRange = 60;
+                        break;
+                    case 3:
+                        currentShowRange = 100;
+                        break;
                     default:
-                        currentShowRange = 10;
+                        currentShowRange = 30;
                         break;
                 }
                 updateNearInfo(mLon, mLan, String.valueOf(currentShowRange));
@@ -169,10 +170,10 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
                 .build();
 
         types = new ArrayList<>();
-        types.add("10公里");
-        types.add("15公里");
-        types.add("20公里");
         types.add("30公里");
+        types.add("50公里");
+        types.add("60公里");
+        types.add("100公里");
 
         typePicker.setPicker(types);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -335,6 +336,12 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
                     }
                 }
             };
+            MapPointBean mapPointBean = new MapPointBean();
+            mapPointBean.setLat(mLan);
+            mapPointBean.setLon(mLon);
+            mapPointBean.setRadius(String.valueOf(currentShowRange));
+            Gson gson = new Gson();
+            jsonString = gson.toJson(mapPointBean);
             getJsonDataTask.execute(jsonString);
         }
         @JavascriptInterface
