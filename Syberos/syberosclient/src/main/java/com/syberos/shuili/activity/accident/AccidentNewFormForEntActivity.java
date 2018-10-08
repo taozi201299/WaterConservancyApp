@@ -326,7 +326,12 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 
 
+/**
+ * 1多媒体关系表 2 多媒体基础信息表
+ * 先提交多媒体基础信息表，提交成功后，提交多媒体关系表
+ * 文档	1  图片	2  音频	3  视频 4 其他	9
 
+ */
         if(list != null){
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
@@ -337,9 +342,11 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 info.bisGuid = "";
                 info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachments.add(info);

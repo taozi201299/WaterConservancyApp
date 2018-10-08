@@ -279,7 +279,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 if (!result.isEmpty()) {
                     Gson gson = new Gson();
                     mapBoundBean = gson.fromJson(result, MapBoundBean.class);
-                    if (mapBoundBean == null && mapBoundBean.result == null ) {
+                    if (mapBoundBean == null || mapBoundBean.result == null ) {
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }else if(mapBoundBean.result.size() == 0){

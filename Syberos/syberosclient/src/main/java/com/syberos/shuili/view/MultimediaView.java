@@ -456,9 +456,11 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
 
     }
     public  enum LocalAttachmentType {
+        DOC,
         IMAGE,
-        VIDEO,
-        AUDIO
+        AUDIO,
+        VIDEO
+
 
     }
     public static class LocalAttachment implements Serializable {

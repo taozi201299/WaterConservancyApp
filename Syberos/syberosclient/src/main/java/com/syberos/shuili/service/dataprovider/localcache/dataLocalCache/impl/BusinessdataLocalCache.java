@@ -20,6 +20,7 @@ import com.syberos.shuili.service.dataprovider.dbconfig.def.DBDefinition;
 import com.syberos.shuili.service.dataprovider.localcache.dataLocalCache.DataLocalCacheBase;
 import com.syberos.shuili.service.entity.AccidentFormReturnEntity;
 import com.syberos.shuili.service.entity.FormCacheEntity;
+import com.syberos.shuili.service.entity.HiddenFormReturnEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.NetworkUtil;
 
@@ -188,9 +189,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                         iSuccessCount++;
                         // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
                         if (entity.LocalStatus.equals("0")) {
-                            Gson gson = new Gson();
-                            AccidentFormReturnEntity accidentFormReturnEntity = gson.fromJson(result, AccidentFormReturnEntity.class);
-                            updateAttachLocalStatus(url, entity.ID, accidentFormReturnEntity.dataSource.getGuid());
+                            updateLocalCache(url,entity.ID,result);
                         }
                         deleteFormCache(entity.ID);
                         resultProcess();
@@ -210,9 +209,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                         iSuccessCount++;
                         // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
                         if (entity.LocalStatus.equals("0")) {
-                            Gson gson = new Gson();
-                            AccidentFormReturnEntity accidentFormReturnEntity = gson.fromJson(result, AccidentFormReturnEntity.class);
-                            updateAttachLocalStatus(url, entity.ID, accidentFormReturnEntity.dataSource.getGuid());
+                            updateLocalCache(url,entity.ID,result);
                         }
                         deleteFormCache(entity.ID);
                         resultProcess();
@@ -227,15 +224,31 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             }
         }
     }
+    private void updateLocalCache(String url,String id,String result){
+        if(url == null) return;
+        Gson gson = new Gson();
+        // 事故
+        if(url.equals(GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Accident/create")
+                || url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/repay")
+                || url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/fastReport")) {
+            AccidentFormReturnEntity accidentFormReturnEntity = gson.fromJson(result, AccidentFormReturnEntity.class);
+            updateAttachLocalStatus(url, id, accidentFormReturnEntity.getData().getData().getGuid());
+        }
+        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd")){
+            HiddenFormReturnEntity hiddenFormReturnEntity = gson.fromJson(result,HiddenFormReturnEntity.class);
+            updateAttachLocalStatus(url,id,hiddenFormReturnEntity.getData().getData().getGuid());
+        }
+    }
     private void updateAttachLocalStatus(String url,String id,String response){
         /**
          * 新增事故返回
          */
-        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/create") ||
-                url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd")) {
+//        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/create") ||
+//                url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd"))
+        {
             String selection = DBDefinition.seriesKey + "=?";
             String[] selectionArgs = {id};
-            List list = dbHelper.query(DBDefinition.COMMIT_TABLE, null, null, null, AttachMentInfoEntity.class);
+            List list = dbHelper.query(DBDefinition.ATTACHMENT_TABLE, null, null, null, AttachMentInfoEntity.class);
             if (list == null || list.isEmpty()) {
                 return;
             } else {
