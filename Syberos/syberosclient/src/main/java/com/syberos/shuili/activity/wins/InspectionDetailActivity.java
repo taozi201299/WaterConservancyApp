@@ -88,6 +88,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         bisWinsGroupAll = (BisWinsGroupAll) bundle.getSerializable("bisWinsGroupAll");
         if(bisWinsGroupAll == null){

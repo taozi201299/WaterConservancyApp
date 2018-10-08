@@ -97,6 +97,7 @@ public class InspectAssessDetailActivity extends BaseActivity  implements View.O
     }
     @Override
     public void initView() {
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         info = (BisWoasGrop) bundle.getSerializable(
                 InspectAssessListActivity.SEND_BUNDLE_KEY);

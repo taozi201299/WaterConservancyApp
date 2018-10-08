@@ -80,6 +80,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         ll_problems_type.setEntries(GlobleConstants.winsProbMap);

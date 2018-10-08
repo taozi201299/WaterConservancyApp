@@ -213,6 +213,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(getResources().getString(R.string.module_child_anquan_jianchayuansu));
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

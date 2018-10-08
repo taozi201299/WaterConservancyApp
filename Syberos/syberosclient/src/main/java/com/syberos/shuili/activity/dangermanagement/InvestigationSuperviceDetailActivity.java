@@ -110,6 +110,8 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
     @BindView(R.id.action_bar)
     LinearLayout ll_action_bar;
+    @BindView(R.id.iv_action_bar2_left)
+    ImageView iv_action_bar2_left;
     /**
      * 接受传递过来的参数
      */

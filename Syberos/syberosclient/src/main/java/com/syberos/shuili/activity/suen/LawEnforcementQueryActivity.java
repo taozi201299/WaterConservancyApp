@@ -80,6 +80,7 @@ public class LawEnforcementQueryActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("法律法规");
         setActionBarRightVisible(View.INVISIBLE);
         searchClearEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {

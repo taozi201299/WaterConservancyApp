@@ -64,6 +64,7 @@ public class InspectProjectSelectActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle("稽察项目选择");
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

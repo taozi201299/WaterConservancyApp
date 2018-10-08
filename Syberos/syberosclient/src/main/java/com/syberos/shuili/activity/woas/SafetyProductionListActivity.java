@@ -72,6 +72,7 @@ public class SafetyProductionListActivity extends BaseActivity implements Common
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

@@ -63,7 +63,7 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
 
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);

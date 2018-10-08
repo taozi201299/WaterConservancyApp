@@ -36,6 +36,7 @@ public class LawEnforcementQueryDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(title);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);

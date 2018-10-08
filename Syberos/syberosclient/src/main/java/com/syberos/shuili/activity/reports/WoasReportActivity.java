@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -18,10 +19,12 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.ObjWoas;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.indexListView.ClearEditText;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 行政端 工作考核报表 分为安全生产和水利稽查
@@ -31,14 +34,27 @@ import butterknife.BindView;
  * 4 根通知guid不为null 有上报和撤回，可以查看其发送的单位的上报情况
  */
 
-public class WoasReportActivity extends BaseActivity{
+public class WoasReportActivity extends BaseActivity {
 
     @BindView(R.id.recyclerView_report_woas)
     RecyclerView recyclerView_report_woas;
     private final String TAG = WoasReportActivity.class.getSimpleName();
     private final String Title = "考核报表";
-    private ObjWoas  objWoas = null;
-    ListAdapter listAdapter ;
+    @BindView(R.id.iv_action_bar2_left)
+    ImageView ivActionBar2Left;
+    @BindView(R.id.tv_action_bar2_title)
+    TextView tvActionBar2Title;
+    @BindView(R.id.clearEditText)
+    ClearEditText clearEditText;
+    @BindView(R.id.iv_action_bar2_right)
+    ImageView ivActionBar2Right;
+    @BindView(R.id.iv_action_bar2_right_search)
+    ImageView ivActionBar2RightSearch;
+    @BindView(R.id.tv_quitSearch)
+    TextView tvQuitSearch;
+    private ObjWoas objWoas = null;
+    ListAdapter listAdapter;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_job_rating_report;
@@ -51,8 +67,8 @@ public class WoasReportActivity extends BaseActivity{
             @Override
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("objWoas",objWoas.dataSource.get(position));
-                intentActivity(WoasReportActivity.this,WoasDetailActivity.class,false,bundle);
+                bundle.putSerializable("objWoas", objWoas.dataSource.get(position));
+                intentActivity(WoasReportActivity.this, WoasDetailActivity.class, false, bundle);
             }
         });
     }
@@ -66,28 +82,30 @@ public class WoasReportActivity extends BaseActivity{
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView_report_woas.setLayoutManager(layoutManager);
-        listAdapter = new ListAdapter(this,R.layout.activity_history_patrol_list_item);
+        listAdapter = new ListAdapter(this, R.layout.activity_history_patrol_list_item);
         recyclerView_report_woas.setAdapter(listAdapter);
     }
-    private void getWoasReportList(){
+
+    private void getWoasReportList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/woas/selectDeployInformByMultiTable/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("sendStat","1");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("sendStat", "1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 closeDataDialog();
                 Gson gson = new Gson();
-                objWoas = gson.fromJson(result,ObjWoas.class);
-                if(objWoas != null && objWoas.dataSource != null && objWoas.dataSource.size() != 0 ){
+                objWoas = gson.fromJson(result, ObjWoas.class);
+                if (objWoas != null && objWoas.dataSource != null && objWoas.dataSource.size() != 0) {
                     refreshUI();
-                }else {
+                } else {
                     ToastUtils.show("未获取到报表内容");
                 }
 
@@ -100,10 +118,19 @@ public class WoasReportActivity extends BaseActivity{
             }
         });
     }
-    private void refreshUI(){
+
+    private void refreshUI() {
         listAdapter.setData(objWoas.dataSource);
         listAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
     private class ListAdapter extends CommonAdapter<ObjWoas> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
@@ -113,9 +140,9 @@ public class WoasReportActivity extends BaseActivity{
         public void convert(ViewHolder holder, final ObjWoas objWoas) {
             holder.getView(R.id.arrhpli_tv_title).setVisibility(View.GONE);
             ((TextView) holder.getView(R.id.arrhpli_tv_time)).setText(objWoas.getWoasThem());
-            ((TextView)holder.getView(R.id.arrhpli_tv_person_label)).setText("考核时间:");
-            ((TextView)holder.getView(R.id.arrhpli_tv_person)).setText(objWoas.getWOASSTARTIME() +"-"+objWoas.getWOASDEADLINE());
+            ((TextView) holder.getView(R.id.arrhpli_tv_person_label)).setText("考核时间:");
+            ((TextView) holder.getView(R.id.arrhpli_tv_person)).setText(objWoas.getWOASSTARTIME() + "-" + objWoas.getWOASDEADLINE());
         }
-}
+    }
 
 }

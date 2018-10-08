@@ -49,6 +49,7 @@ public class InspectAssessDetailRealSituationActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         info = (BisWoasObj) bundle.getSerializable(
                 InspectAssessDetailActivity.SEND_BUNDLE_KEY_0);

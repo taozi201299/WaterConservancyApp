@@ -43,6 +43,7 @@ public class OnSiteLawEnforcementEvidenceDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle("执法证据详情");
         setActionBarRightVisible(View.INVISIBLE);
 

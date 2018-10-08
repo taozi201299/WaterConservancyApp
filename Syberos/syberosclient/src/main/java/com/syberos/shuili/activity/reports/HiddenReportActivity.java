@@ -1,9 +1,13 @@
 package com.syberos.shuili.activity.reports;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -23,17 +27,18 @@ import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
+import com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HiddenReportActivity extends BaseActivity{
+public class HiddenReportActivity extends BaseActivity {
 
     @BindView(R.id.reportRecycleView)
     RecyclerView reportRecycleView;
@@ -43,9 +48,19 @@ public class HiddenReportActivity extends BaseActivity{
 
     final String Tag = AcciReportActivity.class.getSimpleName();
     final String title = "事故报表";
-    String header[] = {"直管单位","监管单位"};
+    String header[] = {"直管单位", "监管单位"};
     GroupedReportListAdapter groupedReportListAdapter;
     ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups = new ArrayList<>();
+    @BindView(R.id.iv_action_bar_back)
+    ImageView ivActionBarBack;
+    @BindView(R.id.tv_action_bar_title)
+    TextView tvActionBarTitle;
+    @BindView(R.id.iv_action_right)
+    LinearLayout ivActionRight;
+    @BindView(R.id.action_bar)
+    RelativeLayout actionBar;
+    @BindView(R.id.sticky_layout)
+    StickyHeaderLayout stickyLayout;
 
     @OnClick(R.id.tv_current_month)
     void onCurrentMonthClicked() {
@@ -56,6 +71,7 @@ public class HiddenReportActivity extends BaseActivity{
     void onActionBarRightClicked() {
         onSelectMonthClicked();
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_report_header_layout;
@@ -64,6 +80,12 @@ public class HiddenReportActivity extends BaseActivity{
     @Override
     public void initListener() {
         tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
+        ivActionBarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityFinish();
+            }
+        });
     }
 
     @Override
@@ -78,7 +100,7 @@ public class HiddenReportActivity extends BaseActivity{
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         reportRecycleView.setLayoutManager(layoutmanager);
-        groupedReportListAdapter = new GroupedReportListAdapter(mContext,mGroups);
+        groupedReportListAdapter = new GroupedReportListAdapter(mContext, mGroups);
     }
 
     /**
@@ -89,21 +111,21 @@ public class HiddenReportActivity extends BaseActivity{
      * 获取下一级单位上报情况
      */
 
-    private void getSubUnitReportList(){
+    private void getSubUnitReportList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectSubordinateMonthlyByTimeAndGuid/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repTime",tv_current_month.getText().toString());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pguid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("repTime", tv_current_month.getText().toString());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result,BisOrgMonRepPeriForAdmin.class);
-                if(bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null){
+                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result, BisOrgMonRepPeriForAdmin.class);
+                if (bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null) {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
+                if (bisOrgMonRepPeriForAdmin.dataSource.size() > 0) {
                     mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 refreshUI();
@@ -118,21 +140,21 @@ public class HiddenReportActivity extends BaseActivity{
         });
     }
 
-    private void getDirectUnit(){
+    private void getDirectUnit() {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectMonthlyReportListByTimeAndGuid/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("adminWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repTime",tv_current_month.getText().toString());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("adminWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("repTime", tv_current_month.getText().toString());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result,BisOrgMonRepPeriForAdmin.class);
-                if(bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null){
+                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result, BisOrgMonRepPeriForAdmin.class);
+                if (bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null) {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                if(bisOrgMonRepPeriForAdmin.dataSource.size() > 0){
+                if (bisOrgMonRepPeriForAdmin.dataSource.size() > 0) {
                     mGroups.add(new GroupInformationEntity<>(header[0], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
                 }
                 getSubUnitReportList();
@@ -147,11 +169,12 @@ public class HiddenReportActivity extends BaseActivity{
         });
     }
 
-    private void refreshUI(){
+    private void refreshUI() {
         groupedReportListAdapter.setData(mGroups);
         reportRecycleView.setAdapter(groupedReportListAdapter);
         groupedReportListAdapter.notifyDataSetChanged();
     }
+
     private void onSelectMonthClicked() {
         //时间选择器
         boolean[] type = {true, true, false, false, false, false};
@@ -165,7 +188,7 @@ public class HiddenReportActivity extends BaseActivity{
                 }
                 String time = Strings.formatDate(date);
                 String[] arrayTime = time.split("-");
-                tv_current_month.setText(arrayTime[0]+"年"+arrayTime[1]+"月");
+                tv_current_month.setText(arrayTime[0] + "年" + arrayTime[1] + "月");
                 // TODO: 2018/4/10 处理时间设置之后的逻辑
                 initData();
             }
@@ -176,6 +199,14 @@ public class HiddenReportActivity extends BaseActivity{
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
     private class GroupedReportListAdapter extends GroupedRecyclerViewAdapter {
 
 
@@ -263,7 +294,7 @@ public class HiddenReportActivity extends BaseActivity{
             TextView tv_returned = holder.get(R.id.tv_returned); // 已退回
             TextView tv_repetition = holder.get(R.id.tv_repetition); // 重报
             TextView tv_rush = holder.get(R.id.tv_rush); // 催报
-            TextView tv_revoke  = holder.get(R.id.tv_revoke); // 撤销
+            TextView tv_revoke = holder.get(R.id.tv_revoke); // 撤销
             TextView tv_report = holder.get(R.id.tv_report); //上报
             TextView tv_reported = holder.get(R.id.tv_reported); // 已上报
             tv_returned.setVisibility(View.GONE);
@@ -276,46 +307,45 @@ public class HiddenReportActivity extends BaseActivity{
             final BisOrgMonRepPeriForAdmin reportForAdmin
                     = mGroups.get(groupPosition).getChildren().get(childPosition);
             tv_sub_unit.setText(reportForAdmin.getWiunName());
-            if(reportForAdmin.getStatus().equals("2")){
-                if(true){
+            if (reportForAdmin.getStatus().equals("2")) {
+                if (true) {
                     // /退回
                     tv_returned.setVisibility(View.VISIBLE);
-                    if(groupPosition == 0){
+                    if (groupPosition == 0) {
                         tv_repetition.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tv_rush.setVisibility(View.VISIBLE);
                     }
-                }else{
+                } else {
                     // 未上报
-                    if(groupPosition == 0){
+                    if (groupPosition == 0) {
                         tv_report.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tv_rush.setVisibility(View.VISIBLE);
                     }
                 }
-            }
-            else if(reportForAdmin.getStatus().equals("1")){
+            } else if (reportForAdmin.getStatus().equals("1")) {
                 tv_reported.setVisibility(View.VISIBLE);
                 //  已上报
-            }else if(reportForAdmin.getStatus().equals("3")){
-                if(groupPosition == 0)
+            } else if (reportForAdmin.getStatus().equals("3")) {
+                if (groupPosition == 0)
                     tv_repetition.setVisibility(View.VISIBLE);
                 else {
                     tv_rush.setVisibility(View.VISIBLE);
                 }
                 // 已撤销 重报
-            }else if(reportForAdmin.getStatus().equals("4")){
+            } else if (reportForAdmin.getStatus().equals("4")) {
                 // 申请撤销中
-            }else if(reportForAdmin.getStatus().equals("5")){
+            } else if (reportForAdmin.getStatus().equals("5")) {
                 //同意撤销
-                if(groupPosition == 0)
+                if (groupPosition == 0)
                     tv_repetition.setVisibility(View.VISIBLE);
                 else {
                     tv_rush.setVisibility(View.VISIBLE);
                 }
-            }else if(reportForAdmin.getStatus().equals("6")){
+            } else if (reportForAdmin.getStatus().equals("6")) {
                 // 不同意撤销
-            }else {
+            } else {
                 tv_rush.setVisibility(View.VISIBLE);
             }
         }

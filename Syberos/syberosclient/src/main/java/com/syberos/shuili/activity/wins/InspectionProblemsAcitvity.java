@@ -86,6 +86,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         groupedWinsProbListAdapter = new GroupedWinsProbListAdapter(this,groups);

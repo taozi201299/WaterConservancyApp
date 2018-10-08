@@ -74,6 +74,7 @@ public class SafetyProductionDeductMarkListActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("扣分记录");
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

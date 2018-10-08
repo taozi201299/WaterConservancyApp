@@ -98,6 +98,7 @@ public class SafetyProductionDetailActivity extends BaseActivity implements View
     }
     @Override
     public void initView() {
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         info = (BisWoasGrop) bundle.getSerializable(
                 SafetyProductionListActivity.SEND_BUNDLE_KEY);

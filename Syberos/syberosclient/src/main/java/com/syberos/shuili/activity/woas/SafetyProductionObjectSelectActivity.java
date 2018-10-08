@@ -82,6 +82,7 @@ public class SafetyProductionObjectSelectActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("考核对象");
         setActionBarRightVisible(View.INVISIBLE);
 

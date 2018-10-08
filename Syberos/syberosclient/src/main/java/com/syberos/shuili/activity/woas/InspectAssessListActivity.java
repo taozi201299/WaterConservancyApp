@@ -70,6 +70,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle("水利稽察考核");
         setActionBarRightVisible(View.INVISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

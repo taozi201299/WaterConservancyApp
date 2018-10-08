@@ -82,6 +82,7 @@ public class InspectAssessObjectSelectActivity extends BaseActivity
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         setActionBarTitle("现场考核");
         setActionBarRightVisible(View.INVISIBLE);
 
