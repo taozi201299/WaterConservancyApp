@@ -229,8 +229,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         Gson gson = new Gson();
         // 事故
         if(url.equals(GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Accident/create")
-                || url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/repay")
-                || url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/fastReport")) {
+                || url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/repay")) {
             AccidentFormReturnEntity accidentFormReturnEntity = gson.fromJson(result, AccidentFormReturnEntity.class);
             updateAttachLocalStatus(url, id, accidentFormReturnEntity.getData().getData().getGuid());
         }

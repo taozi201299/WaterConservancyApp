@@ -122,7 +122,6 @@ public class AccidentDetailActivity extends BaseActivity {
         showDataLoadingDialog();
         getAttachMents();
         if (null != accidentInformation ) {
-            setActionBarTitle(accidentInformation.getAcciCateName());
             tv_accident_unit.setText(accidentInformation.getAccidentUnitName());
             tv_accident_name.setText(accidentInformation.getCollTime()+" 事故");
             tv_serious_injuries_count.setText(

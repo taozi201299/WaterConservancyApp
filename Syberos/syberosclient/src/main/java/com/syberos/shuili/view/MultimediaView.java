@@ -475,6 +475,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
 
         @Override
         public boolean equals(Object object) {
+            if(localFile == null)return false;
             if (this == object) return true;
             if (object == null || getClass() != object.getClass()) return false;
 

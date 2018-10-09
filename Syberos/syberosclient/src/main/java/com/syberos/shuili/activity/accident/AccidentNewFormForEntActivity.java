@@ -172,7 +172,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                     ce_accident_name.setText(getAcciTypeName(objAcci.getAcciCate()));
                     ce_occo_loc.setText(objAcci.getOccuLoc());
                     if(objAcci.getAcciGrad() != null) {
-                        ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(Integer.valueOf(objAcci.getAcciGrad())));
+                        ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(Integer.valueOf(objAcci.getAcciGrad()) -1));
                     }
                     ce_serious_injuries_count.setText(objAcci.getSerInjNum());
                     ce_death_count.setText(objAcci.getCasNum());
@@ -297,17 +297,19 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 break;
             case GlobleConstants.reportAcci_1:
             case GlobleConstants.reportAcci_2:
+                params.put("acciGrad", objAcci.getAcciGrad()== null?"1":objAcci.getAcciGrad());
                 params.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 params.put("repStat", String.valueOf(GlobleConstants.reportAcci_1));
                 params.put("pGuid",objAcci.getId());
                 url = GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/repay";
-                localStatus = 1;
+                localStatus = 0;
                 localCacheEntity.commitType = 0;
                 break;
             case GlobleConstants.reportAcci_0:
                 url = GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/fastReport";
                 localStatus = 1;
                 localCacheEntity.commitType = 1;
+                params.put("acciGrad", objAcci.getAcciGrad()== null?"1":objAcci.getAcciGrad());
                 params.put("missNum","");
                 params.put("rescTreaMeas","");
                 params.put("contaPers","");
@@ -319,7 +321,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
         }
         localCacheEntity.url = url;
         localCacheEntity.type = localStatus;
-        localCacheEntity.attachType = 0;
+        localCacheEntity.attachType = localStatus; // 0 暫存 1 提交
         localCacheEntity.params = params;
         ArrayList<AttachMentInfoEntity>attachments = new ArrayList<>();
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
@@ -339,8 +341,12 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 info.medPath = item.localFile.getPath();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_ACCI";
-                info.bisGuid = "";
-                info.localStatus = "0";
+                if(objAcci != null) {
+                    info.bisGuid = objAcci.getId() == null ? "" : objAcci.getId();
+                }else {
+                    info.bisGuid = "";
+                }
+                info.localStatus = String.valueOf(localStatus);
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
                     info.medType = "2"; // 图片
                 }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
@@ -374,7 +380,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                     AccidentNewFormForEntActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
-            customDialog.setMessage("当前新增事故内容未保存，确定退出？");
+            customDialog.setMessage("当前事故内容未保存，确定退出？");
             customDialog.setOnConfirmClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
