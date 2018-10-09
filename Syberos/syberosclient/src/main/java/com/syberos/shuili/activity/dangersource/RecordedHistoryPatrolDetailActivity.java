@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.dangersource.InspectionPartolInfo;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.MultimediaView;
@@ -55,6 +56,7 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
             tv_time.setText(information.getCollTime());
             tv_reporter.setText(information.getPatPers());
         }
+        BusinessConfig.getAttachMents(information.getHazGuid(),"BIS_HAZ_PAT_REC",mv_multimedia);
     }
 
     @Override
@@ -62,7 +64,5 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
         setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
-
-
     }
 }

@@ -30,7 +30,7 @@ public class LocalCacheEntity implements Parcelable {
 //     */
 //    public List<AttachMentInfoEntity> attachments;
     /**
-     * 0 保存在本地 1 提交到服务器
+     * 0 新增数据 1 修改数据
      */
     public int type;
 

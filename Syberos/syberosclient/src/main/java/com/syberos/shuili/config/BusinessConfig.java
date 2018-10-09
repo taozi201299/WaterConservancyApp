@@ -1,7 +1,15 @@
 package com.syberos.shuili.config;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.entity.common.AttachMentInfo;
+import com.syberos.shuili.view.MultimediaView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Administrator on 2018/8/28.
@@ -40,6 +48,43 @@ public class BusinessConfig {
         return count;
 
 
+    }
+    public static void getAttachMents(String bisGuid, String bisTableName, final MultimediaView multimediaView){
+        final ArrayList<MultimediaView.LocalAttachment> attachments = new ArrayList<>();
+        String url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBases/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("bisGuid",bisGuid);
+        params.put("bisTableName",bisTableName);
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                AttachMentInfo attachMentInfo = gson.fromJson(result,AttachMentInfo.class);
+                if(attachMentInfo != null && attachMentInfo.getData().size() > 0){
+
+                    for(AttachMentInfo.DataBean item : attachMentInfo.getData()){
+                        MultimediaView.LocalAttachment localAttachment = new MultimediaView.LocalAttachment();
+                        if(MultimediaView.LocalAttachmentType.IMAGE.equals(item.getMedType())) {
+                            localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                        }else if(MultimediaView.LocalAttachmentType.AUDIO.equals(item.getMedType())){
+                            localAttachment.type = MultimediaView.LocalAttachmentType.AUDIO;
+                        }else if(MultimediaView.LocalAttachmentType.VIDEO.equals(item.getMedType())){
+                            localAttachment.type = MultimediaView.LocalAttachmentType.VIDEO;
+                        }else {
+                            localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                        }
+                        localAttachment.filePath = item.getMedPath();
+                        attachments.add(localAttachment);
+                    }
+                }
+                multimediaView.setData(attachments);
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
     }
 }
 

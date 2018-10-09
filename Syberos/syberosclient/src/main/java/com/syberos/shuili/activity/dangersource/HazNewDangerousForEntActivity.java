@@ -2,13 +2,14 @@ package com.syberos.shuili.activity.dangersource;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
@@ -16,6 +17,7 @@ import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 /**
  * 新建巡视问题
  */
-public class HazNewDangerousForEntActivity extends BaseActivity {
+public class HazNewDangerousForEntActivity extends BaseActivity  implements BaseActivity.IDialogInterface{
 
     @BindView(R.id.ae_describe_controls_audio)
     AudioEditView ae_describe_controls_audio;
@@ -49,7 +51,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
 
     @OnClick(R.id.tv_passed)
     void onOKClicked() {
-        commitForm();
+        commit();
     }
 
     @Override
@@ -59,7 +61,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
+        setDialogInterface(this);
     }
 
     @Override
@@ -73,6 +75,20 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
         setInitActionBar(true);
         setActionBarTitle("新建巡查记录");
         setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
+    }
+    private void commit() {
+        String message = "确认提交数据?";
+        showCommitDialog(message,0);
+    }
+    @Override
+    public void dialogClick() {
+        commitForm();
+    }
+
+    @Override
+    public void dialogCancel() {
+
     }
     private void commitForm(){
        // String url = "http://192.168.1.8:8080/sjjk/v1/bis/haz/bisHazPatRec/";
@@ -97,14 +113,18 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
         if(list != null){
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
                 info.bisTableName = "BIS_HAZ_PAT_REC";
-                info.bisGuid = "";
+                info.bisGuid = itemInfo.getGuid();
+                info.localStatus = "1";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);
@@ -128,5 +148,26 @@ public class HazNewDangerousForEntActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ll_multimedia.onActivityResult(requestCode,resultCode,data);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    HazNewDangerousForEntActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前风险源内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

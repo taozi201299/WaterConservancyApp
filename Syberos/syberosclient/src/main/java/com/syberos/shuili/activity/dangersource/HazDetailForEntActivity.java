@@ -63,11 +63,6 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     @BindView(R.id.rl_patrol)
     RelativeLayout rl_patrol;
 
-
-
-
-
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_inspection_detail;
