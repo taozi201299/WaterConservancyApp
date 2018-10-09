@@ -71,6 +71,10 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
     public void initData() {
         iSucessCount = 0;
         iFailedCount = 0;
+        if (bisSeWiuns != null) bisSeWiuns.clear();
+        if (objSes != null) objSes.clear();
+        showDataLoadingDialog();
+        getBisSeWiunByUserId();
     }
 
     /**
@@ -80,7 +84,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
         String url = strIP + "/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String, String> params = new HashMap<>();
          params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
+       // params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -223,10 +227,6 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
         adapter.setOnItemClickListener(this);
 
         recyclerView.setAdapter(adapter);
-        if (bisSeWiuns != null) bisSeWiuns.clear();
-        if (objSes != null) objSes.clear();
-        showDataLoadingDialog();
-        getBisSeWiunByUserId();
 
     }
 
