@@ -70,7 +70,7 @@
                             android:layout_centerVertical="true"
                             android:text="考核扣分"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_16sp" />
+                            android:textSize="@dimen/_14sp" />
 
                         <com.syberos.shuili.view.ClearableEditText.ClearableEditText
                             android:id="@+id/ce_score"
@@ -92,7 +92,7 @@
                             android:layout_centerVertical="true"
                             android:text="分"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_16sp" />
+                            android:textSize="@dimen/_14sp" />
                     </RelativeLayout>
 
 
@@ -106,9 +106,10 @@
                         android:id="@+id/ae_describe_audio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
                         android:minHeight="@dimen/_40dp"
-                        android:paddingTop="@dimen/_15dp"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingTop="@dimen/_5dp"
                         app:view_label="扣分说明" />
 
                     <View
@@ -122,7 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingEnd="@dimen/_5dp"
-                        android:paddingStart="@dimen/_5dp">
+                        android:paddingStart="@dimen/_10dp">
 
                         <com.syberos.shuili.view.MultimediaView
                             android:id="@+id/mv_multimedia"

@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.woas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.syberos.shuili.service.dataprovider.sync.synchronizer.SynchronizerFac
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -91,8 +93,10 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
     }
 
     @Override
@@ -165,7 +169,25 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
 
             }
         });
-
-
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    SafetyProductionNewDeductMarksActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未保存，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
