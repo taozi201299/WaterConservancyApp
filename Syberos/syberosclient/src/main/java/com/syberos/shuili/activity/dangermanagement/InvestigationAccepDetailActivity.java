@@ -13,6 +13,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
@@ -163,11 +164,13 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             finish();
         }
-        if("1".equals(investigationInfo.getHiddGrad())) {
+        BusinessConfig.getAttachMents(investigationInfo.getHiddsGuid(),"OBJ_HIDD",ll_multimedia);
+        if("10".equals(investigationInfo.getHiddGrad())) {
             getHiddenCheckDetail();
         }else {
             getInvestigationDetail();
         }
+
 
     }
 
@@ -439,16 +442,17 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             ev_ll_rectify_describe_audio.setEditText("");
         }
         //整改信息
-        int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
-        if(rectifyProcessCount > 0){
+        if(hiddenRectifyProgerssInfo.totalCount != null && Integer.valueOf(hiddenRectifyProgerssInfo.totalCount) > 0 ){
+            int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
             for(int i = 0 ; i < rectifyProcessCount ; i ++){
                 View rectifyView = View.inflate(mContext,R.layout.activity_investigation_rectify_item,null);
                 initElements(rectifyView,0);
                 int index = i + 1;
                 tv_rectify_label.setText(index +"次整改");
-                tv_rectify_time.setText(hiddenRectifyProgerssInfo.getCollTime());
-                tv_rectify_member.setText(hiddenRectifyProgerssInfo.getRecPers());
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getRectProg());
+                tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
+                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg() == null ?"":hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
+                BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
             }
 
 

@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -10,6 +11,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.App;
+import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.ObjHidden;
@@ -18,6 +20,7 @@ import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -95,6 +98,26 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
     public void dialogCancel() {
 
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    InvestigationRectifyCreateActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     private void commit(){
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();
@@ -120,9 +143,11 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);

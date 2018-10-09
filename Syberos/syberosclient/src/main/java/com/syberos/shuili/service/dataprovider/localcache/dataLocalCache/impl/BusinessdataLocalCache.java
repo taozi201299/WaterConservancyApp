@@ -239,12 +239,6 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         }
     }
     private void updateAttachLocalStatus(String url,String id,String response){
-        /**
-         * 新增事故返回
-         */
-//        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/yuanXin/Accident/create") ||
-//                url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd"))
-        {
             String selection = DBDefinition.seriesKey + "=?";
             String[] selectionArgs = {id};
             List list = dbHelper.query(DBDefinition.ATTACHMENT_TABLE, null, null, null, AttachMentInfoEntity.class);
@@ -257,7 +251,6 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                 dbHelper.update(DBDefinition.ATTACHMENT_TABLE, contentValues, selection, selectionArgs);
             }
             submitLocalCache();
-        }
         }
     private void resultProcess() {
         if (iSuccessCount + iFailedCount == iTotalCacheCount) {

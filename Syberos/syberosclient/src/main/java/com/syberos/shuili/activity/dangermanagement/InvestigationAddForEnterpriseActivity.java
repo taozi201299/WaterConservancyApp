@@ -117,6 +117,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         setActionBarRightVisible(View.INVISIBLE);
         ev_des_audio.setLabelText("隐患描述");
         ll_multimedia = (MultimediaView)ll_investigation_add_layout.findViewById(R.id.ll_multimedia);
+        setFinishOnBackKeyDown(false);
 
     }
     @Override

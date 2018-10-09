@@ -13,6 +13,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
@@ -165,6 +166,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         if(investigationInfo == null){
             return;
         }
+        BusinessConfig.getAttachMents(investigationInfo.getHiddsGuid(),"OBJ_HIDD",ll_multimedia);
         getInvestigationDetail();
 
     }
@@ -414,13 +416,13 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         }
         if(this.hiddenRectifyPlanInfo.totalCount != null) {
             if (Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount) > 0) {
-                tv_unit_name.setText(hiddenRectifyPlanInfo.getGoverRespWiunName() == null ?"":hiddenRectifyPlanInfo.getGoverRespWiunName());
-                tv_rectify_plan_time.setText(hiddenRectifyPlanInfo.getRequCompDate() == null ?"":hiddenRectifyPlanInfo.getRequCompDate());
-                ev_rectify_target_audio.setEditText(hiddenRectifyPlanInfo.getGoveObjeTasks() == null ?"":hiddenRectifyPlanInfo.getGoveObjeTasks());
+                tv_unit_name.setText(hiddenRectifyPlanInfo.dataSource.get(0).getGoverRespWiunName() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getGoverRespWiunName());
+                tv_rectify_plan_time.setText(hiddenRectifyPlanInfo.dataSource.get(0).getRequCompDate() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getRequCompDate());
+                ev_rectify_target_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getGoveObjeTasks() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getGoveObjeTasks());
                 ev_rectify_target_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-                ev_rectify_emergency_plan_audio.setEditText(hiddenRectifyPlanInfo.getEmerPlanSame() == null ?"":hiddenRectifyPlanInfo.getEmerPlanSame());
+                ev_rectify_emergency_plan_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getEmerPlanSame() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getEmerPlanSame());
                 ev_rectify_emergency_plan_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-                ev_ll_rectify_describe_audio.setEditText(hiddenRectifyPlanInfo.getCorrMeas() == null ?"":hiddenRectifyPlanInfo.getCorrMeas());
+                ev_ll_rectify_describe_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getCorrMeas() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getCorrMeas());
                 ev_ll_rectify_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             }
         }
@@ -432,9 +434,10 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                 initElements(rectifyView,0);
                 int index = i + 1;
                 tv_rectify_label.setText(index +"次整改");
-                tv_rectify_time.setText(hiddenRectifyProgerssInfo.getCollTime() == null ?"" :hiddenRectifyProgerssInfo.getCollTime());
-                tv_rectify_member.setText("");
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getRectProg() == null ?"":hiddenRectifyProgerssInfo.getRecPers());
+                tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
+                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg() == null ?"":hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
+                BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
             }
 
 
