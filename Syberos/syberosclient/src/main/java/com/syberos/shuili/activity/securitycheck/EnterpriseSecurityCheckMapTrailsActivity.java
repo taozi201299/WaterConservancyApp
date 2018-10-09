@@ -20,6 +20,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -45,10 +46,12 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.amap.AMapToWGS;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.CustomDialog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,7 +72,7 @@ import static com.lzy.okhttputils.callback.FileCallback.DM_TARGET_FOLDER;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 @SuppressLint("MissingPermission")
-public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implements EasyPermissions.PermissionCallbacks {
+public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
     private final static String TAG = EnterpriseSecurityCheckMapTrailsActivity.class.getSimpleName();
     private final static boolean USE_GAO_DE_SDK_API = true;
@@ -203,17 +206,13 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implement
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_security_check_map_trails);
-        ButterKnife.bind(this);
-        btn_start_check.setVisibility(View.GONE);
-        initData();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestMulti();
-        }else{
-            webMap();
-        }
+    public int getLayoutId() {
+        return R.layout.activity_security_check_map_trails;
+    }
+
+    @Override
+    public void initListener() {
+
     }
 
     @Override
@@ -232,7 +231,7 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implement
         super.onPause();
     }
 
-    private void initData(){
+    public void initData(){
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         bisSinsRec = (BisSinsRec) bundle.getSerializable("bisSinsRec");
         if(bisSinsRec == null){
@@ -240,6 +239,19 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implement
             finish();
         }
     }
+
+    @Override
+    public void initView() {
+        setFinishOnBackKeyDown(false);
+        btn_start_check.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestMulti();
+        }else{
+            webMap();
+        }
+
+    }
+
     public void webMap() {//地图定位
 
         webView = (WebView) findViewById(R.id.webview);
@@ -783,5 +795,25 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends Activity implement
 
             }
         });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    EnterpriseSecurityCheckMapTrailsActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("停止当前检查，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

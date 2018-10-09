@@ -12,8 +12,11 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
+import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
@@ -61,6 +64,9 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
 
     ObjHidden objHidden =null;
 
+    int iSucessCount = 0;
+    int iFailedCount = 0 ;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_enterprises_on_site_check_detail;
@@ -73,6 +79,8 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getHiddenInfo();
 
@@ -102,7 +110,6 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDataDialog();
                 Gson gson = new Gson();
                 objHidden = gson.fromJson(result,ObjHidden.class);
                 if(objHidden == null || objHidden.dataSource == null){
@@ -110,7 +117,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                addHiddenItems(objHidden.dataSource);
+                getEngName();
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
@@ -119,15 +126,57 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * 获取轨迹信息
+     */
     private void getRotes(){
 
     }
     private void addHiddenItems(List<ObjHidden> hiddenItemInfos) {
         if (hiddenItemInfos.size() <= 0) {
+            closeDataDialog();
             return;
         }
         for (ObjHidden hiddenItemInfo : hiddenItemInfos) {
             addHiddenItem(hiddenItemInfo);
+        }
+    }
+    private void getEngName(){
+        if (objHidden.dataSource.size() <= 0) {
+            closeDataDialog();
+            return;
+        }
+        final int count = objHidden.dataSource.size();
+        for (final ObjHidden hiddenItemInfo : objHidden.dataSource) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",hiddenItemInfo.getEngGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++ ;
+                    Gson gson = new Gson();
+                    ObjectEngine objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    if(objectEngine != null && objectEngine.dataSource.size() > 0){
+                        hiddenItemInfo.setEngName(objectEngine.dataSource.get(0).getEngName());
+                    }
+                    if(iSucessCount + iFailedCount == count){
+                        closeDataDialog();
+                        addHiddenItems(objHidden.dataSource);
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                      iFailedCount ++;
+                    if(iSucessCount + iFailedCount == count){
+                        closeDataDialog();
+                        addHiddenItems(objHidden.dataSource);
+                    }
+                }
+            });
+
         }
     }
     private void addHiddenItem(final ObjHidden hiddenItemInfo) {
@@ -159,6 +208,14 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         }
 
         ll_hidden_object_container.addView(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",hiddenItemInfo);
+                intentActivity(EnterprisesOnSiteCheckDetailActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
+            }
+        });
     }
 
 }

@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.securitycheck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,13 +12,11 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
-import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.ObjectTend;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
@@ -28,6 +27,7 @@ import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 import com.syberos.shuili.view.indexListView.ClearEditText;
@@ -45,7 +45,7 @@ import static com.syberos.shuili.config.GlobleConstants.strIP;
  * 安全检查新建隐患
  */
 
-public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity implements View.OnClickListener{
+public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity implements View.OnClickListener ,BaseActivity.IDialogInterface{
     private OptionsPickerView levelPicker = null;
     /**
      *  安全元素对象信息
@@ -95,6 +95,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     @Override
     public void initListener() {
         ll_commit.setOnClickListener(this);
+        setDialogInterface(this);
 
     }
 
@@ -165,6 +166,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         ll_part.setVisibility(View.GONE);
         ll_part_line.setVisibility(View.GONE);
         ev_des_audio.setLabelText("隐患描述");
+        setFinishOnBackKeyDown(false);
     }
 
     @Override
@@ -175,14 +177,25 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
                 break;
         }
     }
+    @Override
+    public void dialogClick() {
+        commitForm();
 
+    }
+
+    @Override
+    public void dialogCancel() {
+
+    }
+    private void commit(){
+        showCommitDialog("确认提交数据?",0);
+    }
     /**
      * 多媒体附件的上传 下载
      */
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
-    private void commit(){
-        String url = GlobleConstants.strCJIP + "/wcsps-api/cj/obj/hiddAndSe/addObjHidd";
-        //String  url = "http://192.168.1.8:8080/sjjk/v1/bis/obj/objHidd/";
+    private void commitForm(){
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/obj/hiddAndSe/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",objectEngine.getId()); // 所属工程
@@ -203,7 +216,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
         if(list != null){
@@ -241,5 +254,25 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ll_multimedia.onActivityResult(requestCode,requestCode,data);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    EnterprisesElementCheckCreateHiddenActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

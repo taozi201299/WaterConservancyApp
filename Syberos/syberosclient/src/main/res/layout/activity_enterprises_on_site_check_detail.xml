@@ -98,7 +98,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/padding_20"
                             android:layout_toEndOf="@+id/tv_check_time_label"
-                            android:text="2017-07-20 至 2018-07-20" />
+                            android:text="" />
                     </RelativeLayout>
 
                     <View
@@ -128,7 +128,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/padding_20"
                             android:layout_toEndOf="@+id/tv_check_content_label"
-                            android:text="水库、农村水电站、於地段、在建功能、勘察设计和水温监测" />
+                            android:text="" />
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
