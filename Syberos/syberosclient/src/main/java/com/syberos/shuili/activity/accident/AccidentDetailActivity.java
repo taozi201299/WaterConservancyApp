@@ -10,15 +10,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
+import com.syberos.shuili.entity.common.AttachMentInfo;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -113,6 +119,8 @@ public class AccidentDetailActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
     private void updateView() {
+        showDataLoadingDialog();
+        getAttachMents();
         if (null != accidentInformation ) {
             setActionBarTitle(accidentInformation.getAcciCateName());
             tv_accident_unit.setText(accidentInformation.getAccidentUnitName());
@@ -157,5 +165,44 @@ public class AccidentDetailActivity extends BaseActivity {
                 }
             }
         }
+    }
+    private void getAttachMents(){
+        final ArrayList<MultimediaView.LocalAttachment> attachments = new ArrayList<>();
+        String url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBases/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("bisGuid",accidentInformation.getId());
+        params.put("bisTableName","OBJ_ACCI");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                AttachMentInfo attachMentInfo = gson.fromJson(result,AttachMentInfo.class);
+                if(attachMentInfo != null && attachMentInfo.getData().size() > 0){
+
+                    for(AttachMentInfo.DataBean item : attachMentInfo.getData()){
+                        MultimediaView.LocalAttachment localAttachment = new MultimediaView.LocalAttachment();
+                        if(MultimediaView.LocalAttachmentType.IMAGE.equals(item.getMedType())) {
+                            localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                        }else if(MultimediaView.LocalAttachmentType.AUDIO.equals(item.getMedType())){
+                            localAttachment.type = MultimediaView.LocalAttachmentType.AUDIO;
+                        }else if(MultimediaView.LocalAttachmentType.VIDEO.equals(item.getMedType())){
+                            localAttachment.type = MultimediaView.LocalAttachmentType.VIDEO;
+                        }else {
+                            localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                        }
+                        localAttachment.filePath = item.getMedPath();
+                        attachments.add(localAttachment);
+                    }
+                }
+                mv_accident_multimedia.setData(attachments);
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+
+            }
+        });
     }
 }
