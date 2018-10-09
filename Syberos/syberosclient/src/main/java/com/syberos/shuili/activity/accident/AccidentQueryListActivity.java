@@ -178,8 +178,9 @@ public class AccidentQueryListActivity extends BaseActivity {
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
 
-            }    private ArrayList<ObjAcci> reportInfos = new ArrayList<>();
+            }
         });
     }
     /**

@@ -168,7 +168,11 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
                     return;
                 };
                 parasAccidentInformation();
-                getAccidentUnitInfo();
+                if(accidentInformation.dataSource.size() > 0) {
+                    getAccidentUnitInfo();
+                }else {
+                    closeDataDialog();
+                }
             }
 
             @Override
