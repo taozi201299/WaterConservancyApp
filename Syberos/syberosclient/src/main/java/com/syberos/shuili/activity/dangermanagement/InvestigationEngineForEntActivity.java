@@ -24,6 +24,7 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.MvEngColl;
 import com.syberos.shuili.entity.securitycheck.BisSeChit;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
+import com.syberos.shuili.entity.securitycheck.ObjSe;
 import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 public class InvestigationEngineForEntActivity extends BaseActivity implements AdapterView.OnItemClickListener {
    private final String Tag = InvestigationEngineForEntActivity.class.getSimpleName();
    private final String Title = "隐患排查";
+    ObjSe objSe = null;
     /**
      * 元素检查检查项对象
      */
@@ -111,6 +113,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
         if("element".equals(type)){
             // 元素检查
             bisSeChit = (BisSeChit) mBundle.getSerializable("checkItem");
+            objSe  = (ObjSe) mBundle.getSerializable("element");
         }else if("check".equals(type)){
             // 现场检查
             bisSinsRec = (BisSinsRec)mBundle.getSerializable("bisSinsRec");
@@ -241,13 +244,14 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
                 bundle.putSerializable("checkItem",bisSinsRec);
             }else if(type.equalsIgnoreCase("element")){
                 bundle.putSerializable("checkItem",bisSeChit);
+                bundle.putSerializable("element",objSe);
             }
             intentActivity(InvestigationEngineForEntActivity.this, InvestigationEngineTendForEntActivity.class,
                     false, bundle);
         }else {
             bundle.putBoolean("hasTend",false);
             if(type.equals("element")) {
-                bundle.putSerializable("checkItem",bisSeChit);
+                bundle.putSerializable("element",objSe);
                 intentActivity(InvestigationEngineForEntActivity.this,EnterprisesElementCheckCreateHiddenActivity.class,false,bundle);
             }else if(type.equals("check")) {
                 bundle.putSerializable("checkItem",bisSinsRec);

@@ -80,7 +80,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
         String url = strIP + "/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
         HashMap<String, String> params = new HashMap<>();
          params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-      //  params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
+        params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -249,7 +249,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
             ((TextView) (holder.getView(R.id.tv_title))).setText(information.getSeName());
 
             String[] levelNames = getResources().getStringArray(R.array.enterprises_element_check_level);
-            int level = Integer.valueOf(information.getSeType() == null ? "1" : information.getSeType());
+            int level = Integer.valueOf(information.getSeType() == null || information.getSeType().isEmpty() ? "1" : information.getSeType());
             TextView tv_type = (TextView) (holder.getView(R.id.tv_type));
             tv_type.setText(levelNames[level - 1]);
 

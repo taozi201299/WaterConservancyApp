@@ -115,7 +115,7 @@
     <TextView
         android:id="@+id/tv_ok"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_30dp"
+        android:layout_height="@dimen/_40dp"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="@dimen/_5dp"
         android:layout_marginEnd="@dimen/_10dp"

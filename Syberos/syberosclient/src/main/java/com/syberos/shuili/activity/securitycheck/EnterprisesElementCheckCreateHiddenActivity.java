@@ -105,8 +105,8 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         hasTend = bundle.getBoolean("hasTend");
         type = bundle.getString("type");
         if("element".equals(type)) {
-            if (bisSeChit == null) {
-                bisSeChit = (BisSeChit) bundle.getSerializable("checkItem");
+            if (information == null) {
+                information = (ObjSe) bundle.getSerializable("element");
             }
         }else if("check".equals(type)){
             if(bisSinsRec == null){
@@ -201,7 +201,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         params.put("engGuid",objectEngine.getId()); // 所属工程
         params.put("tendGuid",objectTend == null ? "":objectTend.getGuid());
         if("element".equals(type)) {
-            params.put("seCheckItemGuid", bisSeChit.getGuid());
+            params.put("seCheckItemGuid", information.getGuid());
         }else if("check".equals(type)){
             params.put("inspRecGuid",bisSinsRec.sinsGuid);
         }
