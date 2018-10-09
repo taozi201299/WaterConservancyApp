@@ -140,7 +140,6 @@ public class AccReportForEntActivity extends TranslucentActivity {
                 else if(bisOrgMonRepPeri.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show("没有上报内容");
-                    return;
                 }
                refreshUI();
             }

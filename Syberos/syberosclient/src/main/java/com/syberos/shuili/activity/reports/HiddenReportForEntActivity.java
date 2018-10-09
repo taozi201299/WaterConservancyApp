@@ -138,7 +138,6 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
                     return;
                 }else if(bisOrgMonRepPeri.dataSource.size() == 0){
                     ToastUtils.show("没有上报内容");
-                    return;
                 }
                 refreshUI();
             }
