@@ -39,6 +39,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
@@ -330,7 +331,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 @Override
                 public void onNext(SecurityCloudOrgEntry securityCloudOrgEntry) {
                     setSecurityCloudOrgEntry(securityCloudOrgEntry);
-                    if (tvTitle != null && securityCloudOrgEntry != null) {
+                    if (tvTitle != null && securityCloudOrgEntry != null && securityCloudOrgEntry.getData() != null) {
                         updateView(securityCloudOrgEntry);
                     }
                 }
@@ -356,7 +357,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
                 @Override
                 public void onNext(SecurityCloudAreaEntry securityCloudAreaEntry) {
-                    if (tvTitle != null && securityCloudAreaEntry != null) {
+                    if (tvTitle != null && securityCloudAreaEntry != null && securityCloudAreaEntry.getData() != null) {
                         updateView(securityCloudAreaEntry);
                     }
                 }
@@ -368,8 +369,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 @Override
                 public void onComplete() {
                 }
-//            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
-            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
+            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
+        //    }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
 
         }
     }

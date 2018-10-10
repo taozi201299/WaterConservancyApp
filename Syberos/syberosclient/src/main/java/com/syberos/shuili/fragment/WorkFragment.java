@@ -195,7 +195,7 @@ public class WorkFragment extends BaseFragment {
             modules.add(getResources().getString(R.string.module_biaozhunhua));
         }
         if(App.sCodes.contains(GlobleConstants.sins)){
-            modules.add(getResources().getString(R.string.module_anjian));
+            modules.add(getResources().getString(R.string.module_anquan));
         }
         if(App.sCodes.contains(GlobleConstants.suen)){
             modules.add(getResources().getString(R.string.module_anjian));

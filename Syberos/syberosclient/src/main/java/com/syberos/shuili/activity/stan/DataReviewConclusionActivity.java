@@ -109,8 +109,9 @@ public class DataReviewConclusionActivity extends BaseActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(int result){
-        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec";
         HashMap<String,String> params= new HashMap<>();
+        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("reviType","2");
         params.put("confTime",tv_time.getText().toString()); //会议时间
         params.put("confLoc",tv_area.getText().toString()); //会议地点
@@ -118,23 +119,25 @@ public class DataReviewConclusionActivity extends BaseActivity {
         params.put("ifSiteRevi",rg_if_site_revi.getCheckedRadioButtonId() == R.id.rb_if_site_revi_yes ? "1" :"2");
         params.put("ifAgree",result == 0 ?"2":"1");
         params.put("reviOpin",et_content.getText().toString()); // 评审意见
+        params.put("collTime",CommonUtils.getCurrentDate());
+        params.put("note","移动端测试数据");
         int size = selectedReviewItemInformationList.size();
         for(ObjStanRevis item : selectedReviewItemInformationList){
             params.put("stanReviGuid",item.getGuid());//标准化评审GUID
-            url += item.getGuid() +"/"+"?";
-            for(String key :params.keySet()){
-                url += key;
-                url +="=";
-                url += params.get(key);
-                url += "&";
-            }
-            url = url.substring(0,url.length() -1);
+//            url += item.getGuid() +"/"+"?";
+//            for(String key :params.keySet()){
+//                url += key;
+//                url +="=";
+//                url += params.get(key);
+//                url += "&";
+//            }
+//            url = url.substring(0,url.length() -1);
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;
             ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
             localCacheEntity.params = params;
-            localCacheEntity.type = 1;
-            localCacheEntity.commitType = 1;
+            localCacheEntity.type = 0;
+            localCacheEntity.commitType = 0;
             localCacheEntity.seriesKey = UUID.randomUUID().toString();
             SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
                 @Override

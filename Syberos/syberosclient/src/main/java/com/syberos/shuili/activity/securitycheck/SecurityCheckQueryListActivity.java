@@ -170,6 +170,10 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
                 Gson gson = new Gson();
                 objSins = gson.fromJson(result, ObjSins.class);
                 if (objSins != null && objSins.dataSource != null) {
+                    if(objSins.dataSource.size() == 0) {
+                        closeDataDialog();
+                        ToastUtils.show("没有相关内容");
+                    }
                     getPlanInfo();
 
                 } else {
@@ -232,6 +236,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
     }
 
     private void refreshUI() {
+        if(map.size() == 0)closeDataDialog();
         groupedListAdapter.setData(map);
         groupedListAdapter.notifyDataSetChanged();
     }
