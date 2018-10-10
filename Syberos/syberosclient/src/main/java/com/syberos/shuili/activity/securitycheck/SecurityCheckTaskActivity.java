@@ -99,6 +99,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
         params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+    //    params.put("persGuid","3ADACCFB2EF149E580989A82277A8505");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -175,7 +176,12 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                     if(bisSinsSche == null || bisSinsSche.dataSource == null){
                         closeDataDialog();
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        //   return;
+                        return;
+                    }
+                    if(bisSinsSche.dataSource.size() == 0){
+                        closeDataDialog();
+                        ToastUtils.show("未获取到相关内容");
+                        return;
                     }
                     bisSinsSches.add(bisSinsSche);
                     if(bisSinsSches.size() == bisSinsScheGroups.size()){

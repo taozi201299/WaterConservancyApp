@@ -79,6 +79,7 @@ public class InspectProjectSelectActivity extends BaseActivity
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectInspectionTeamAllProjectNames/";
         HashMap<String,String>params = new HashMap<>();
         params.put("bwgGuid",bisWinsGroupAll.getGuid());
+       // params.put("bwgGuid","600fa3a0453640bc8212983a30cffa6b");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

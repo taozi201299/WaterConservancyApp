@@ -663,6 +663,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
         public void onLocationChanged(AMapLocation amapLocation) {
             // TODO Auto-generated method stub
 
+
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
                     //定位成功回调信息，设置相关消息
@@ -707,6 +708,10 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
 //                    mLocationClient.stopLocation();//停止定位
                 } else {
                     //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                    ToastUtils.show("定位失败" +
+                                    amapLocation.getLocationDetail());
+
+                    closeDataDialog();
                     Log.e("info", "location Error, ErrCode:"
                             + amapLocation.getErrorCode() + ", errInfo:"
                             + amapLocation.getErrorInfo());

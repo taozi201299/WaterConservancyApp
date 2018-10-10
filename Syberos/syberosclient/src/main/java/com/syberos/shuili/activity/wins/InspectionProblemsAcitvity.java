@@ -104,6 +104,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs/";
         HashMap<String,String>params = new HashMap<>();
         params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
+     //   params.put("winsGroupGuid","600fa3a0453640bc8212983a30cffa6b");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -134,7 +135,6 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     private void getWinsProblems(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prob/bisWinsProbs/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -162,6 +162,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     private void processResult(){
         for(BisWinsProjAll bisWinsProjAll: bisWinsProjAll.dataSource ){
             mapValues.put(bisWinsProjAll.getProjGuid(),new ArrayList<BisWinsProb>());
+          //  mapValues.put("3e6d04f19f55442e94b3cf4a9d390a4c",new ArrayList<BisWinsProb>());
             mapProjValues.put(bisWinsProjAll.getProjGuid(),bisWinsProjAll.getProjName() +"("+ bisWinsProjAll.getAdminWiunName() +")");
         }
         for(BisWinsProb bisWinsProb : bisWinsProb.dataSource){

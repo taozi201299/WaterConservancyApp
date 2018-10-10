@@ -118,6 +118,7 @@ public class InspectQueryListActivity extends BaseActivity {
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else if(objWinsPlan.dataSource.size() == 0){
+                    closeDataDialog();
                     ToastUtils.show("没查询到稽查计划");
                 }else {
                     getBisWinsProg();
