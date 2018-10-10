@@ -78,8 +78,11 @@ public class InspectProblemDetailActivity extends BaseActivity {
 
         if (null != bisWinsProb) {
             tv_project.setText(projName);
-
-            tv_type.setText(GlobleConstants.winsProbMap.get(bisWinsProb.getProbType()));
+            int index = 1;
+            if(!bisWinsProb.getProbType().isEmpty()){
+                index = Integer.valueOf(bisWinsProb.getProbType());
+            }
+            tv_type.setText(GlobleConstants.winsProbMap.get(index));
 
             tv_department.setText(bisWinsProb.getProbDep());
             int type = Integer.valueOf(bisWinsProb.getProbCate());

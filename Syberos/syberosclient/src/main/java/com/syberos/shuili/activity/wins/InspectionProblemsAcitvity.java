@@ -167,7 +167,12 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         }
         for(BisWinsProb bisWinsProb : bisWinsProb.dataSource){
             ArrayList list = mapValues.get(bisWinsProb.getWinsProjGuid());
-            if(list == null )continue;
+            if(list == null ){
+                list = new ArrayList();
+                list.add(bisWinsProb);
+                mapValues.put(bisWinsProb.getProbType(),list);
+                continue;
+            }
             list.add(bisWinsProb);
         }
         for(String key:mapValues.keySet()){
@@ -327,7 +332,11 @@ public class InspectionProblemsAcitvity extends BaseActivity {
 
             ((TextView)holder.get(R.id.tv_name_label)).setText("问题分类");
             holder.setText(R.id.tv_time, bisWinsProb.getCollTime());
-            holder.setText(R.id.tv_name,GlobleConstants.winsProbMap.get(bisWinsProb.getProbType()));
+            int index = 1;
+            if(!bisWinsProb.getProbType().isEmpty()){
+                index = Integer.valueOf(bisWinsProb.getProbType());
+            }
+            holder.setText(R.id.tv_name,GlobleConstants.winsProbMap.get(index));
         }
     }
 }

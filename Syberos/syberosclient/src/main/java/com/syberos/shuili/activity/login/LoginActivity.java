@@ -289,6 +289,8 @@ public class LoginActivity extends BaseActivity {
                 }
                 SyberosManagerImpl.getInstance().setCurrentUserInfo(userExtendInformation);
                 if (checkUserPermission(userExtendInformation)) {
+                    SPUtils.put(GlobleConstants.Pwd, userExtendInformation.getPassword());
+                    LoginUtil.setLastUserAccount(accountEdit.getText().toString());
                     // TODO: 2018/8/1 企事业用户需要获取功能模块权限
                     /**
                      * 行政用户直接进行登录
@@ -380,8 +382,6 @@ public class LoginActivity extends BaseActivity {
         UserExtendInformation userExtendInformation = setUserExtendInfo(info);
         userExtendInformation.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
-        SPUtils.put(GlobleConstants.Pwd, userExtendInformation.getPassword());
-        LoginUtil.setLastUserAccount(accountEdit.getText().toString());
         LoginUtil.setRoleList(roleList);
         return userExtendInformation;
 
