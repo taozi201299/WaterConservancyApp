@@ -272,12 +272,12 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
             RelativeLayout rl_supervice = holder.get(R.id.ll_supervise);
             ShapeDrawable bgShape = null;
             switch (type){
-                case "0": {
+                case "1": {
                     ((TextView) (holder.get(R.id.tv_type))).setText(R.string.normal);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
                 }
                 break;
-                case "1": {
+                case "2": {
                     ((TextView) (holder.get(R.id.tv_type))).setText(R.string.danger);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
                 }

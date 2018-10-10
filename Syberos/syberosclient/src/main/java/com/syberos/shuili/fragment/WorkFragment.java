@@ -84,7 +84,7 @@ public class WorkFragment extends BaseFragment {
     private ModuleChildViewHolder moduleChildViewHolder;
     @OnClick(R.id.iv_action_bar_right_1)
     void go2locationActivity() {
-        intentActivity((Activity) mContext,TestActivity1.class,false,true);
+        intentActivity((Activity) mContext,ShowNearlyInfoActivity.class,false,true);
     }
 
     @OnClick(R.id.iv_action_bar_right_2)

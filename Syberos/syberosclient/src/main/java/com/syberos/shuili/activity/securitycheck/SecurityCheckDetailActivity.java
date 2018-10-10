@@ -280,8 +280,8 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("checkItem",infos.get(finalI));
-                    intentActivity(SecurityCheckDetailActivity.this, SecurityCheckItemFormActivity.class,
-                            false, bundle);
+//                    intentActivity(SecurityCheckDetailActivity.this, SecurityCheckItemFormActivity.class,
+//                            false, bundle);
                 }
             });
             return;
