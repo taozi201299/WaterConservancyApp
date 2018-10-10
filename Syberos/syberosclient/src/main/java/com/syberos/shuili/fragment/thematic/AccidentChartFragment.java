@@ -212,14 +212,20 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if(orgLevel == 1) iMapLevel = -1;
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/acci.html");
+            if(type == 2)
+                webView.loadUrl("file:///android_asset/chart/acci_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/acci.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/acci_liuyu.html");
         }
+
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -308,7 +314,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     }
 
     private void  refreshUI(){
-
+        closeDataDialog();
         if(webView == null){
             closeDataDialog();
             webMap();
@@ -328,7 +334,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
         } else {
             type = 1;
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicAcci(new BaseObserver<AcciEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -337,7 +342,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
             @Override
             public void onNext(AcciEntry acciEntry) {
-                closeDataDialog();
+
                 LogUtils.i(TAG + "getThematicAcci:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();

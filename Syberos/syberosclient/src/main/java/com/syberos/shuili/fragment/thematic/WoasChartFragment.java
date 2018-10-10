@@ -213,10 +213,15 @@ public class WoasChartFragment extends BaseLazyFragment {
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if (orgLevel == 1) iMapLevel = -1;
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/woas.html");
+            if (type == 3)
+                webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/woas.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/woas_liuyu.html");
@@ -276,7 +281,6 @@ public class WoasChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicWoas(new BaseObserver<WoasEntry>() {
             @Override
             public void onSubscribe(Disposable d) {

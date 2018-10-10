@@ -213,10 +213,15 @@ public class SuenChartFragment extends BaseLazyFragment {
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if (orgLevel == 1) iMapLevel = -1;
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/suen.html");
+            if (type == 3)
+                webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/suen.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/suen_liuyu.html");
@@ -270,7 +275,6 @@ public class SuenChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicSuen(new BaseObserver<SuenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {

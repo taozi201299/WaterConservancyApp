@@ -265,12 +265,17 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if(orgLevel == 1){
                 iMapLevel = -1;
             }
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/sins.html");
+            if(type == 2)
+                webView.loadUrl("file:///android_asset/chart/sins_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/sins.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/sins_liuyu.html");
@@ -375,7 +380,6 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else if(type== 3){
             subType = "3";
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicSins(new BaseObserver<SinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {

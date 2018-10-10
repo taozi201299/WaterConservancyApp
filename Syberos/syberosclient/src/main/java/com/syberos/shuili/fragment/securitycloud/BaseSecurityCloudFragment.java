@@ -968,6 +968,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             Entry entry = new Entry(i, (float) beans.get(i).getAQPG());
             entries.add(entry);
         }
+        if(entries.size() == 0)return  new LineData();
 
         LineDataSet lineDataSet = new LineDataSet(entries, "得分");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
 //        lineDataSet.setCircleColor(Color.WHITE);

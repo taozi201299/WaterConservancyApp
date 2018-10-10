@@ -220,10 +220,15 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if (orgLevel == 1) iMapLevel = -1;
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/hidd.html");
+            if (type == 3)
+                webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/hidd.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/hidd_liuyu.html");
@@ -340,7 +345,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         } else {
             type = 1;
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicHidden(new BaseObserver<HiddenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {

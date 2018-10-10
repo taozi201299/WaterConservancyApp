@@ -246,12 +246,17 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         webView.getSettings().setJavaScriptEnabled(true);//支持JavaScriptEnabled
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//支持JavaScriptEnabled
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
+        webView.removeAllViews();
         if (orgType == 1 || orgType == 3) {
             if(orgLevel == 1){
                 iMapLevel = -1;
             }
             else iMapLevel = 4;
-            webView.loadUrl("file:///android_asset/chart/wins.html");
+            if(type == 2)
+                webView.loadUrl("file:///android_asset/chart/wins_liuyu.html");
+            else {
+                webView.loadUrl("file:///android_asset/chart/wins.html");
+            }
         } else if (orgType == 2) {
             iMapLevel = 0;
             webView.loadUrl("file:///android_asset/chart/wins_liuyu.html");
@@ -371,7 +376,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else {
             subType = "";
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicWins(new BaseObserver<WinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
