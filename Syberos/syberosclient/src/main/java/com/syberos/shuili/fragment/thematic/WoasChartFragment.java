@@ -256,9 +256,9 @@ public class WoasChartFragment extends BaseLazyFragment {
     }
 
     private void refreshUI() {
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -276,6 +276,7 @@ public class WoasChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicWoas(new BaseObserver<WoasEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -284,6 +285,7 @@ public class WoasChartFragment extends BaseLazyFragment {
 
             @Override
             public void onNext(WoasEntry woasEntry) {
+                closeDataDialog();
                 setWoasEntry(woasEntry);
 
                 List<Point> list = new ArrayList<>();
@@ -303,6 +305,7 @@ public class WoasChartFragment extends BaseLazyFragment {
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
 
             }
 

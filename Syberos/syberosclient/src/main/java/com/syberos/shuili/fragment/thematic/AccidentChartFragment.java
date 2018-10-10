@@ -308,8 +308,9 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     }
 
     private void  refreshUI(){
-        closeDataDialog();
+
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -327,6 +328,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicAcci(new BaseObserver<AcciEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -335,6 +337,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
             @Override
             public void onNext(AcciEntry acciEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG + "getThematicAcci:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -352,6 +355,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG + "getThematicAcci:", "onError");
             }

@@ -375,8 +375,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                getSupserviceInfo();
             }
         });
     }
@@ -426,7 +425,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
 //            ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
 //        }
         // 隐患排查
-        if("1".equals(this.hiddenInvesInfo.totalCount)) {
+        if(hiddenInvesInfo != null && "1".equals(this.hiddenInvesInfo.totalCount)) {
             hiddenInvesInfo = this.hiddenInvesInfo.dataSource.get(0);
             tv_other.setText(hiddenInvesInfo.getInspLeader());
             tv_other2.setText(hiddenInvesInfo.getInspMem());
@@ -434,15 +433,16 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             tv_other4.setText(hiddenInvesInfo.getRecPers());
             tv_other5.setText(hiddenInvesInfo.getInspDate());
         }
-        if(Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount)> 0){
-            tv_unit_name.setText("");
-            tv_rectify_plan_time.setText("");
+        if(hiddenRectifyPlanInfo != null && Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount)> 0){
+            HiddenRectifyPlanInfo info = hiddenRectifyPlanInfo.dataSource.get(0);
+            tv_unit_name.setText(info.getGoverRespWiunName());
+            tv_rectify_plan_time.setText(info.getCollTime());
             ev_rectify_target_audio.setEditText("");
-            ev_rectify_emergency_plan_audio.setEditText("");
+            ev_rectify_emergency_plan_audio.setEditText(info.getEmerPlanSame());
             ev_ll_rectify_describe_audio.setEditText("");
         }
         //整改信息
-        if(hiddenRectifyProgerssInfo.totalCount != null && Integer.valueOf(hiddenRectifyProgerssInfo.totalCount) > 0 ){
+        if(hiddenRectifyProgerssInfo != null && hiddenRectifyProgerssInfo.totalCount != null && Integer.valueOf(hiddenRectifyProgerssInfo.totalCount) > 0 ){
             int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
             for(int i = 0 ; i < rectifyProcessCount ; i ++){
                 View rectifyView = View.inflate(mContext,R.layout.activity_investigation_rectify_item,null);

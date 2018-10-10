@@ -313,9 +313,9 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
 
     private void refreshUI() {
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -333,6 +333,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicHaz(new BaseObserver<HazEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -341,6 +342,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
 
             @Override
             public void onNext(HazEntry hazEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -359,6 +361,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG + "getThematicHaz:", "onError");
             }

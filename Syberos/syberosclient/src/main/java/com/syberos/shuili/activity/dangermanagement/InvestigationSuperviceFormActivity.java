@@ -1,6 +1,7 @@
 package com.syberos.shuili.activity.dangermanagement;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -25,6 +26,7 @@ import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +42,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
  * Created by Administrator on 2018/4/16.
  */
 
-public class InvestigationSuperviceFormActivity extends BaseActivity implements View.OnClickListener {
+public class InvestigationSuperviceFormActivity extends BaseActivity implements View.OnClickListener,BaseActivity.IDialogInterface {
     @BindView(R.id.tv_supervise_code)
     TextView tv_supervise_code;
     @BindView(R.id.rl_time)
@@ -72,6 +74,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
     public void initListener() {
         rl_time.setOnClickListener(this);
         ll_commit.setOnClickListener(this);
+        setDialogInterface(this);
 
     }
 
@@ -87,6 +90,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         showTitle("隐患督办");
         setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
 
     }
 
@@ -94,7 +98,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_commit:
-                submit();
+                commit();
                 break;
             case R.id.rl_time:
                 setTime();
@@ -122,7 +126,11 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
-    private void submit(){
+    private void commit() {
+        String message = "确认提交数据?";
+        showCommitDialog(message,0);
+    }
+    private void submitForm(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSup/";
         HashMap<String,String>params = new HashMap<>();
         // 隐患GUID
@@ -177,4 +185,34 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         });
 
     }
+    @Override
+    public void dialogClick() {
+        submitForm();
+    }
+
+    @Override
+    public void dialogCancel() {
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    InvestigationSuperviceFormActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

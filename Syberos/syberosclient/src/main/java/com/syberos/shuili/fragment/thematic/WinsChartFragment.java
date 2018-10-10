@@ -344,8 +344,8 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     }
 
     private void  refreshUI(){
-        closeDataDialog();
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -371,6 +371,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else {
             subType = "";
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicWins(new BaseObserver<WinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -379,6 +380,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
             @Override
             public void onNext(WinsEntry winsEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG, "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -395,6 +397,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG, "onError");
             }

@@ -251,9 +251,9 @@ public class SuenChartFragment extends BaseLazyFragment {
     public void setSuenEntry(SuenEntry suenEntry) {
         this.suenEntry = suenEntry;}
     private void refreshUI() {
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -270,6 +270,7 @@ public class SuenChartFragment extends BaseLazyFragment {
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicSuen(new BaseObserver<SuenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -278,6 +279,7 @@ public class SuenChartFragment extends BaseLazyFragment {
 
             @Override
             public void onNext(SuenEntry suenEntry) {
+                closeDataDialog();
                 setSuenEntry(suenEntry);
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -294,6 +296,7 @@ public class SuenChartFragment extends BaseLazyFragment {
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
 
             }
 

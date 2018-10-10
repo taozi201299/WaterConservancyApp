@@ -321,9 +321,9 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     private void refreshUI() {
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             return;
         }
         webView.loadUrl("javascript:showMap(" + mLon + ',' + mLat + ',' + iMapLevel + ")");
@@ -340,6 +340,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicHidden(new BaseObserver<HiddenEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -348,6 +349,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
             @Override
             public void onNext(HiddenEntry hiddenEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -366,6 +368,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG + "getThematicHidden:", "onError");
             }

@@ -334,8 +334,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                getSupserviceInfo();
 
             }
         });
@@ -369,7 +368,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void refreshUI(){
         customScrollView.setVisibility(View.VISIBLE);
         // 1 隐患核实信息
-        if(this.hiddenProjectInfo.totalCount.equals("1")) {
+        if(hiddenProjectInfo != null && this.hiddenProjectInfo.totalCount.equals("1")) {
             hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
             tv_projectName.setText(hiddenProjectInfo.getEngGuid());
             tv_level.setText(hiddenProjectInfo.getHiddGrad());
@@ -379,7 +378,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
         }
         // 隐患排查
-        if(this.hiddenInvesInfo.totalCount.equals("1")) {
+        if(hiddenInvesInfo != null && this.hiddenInvesInfo.totalCount.equals("1")) {
             hiddenInvesInfo = this.hiddenInvesInfo.dataSource.get(0);
             tv_other.setText(hiddenInvesInfo.getInspLeader());
             tv_other2.setText(hiddenInvesInfo.getInspMem());
@@ -387,41 +386,46 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             tv_other4.setText(hiddenInvesInfo.getRecPers());
             tv_other5.setText(hiddenInvesInfo.getCollTime());
         }
-        if(Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount)> 0){
-            tv_unit_name.setText("");
-            tv_rectify_plan_time.setText("");
+        if(hiddenRectifyPlanInfo != null && Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount)> 0){
+            HiddenRectifyPlanInfo info = hiddenRectifyPlanInfo.dataSource.get(0);
+            tv_unit_name.setText(info.getGoverRespWiunName());
+            tv_rectify_plan_time.setText(info.getCollTime());
             ev_rectify_target_audio.setEditText("");
-            ev_rectify_emergency_plan_audio.setEditText("");
+            ev_rectify_emergency_plan_audio.setEditText(info.getEmerPlanSame());
             ev_ll_rectify_describe_audio.setEditText("");
         }
         //整改信息
-        int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
-        int acceptCount = Integer.valueOf(hiddenAcceptInfo.totalCount);
-        if(rectifyProcessCount > 0){
-            for(int i = 0 ; i < rectifyProcessCount ; i ++){
-                View rectifyView = View.inflate(mContext,R.layout.activity_investigation_rectify_item,null);
-                initElements(rectifyView,0);
+        if(hiddenRectifyProgerssInfo != null ){
+            int rectifyProcessCount = Integer.valueOf(hiddenRectifyProgerssInfo.totalCount);
+        if(rectifyProcessCount > 0) {
+            for (int i = 0; i < rectifyProcessCount; i++) {
+                View rectifyView = View.inflate(mContext, R.layout.activity_investigation_rectify_item, null);
+                initElements(rectifyView, 0);
                 int index = i + 1;
-                tv_rectify_label.setText(index +"次整改");
-                tv_rectify_time.setText(hiddenRectifyProgerssInfo.getCollTime());
-                tv_rectify_member.setText("");
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.getNote());
+                tv_rectify_label.setText(index + "次整改");
+                tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
+                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
             }
-
 
         }
-        // 验收信息
-        if(acceptCount > 0){
-            for(int i = 0 ; i < rectifyProcessCount ; i ++){
-                View rectifyView = View.inflate(mContext,R.layout.activity_investigation_rectify_item,null);
-                initElements(rectifyView,0);
-                int index = i +1;
-                tv_rectify_label.setText(index +"次验收");
-                tv_accept_member.setText("");
-                ev_rectify_opinion_audio.setEditText(hiddenAcceptInfo.getNote());
+        }
+        if(hiddenAcceptInfo != null) {
+            int acceptCount = Integer.valueOf(hiddenAcceptInfo.totalCount);
+            // 验收信息
+            if (acceptCount > 0) {
+                for (int i = 0; i < acceptCount; i++) {
+                    View rectifyView = View.inflate(mContext, R.layout.activity_investigation_rectify_item, null);
+                    initElements(rectifyView, 0);
+                    int index = i + 1;
+                    tv_rectify_label.setText(index + "次验收");
+                    tv_accept_member.setText("");
+                    ev_rectify_opinion_audio.setEditText(hiddenAcceptInfo.dataSource.get(i).getNote());
+                }
             }
-        }if(Integer.valueOf(this.hiddenSupserviceInfo.totalCount) > 0){
+            if (Integer.valueOf(this.hiddenSupserviceInfo.totalCount) > 0) {
 
+            }
         }
 
 

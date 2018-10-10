@@ -334,9 +334,9 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
     }
 
     private void refreshUI_Direct(){
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -362,6 +362,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
             @Override
             public void onNext(StanDirectEntry stanDirectEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -379,6 +380,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG + "getThematicHidden:", "onError");
             }
@@ -391,9 +393,9 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
     }
     private void refreshUI() {
-        closeDataDialog();
         bShowMap = true;
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -411,6 +413,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
         } else {
             type = 1;
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicStans(new BaseObserver<StanSuperviseEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -419,6 +422,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
             @Override
             public void onNext(StanSuperviseEntry stanSuperviseEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -436,6 +440,7 @@ public class StanChartFragment extends BaseLazyFragment implements View.OnClickL
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG + "getThematicHidden:", "onError");
             }

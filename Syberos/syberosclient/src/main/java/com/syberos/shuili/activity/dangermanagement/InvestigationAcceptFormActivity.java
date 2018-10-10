@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
  * Created by Administrator on 2018/9/6.
  */
 
-public class InvestigationAcceptFormActivity extends BaseActivity implements View.OnClickListener {
+public class InvestigationAcceptFormActivity extends BaseActivity implements View.OnClickListener,BaseActivity.IDialogInterface {
     @BindView(R.id.ll_multimedia)
     MultimediaView ll_multimedia;
     @BindView(R.id.tv_accept_person)
@@ -73,6 +75,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
         tv_commitBtn.setOnClickListener(this);
         tv_RejectBtn.setOnClickListener(this);
         rl_time.setOnClickListener(this);
+        setDialogInterface(this);
 
 
     }
@@ -97,6 +100,7 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
         showTitle(InvestigationAccepTaskActivity.Title);
         setActionBarRightVisible(View.INVISIBLE);
         tv_time.setText(CommonUtils.getCurrentDate());
+        setFinishOnBackKeyDown(false);
 
     }
     @Override
@@ -111,10 +115,10 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 setTime();
                 break;
             case R.id.tv_RejectBtn:
-                submit(0);
+                commit();
                 break;
             case R.id.tv_commitBtn:
-                submit(1);
+                commit();
                 if("1".equalsIgnoreCase(type)) {
                     updateTodoTask();
                 }else if("0".equalsIgnoreCase(type)){
@@ -143,7 +147,39 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
+    private void commit() {
+        String message = "确认提交数据?";
+        showCommitDialog(message,0);
+    }
+    @Override
+    public void dialogClick() {
+        submit(1);
+    }
 
+    @Override
+    public void dialogCancel() {
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    InvestigationAcceptFormActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     /**
      * 0 通过 1 不通过
      * @param type
@@ -176,9 +212,11 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);

@@ -287,7 +287,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
             ( (TextView)(holder.get(R.id.tv_title))).setText(investigationInfo.getHiddName());
             ( (TextView)(holder.get(R.id.tv_time))).setText(investigationInfo.getRequCompDate());
             ( (TextView)(holder.get(R.id.tv_name))).setText(investigationInfo.getEngName());
-            ( (TextView)(holder.get(R.id.tv_content))).setText("待补充");
+            ((TextView) (holder.get(R.id.tv_content))).setText(investigationInfo.getHiddDesc());
             rl_supervice.setVisibility(View.VISIBLE);
             btnSupervice.setOnClickListener(new View.OnClickListener() {
                 @Override

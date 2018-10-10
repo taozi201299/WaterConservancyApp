@@ -346,8 +346,8 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     }
 
     private void  refreshUI(){
-        closeDataDialog();
         if(webView == null){
+            closeDataDialog();
             webMap();
             return;
         }
@@ -375,6 +375,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
         }else if(type== 3){
             subType = "3";
         }
+        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicSins(new BaseObserver<SinsEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -383,6 +384,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
             @Override
             public void onNext(SinsEntry sinsEntry) {
+                closeDataDialog();
                 LogUtils.i(TAG, "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -400,6 +402,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
             @Override
             public void onError(Throwable e) {
+                closeDataDialog();
                 e.printStackTrace();
                 LogUtils.i(TAG, "onError");
             }
