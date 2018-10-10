@@ -197,12 +197,12 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             if("CJFR".equalsIgnoreCase(App.sCode) || "CJJL".equalsIgnoreCase(App.sCode) ||"CJSG".equalsIgnoreCase(App.sCode)){
                 // 在建工程 1
                 if(!"1".equals(item.getStat())){
-                    continue;
+                   // continue;
                 }
             }else {
                 // 已建工程 2
                 if(!"2".equals(item.getStat())){
-                    continue;
+                   // continue;
                 }
             }
             mvEngColls.add(item);
