@@ -92,6 +92,7 @@ public class WoasChartFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -181,7 +182,6 @@ public class WoasChartFragment extends BaseLazyFragment {
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
             webMap();
         }
         bFirst = false;
@@ -234,6 +234,7 @@ public class WoasChartFragment extends BaseLazyFragment {
 
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
+                    closeDataDialog();
                     refreshUI();
                 }
 
@@ -261,6 +262,7 @@ public class WoasChartFragment extends BaseLazyFragment {
     }
 
     private void refreshUI() {
+        showDataLoadingDialog();
         bShowMap = true;
         if(webView == null){
             closeDataDialog();
@@ -289,13 +291,13 @@ public class WoasChartFragment extends BaseLazyFragment {
 
             @Override
             public void onNext(WoasEntry woasEntry) {
-                closeDataDialog();
                 setWoasEntry(woasEntry);
 
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if (woasEntry == null || woasEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
+                    closeDataDialog();
                     return;
                 }
                 for (WoasEntry.DataBean.SCORERANKBean bean :
@@ -304,6 +306,7 @@ public class WoasChartFragment extends BaseLazyFragment {
                 }
 //                setHiddenEntry(hiddenEntry);
                 addMarkInfo(list);
+                closeDataDialog();
                 EventBus.getDefault().postSticky(woasEntry);
             }
 

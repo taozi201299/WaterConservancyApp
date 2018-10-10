@@ -89,6 +89,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     @Override
     protected void initView() {
         Log.d(TAG,"--------------initView()");
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -179,7 +180,6 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
             webMap();
         }
         bFirst = false;
@@ -240,6 +240,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
+                    closeDataDialog();
                     refreshUI();
                 }
             }
@@ -326,6 +327,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
     }
 
     private void refreshUI() {
+        showDataLoadingDialog();
         bShowMap = true;
         if(webView == null){
             closeDataDialog();
@@ -353,11 +355,11 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
 
             @Override
             public void onNext(HiddenEntry hiddenEntry) {
-                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if (hiddenEntry == null || hiddenEntry.getData() == null) {
+                    closeDataDialog();
                     ToastUtils.show("未获取到数据");
                     return;
                 }
@@ -367,6 +369,7 @@ public class HiddenChartFragment extends BaseLazyFragment implements View.OnClic
                 }
                 setHiddenEntry(hiddenEntry);
                 addMarkInfo(list);
+                closeDataDialog();
                 EventBus.getDefault().postSticky(hiddenEntry);
             }
 

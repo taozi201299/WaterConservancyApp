@@ -91,6 +91,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
 
     @Override
     protected void initView() {
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -180,7 +181,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
             webMap();
         }
         bFirst = false;
@@ -240,6 +240,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
                 super.onPageFinished(view, url);
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
+                    closeDataDialog();
                     refreshUI();
                 }
             }
@@ -318,7 +319,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
     }
 
     private void refreshUI() {
-        closeDataDialog();
+        showDataLoadingDialog();
         bShowMap = true;
         if(webView == null){
             closeDataDialog();
@@ -339,7 +340,6 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
         } else {
             type = 1;
         }
-        showDataLoadingDialog();
         RetrofitHttpMethods.getInstance().getThematicHaz(new BaseObserver<HazEntry>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -348,12 +348,12 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
 
             @Override
             public void onNext(HazEntry hazEntry) {
-                closeDataDialog();
                 LogUtils.i(TAG + "getThematicHidden:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if (hazEntry == null || hazEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
+                    closeDataDialog();
                     return;
                 }
                 for(HazEntry.EveryEngBean bean : hazEntry.getData().getEveryEngList()){
@@ -362,6 +362,7 @@ public class HazChartFragment extends BaseLazyFragment implements View.OnClickLi
                 }
                 setHazEntry(hazEntry);
                 addMarkInfo(list);
+                closeDataDialog();
                 EventBus.getDefault().postSticky(hazEntry);
             }
 

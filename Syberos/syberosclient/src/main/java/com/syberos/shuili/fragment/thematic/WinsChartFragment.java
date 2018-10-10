@@ -97,6 +97,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
     @Override
     protected void initView() {
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
@@ -217,7 +218,6 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
             webMap();
         }
         bFirst = false;
@@ -269,6 +269,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     bShowMap = true;
+                    closeDataDialog();
                     refreshUI();
                 }
             }
@@ -349,6 +350,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     }
 
     private void  refreshUI(){
+        showDataLoadingDialog();
         if(webView == null){
             closeDataDialog();
             webMap();
@@ -384,12 +386,12 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
 
             @Override
             public void onNext(WinsEntry winsEntry) {
-                closeDataDialog();
                 LogUtils.i(TAG, "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if(winsEntry == null || winsEntry.getData() == null){
                     ToastUtils.show("未获取到数据");
+                    closeDataDialog();
                     return;
                 }
                 for(WinsEntry.SubWinsDataBean bean:winsEntry.getData().getSUBWINSDATA()){
@@ -397,6 +399,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                 }
                 setData(winsEntry);
                 addMarkInfo(list);
+                closeDataDialog();
             }
 
             @Override

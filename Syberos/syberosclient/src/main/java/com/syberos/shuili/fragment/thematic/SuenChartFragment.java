@@ -94,6 +94,7 @@ public class SuenChartFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd = "000000000000";
         orgLevel = 1;
@@ -183,7 +184,7 @@ public class SuenChartFragment extends BaseLazyFragment {
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
+
             webMap();
         }
         bFirst = false;
@@ -234,6 +235,7 @@ public class SuenChartFragment extends BaseLazyFragment {
 
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
+                    closeDataDialog();
                     refreshUI();
                 }
 
@@ -256,6 +258,7 @@ public class SuenChartFragment extends BaseLazyFragment {
     public void setSuenEntry(SuenEntry suenEntry) {
         this.suenEntry = suenEntry;}
     private void refreshUI() {
+        showDataLoadingDialog();
         bShowMap = true;
         if(webView == null){
             closeDataDialog();
@@ -283,18 +286,19 @@ public class SuenChartFragment extends BaseLazyFragment {
 
             @Override
             public void onNext(SuenEntry suenEntry) {
-                closeDataDialog();
                 setSuenEntry(suenEntry);
                 List<Point> list = new ArrayList<>();
                 list.clear();
                 if (suenEntry == null || suenEntry.getData() == null) {
                     ToastUtils.show("未获取到数据");
+                    closeDataDialog();
                     return;
                 }
                 for(SuenEntry.EveryOrgBean bean :suenEntry.getData().getEveryOrgList()){
                     list.add(new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getCOUNT()),bean.getJURD()));
                 }
                 addMarkInfo(list);
+                closeDataDialog();
                 EventBus.getDefault().postSticky(suenEntry);
             }
 

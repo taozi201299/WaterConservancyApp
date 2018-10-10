@@ -91,6 +91,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     @Override
     protected void initView() {
         Log.d(TAG,"---------------initView");
+        showDataLoadingDialog();
         App.jurdAreaType = "1";
         App.orgJurd ="000000000000";
         orgLevel = 1;
@@ -182,7 +183,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     protected void initData() {
         Log.d(TAG,"----------------initData");
         if(!bFirst) {
-            showDataLoadingDialog();
             webMap();
         }
         bFirst = false;
@@ -234,6 +234,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 bLoadFinish = true;
                 if (!bShowMap && !mLon.isEmpty() && !mLat.isEmpty()) {
                     bShowMap = true;
+                    closeDataDialog();
                     refreshUI();
                 }
             }
@@ -314,7 +315,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
     }
 
     private void  refreshUI(){
-        closeDataDialog();
+        showDataLoadingDialog();
         if(webView == null){
             closeDataDialog();
             webMap();
@@ -342,7 +343,6 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
 
             @Override
             public void onNext(AcciEntry acciEntry) {
-
                 LogUtils.i(TAG + "getThematicAcci:", "onNext");
                 List<Point> list = new ArrayList<>();
                 list.clear();
@@ -356,6 +356,7 @@ public class AccidentChartFragment extends BaseLazyFragment implements EasyPermi
                 }
                 setData(acciEntry);
                 addMarkInfo(list);
+                closeDataDialog();
             }
 
             @Override
