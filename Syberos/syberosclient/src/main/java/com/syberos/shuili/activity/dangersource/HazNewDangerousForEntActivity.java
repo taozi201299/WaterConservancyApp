@@ -92,6 +92,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
     }
     private void commitForm(){
        // String url = "http://192.168.1.8:8080/sjjk/v1/bis/haz/bisHazPatRec/";
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Danger/create";
         HashMap<String, String> params = new HashMap<>();
         params.put("hazGuid", itemInfo.getGuid());
@@ -133,12 +134,14 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 finish();
 
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

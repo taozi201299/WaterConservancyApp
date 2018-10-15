@@ -153,7 +153,7 @@
     <string name="module_child_yinhuan_chaxun">隐患查询</string>
     <string name="module_child_shigu_kuaibao">快报事故</string>
     <string name="module_child_shigu_chaxun">事故查询</string>
-    <string name="module_child_weixianyuan_xuncha">风险源巡视</string>
+    <string name="module_child_weixianyuan_xuncha">风险源巡查</string>
     <string name="module_child_weixianyuan_weiti">风险源查询</string>
     <string name="module_child_weixianyuan_beian">备案审核</string>
     <string name="module_child_weixianyuan_hexiao">核销审核</string>

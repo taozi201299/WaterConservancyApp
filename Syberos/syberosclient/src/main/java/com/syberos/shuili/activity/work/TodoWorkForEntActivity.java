@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAcceptFormForEntActivity;
@@ -148,7 +149,8 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
         String nextStep = todoWorkInfo.getNextStep();
 
         // 隐患 隐患整改 隐患销号
-        if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName) && GlobleConstants.step.equals(nextStep)) {
+        if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName) && GlobleConstants.step.equals(nextStep)
+                && App.moduleName.contains(GlobleConstants.moduleMap.get("4A25B41885D94D0F941F6EF0118D768A"))) {
             ObjHidden objHidden = new ObjHidden();
             objHidden.setGuid(busiCode);
             Bundle bundle = new Bundle();
