@@ -91,6 +91,10 @@ public class GlobleConstants {
 
 
     /**
+     * 任务代办
+     */
+    public static final String step = "完成整改，待销号";
+    /**
      * 企事业模块
      */
     public static final HashMap<String,String>moduleMap = new HashMap<String,String>() {

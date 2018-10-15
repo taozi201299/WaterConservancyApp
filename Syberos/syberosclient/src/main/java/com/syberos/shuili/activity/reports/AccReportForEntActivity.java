@@ -452,20 +452,21 @@ public class AccReportForEntActivity extends TranslucentActivity {
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDialog();
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 initData();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDialog();
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
         });
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/cancelAcci/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repguid",bisOrgMonRepPeri.getGuid());
@@ -479,12 +480,14 @@ public class AccReportForEntActivity extends TranslucentActivity {
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 initData();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

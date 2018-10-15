@@ -110,7 +110,7 @@ public class MyImformationActivity extends BaseActivity {
      */
     private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
-            if (TextUtils.isEmpty(userInformation.getUserName())) {
+            if (TextUtils.isEmpty(userInformation.getPersName())) {
                 userInformation.setUserName("未知");
             }
 

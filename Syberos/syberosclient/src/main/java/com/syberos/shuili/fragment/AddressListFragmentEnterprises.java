@@ -134,7 +134,7 @@ public class AddressListFragmentEnterprises extends BaseFragment implements Side
     public void initData() {
         mProgressBar.setVisibility(View.VISIBLE);
         HashMap<String,String>map = new HashMap<>();
-        map.put("userId","11");
+        map.put("userId", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         SyberosManagerImpl.getInstance().getLocalAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
             @Override
             public void onSuccess(List<UserExtendInformation> var1) {
@@ -179,7 +179,7 @@ public class AddressListFragmentEnterprises extends BaseFragment implements Side
             @Override
             public void onRefresh() {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("userId",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
+                map.put("arg0", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
                 SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
                     @Override
                     public void onSuccess(List<UserExtendInformation> var1) {
@@ -199,6 +199,21 @@ public class AddressListFragmentEnterprises extends BaseFragment implements Side
             @Override
             public void onRefresh(boolean isPullDown) {
                 LogUtils.d(TAG,"22222");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("arg0", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+                SyberosManagerImpl.getInstance().syncAddressList(map, new SyberosManagerImpl.ResultCallback<List<UserExtendInformation>>() {
+                    @Override
+                    public void onSuccess(List<UserExtendInformation> var1) {
+                        xRefreshView.stopRefresh(true);
+                        updateIndexListDataSource(var1);
+                    }
+
+                    @Override
+                    public void onError(SyberosManagerImpl.ErrorCode var1) {
+                        xRefreshView.stopRefresh(false);
+
+                    }
+                });
 
             }
 

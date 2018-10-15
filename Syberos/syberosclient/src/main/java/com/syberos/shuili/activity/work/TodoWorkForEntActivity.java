@@ -120,6 +120,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
     public void initView() {
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         adapter = new TodoWorkAdapter(mContext,R.layout.layout_todo_work_item,datas);
         pullRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
         pullRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -147,7 +148,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
         String nextStep = todoWorkInfo.getNextStep();
 
         // 隐患 隐患整改 隐患销号
-        if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName)) {
+        if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName) && GlobleConstants.step.equals(nextStep)) {
             ObjHidden objHidden = new ObjHidden();
             objHidden.setGuid(busiCode);
             Bundle bundle = new Bundle();
@@ -155,27 +156,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
             bundle.putSerializable("todoWork",todoWorkInfo);
             bundle.putString("type","0");
             intentActivity(TodoWorkForEntActivity.this,InvestigationAcceptFormForEntActivity.class,false,bundle);
-        }
-        // 风险源
-        else if(GlobleConstants.Module_Name_Haz.equalsIgnoreCase(moduleName)){
-
-        }
-        // 安全检查
-        else if(GlobleConstants.Module_Name_Sins.equalsIgnoreCase(moduleName)){
-
-        }
-        // 安全检查报表
-        else if(GlobleConstants.Module_Name_Report_Check.equalsIgnoreCase(moduleName)){
-
-        }
-        //隐患报表
-        else if(GlobleConstants.Module_Name_Report_Hidd.equalsIgnoreCase(moduleName)){
-
-        }
-        // 事故报表
-        else if(GlobleConstants.Module_Name_Report_Acci.equalsIgnoreCase(moduleName)){
-
-        }else {
+        } else {
             final CustomDialog customDialog = new CustomDialog(TodoWorkForEntActivity.this);
             customDialog.setDialogMessage(Title, "", null);
             customDialog.setMessage("请在电脑端进行处理");

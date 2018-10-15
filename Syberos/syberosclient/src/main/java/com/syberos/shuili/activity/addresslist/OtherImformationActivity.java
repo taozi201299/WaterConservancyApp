@@ -103,7 +103,7 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
      */
     private void loadIcon(final ImageView image, final UserExtendInformation userInformation) {
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
-            if (TextUtils.isEmpty(userInformation.getUserName())) {
+            if (TextUtils.isEmpty(userInformation.getPersName())) {
                 userInformation.setUserName("未知");
             }
 

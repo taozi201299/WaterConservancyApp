@@ -137,6 +137,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
 
     @Override
     public void initView() {
+        setInitActionBar(true);
         showDataLoadingDialog();
         showTitle("查附近");
         setActionBarRightVisible(View.INVISIBLE);
