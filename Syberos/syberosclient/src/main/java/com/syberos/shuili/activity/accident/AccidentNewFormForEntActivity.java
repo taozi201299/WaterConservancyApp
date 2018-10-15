@@ -93,6 +93,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
     private HashMap<String,String> m_unitMap;
     private HashMap<String,String> m_acciTypeMap;
     private HashMap<Integer,String>m_acciGradeMap;
+    ArrayList<String>m_acciGradMapList = new ArrayList<>();
     private ObjAcci objAcci = null;
     private int type ;
     MvEngColl item;
@@ -172,7 +173,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                     ce_accident_unit.setText(objAcci.getAccidentUnitName());
                     ce_accident_name.setText(getAcciTypeName(objAcci.getAcciCate()));
                     ce_occo_loc.setText(objAcci.getOccuLoc());
-                    if(objAcci.getAcciGrad() != null) {
+                    if(objAcci.getAcciGrad() != null && !objAcci.getAcciGrad().isEmpty()) {
                         ll_enum_level.setCurrentDetailText(m_acciGradeMap.get(Integer.valueOf(objAcci.getAcciGrad()) -1));
                     }
                     ce_serious_injuries_count.setText(objAcci.getSerInjNum());
@@ -239,8 +240,9 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
         if(acciGrade != null){
             for(int i  = 0; i < acciGrade.length;i ++){
                 m_acciGradeMap.put(i,acciGrade[i]);
+                m_acciGradMapList.add(acciGrade[i]);
             }
-            ll_enum_level.setEntries(m_acciGradeMap);
+            ll_enum_level.setEntries(m_acciGradMapList);
         }
     }
     private String  getAcciTypeName(String code){
