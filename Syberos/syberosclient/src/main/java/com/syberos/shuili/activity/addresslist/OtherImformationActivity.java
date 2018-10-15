@@ -105,6 +105,8 @@ public class OtherImformationActivity extends BaseActivity implements View.OnCli
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
             if (TextUtils.isEmpty(userInformation.getPersName())) {
                 userInformation.setUserName("未知");
+            }else {
+                userInformation.setUserName(userInformation.getPersName());
             }
 
             TextDrawable textDrawable = BitmapUtil.drawableFactory(getApplicationContext(), userInformation, 25);

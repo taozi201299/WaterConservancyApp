@@ -112,6 +112,8 @@ public class MyImformationActivity extends BaseActivity {
         if (TextUtils.isEmpty(userInformation.getIconUrl())) {
             if (TextUtils.isEmpty(userInformation.getPersName())) {
                 userInformation.setUserName("未知");
+            }else {
+                userInformation.setUserName(userInformation.getPersName());
             }
 
             TextDrawable textDrawable = BitmapUtil.drawableFactory(this, userInformation, 25);
