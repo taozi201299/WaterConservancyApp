@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sl_notification"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,6 +12,7 @@
         android:layout_height="@dimen/_50dp"
         android:background="@color/red_delete"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="1">
         <!--What you want to show-->
         <TextView
@@ -88,6 +89,6 @@
             android:src="@mipmap/me_red_pot"/>
     </LinearLayout>
     <!-- Surface View End -->
-</com.daimajia.swipe.SwipeLayout>
+</LinearLayout>
 
 

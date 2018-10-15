@@ -35,7 +35,7 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     private final String TAG = HazDetailActivity.class.getSimpleName();
 
     private final String Title = "巡查记录";
-    private final String ActivityTitle = "危险源详情";
+    private final String ActivityTitle = "风险源详情";
 
     public static final String SEND_BUNDLE_KEY = "HistoryPatrolInformation";
     private ObjHaz information = null;

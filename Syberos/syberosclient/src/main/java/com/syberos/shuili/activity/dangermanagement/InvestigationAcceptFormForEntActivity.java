@@ -147,6 +147,7 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
      * @param type
      */
     private void submit(int type){
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
@@ -184,12 +185,14 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -270,7 +273,7 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                ToastUtils.show("创建代办任务失败");
+              //  ToastUtils.show("创建代办任务失败");
 
             }
         });

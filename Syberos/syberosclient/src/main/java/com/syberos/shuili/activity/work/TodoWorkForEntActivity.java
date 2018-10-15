@@ -196,6 +196,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
         public void convert(ViewHolder holder, TodoWorkInfo todoWorkInfo) {
             ((TextView)(holder.getView(R.id.tv_todo_work_time))).setText(todoWorkInfo.getMtime());
             ((TextView)(holder.getView(R.id.tv_todo_work_title))).setText(todoWorkInfo.getBusiName());
+            ((TextView)holder.getView(R.id.tv_nextStep)).setText(todoWorkInfo.getNextStep());
 
         }
     }

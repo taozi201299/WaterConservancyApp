@@ -119,6 +119,7 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
         return super.onKeyDown(keyCode, event);
     }
     private void commit(){
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
@@ -156,12 +157,14 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

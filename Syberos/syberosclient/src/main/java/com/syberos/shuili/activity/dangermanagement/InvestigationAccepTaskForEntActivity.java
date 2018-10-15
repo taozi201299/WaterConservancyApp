@@ -109,7 +109,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 if(investigationTaskInfo != null && investigationTaskInfo.dataSource != null){
                     if(investigationTaskInfo.dataSource.size() == 0){
                         closeLoadingDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                        refreshUI();
                     }else {
                         getHiddenGrade();
                     }
