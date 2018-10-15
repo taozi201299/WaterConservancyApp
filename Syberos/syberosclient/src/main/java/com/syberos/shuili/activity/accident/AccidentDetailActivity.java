@@ -189,8 +189,10 @@ public class AccidentDetailActivity extends BaseActivity {
                             localAttachment.type = MultimediaView.LocalAttachmentType.VIDEO;
                         }else {
                             localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                            continue;
                         }
                         localAttachment.filePath = item.getMedPath();
+                        localAttachment.bExist = true;
                         attachments.add(localAttachment);
                     }
                 }

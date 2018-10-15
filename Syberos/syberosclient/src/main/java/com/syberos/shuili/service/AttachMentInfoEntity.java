@@ -22,6 +22,16 @@ public class AttachMentInfoEntity implements Parcelable {
     public String medExt;
     public String recPers;
 
+    public long getMedSize() {
+        return medSize;
+    }
+
+    public void setMedSize(long medSize) {
+        this.medSize = medSize;
+    }
+
+    public long medSize;
+
     @Override
     public int describeContents() {
         return 0;

@@ -216,7 +216,6 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
         HashMap<String,String>param = new HashMap<>();
         param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        //param.put("acciWinuGuid","537AD1AB8E7447AAA249AB22A5344955");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

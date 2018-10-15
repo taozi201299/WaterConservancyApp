@@ -30,6 +30,7 @@ import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -340,6 +341,8 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(info.medPath);
+                info.medSize = file.length();
                 info.bisTableName = "OBJ_ACCI";
                 if(objAcci != null) {
                     info.bisGuid = objAcci.getId() == null ? "" : objAcci.getId();

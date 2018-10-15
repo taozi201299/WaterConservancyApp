@@ -300,6 +300,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDialog();
                 ToastUtils.show(errorInfo.getMessage());
             }
         }, CacheMode.DEFAULT);

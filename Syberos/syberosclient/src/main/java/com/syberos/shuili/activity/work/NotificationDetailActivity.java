@@ -83,6 +83,7 @@ public class NotificationDetailActivity extends BaseActivity {
     @Override
     public void initView() {
         setInitActionBar(false);
+        setInitActionBar(true);
         tv_action_bar2_title.setText("通知详情");
         tv_action_bar2_title.setGravity(Gravity.LEFT);
         iv_action_bar2_right.setImageResource(R.mipmap.icon_delete);

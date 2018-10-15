@@ -432,6 +432,7 @@ public class AccReportForEntActivity extends TranslucentActivity {
     }
 
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/addAcciRecRep/";
         HashMap<String,String>params = new HashMap<>();
         params.put("appCode", App.sCode.toLowerCase());
@@ -451,12 +452,14 @@ public class AccReportForEntActivity extends TranslucentActivity {
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDialog();
                 ToastUtils.show("提交成功");
                 initData();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

@@ -146,7 +146,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
         String busiName = todoWorkInfo.getBusiName();
         String nextStep = todoWorkInfo.getNextStep();
 
-        // 隐患
+        // 隐患 隐患整改 隐患销号
         if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName)) {
             ObjHidden objHidden = new ObjHidden();
             objHidden.setGuid(busiCode);
@@ -155,10 +155,6 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
             bundle.putSerializable("todoWork",todoWorkInfo);
             bundle.putString("type","0");
             intentActivity(TodoWorkForEntActivity.this,InvestigationAcceptFormForEntActivity.class,false,bundle);
-        }
-        // 事故
-        else if ( GlobleConstants.Module_Name_Acci.equalsIgnoreCase(moduleName)){
-
         }
         // 风险源
         else if(GlobleConstants.Module_Name_Haz.equalsIgnoreCase(moduleName)){
