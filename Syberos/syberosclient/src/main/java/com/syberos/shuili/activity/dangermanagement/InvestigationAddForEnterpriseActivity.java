@@ -29,6 +29,7 @@ import com.syberos.shuili.view.indexListView.ClearEditText;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -167,6 +168,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     }
     private void commit(){
         if(!checkParam())return;
+        showDataLoadingDialog();
         String url = GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
@@ -181,7 +183,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
-        params.put("hiddStat","1");
+        params.put("hiddStat","0");
         params.put("note","移动端测试");
         params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
@@ -206,6 +208,8 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
+                File file = new File(info.medPath);
+                info.medSize = file.length();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";
@@ -224,12 +228,14 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachments, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

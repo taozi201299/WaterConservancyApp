@@ -36,14 +36,15 @@ import butterknife.BindView;
 /**
  * Created by jidan on 18-3-23.
  * 行政版 隐患验收 获取隐患状态获取需要验收的隐患对象
- * 状态为1的任务
+ * 状态为1的任务 整改落实完成的
+ *
  */
 
 public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity implements CommonAdapter.OnItemClickListener,OnPullRefreshListener {
     private final String TAG = InvestigationAccepTaskActivity.class.getSimpleName();
     public static final String Title = "隐患整改";
     private final String btnText = "整改";
-    private final String strHiddState = "1";
+    private final String strHiddState = "1"; ///  ????? 0 or 1
     private ObjectEngine objectEngine;
     private ObjProject objProject;
     private ArrayList<ObjectEngine> objectEngines = new ArrayList<>();
@@ -105,6 +106,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
                 else if(investigationTaskInfo.dataSource.size() == 0){
                     closeLoadingDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                    refreshUI();
                 }
                 else {
                     closeLoadingDialog();

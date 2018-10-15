@@ -166,7 +166,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         if(investigationInfo == null){
             return;
         }
-        BusinessConfig.getAttachMents(investigationInfo.getHiddsGuid(),"OBJ_HIDD",ll_multimedia);
+        BusinessConfig.getAttachMents(investigationInfo.getGuid(),"OBJ_HIDD",ll_multimedia);
         getInvestigationDetail();
 
     }
@@ -328,7 +328,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
     }
 
     /**
-     * 隐患整改信息
+     * 隐患整改落实信息
      */
     private void getRectifyInfo(){
         String url =  GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";

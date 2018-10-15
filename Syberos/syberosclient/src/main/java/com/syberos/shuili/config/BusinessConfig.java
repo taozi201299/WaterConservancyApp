@@ -64,16 +64,17 @@ public class BusinessConfig {
 
                     for(AttachMentInfo.DataBean item : attachMentInfo.getData()){
                         MultimediaView.LocalAttachment localAttachment = new MultimediaView.LocalAttachment();
-                        if(MultimediaView.LocalAttachmentType.IMAGE.equals(item.getMedType())) {
+                        if("2".equals(item.getMedType())) {
                             localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
-                        }else if(MultimediaView.LocalAttachmentType.AUDIO.equals(item.getMedType())){
+                        }else if("3".equals(item.getMedType())){
                             localAttachment.type = MultimediaView.LocalAttachmentType.AUDIO;
-                        }else if(MultimediaView.LocalAttachmentType.VIDEO.equals(item.getMedType())){
+                        }else if("4".equals(item.getMedType())){
                             localAttachment.type = MultimediaView.LocalAttachmentType.VIDEO;
                         }else {
-                            localAttachment.type = MultimediaView.LocalAttachmentType.IMAGE;
+                            continue;
                         }
                         localAttachment.filePath = item.getMedPath();
+                        localAttachment.bExist = true;
                         attachments.add(localAttachment);
                     }
                 }

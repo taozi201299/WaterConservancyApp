@@ -83,6 +83,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     @Override
     public void initData() {
+        results.clear();
         showDataLoadingDialog();
         getHiddenList();
 
@@ -342,7 +343,9 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         return "";
     }
     private void refreshUI(){
-
+        if(results.size() == 0){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+        }
         investigationAdapter.setData(results);
         investigationAdapter.notifyDataSetChanged();
     }
