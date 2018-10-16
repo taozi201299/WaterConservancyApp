@@ -232,7 +232,7 @@ public class InvestigationEngineForEntActivity extends BaseActivity implements A
             bundle.putInt("type",GlobleConstants.NEW_ACCI);
             bundle.putSerializable("engColls",item);
             bundle.putSerializable(DIC_UNIT_KEY,mBundle.getSerializable(DIC_UNIT_KEY));
-            bundle.putSerializable(DIC_ACCIDENT_KEY,bundle.getSerializable(DIC_ACCIDENT_KEY));
+            bundle.putSerializable(DIC_ACCIDENT_KEY,mBundle.getSerializable(DIC_ACCIDENT_KEY));
             intentActivity(InvestigationEngineForEntActivity.this, AccidentNewFormForEntActivity.class,
                     false, bundle);
             return;

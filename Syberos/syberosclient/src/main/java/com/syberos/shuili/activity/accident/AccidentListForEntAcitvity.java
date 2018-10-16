@@ -118,12 +118,11 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         xRefreshView.setXRefreshViewListener(new XRefreshView.XRefreshViewListener() {
             @Override
             public void onRefresh() {
-                getAccidentUnitType();
+                initData();
             }
 
             @Override
             public void onRefresh(boolean isPullDown) {
-
             }
 
             @Override
