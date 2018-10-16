@@ -283,7 +283,7 @@ public class LoginActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 if (userExtendInformation == null) {
-                    closeDataDialog();
+                    closeDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-3).getMessage());
                     return;
                 }
@@ -304,7 +304,7 @@ public class LoginActivity extends BaseActivity {
 
                 } else {
                     ToastUtils.show("该用户无权限使用本系统");
-                    closeDataDialog();
+                    closeDialog();
                 }
             }
 
