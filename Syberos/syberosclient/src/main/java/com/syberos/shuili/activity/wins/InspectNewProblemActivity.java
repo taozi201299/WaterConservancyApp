@@ -153,9 +153,9 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
                 info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                info.bisTableName = "BIS_HIDD_RECT_ACCE";
+                info.bisTableName = "BIS_WINS_PROB";
                 info.bisGuid = "";
-                info.localStatus = "1";
+                info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
                     info.medType = "0";
                 }else {

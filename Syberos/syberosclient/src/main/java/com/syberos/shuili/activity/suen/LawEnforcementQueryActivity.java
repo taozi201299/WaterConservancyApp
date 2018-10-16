@@ -173,6 +173,7 @@ public class LawEnforcementQueryActivity extends BaseActivity
     private void refreshUI(){
         if(bSearch){
             listAdapter.setData(searchResultList);
+
         }else {
             listAdapter.setData(objLayer.dataSource);
         }

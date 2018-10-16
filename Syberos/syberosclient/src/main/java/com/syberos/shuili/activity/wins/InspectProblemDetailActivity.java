@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.syberos.shuili.BuildConfig;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsProb;
 import com.syberos.shuili.entity.wins.InspectProblemInformation;
@@ -124,6 +126,7 @@ public class InspectProblemDetailActivity extends BaseActivity {
             ae_controls_audio.setEditText(bisWinsProb.getRectSugg());
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+            BusinessConfig.getAttachMents(bisWinsProb.getGuid(),"BIS_WINS_PROB",mv_multimedia);
         }
     }
 }
