@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.indexListView.ClearEditText;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
@@ -90,7 +92,6 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         objectEngine = (MvEngColl)bundle.getSerializable("data");
         hasTend = bundle.getBoolean("hasTend");
@@ -107,18 +108,19 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
             line.setVisibility(View.GONE);
         }
         tv_project_name.setText(objectEngine == null ?"未知":objectEngine.getName());
-        getHiddenDic();
 
     }
 
     @Override
     public void initView() {
+        showDataLoadingDialog();
         setInitActionBar(true);
         showTitle("新建隐患");
         setActionBarRightVisible(View.INVISIBLE);
         ev_des_audio.setLabelText("隐患描述");
         ll_multimedia = (MultimediaView)ll_investigation_add_layout.findViewById(R.id.ll_multimedia);
         setFinishOnBackKeyDown(false);
+        getHiddenDic();
 
     }
     @Override
@@ -250,5 +252,25 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     @Override
     public void dialogCancel() {
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    InvestigationAddForEnterpriseActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未提交，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -70,14 +70,14 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
     }
 
     private void getData(){
-        final int size = LoginUtil.getRoleList().size();
+        final int size = 1;
         ArrayList<RoleBaseInfo>roleBaseInfos = LoginUtil.getRoleList();
         if(size == 0)closeDataDialog();
-        for(int i = 0; i<size; i++) {
+        for(int i = 0; i<1; i++) {
             String url = strZJIP + "/pprty/WSRest/service/backlog";
             HashMap<String, String> params = new HashMap<>();
-            params.put("roleCode", roleBaseInfos.get(i).getRoleCode());
-            //  params.put("userGuid","EFB8D92EEA1542C39BB437201659DC1D");
+           // params.put("roleCode", roleBaseInfos.get(i).getRoleCode());
+              params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
@@ -96,6 +96,19 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
                                 }
                             }
                             if(!bExist){
+                                if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Haz)){
+                                    if(!App.moduleName.contains("风险源")){
+                                        continue;
+                                    }
+                                }else if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Hidd)){
+                                    if(!App.moduleName.contains("隐患")){
+                                        continue;
+                                    }
+                                }else if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Acci)){
+                                    if(!App.moduleName.contains("事故")){
+                                        continue;
+                                    }
+                                }
                                 datas.add(info);
                             }
                         }
@@ -150,7 +163,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
 
         // 隐患 隐患整改 隐患销号
         if(GlobleConstants.Module_Name_Hidd.equalsIgnoreCase(moduleName) && GlobleConstants.step.equals(nextStep)
-                && App.moduleName.contains(GlobleConstants.moduleMap.get("4A25B41885D94D0F941F6EF0118D768A"))) {
+                && App.moduleName.contains("隐患")) {
             ObjHidden objHidden = new ObjHidden();
             objHidden.setGuid(busiCode);
             Bundle bundle = new Bundle();

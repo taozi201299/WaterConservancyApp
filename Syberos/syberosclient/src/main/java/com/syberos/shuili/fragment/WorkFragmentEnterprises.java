@@ -171,6 +171,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 names.add(GlobleConstants.moduleMap.get(guid));
             }
         }
+
         /**
          * 监理和施工没有事故模块
          */
@@ -193,6 +194,10 @@ public class WorkFragmentEnterprises extends BaseFragment {
         }else {
             moduleNames = getResources().getStringArray(R.array.module_enterprise);
         }
+        App.moduleName.clear();
+        for(int i = 0; i < moduleNames.length ; i++) {
+            App.moduleName.add(moduleNames[i]);
+        }
         int moduleCount = moduleNames.length;
 
         for (int i = 0; i < moduleCount; i++) {
@@ -201,7 +206,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
             moduleViewHolder.tv_moduleName.setText(moduleNames[i]);
             GradientDrawable drawable = (GradientDrawable) moduleViewHolder.ll_module_name.getBackground();
             //改变drawable的背景填充色
-
             drawable.setColor(getResources().getColor(moduleColor[i]));
 
             String[] childNames = getModuleNames(moduleNames[i]);

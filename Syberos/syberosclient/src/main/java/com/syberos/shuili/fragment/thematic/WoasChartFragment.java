@@ -93,9 +93,9 @@ public class WoasChartFragment extends BaseLazyFragment {
     @Override
     protected void initView() {
         showDataLoadingDialog();
-        App.jurdAreaType = "1";
-        App.orgJurd = "000000000000";
-        orgLevel = 1;
+//        App.jurdAreaType = "1";
+//        App.orgJurd = "000000000000";
+//        orgLevel = 1;
         radioBtnJianguan.setVisibility(View.GONE);
         radioBtnLiuyu.setVisibility(View.GONE);
         radioBtnZhiguan.setVisibility(View.GONE);

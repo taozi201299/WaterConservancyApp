@@ -98,9 +98,9 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
     @Override
     protected void initView() {
         showDataLoadingDialog();
-        App.jurdAreaType = "1";
-        App.orgJurd ="000000000000";
-        orgLevel = 1;
+//        App.jurdAreaType = "1";
+//        App.orgJurd ="000000000000";
+//        orgLevel = 1;
         rbtnJianguan.setVisibility(View.GONE);
         rbtnLiuyu.setVisibility(View.GONE);
         rbtnZhiguan.setVisibility(View.GONE);

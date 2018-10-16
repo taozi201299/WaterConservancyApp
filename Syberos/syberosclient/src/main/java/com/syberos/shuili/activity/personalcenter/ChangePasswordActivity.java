@@ -115,6 +115,7 @@ public class ChangePasswordActivity extends BaseActivity {
     @Override
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         showTitle("修改密码");
         updateSubmitEnabledStatus();
     }
