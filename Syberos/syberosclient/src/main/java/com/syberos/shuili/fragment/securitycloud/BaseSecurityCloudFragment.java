@@ -346,8 +346,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 public void onComplete() {
                     LogUtils.i("SecurityCloudOrgEntry ","onComplete");
                 }
-//            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
-            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
+            }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
+//            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
         } else if (safaType == 0) {//区域
             RxApiManager.get().cancel(SecurityCloudAreaEntry.class);
             RetrofitHttpMethods.getInstance().getSecurityAreaData(new BaseObserver<SecurityCloudAreaEntry>() {
