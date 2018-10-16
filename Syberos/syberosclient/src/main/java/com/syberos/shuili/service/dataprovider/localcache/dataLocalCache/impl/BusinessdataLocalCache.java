@@ -21,6 +21,7 @@ import com.syberos.shuili.service.dataprovider.localcache.dataLocalCache.DataLoc
 import com.syberos.shuili.service.entity.AccidentFormReturnEntity;
 import com.syberos.shuili.service.entity.FormCacheEntity;
 import com.syberos.shuili.service.entity.HiddenFormReturnEntity;
+import com.syberos.shuili.service.entity.WoasDeucReturnEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.NetworkUtil;
 
@@ -239,6 +240,10 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                 || url.equals(GlobleConstants.strCJIP + "/cjapi/cj/obj/hiddAndSe/addObjHidd")){
             HiddenFormReturnEntity hiddenFormReturnEntity = gson.fromJson(result,HiddenFormReturnEntity.class);
             updateAttachLocalStatus(url,id,hiddenFormReturnEntity.getData().getData().getGuid());
+        }
+        if(url.equalsIgnoreCase(GlobleConstants.strZRIP +"/woas/mobile/bisWoasDeuc/")){
+            WoasDeucReturnEntity woasDeucReturnEntity = gson.fromJson(result,WoasDeucReturnEntity.class);
+            updateAttachLocalStatus(url,id,woasDeucReturnEntity.getData().getGuid());
         }
     }
     private void updateAttachLocalStatus(String url,String id,String response){

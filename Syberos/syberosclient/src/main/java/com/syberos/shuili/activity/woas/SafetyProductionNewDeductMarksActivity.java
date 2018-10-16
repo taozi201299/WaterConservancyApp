@@ -120,6 +120,7 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         showCommitDialog("确认提交考核结果?",0);
     }
     private void commit(){
+        showDataLoadingDialog();
         String url = GlobleConstants.strZRIP +"/woas/mobile/bisWoasDeuc/";
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
@@ -133,7 +134,7 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  mv_multimedia.getBinaryFile();
@@ -146,11 +147,13 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
                 info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "BIS_WOAS_DEUC";
                 info.bisGuid = "";
-                info.localStatus = "1";
+                info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);
@@ -159,12 +162,14 @@ public class SafetyProductionNewDeductMarksActivity extends BaseActivity impleme
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

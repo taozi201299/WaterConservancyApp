@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
@@ -70,6 +71,7 @@ public class InspectAssessDetailDeductMarksActivity extends TranslucentActivity 
             ae_describe_audio.setEditText(info.getDeucNote());
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+              BusinessConfig.getAttachMents(info.getGuid(),"BIS_WOAS_DEUC",mv_multimedia);
         }
     }
 }

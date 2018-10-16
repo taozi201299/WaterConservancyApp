@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.BisWoasObj;
@@ -83,6 +84,7 @@ public class SafetyProductionDetailDeductMarksActivity extends TranslucentActivi
             ae_describe_audio.setEditText(String.valueOf(info.getDeucNote()));
 
             mv_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+            BusinessConfig.getAttachMents(info.getGuid(),"BIS_WOAS_DEUC",mv_multimedia);
         }else {
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             activityFinish();

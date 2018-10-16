@@ -1,5 +1,6 @@
 package com.syberos.shuili.activity.woas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -72,6 +73,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
 
     @Override
     public void initListener() {
+        setDialogInterface(this);
 
     }
 
@@ -96,6 +98,10 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         setActionBarRightVisible(View.INVISIBLE);
         setFinishOnBackKeyDown(false);
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mv_multimedia.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void updateView(){
         tv_woas_unit.setText(bisWoasObj.getWoasWiunName());
@@ -113,12 +119,13 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         showCommitDialog("确认提交考核结果?",0);
     }
     private void commit(){
+        showDataLoadingDialog();
         String url = GlobleConstants.strZRIP +"/woas/mobile/bisWoasDeuc/";
         HashMap<String,String> params = new HashMap<>();
         params.put("woasWiunGuid",bisWoasObj.getGuid());// 被考核单位GUID
         params.put("woasGuid",bisWoasObj.getWoasGuid()); // 工作考核GUID
         params.put("woasGropGuid",bisWoasGrop.getGuid()); // 考核组GUID
-        params.put("fianDeuc", (String) ce_score.getText()); //最终扣分
+        params.put("fianDeuc", ce_score.getText().toString()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
         params.put("woasType","1");// 考核类型
         params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
@@ -126,7 +133,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  mv_multimedia.getBinaryFile();
@@ -137,13 +144,15 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
                 info.medName = item.localFile.getName();
                 info.medPath = item.localFile.getPath();
                 info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                info.bisTableName = "BIS_HIDD_RECT_ACCE";
-                info.bisGuid = "";
-                info.localStatus = "1";
+                info.bisTableName = "BIS_WOAS_DEUC";
+                info.bisGuid = bisWoasObj.getGuid();
+                info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);
@@ -152,12 +161,14 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

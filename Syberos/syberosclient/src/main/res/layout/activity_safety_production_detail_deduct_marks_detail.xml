@@ -166,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/_50dp"
                         android:paddingTop="@dimen/_15dp"
+                        android:paddingLeft="@dimen/_5dp"
                         app:view_label="扣分说明"
                         app:view_labelWidth="@dimen/_60dp" />
                 </RelativeLayout>
