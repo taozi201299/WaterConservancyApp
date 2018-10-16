@@ -130,8 +130,10 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("data",information);
                             intentActivity(OnSiteLawEnforcementListActivity.this,
-                                    OnSiteLawEnforcementEvidenceCreateActivity.class, false, REQUEST_CODE);
+                                    OnSiteLawEnforcementEvidenceCreateActivity.class, false, bundle);
                         }
                     });
 
@@ -145,25 +147,5 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
                     information.caseSitu);
 
         }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-//                LawEnforcementEvidenceInformation information
-//                        = (LawEnforcementEvidenceInformation)data.getSerializableExtra(
-//                        OnSiteLawEnforcementEvidenceCreateActivity.RESULT_KEY);
-//                List<LawEnforcementEvidenceInformation>
-//                        leeiList = currentAddEvidenceItem.getEvidenceInformationList();
-//                leeiList.add(information);
-//                currentAddEvidenceItem.setEvidenceInformationList(leeiList);
-
-                // TODO: 18-4-16 将新增的证据信息上传服务器
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

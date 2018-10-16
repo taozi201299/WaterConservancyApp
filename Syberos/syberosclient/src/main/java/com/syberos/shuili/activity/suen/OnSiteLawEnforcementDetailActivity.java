@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.entity.objCase.LawEnforcementEvidenceInformation;
 import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.Strings;
@@ -88,15 +89,8 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
             ae_describe_audio.setLabelText("案件基本情况");
             ae_describe_audio.setEditText(lawEnforcementInformation.caseSitu);
             llMultimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+            BusinessConfig.getAttachMents(lawEnforcementInformation.guid,"OBJ_CASE",llMultimedia);
 
         }
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

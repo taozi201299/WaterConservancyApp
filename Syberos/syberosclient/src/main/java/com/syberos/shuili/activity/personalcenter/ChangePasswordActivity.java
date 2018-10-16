@@ -21,6 +21,7 @@ import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.listener.TextChangedListener;
 import com.syberos.shuili.utils.SPUtils;
+import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
 
@@ -28,6 +29,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.syberos.shuili.utils.CommonUtils.encrypt;
 
 public class ChangePasswordActivity extends BaseActivity {
 
@@ -175,7 +178,7 @@ public class ChangePasswordActivity extends BaseActivity {
             return bRet;
         }
         String strPwd = userExtendInformation.getPassword();
-        if(!strPwd.equals(CommonUtils.encrypt(originalPwd))){
+        if(!strPwd.equals(encrypt(originalPwd))){
             ToastUtils.show("原密码错误");
             return bRet;
         }
@@ -188,7 +191,7 @@ public class ChangePasswordActivity extends BaseActivity {
         HashMap<String,Object>params = new HashMap<>();
         params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserCode());
         params.put("arg1",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPhone());
-        params.put("arg2",CommonUtils.encrypt(et_input_new_password.getText().toString()));
+        params.put("arg2", encrypt(et_input_new_password.getText().toString()));
         SyberosManagerImpl.getInstance().changePwd(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
@@ -206,6 +209,7 @@ public class ChangePasswordActivity extends BaseActivity {
         });
     }
     private void logOut(){
+        ScreenManager.getScreenManager().popAll();
         App.userType = "-1";
         App.sCodes.clear();
         App.sCode = "";
@@ -219,7 +223,7 @@ public class ChangePasswordActivity extends BaseActivity {
         HashMap<String,Object>params = new HashMap<>();
         params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getUserCode());
         params.put("arg1",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword());
-        params.put("arg2",et_input_new_password.getText().toString());
+        params.put("arg2",encrypt(et_input_new_password.getText().toString()));
         SyberosManagerImpl.getInstance().changePwdForWater(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {

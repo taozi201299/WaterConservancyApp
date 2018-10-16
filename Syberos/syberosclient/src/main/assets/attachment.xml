@@ -5,6 +5,7 @@
         <Field name="url" type="char(36)" length="36" isKey="false" enableNull="false"/>
         <Field name="medName" type="char(36)" length="36" isKey="false" enableNull="false"/>
         <Field name="medType" type="char(36)" length="36" isKey="false" enableNull="false"/>
+        <Field name="medSize" type="char(36)" length="36" isKey="false" enableNull="false"/>
         <Field name="medPath" type="char(36)" length="36" isKey="false" enableNull="false"/>
         <Field name="collTime" type="char(36)" length="36" isKey="false" enableNull="true"/>
         <Field name="bisTableName" type="char(36)" length="36" isKey="false" enableNull="false"/>

@@ -26,6 +26,7 @@
             android:orientation="vertical"
             >
             <com.syberos.shuili.view.EnumView
+                android:visibility="gone"
                 android:id="@+id/ev_severity"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50dp"

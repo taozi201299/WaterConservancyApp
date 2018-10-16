@@ -86,6 +86,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         return true;
     }
     private  void writeCacheTable(LocalCacheEntity localCacheEntity){
+        if(localCacheEntity.url.isEmpty())return ;
         HashMap<String,String>valueMap = (HashMap<String, String>) localCacheEntity.params;
         String strID = localCacheEntity.seriesKey;
         String strUrl = localCacheEntity.url;
@@ -109,6 +110,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             values.put("url",info.url == null ?GlobleConstants.strIP+"/sjjk/v1/jck/attMedBase/":info.url);
             values.put("medName", info.medName);
             values.put("medType", info.medType);
+            values.put("medSize",info.medSize);
             values.put("medPath", info.medPath);
             values.put("collTime", CommonUtils.getCurrentDate());
             values.put("bisTableName", info.bisTableName == null ?"":info.bisTableName);
