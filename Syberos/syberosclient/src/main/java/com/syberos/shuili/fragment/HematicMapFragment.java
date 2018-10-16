@@ -255,8 +255,6 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     }
 
     public void getCenterXY() {
-        App.jurdAreaType = "1";
-        App.orgJurd ="000000000000";
         String code = App.orgJurd;
         String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
         HashMap<String, String> params = new HashMap<>();
@@ -268,7 +266,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
         } else {
             params.put("type", "PROVINCE");
         }
-        params.put("type", "XZBAS");
+      //  params.put("type", "XZBAS");
         code = code.substring(0, 6);
         params.put("guid", code);
         params.put("name", "");
