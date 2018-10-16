@@ -14,6 +14,8 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
@@ -96,6 +98,8 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     LinearLayout ll_hidden_object_container;
     @BindView(R.id.customScrollView)
     CustomScrollView  customScrollView;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override  public int getLayoutId() {
         return R.layout.activity_security_check_form_layout;
@@ -109,6 +113,8 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         if(bisSinsScheGroup == null){
             bisSinsScheGroup = (BisSinsScheGroup) bundle.getSerializable(SEND_BUNDLE_KEY);
@@ -178,9 +184,10 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
      * 获取被检对象
      */
     private void getCheckObject(){
-        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/relSinsGroupWiuns/";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisSinsScheGroup.getGuid());
+      //  params.put("guid","654c53e240cb414daa5140323647fbaa");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -189,7 +196,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 relSinsGroupWiun = gson.fromJson(result,RelSinsGroupWiun.class);
                 if(relSinsGroupWiun != null && relSinsGroupWiun.dataSource != null){
                  //   getCheckObjectInfo();
-                    refreshUI();
+                    getEntName();
                 }
             }
 
@@ -199,6 +206,42 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
+    }
+    private void getEntName(){
+        final int size = relSinsGroupWiun.dataSource.size();
+        for(final RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
+            if(iFailedCount != 0){
+                break;
+            }
+            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",item.getObjGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjectEngine objectEngine  = null;
+                    objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    if(objectEngine == null || objectEngine.dataSource == null ||
+                            objectEngine.dataSource.size() == 0){
+
+                    }
+                    item.setObjName(objectEngine.dataSource.get(0).getEngName());
+                    if(iSucessCount +iFailedCount == size) {
+                        refreshUI();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size) {
+                        refreshUI();
+                    }
+                }
+            });
+        }
     }
     private void getCheckObjectInfo(){
         getHiddenInfo();
@@ -243,7 +286,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     boolean getEngGuid(ObjHidden objHidden){
         for(RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
             if(item.getGuid().equals(objHidden.getEngGuid())){
-                objHidden.setEngName(item.getEngName());
+                objHidden.setEngName(item.getObjName());
                 return true;
             }
         }
@@ -272,7 +315,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
         for (int i = 0; i < size; i++) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.view_with_right_arrow, null);
             TextView tv_item_name = (TextView)view.findViewById(R.id.tv_item_name);
-            tv_item_name.setText(infos.get(i).getEngName());
+            tv_item_name.setText(infos.get(i).getObjName());
             ll_check_object_container.addView(view);
             final int finalI = i;
             view.setOnClickListener(new View.OnClickListener() {
@@ -325,6 +368,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     public void initView() {
         customScrollView.setVisibility(View.GONE);
       setActionBarRightVisible(View.INVISIBLE);
+      setInitActionBar(true);
     }
 
 

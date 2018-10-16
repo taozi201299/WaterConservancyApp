@@ -18,10 +18,12 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationAccepDetailActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
 import com.syberos.shuili.utils.Strings;
+import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
@@ -62,9 +64,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
     }
-
     @Override
     public void initData() {
         iSucessCount = 0;
@@ -84,6 +84,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
     public void initView() {
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         groupedEnterprisesExpressAccidentListAdapter = new GroupedEnterprisesExpressAccidentListAdapter(this,groups);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
@@ -106,7 +107,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
             return;
         }
         for(int i =0 ; i < size ; i++){
-            final RelSinsGroupWiun item = relSinsGroupWiun.dataSource.get(i);
+            final RelSinsGroupWiun  item = relSinsGroupWiun.dataSource.get(i);
             final String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
             HashMap<String,String> params = new HashMap<>();
             params.put("engGuid",item.getGuid());
@@ -119,8 +120,17 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
                     objHidden = gson.fromJson(result,ObjHidden.class);
                     if(objHidden != null && objHidden.dataSource != null){
                         if(objHidden.dataSource.size() != 0){
-                            SecurityCheckHiddenGroup securityCheckHiddenGroup = new SecurityCheckHiddenGroup(item.getEngName(), (ArrayList<ObjHidden>) objHidden.dataSource);
+                            SecurityCheckHiddenGroup securityCheckHiddenGroup = new SecurityCheckHiddenGroup(item.getObjName(), (ArrayList<ObjHidden>) objHidden.dataSource);
                             groups.add(securityCheckHiddenGroup);
+                        }
+                    }
+                    for(ObjHidden obj: objHidden.dataSource) {
+                        obj.setEngName(item.getObjName());
+                        if ("1".equals(obj.getHiddGrad())) {
+                            obj.setHiddGradName("一般隐患");
+
+                        } else if ("2".equals(obj.getHiddGrad())) {
+                            obj.setHiddGradName("重大隐患");
                         }
                     }
                     if(iSucessCount + iFailedCount == size){
@@ -142,6 +152,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
         }
     }
     private  void  refreshUI(){
+        closeDataDialog();
         groupedEnterprisesExpressAccidentListAdapter.setData(groups);
         groupedEnterprisesExpressAccidentListAdapter.notifyDataSetChanged();
 
@@ -284,6 +295,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
             }
             ( (TextView)(holder.get(R.id.tv_title))).setText(objHidden.getHiddName());
             ( (TextView)(holder.get(R.id.tv_time))).setText(objHidden.getCollTime());
+            holder.get(R.id.tv_name).setVisibility(View.GONE);
             ( (TextView)(holder.get(R.id.tv_content))).setText(objHidden.getHiddDesc());
 
 

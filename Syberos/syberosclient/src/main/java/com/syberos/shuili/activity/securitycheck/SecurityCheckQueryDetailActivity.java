@@ -153,5 +153,6 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
     @Override
     public void initView() {
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
     }
 }

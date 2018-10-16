@@ -17,6 +17,8 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
 import com.syberos.shuili.utils.Strings;
@@ -48,6 +50,8 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
     RecyclerView recyclerView;
 
     ListAdapter listAdapter;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public int getLayoutId() {
@@ -61,6 +65,8 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
 
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         if(information == null){
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
         }else {
@@ -73,7 +79,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
     public void initView() {
         showTitle("安全检查对象");
         setActionBarRightVisible(View.INVISIBLE);
-
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         information = (BisSinsScheGroup)bundle.getSerializable(
                 SecurityCheckTaskActivity.SEND_BUNDLE_KEY);
@@ -104,10 +110,11 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
      * 获取被检对象
      */
     private void getCheckObject(){
-        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
+        String url = strIP +"/sjjk/v1/rel/sins/group/wiun/relSinsGroupWiuns/";
         HashMap<String,String> params = new HashMap<>();
         // 检查小组GUID
         params.put("guid",information.getGuid());
+      //  params.put("guid","654c53e240cb414daa5140323647fbaa");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -117,7 +124,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }
-                refreshUI();
+                getEntName();
             }
 
             @Override
@@ -127,7 +134,44 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
             }
         });
     }
+    private void getEntName(){
+        final int size = relSinsGroupWiun.dataSource.size();
+        for(final RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
+            if(iFailedCount != 0){
+                break;
+            }
+            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",item.getObjGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjectEngine objectEngine  = null;
+                    objectEngine = gson.fromJson(result,ObjectEngine.class);
+                    if(objectEngine == null || objectEngine.dataSource == null ||
+                            objectEngine.dataSource.size() == 0){
+
+                    }
+                    item.setObjName(objectEngine.dataSource.get(0).getEngName());
+                    if(iSucessCount +iFailedCount == size) {
+                        refreshUI();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size) {
+                        refreshUI();
+                    }
+                }
+            });
+        }
+    }
     void refreshUI(){
+        closeDataDialog();
         listAdapter.setData(relSinsGroupWiun.dataSource);
         listAdapter.notifyDataSetChanged();
     }
@@ -139,7 +183,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
         @Override
         public void convert(ViewHolder holder, final RelSinsGroupWiun information) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getEngName());
+                    information.getObjName());
         }
     }
 

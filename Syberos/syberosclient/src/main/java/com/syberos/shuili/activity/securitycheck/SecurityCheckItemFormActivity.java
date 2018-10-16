@@ -76,7 +76,7 @@ public class SecurityCheckItemFormActivity extends BaseActivity{
                 return;
             }
         }
-        showTitle("被检对象详情---" + relSinsGroupWiun.getEngName());
+        showTitle("被检对象详情---" + relSinsGroupWiun.getObjName());
         getUnitIDByEngGuid();
 
 

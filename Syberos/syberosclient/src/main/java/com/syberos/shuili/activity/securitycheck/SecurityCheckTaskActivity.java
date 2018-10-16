@@ -75,6 +75,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         showDataLoadingDialog();
         showTitle(getResources().getString(R.string.module_child_anquan_xianchangjiancha));
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutmanager);
@@ -139,7 +140,12 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                    bisSinsScheGroup = gson.fromJson(result, BisSinsScheGroup.class);
                    if (bisSinsScheGroup != null && bisSinsScheGroup.dataSource != null) {
                        bisSinsScheGroups.add(bisSinsScheGroup.dataSource.get(0));
-                   } else {
+                   }else if(bisSinsScheGroup.dataSource.size() == 0){
+                       closeDataDialog();
+                       String errMsg = ErrorInfo.ErrorCode.valueOf(-7).getMessage();
+                       ToastUtils.show(errMsg);
+                   }
+                   else {
                        closeDataDialog();
                        String errMsg = ErrorInfo.ErrorCode.valueOf(-2).getMessage();
                        ToastUtils.show(errMsg);
@@ -167,6 +173,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
             params.put("sinsGuid",item.getScheGuid());
+            //params.put("sinsGuid","e5ea954bdb424bed80e64dfc459e8e6b");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {

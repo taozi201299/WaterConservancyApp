@@ -199,7 +199,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
     boolean getEngGuid(ObjHidden objHidden){
         for(RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
             if(item.getGuid().equals(objHidden.getEngGuid())){
-                objHidden.setEngName(item.getEngName());
+                objHidden.setEngName(item.getObjName());
                 return true;
             }
         }
@@ -218,7 +218,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
         if(relSinsGroupWiun != null || relSinsGroupWiun.dataSource != null){
             String checkObject= "";
             for(RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
-                checkObject += item.getEngName();
+                checkObject += item.getObjName();
                 checkObject +=" ";
             }
             tv_check_project.setText(checkObject);

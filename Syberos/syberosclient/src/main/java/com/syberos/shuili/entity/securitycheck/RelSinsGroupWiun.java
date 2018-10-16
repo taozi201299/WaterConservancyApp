@@ -8,8 +8,23 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 
 public class RelSinsGroupWiun extends HttpBaseResponse<RelSinsGroupWiun> {
-   String guid;
-   String engName;
+    private String guid;
+    private String groupGuid;
+    private String objGuid;
+    private String fromDate;
+    private String toDate;
+    private String stat;
+    private String sinsType;
+
+    public String getObjName() {
+        return objName == null ? "" : objName;
+    }
+
+    public void setObjName(String objName) {
+        this.objName = objName;
+    }
+
+    private String objName;
 
     public String getGuid() {
         return guid == null ? "" : guid;
@@ -19,11 +34,51 @@ public class RelSinsGroupWiun extends HttpBaseResponse<RelSinsGroupWiun> {
         this.guid = guid;
     }
 
-    public String getEngName() {
-        return engName == null ? "" : engName;
+    public String getGroupGuid() {
+        return groupGuid == null ? "" : groupGuid;
     }
 
-    public void setEngName(String engName) {
-        this.engName = engName;
+    public void setGroupGuid(String groupGuid) {
+        this.groupGuid = groupGuid;
+    }
+
+    public String getObjGuid() {
+        return objGuid == null ? "" : objGuid;
+    }
+
+    public void setObjGuid(String objGuid) {
+        this.objGuid = objGuid;
+    }
+
+    public String getFromDate() {
+        return fromDate == null ? "" : fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate == null ? "" : toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+    public String getStat() {
+        return stat == null ? "" : stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
+    }
+
+    public String getSinsType() {
+        return sinsType == null ? "" : sinsType;
+    }
+
+    public void setSinsType(String sinsType) {
+        this.sinsType = sinsType;
     }
 }

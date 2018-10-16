@@ -402,7 +402,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
     }
     private boolean checkAttachSize(){
         if(images.size() >= MEDIA_MAX_SIZE){
-            ToastUtils.show("最多支持3个附件");
+            ToastUtils.show("最多支持5个附件");
         }
         return  images.size()< MEDIA_MAX_SIZE;
     }

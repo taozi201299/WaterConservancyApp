@@ -19,6 +19,7 @@ import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
@@ -86,7 +87,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
             relSinsGroupWiun = (RelSinsGroupWiun) bundle.getSerializable(
                     SecurityCheckProjectSelectActivity.SEND_BUNDLE_KEY);
         }
-        tv_project_name.setText(relSinsGroupWiun.getEngName());
+        tv_project_name.setText(relSinsGroupWiun.getObjName());
         if(bisSinsScheGroup == null) {
             bisSinsScheGroup = (BisSinsScheGroup) bundle.getSerializable("group");
         }
@@ -123,16 +124,21 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
     }
     private void setEnumData(){
         HashMap<Integer,String> values= new HashMap<>();
+        ArrayList<String>valueList = new ArrayList<>();
         int size = hiddenGrade.dataSource.size();
         for(int i = 0; i < size ; i ++){
             values.put(i,hiddenGrade.dataSource.get(i).getDcItemName());
+            valueList.add(hiddenGrade.dataSource.get(i).getDcItemName());
         }
-        ll_enum_level.setEntries(values);
+        ll_enum_level.setEntries(valueList);
+        ll_enum_level.setCurrentDetailText(valueList.get(0));
+        ll_enum_level.setCurrentIndex(0);
     }
     @Override
     public void initView() {
         showTitle("新建隐患");
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         ll_project_tend.setVisibility(View.GONE);
         ll_part.setVisibility(View.GONE);
         ll_part_line.setVisibility(View.GONE);
@@ -154,18 +160,22 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",relSinsGroupWiun.getGuid()); // 所属工程
         params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
-        params.put("orgGuid","");
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex()+1)); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
         params.put("note","移动端测试");
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("collTime", CommonUtils.getCurrentDate());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
+
+
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
         if(list != null){
@@ -178,9 +188,11 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
                 info.bisGuid = "";
                 info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);

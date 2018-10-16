@@ -152,12 +152,14 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
     }
     private void setEnumData(){
         HashMap<Integer,String> values= new HashMap<>();
+        ArrayList<String>valueList = new ArrayList<>();
         int size = hiddenGrade.dataSource.size();
         for(int i = 0; i < size ; i ++){
             values.put(i,hiddenGrade.dataSource.get(i).getDcItemName());
+            valueList.add(hiddenGrade.dataSource.get(i).getDcItemName());
         }
-        ll_enum_level.setEntries(values);
-        ll_enum_level.setCurrentDetailText(values.get(0));
+        ll_enum_level.setEntries(valueList);
+        ll_enum_level.setCurrentDetailText(valueList.get(0));
         ll_enum_level.setCurrentIndex(0);
     }
     private boolean checkParam(){
@@ -181,7 +183,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
             params.put("tendGuid","");
         }
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
+        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex() +1)); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述

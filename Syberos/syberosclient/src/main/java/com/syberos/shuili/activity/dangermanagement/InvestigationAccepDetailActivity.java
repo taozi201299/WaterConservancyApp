@@ -164,7 +164,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             finish();
         }
-        BusinessConfig.getAttachMents(investigationInfo.getHiddsGuid(),"OBJ_HIDD",ll_multimedia);
+        BusinessConfig.getAttachMents(investigationInfo.getGuid(),"OBJ_HIDD",ll_multimedia);
         if("10".equals(investigationInfo.getHiddGrad())) {
             getHiddenCheckDetail();
         }else {
