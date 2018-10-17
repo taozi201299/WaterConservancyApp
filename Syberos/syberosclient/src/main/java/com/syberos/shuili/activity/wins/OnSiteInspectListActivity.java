@@ -22,6 +22,7 @@ import com.syberos.shuili.entity.wins.BisWinsGroupAll;
 import com.syberos.shuili.entity.wins.BisWinsProg;
 import com.syberos.shuili.entity.wins.BisWinsProgAll;
 import com.syberos.shuili.entity.wins.BisWinsProjAll;
+import com.syberos.shuili.entity.wins.BisWinsStaff;
 import com.syberos.shuili.entity.wins.ObjWinsPlan;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -62,6 +63,8 @@ public class OnSiteInspectListActivity extends BaseActivity
     private BisWinsGroupAll bisWinsGroupAll1 = null;
     ArrayList<BisWinsGroupAll>datas = new ArrayList<>();
 
+    private String personId;
+
 
     @Override
     public int getLayoutId() {
@@ -77,7 +80,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     public void initData() {
         datas.clear();
         showDataLoadingDialog();
-        getBisWinsGroupBySepStafGuid();
+        getPersonID();
     }
 
     @Override
@@ -101,10 +104,38 @@ public class OnSiteInspectListActivity extends BaseActivity
         intentActivity(OnSiteInspectListActivity.this,
                 InspectionDetailActivity.class, false, bundle);
     }
+    private void getPersonID(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                BisWinsStaff bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
+                if(bisWinsStaff == null || bisWinsStaff.dataSource == null ){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }if(bisWinsStaff.dataSource.size() == 0){
+                    return;
+                }
+               personId =  bisWinsStaff.dataSource.get(0).getGuid();
+                getBisWinsGroupBySepStafGuid();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
     private void getBisWinsGroupBySepStafGuid(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("speStafGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("speStafGuid",personId);
       //  params.put("speStafGuid","95873d092b294fccb619e3c56dec9dfe");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override

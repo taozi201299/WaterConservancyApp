@@ -161,19 +161,19 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     }
     private void processResult(){
         for(BisWinsProjAll bisWinsProjAll: bisWinsProjAll.dataSource ){
-            mapValues.put(bisWinsProjAll.getProjGuid(),new ArrayList<BisWinsProb>());
-          //  mapValues.put("3e6d04f19f55442e94b3cf4a9d390a4c",new ArrayList<BisWinsProb>());
-            mapProjValues.put(bisWinsProjAll.getProjGuid(),bisWinsProjAll.getProjName() +"("+ bisWinsProjAll.getAdminWiunName() +")");
+            mapValues.put(bisWinsProjAll.getGuid(),new ArrayList<BisWinsProb>());
+            mapProjValues.put(bisWinsProjAll.getGuid(),bisWinsProjAll.getProjName() +"("+ bisWinsProjAll.getAdminWiunName() +")");
         }
-        for(BisWinsProb bisWinsProb : bisWinsProb.dataSource){
-            ArrayList list = mapValues.get(bisWinsProb.getWinsProjGuid());
+        for(BisWinsProb item : bisWinsProb.dataSource){
+            ArrayList list = mapValues.get(item.getWinsProjGuid());
             if(list == null ){
                 list = new ArrayList();
-                list.add(bisWinsProb);
-                mapValues.put(bisWinsProb.getProbType(),list);
+                list.add(item);
+                mapValues.put(item.getWinsProjGuid(),list);
                 continue;
             }
-            list.add(bisWinsProb);
+            list.add(item);
+            mapValues.put(item.getWinsProjGuid(),list);
         }
         for(String key:mapValues.keySet()){
             if(mapValues.get(key).size() == 0)continue;

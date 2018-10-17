@@ -15,12 +15,14 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsProj;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -75,6 +77,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
             activityFinish();
         }
+        tv_project.setText(bisWinsProj.getProjName());
 
     }
 
@@ -174,8 +177,12 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
-                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "wins/BIS_WINS_PROB/"+time+ "/"+info.medName;
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
+                info.medSize = file.length();
                 info.bisTableName = "BIS_WINS_PROB";
                 info.bisGuid = "";
                 info.localStatus = "0";

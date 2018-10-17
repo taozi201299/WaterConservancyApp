@@ -5,17 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.BuildConfig;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.wins.BisWinsProb;
 import com.syberos.shuili.entity.wins.InspectProblemInformation;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -66,6 +73,27 @@ public class InspectProblemDetailActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",bisWinsProb.getProbDep());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                AttOrgBase attOrgBase = gson.fromJson(result,AttOrgBase.class);
+                if(attOrgBase != null && attOrgBase.dataSource != null &&attOrgBase.dataSource.size() > 0){
+                    tv_department.setText(attOrgBase.dataSource.get(0).getOrgName());
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+            }
+        });
 
     }
 
