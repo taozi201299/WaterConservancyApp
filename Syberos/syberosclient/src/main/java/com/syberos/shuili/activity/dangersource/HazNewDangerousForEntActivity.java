@@ -15,11 +15,13 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -128,7 +130,12 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "acci/BIS_HAZ_PAT_REC/"+time+ "/"+info.medName;
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
+                info.medSize = file.length();
                 info.bisTableName = "BIS_HAZ_PAT_REC";
                 info.bisGuid = itemInfo.getGuid();
                 info.localStatus = "1";

@@ -23,6 +23,7 @@ import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -147,8 +148,12 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "hidden/BIS_HIDD_RECT_PROG/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
+                info.medSize = file.length();
                 info.bisTableName = "BIS_HIDD_RECT_PROG";
                 info.bisGuid = investigationInfo.getGuid();
                 info.localStatus = "1";

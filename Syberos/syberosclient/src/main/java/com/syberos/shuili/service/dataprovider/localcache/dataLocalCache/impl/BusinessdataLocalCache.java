@@ -113,6 +113,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             values.put("medType", info.medType);
             values.put("medSize",info.medSize);
             values.put("medPath", info.medPath);
+            values.put("localPath",info.localPath);
             values.put("collTime", CommonUtils.getCurrentDate());
             values.put("bisTableName", info.bisTableName == null ?"":info.bisTableName);
             values.put("bisGuid", info.bisGuid == null ? "":info.bisGuid);
@@ -275,7 +276,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             String url = entity.url;
             String strMedGuid = UUID.randomUUID().toString().replace("-","");
             HashMap<String,String> params = new HashMap<>();
-            File file = new File(entity.medPath);
+            File file = new File(entity.localPath);
             params.put("bisTablename",entity.bisTableName);
             params.put("bisGuid",entity.bisGuid);
             params.put("medName",entity.medName);

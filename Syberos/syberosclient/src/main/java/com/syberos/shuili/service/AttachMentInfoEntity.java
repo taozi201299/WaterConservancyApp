@@ -22,6 +22,16 @@ public class AttachMentInfoEntity implements Parcelable {
     public String medExt;
     public String recPers;
 
+    public String getLocalPath() {
+        return localPath == null ? "" : localPath;
+    }
+
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
+    }
+
+    public String localPath;
+
     public long getMedSize() {
         return medSize;
     }

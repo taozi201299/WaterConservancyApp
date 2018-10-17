@@ -328,7 +328,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
      * 新增事故 post  快报 put 补报 post pGuid
      */
     private void accidentReport() {
-        if(!checkParam())return;;
+        if(!checkParam())return;
         int localStatus = 0;
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Accident/create";
@@ -396,9 +396,11 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "hidden/OBJ_ACCI/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                File file = new File(info.medPath);
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
                 info.medSize = file.length();
                 info.bisTableName = "OBJ_ACCI";
                 if(objAcci != null) {

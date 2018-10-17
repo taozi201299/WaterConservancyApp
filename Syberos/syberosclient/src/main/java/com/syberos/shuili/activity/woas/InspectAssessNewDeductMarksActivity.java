@@ -20,12 +20,14 @@ import com.syberos.shuili.entity.woas.DeductMarksInfo;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.service.dataprovider.sync.synchronizer.SynchronizerFactory;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -155,8 +157,12 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
-                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "woas/BIS_WOAS_DEUC/"+time+ "/"+info.medName;
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.medSize = file.length();
+                info.localPath = item.localFile.getPath();
                 info.bisTableName = "BIS_WOAS_DEUC";
                 info.bisGuid = bisWoasObj.getGuid();
                 info.localStatus = "0";

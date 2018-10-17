@@ -39,6 +39,7 @@ import com.imnjh.imagepicker.SImagePicker;
 import com.imnjh.imagepicker.activity.PhotoPickerActivity;
 import com.syberos.shuili.R;
 import com.syberos.shuili.App;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.media.GlideImageLoader;
 import com.syberos.shuili.media.PreviewActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -519,6 +520,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             if(runningMode == RunningMode.READ_ONLY_MODE){
                 iv_delete.setVisibility(GONE);
                 if(localAttachment.bExist) {
+                    localAttachment.filePath = GlobleConstants.strIP + "/" +localAttachment.filePath;
                     iv_attachImage.setEnabled(true);
                     tv_attachment_text.setVisibility(GONE);
                     Glide.with(mContext).load(localAttachment.filePath).into(iv_attachImage);
