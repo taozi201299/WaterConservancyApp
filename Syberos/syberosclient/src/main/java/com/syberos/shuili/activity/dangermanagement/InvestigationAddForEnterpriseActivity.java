@@ -168,6 +168,18 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
             ToastUtils.show("隐患名称不能为空");
             return bRet;
         }
+        if(ll_enum_level.getCurrentDetailText() == null || ll_enum_level.getCurrentDetailText().isEmpty()){
+            ToastUtils.show("隐患级别不能为空");
+            return  bRet;
+        }
+        if(tv_hidden_part.getText().toString() == null || tv_hidden_part.getText().toString().isEmpty()){
+            ToastUtils.show("隐患部位不能空");
+            return bRet;
+        }
+        if(ev_des_audio.getEditText() == null || ev_des_audio.getEditText().isEmpty()){
+            ToastUtils.show("隐患描述不能为空");
+            return  bRet;
+        }
         return true;
     }
     private void commit(){
