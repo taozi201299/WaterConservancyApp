@@ -243,6 +243,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 m_acciGradMapList.add(acciGrade[i]);
             }
             ll_enum_level.setEntries(m_acciGradMapList);
+            ll_enum_level.setCurrentDetailText(m_acciGradMapList.get(0));
         }
     }
     private String  getAcciTypeName(String code){
@@ -265,6 +266,59 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ll_multimedia.onActivityResult(requestCode, requestCode, data);
     }
+    private boolean checkParam(){
+        boolean bRet = true;
+        String accUnit = ce_accident_unit.getText().toString();
+        if(accUnit == null || accUnit.isEmpty()){
+            ToastUtils.show("事故单位不能为空");
+            bRet = false;
+            return  bRet;
+        }
+        String inJuriesCount = ce_serious_injuries_count.getText().toString();
+        if(inJuriesCount == null || inJuriesCount.isEmpty()){
+            ToastUtils.show("重伤人数不能为空");
+            bRet = false;
+            return bRet;
+        }
+        String deatchCount = ce_death_count.getText().toString();
+        if(deatchCount == null || deatchCount.isEmpty()){
+            ToastUtils.show("死亡人数不能为空");
+            bRet = false;
+            return bRet;
+        }
+        String economicLoss = ce_direct_economic_loss.getText().toString();
+        if(economicLoss == null || economicLoss.isEmpty()){
+            ToastUtils.show("直接经济损失不能为空");
+            bRet = false;
+            return bRet;
+        }
+        String level = ll_enum_level.getCurrentDetailText();
+        if(level == null || level.isEmpty()){
+            ToastUtils.show("事故级别不能为空");
+            bRet = false;
+            return  bRet;
+        }
+        String accidentDesc = aev_accident_description.getEditText().toString();
+        if(accidentDesc == null || accidentDesc.isEmpty()){
+            ToastUtils.show("事故描述不能为空");
+            bRet = false;
+            return bRet;
+        }
+        String unitType = ev_unit_type.getCurrentDetailText();
+        if(unitType == null || unitType.isEmpty()){
+            ToastUtils.show("事故单位类型不能为空");
+            bRet = false;
+            return bRet;
+        }
+        String accidentType = ev_type.getCurrentDetailText();
+        if(accidentType == null || unitType.isEmpty()){
+            ToastUtils.show("事故类型不能为空");
+            bRet = false;
+            return bRet;
+        }
+        return bRet;
+
+    }
     private void commit() {
         String message = "确认提交数据?";
         showCommitDialog(message,0);
@@ -274,6 +328,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
      * 新增事故 post  快报 put 补报 post pGuid
      */
     private void accidentReport() {
+        if(!checkParam())return;;
         int localStatus = 0;
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Accident/create";
