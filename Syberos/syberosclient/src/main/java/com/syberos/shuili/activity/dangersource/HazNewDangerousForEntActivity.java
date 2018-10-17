@@ -90,8 +90,20 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
     public void dialogCancel() {
 
     }
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(ae_describe_problem_audio.getEditText() == null || ae_describe_problem_audio.getEditText().isEmpty()){
+            ToastUtils.show("发现问题内容不能为空");
+            return  bRet;
+        }
+        if(ae_describe_controls_audio.getEditText() == null || ae_describe_controls_audio.getEditText().isEmpty()){
+            ToastUtils.show("处理措施不能为空");
+            return  bRet;
+        }
+        return  bRet;
+    }
     private void commitForm(){
-       // String url = "http://192.168.1.8:8080/sjjk/v1/bis/haz/bisHazPatRec/";
+        if(!checkParam())return;
         showDataLoadingDialog();
         String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Danger/create";
         HashMap<String, String> params = new HashMap<>();

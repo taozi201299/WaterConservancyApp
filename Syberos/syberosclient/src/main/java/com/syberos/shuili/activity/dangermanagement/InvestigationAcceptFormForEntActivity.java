@@ -142,11 +142,20 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         pvTime.show();
     }
 
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(et_accept_desc.getEditText() == null || et_accept_desc.getEditText().isEmpty()){
+            ToastUtils.show("销号描述不能为空");
+            return  bRet;
+        }
+        return  true;
+    }
     /**
      * 0 通过 1 不通过
      * @param type
      */
     private void submit(int type){
+        if(!checkParam())return;
         showDataLoadingDialog();
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();

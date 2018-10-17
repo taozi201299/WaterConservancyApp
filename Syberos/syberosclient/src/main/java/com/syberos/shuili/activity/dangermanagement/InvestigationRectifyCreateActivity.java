@@ -118,7 +118,16 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
         }
         return super.onKeyDown(keyCode, event);
     }
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(ev_rectify_des.getEditText() == null || ev_rectify_des.getEditText().isEmpty()){
+            ToastUtils.show("整改描述不能为空");
+            return  bRet;
+        }
+        return true;
+    }
     private void commit(){
+        if(!checkParam())return;
         showDataLoadingDialog();
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectPro/addObjHiddRectPro";
         HashMap<String,String> params = new HashMap<>();

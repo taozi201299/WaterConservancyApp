@@ -187,6 +187,26 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     public void dialogCancel() {
 
     }
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(tv_hidden_name.getText().toString() == null || tv_hidden_name.getText().toString().isEmpty()){
+            ToastUtils.show("隐患名称不能为空");
+            return bRet;
+        }
+        if(ll_enum_level.getCurrentDetailText() == null || ll_enum_level.getCurrentDetailText().isEmpty()){
+            ToastUtils.show("隐患级别不能为空");
+            return  bRet;
+        }
+        if(tv_hidden_part.getText().toString() == null || tv_hidden_part.getText().toString().isEmpty()){
+            ToastUtils.show("隐患部位不能空");
+            return bRet;
+        }
+        if(ev_des_audio.getEditText() == null || ev_des_audio.getEditText().isEmpty()){
+            ToastUtils.show("隐患描述不能为空");
+            return  bRet;
+        }
+        return true;
+    }
     private void commit(){
         showCommitDialog("确认提交数据?",0);
     }
@@ -195,6 +215,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
      */
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commitForm(){
+        if(!checkParam())return;
         String url = GlobleConstants.strCJIP + "/cjapi/cj/obj/hiddAndSe/addObjHidd";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
