@@ -82,6 +82,7 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity imp
     public void initView() {
         showTitle("新增证据");
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         objCase = (ObjCase) bundle.getSerializable("data");
         if(objCase == null){

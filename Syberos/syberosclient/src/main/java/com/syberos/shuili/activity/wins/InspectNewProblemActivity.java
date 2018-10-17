@@ -122,7 +122,30 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
     private void submit(){
         showCommitDialog("确认提交稽查问题?",0);
     }
+
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(ll_problems_type.getCurrentDetailText()  == null || ll_problems_type.getCurrentDetailText().isEmpty()){
+            ToastUtils.show("问题分类不能为空");
+            return  bRet;
+        }
+        if(ll_severity_level.getCurrentDetailText() == null ||ll_severity_level.getCurrentDetailText().isEmpty()){
+            ToastUtils.show("问题严重程度内容不能为空");
+            return  bRet;
+        }
+        if(ae_describe_audio.getEditText()== null || ae_describe_audio.getEditText().isEmpty()){
+            ToastUtils.show("问题描述不能为空");
+            return  bRet;
+        }
+        if(ae_rect_audio.getEditText() == null || ae_rect_audio.getEditText().isEmpty()){
+            ToastUtils.show("整改建议不能为空");
+            return  bRet;
+        }
+        return  true;
+    }
     private void commit(){
+        if(!checkParam())return;
+        showDataLoadingDialog();
         String url = GlobleConstants.strZRIP +"/wins/mobile/bisWinsProb/";
         HashMap<String,String> params = new HashMap<>();
         params.put("winsProjGuid",bisWinsProj.getProjGuid());// 稽察项目GUID
@@ -168,12 +191,14 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 ToastUtils.show("提交成功");
                 finish();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }

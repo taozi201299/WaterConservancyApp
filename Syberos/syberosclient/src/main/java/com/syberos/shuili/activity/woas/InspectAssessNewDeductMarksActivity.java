@@ -115,10 +115,23 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
     public void dialogCancel() {
 
     }
+    private boolean checkParam(){
+        boolean bRet = false;
+        if(ce_score.getText().toString() == null || ce_score.getText().toString().isEmpty()){
+            ToastUtils.show("考核扣分不能为空");
+            return  bRet;
+        }
+        if(ae_describe_audio.getEditText() == null || ae_describe_audio.getEditText().isEmpty()){
+            ToastUtils.show("扣分说明不能为空");
+            return  bRet;
+        }
+        return  true;
+    }
     private void submit(){
         showCommitDialog("确认提交考核结果?",0);
     }
     private void commit(){
+        if(!checkParam())return;
         showDataLoadingDialog();
         String url = GlobleConstants.strZRIP +"/woas/mobile/bisWoasDeuc/";
         HashMap<String,String> params = new HashMap<>();
