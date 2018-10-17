@@ -101,7 +101,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
                 Gson gson = new Gson();
                 bisWinsGroup = gson.fromJson(result, BisWinsGroupAll.class);
                 if (bisWinsGroup == null || bisWinsGroup.dataSource == null) {
-                    ToastUtils.show("获取稽查组信息错误");
+                    ToastUtils.show("获取稽察组信息错误");
                 } else {
                     addGroupItems(bisWinsGroup.dataSource);
                 }
@@ -111,7 +111,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
-                ToastUtils.show("获取稽查组信息错误");
+                ToastUtils.show("获取稽察组信息错误");
             }
         });
     }

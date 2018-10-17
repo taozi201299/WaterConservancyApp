@@ -35,7 +35,7 @@ import butterknife.BindView;
 public class InspectNewProblemActivity extends BaseActivity implements BaseActivity.IDialogInterface,View.OnClickListener {
 
     public static final String RESULT_KEY = "InspectProblemInformation";
-    private final String Title = "新建稽查问题";
+    private final String Title = "新建稽察问题";
 
     @BindView(R.id.tv_project)
     TextView tv_project;
@@ -168,8 +168,10 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.commitType = 0;
+        localCacheEntity.attachType = 0; // 0 暫存 1 提交
+        localCacheEntity.params = params;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  mv_multimedia.getBinaryFile();
 
@@ -187,9 +189,11 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
                 info.bisGuid = "";
                 info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);

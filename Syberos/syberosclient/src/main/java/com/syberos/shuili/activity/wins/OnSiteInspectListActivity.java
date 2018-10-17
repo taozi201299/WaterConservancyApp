@@ -45,7 +45,7 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     private final String TAG = OnSiteInspectListActivity.class.getSimpleName();
 
-    private final String Title = "现场稽查";
+    private final String Title = "现场稽察";
 
     public static final String SEND_BUNDLE_KEY = "OnSiteInspectInformation";
 
@@ -176,7 +176,7 @@ public class OnSiteInspectListActivity extends BaseActivity
                 }
                 datas.addAll(bisWinsGroupAll1.dataSource);
                 if(datas.size() == 0){
-                    ToastUtils.show("未获取到稽查任务");
+                    ToastUtils.show("未获取到稽察任务");
                 }
                 refreshUI();
             }

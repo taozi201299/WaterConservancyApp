@@ -33,7 +33,7 @@ import static com.syberos.shuili.config.GlobleConstants.winsTypeMap;
 public class InspectQueryGroupDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_BUNDLE_KEY = "InspectProblemInformation";
-    private final String Title = "稽查组信息";
+    private final String Title = "稽察组信息";
     /**
      * 稽查组
      */

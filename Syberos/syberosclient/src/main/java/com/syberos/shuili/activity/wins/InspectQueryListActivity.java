@@ -34,7 +34,7 @@ import butterknife.BindView;
  */
 public class InspectQueryListActivity extends BaseActivity {
 
-    private final String Title = "稽查查询";
+    private final String Title = "稽察查询";
 
     public static final String SEND_BUNDLE_KEY = "InspectPlan";
 
@@ -119,7 +119,7 @@ public class InspectQueryListActivity extends BaseActivity {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else if(objWinsPlan.dataSource.size() == 0){
                     closeDataDialog();
-                    ToastUtils.show("没查询到稽查计划");
+                    ToastUtils.show("没查询到稽察计划");
                 }else {
                     getBisWinsProg();
                 }

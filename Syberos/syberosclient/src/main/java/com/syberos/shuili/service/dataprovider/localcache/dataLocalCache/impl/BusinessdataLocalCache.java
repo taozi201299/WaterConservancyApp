@@ -21,6 +21,7 @@ import com.syberos.shuili.service.dataprovider.localcache.dataLocalCache.DataLoc
 import com.syberos.shuili.service.entity.AccidentFormReturnEntity;
 import com.syberos.shuili.service.entity.FormCacheEntity;
 import com.syberos.shuili.service.entity.HiddenFormReturnEntity;
+import com.syberos.shuili.service.entity.WinsProblemsReturnEntity;
 import com.syberos.shuili.service.entity.WoasDeucReturnEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.NetworkUtil;
@@ -246,6 +247,10 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             WoasDeucReturnEntity woasDeucReturnEntity = gson.fromJson(result,WoasDeucReturnEntity.class);
             updateAttachLocalStatus(url,id,woasDeucReturnEntity.getData().getGuid());
         }
+        if(url.equalsIgnoreCase(GlobleConstants.strZRIP +"/wins/mobile/bisWinsProb/")){
+            WinsProblemsReturnEntity winsProblemsReturnEntity = gson.fromJson(result,WinsProblemsReturnEntity.class);
+            updateAttachLocalStatus(url,id,winsProblemsReturnEntity.getData().getGuid());
+        }
     }
     private void updateAttachLocalStatus(String url,String id,String response){
             String selection = DBDefinition.seriesKey + "=?";
@@ -287,13 +292,16 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             params.put("collTime",CommonUtils.getCurrentDate());
             params.put("medGuid",strMedGuid);
             params.put("fromDate",CommonUtils.getCurrentDate());
-            HashMap<String,File>binaryFiles = new HashMap<>();
+            final HashMap<String,File>binaryFiles = new HashMap<>();
+            HashMap<String,File>items = new HashMap<>();
             binaryFiles.put(entity.medName,file);
+        //    upBinary(entity);
             HttpUtils.getInstance().requestNet_File(url, params, binaryFiles, url, new StringCallback() {
                 @Override
                 public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
                     resultBinaryProcess();
                     deleteBinary(entity.medName,entity.medPath);
+
                 }
 
                 @Override
@@ -302,6 +310,22 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                 }
             });
         }
+    }
+    private void upBinary(final AttachMentInfoEntity attachMentInfoEntity){
+        String url = GlobleConstants.strZRIP + "/data/";
+        final HashMap<String,File>binaryFiles = new HashMap<>();
+        File file = new File(attachMentInfoEntity.localPath);
+        binaryFiles.put(attachMentInfoEntity.medName,file);
+        HttpUtils.getInstance().requestNet_File(url, new HashMap<String, String>(), binaryFiles, url, new StringCallback() {
+            @Override
+            public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                deleteBinary(attachMentInfoEntity.medName,attachMentInfoEntity.medPath);
+            }
+
+            @Override
+            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            }
+        });
     }
     /**
      * 处理二进制提交结果

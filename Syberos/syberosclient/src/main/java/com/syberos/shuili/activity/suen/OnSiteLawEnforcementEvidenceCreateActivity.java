@@ -19,6 +19,7 @@ import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.Arrays2;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
@@ -155,9 +156,11 @@ public class OnSiteLawEnforcementEvidenceCreateActivity extends BaseActivity imp
             for (MultimediaView.LocalAttachment item : list) {
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
-                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
-                File file = new File(info.medPath);
+                String time = CommonUtils.getCurrentDateYMD();
+                info.medPath = "case/OBJ_CASE/"+time+ "/"+info.medName;
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
                 info.medSize = file.length();
                 info.bisTableName = "OBJ_CASE";
                 info.bisGuid = objCase.getGuid();

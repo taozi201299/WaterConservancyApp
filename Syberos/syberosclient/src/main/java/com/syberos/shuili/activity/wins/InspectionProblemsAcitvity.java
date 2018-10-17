@@ -37,7 +37,7 @@ import butterknife.BindView;
  */
 
 public class InspectionProblemsAcitvity extends BaseActivity {
-    private final String Title = "稽查问题";
+    private final String Title = "稽察问题";
 
     @BindView(R.id.recyclerView_inspection_prob)
     RecyclerView recyclerView_inspection_prob;
@@ -144,7 +144,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     closeDataDialog();
                 }else if(bisWinsProb.dataSource.size() == 0){
-                    ToastUtils.show("该稽查组下没有稽查问题");
+                    ToastUtils.show("该稽察组下没有稽察问题");
                     closeDataDialog();
                 }
                 else {

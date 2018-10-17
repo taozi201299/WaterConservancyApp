@@ -96,6 +96,7 @@ public class WoasReportActivity extends BaseActivity {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/woas/selectDeployInformByMultiTable/";
         HashMap<String, String> params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("woasType","2");
         params.put("sendStat", "1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
@@ -123,14 +124,6 @@ public class WoasReportActivity extends BaseActivity {
         listAdapter.setData(objWoas.dataSource);
         listAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     private class ListAdapter extends CommonAdapter<ObjWoas> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
@@ -139,6 +132,9 @@ public class WoasReportActivity extends BaseActivity {
         @Override
         public void convert(ViewHolder holder, final ObjWoas objWoas) {
             holder.getView(R.id.arrhpli_tv_title).setVisibility(View.GONE);
+            holder.getView(R.id.arrhpli_tv_person_label).setVisibility(View.GONE);
+            holder.getView(R.id.arrhpli_tv_person).setVisibility(View.GONE);
+            holder.getView(R.id.ll_patrol_item).setVisibility(View.GONE);
             ((TextView) holder.getView(R.id.arrhpli_tv_time)).setText(objWoas.getWoasThem());
             ((TextView) holder.getView(R.id.arrhpli_tv_person_label)).setText("考核时间:");
             ((TextView) holder.getView(R.id.arrhpli_tv_person)).setText(objWoas.getWOASSTARTIME() + "-" + objWoas.getWOASDEADLINE());

@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.BisWoasNoti;
 import com.syberos.shuili.entity.report.ObjWoas;
@@ -49,9 +51,11 @@ public class WoasDetailActivity extends BaseActivity {
     TextView tv_action_bar_title;
     @BindView(R.id.iv_action_right)
     LinearLayout iv_action_right;
+    @BindView(R.id.iv_action_bar_back)
+    ImageView iv_action_bar_back;
 
     private ListAdapter listAdapter ;
-
+    private int orgLevel = BusinessConfig.getOrgLevel();
     @Override
     public int getLayoutId() {
         return R.layout.activity_enterprises_hidden_danger_report;
@@ -59,12 +63,22 @@ public class WoasDetailActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        iv_action_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityFinish();
+            }
+        });
 
     }
     @Override
     public void initData() {
         showDataLoadingDialog();
-        getWoasNoti();
+        if(orgLevel == 1){
+            getWoasNoti();
+        }else {
+            getWoasNotiSelf();
+        }
     }
     @Override
     public void initView() {
@@ -98,7 +112,7 @@ public class WoasDetailActivity extends BaseActivity {
                 if(bisWoasNoti == null || bisWoasNoti.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
                 }
-                getWoasNotiSelf();
+                refreshUI();
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
@@ -108,9 +122,6 @@ public class WoasDetailActivity extends BaseActivity {
         });
     }
     private void getWoasNotiSelf(){
-        if("0".equals(objWoas.getIsForw())){
-            refreshUI();
-        }else {
             String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/noti/selectIncomingDispatchesUnitList/";
             HashMap<String,String>params = new HashMap<>();
             params.put("woasGuid",objWoas.getGuid());
@@ -120,11 +131,10 @@ public class WoasDetailActivity extends BaseActivity {
                 public void onResponse(String result) {
                     closeDataDialog();
                     Gson gson = new Gson();
-                    BisWoasNoti item = gson.fromJson(result, BisWoasNoti.class);
-                    if(item == null || item.dataSource == null){
+                    bisWoasNoti = gson.fromJson(result, BisWoasNoti.class);
+                    if(bisWoasNoti == null || bisWoasNoti.dataSource == null){
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
-                    }else if(item.dataSource.size() == 1){
-                        bisWoasNoti.dataSource.add(0,item.dataSource.get(0));
+                    }else if(bisWoasNoti.dataSource.size() == 1){
                         refreshUI();
                     }
                 }
@@ -134,7 +144,6 @@ public class WoasDetailActivity extends BaseActivity {
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
-        }
     }
     private void refreshUI(){
         closeDataDialog();
@@ -151,42 +160,56 @@ public class WoasDetailActivity extends BaseActivity {
         @Override
         public void convert(ViewHolder holder, final BisWoasNoti bisWoasNoti) {
             ((TextView) (holder.getView(R.id.tv_title))).setText(bisWoasNoti.getOrgName());
-            TextView tv_refunded =  holder.getView(R.id.tv_refunded);
-            TextView tv_report =  holder.getView(R.id.tv_report);
-            TextView tv_recall =  holder.getView(R.id.tv_recall);
+            TextView tv_refunded = holder.getView(R.id.tv_refunded);
+            TextView tv_report = holder.getView(R.id.tv_report);
+            TextView tv_recall = holder.getView(R.id.tv_recall);
+            TextView tv_score = holder.getView(R.id.tv_score);
             tv_recall.setVisibility(View.GONE);
             tv_refunded.setVisibility(View.GONE);
             // 0 未上报 1 已上报
             final int linkStatus = Integer.valueOf(bisWoasNoti.getRepStat());
-            // 上报和撤回功能
-            switch (linkStatus) {
-                case 0:
-                    tv_report.setVisibility(View.VISIBLE);
-                    tv_report.setText("上报");
-                    break;
-                case 1:
-                    tv_report.setVisibility(View.GONE);
-                    tv_recall.setVisibility(View.VISIBLE);
-                    tv_refunded.setVisibility(View.GONE);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
-                    } else {
-                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
+            if (orgLevel == 1) {
+                tv_report.setVisibility(View.GONE);
+                tv_score.setVisibility(View.VISIBLE);
+                tv_score.setText(tv_score.getText() + bisWoasNoti.getSeasScore());
+                tv_refunded.setVisibility(View.VISIBLE);
+                if( 0 == linkStatus){
+                    tv_refunded.setText("未上报");
+                }else {
+                    tv_refunded.setText("已上报");
+                }
+
+            } else {
+                // 上报和撤回功能
+                switch (linkStatus) {
+                    case 0:
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("上报");
+                        break;
+                    case 1:
+                        tv_report.setVisibility(View.GONE);
+                        tv_recall.setVisibility(View.VISIBLE);
+                        tv_refunded.setVisibility(View.GONE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
+                        } else {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
+                        }
+                        break;
+                }
+                tv_report.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        report(1, bisWoasNoti);
                     }
-                    break;
+                });
+                tv_recall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        report(2, bisWoasNoti);
+                    }
+                });
             }
-            tv_report.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    report(1,bisWoasNoti);
-                }
-            });
-            tv_recall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v){
-                    report(2,bisWoasNoti);
-                }
-            });
         }
     }
 

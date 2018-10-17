@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -33,12 +34,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding_1"
+                android:layout_marginTop="@dimen/_5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="北京水利总院"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/tv_refunded"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,11 +49,10 @@
                 android:layout_width="@dimen/_60dp"
                 android:layout_height="@dimen/_30dp"
                 android:layout_marginEnd="@dimen/_6dp"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="@string/refunded"
                 android:textColor="@color/refunded_link_text_color"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/tv_report"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +67,6 @@
                 android:text="上报"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/tv_recall"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,9 +81,20 @@
                 android:text="撤回"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dp"
+                android:textSize="@dimen/_14sp"
+                android:text="自评得分:"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:visibility="gone"
+                tools:visibility ="visible"/>
         </android.support.constraint.ConstraintLayout>
 
 

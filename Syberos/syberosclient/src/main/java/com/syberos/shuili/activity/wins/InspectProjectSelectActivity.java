@@ -89,7 +89,7 @@ public class InspectProjectSelectActivity extends BaseActivity
                 if(inspectionProjects == null || inspectionProjects.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else if(inspectionProjects.dataSource.size() == 0){
-                    ToastUtils.show("没有稽查项目");
+                    ToastUtils.show("没有稽察项目");
                 }else {
                     refreshUI();
                 }

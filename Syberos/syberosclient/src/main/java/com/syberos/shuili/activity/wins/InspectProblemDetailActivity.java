@@ -31,7 +31,7 @@ import butterknife.BindView;
  */
 public class InspectProblemDetailActivity extends BaseActivity {
 
-    private final String Title = "稽查问题详情";
+    private final String Title = "稽察问题详情";
 
     @BindView(R.id.tv_project)
     TextView tv_project;

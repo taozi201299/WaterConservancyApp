@@ -172,14 +172,14 @@
     <string name="module_child_gongzuokaohe_yinhuangenzong">隐患跟踪</string>
     <string name="module_child_gongzuokaohe_chaxun">考核查询</string>
     <string name="module_child_gongzuokaohe_anquanshengchankaohe">安全生产</string>
-    <string name="module_child_gongzuokaohe_shuilijichakaohe">水利稽查</string>
+    <string name="module_child_gongzuokaohe_shuilijichakaohe">水利稽察</string>
     <string name="module_child_anjian_zhifa">现场执法</string>
     <string name="module_child_anjian_diaocha">现场调查</string>
     <string name="module_child_anjian_fucha">现场复查</string>
     <string name="module_child_anjian_chaxun">执法查询</string>
-    <string name="module_child_shuilijicha_xianchang">现场稽查</string>
+    <string name="module_child_shuilijicha_xianchang">现场稽察</string>
     <string name="module_child_shuilijicha_wenti">问题跟踪</string>
-    <string name="module_child_shuilijicha_chaxun">稽查查询</string>
+    <string name="module_child_shuilijicha_chaxun">稽察查询</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="refunded"><u>被退回</u></string>
     <string name="returned"><u>已退回</u></string>
