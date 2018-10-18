@@ -9,7 +9,9 @@ import android.support.multidex.MultiDex;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.service.SyberosAidlClient;
+import com.syberos.shuili.service.dao.DBHelperFactory;
 import com.syberos.shuili.utils.Arrays2;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.CrashHandler;
 import com.syberos.shuili.utils.SPUtils;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -89,7 +91,12 @@ public class  App extends Application {
         context = getApplicationContext();
         initLog();
         OkHttpUtils.init(this);
-//        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+        String oldVersionCode = SPUtils.get("versionCode","1").toString();
+        String newVersionCode = String.valueOf(CommonUtils.getVersionCode());
+        if(Float.valueOf(newVersionCode) - Float.valueOf(oldVersionCode) > 0){
+            context.deleteDatabase("/sdcard/" + DBHelperFactory.DB_NAME);
+        }
+        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init();

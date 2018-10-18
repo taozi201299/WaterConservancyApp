@@ -87,6 +87,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     public void initView() {
         showTitle(getResources().getString(R.string.module_child_anquan_xianchangjiancha));
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         pullRecyclerView.setLayoutManager(layoutManager);

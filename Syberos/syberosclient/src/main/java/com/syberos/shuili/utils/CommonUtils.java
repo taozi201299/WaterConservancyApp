@@ -2262,5 +2262,15 @@ public static boolean isSameImage(String pathUrl) {
         int h=(int) (time/3600);//秒
         return String.format("%02d:%02d:%02d",h,m,s);
     }
-
+    public static int packageCode(Context context) {
+        PackageManager manager = context.getPackageManager();
+        int code = 0;
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            code = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return code;
+    }
 }
