@@ -5,8 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.fragment.securitycloud.BaseSecurityCloudFragment;
 
 import butterknife.BindView;
@@ -25,6 +27,8 @@ public class SecurityCloudFragment extends BaseFragment {
     BaseSecurityCloudFragment riverFragment;//流域机构
     BaseSecurityCloudFragment straightTubeFragment;//直管工程
     BaseSecurityCloudFragment supervisionFragment;//行业监管
+    private int orgLevel = BusinessConfig.getOrgLevel();
+    private int orgType ; // 1 行政区划 2 流域用户
     Fragment[] fragments;
     String strJsonData = "{\"accidentInfoEntry\":{\"accLevelFourCount\":0,\"accLevelOneCount\":10,\"accLevelThreeCount\":10,\"accLevelTwoCount\":10,\"deathCount\":10,\"score\":10,\"totalCount\":10},\"compScoreTrend\":{\"dataList\":[{\"date\":null,\"score\":10}],\"qualifiedScore\":10},\"hiddenInfoEntry\":{\"majorHadSupervisingCount\":10,\"majorHiddenCount\":10,\"majorHiddenHadRectifyCount\":10,\"majorHiddenNoRectifyCount\":10,\"majorLateNoRectifyCount\":10,\"noRectifyCount\":10,\"normalHiddenCount\":10,\"normalHiddenHadRectifyCount\":10,\"normalHiddenNoRectifyCount\":10,\"normalLateNoRectifyCount\":10,\"score\":10,\"totalHiddenCount\":10},\"rankList\":[{\"id\":null,\"name\":\"测试数据\",\"score\":10}],\"riskSourceEntry\":{\"hadControl\":10,\"hadRecord\":10,\"noControl\":10,\"noRecord\":10,\"score\":10},\"straightTubeManageEntry\":{\"dataList\":[{\"taskId\":\"1\",\"partReportCount\":10,\"partUnReportCount\":10},{\"taskId\":\"2\",\"partReportCount\": 10,\"partUnReportCount\": 10},{\"taskId\":\"3\",\"partReportCount\": 10,\"partUnReportCount\": 10}, {\"taskId\":\"4\",\"partReportCount\": 10,\"partUnReportCount\": 10}],\"perTrainingHours\":10,\"score\":10,\"trainingPersonCount\":10},\"supervisionMangeEntry\":{\"score\":10,\"standardLevelOneCount\":10,\"standardLevelThreeCount\":10,\"standardLevelTwoCount\":10,\"workAssessmentScore\":10},\"synthesisInfoEntry\":{\"chainRatio\":\"测试数据\",\"sameTimeRatio\":\"测试数据\",\"score\":88}}";
     private MyViewPagerAdapter mPageAdapter;
@@ -41,6 +45,11 @@ public class SecurityCloudFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        if ("1".equals(App.jurdAreaType)) {
+            orgType = 1;
+        } else if ("3".equals(App.jurdAreaType) || "4".equals(App.jurdAreaType)) {
+            orgType = 2;
+        }
         initViewAndData();
     }
 
@@ -48,8 +57,25 @@ public class SecurityCloudFragment extends BaseFragment {
         straightTubeFragment = new BaseSecurityCloudFragment(strJsonData, "1");//直管
         riverFragment = new BaseSecurityCloudFragment(strJsonData, "2");//流域
         supervisionFragment = new BaseSecurityCloudFragment(null, "3");//监管
-
-        fragments = new Fragment[]{straightTubeFragment, riverFragment, supervisionFragment};
+        if(orgType == 1){
+            // 行政
+            if(orgLevel == 1){
+                // 部级用户
+                fragments = new Fragment[]{straightTubeFragment, riverFragment, supervisionFragment};
+            }else  if(orgLevel == 2){
+                // 省级用户
+                fragments = new Fragment[]{straightTubeFragment, supervisionFragment};
+            }else if(orgLevel == 3){
+                // 市级用户
+                fragments = new Fragment[]{straightTubeFragment, supervisionFragment};
+            }else if(orgLevel == 4){
+                // 县级用户
+                fragments = new Fragment[]{straightTubeFragment};
+            }
+        }else if(orgType == 2){
+            // 区域
+            fragments = new Fragment[]{riverFragment};
+        }
         mPageAdapter = new MyViewPagerAdapter(getChildFragmentManager());
         viewpager.setOffscreenPageLimit(1);
         viewpager.setAdapter(mPageAdapter);

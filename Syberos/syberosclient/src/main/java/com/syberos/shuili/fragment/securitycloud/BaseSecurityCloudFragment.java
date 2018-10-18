@@ -13,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import com.syberos.shuili.entity.securitycloud.SupervisionMangeEntry;
 import com.syberos.shuili.network.retrofit.BaseObserver;
 import com.syberos.shuili.network.retrofit.RetrofitHttpMethods;
 import com.syberos.shuili.network.retrofit.RxApiManager;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.LogUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.DialPlateView;
@@ -252,13 +254,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     public void initViewData() {
         appBarLayout.addOnOffsetChangedListener(this);
-//        Gson gson = new Gson();
-//
-//        securityCloudEntry = gson.fromJson(strJsonData, SecurityCloudEntry.class);
-//
         initTitleAndView(type);
-
-
     }
 
     int sourceType = 1;
@@ -275,9 +271,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 } else {
                     safaType = 1;
                 }
-//                getDataZhiGuan();
-//                initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
-//                initRankView(securityCloudEntry.getRankList());
                 break;
             case "2":
                 title = "流域机构";
@@ -308,13 +301,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         int levelTwo = supervisionMangeEntry.getStandardLevelTwoCount();
         int levelThree = supervisionMangeEntry.getStandardLevelThreeCount();
         if (levelOne + levelTwo + levelThree == 0) {
-            initPieChartNoData(pieChartManager, "暂无数据");
+            initPieChartNoData(pieChartManager, "无管理数据");
         } else {
             list.add(new PieEntry(levelOne, "标准化一级" + String.format("%.1f", (levelOne * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             list.add(new PieEntry(levelTwo, "标准化二级" + String.format("%.1f", (levelTwo * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             list.add(new PieEntry(levelThree, "标准化三级" + String.format("%.1f", (levelThree * 100.0f / (levelOne + levelThree + levelTwo))) + "%"));
             waterView.setProgress(supervisionMangeEntry.getWorkAssessmentScore());
-//            waterView.startAnimation();
             initPieCharView(pieChartManager, list);
         }
     }
@@ -347,7 +339,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                     LogUtils.i("SecurityCloudOrgEntry ","onComplete");
                 }
             }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
-//            }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
         } else if (safaType == 0) {//区域
             RxApiManager.get().cancel(SecurityCloudAreaEntry.class);
             RetrofitHttpMethods.getInstance().getSecurityAreaData(new BaseObserver<SecurityCloudAreaEntry>() {
@@ -370,7 +361,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
                 public void onComplete() {
                 }
             }, sourceType + "", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId(), safaType + "", "", "");
-        //    }, sourceType + "", "D7862390F88443AE87FA9DD1FE45A8B6", safaType + "", "", "");
 
         }
     }
@@ -395,16 +385,14 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             tvDeathAccCount.setText(sgxxBean.getSWRS() + "");
 
             List<PieEntry> accPieEntrys = new ArrayList<>();
-            PieChart pieChart = (PieChart) cardViewAcc.findViewById(R.id.pie_char_acc);
             if (sgxxBean.getZDSG() + sgxxBean.getYBSG() + sgxxBean.getJDSG() + sgxxBean.getTDSG() == 0) {
-
-                initPieChartNoData(pieChart, "无事故发生");
+                initPieChartNoData(pieCharAcc, "无事故发生");
             } else {
                 accPieEntrys.add(new PieEntry(sgxxBean.getYBSG(), "一般事故 " + sgxxBean.getYBSG()));
                 accPieEntrys.add(new PieEntry(sgxxBean.getJDSG(), "较大事故 " + sgxxBean.getJDSG()));
                 accPieEntrys.add(new PieEntry(sgxxBean.getZDSG(), "重大事故 " + sgxxBean.getZDSG()));
                 accPieEntrys.add(new PieEntry(sgxxBean.getTDSG(), "特大事故 " + sgxxBean.getTDSG()));
-                initPieCharView(pieChart, accPieEntrys);
+                initPieCharView(pieCharAcc, accPieEntrys);
             }
         }
         if (aqpgScoreBean != null) {
@@ -444,13 +432,12 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
             List<PieEntry> riskPieEntrys = new ArrayList<>();
 
-            PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char_risk));
             if (fxyxxBean.getYBA() + fxyxxBean.getWBA() == 0) {
-                initPieChartNoData(pieChart, "无风险源");
+                initPieChartNoData(pieCharRisk, "无风险源");
             } else {
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getYBA(), "已备案 " + fxyxxBean.getYBA()));
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getWGK(), "未备案 " + fxyxxBean.getWGK()));
-                initPieCharView(pieChart, riskPieEntrys);
+                initPieCharView(pieCharRisk, riskPieEntrys);
             }
         }
         SupervisionMangeEntry supervisionMangeEntry = new SupervisionMangeEntry();
@@ -461,9 +448,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             supervisionMangeEntry.setStandardLevelTwoCount(bzhBean.getEJ());
             supervisionMangeEntry.setStandardLevelThreeCount(bzhBean.getSJ());
             supervisionMangeEntry.setWorkAssessmentScore(securityCloudAreaEntry.getData().getGzkh().get(0).getAVGSCORE());
-//            if(sourceType != 1) {
-//                initSupervisionManage(supervisionMangeEntry);
-//            }
+            if(sourceType != 1) {
+                initSupervisionManage(supervisionMangeEntry);
+            }
         }
 //        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
 //        if (bzhBean != null) {
@@ -586,7 +573,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        todo 直管工程的 管理
         StraightTubeManageEntry straightTubeManageEntry = new StraightTubeManageEntry();
 //        straightTubeManageEntry.set
-//        initStraightTubeManage();
+        initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
         List<SecurityCloudOrgEntry.DataBean.AqpgMonthBean> list = securityCloudOrgEntry.getData().getAqpgMonth();
         lineChart = viewGradeTrend.findViewById(R.id.line_chart);
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -713,11 +700,15 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
     private void initPieChartNoData(PieChart pieChart, String str) {
 
-        PieChart.LayoutParams params = new PieChart.LayoutParams(PieChart.LayoutParams.MATCH_PARENT, 25);
+//        PieChart.LayoutParams params = new PieChart.LayoutParams(PieChart.LayoutParams.MATCH_PARENT, 25);
+//        pieChart.setLayoutParams(params);
+        // 类型转换问题
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CommonUtils.dip2px(30));
+        params.gravity = Gravity.CENTER;
         pieChart.setLayoutParams(params);
         pieChart.setNoDataText(str);
+        pieChart.setNoDataTextColor(R.color.red);
         pieChart.setTouchEnabled(false);
-        pieChart.setNoDataTextColor(R.color.text_black_color);
         cardViewAcc.postInvalidateDelayed(100);
     }
 
@@ -1042,7 +1033,6 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         pieChart.setData(pieData);
         pieChart.setNoDataTextColor(Color.RED);
 //        pieChart.show
-
         pieChart.setNoDataText("暂无数据");
         pieChart.setExtraOffsets(-10, 0, 10, 0);
 //        pieChart.setTranslationX(20);
