@@ -157,6 +157,8 @@ public class LoginActivity extends BaseActivity {
 
                 }
             }).start();
+        }else {
+            accountEdit.setText(LoginUtil.getLastUserAccount());
         }
     }
 
