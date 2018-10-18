@@ -25,6 +25,7 @@ import com.syberos.shuili.service.entity.WinsProblemsReturnEntity;
 import com.syberos.shuili.service.entity.WoasDeucReturnEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.NetworkUtil;
+import com.syberos.shuili.utils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -295,7 +296,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             final HashMap<String,File>binaryFiles = new HashMap<>();
             HashMap<String,File>items = new HashMap<>();
             binaryFiles.put(entity.medName,file);
-        //    upBinary(entity);
+            upBinary(entity);
             HttpUtils.getInstance().requestNet_File(url, params, binaryFiles, url, new StringCallback() {
                 @Override
                 public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
@@ -312,7 +313,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         }
     }
     private void upBinary(final AttachMentInfoEntity attachMentInfoEntity){
-        String url = GlobleConstants.strZRIP + "/data/";
+        String url = "http://192.168.1.66:8080/mappservice/uploadClient";
         final HashMap<String,File>binaryFiles = new HashMap<>();
         File file = new File(attachMentInfoEntity.localPath);
         binaryFiles.put(attachMentInfoEntity.medName,file);
@@ -324,6 +325,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
 
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+              //  ToastUtils.show("failed");
             }
         });
     }

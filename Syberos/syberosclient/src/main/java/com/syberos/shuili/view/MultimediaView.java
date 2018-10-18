@@ -521,7 +521,6 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 iv_delete.setVisibility(GONE);
                 if(localAttachment.bExist) {
                     localAttachment.filePath = GlobleConstants.strIP + "/" +localAttachment.filePath;
-                    localAttachment.filePath = GlobleConstants.strZRIP +"/wins/zrsys/file/download?filePath=sljc/BIS_WINS_PROB/2018-10-17/4d343d28e4604c018382aac46ad5f475.jpg&fileName=微信图片_20181017153318.jpg";
                     iv_attachImage.setEnabled(true);
                     tv_attachment_text.setVisibility(GONE);
                     Glide.with(mContext).load(localAttachment.filePath).into(iv_attachImage);
