@@ -160,11 +160,10 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     public void initView() {
         showTitle("新建隐患");
         setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
         if(objectTend == null) {
             ll_project_tend.setVisibility(View.GONE);
         }
-        ll_part.setVisibility(View.GONE);
-        ll_part_line.setVisibility(View.GONE);
         ev_des_audio.setLabelText("隐患描述");
         setFinishOnBackKeyDown(false);
     }

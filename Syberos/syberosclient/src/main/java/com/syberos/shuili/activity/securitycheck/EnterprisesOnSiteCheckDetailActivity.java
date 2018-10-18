@@ -90,6 +90,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     public void initView() {
         setActionBarTitle("现场检查");
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         bisSinsRec = (BisSinsRec) bundle.getSerializable("bisSinsRec");
         if (null != bisSinsRec) {
@@ -138,6 +139,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
             closeDataDialog();
             return;
         }
+        ll_hidden_object_container.removeAllViews();
         for (ObjHidden hiddenItemInfo : hiddenItemInfos) {
             addHiddenItem(hiddenItemInfo);
         }
