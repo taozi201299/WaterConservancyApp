@@ -1,6 +1,7 @@
 package com.syberos.shuili.base;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.CustomDialog;
 
 import butterknife.BindView;
 
@@ -28,6 +30,8 @@ public abstract class TranslucentActivity extends BaseFragmentActivity {
     private Dialog shareDialog;
     protected final static String Msg_Recv =  "MsgRecv";
     protected final static String Allow_ScreenShot = "AllowScreenShot";
+
+    private BaseActivity.IDialogInterface iDialogInterface ;
     /**
      * 初始化分享模块
      *
@@ -100,6 +104,50 @@ public abstract class TranslucentActivity extends BaseFragmentActivity {
         if(ibtnClicked != null){
             this.m_btnClicked = ibtnClicked;
         }
+    }
+
+    protected void setDialogInterface(BaseActivity.IDialogInterface iDialogInterface){
+        this.iDialogInterface = iDialogInterface;
+    }
+    /**
+     *
+     * @param message
+     * @param type 0 commit 1 back
+     */
+    public void showCommitDialog(String message ,final int type){
+        final CustomDialog customDialog = new CustomDialog(this);
+        customDialog.setDialogMessage(null, null,
+                null);
+        customDialog.setMessage(message);
+        customDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                customDialog.dismiss();
+                switch (type){
+                    case  0:
+                        break;
+                    case 1:
+                        finish();
+                        break;
+                }
+            }
+        });
+        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog.dismiss();
+                switch (type){
+                    case  0:
+                        if(iDialogInterface != null){
+                            iDialogInterface.dialogClick();
+                        }
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });
+        customDialog.show();
     }
 
 }

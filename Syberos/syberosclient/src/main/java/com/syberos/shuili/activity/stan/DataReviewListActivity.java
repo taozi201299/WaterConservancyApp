@@ -18,6 +18,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -40,6 +41,8 @@ public class DataReviewListActivity extends TranslucentActivity
     ArrayList<ObjStanRevis> selectedReviewItemInformationList = new ArrayList<>();
     private ObjStanRevis objStanRevis = null;
     private ArrayList<ObjStanRevis>result = new ArrayList<>();
+    private int iSucessCount =0;
+    private int iFailedCount = 0;
 
     @OnClick(R.id.tv_review)
     void onReviewClicked() {
@@ -83,16 +86,19 @@ public class DataReviewListActivity extends TranslucentActivity
     private void getobjStanRevisList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
         HashMap<String,String> param = new HashMap<>();
-        param.put("applOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        param.put("veriWiunCode", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         param.put("veriConc","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeLoadingDialog();
                 Gson gson = new Gson();
-                objStanRevis = (ObjStanRevis)gson.fromJson(result,ObjStanRevis.class);
-                if(objStanRevis != null){
-                    refreshUI();
+                objStanRevis = gson.fromJson(result,ObjStanRevis.class);
+                if(objStanRevis != null || objStanRevis.dataSource != null
+                        || objStanRevis.dataSource.size() > 0){
+                   getOrgName();
+                }else {
+                    closeLoadingDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
             }
 
@@ -102,6 +108,41 @@ public class DataReviewListActivity extends TranslucentActivity
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
+    }
+    public void getOrgName() {
+        final int size = objStanRevis.dataSource.size();
+        for(int i = 0; i< size; i++) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", objStanRevis.dataSource.get(i).getApplOrgGuid());
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
+                    if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
+                        objStanRevis.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                    }
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+                }
+            });
+        }
+
     }
     private void refreshUI(){
         for(ObjStanRevis item: objStanRevis.dataSource){
@@ -116,6 +157,8 @@ public class DataReviewListActivity extends TranslucentActivity
     public void initData() {
         showDataLoadingDialog();
         if(result != null) result.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
         getobjStanRevisList();
     }
 
@@ -174,7 +217,7 @@ public class DataReviewListActivity extends TranslucentActivity
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getApplOrgGuid());
+                    information.getApplOrgName());
             // 申请时间
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());

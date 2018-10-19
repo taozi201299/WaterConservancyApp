@@ -150,7 +150,7 @@
                         android:minHeight="@dimen/_50dp"
                         android:paddingTop="@dimen/_15dp"
                         app:view_label="现场评审意见"
-                        app:view_labelWidth="@dimen/_60dp"
+                        app:view_labelWidth="90dp"
                         app:view_content_hint="@string/please_input"/>
                 </RelativeLayout>
 

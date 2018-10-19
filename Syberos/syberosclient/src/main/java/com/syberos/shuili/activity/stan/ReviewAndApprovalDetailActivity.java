@@ -10,13 +10,10 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
-import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
 import com.syberos.shuili.entity.standardization.ReviewItemInformation;
-import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
@@ -35,7 +32,7 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SceneReviewDetailActivity extends BaseActivity implements BaseActivity.IDialogInterface{
+public class ReviewAndApprovalDetailActivity extends BaseActivity implements BaseActivity.IDialogInterface{
 
     private BisStanReviRec reviewItemInformation = null;
     private int currentLevel = ReviewItemInformation.LEVEL_3;
@@ -165,7 +162,7 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK) {
             final CustomDialog customDialog = new CustomDialog(
-                    SceneReviewDetailActivity.this);
+                    ReviewAndApprovalDetailActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
             customDialog.setMessage("当前内容未保存，确定退出？");
@@ -187,19 +184,17 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     private void  commitForm(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
-        // TODO: 2018/10/19 guid 未返回
         url += reviewItemInformation.getGuid() +"/";
-        params.put("reviType","3");
+        params.put("reviType","4");
         if(currentLevel == ReviewItemInformation.LEVEL_3)
-        params.put("ifAgree","2");
+            params.put("ifAgree","2");
         else {
             params.put("ifAgree","1");
         }
-        params.put("recomLevel",String.valueOf(currentLevel)); // 现场审核评定等级
-        params.put("siteReviNote",ae_describe_audio.getEditText()); // 现场复审备注
-        params.put("recPers","");
         params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("stanReviGuid",reviewItemInformation.getStanReviGuid());
+        params.put("reviGrade",String.valueOf(currentLevel));
+        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -249,8 +244,8 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                    ToastUtils.show("提交成功");
-                    finish();
+                ToastUtils.show("提交成功");
+                finish();
             }
 
             @Override

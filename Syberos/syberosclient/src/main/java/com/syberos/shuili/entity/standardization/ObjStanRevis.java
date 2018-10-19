@@ -15,6 +15,19 @@ public class ObjStanRevis extends HttpBaseResponse<ObjStanRevis> {
      * 申请单位GUID
      */
     String applOrgGuid;
+
+    public String getApplOrgName() {
+        return applOrgName == null ? "" : applOrgName;
+    }
+
+    public void setApplOrgName(String applOrgName) {
+        this.applOrgName = applOrgName;
+    }
+
+    /**
+     * 申请单位名称
+     */
+    String applOrgName;
     /**
      * 申请性质
      */

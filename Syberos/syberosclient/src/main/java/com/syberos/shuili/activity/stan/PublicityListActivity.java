@@ -22,7 +22,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
@@ -36,7 +38,8 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-// 公示 从审核记录表中获取
+// 公示 从标准化记录表中获取
+
 
 public class PublicityListActivity extends TranslucentActivity implements PullRecyclerView.OnPullRefreshListener {
     @BindView(R.id.recyclerView_list)
@@ -45,6 +48,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
     ListAdapter listAdapter = null;
     ArrayList<BisStanReviRec> selectedReviewItemInformationList = new ArrayList<>();
     private BisStanReviRec bisStanReviRec = null;
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @OnClick(R.id.tv_review)
     void onReviewClicked() {
@@ -109,9 +114,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         recyclerView.refreshOrLoadComplete();
     }
     private void getobjStanRevisList() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/selectPublicity/" ;
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRecs/";
         HashMap<String,String> param = new HashMap<>();
-        param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         param.put("reviType","4");
         param.put("isAgree","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
@@ -119,8 +123,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
             public void onResponse(String result) {
                closeLoadingDialog();
                 Gson gson = new Gson();
-                bisStanReviRec = (BisStanReviRec)gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec != null){
+                bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
+                if(bisStanReviRec!= null){
                     refreshUI();
                 }
             }
@@ -132,6 +136,78 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
 
             }
         });
+    }
+    private void getApplOrgId(){
+        final int size = bisStanReviRec.dataSource.size();
+        for(int i = 0 ; i< size;i++) {
+            final BisStanReviRec item = bisStanReviRec.dataSource.get(i);
+            String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", item.getStanReviGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjStanRevis objStanRevis =  gson.fromJson(result,ObjStanRevis.class);
+                    if(objStanRevis != null  && objStanRevis.dataSource != null &&
+                            objStanRevis.dataSource.size() > 0){
+                        item.setApplOrgId(objStanRevis.dataSource.get(0).getApplOrgGuid());
+                        item.setApplGrade(objStanRevis.dataSource.get(0).getApplGrade());
+                        item.setApplTime(objStanRevis.dataSource.get(0).getApplTime());
+                    }
+                    if(iSucessCount + iFailedCount == size){
+                        getOrgName();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == size){
+                        getOrgName();
+                    }
+
+                }
+            });
+        }
+    }
+    public void getOrgName() {
+        iSucessCount = 0;
+        iFailedCount = 0;
+        final int size = bisStanReviRec.dataSource.size();
+        for(int i = 0; i< size; i++) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", bisStanReviRec.dataSource.get(i).getApplOrgId());
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
+                    if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
+                        bisStanReviRec.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                    }
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+                }
+            });
+        }
+
     }
     private void refreshUI(){
         listAdapter.setData(bisStanReviRec.dataSource);
@@ -196,7 +272,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getWiunName());
+                    information.getApplOrgName());
             // 申请时间
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
@@ -226,20 +302,12 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         int size = selectedReviewItemInformationList.size();
         for(BisStanReviRec item : selectedReviewItemInformationList){
             params.put("stanReviGuid",item.getGuid());//标准化评审GUID
-            url += item.getGuid() +"/"+"?";
-            for(String key :params.keySet()){
-                url += key;
-                url +="=";
-                url += params.get(key);
-                url += "&";
-            }
-            url = url.substring(0,url.length() -1);
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;
             ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
             localCacheEntity.params = params;
-            localCacheEntity.type = 1;
-            localCacheEntity.commitType = 1;
+            localCacheEntity.type = 0;
+            localCacheEntity.commitType = 0;
             localCacheEntity.seriesKey = UUID.randomUUID().toString();
             SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
                 @Override

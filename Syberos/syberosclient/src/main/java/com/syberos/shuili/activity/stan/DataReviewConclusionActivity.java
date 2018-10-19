@@ -102,6 +102,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
     public void initView() {
         setActionBarTitle("材料审查结论");
         setActionBarRightVisible(View.INVISIBLE);
+        setInitActionBar(true);
         tv_time.setText(CommonUtils.getCurrentDate());
     }
 
@@ -109,7 +110,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
      * 提交到标准化评审记录表
      */
     private void  commit(int result){
-        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec";
+        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
         params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("reviType","2");
@@ -120,7 +121,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
         params.put("ifAgree",result == 0 ?"2":"1");
         params.put("reviOpin",et_content.getText().toString()); // 评审意见
         params.put("collTime",CommonUtils.getCurrentDate());
-        params.put("note","移动端测试数据");
+        params.put("note","移动端数据");
         int size = selectedReviewItemInformationList.size();
         for(ObjStanRevis item : selectedReviewItemInformationList){
             params.put("stanReviGuid",item.getGuid());//标准化评审GUID
@@ -143,7 +144,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
                 @Override
                 public void onResponse(String result) {
                     ToastUtils.show("提交成功");
-                    finish();
+                    activityFinish();
                 }
 
                 @Override

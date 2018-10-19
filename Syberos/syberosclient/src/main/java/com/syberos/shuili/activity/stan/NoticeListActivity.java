@@ -120,7 +120,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
             public void onResponse(String result) {
                 closeLoadingDialog();
                 Gson gson = new Gson();
-                bisStanReviRec = (BisStanReviRec)gson.fromJson(result,BisStanReviRec.class);
+                bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
                 if(bisStanReviRec != null){
                     refreshUI();
                 }
@@ -197,7 +197,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getWiunName());
+                    information.getApplOrgName());
             // 申请时间
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
