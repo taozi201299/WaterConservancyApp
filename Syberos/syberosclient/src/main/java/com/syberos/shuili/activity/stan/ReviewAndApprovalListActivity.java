@@ -21,6 +21,7 @@ import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -180,7 +181,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new ListAdapter(this,
-                R.layout.activity_review_and_approval_list_item);
+                R.layout.activity_scene_review_list_item);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -201,18 +202,16 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
         @Override
         public void convert(final ViewHolder holder, final BisStanReviRec information) {
-
             LinearLayout background = (LinearLayout) holder.getView(R.id.ll_background);
             background.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(SEND_BUNDLE_KEY, information);
+                    bundle.putSerializable("data", information);
                     intentActivity(ReviewAndApprovalListActivity.this,
                             ReviewAndApprovalDetailActivity.class, false, bundle);
                 }
             });
-
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(

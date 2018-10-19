@@ -121,11 +121,14 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-               closeLoadingDialog();
                 Gson gson = new Gson();
                 bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec!= null){
-                    refreshUI();
+                if(bisStanReviRec!= null && bisStanReviRec.dataSource != null
+                        && bisStanReviRec.dataSource.size() > 0){
+                    getApplOrgId();
+                }else {
+                    closeLoadingDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
             }
 
@@ -299,9 +302,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         params.put("collTime", CommonUtils.getCurrentDate()); // 采集时间
         params.put("updTime",""); // 更新时间
         params.put("recPers",""); // 记录人员
-        int size = selectedReviewItemInformationList.size();
         for(BisStanReviRec item : selectedReviewItemInformationList){
-            params.put("stanReviGuid",item.getGuid());//标准化评审GUID
+            params.put("stanReviGuid",item.getStanReviGuid());//标准化评审GUID
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;
             ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();

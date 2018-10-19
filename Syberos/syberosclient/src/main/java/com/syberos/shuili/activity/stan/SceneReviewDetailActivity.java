@@ -187,8 +187,6 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     private void  commitForm(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
-        // TODO: 2018/10/19 guid 未返回
-        url += reviewItemInformation.getGuid() +"/";
         params.put("reviType","3");
         if(currentLevel == ReviewItemInformation.LEVEL_3)
         params.put("ifAgree","2");
@@ -200,6 +198,14 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
         params.put("recPers","");
         params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("stanReviGuid",reviewItemInformation.getStanReviGuid());
+        url += reviewItemInformation.getGuid() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

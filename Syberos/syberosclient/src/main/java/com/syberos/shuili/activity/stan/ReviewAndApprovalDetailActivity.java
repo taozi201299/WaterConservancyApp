@@ -121,9 +121,7 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
     public void initView() {
         setFinishOnBackKeyDown(false);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        reviewItemInformation = (BisStanReviRec) bundle.getSerializable(
-                SceneReviewListActivity.SEND_BUNDLE_KEY);
-
+        reviewItemInformation = (BisStanReviRec) bundle.getSerializable("data");
         if (null != reviewItemInformation) {
             currentLevel = Integer.valueOf(reviewItemInformation.getApplGrade());
             switch (currentLevel) {
@@ -184,7 +182,6 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
     private void  commitForm(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
         HashMap<String,String> params= new HashMap<>();
-        url += reviewItemInformation.getGuid() +"/";
         params.put("reviType","4");
         if(currentLevel == ReviewItemInformation.LEVEL_3)
             params.put("ifAgree","2");
@@ -195,6 +192,14 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
         params.put("stanReviGuid",reviewItemInformation.getStanReviGuid());
         params.put("reviGrade",String.valueOf(currentLevel));
         params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
+        url += reviewItemInformation.getGuid() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -202,7 +207,6 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
         localCacheEntity.type = 1;
         localCacheEntity.commitType = 1;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
-
         localCacheEntity.url = url;
         localCacheEntity.attachType = 1; // 0 暫存 1 提交
         localCacheEntity.params = params;

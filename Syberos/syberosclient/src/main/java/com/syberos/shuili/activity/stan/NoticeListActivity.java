@@ -22,7 +22,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
@@ -47,6 +49,8 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     ListAdapter listAdapter = null;
     ArrayList<BisStanReviRec> selectedReviewItemInformationList = new ArrayList<>();
     private BisStanReviRec bisStanReviRec = null;
+    private  int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @OnClick(R.id.tv_review)
     void onReviewClicked() {
@@ -121,8 +125,12 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
                 closeLoadingDialog();
                 Gson gson = new Gson();
                 bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec != null){
-                    refreshUI();
+                if(bisStanReviRec != null && bisStanReviRec.dataSource != null &&
+                        bisStanReviRec.dataSource.size() > 0){
+                    getApplOrgId();
+                }else {
+                    closeLoadingDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
             }
 
@@ -140,6 +148,8 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     }
     @Override
     public void initData() {
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getobjStanRevisList();
     }
@@ -252,9 +262,80 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     ToastUtils.show(errorInfo.getMessage());
+                }
+            });
+        }
+    }
+    private void getApplOrgId(){
+        final int size = bisStanReviRec.dataSource.size();
+        for(int i = 0 ; i< size;i++) {
+            final BisStanReviRec item = bisStanReviRec.dataSource.get(i);
+            String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", item.getStanReviGuid());
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    ObjStanRevis objStanRevis =  gson.fromJson(result,ObjStanRevis.class);
+                    if(objStanRevis != null  && objStanRevis.dataSource != null &&
+                            objStanRevis.dataSource.size() > 0){
+                        item.setApplOrgId(objStanRevis.dataSource.get(0).getApplOrgGuid());
+                        item.setApplGrade(objStanRevis.dataSource.get(0).getApplGrade());
+                        item.setApplTime(objStanRevis.dataSource.get(0).getApplTime());
+                    }
+                    if(iSucessCount + iFailedCount == size){
+                        getOrgName();
+                    }
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == size){
+                        getOrgName();
+                    }
 
                 }
             });
         }
+    }
+    public void getOrgName() {
+        iSucessCount = 0;
+        iFailedCount = 0;
+        final int size = bisStanReviRec.dataSource.size();
+        for(int i = 0; i< size; i++) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", bisStanReviRec.dataSource.get(i).getApplOrgId());
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    Gson gson = new Gson();
+                    AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
+                    if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
+                        bisStanReviRec.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                    }
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size) {
+                        closeLoadingDialog();
+                        refreshUI();
+                    }
+                }
+            });
+        }
+
     }
 }
