@@ -143,25 +143,26 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         ae_describe_audio.setLabelText("备注");
     }
     private  void commit(){
-        String url = GlobleConstants.strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrit/";
+        String url;
+        if(titleType == 0) {
+            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/insert";
+        }else {
+            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/writInsert";
+        }
         HashMap<String,String> params= new HashMap<>();
-        params.put("hazGuid",information.guid); // 危险源GUID
-        params.put("regOrgGuid",bisHazRegDetail.dataSource.get(0).orgGuid); // 报备单位GUID
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
+        params.put("hazGuid",information.guid);
+        params.put("note","");
+        params.put("regTime",CommonUtils.getCurrentDate());
+        params.put("regCode","");
+        params.put("requestFrom","0");
         if(titleType == 0) {
             params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
-            params.put("hazStat", "2");
         }
         if(titleType == 1) {
-        params.put("writeOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId()); // 核销单位GUID
         params.put("writeOffTime",CommonUtils.getCurrentDate()); // 核销时间
-            params.put("hazStat","4");
         }
-
-        params.put("note","移动端测试"); // 备注
-        params.put("collTime",CommonUtils.getCurrentDate()); // 采集时间
-        params.put("updTime",""); // 更新时间
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId()); // 记录人员
-        params.put("reviOpin",ae_describe_audio.getEditText());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
