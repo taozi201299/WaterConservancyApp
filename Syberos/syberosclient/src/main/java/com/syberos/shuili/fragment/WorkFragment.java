@@ -236,6 +236,10 @@ public class WorkFragment extends BaseFragment {
                             || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))
                             || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan)))
                     continue;
+                }else {
+                   if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_gongzuo))){
+                        continue;
+                    }
                 }
                 if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))){
                     continue;

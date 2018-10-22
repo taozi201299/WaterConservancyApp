@@ -24,7 +24,7 @@ import butterknife.BindView;
  * Created by jidan on 18-3-12.
  */
 
-public abstract class TranslucentActivity extends BaseFragmentActivity {
+public abstract class TranslucentActivity extends BaseFragmentActivity{
 
     private IbtnClicked m_btnClicked;
     private Dialog shareDialog;

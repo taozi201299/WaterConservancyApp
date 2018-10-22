@@ -27,6 +27,7 @@ import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
+import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.report.BisHiddRecRep;
@@ -38,6 +39,7 @@ import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ import butterknife.OnClick;
  * BIS_ORG_MON_REP_PERI 月报表上报期间表
  * 按照时间查找报表列表
  */
-public class HiddenReportActivity extends TranslucentActivity {
+public class HiddenReportActivity extends BaseActivity {
 
     private ListAdapter listAdapter = null;
     private Dialog reasonDialog;
@@ -68,6 +70,7 @@ public class HiddenReportActivity extends TranslucentActivity {
 
     private BisOrgMonRepPeri bisOrgMonRepPeri = null;
     private BisHiddRecRep bisHiddRecRep = null;
+    BisOrgMonRepPeri item = null;
 
     private int iSucessCount  = 0;
     private int iFailedCount = 0;
@@ -235,7 +238,6 @@ public class HiddenReportActivity extends TranslucentActivity {
         String[]arrTime = currentTime.split("-");
         tv_current_month.setText(arrTime[0] +"年" +arrTime[1] +"月");
     }
-
     private class ListAdapter extends CommonAdapter<BisOrgMonRepPeri> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
@@ -251,6 +253,7 @@ public class HiddenReportActivity extends TranslucentActivity {
             tv_report.setVisibility(View.GONE);
             tv_refunded.setVisibility(View.GONE);
             final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
+
 
             // 2  未上报 本单位可以退回  1 已上报 2 被退回 3 已撤销
             switch (linkStatus) {
@@ -346,8 +349,7 @@ public class HiddenReportActivity extends TranslucentActivity {
                             btn_confirm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    report(hiddenDangerReport);
-                                    confirmDialog.dismiss();
+                                     report(hiddenDangerReport);
                                 }
                             });
                             confirmDialog.show();
@@ -360,45 +362,46 @@ public class HiddenReportActivity extends TranslucentActivity {
                 public void onClick(View v) {
                     switch (linkStatus) {
                         case HiddenDangerReport.LINK_YES:
-//                            if(hiddenDangerReport.isReportFinish()) {
-                            confirmDialog = new Dialog(HiddenReportActivity.this);
-                            View v1 = LayoutInflater.from(HiddenReportActivity.this).inflate(
-                                    R.layout.dialog_hidden_danger_report_confirm, null);
-                            tv_confirmDialog_title =  v1.findViewById(R.id.tv_title);
-                            tv_confirmDialog_title.setText("确认撤回");
-                            confirmDialog.setContentView(v1);
-                            Window dialogWindow = confirmDialog.getWindow();
-                            WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
-
-                            lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                            lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                            lp1.gravity = Gravity.CENTER;
-                            confirmDialog.setCancelable(false);
-                            dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-                            dialogWindow.setAttributes(lp1);
-                            Button bt_cancel =  v1.findViewById(R.id.btn_cancel);
-                            bt_cancel.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    confirmDialog.dismiss();
-                                }
-                            });
-                            Button btn_confirm =  v1.findViewById(R.id.btn_confirm);
-                            btn_confirm.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    cancelReport(hiddenDangerReport);
-                                    confirmDialog.dismiss();
-                                }
-                            });
-
-                            confirmDialog.show();
-                            //  }
+                            item = hiddenDangerReport;
+                            showCancleDialog(R.layout.dialog_accident_report_refunded_reason);
                             break;
                     }
                 }
             });
         }
+    }
+    private  void showCancleDialog(int resId){
+        final Dialog shareDialog = new Dialog(HiddenReportActivity.this);
+        View v = LayoutInflater.from(HiddenReportActivity.this).inflate(resId, null);
+        shareDialog.setContentView(v);
+        Window dialogWindow = shareDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        shareDialog.setCancelable(false);
+        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+        dialogWindow.setAttributes(lp);
+        Button bt_cancel = (Button)v.findViewById(R.id.btn_cancel);
+        Button btn_confirm = (Button)v.findViewById(R.id.btn_confirm);
+        final AudioEditView ae_describe_audio = v.findViewById(R.id.ae_describe_audio);
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareDialog.dismiss();
+
+            }
+        });
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareDialog.dismiss();
+                cancelReport(item,ae_describe_audio.getEditText().toString());
+
+            }
+        });
+        shareDialog.show();
     }
 
     private void onSelectMonthClicked() {
@@ -427,15 +430,14 @@ public class HiddenReportActivity extends TranslucentActivity {
     }
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
         showDataLoadingDialog();
-        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/addHiddRecRep/";
+        String url = GlobleConstants.strZJIP + "/hidd/hiddMonth/saveMonth";
         HashMap<String,String>params = new HashMap<>();
-        params.put("appCode", App.sCode.toLowerCase());
-        params.put("repGuid",bisOrgMonRepPeri.getGuid());
+        params.put("year",getYear());
+        params.put("month",getMonth());
+        params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
+        params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        String time = tv_current_month.getText().toString();
-        time = time.replace("年","");
-        time = time.replace("月","");
-        params.put("yearMonth",time);
+        params.put("requestFrom","0");
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -459,11 +461,16 @@ public class HiddenReportActivity extends TranslucentActivity {
             }
         });
     }
-    private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
+    private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
         showDataLoadingDialog();
-        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/cancelHidd";
+        String url = GlobleConstants.strCJIP + "/hidd/hiddMonth/saveRevoc";
         HashMap<String,String>params = new HashMap<>();
-        params.put("repguid",bisOrgMonRepPeri.getGuid());
+        params.put("guid",bisOrgMonRepPeri.getGuid());
+        params.put("revocDesc",content);
+        params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
+        params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
+        params.put("requestFrom","0");
+
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -486,5 +493,28 @@ public class HiddenReportActivity extends TranslucentActivity {
 
             }
         });
+    }
+
+    private String getYear(){
+        String time = tv_current_month.getText().toString();
+        String[] arrayTime = time.split("年");
+        if(arrayTime.length > 0){
+            return  arrayTime[0];
+        }
+        return "";
+    }
+    private String getMonth(){
+        String time = tv_current_month.getText().toString();
+        time = time.replace("月","年");
+        String[]arrayTime = time.split("年");
+        if(arrayTime.length == 2){
+            String month = arrayTime[1];
+            if(month.startsWith("0")){
+                month = month.replace("0","");
+            }
+            return  month;
+        }
+        return "";
+
     }
 }
