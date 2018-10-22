@@ -235,7 +235,10 @@ public class WorkFragment extends BaseFragment {
                     if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))
                             || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))
                             || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan)))
-                        continue;
+                    continue;
+                }
+                if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))){
+                    continue;
                 }
                 View childView = LayoutInflater.from(mContext).inflate(R.layout.layout_work_item_button, null);
                 childView.setTag(childNames[j]);

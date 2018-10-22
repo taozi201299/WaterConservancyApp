@@ -214,7 +214,8 @@ public class WorkFragmentEnterprises extends BaseFragment {
             int size = childNames.length;
             for (int j = 0; j < size; j++) {
                 if (childNames[j].equalsIgnoreCase(getResources().getString(R.string.module_child_yinhuan_chaxun))
-                        || childNames[j].equalsIgnoreCase(getResources().getString(R.string.module_child_baobiao_gongzuo))) {
+                        || childNames[j].equalsIgnoreCase(getResources().getString(R.string.module_child_baobiao_gongzuo))
+                        ||childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))) {
                     continue;
                 }
                 /**
