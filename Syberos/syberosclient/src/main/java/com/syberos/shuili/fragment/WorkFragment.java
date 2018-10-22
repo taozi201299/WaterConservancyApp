@@ -177,9 +177,9 @@ public class WorkFragment extends BaseFragment {
 //
 //        modules.add(getResources().getString(R.string.module_anjian));
 //        modules.add(getResources().getString(R.string.module_shuilijicha));
+        modules.add(getResources().getString(R.string.module_baobiao));
         // 工作考核
         if(App.sCodes.contains(GlobleConstants.wins)){
-            modules.add(getResources().getString(R.string.module_baobiao));
             modules.add(getResources().getString(R.string.module_gongzuo));
         }
         if(App.sCodes.contains(GlobleConstants.hidd)){

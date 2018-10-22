@@ -1,13 +1,20 @@
 package com.syberos.shuili.activity.reports;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
+import android.os.Build;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -16,51 +23,63 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.adapter.CommonAdapter;
+import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.publicentry.GroupInformationEntity;
-import com.syberos.shuili.entity.report.BisOrgMonRepPeriForAdmin;
+import com.syberos.shuili.entity.report.BisHiddRecRep;
+import com.syberos.shuili.entity.report.BisOrgMonRepPeri;
+import com.syberos.shuili.entity.report.HiddenDangerReport;
 import com.syberos.shuili.listener.ItemClickedAlphaChangeListener;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
-import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
-import com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout;
+import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HiddenReportActivity extends BaseActivity {
+//行政端：隐患报表
+/**
+ * BIS_ORG_MON_REP_PERI 月报表上报期间表
+ * 按照时间查找报表列表
+ */
+public class HiddenReportActivity extends TranslucentActivity {
 
-    @BindView(R.id.reportRecycleView)
-    RecyclerView reportRecycleView;
+    private ListAdapter listAdapter = null;
+    private Dialog reasonDialog;
+    private Dialog confirmDialog;
+    private TextView tv_reasonDialog_title;
+    private TextView tv_reasonDialog_message;
+    private TextView tv_confirmDialog_title;
+    private ScrollView sv_reasonDialog_message_view;
+    private String refundedReason = ""; // 被退回原因
+    private String returnedReason = ""; // 退回原因
+
+    private BisOrgMonRepPeri bisOrgMonRepPeri = null;
+    private BisHiddRecRep bisHiddRecRep = null;
+
+    private int iSucessCount  = 0;
+    private int iFailedCount = 0;
+
+    @BindView(R.id.recyclerView_query_accident)
+    RecyclerView recyclerView;
+
     @BindView(R.id.tv_current_month)
     TextView tv_current_month;
 
-
-    final String Tag = AcciReportActivity.class.getSimpleName();
-    final String title = "事故报表";
-    String header[] = {"直管单位", "监管单位"};
-    GroupedReportListAdapter groupedReportListAdapter;
-    ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups = new ArrayList<>();
-    @BindView(R.id.iv_action_bar_back)
-    ImageView ivActionBarBack;
-    @BindView(R.id.tv_action_bar_title)
-    TextView tvActionBarTitle;
     @BindView(R.id.iv_action_right)
-    LinearLayout ivActionRight;
-    @BindView(R.id.action_bar)
-    RelativeLayout actionBar;
-    @BindView(R.id.sticky_layout)
-    StickyHeaderLayout stickyLayout;
+    LinearLayout iv_action_right;
 
     @OnClick(R.id.tv_current_month)
     void onCurrentMonthClicked() {
@@ -72,107 +91,314 @@ public class HiddenReportActivity extends BaseActivity {
         onSelectMonthClicked();
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_report_header_layout;
+    @OnClick(R.id.iv_action_bar_back)
+    void onBackClicked() {
+        activityFinish();
     }
 
     @Override
+    public int getLayoutId() {
+        return R.layout.activity_enterprises_hidden_danger_report;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
     public void initListener() {
         tv_current_month.setOnTouchListener(new ItemClickedAlphaChangeListener());
-        ivActionBarBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityFinish();
-            }
-        });
+        iv_action_right.setOnTouchListener(new ItemClickedAlphaChangeListener());
     }
 
     @Override
     public void initData() {
-        mGroups.clear();
-        getDirectUnit();
-    }
+        iSucessCount = 0;
+        iFailedCount = 0;
+        showDataLoadingDialog();
+        getReortList();
 
-    @Override
-    public void initView() {
-        setInitActionBar(false);
-        LinearLayoutManager layoutmanager = new LinearLayoutManager(this);
-        //设置RecyclerView 布局
-        reportRecycleView.setLayoutManager(layoutmanager);
-        groupedReportListAdapter = new GroupedReportListAdapter(mContext, mGroups);
     }
 
     /**
-     * 获取直属单位上报情况
+     * 根据上报单位获取本单位上报列表
      */
-
-    /**
-     * 获取下一级单位上报情况
-     */
-
-    private void getSubUnitReportList() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectSubordinateMonthlyByTimeAndGuid/";
-        HashMap<String, String> params = new HashMap<>();
-        params.put("pguid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repTime", tv_current_month.getText().toString());
+    private void getReortList(){
+        String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        //   params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
+        params.put("repTime",tv_current_month.getText().toString());
+        params.put("repType","0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                closeDataDialog();
                 Gson gson = new Gson();
-                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result, BisOrgMonRepPeriForAdmin.class);
-                if (bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null) {
+                bisOrgMonRepPeri = gson.fromJson(result,BisOrgMonRepPeri.class);
+                if(bisOrgMonRepPeri == null || bisOrgMonRepPeri.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
-                }
-                if (bisOrgMonRepPeriForAdmin.dataSource.size() > 0) {
-                    mGroups.add(new GroupInformationEntity<>(header[1], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                }else if(bisOrgMonRepPeri.dataSource.size() == 0){
+                    ToastUtils.show("没有上报内容");
                 }
                 refreshUI();
             }
-
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
-
             }
         });
     }
-
-    private void getDirectUnit() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/selectMonthlyReportListByTimeAndGuid/";
-        HashMap<String, String> params = new HashMap<>();
-        params.put("adminWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("repTime", tv_current_month.getText().toString());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                BisOrgMonRepPeriForAdmin bisOrgMonRepPeriForAdmin = gson.fromJson(result, BisOrgMonRepPeriForAdmin.class);
-                if (bisOrgMonRepPeriForAdmin == null || bisOrgMonRepPeriForAdmin.dataSource == null) {
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
+    private  void getReportItemDetail(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rec/bisHiddRecReps/";
+        HashMap<String,String>params = new HashMap<>();
+        ArrayList<BisOrgMonRepPeri> list = (ArrayList<BisOrgMonRepPeri>) bisOrgMonRepPeri.dataSource;
+        final int size = list.size();
+        BisOrgMonRepPeri item = null;
+        for(int i = 0 ; i < size ; i++){
+            if(iFailedCount > 0)break;
+            item = list.get(i);
+            params.put("repGuid",item.getGuid());
+            final BisOrgMonRepPeri finalItem = item;
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    Gson gson = new Gson();
+                    bisHiddRecRep = gson.fromJson(result,BisHiddRecRep.class);
+                    if(bisHiddRecRep == null || bisHiddRecRep.dataSource == null){
+                        iFailedCount ++;
+                        closeDataDialog();
+                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                        return;
+                    }
+                    iSucessCount ++;
+                    if(bisHiddRecRep.dataSource.size() > 0) {
+                        finalItem.setRepAct(bisHiddRecRep.dataSource.get(0).getRepAct());
+                        finalItem.setReportFinish(true);
+                    }else {
+                        finalItem.setReportFinish(false);
+                    }
+                    if(iSucessCount == size){
+                        closeDataDialog();
+                        refreshUI();
+                    }
                 }
-                if (bisOrgMonRepPeriForAdmin.dataSource.size() > 0) {
-                    mGroups.add(new GroupInformationEntity<>(header[0], (ArrayList<BisOrgMonRepPeriForAdmin>) bisOrgMonRepPeriForAdmin.dataSource));
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    closeDataDialog();
+                    ToastUtils.show(errorInfo.getMessage());
                 }
-                getSubUnitReportList();
-            }
+            });
+        }
+    }
+    private void refreshUI(){
+        listAdapter.setData(bisOrgMonRepPeri.dataSource);
+        listAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public void initView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置RecyclerView 布局
+        recyclerView.setLayoutManager(layoutManager);
+        listAdapter = new ListAdapter(this,
+                R.layout.activity_enterprises_hidden_danger_report_item);
+        recyclerView.setAdapter(listAdapter);
 
+        refundedReason = "数据补全，请补充后重新上报数据补全" ;
+        reasonDialog = new Dialog(this);
+        View v = LayoutInflater.from(this).inflate(
+                R.layout.dialog_hidden_danger_report_refunded_reason, null);
+        tv_reasonDialog_title = (TextView) v.findViewById(R.id.tv_title);
+        tv_reasonDialog_message = (TextView) v.findViewById(R.id.tv_content);
+        sv_reasonDialog_message_view = (ScrollView) v.findViewById(R.id.message_view);
+        reasonDialog.setContentView(v);
+        Window dialogWindow = reasonDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        reasonDialog.setCancelable(false);
+        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+        dialogWindow.setAttributes(lp);
+        Button bt_cancel = (Button)v.findViewById(R.id.btn_cancel);
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-
+            public void onClick(View v) {
+//                sv_reasonDialog_message_view.setFocusable(false);
+                sv_reasonDialog_message_view.fullScroll(View.FOCUS_UP);
+                reasonDialog.dismiss();
             }
         });
+        String currentTime = CommonUtils.getCurrentDate();
+        String[]arrTime = currentTime.split("-");
+        tv_current_month.setText(arrTime[0] +"年" +arrTime[1] +"月");
     }
 
-    private void refreshUI() {
-        groupedReportListAdapter.setData(mGroups);
-        reportRecycleView.setAdapter(groupedReportListAdapter);
-        groupedReportListAdapter.notifyDataSetChanged();
+    private class ListAdapter extends CommonAdapter<BisOrgMonRepPeri> {
+        public ListAdapter(Context context, int layoutId) {
+            super(context, layoutId);
+        }
+
+        @Override
+        public void convert(ViewHolder holder, final BisOrgMonRepPeri hiddenDangerReport) {
+            ((TextView) (holder.getView(R.id.tv_title))).setText(hiddenDangerReport.getRepName());
+            TextView tv_refunded =  holder.getView(R.id.tv_refunded);
+            TextView tv_report =  holder.getView(R.id.tv_report);
+            TextView tv_recall =  holder.getView(R.id.tv_recall);
+            tv_recall.setVisibility(View.GONE);
+            tv_report.setVisibility(View.GONE);
+            tv_refunded.setVisibility(View.GONE);
+            final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
+
+            // 2  未上报 本单位可以退回  1 已上报 2 被退回 3 已撤销
+            switch (linkStatus) {
+                case HiddenDangerReport.LINK_YES:
+                    tv_refunded.setVisibility(View.GONE);
+                    tv_report.setVisibility(View.GONE);
+                    tv_refunded.setText("已上报");
+                    tv_refunded.setVisibility(View.VISIBLE);
+                    tv_recall.setVisibility(View.VISIBLE);
+                    break;
+                case HiddenDangerReport.LINK_RETURNED:
+                    tv_report.setEnabled(true);
+                    tv_refunded.setVisibility(View.VISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
+                    } else {
+                        tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
+                    }
+                    tv_refunded.setText("已撤销");
+                    tv_report.setVisibility(View.VISIBLE);
+                    tv_report.setText("重报");
+
+                    break;
+                case HiddenDangerReport.LINK_REFUNDED:
+                    if(hiddenDangerReport.isReportFinish()) {
+                        tv_refunded.setVisibility(View.VISIBLE);
+                        tv_refunded.setText("已退回");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
+                        } else {
+                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
+                        }
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("重报");
+                    }else {
+                        tv_report.setVisibility(View.VISIBLE);
+                        tv_report.setText("上报");
+                    }
+                    break;
+            }
+
+
+            tv_refunded.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
+                    switch (linkStatus) {
+                        case HiddenDangerReport.LINK_RETURNED:
+                            tv_reasonDialog_title.setText("撤销原因");
+                            tv_reasonDialog_message.setText(returnedReason);
+                            reasonDialog.show();
+                            break;
+                        case HiddenDangerReport.LINK_REFUNDED:
+                            if(hiddenDangerReport.isReportFinish()) {
+                                tv_reasonDialog_title.setText("被退回原因");
+                                tv_reasonDialog_message.setText(refundedReason);
+                                reasonDialog.show();
+                                break;
+                            }
+                    }
+                }
+            });
+            tv_report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (linkStatus) {
+                        // 撤销和退回
+                        case HiddenDangerReport.LINK_RETURNED:
+                        case HiddenDangerReport.LINK_REFUNDED:
+                            confirmDialog = new Dialog(HiddenReportActivity.this);
+                            View v1 = LayoutInflater.from(HiddenReportActivity.this).inflate(
+                                    R.layout.dialog_hidden_danger_report_confirm, null);
+                            tv_confirmDialog_title = v1.findViewById(R.id.tv_title);
+                            tv_confirmDialog_title.setText("确认上报");
+                            confirmDialog.setContentView(v1);
+                            Window dialogWindow = confirmDialog.getWindow();
+                            WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
+
+                            lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.gravity = Gravity.CENTER;
+                            confirmDialog.setCancelable(false);
+                            dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+                            dialogWindow.setAttributes(lp1);
+                            Button bt_cancel = v1.findViewById(R.id.btn_cancel);
+                            bt_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            Button btn_confirm = v1.findViewById(R.id.btn_confirm);
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    report(hiddenDangerReport);
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            confirmDialog.show();
+                            break;
+                    }
+                }
+            });
+            tv_recall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (linkStatus) {
+                        case HiddenDangerReport.LINK_YES:
+//                            if(hiddenDangerReport.isReportFinish()) {
+                            confirmDialog = new Dialog(HiddenReportActivity.this);
+                            View v1 = LayoutInflater.from(HiddenReportActivity.this).inflate(
+                                    R.layout.dialog_hidden_danger_report_confirm, null);
+                            tv_confirmDialog_title =  v1.findViewById(R.id.tv_title);
+                            tv_confirmDialog_title.setText("确认撤回");
+                            confirmDialog.setContentView(v1);
+                            Window dialogWindow = confirmDialog.getWindow();
+                            WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
+
+                            lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp1.gravity = Gravity.CENTER;
+                            confirmDialog.setCancelable(false);
+                            dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+                            dialogWindow.setAttributes(lp1);
+                            Button bt_cancel =  v1.findViewById(R.id.btn_cancel);
+                            bt_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    confirmDialog.dismiss();
+                                }
+                            });
+                            Button btn_confirm =  v1.findViewById(R.id.btn_confirm);
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    cancelReport(hiddenDangerReport);
+                                    confirmDialog.dismiss();
+                                }
+                            });
+
+                            confirmDialog.show();
+                            //  }
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     private void onSelectMonthClicked() {
@@ -188,9 +414,9 @@ public class HiddenReportActivity extends BaseActivity {
                 }
                 String time = Strings.formatDate(date);
                 String[] arrayTime = time.split("-");
-                tv_current_month.setText(arrayTime[0] + "年" + arrayTime[1] + "月");
+                tv_current_month.setText(arrayTime[0]+"年"+arrayTime[1]+"月");
                 // TODO: 2018/4/10 处理时间设置之后的逻辑
-                initData();
+                getReortList();
             }
         })
                 .isDialog(true)
@@ -199,155 +425,66 @@ public class HiddenReportActivity extends BaseActivity {
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    private class GroupedReportListAdapter extends GroupedRecyclerViewAdapter {
-
-
-        private ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> mGroups;
-
-        public GroupedReportListAdapter(
-                Context context, ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> groups) {
-            super(context);
-            mGroups = groups;
-        }
-
-        public void setData(ArrayList<GroupInformationEntity<BisOrgMonRepPeriForAdmin>> groups) {
-            mGroups = groups;
-
-        }
-
-        @Override
-        public int getGroupCount() {
-            return mGroups == null ? 0 : mGroups.size();
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            ArrayList<BisOrgMonRepPeriForAdmin> children = mGroups.get(groupPosition).getChildren();
-            return children == null ? 0 : children.size();
-        }
-
-        @Override
-        public boolean hasHeader(int groupPosition) {
-            return true;
-        }
-
-        /**
-         * 返回false表示没有组尾
-         *
-         * @param groupPosition
-         * @return
-         */
-        @Override
-        public boolean hasFooter(int groupPosition) {
-            return false;
-        }
-
-        /**
-         * 当hasFooter返回false时，这个方法不会被调用。
-         *
-         * @return
-         */
-        @Override
-        public int getFooterLayout(int viewType) {
-            return 0;
-        }
-
-        /**
-         * 当hasFooter返回false时，这个方法不会被调用。
-         *
-         * @param holder
-         * @param groupPosition
-         */
-        @Override
-        public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
-
-        }
-
-        @Override
-        public int getHeaderLayout(int viewType) {
-            return R.layout.adapter_header;
-        }
-
-        @Override
-        public int getChildLayout(int viewType) {
-            return R.layout.layout_sub_unit_item;
-        }
-
-        @Override
-        public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
-            holder.setText(R.id.tv_header, mGroups.get(groupPosition).getHeader());
-        }
-
-        @Override
-        public void onBindChildViewHolder(BaseViewHolder holder,
-                                          final int groupPosition, final int childPosition) {
-
-            TextView tv_sub_unit = holder.get(R.id.tv_sub_unit);
-            TextView tv_returned = holder.get(R.id.tv_returned); // 已退回
-            TextView tv_repetition = holder.get(R.id.tv_repetition); // 重报
-            TextView tv_rush = holder.get(R.id.tv_rush); // 催报
-            TextView tv_revoke = holder.get(R.id.tv_revoke); // 撤销
-            TextView tv_report = holder.get(R.id.tv_report); //上报
-            TextView tv_reported = holder.get(R.id.tv_reported); // 已上报
-            tv_returned.setVisibility(View.GONE);
-            tv_repetition.setVisibility(View.GONE);
-            tv_rush.setVisibility(View.GONE);
-            tv_revoke.setVisibility(View.GONE);
-            tv_report.setVisibility(View.GONE);
-            tv_reported.setVisibility(View.GONE);
-
-            final BisOrgMonRepPeriForAdmin reportForAdmin
-                    = mGroups.get(groupPosition).getChildren().get(childPosition);
-            tv_sub_unit.setText(reportForAdmin.getWiunName());
-            if (reportForAdmin.getStatus().equals("2")) {
-                if (true) {
-                    // /退回
-                    tv_returned.setVisibility(View.VISIBLE);
-                    if (groupPosition == 0) {
-                        tv_repetition.setVisibility(View.VISIBLE);
-                    } else {
-                        tv_rush.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    // 未上报
-                    if (groupPosition == 0) {
-                        tv_report.setVisibility(View.VISIBLE);
-                    } else {
-                        tv_rush.setVisibility(View.VISIBLE);
-                    }
-                }
-            } else if (reportForAdmin.getStatus().equals("1")) {
-                tv_reported.setVisibility(View.VISIBLE);
-                //  已上报
-            } else if (reportForAdmin.getStatus().equals("3")) {
-                if (groupPosition == 0)
-                    tv_repetition.setVisibility(View.VISIBLE);
-                else {
-                    tv_rush.setVisibility(View.VISIBLE);
-                }
-                // 已撤销 重报
-            } else if (reportForAdmin.getStatus().equals("4")) {
-                // 申请撤销中
-            } else if (reportForAdmin.getStatus().equals("5")) {
-                //同意撤销
-                if (groupPosition == 0)
-                    tv_repetition.setVisibility(View.VISIBLE);
-                else {
-                    tv_rush.setVisibility(View.VISIBLE);
-                }
-            } else if (reportForAdmin.getStatus().equals("6")) {
-                // 不同意撤销
-            } else {
-                tv_rush.setVisibility(View.VISIBLE);
+    private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
+        showDataLoadingDialog();
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/addHiddRecRep/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("appCode", App.sCode.toLowerCase());
+        params.put("repGuid",bisOrgMonRepPeri.getGuid());
+        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        String time = tv_current_month.getText().toString();
+        time = time.replace("年","");
+        time = time.replace("月","");
+        params.put("yearMonth",time);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                ToastUtils.show("提交成功");
+                initData();
             }
-        }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
+    private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri){
+        showDataLoadingDialog();
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/yuanXin/Report/cancelHidd";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("repguid",bisOrgMonRepPeri.getGuid());
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                ToastUtils.show("提交成功");
+                initData();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
     }
 }

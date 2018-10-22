@@ -141,7 +141,7 @@ public class FormalReviewListActivity extends TranslucentActivity
                 Gson gson = new Gson();
                 objStanRevis = gson.fromJson(result,ObjStanRevis.class);
                 if(objStanRevis != null && objStanRevis.dataSource != null
-                        || objStanRevis.dataSource.size() > 0){
+                        && objStanRevis.dataSource.size() > 0){
                    getOrgName();
                 }else {
                     closeLoadingDialog();

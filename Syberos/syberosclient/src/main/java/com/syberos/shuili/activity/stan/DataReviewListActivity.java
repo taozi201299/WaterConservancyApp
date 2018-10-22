@@ -81,7 +81,6 @@ public class DataReviewListActivity extends TranslucentActivity
         closeDataDialog();
         recyclerView.refreshOrLoadComplete();
     }
-
     //材料审核 对象表
     private void getobjStanRevisList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
@@ -93,8 +92,8 @@ public class DataReviewListActivity extends TranslucentActivity
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 objStanRevis = gson.fromJson(result,ObjStanRevis.class);
-                if(objStanRevis != null || objStanRevis.dataSource != null
-                        || objStanRevis.dataSource.size() > 0){
+                if(objStanRevis != null && objStanRevis.dataSource != null
+                        && objStanRevis.dataSource.size() > 0){
                    getOrgName();
                 }else {
                     closeLoadingDialog();

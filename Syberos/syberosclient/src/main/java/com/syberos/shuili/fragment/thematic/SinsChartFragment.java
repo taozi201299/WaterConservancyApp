@@ -399,7 +399,7 @@ public class SinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                     return;
                 }
                 for(SinsEntry.DataBean.SUBSINSDATABean bean:sinsEntry.getData().getSUBSINSDATA()){
-                    list.add(new Point(bean.getOBJLONG(),bean.getOBJLAT(),bean.getSINSQUA(),bean.getOBJGUID()));
+                    list.add(new Point(bean.getOBJLONG(),bean.getOBJLAT(),bean.getSINSHIDDQUA(),bean.getOBJGUID()));
                 }
                 setData(sinsEntry);
                 addMarkInfo(list);
