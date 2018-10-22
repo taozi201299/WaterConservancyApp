@@ -14,6 +14,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -130,7 +131,12 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         String message = "确认提交数据?";
         showCommitDialog(message,0);
     }
+
+    /**
+     * 隐患督办 生成消息
+     */
     private void submitForm(){
+        showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSup/";
         HashMap<String,String>params = new HashMap<>();
         // 隐患GUID
@@ -172,8 +178,8 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                ToastUtils.show("提交成功");
-                finish();
+                // 生成督办消息
+                sendMessage();
 
             }
 
@@ -213,6 +219,37 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    private void sendMessage(){
+        String url = GlobleConstants.strZJIP + "/pprty/WSRest/service/notice";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("noticeCode","");
+        params.put("noticeTitle",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName() + "隐患督办信息");
+        params.put("noticeContent",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName() + "隐患督办信息");
+        params.put("appCode", App.sCodes.get(0));
+        params.put("fromDate",CommonUtils.getCurrentDate());
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        localCacheEntity.type = 0;
+        localCacheEntity.params = params;
+        localCacheEntity.commitType = 0;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                ToastUtils.show("提交成功");
+                activityFinish();
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+
     }
 
 }

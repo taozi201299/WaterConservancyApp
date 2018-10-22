@@ -165,7 +165,8 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeLoadingDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                ToastUtils.show(errorInfo.getMessage() + "获取下级水行政隐患失败");
+                refreshUI();
             }
         });
     }
