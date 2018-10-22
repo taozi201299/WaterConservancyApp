@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -397,7 +398,8 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 String time = CommonUtils.getCurrentDateYMD();
-                info.medPath = "hidden/OBJ_ACCI/"+time+ "/"+info.medName;
+                time = time.replace("-","");
+                info.medPath = App.roleCode + "/OBJ_ACCI/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 File file = new File(item.localFile.getPath());
                 info.localPath = item.localFile.getPath();

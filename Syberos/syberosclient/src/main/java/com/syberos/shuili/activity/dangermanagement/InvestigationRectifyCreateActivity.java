@@ -149,7 +149,8 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 String time = CommonUtils.getCurrentDateYMD();
-                info.medPath = "hidden/BIS_HIDD_RECT_PROG/"+time+ "/"+info.medName;
+                time = time.replace("-","");
+                info.medPath = App.sCode + "/BIS_HIDD_RECT_PROG/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 File file = new File(item.localFile.getPath());
                 info.localPath = item.localFile.getPath();

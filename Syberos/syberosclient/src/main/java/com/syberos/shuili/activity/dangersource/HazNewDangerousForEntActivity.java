@@ -7,9 +7,11 @@ import android.view.View;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
+import com.syberos.shuili.activity.reports.AcciReportActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
@@ -131,7 +133,8 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.medName = item.localFile.getName();
                 String time = CommonUtils.getCurrentDateYMD();
-                info.medPath = "acci/BIS_HAZ_PAT_REC/"+time+ "/"+info.medName;
+                time.replace("-","");
+                info.medPath = App.sCode + "/BIS_HAZ_PAT_REC/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 File file = new File(item.localFile.getPath());
                 info.localPath = item.localFile.getPath();

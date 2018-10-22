@@ -11,6 +11,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
@@ -182,7 +183,9 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
+                String time = CommonUtils.getCurrentDateYMD();
+                time = time.replace("-","");
+                info.medPath = App.roleCode + "/OBJ_HIDD/"+time+ "/"+info.medName;
                 info.url = strIP +"/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";

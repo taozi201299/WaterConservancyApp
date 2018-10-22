@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.solver.widgets.ResolutionNode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,8 +38,14 @@ import com.cjt2325.cameralibrary.JCameraView;
 import com.imnjh.imagepicker.PickerConfig;
 import com.imnjh.imagepicker.SImagePicker;
 import com.imnjh.imagepicker.activity.PhotoPickerActivity;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.FileCallback;
+import com.shuili.callback.ErrorInfo;
+import com.shuili.callback.RequestCallback;
+import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.App;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.media.GlideImageLoader;
 import com.syberos.shuili.media.PreviewActivity;
@@ -58,6 +65,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import okhttp3.Request;
+import okhttp3.Response;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -504,9 +513,9 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
 //            params.height=200;
 //            params.width =200;
 //            iv_attachImage.setLayoutParams(params);
-            ImageView iv_attachVideo = holder.getView(R.id.attachment_video);
+            final ImageView iv_attachVideo = holder.getView(R.id.attachment_video);
             ImageView iv_delete = holder.getView(R.id.attachment_image_delete);
-            TextView tv_attachment_text = holder.getView(R.id.attachment_text);
+            final TextView tv_attachment_text = holder.getView(R.id.attachment_text);
             TextView tv_attach_time = holder.getView(R.id.tv_attach_time);
             TextView tv_attach_desc = holder.getView(R.id.tv_attach_desc);
 
@@ -519,19 +528,29 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             }
             if(runningMode == RunningMode.READ_ONLY_MODE){
                 iv_delete.setVisibility(GONE);
-                if(localAttachment.bExist) {
-                    localAttachment.filePath = GlobleConstants.strIP + "/" +localAttachment.filePath;
-                    iv_attachImage.setEnabled(true);
-                    tv_attachment_text.setVisibility(GONE);
-                    Glide.with(mContext).load(localAttachment.filePath).into(iv_attachImage);
-                    iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
+                String url = GlobleConstants.strAppIP + "/mappservice/downloadMedia";
+                HashMap<String,String>params = new HashMap<>();
+                params.put("medUrl",localAttachment.filePath);
 
-                }else {
-                    iv_attachImage.setEnabled(false);
-                    iv_attachVideo.setVisibility(GONE);
-                    tv_attachment_text.setVisibility(VISIBLE);
+                HttpUtils.getInstance().requestNet_download(url, params, url, new FileCallback("/sdcard/app") {
+                    @Override
+                    public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
+                        if(localAttachment.bExist) {
+                            localAttachment.filePath = GlobleConstants.strIP + "/" +localAttachment.filePath;
+                            iv_attachImage.setEnabled(true);
+                            tv_attachment_text.setVisibility(GONE);
+                            Glide.with(mContext).load(file.getPath()).into(iv_attachImage);
+                            iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
 
-                }
+                        }else {
+                            iv_attachImage.setEnabled(false);
+                            iv_attachVideo.setVisibility(GONE);
+                            tv_attachment_text.setVisibility(VISIBLE);
+
+                        }
+                    }
+                });
+
             }
             iv_delete.setOnClickListener(new OnClickListener() {
                 @Override

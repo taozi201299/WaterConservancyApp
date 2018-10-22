@@ -223,7 +223,9 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
             for(MultimediaView.LocalAttachment item :list){
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
-                info.medPath = item.localFile.getPath();
+                String time = CommonUtils.getCurrentDateYMD();
+                time = time.replace("-","");
+                info.medPath = App.roleCode + "/OBJ_HIDD/"+time+ "/"+info.medName;
                 File file = new File(info.medPath);
                 info.medSize = file.length();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";

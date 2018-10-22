@@ -158,6 +158,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 String time = CommonUtils.getCurrentDateYMD();
+                time = time.replace("-","");
                 info.medPath = "woas/BIS_WOAS_DEUC/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 File file = new File(item.localFile.getPath());

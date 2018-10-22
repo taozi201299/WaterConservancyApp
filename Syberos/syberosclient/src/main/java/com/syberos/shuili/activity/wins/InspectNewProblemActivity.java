@@ -180,6 +180,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
                 AttachMentInfoEntity info = new AttachMentInfoEntity();
                 info.medName = item.localFile.getName();
                 String time = CommonUtils.getCurrentDateYMD();
+                time.replace("-","");
                 info.medPath = "wins/BIS_WINS_PROB/"+time+ "/"+info.medName;
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 File file = new File(item.localFile.getPath());
