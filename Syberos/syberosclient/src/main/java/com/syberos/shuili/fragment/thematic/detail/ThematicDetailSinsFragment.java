@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -41,7 +42,6 @@ import butterknife.Unbinder;
  * 安全检查
  */
 public class ThematicDetailSinsFragment extends BaseLazyFragment {
-
     @BindView(R.id.tv_view_title)
     TextView tvViewTitle;
     @BindView(R.id.iv_mark_pot_2)
@@ -165,6 +165,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
                 list.add(new ProjectEntry(bean.getOBJGUID(), bean.getOBJNAME(), bean.getSINSHIDDQUA()));
             }
             RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"个");
+            recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
             recyclerView.setAdapter(adapter);
@@ -236,12 +237,12 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
         ivMarkPot3.setVisibility(View.GONE);
         tvChartValue3.setVisibility(View.GONE);
         tvChartValueTitle3.setVisibility(View.GONE);
+        pieChartHiddenSummarized.setVisibility(View.GONE);
 
         ivMarkPot4.setVisibility(View.GONE);
         tvChartValue4.setVisibility(View.GONE);
         tvChartValueTitle4.setVisibility(View.GONE);
 
-        pieChartHiddenSummarized.setVisibility(View.GONE);
 
     }
 
