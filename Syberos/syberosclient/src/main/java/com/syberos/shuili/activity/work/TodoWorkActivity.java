@@ -97,7 +97,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
                             }
                             if(!bExist){
                                 if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Haz)){
-                                    if(!App.moduleName.contains("风险源")){
+                                    if(!App.moduleName.contains("危险源")){
                                         continue;
                                     }
                                 }else if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Hidd)){

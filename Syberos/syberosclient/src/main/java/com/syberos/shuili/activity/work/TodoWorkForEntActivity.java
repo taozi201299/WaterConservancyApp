@@ -41,7 +41,7 @@ import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 public class TodoWorkForEntActivity extends BaseActivity implements PullRecyclerView.OnPullRefreshListener,CommonAdapter.OnItemClickListener{
 
     private final String TAG = TodoWorkForEntActivity.class.getSimpleName();
-    private final String Title = "代办工作";
+    private final String Title = "待办工作";
     @BindView(R.id.pullRecylerView)
     PullRecyclerView pullRecyclerView;
     private TodoWorkAdapter adapter;
@@ -97,7 +97,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
                             }
                             if(!bExist){
                                 if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Haz)){
-                                    if(!App.moduleName.contains("风险源")){
+                                    if(!App.moduleName.contains("危险源")){
                                         continue;
                                     }
                                 }else if(info.getModName().equalsIgnoreCase(GlobleConstants.Module_Name_Hidd)){

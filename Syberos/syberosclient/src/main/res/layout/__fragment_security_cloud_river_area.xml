@@ -147,7 +147,7 @@
             <include
                 android:id="@+id/view_hidden"
                 layout="@layout/include_security_data_hidden" />
-            <!--风险源-->
+            <!--危险源-->
             <include
                 android:id="@+id/view_risk_source"
                 layout="@layout/include_security_data_risk_resource" />

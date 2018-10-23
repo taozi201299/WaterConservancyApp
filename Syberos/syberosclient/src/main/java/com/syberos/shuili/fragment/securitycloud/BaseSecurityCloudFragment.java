@@ -311,6 +311,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         }
     }
 
+    /**
+     * 工程和区域使用不同的接口
+     * @param sourceType
+     * @param safaType
+     */
     private void getSecuritData(int sourceType, int safaType) {
         RxApiManager.get().cancel(SecurityCloudOrgEntry.class);
         if (safaType == 1) {//工程

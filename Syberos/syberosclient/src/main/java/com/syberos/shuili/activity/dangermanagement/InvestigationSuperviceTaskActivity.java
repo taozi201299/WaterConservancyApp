@@ -35,6 +35,8 @@ import butterknife.BindView;
  * todo 待修改 需要和7个子系统确定 行政版
  * 重大隐患和逾期的一般隐患  督办 -- 直属 水行政
  *
+ * 获取下一级水行政的列表 （接口报错）
+ *
  */
 
 public class InvestigationSuperviceTaskActivity extends BaseActivity{
@@ -130,6 +132,10 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
             }
         });
     }
+
+    /**
+     * 获取下一级水行政待督办列表
+     */
     private void  getLowerWaterList(){
         String url = GlobleConstants.strIP +"/sjjk/v1/obj/hidd/selectLowerWater/";
         HashMap<String,String>params = new HashMap<>();

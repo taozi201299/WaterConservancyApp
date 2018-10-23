@@ -103,7 +103,7 @@ public class GlobleConstants {
         {
             put("5814CCBC947CCCCBB64321348D7CB6BE", "报表管理");
             put("BCB22F06B30747A49B14267AEE543608", "安全检查");
-            put("FE44F5A0763146D59274FD5021AE5F43", "风险源");
+            put("FE44F5A0763146D59274FD5021AE5F43", "危险源");
             put("20D0CB88979944FA96946C2A938CC3D1", "事故");
             put("4A25B41885D94D0F941F6EF0118D768A", "隐患");
         }

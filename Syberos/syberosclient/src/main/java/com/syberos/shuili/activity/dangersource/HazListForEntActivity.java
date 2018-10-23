@@ -38,7 +38,7 @@ public class HazListForEntActivity extends BaseActivity
 
     private final String TAG = HazListForEntActivity.class.getSimpleName();
 
-    private final String Title = "风险源巡查";
+    private final String Title = "危险源巡查";
 
     public static final String SEND_BUNDLE_KEY = "DangerousInformation";
 
