@@ -12,6 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -42,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -68,13 +70,15 @@
             android:layout_marginLeft="@dimen/_12dp"
             android:layout_marginRight="@dimen/_12dp"
             android:layout_marginTop="@dimen/_6dp"
+            android:visibility="gone"
             android:background="@color/div" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart_manager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_140dp"
-            android:layout_margin="@dimen/_15dp" />
+            android:layout_margin="@dimen/_15dp"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/div"
