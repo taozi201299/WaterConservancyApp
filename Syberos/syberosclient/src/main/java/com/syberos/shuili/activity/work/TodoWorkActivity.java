@@ -41,7 +41,7 @@ import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.OnPullRefreshListener,CommonAdapter.OnItemClickListener{
 
     private final String TAG = TodoWorkForEntActivity.class.getSimpleName();
-    private final String Title = "代办工作";
+    private final String Title = "待办工作";
     @BindView(R.id.pullRecylerView)
     PullRecyclerView pullRecyclerView;
     private TodoWorkAdapter adapter;
