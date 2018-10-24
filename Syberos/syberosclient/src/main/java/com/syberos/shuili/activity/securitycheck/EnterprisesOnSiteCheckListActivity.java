@@ -144,8 +144,8 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
     private void getObjSins(){
         String url = strIP + "/sjjk/v1/obj/sis/objSinss/";
         HashMap<String,String> params = new HashMap<>();
-       // params.put("notIssuWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("notIssuWiun", "35B00CA81E084CFBAEB22E928BDD2B01");
+        params.put("notIssuWiun", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+       // params.put("notIssuWiun", "35B00CA81E084CFBAEB22E928BDD2B01");
         
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
