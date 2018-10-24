@@ -67,6 +67,7 @@ public class GlobleConstants {
     public static final String CJFW = "CJFW";
     public static final String CJSG = "CJSG";
     public static final String CJJL = "CJJL";
+    public static final String CJZJ ="CJZJ";
 
     public static final String CJYJ002 ="CJYJ002";
     public static final String CJYJ005 = "CJYJ005";
@@ -106,6 +107,15 @@ public class GlobleConstants {
             put("FE44F5A0763146D59274FD5021AE5F43", "危险源");
             put("20D0CB88979944FA96946C2A938CC3D1", "事故");
             put("4A25B41885D94D0F941F6EF0118D768A", "隐患");
+        }
+    };
+    public static HashMap<String,String>hazStatusMap = new HashMap<String,String>(){
+        {
+            put("0","未备案");
+            put("1","备案中");
+            put("2","已备案");
+            put("3","核销中");
+            put("4","已核销");
         }
     };
 

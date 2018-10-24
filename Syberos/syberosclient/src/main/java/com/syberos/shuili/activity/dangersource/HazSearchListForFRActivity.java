@@ -40,7 +40,7 @@ import butterknife.OnClick;
 /**
  * 企事业危险源查询
  */
-public class HazSearchListForEntActivity extends BaseActivity
+public class HazSearchListForFRActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
 
     private final String TAG = HazSearchListForEntActivity.class.getSimpleName();
@@ -218,7 +218,7 @@ public class HazSearchListForEntActivity extends BaseActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new HazSearchListForEntActivity.DangerousListAdapter(this,
+        listAdapter = new DangerousListAdapter(this,
                 R.layout.activity_recorded_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);

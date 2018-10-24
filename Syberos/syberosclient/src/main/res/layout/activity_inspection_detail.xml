@@ -155,6 +155,35 @@
                                 android:layout_marginLeft="@dimen/_10dp"
                                 android:text="" />
                         </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/rl_danger_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/_5dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/icon_dot_blue" />
+
+                            <TextView
+                                android:id="@+id/tv_danger_status_label"
+                                android:layout_width="@dimen/_60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:text="危险源状态" />
+
+                            <TextView
+                                android:id="@+id/tv_danger_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/_10dp"
+                                android:text="" />
+                        </LinearLayout>
+
 
                         <LinearLayout
                             android:id="@+id/rl_lince_note"

@@ -48,6 +48,8 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     TextView tv_project;
     @BindView(R.id.tv_danger_grade)
     TextView tv_danger_grade;
+    @BindView(R.id.tv_danger_status)
+    TextView tv_danger_status;
     @BindView(R.id.tv_lince_note)
     TextView tv_line_note;
     @BindView(R.id.tv_super_pers)
@@ -139,14 +141,21 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
         }
 
     }
+
     private void refreshUI(){
         BisHazRegDetail item = bisHazRegDetail.dataSource.get(0);
         String strUnit = item.wiunName;
         tv_unit.setText(strUnit == null ? "":strUnit);
         String strEngName = item.engName;
-        tv_project.setText(strEngName == null ?"":strUnit);
+        tv_project.setText(strEngName == null ?"":strEngName);
         int grad = Integer.valueOf(item.hiddGrad) == null? 1:Integer.valueOf(item.hiddGrad);
         tv_danger_grade.setText(hazGradeMap.get(grad));
+        String hazStatus = GlobleConstants.hazStatusMap.get(item.getHazStat());
+        if(hazStatus != null){
+            tv_danger_status.setText(hazStatus);
+        }else {
+            tv_danger_status.setText("未知");
+        }
         String strLiceNoti = item.ifLiceNoti;
         if("1".equals(strLiceNoti)){
             tv_line_note.setText("是");

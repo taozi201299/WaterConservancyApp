@@ -28,6 +28,7 @@ import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntAct
 import com.syberos.shuili.activity.dangermanagement.InvestigationRectifyTaskForEnterpriseActivity;
 import com.syberos.shuili.activity.dangersource.HazListForEntActivity;
 import com.syberos.shuili.activity.dangersource.HazSearchListForEntActivity;
+import com.syberos.shuili.activity.dangersource.HazSearchListForFRActivity;
 import com.syberos.shuili.activity.qrcode.CustomScannerActivity;
 import com.syberos.shuili.activity.reports.AccReportForEntActivity;
 import com.syberos.shuili.activity.reports.CheckReportForEntActivity;
@@ -51,6 +52,8 @@ import com.syberos.shuili.view.PopupButton.RippleLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -230,6 +233,13 @@ public class WorkFragmentEnterprises extends BaseFragment {
                         continue;
                     }
                 }
+                if(GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode)
+                        || GlobleConstants.CJZJ.equalsIgnoreCase(App.sCode)){
+                    if(childNames[j].equals(getResources().getString(R.string.module_child_weixianyuan_xuncha))){
+                        continue;
+                    }
+
+                }
                 View childView = LayoutInflater.from(mContext).inflate(R.layout.layout_work_item_button, null);
                 childView.setTag(childNames[j]);
                 moduleChildViewHolder = new ModuleChildViewHolder(mContext, childView, null);
@@ -368,12 +378,15 @@ public class WorkFragmentEnterprises extends BaseFragment {
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_xuncha))) {
                 intentActivity((Activity) mContext, HazListForEntActivity.class, false, true);
             } else if (itemTag.equals(strResource.getString(R.string.module_child_weixianyuan_weiti))) {
-                intentActivity((Activity) mContext, HazSearchListForEntActivity.class, false, true);
+                if(GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode)
+                         || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode) || GlobleConstants.CJZJ.equalsIgnoreCase(App.sCode)) {
+                    intentActivity((Activity) mContext, HazSearchListForEntActivity.class, false, true);
+                }else {
+                    intentActivity((Activity) mContext, HazSearchListForFRActivity.class, false, true);
+                }
             }
-
         }
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
