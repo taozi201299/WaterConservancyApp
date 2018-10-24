@@ -55,6 +55,16 @@ public class ObjHaz extends HttpBaseResponse<ObjHaz> {
 
     String engineName;
 
+    public String getHazStat() {
+        return hazStat == null ? "" : hazStat;
+    }
+
+    public void setHazStat(String hazStat) {
+        this.hazStat = hazStat;
+    }
+
+    String hazStat;
+
     public String getUsername() {
         return username == null ? "" : username;
     }

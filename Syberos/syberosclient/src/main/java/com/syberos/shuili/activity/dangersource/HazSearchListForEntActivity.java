@@ -18,6 +18,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
@@ -114,7 +115,7 @@ public class HazSearchListForEntActivity extends BaseActivity
                 Gson gson = new Gson();
                 inspectionList = gson.fromJson(result,ObjHaz.class);
                 if(inspectionList != null && inspectionList.dataSource != null && inspectionList.dataSource.size() > 0){
-                    getHazEntName();
+                    getHazDetail();
                 }else {
                     closeDataDialog();
                     ToastUtils.show("没有风险源信息");
@@ -129,67 +130,26 @@ public class HazSearchListForEntActivity extends BaseActivity
         });
     }
 
-    private void getHazEntName(){
-        for(final ObjHaz item : inspectionList.dataSource){
-            if(iFailedCount != 0){
-                break;
-            }
-            String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
-            HashMap<String,String>params = new HashMap<>();
-            params.put("guid",item.getEngGuid());
+    private void getHazDetail(){
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        HashMap<String,String>params = new HashMap<>();
+        for(final ObjHaz item: inspectionList.dataSource){
+            params.put("guid",item.getGuid());
+            params.put("hazGuid",item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     iSucessCount ++;
                     Gson gson = new Gson();
-                    ObjectEngine objectEngine  = null;
-                    objectEngine = gson.fromJson(result,ObjectEngine.class);
-                    if(objectEngine == null || objectEngine.dataSource == null ||
-                            objectEngine.dataSource.size() == 0){
-                        return;
-                    }
-                    int index = inspectionList.dataSource.indexOf(item);
-                    ObjHaz objHaz = inspectionList.dataSource.get(index);
-                    objHaz.setEngineName(objectEngine.dataSource.get(0).getEngName());
-                    if(iSucessCount ==  inspectionList.dataSource.size()) {
-                        getUnitName();
-                    }
-                }
+                    BisHazRegDetail bisHazRegDetail = gson.fromJson(result,BisHazRegDetail.class);
+                    if(bisHazRegDetail == null || bisHazRegDetail.dataSource == null || bisHazRegDetail.dataSource.size() == 0){
 
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    iFailedCount ++;
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
-                }
-            });
-        }
-    }
-    private void getUnitName(){
-        iSucessCount = 0;
-        iFailedCount = 0;
-        final int size = inspectionList.dataSource.size();
-        for(int i = 0; i < size; i ++) {
-            if(iFailedCount != 0){
-                break;
-            }
-            final ObjHaz item = inspectionList.dataSource.get(i);
-            String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
-            HashMap<String,String>params = new HashMap<>();
-            params.put("guid",item.getOrgGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    iSucessCount ++;
-                    Gson gson = new Gson();
-                    OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
-                    if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
-                        item.setOrgName(orgInfo.dataSource.get(0).getOrgName());
                     }else {
-                        item.setOrgName("未知");
+                        item.setHazName(bisHazRegDetail.dataSource.get(0).getHazName());
+                        item.setEngineName(bisHazRegDetail.dataSource.get(0).getEngName());
+                        item.setHazStat(bisHazRegDetail.dataSource.get(0).getHazStat());
                     }
-                    if(iSucessCount == size){
-                        closeDataDialog();
+                    if(iSucessCount +iFailedCount == inspectionList.dataSource.size()){
                         refreshUI();
                     }
                 }
@@ -197,15 +157,16 @@ public class HazSearchListForEntActivity extends BaseActivity
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     iFailedCount ++;
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
+                    if(iSucessCount +iFailedCount == inspectionList.dataSource.size()){
+                        refreshUI();
+                    }
                 }
             });
-
-
         }
+
     }
     private void refreshUI(){
+        closeDataDialog();
         if(inspectionList != null){
             for(ObjHaz item: inspectionList.dataSource){
                 item.setHiddGradName(getHazsGradeName(item.getHiddGrad()));

@@ -31,29 +31,29 @@ public class GlobleConstants {
     public static final int HIDD_TYPE_NORMAL = 1;
     public static final int HIDD_TYPE_BIGER = 2;
 
-    // 地图服务器地址
-    public static final String mapServer = "http://192.168.1.11:8088";
-    public static String strIP = "http://192.168.1.8:8080";
-    public static String strCJIP = "http://192.168.1.11:7080";
-    public static String strZJIP = "http://192.168.1.11:9080";
-    public static String strZRIP = "http://192.168.1.11:6080";
-
-    //专题图 - 地址
-    public static final String BASE_URL = "http://192.168.1.11:7080/";
+//    // 地图服务器地址
+//    public static final String mapServer = "http://192.168.1.11:8088";
+//    public static String strIP = "http://192.168.1.8:8080";
+//    public static String strCJIP = "http://192.168.1.11:7080";
+//    public static String strZJIP = "http://192.168.1.11:9080";
+//    public static String strZRIP = "http://192.168.1.11:6080";
+//
+//    //专题图 - 地址
+//    public static final String BASE_URL = "http://192.168.1.11:7080/";
 
     public static final String strAppIP = "http://192.168.1.66:8080";
 
 
-//
-//    // 地图服务器地址
-//    public static final String mapServer = "http://10.1.194.68:80"; // 地图接口地址
-//    public static String strIP = "http://10.1.194.92"; // 吉威数据库接口地址
-//    public static String strCJIP = "http://10.1.194.90:7080"; // 采集接口地址
-//    public static String strZJIP = "http://10.1.194.91"; // 总集接口地址
-//    public static String strZRIP = "http://10.1.194.91:7080"; // 5个接口系统
-//
-//    //专题图 - 地址 决策
-//    public static final String BASE_URL = "http://10.1.194.89/"; // 决策接口地址
+
+    // 地图服务器地址
+    public static final String mapServer = "http://10.1.194.68:80"; // 地图接口地址
+    public static String strIP = "http://10.1.194.92"; // 吉威数据库接口地址
+    public static String strCJIP = "http://10.1.194.90:7080"; // 采集接口地址
+    public static String strZJIP = "http://10.1.194.91"; // 总集接口地址
+    public static String strZRIP = "http://10.1.194.91:7080"; // 5个接口系统
+
+    //专题图 - 地址 决策
+    public static final String BASE_URL = "http://10.1.194.89/"; // 决策接口地址
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR
