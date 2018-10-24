@@ -104,7 +104,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
             ToastUtils.show("处理措施不能为空");
             return  bRet;
         }
-        return  bRet;
+        return  true;
     }
     private void commitForm(){
         if(!checkParam())return;
