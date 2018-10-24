@@ -113,8 +113,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/relSinsGroupWiuns/";
         HashMap<String,String> params = new HashMap<>();
         // 检查小组GUID
-        params.put("guid",information.getGuid());
-      //  params.put("guid","654c53e240cb414daa5140323647fbaa");
+        params.put("groupGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

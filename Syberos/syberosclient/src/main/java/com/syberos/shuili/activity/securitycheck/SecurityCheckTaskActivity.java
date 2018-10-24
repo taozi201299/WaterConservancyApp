@@ -16,9 +16,11 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.BisSinsScheGroup;
+import com.syberos.shuili.entity.securitycheck.RelSinsGroupExpert;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupPers;
 import com.syberos.shuili.entity.securitycheck.RelSinsGroupWiun;
 import com.syberos.shuili.utils.ToastUtils;
@@ -26,6 +28,8 @@ import com.syberos.shuili.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
 
@@ -96,13 +100,13 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     /**
      *  1 根据用户id从8.2.3.14	检查小组与组员关系表（REL_SINS_GROUP_PERS）中获取检查小组信息
      *
-     *  检查小组和专家关系表 获取检查小组
+     *  2 从检查小组和专家关系表 获取检查小组
      */
     private void getScheGroupIdByUserId(){
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
         HashMap<String,String>params = new HashMap<>();
         params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-    //    params.put("persGuid","3ADACCFB2EF149E580989A82277A8505");
+      //  params.put("persGuid","2A3FD75CBB154627AFF2745F09584B6B");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -117,13 +121,40 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
                     ToastUtils.show("未发现相关任务");
                     closeDataDialog();
                 }
-                getScheGroupList();
+                getScheGroupIdByExpertID();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private  void getScheGroupIdByExpertID(){
+        String url = GlobleConstants.strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("expeGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result){
+                Gson gson = new Gson();
+                RelSinsGroupExpert relSinsGroupExpert = gson.fromJson(result,RelSinsGroupExpert.class);
+                if(relSinsGroupExpert != null && relSinsGroupExpert.dataSource != null){
+                    for(RelSinsGroupExpert item : relSinsGroupExpert.dataSource){
+                        RelSinsGroupPers object = new RelSinsGroupPers();
+                        object.setGroupGuid(relSinsGroupExpert.getGroupGuid());
+                        relSinsGroupPers.dataSource.add(object);
+
+                    }
+                }
+                getScheGroupList();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                getScheGroupList();
+
             }
         });
     }
@@ -168,14 +199,12 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     }
     /**
      * 3 检查方案GUID获取该检查方案的信息 从安全检查方案（BIS_SINS_SCHE）表中获取
-     * todo 该接口sql报错 暂未处理
      */
     private void getPlanInfo(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
         for(BisSinsScheGroup item : bisSinsScheGroups){
-            params.put("sinsGuid",item.getScheGuid());
-            //params.put("sinsGuid","e5ea954bdb424bed80e64dfc459e8e6b");
+            params.put("guid",item.getScheGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
