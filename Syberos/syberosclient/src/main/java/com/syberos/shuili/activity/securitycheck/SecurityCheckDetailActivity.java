@@ -166,7 +166,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                objExpert = (ObjExpert)gson.fromJson(result,ObjExpert.class);
+                objExpert = gson.fromJson(result,ObjExpert.class);
                 if(objExpert != null && objExpert.dataSource != null){
                     getCheckObject();
                 }
@@ -186,8 +186,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getCheckObject(){
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/relSinsGroupWiuns/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("guid",bisSinsScheGroup.getGuid());
-      //  params.put("guid","654c53e240cb414daa5140323647fbaa");
+        params.put("groupGuid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -195,7 +194,6 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 Gson gson = new Gson();
                 relSinsGroupWiun = gson.fromJson(result,RelSinsGroupWiun.class);
                 if(relSinsGroupWiun != null && relSinsGroupWiun.dataSource != null){
-                 //   getCheckObjectInfo();
                     getEntName();
                 }
             }
@@ -210,9 +208,6 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getEntName(){
         final int size = relSinsGroupWiun.dataSource.size();
         for(final RelSinsGroupWiun item : relSinsGroupWiun.dataSource){
-            if(iFailedCount != 0){
-                break;
-            }
             String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getObjGuid());

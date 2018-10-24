@@ -95,6 +95,8 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
 
     /**
      *  1 根据用户id从8.2.3.14	检查小组与组员关系表（REL_SINS_GROUP_PERS）中获取检查小组信息
+     *
+     *  检查小组和专家关系表 获取检查小组
      */
     private void getScheGroupIdByUserId(){
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
