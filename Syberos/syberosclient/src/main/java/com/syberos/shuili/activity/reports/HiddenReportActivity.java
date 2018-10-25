@@ -349,6 +349,7 @@ public class HiddenReportActivity extends BaseActivity {
                             btn_confirm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                     confirmDialog.dismiss();
                                      report(hiddenDangerReport);
                                 }
                             });
@@ -430,7 +431,7 @@ public class HiddenReportActivity extends BaseActivity {
     }
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
         showDataLoadingDialog();
-        String url = GlobleConstants.strZJIP + "/hidd/hiddMonth/mobile/saveMonth";
+        String url = GlobleConstants.str7GeIP + "/hidd/hiddMonth/mobile/saveMonth";
         HashMap<String,String>params = new HashMap<>();
         params.put("year",getYear());
         params.put("month",getMonth());
@@ -462,14 +463,12 @@ public class HiddenReportActivity extends BaseActivity {
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
         showDataLoadingDialog();
-        String url = GlobleConstants.strCJIP + "/hidd/hiddMonth/mobile/saveRevoc";
+        String url = GlobleConstants.str7GeIP + "/hidd/hiddMonth/mobile/saveRevoc";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisOrgMonRepPeri.getGuid());
         params.put("revocDesc",content);
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("requestFrom","0");
-
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

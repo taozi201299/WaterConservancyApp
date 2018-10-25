@@ -400,14 +400,13 @@ public class AcciReportActivity extends TranslucentActivity  {
 
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
         showDataLoadingDialog();
-        String url = GlobleConstants.strZJIP + "/acci/acciDeal/mobile/save";
+        String url = GlobleConstants.str7GeIP + "/acci/acciDeal/mobile/save";
         HashMap<String,String>params = new HashMap<>();
         params.put("year",getYear());
         params.put("month",getMonth());
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("requestFrom","0");
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -466,13 +465,12 @@ public class AcciReportActivity extends TranslucentActivity  {
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
         showDataLoadingDialog();
-        String url = GlobleConstants.strCJIP + "/acci/acciMont/mobile/cancel";
+        String url = GlobleConstants.str7GeIP + "/acci/acciMont/mobile/cancel";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisOrgMonRepPeri.getGuid());
         params.put("revocDesc",content);
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("requestFrom","0");
 
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
