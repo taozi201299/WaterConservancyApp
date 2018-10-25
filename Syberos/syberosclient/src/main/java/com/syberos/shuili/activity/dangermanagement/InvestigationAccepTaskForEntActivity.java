@@ -83,6 +83,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     @Override
     public void initData() {
+        sucessCount = 0;
+        failedCount = 0;
         results.clear();
         showDataLoadingDialog();
         getHiddenList();
@@ -139,7 +141,6 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    closeLoadingDialog();
                     Gson gson = new Gson();
                     objectEngine = gson.fromJson(result,ObjectEngine.class);
                     if(objectEngine != null && objectEngine.dataSource != null && objectEngine.dataSource.size() > 0){
@@ -176,20 +177,14 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 @Override
                 public void onResponse(String result) {
                     //遍历返回的数据
+                    sucessCount ++;
                     Gson gson = new Gson();
                     hiddenAcceptInfo = gson.fromJson(result,HiddenAcceptInfo.class);
                     if(hiddenAcceptInfo == null || hiddenAcceptInfo.dataSource == null){
-                        failedCount ++;
-                        closeLoadingDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
                     }else if(hiddenAcceptInfo.dataSource.size() == 0){
                         item.setAccept(false);
                     }else {
                         for(HiddenAcceptInfo acceptInfo :hiddenAcceptInfo.dataSource){
-                            if(failedCount >0){
-                                break;
-                            }
                              if((acceptInfo.getAccepDate() != null && !acceptInfo.getAccepDate().isEmpty()
                             ||(acceptInfo.getAccepPers() != null && !acceptInfo.getAccepPers().isEmpty())
                             || (acceptInfo.getAccepOpin() != null && !acceptInfo.getAccepOpin().isEmpty()) )) {
@@ -204,8 +199,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                             }
                         }
                     }
-                    sucessCount ++;
-                    if(sucessCount == size){
+                    if(sucessCount + failedCount == size){
                         closeDataDialog();
                         processResult();
                         refreshUI();
@@ -214,9 +208,11 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     failedCount ++;
-                    closeLoadingDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
+                    if(sucessCount + failedCount == size){
+                        closeDataDialog();
+                        processResult();
+                        refreshUI();
+                    }
                 }
             });
 
@@ -366,7 +362,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("data",results.get(position));
-        intentActivity(this,InvestigationAccepDetailActivity.class,false,bundle);
+        intentActivity(this,InvestigationRectifyDetailForEnterpriseActivity.class,false,bundle);
     }
     @Override
     public void onRefresh() {

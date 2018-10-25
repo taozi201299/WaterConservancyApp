@@ -153,6 +153,7 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("hazGuid",information.guid);
+        params.put("collTime",CommonUtils.getCurrentDate());
         params.put("note","");
         if(titleType == 0) {
             params.put("regTime", CommonUtils.getCurrentDate()); //备案日期

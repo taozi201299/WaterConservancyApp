@@ -38,7 +38,6 @@ public class SoapUtils {
     private final  String NAME_SPACE_WINU_EXT = "http://orgwiunext.service.uumsext.dhcc.com.cn/";
 
 
-
     /** WSDL文件的URL. 非水利用户*/
     private final  String WSDL_URL = "http://" + strIp + "/uams/ws/uumsext/UserExt?wsdl";
     /**

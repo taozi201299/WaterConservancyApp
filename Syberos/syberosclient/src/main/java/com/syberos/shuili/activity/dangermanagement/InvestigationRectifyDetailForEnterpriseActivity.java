@@ -283,6 +283,9 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
+                if(hiddenRectifyProgerssInfo.dataSource.size() > 0){
+                    getRectifyPerName();
+                }
                 getRectifyInfo();
             }
 
@@ -294,7 +297,13 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             }
         });
     }
+private void getRectifyPerName(){
+        int size = hiddenRectifyProgerssInfo.dataSource.size();
+        for(int i = 0; i<size ; i++){
 
+        }
+
+}
     /**
      * 隐患督办信息
      */
@@ -399,9 +408,9 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                 initElements(rectifyView,0);
                 int index = i + 1;
                 tv_rectify_label.setText(index +"次整改");
-                tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
-                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers() == null ?"" :hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
-                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg() == null ?"":hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
+                tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
+                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
+                ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
                 BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
             }
 
