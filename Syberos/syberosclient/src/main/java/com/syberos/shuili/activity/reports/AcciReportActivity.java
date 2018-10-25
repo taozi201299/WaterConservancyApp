@@ -278,23 +278,11 @@ public class AcciReportActivity extends TranslucentActivity  {
                     tv_report.setVisibility(View.VISIBLE);
                     tv_report.setText("重报");
                     break;
-                case HiddenDangerReport.LINK_REFUNDED:
-                    if(hiddenDangerReport.isReportFinish()) {
-                        tv_refunded.setVisibility(View.VISIBLE);
-                        tv_refunded.setText("已退回");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color, null));
-                        } else {
-                            tv_refunded.setTextColor(getResources().getColor(R.color.login_page_link_text_color));
-                        }
-                        tv_report.setVisibility(View.VISIBLE);
-                        tv_report.setText("重报");
-                    }else {
-                        tv_recall.setVisibility(View.GONE);
-                        tv_refunded.setVisibility(View.GONE);
-                        tv_report.setVisibility(View.VISIBLE);
-                        tv_report.setText("上报");
-                    }
+                case HiddenDangerReport.LINK_NO:
+                    tv_recall.setVisibility(View.GONE);
+                    tv_refunded.setVisibility(View.GONE);
+                    tv_report.setVisibility(View.VISIBLE);
+                    tv_report.setText("上报");
                     break;
             }
 

@@ -49,6 +49,8 @@ public class WriteOffVerificationListActivity extends BaseActivity
 
     @BindView(R.id.recyclerView_record_review)
     RecyclerView recyclerView;
+    @BindView(R.id.ll_search)
+    LinearLayout ll_search;
     DangerousListAdapter listAdapter;
     BisHazReg bisHazReg = null;
     BisHazMajRegWrit bisHazMajRegWrit = null;
@@ -158,6 +160,7 @@ public class WriteOffVerificationListActivity extends BaseActivity
         setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        ll_search.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);

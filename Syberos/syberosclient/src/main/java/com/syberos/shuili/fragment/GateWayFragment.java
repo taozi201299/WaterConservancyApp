@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -85,6 +87,7 @@ public class GateWayFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+
     }
 
     @Override
@@ -108,7 +111,6 @@ public class GateWayFragment extends BaseFragment {
             fragments.add(fragment);
         }
         tabAdapter = new TabAdapter(getChildFragmentManager(), fragments, tabTitle);
-        m_adapter = new GateWayAdatper(mContext,R.layout.simple_list_row,datas);
         //给ViewPager设置适配器
         vp_content.setAdapter(tabAdapter);
         //将TabLayout和ViewPager关联起来。
@@ -145,21 +147,14 @@ public class GateWayFragment extends BaseFragment {
 
         @Override
         protected void initData() {
-            datas.clear();
-            switch (type){
-                case 1:
-                case 2:
-                case 3:
-                    for(int i = 0 ; i <10 ;i++) {
-                        String info = "海淀区小月河水利工程";
-                        datas.add(info);
-                    }
-                    recyclerViewLayout.setAdapter(m_adapter);
-                    m_adapter.setData(datas);
-                    m_adapter.notifyDataSetChanged();
-                    break;
-
-            }
+            webview.setWebViewClient(new WebViewClient(){
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
+            webview.loadUrl("http://192.168.1.11:9080/eutr/moni/stan");
 
         }
     }

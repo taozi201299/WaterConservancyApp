@@ -51,9 +51,6 @@ public class GateWayFragmentEnterprises extends BaseFragment {
     @BindView(R.id.iv_action_bar2_right)
     ImageView iv_action_bar2_right;
 
-
-    private static GateWayEnterpriseAdatper m_adapter;
-    static List<String> datas = new ArrayList<>();
     private OpenDrawerListener openDrawerListener = null;
     private Back2LoginActivityListener back2LoginActivityListener = null;
 
@@ -93,7 +90,6 @@ public class GateWayFragmentEnterprises extends BaseFragment {
             fragment.setType(bundle);
             fragments.add(fragment);
         }
-        m_adapter = new GateWayEnterpriseAdatper(mContext,R.layout.simple_list_row,datas);
         tabAdapter = new TabAdapter(getChildFragmentManager(), fragments, tabTitle);
         //给ViewPager设置适配器
         vp_content.setAdapter(tabAdapter);
@@ -119,21 +115,7 @@ public class GateWayFragmentEnterprises extends BaseFragment {
 
         @Override
         protected void initData() {
-            datas.clear();
-            switch (type){
-                case 1:
-                case 2:
-                case 3:
-                    for(int i = 0 ; i <10 ;i++) {
-                        String info = "海淀区小月河水利工程";
-                        datas.add(info);
-                    }
-                    recyclerViewLayout.setAdapter(m_adapter);
-                    m_adapter.setData(datas);
-                    m_adapter.notifyDataSetChanged();
-                    break;
-
-            }
+            webview.loadUrl("http://192.168.1.11:9080/eutr/moni/stan");
 
         }
     }

@@ -154,14 +154,13 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("hazGuid",information.guid);
         params.put("note","");
-        params.put("regTime",CommonUtils.getCurrentDate());
-        params.put("regCode","");
-        params.put("requestFrom","0");
         if(titleType == 0) {
             params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
         }
         if(titleType == 1) {
-        params.put("writeOffTime",CommonUtils.getCurrentDate()); // 核销时间
+            params.put("recCode","");
+            params.put("regTime",information.getRegTime());
+            params.put("writeOffTime",CommonUtils.getCurrentDate()); // 核销时间
         }
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
