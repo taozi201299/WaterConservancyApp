@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_bg"
     android:orientation="vertical">
 
@@ -39,9 +40,23 @@
         android:visibility="gone" />
 
 </LinearLayout>
-
+    <RelativeLayout
+        android:id="@+id/ll_unit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp"
+        android:visibility="gone">
+        <com.syberos.shuili.view.EnumView
+            android:id="@+id/ll_unit_level"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            app:enum_title="施工单位">
+        </com.syberos.shuili.view.EnumView>
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_record_review"
+        android:layout_marginTop="@dimen/_5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

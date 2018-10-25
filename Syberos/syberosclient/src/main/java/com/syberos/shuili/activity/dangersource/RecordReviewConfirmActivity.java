@@ -145,9 +145,9 @@ public class RecordReviewConfirmActivity extends BaseActivity {
     private  void commit(){
         String url;
         if(titleType == 0) {
-            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/insert";
+            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/mobile/insert";
         }else {
-            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/writInsert";
+            url = GlobleConstants.strZJIP + "/maha/BisHazMajReg/mobile/writInsert";
         }
         HashMap<String,String> params= new HashMap<>();
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());

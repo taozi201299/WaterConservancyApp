@@ -194,6 +194,14 @@ public class SyberosManagerImpl {
             }
         });
     }
+    public void getAllOrgInfo(final  HashMap<String,Object> params,final  String methodName,final RequestCallback<Object> callback){
+        mWorkHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                soapUtils.callWebService(params,methodName,callback,SoapUtils.SoapType.WSDL_WIUM_EXT);
+            }
+        });
+    }
     public void changePwdForWater(final HashMap<String, Object> params, final String methodName, final RequestCallback<Object> callback){
         mWorkHandler.post(new Runnable() {
             @Override

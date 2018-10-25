@@ -279,6 +279,9 @@
             android:name=".activity.dangersource.HazDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.dangersource.HazSearchListForFRActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.dangersource.HazDetailForEntActivity"
             android:screenOrientation="portrait"

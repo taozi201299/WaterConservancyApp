@@ -28,6 +28,7 @@ import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.indexListView.ClearEditText;
 
 import java.util.ArrayList;
@@ -53,7 +54,10 @@ public class HazSearchListForFRActivity extends BaseActivity
     RecyclerView recyclerView;
     @BindView(R.id.searchClearEditText)
     ClearEditText searchClearEditText;
-
+    @BindView(R.id.ll_unit)
+    RelativeLayout ll_unit;
+    @BindView(R.id.ll_unit_level)
+    EnumView ll_unit_level;
     @BindView(R.id.tv_quit_search)
     TextView tv_quit_search;
     private List<ObjHaz> searchResultList = new ArrayList<>();
@@ -123,6 +127,22 @@ public class HazSearchListForFRActivity extends BaseActivity
             }
         }
         return dicName;
+    }
+    private void getUnitNames (){
+        String methodName =  "getOrgListByOrgBaseId";
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("arg0",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        SyberosManagerImpl.getInstance().getAllOrgInfo(params, methodName, new RequestCallback<Object>() {
+            @Override
+            public void onResponse(Object result) {
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
     }
     private void getHazsList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
@@ -214,6 +234,7 @@ public class HazSearchListForFRActivity extends BaseActivity
         setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
+        ll_unit.setVisibility(View.VISIBLE);
         showDataLoadingDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
