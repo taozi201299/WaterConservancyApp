@@ -111,6 +111,40 @@
                     android:layout_toRightOf="@+id/tv_rect_leg_per_label"
                     android:text="" />
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_rect_leg_pers_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50dp"
+                android:paddingLeft="@dimen/_10dp"
+                android:paddingRight="@dimen/_10dp">
+
+                <ImageView
+                    android:id="@+id/iv_dot_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_dot_blue" />
+
+                <TextView
+                    android:id="@+id/tv_rect_leg_per_phone_label"
+                    style="@style/text_detail_14sp_title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_toRightOf="@id/iv_dot_phone"
+                    android:text="整改责任人电话" />
+
+                <TextView
+                    android:id="@+id/tv_rect_leg_per_phone"
+                    style="@style/text_detail_14sp_title0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_toRightOf="@+id/tv_rect_leg_per_phone_label"
+                    android:text="" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/ll_rectify_person"

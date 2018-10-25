@@ -15,6 +15,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
 import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
@@ -94,6 +95,10 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
     TextView tv_unit_name;
     @BindView(R.id.tv_rectify_plan_time)
     TextView tv_rectify_plan_time;
+    @BindView(R.id.tv_rect_leg_per)
+    TextView tv_rect_leg_per;
+    @BindView(R.id.tv_rect_leg_per_phone)
+    TextView tv_rect_leg_per_phone;
     @BindView(R.id.ev_rectify_target_audio)
     AudioEditView ev_rectify_target_audio;
     @BindView(R.id.ev_rectify_emergency_plan_audio)
@@ -177,21 +182,21 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         scrollView.setVisibility(View.GONE);
         ll_commit.setVisibility(View.GONE);
         ((TextView)findViewById(R.id.tv_action_bar2_title)).setText("隐患详情");
-        ((ImageView)findViewById(R.id.iv_action_bar2_left)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.iv_action_bar2_left)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        ((ImageView)findViewById(R.id.iv_action_bar2_right)).setVisibility(View.INVISIBLE);
-        ll_check_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_check_info);
-        ll_supervise_info = (LinearLayout)rl_accept_detail.findViewById(R.id.layout_supervice_info);
+        (findViewById(R.id.iv_action_bar2_right)).setVisibility(View.INVISIBLE);
+        ll_check_info = rl_accept_detail.findViewById(R.id.layout_check_info);
+        ll_supervise_info = rl_accept_detail.findViewById(R.id.layout_supervice_info);
         ll_supervise_info.setVisibility(View.GONE);
-        ll_rectify_container = (LinearLayout)rl_accept_detail.findViewById(R.id.ll_rectify_container);
+        ll_rectify_container = rl_accept_detail.findViewById(R.id.ll_rectify_container);
         ll_rectify_plan_info.setVisibility(View.VISIBLE);
-        iv_location = (ImageView)ll_check_info.findViewById(R.id.iv_location);
-        ev_des_audio = (AudioEditView)ll_check_info.findViewById(R.id.ev_des_audio);
-        ll_multimedia = (MultimediaView)ll_check_info.findViewById(R.id.ll_multimedia);
+        iv_location = ll_check_info.findViewById(R.id.iv_location);
+        ev_des_audio = ll_check_info.findViewById(R.id.ev_des_audio);
+        ll_multimedia = ll_check_info.findViewById(R.id.ll_multimedia);
         iv_location.setVisibility(View.GONE);
         ev_des_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
@@ -208,42 +213,10 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                 break;
         }
     }
-
-
-    /**
-     * 隐患核实信息
-     */
-    private void getHiddenCheckDetail(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddVeris/";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Gson gson = new Gson();
-                hiddenProjectInfo = (HiddenProjectInfo)gson.fromJson(result,HiddenProjectInfo.class);
-                if(hiddenProjectInfo == null || hiddenProjectInfo.dataSource == null){
-                    closeDataDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
-                }
-                getInvestigationDetail();
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-
-            }
-        });
-    }
-
     /**
      *隐患排查信息
      */
     private void getInvestigationDetail(){
-
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddInves/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
@@ -257,6 +230,9 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
+                if(hiddenInvesInfo.dataSource.size() > 0){
+                    getOrgName(hiddenInvesInfo.dataSource.get(0).getInspOrgGuid());
+                }
                 getRectifyProgress();
             }
 
@@ -267,6 +243,27 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
 
             }
         });
+    }
+
+    private void getOrgName(String guid){
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        HashMap<String,String>params = new HashMap<>();
+            params.put("guid",guid);
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    Gson gson = new Gson();
+                    OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
+                    if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
+                        hiddenInvesInfo.dataSource.get(0).setUnitName(orgInfo.dataSource.get(0).getOrgName());
+                    }
+                }
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+                }
+            });
+
     }
 
     /**
@@ -355,34 +352,6 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             }
         });
     }
-
-    /**
-     * 隐患验收信息
-     */
-    private void getRectifyAcceptInfo(){
-        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
-        HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                closeDataDialog();
-                Gson gson = new Gson();
-                hiddenAcceptInfo = (HiddenAcceptInfo) gson.fromJson(result,HiddenAcceptInfo.class);
-                if(hiddenAcceptInfo == null || hiddenAcceptInfo.dataSource == null ){
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDataDialog();
-                ToastUtils.show(errorInfo.getMessage());
-
-            }
-        });
-    }
     private void refreshUI(){
         closeDataDialog();
         scrollView.setVisibility(View.VISIBLE);
@@ -398,31 +367,27 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         tv_type.setText(investigationInfo.getHiddClassName() == null ?"":investigationInfo.getHiddClassName());
         tv_location.setText(investigationInfo.getProPart() == null ?"":investigationInfo.getProPart());
         ev_des_audio.setEditText(investigationInfo.getHiddDesc());
-//        // 1 隐患核实信息
-//        if("1".equals(this.hiddenProjectInfo.totalCount)) {
-//            hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
-//
-//            tv_measure_info.setText("不存在该字段");
-//            ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
-//        }
         // 隐患排查
         if("1".equals(this.hiddenInvesInfo.totalCount)) {
             hiddenInvesInfo = this.hiddenInvesInfo.dataSource.get(0);
-            tv_other.setText(hiddenInvesInfo.getInspLeader() == null ?"":hiddenInvesInfo.getInspLeader());
-            tv_other2.setText(hiddenInvesInfo.getInspMem() == null ?"":hiddenInvesInfo.getInspMem());
-            tv_other3.setText(hiddenInvesInfo.getInspOrgGuid() == null ?"":hiddenInvesInfo.getInspOrgGuid());
-            tv_other4.setText(hiddenInvesInfo.getRecPers() == null ?"":hiddenInvesInfo.getRecPers());
-            tv_other5.setText(hiddenInvesInfo.getCollTime() == null ?"":hiddenInvesInfo.getCollTime());
+            tv_other.setText(hiddenInvesInfo.getInspLeader());
+            tv_other2.setText(hiddenInvesInfo.getInspMem());
+            tv_other3.setText(hiddenInvesInfo.getUnitName());
+            tv_other4.setText(hiddenInvesInfo.getRecPers());
+            tv_other5.setText(hiddenInvesInfo.getCollTime());
         }
         if(this.hiddenRectifyPlanInfo.totalCount != null) {
             if (Integer.valueOf(this.hiddenRectifyPlanInfo.totalCount) > 0) {
-                tv_unit_name.setText(hiddenRectifyPlanInfo.dataSource.get(0).getGoverRespWiunName() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getGoverRespWiunName());
-                tv_rectify_plan_time.setText(hiddenRectifyPlanInfo.dataSource.get(0).getRequCompDate() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getRequCompDate());
-                ev_rectify_target_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getGoveObjeTasks() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getGoveObjeTasks());
+                HiddenRectifyPlanInfo item = hiddenRectifyPlanInfo.dataSource.get(0);
+                tv_unit_name.setText(item.getGoverRespWiunName());
+                tv_rect_leg_per.setText(item.getRectLegPers());
+                tv_rect_leg_per_phone.setText(item.getRectPersOffiTel());
+                tv_rectify_plan_time.setText(item.getRequCompDate());
+                ev_rectify_target_audio.setEditText(item.getGoveObjeTasks());
                 ev_rectify_target_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-                ev_rectify_emergency_plan_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getEmerPlanSame() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getEmerPlanSame());
+                ev_rectify_emergency_plan_audio.setEditText(item.getEmerPlanSame());
                 ev_rectify_emergency_plan_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
-                ev_ll_rectify_describe_audio.setEditText(hiddenRectifyPlanInfo.dataSource.get(0).getCorrMeas() == null ?"":hiddenRectifyPlanInfo.dataSource.get(0).getCorrMeas());
+                ev_ll_rectify_describe_audio.setEditText(item.getCorrMeas());
                 ev_ll_rectify_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             }
         }

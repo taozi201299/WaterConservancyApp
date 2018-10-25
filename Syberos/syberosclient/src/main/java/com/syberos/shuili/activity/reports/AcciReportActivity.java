@@ -400,7 +400,7 @@ public class AcciReportActivity extends TranslucentActivity  {
 
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
         showDataLoadingDialog();
-        String url = GlobleConstants.str7GeIP + "/acci/acciDeal/mobile/save";
+        String url = GlobleConstants.str7GeIP + "/acci/acci/acciDeal/mobile/save";
         HashMap<String,String>params = new HashMap<>();
         params.put("year",getYear());
         params.put("month",getMonth());
@@ -465,7 +465,7 @@ public class AcciReportActivity extends TranslucentActivity  {
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
         showDataLoadingDialog();
-        String url = GlobleConstants.str7GeIP + "/acci/acciMont/mobile/cancel";
+        String url = GlobleConstants.str7GeIP + "/acci/acci/acciMont/mobile/cancel";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisOrgMonRepPeri.getGuid());
         params.put("revocDesc",content);

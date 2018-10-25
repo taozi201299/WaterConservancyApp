@@ -120,6 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_level_label"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:minHeight="@dimen/_40dp"
         android:paddingLeft="@dimen/_10dp"
         android:paddingRight="@dimen/_10dp">
@@ -129,7 +130,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_dot_blue" />
+            android:src="@mipmap/icon_dot_blue"
+          />
 
         <TextView
             android:id="@+id/tv_measure_label"
@@ -299,6 +301,7 @@
     <RelativeLayout
         android:id="@+id/ll_other_1"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="@dimen/_40dp">
         <ImageView
             android:id="@+id/iv_other_dot0"
@@ -330,6 +333,7 @@
     <RelativeLayout
         android:id="@+id/ll_other_2"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="@dimen/_40dp">
         <ImageView
             android:id="@+id/iv_other_dot1"

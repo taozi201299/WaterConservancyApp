@@ -41,7 +41,9 @@ public class GlobleConstants {
 //    //专题图 - 地址
 //    public static final String BASE_URL = "http://192.168.1.11:7080/";
 
-    public static String str7GeIP = "http://10.1.194.91"; // 总集接口地址
+   // public static String str7GeIP = "http://10.1.194.91"; // 7个接口地址
+
+    public static String str7GeIP = "http://192.168.1.11:9080";
 
     public static final String strAppIP = "http://192.168.1.66:8080";
 

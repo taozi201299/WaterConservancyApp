@@ -431,7 +431,7 @@ public class HiddenReportActivity extends BaseActivity {
     }
     private void report(BisOrgMonRepPeri bisOrgMonRepPeri){
         showDataLoadingDialog();
-        String url = GlobleConstants.str7GeIP + "/hidd/hiddMonth/mobile/saveMonth";
+        String url = GlobleConstants.str7GeIP + "/hidd/hidd/hiddMonth/mobile/saveMonth";
         HashMap<String,String>params = new HashMap<>();
         params.put("year",getYear());
         params.put("month",getMonth());
@@ -463,7 +463,7 @@ public class HiddenReportActivity extends BaseActivity {
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
         showDataLoadingDialog();
-        String url = GlobleConstants.str7GeIP + "/hidd/hiddMonth/mobile/saveRevoc";
+        String url = GlobleConstants.str7GeIP + "/hidd/hidd/hiddMonth/mobile/saveRevoc";
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisOrgMonRepPeri.getGuid());
         params.put("revocDesc",content);
