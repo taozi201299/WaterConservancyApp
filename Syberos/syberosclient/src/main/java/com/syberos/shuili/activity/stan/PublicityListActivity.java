@@ -31,6 +31,7 @@ import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -257,6 +258,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
      * 提交到公示公告表  提交内容
      */
     private void  commit(){
+        iSucessCount = 0;
+        iFailedCount = 0;
         showLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
@@ -310,7 +313,9 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String endTime = String.valueOf(getDateAfter(date,5));
+        String endTime = "";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        endTime = formatter.format(getDateAfter(date,5));
         params.put("endTime",endTime);
         params.put("relePers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
         params.put("releOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
@@ -319,15 +324,30 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         params.put("collTime",CommonUtils.getCurrentDate());
         params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("stanReviGuid",item.getGuid());
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 0;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-
-
+                iSucessCount ++ ;
+                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                    closeDataDialog();
+                    ToastUtils.show("提交成功");
+                }
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                iSucessCount ++ ;
+                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                    closeDataDialog();
+                    ToastUtils.show("提交成功");
+                }
 
             }
         });

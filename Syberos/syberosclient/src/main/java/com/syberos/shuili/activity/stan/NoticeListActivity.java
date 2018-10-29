@@ -218,7 +218,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     private void  commit(){
         iSucessCount = 0;
         iFailedCount = 0;
-        showLoadingDialog("数据提交中...");
+        showDataLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
         params.put("stat","8");
@@ -332,7 +332,14 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
             url += "&";
         }
         url = url.substring(0,url.length() -1);
-        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 1;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 iSucessCount ++ ;
