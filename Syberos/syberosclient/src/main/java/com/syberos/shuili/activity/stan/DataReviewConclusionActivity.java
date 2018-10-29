@@ -2,6 +2,7 @@ package com.syberos.shuili.activity.stan;
 
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
+import com.syberos.shuili.view.CustomDialog;
 import com.syberos.shuili.view.CustomEdit;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 /**
  * 材料审核提交
  */
-public class DataReviewConclusionActivity extends BaseActivity {
+public class DataReviewConclusionActivity extends BaseActivity implements BaseActivity.IDialogInterface {
 
     @BindView(R.id.tv_time)
     TextView tv_time;
@@ -102,7 +104,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
 
     @OnClick(R.id.tv_commit)
     void onAcceptedClicked() {
-        commit(1);
+        commit();
     }
 
     @Override
@@ -112,6 +114,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        setDialogInterface(this);
         ll_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,13 +165,33 @@ public class DataReviewConclusionActivity extends BaseActivity {
         setActionBarTitle("材料审查结论");
         setActionBarRightVisible(View.INVISIBLE);
         setInitActionBar(true);
+        setFinishOnBackKeyDown(false);
         tv_time.setText(CommonUtils.getCurrentDate());
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            final CustomDialog customDialog = new CustomDialog(
+                    DataReviewConclusionActivity.this);
+            customDialog.setDialogMessage(null, null,
+                    null);
+            customDialog.setMessage("当前内容未保存，确定退出？");
+            customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activityFinish();
+                    customDialog.dismiss();
+                }
+            });
+            customDialog.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     /**
      * 提交到标准化评审记录表
      */
-    private void commit(int result) {
+    private void commitForm() {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/informa/revi/bisInformaRevi/";
         HashMap<String, String> params = new HashMap<>();
         params.put("apprOpin", et_content.getEditableText().toString());
@@ -239,11 +262,18 @@ public class DataReviewConclusionActivity extends BaseActivity {
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
+    private void commit() {
+        String message = "确认提交数据?";
+        showCommitDialog(message,0);
+    }
+    @Override
+    public void dialogClick() {
+        commitForm();
+
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void dialogCancel() {
+
     }
 }

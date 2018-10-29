@@ -62,7 +62,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         }
         final Dialog repetitionDialog = new Dialog(this);
         View v1 = LayoutInflater.from(this).inflate(
-                R.layout.dialog_publicity_review, null);
+                R.layout.dialog_notice_review, null);
         repetitionDialog.setContentView(v1);
         Window dialogWindow = repetitionDialog.getWindow();
         WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();

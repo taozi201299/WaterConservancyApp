@@ -37,7 +37,7 @@ import butterknife.OnClick;
 //0:补充材料 1:形式初审 2:资料审查3.现场复核4.会议审定 5.公示 6.发证公告 7.拒绝达标 8.已发证
 
 public class DataReviewListActivity extends TranslucentActivity
-        implements CommonAdapter.OnItemClickListener,PullRecyclerView.OnPullRefreshListener {
+        implements CommonAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView_list)
     PullRecyclerView recyclerView;
@@ -80,13 +80,10 @@ public class DataReviewListActivity extends TranslucentActivity
 
     @Override
     public void initListener() {
-        recyclerView.setOnPullRefreshListener(this);
-        recyclerView.setHasMore(false);
 
     }
     private void closeLoadingDialog(){
         closeDataDialog();
-        recyclerView.refreshOrLoadComplete();
     }
     private void getObjStanAppls(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
@@ -232,17 +229,6 @@ public class DataReviewListActivity extends TranslucentActivity
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
         tv_review.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onRefresh() {
-        if(result != null) result.clear();
-        getObjStanAppls();
-    }
-
-    @Override
-    public void onLoadMore() {
-
     }
 
     private class ListAdapter extends CommonAdapter<ObjStanAppl> {
