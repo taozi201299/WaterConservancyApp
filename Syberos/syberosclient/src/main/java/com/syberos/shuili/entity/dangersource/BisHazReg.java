@@ -9,15 +9,20 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 
 public class BisHazReg extends HttpBaseResponse<BisHazReg> {
-    public String hazName;
-    public String guid;;
-    public String regTime;
-    public String wiunName;
-    public String ROWNO;
-    public String collTime;
-    public String hazStat;
-    public String engName;
-    public String writeOffTime;
+    private String hazName;
+    private String guid;
+    private String orgGuid;
+    private String requestTime;
+    private String regTime;
+    private String orderCode;
+    private String wiunName;
+    private String orgCode;
+    private int ROWNO;
+    private String collTime;
+    private String hazStat;
+    private String adminWiunGuid;
+    private String engName;
+    private String writeOffTime;
 
     public String getHazName() {
         return hazName == null ? "" : hazName;
@@ -35,12 +40,36 @@ public class BisHazReg extends HttpBaseResponse<BisHazReg> {
         this.guid = guid;
     }
 
+    public String getOrgGuid() {
+        return orgGuid == null ? "" : orgGuid;
+    }
+
+    public void setOrgGuid(String orgGuid) {
+        this.orgGuid = orgGuid;
+    }
+
+    public String getRequestTime() {
+        return requestTime == null ? "" : requestTime;
+    }
+
+    public void setRequestTime(String requestTime) {
+        this.requestTime = requestTime;
+    }
+
     public String getRegTime() {
         return regTime == null ? "" : regTime;
     }
 
     public void setRegTime(String regTime) {
         this.regTime = regTime;
+    }
+
+    public String getOrderCode() {
+        return orderCode == null ? "" : orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 
     public String getWiunName() {
@@ -51,11 +80,19 @@ public class BisHazReg extends HttpBaseResponse<BisHazReg> {
         this.wiunName = wiunName;
     }
 
-    public String getROWNO() {
-        return ROWNO == null ? "" : ROWNO;
+    public String getOrgCode() {
+        return orgCode == null ? "" : orgCode;
     }
 
-    public void setROWNO(String ROWNO) {
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
+    }
+
+    public int getROWNO() {
+        return ROWNO;
+    }
+
+    public void setROWNO(int ROWNO) {
         this.ROWNO = ROWNO;
     }
 
@@ -73,6 +110,14 @@ public class BisHazReg extends HttpBaseResponse<BisHazReg> {
 
     public void setHazStat(String hazStat) {
         this.hazStat = hazStat;
+    }
+
+    public String getAdminWiunGuid() {
+        return adminWiunGuid == null ? "" : adminWiunGuid;
+    }
+
+    public void setAdminWiunGuid(String adminWiunGuid) {
+        this.adminWiunGuid = adminWiunGuid;
     }
 
     public String getEngName() {

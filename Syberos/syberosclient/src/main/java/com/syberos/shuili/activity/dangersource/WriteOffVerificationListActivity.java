@@ -20,6 +20,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgExt;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
@@ -53,16 +54,11 @@ public class WriteOffVerificationListActivity extends BaseActivity
     LinearLayout ll_search;
     DangerousListAdapter listAdapter;
     BisHazReg bisHazReg = null;
-    BisHazMajRegWrit bisHazMajRegWrit = null;
-    ArrayList<String>regOrgGuid = new ArrayList<>();
-    ArrayList<BisHazReg>datas = new ArrayList<>();
-    private int iSucessCount = 0;
-    private int iFailedCount = 0;
 
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        BisHazReg information = datas.get(position);
+        BisHazReg information = bisHazReg.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, HazDetailActivity.class, false, bundle);
     }
@@ -76,25 +72,23 @@ public class WriteOffVerificationListActivity extends BaseActivity
     public void initListener() {
 
     }
-    public void getAllRegOrgGUID(){
-        String url = strIP +"/sjjk/v1/bis/haz/maj/bisHazMajRegWrits/";
-        HashMap<String,String>params = new HashMap<>();
+    private void getHazList(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/haz/selectAccidentListDirectUnit/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("guid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("hazStat","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                bisHazMajRegWrit = gson.fromJson(result,BisHazMajRegWrit.class);
-                if(bisHazMajRegWrit == null || bisHazMajRegWrit.dataSource == null){
+                bisHazReg = gson.fromJson(result,BisHazReg.class);
+                if(bisHazReg == null || bisHazReg.dataSource == null){
                     closeDataDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
+                }else {
+                    refreshUI();
                 }
-                for(BisHazMajRegWrit bisHazMajRegWrit :bisHazMajRegWrit.dataSource){
-                    if(!regOrgGuid.contains(bisHazMajRegWrit.getRegOrgGuid())){
-                        regOrgGuid.add(bisHazMajRegWrit.getRegOrgGuid());
-                    }
-                }
-                getHazList();
+
             }
 
             @Override
@@ -105,55 +99,15 @@ public class WriteOffVerificationListActivity extends BaseActivity
             }
         });
     }
-    public void getHazList(){
-        final int size = regOrgGuid.size();
-        for(int i = 0; i <size;i++) {
-            String url = strIP + "/sjjk/v1/bis/obj/haz/selectObjHazWithBisHazMajRegWrit/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("orgGuid",regOrgGuid.get(i));
-            params.put("hazStat", "2");
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    iSucessCount ++;
-                    Gson gson = new Gson();
-                    bisHazReg = gson.fromJson(result, BisHazReg.class);
-                    if (bisHazReg == null || bisHazReg.dataSource == null) {
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                    } else if (bisHazReg.dataSource.size() == 0) {
-                    } else {
-                        for(BisHazReg item : bisHazReg.dataSource){
-                            datas.add(item);
-                        }
-                    }
-                    if(iSucessCount + iFailedCount == size){
-                        refreshUI();
-                    }
-                }
-
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    iFailedCount ++;
-                    if(iSucessCount + iFailedCount == size){
-                        refreshUI();
-                    }
-                }
-            });
-        }
-    }
     private void refreshUI(){
         closeDataDialog();
-        listAdapter.setData(datas);
+        listAdapter.setData(bisHazReg.dataSource);
         listAdapter.notifyDataSetChanged();
     }
     @Override
     public void initData() {
         showDataLoadingDialog();
-        iSucessCount = 0;
-        iFailedCount =0;
-        datas.clear();
-        regOrgGuid.clear();
-        getAllRegOrgGUID();
+        getHazList();
     }
     @Override
     public void initView() {
@@ -216,10 +170,10 @@ public class WriteOffVerificationListActivity extends BaseActivity
                 break;
             }
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    dangerousInformation.hazName);
+                    dangerousInformation.getHazName());
             ((TextView) (holder.getView(R.id.tv_name))).setText(
-                    dangerousInformation.engName);
-            ((TextView)(holder.getView(R.id.tv_content))).setText(dangerousInformation.wiunName);
+                    dangerousInformation.getEngName());
+            ((TextView)(holder.getView(R.id.tv_content))).setText(dangerousInformation.getWiunName());
             ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
         }
     }

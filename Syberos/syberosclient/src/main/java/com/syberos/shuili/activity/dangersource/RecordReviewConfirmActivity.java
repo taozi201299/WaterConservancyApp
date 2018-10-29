@@ -85,8 +85,8 @@ public class RecordReviewConfirmActivity extends BaseActivity {
     private void getBisHazRegDetail(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
         HashMap<String,String>param = new HashMap<>();
-        param.put("guid",information.guid);
-        param.put("hazGuid",information.guid);
+        param.put("guid",information.getGuid());
+        param.put("hazGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -137,7 +137,7 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         showTitle(title);
 
         if (null != information) {
-            ce_unit.setText(information.wiunName);
+            ce_unit.setText(information.getWiunName());
         }
 
         ae_describe_audio.setLabelText("备注");
@@ -152,9 +152,9 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         HashMap<String,String> params= new HashMap<>();
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
-        params.put("hazGuid",information.guid);
+        params.put("hazGuid",information.getGuid());
         params.put("collTime",CommonUtils.getCurrentDate());
-        params.put("note","");
+        params.put("note",ae_describe_audio.getEditText().toString());
         if(titleType == 0) {
             params.put("regTime", CommonUtils.getCurrentDate()); //备案日期
         }
@@ -167,7 +167,7 @@ public class RecordReviewConfirmActivity extends BaseActivity {
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         localCacheEntity.commitType = 0;
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {

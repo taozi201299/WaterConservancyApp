@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class SoapUtils {
     private final String TAG = SoapUtils.class.getSimpleName();
     private final String strIp = "192.168.1.11:9080";
-   //private final String strIp = "10.1.195.18";
+ //  private final String strIp = "10.1.195.18";
 
 
     /** 命名空间. */
@@ -36,7 +36,6 @@ public class SoapUtils {
     private final String NAME_SPACE_FOR_WATER = "http://uums.service.uums.dhcc.com.cn/";
 
     private final  String NAME_SPACE_WINU_EXT = "http://orgwiunext.service.uumsext.dhcc.com.cn/";
-
 
     /** WSDL文件的URL. 非水利用户*/
     private final  String WSDL_URL = "http://" + strIp + "/uams/ws/uumsext/UserExt?wsdl";

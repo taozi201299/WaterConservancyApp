@@ -73,7 +73,7 @@ public class RecordedHistoryPatrolListActivity extends BaseActivity
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/haz/bisHazPatRecs/";
         HashMap<String,String>params = new HashMap<>();
         if("admin".equals(type)){
-            params.put("hazGuid",bisHazReg.guid);
+            params.put("hazGuid",bisHazReg.getGuid());
         }else {
             params.put("hazGuid", information.getGuid());
         }
