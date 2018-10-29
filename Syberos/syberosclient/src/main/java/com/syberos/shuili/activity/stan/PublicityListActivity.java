@@ -260,7 +260,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         showLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
-        params.put("stat","8");
+        params.put("stat","6");
         for(final ObjStanAppl item : selectedReviewItemInformationList){
             url += item.getGuid() +"/"+"?";
             for(String key :params.keySet()){
@@ -315,7 +315,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         params.put("relePers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
         params.put("releOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("valiTime","5天");
-        params.put("stat","3");
+        params.put("stat","1");
         params.put("collTime",CommonUtils.getCurrentDate());
         params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
         params.put("stanReviGuid",item.getGuid());

@@ -41,6 +41,16 @@ public class ObjStanAppl extends HttpBaseResponse<ObjStanAppl> {
     private String compTime;
     private String confLoc;
 
+    public String getObjPunoGuid() {
+        return objPunoGuid == null ? "" : objPunoGuid;
+    }
+
+    public void setObjPunoGuid(String objPunoGuid) {
+        this.objPunoGuid = objPunoGuid;
+    }
+
+    private String objPunoGuid;
+
     public String getStartTime() {
         return startTime == null ? "" : startTime;
     }
