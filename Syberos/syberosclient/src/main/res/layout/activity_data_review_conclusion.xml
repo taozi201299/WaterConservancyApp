@@ -35,6 +35,7 @@
                     android:id="@+id/ll_type"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
+                    android:visibility="gone"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -67,12 +68,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
+                    android:background="@color/gray_bb"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/ll_department"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -102,12 +105,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
+                    android:visibility="gone"
                     android:background="@color/gray_bb" />
 
                 <LinearLayout
                     android:id="@+id/ll_severity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -135,6 +140,7 @@
 
                 <View
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb" />
@@ -146,16 +152,16 @@
                     android:paddingStart="@dimen/_10dp">
 
                     <TextView
-                        android:id="@+id/tv_if_site_revi_label"
+                        android:id="@+id/tv_revi_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:textColor="@color/black"
-                        android:text="是否现场复核" />
+                        android:text="审批结果" />
 
 
                     <RadioGroup
-                        android:id="@+id/rg_if_site_revi"
+                        android:id="@+id/rg_site_revi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -163,17 +169,23 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rb_if_site_revi_yes"
+                            android:id="@+id/rb_revi_yes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="是" />
+                            android:text="会议审定" />
 
                         <RadioButton
-                            android:id="@+id/rb_if_site_revi_no"
+                            android:id="@+id/rb_revi_no"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="否" />
+                            android:text="现场复核" />
+                        <RadioButton
+                            android:id="@+id/rb_revi_no_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="拒绝达标" />
                     </RadioGroup>
                 </RelativeLayout>
                 <View
@@ -185,6 +197,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:minHeight="@dimen/_40dp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
@@ -208,7 +221,7 @@
                         android:layout_margin="@dimen/_10dp"
                         android:background="@null"
                         android:gravity="start|top"
-                        android:hint="请输入审核意见" />
+                        android:hint="请输入审批意见" />
 
                 </LinearLayout>
 
@@ -227,14 +240,14 @@
         >
 
         <TextView
-            android:id="@+id/tv_no"
-            android:layout_width="@dimen/_120dp"
+            android:id="@+id/tv_commit"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_38dp"
             android:layout_marginStart="@dimen/_20dp"
             android:layout_marginEnd="@dimen/_20dp"
             android:background="@drawable/cancel_button_selector"
             android:gravity="center"
-            android:text="不同意"
+            android:text="提交"
             android:textColor="@color/white"
             android:textSize="@dimen/text_edit_text_size" />
 
@@ -242,6 +255,7 @@
             android:id="@+id/tv_ok"
             android:layout_width="@dimen/_120dp"
             android:layout_height="@dimen/_38dp"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/_20dp"
             android:layout_marginEnd="@dimen/_20dp"
             android:background="@drawable/button_login_normal"

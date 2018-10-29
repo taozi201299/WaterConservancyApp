@@ -28,10 +28,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-// 现场复核 从标准化评审记录表中获取 ifagree = 1 && REVI_TYPE = 1 IF_SITE_REVI = 1
-
-// 从标准化评审记录表中获取
+//  从达标申请表中查找状态为3的记录，并现场评审表中查到该记录的审核情况
+//0:补充材料 1:形式初审 2:资料审查3.现场复核4.会议审定 5.公示 6.发证公告 7.拒绝达标 8.已发证
 
 public class SceneReviewListActivity extends TranslucentActivity implements PullRecyclerView.OnPullRefreshListener {
 

@@ -2,6 +2,9 @@ package com.syberos.shuili.activity.stan;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,9 +16,9 @@ import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -32,6 +35,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
@@ -53,7 +57,30 @@ public class DataReviewConclusionActivity extends BaseActivity {
     RelativeLayout ll_type;
     @BindView(R.id.rg_if_site_revi)
     RadioGroup rg_if_site_revi;
-    ArrayList<ObjStanRevis> selectedReviewItemInformationList = new ArrayList<>();
+    ArrayList<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
+    @BindView(R.id.iv_action_bar2_right_search)
+    ImageView ivActionBar2RightSearch;
+    @BindView(R.id.tv_quitSearch)
+    TextView tvQuitSearch;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.ll_department)
+    LinearLayout llDepartment;
+    @BindView(R.id.rb_revi_yes)
+    RadioButton rbReviYes;
+    @BindView(R.id.rb_revi_no)
+    RadioButton rbReviNo;
+    @BindView(R.id.rb_revi_no_1)
+    RadioButton rbReviNo1;
+    @BindView(R.id.rg_site_revi)
+    RadioGroup rgSiteRevi;
+    @BindView(R.id.rl_if_site_revi)
+    RelativeLayout rlIfSiteRevi;
+    @BindView(R.id.tv_commit)
+    TextView tvCommit;
+    @BindView(R.id.ll_commit)
+    LinearLayout llCommit;
+
     @OnClick(R.id.tv_no)
     void onRejectedClicked() {
         ToastUtils.show("TODO: 不同意，后续逻辑处理");
@@ -64,7 +91,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
     @OnClick(R.id.tv_ok)
     void onAcceptedClicked() {
         ToastUtils.show("TODO: 同意，后续逻辑处理");
-        if(selectedReviewItemInformationList != null){
+        if (selectedReviewItemInformationList != null) {
             commit(1);
         }
         activityFinish();
@@ -89,8 +116,8 @@ public class DataReviewConclusionActivity extends BaseActivity {
     @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        selectedReviewItemInformationList = (ArrayList<ObjStanRevis>)bundle.getSerializable("data");
-        if(selectedReviewItemInformationList == null){
+        selectedReviewItemInformationList = (ArrayList<ObjStanAppl>) bundle.getSerializable("data");
+        if (selectedReviewItemInformationList == null) {
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
             finish();
         }
@@ -109,38 +136,35 @@ public class DataReviewConclusionActivity extends BaseActivity {
     /**
      * 提交到标准化评审记录表
      */
-    private void  commit(int result){
-        String url =  GlobleConstants.strIP +"/sjjk/v1/obj/stan/revi/bisStanReviRec/";
-        HashMap<String,String> params= new HashMap<>();
-        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("reviType","2");
-        params.put("confTime",tv_time.getText().toString()); //会议时间
-        params.put("confLoc",tv_area.getText().toString()); //会议地点
-        params.put("partPers",tv_person.getText().toString()); //参会人员
-        params.put("ifSiteRevi",rg_if_site_revi.getCheckedRadioButtonId() == R.id.rb_if_site_revi_yes ? "1" :"2");
-        params.put("ifAgree",result == 0 ?"2":"1");
-        params.put("reviOpin",et_content.getText().toString()); // 评审意见
-        params.put("collTime",CommonUtils.getCurrentDate());
-        params.put("note","移动端数据");
+    private void commit(int result) {
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        HashMap<String, String> params = new HashMap<>();
         int size = selectedReviewItemInformationList.size();
-        for(ObjStanRevis item : selectedReviewItemInformationList){
-            params.put("stanReviGuid",item.getGuid());//标准化评审GUID
-//            url += item.getGuid() +"/"+"?";
-//            for(String key :params.keySet()){
-//                url += key;
-//                url +="=";
-//                url += params.get(key);
-//                url += "&";
-//            }
-//            url = url.substring(0,url.length() -1);
+        params.put("apprOpin",et_content.getEditableText().toString());
+        if(rbReviYes.isChecked()) {
+            params.put("arrpStat", "0");
+        }else if(rbReviNo.isChecked()) {
+            params.put("arrpStat","1");
+        }else if(rbReviNo1.isChecked()){
+            params.put("arrpStat","2");
+        }
+        for (ObjStanAppl item : selectedReviewItemInformationList) {
+            url += item.getBisScheReviGuid() +"/"+"?";
+            for(String key :params.keySet()){
+                url += key;
+                url +="=";
+                url += params.get(key);
+                url += "&";
+            }
+            url = url.substring(0,url.length() -1);
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;
-            ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+            ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
             localCacheEntity.params = params;
-            localCacheEntity.type = 0;
-            localCacheEntity.commitType = 0;
+            localCacheEntity.type = 1;
+            localCacheEntity.commitType = 1;
             localCacheEntity.seriesKey = UUID.randomUUID().toString();
-            SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
+            SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     ToastUtils.show("提交成功");
@@ -155,6 +179,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
             });
         }
     }
+
     void setTimeClicked() {
         //时间选择器
         boolean[] type = {true, true, true, true, true, true};
@@ -174,5 +199,12 @@ public class DataReviewConclusionActivity extends BaseActivity {
                 .build();
         pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

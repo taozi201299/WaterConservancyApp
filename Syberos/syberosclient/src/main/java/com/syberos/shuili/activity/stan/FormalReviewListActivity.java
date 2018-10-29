@@ -22,7 +22,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -48,10 +50,10 @@ public class FormalReviewListActivity extends TranslucentActivity
     PullRecyclerView recyclerView;
 
     ListAdapter listAdapter = null;
-    List<ObjStanRevis> selectedReviewItemInformationList = new ArrayList<>();
-    private ObjStanRevis objStanRevis = null;
+    List<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
+    private ObjStanAppl objStanAppl = null;
 
-    private ArrayList<ObjStanRevis>result = new ArrayList<>();
+    private ArrayList<ObjStanAppl>result = new ArrayList<>();
 
     private int iSucessCount =0;
     private int iFailedCount = 0;
@@ -130,39 +132,42 @@ public class FormalReviewListActivity extends TranslucentActivity
         closeDataDialog();
         recyclerView.refreshOrLoadComplete();
     }
-    private void getobjStanRevisList() {
-       String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
-        HashMap<String,String>param = new HashMap<>();
-        param.put("veriWiunCode", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        param.put("veriConc","0");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+    private void getObjStanAppls() {
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("stat", "1");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                objStanRevis = gson.fromJson(result,ObjStanRevis.class);
-                if(objStanRevis != null && objStanRevis.dataSource != null
-                        && objStanRevis.dataSource.size() > 0){
-                   getOrgName();
-                }else {
-                    closeLoadingDialog();
+                objStanAppl = gson.fromJson(result, ObjStanAppl.class);
+                if (objStanAppl == null || objStanAppl.dataSource == null) {
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                } else if (objStanAppl.dataSource.size() == 0) {
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
+                getOrgName();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeLoadingDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                closeDataDialog();
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
 
             }
         });
     }
+
     public void getOrgName() {
-        final int size = objStanRevis.dataSource.size();
+        iSucessCount = 0;
+        iFailedCount = 0;
+        final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String, String> params = new HashMap<>();
-            params.put("guid", objStanRevis.dataSource.get(i).getApplOrgGuid());
+            params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -171,7 +176,7 @@ public class FormalReviewListActivity extends TranslucentActivity
                     Gson gson = new Gson();
                     AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
                     if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
-                        objStanRevis.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                        objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
                         closeLoadingDialog();
@@ -194,7 +199,7 @@ public class FormalReviewListActivity extends TranslucentActivity
     }
     private void refreshUI(){
 
-        for(ObjStanRevis item : objStanRevis.dataSource){
+        for(ObjStanAppl item : objStanAppl.dataSource){
             result.add(item);
         }
         listAdapter.setData(result);
@@ -211,7 +216,7 @@ public class FormalReviewListActivity extends TranslucentActivity
             return;
         }
         showDataLoadingDialog();
-        getobjStanRevisList();
+        getObjStanAppls();
 
     }
 
@@ -234,7 +239,7 @@ public class FormalReviewListActivity extends TranslucentActivity
     @Override
     public void onRefresh() {
         if(result !=null) result.clear();
-        getobjStanRevisList();
+        getObjStanAppls();
 
     }
 
@@ -243,13 +248,13 @@ public class FormalReviewListActivity extends TranslucentActivity
 
     }
 
-    private class ListAdapter extends CommonAdapter<ObjStanRevis> {
+    private class ListAdapter extends CommonAdapter<ObjStanAppl> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(final ViewHolder holder, final ObjStanRevis information) {
+        public void convert(final ViewHolder holder, final ObjStanAppl information) {
 
             final CheckBox checkBox = (CheckBox) holder.getView(R.id.cb_select);
 
@@ -286,13 +291,13 @@ public class FormalReviewListActivity extends TranslucentActivity
     }
 
     /**
-     * 提交到标准化评审对象表
+     * 形式初审表 只有审核没有审批
      */
     private void commit(int result,String opinion){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevi/";
         HashMap <String,String>params= new HashMap<>();
         int size = selectedReviewItemInformationList.size();
-        for(ObjStanRevis item : selectedReviewItemInformationList){
+        for(ObjStanAppl item : selectedReviewItemInformationList){
             params.put("guid",item.getGuid());
             params.put("veriConc",String.valueOf(result));
             params.put("veriOpin",opinion);
