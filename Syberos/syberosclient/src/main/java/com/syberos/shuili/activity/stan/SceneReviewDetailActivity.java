@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -42,6 +43,9 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
 
     private ObjStanAppl reviewItemInformation = null;
     private int currentLevel = ReviewItemInformation.LEVEL_3;
+
+    @BindView(R.id.ll_type)
+    LinearLayout ll_type;
 
     @BindView(R.id.ae_describe_audio)
     AudioEditView ae_describe_audio;
@@ -130,6 +134,7 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     @Override
     public void initView() {
         setFinishOnBackKeyDown(false);
+        ll_type.setVisibility(View.GONE);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         reviewItemInformation = (ObjStanAppl) bundle.getSerializable(
                 SceneReviewListActivity.SEND_BUNDLE_KEY);
@@ -192,6 +197,7 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
      * 提交到现场复核BIS_SCEN_REVI表 修改接口
      */
     private void  commitForm(){
+        showLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/scen/revi/bisScenRevis/";
         HashMap<String,String> params= new HashMap<>();
         params.put("apprOpin",ae_describe_audio.getEditText());
@@ -212,8 +218,8 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
-        localCacheEntity.commitType = 1;
+        localCacheEntity.type = 0;
+        localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
 
         localCacheEntity.url = url;
@@ -257,12 +263,12 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                    ToastUtils.show("提交成功");
-                    finish();
+                updateState();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -277,5 +283,39 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     @Override
     public void dialogCancel() {
 
+    }
+    private void updateState(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
+        HashMap<String,String> params= new HashMap<>();
+        params.put("stat","4");
+        url += reviewItemInformation.getGuid() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 1;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                ToastUtils.show("提交成功");
+                activityFinish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
     }
 }

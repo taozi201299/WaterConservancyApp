@@ -83,6 +83,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
                 else if(objStanAppl.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                    refreshUI();
                 }
              getBisConfExamappr();
             }

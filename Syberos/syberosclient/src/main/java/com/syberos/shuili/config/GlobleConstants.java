@@ -122,7 +122,13 @@ public class GlobleConstants {
             put("4","已核销");
         }
     };
-
+    public static HashMap<String,String>stanGradeMap = new HashMap<String,String>(){
+        {
+            put("0","一级");
+            put("1","二级");
+            put("2","三级");
+        }
+    };
     public static ModuleBean moduleBean = null;
     /**
      * 事故快报状态

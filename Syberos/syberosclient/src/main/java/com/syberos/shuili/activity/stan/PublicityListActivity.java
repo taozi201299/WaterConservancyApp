@@ -26,10 +26,14 @@ import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -128,6 +132,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
                 else if(objStanAppl.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                    refreshUI();
                 }
                 getOrgName();
             }
@@ -252,11 +257,12 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
      * 提交到公示公告表  提交内容
      */
     private void  commit(){
+        showLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
-        params.put("stat","6");
-        for(ObjStanAppl item : selectedReviewItemInformationList){
-            url += item.getBisScheReviGuid() +"/"+"?";
+        params.put("stat","8");
+        for(final ObjStanAppl item : selectedReviewItemInformationList){
+            url += item.getGuid() +"/"+"?";
             for(String key :params.keySet()){
                 url += key;
                 url +="=";
@@ -268,14 +274,13 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
             localCacheEntity.url = url;
             ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
             localCacheEntity.params = params;
-            localCacheEntity.type = 0;
-            localCacheEntity.commitType = 0;
+            localCacheEntity.type = 1;
+            localCacheEntity.commitType = 1;
             localCacheEntity.seriesKey = UUID.randomUUID().toString();
             SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    ToastUtils.show("提交成功");
-                    finish();
+                    insetInfo2ObjPuno(item);
                 }
 
                 @Override
@@ -285,5 +290,46 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
                 }
             });
         }
+    }
+    public static Date getDateAfter(Date d, int day){
+        Calendar now =Calendar.getInstance();
+        now.setTime(d);
+        now.set(Calendar.DATE,now.get(Calendar.DATE)+day);
+        return now.getTime();
+    }
+    private void insetInfo2ObjPuno(ObjStanAppl item){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/objPuno/";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("titl",item.getApplOrgName() + "达标申请公示公告中");
+        params.put("cont","");
+        params.put("punoType","2");
+        params.put("releTime", CommonUtils.getCurrentDate());
+        Date date = null;
+        try {
+            date = CommonUtils.stringToDate(params.get("releTime"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String endTime = String.valueOf(getDateAfter(date,5));
+        params.put("endTime",endTime);
+        params.put("relePers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("releOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("valiTime","5天");
+        params.put("stat","3");
+        params.put("collTime",CommonUtils.getCurrentDate());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("stanReviGuid",item.getGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
     }
 }

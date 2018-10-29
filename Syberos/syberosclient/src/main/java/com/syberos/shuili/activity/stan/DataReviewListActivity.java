@@ -101,6 +101,7 @@ public class DataReviewListActivity extends TranslucentActivity
                 else if(objStanAppl.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                    refreshUI();
                 }
                 getBisImformaRevi();
             }
@@ -279,7 +280,8 @@ public class DataReviewListActivity extends TranslucentActivity
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
             // 申请等级
-            ((TextView) (holder.getView(R.id.tv_level))).setText(information.getApplGrade());
+            String grade = GlobleConstants.stanGradeMap.get(information.getApplGrade());
+            ((TextView) (holder.getView(R.id.tv_level))).setText(grade == null ?"":grade);
         }
     }
 }

@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_bb"
-                    android:text="申请时间:"
+                    android:text="上级主管部门:"
                     />
                 <TextView
                     android:id="@+id/tv_higher"
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_bb"
-                    android:text="上级主管部门:"
+                    android:text="申请时间:"
                     />
                 <TextView
                     android:id="@+id/tv_time"

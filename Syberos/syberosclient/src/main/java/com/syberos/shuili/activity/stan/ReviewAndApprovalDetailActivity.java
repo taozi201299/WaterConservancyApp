@@ -251,12 +251,12 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                ToastUtils.show("提交成功");
-                finish();
+                updateState();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -271,5 +271,39 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
     @Override
     public void dialogCancel() {
 
+    }
+    private void updateState(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
+        HashMap<String,String> params= new HashMap<>();
+        params.put("stat","5");
+        url += reviewItemInformation.getGuid() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 1;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                ToastUtils.show("提交成功");
+                activityFinish();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
     }
 }

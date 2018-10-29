@@ -81,6 +81,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
                 else if(objStanAppl.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                    refreshUI();
                 }
                 getBisScheRevi();
             }

@@ -62,8 +62,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:visibility="gone"
+                android:orientation="horizontal"
                 android:padding="@dimen/padding_4">
 
                 <TextView
@@ -78,7 +78,6 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="北京市水利局"
                     android:textColor="@color/gray_bb" />
             </LinearLayout>
 

@@ -2,7 +2,9 @@ package com.syberos.shuili.activity.stan;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomEdit;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -44,10 +47,12 @@ import butterknife.OnClick;
  * 待形式初审  --- 达标申请对象表
  */
 public class FormalReviewListActivity extends TranslucentActivity
-        implements CommonAdapter.OnItemClickListener ,PullRecyclerView.OnPullRefreshListener {
+        implements CommonAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView_list)
-    PullRecyclerView recyclerView;
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_review)
+            TextView tv_review;
 
     ListAdapter listAdapter = null;
     List<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
@@ -58,59 +63,6 @@ public class FormalReviewListActivity extends TranslucentActivity
     private int iSucessCount =0;
     private int iFailedCount = 0;
 
-    @OnClick(R.id.tv_review)
-    void onReviewClicked() {
-        // use selectedReviewItemInformationList
-        if(selectedReviewItemInformationList.size() == 0){
-            ToastUtils.show("没有需要审核的项");
-            return;
-        }
-        final Dialog repetitionDialog = new Dialog(this);
-        View v1 = LayoutInflater.from(this).inflate(
-                R.layout.dialog_formal_review, null);
-        final CustomEdit customEdit = (CustomEdit) v1.findViewById(R.id.et_content);
-        repetitionDialog.setContentView(v1);
-        Window dialogWindow = repetitionDialog.getWindow();
-        WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
-
-        lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp1.gravity = Gravity.CENTER;
-        repetitionDialog.setCancelable(true);
-        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
-        dialogWindow.setAttributes(lp1);
-        Button bt_cancel = (Button)v1.findViewById(R.id.btn_cancel);
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 不同意，后续处理逻辑: " + customEdit.getText().toString());
-                repetitionDialog.dismiss();
-                commit(2,customEdit.getText().toString());
-            }
-        });
-
-        Button btn_center = (Button)v1.findViewById(R.id.btn_center);
-        btn_center.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 补充材料，后续处理逻辑: " + customEdit.getText().toString());
-                repetitionDialog.dismiss();
-                commit(3,customEdit.getText().toString());
-            }
-        });
-
-        Button btn_confirm = (Button)v1.findViewById(R.id.btn_confirm);
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show("TODO: 同意，后续处理逻辑: " + customEdit.getText().toString());
-                repetitionDialog.dismiss();
-                commit(1,customEdit.getText().toString());
-            }
-        });
-
-        repetitionDialog.show();
-    }
 
     @OnClick(R.id.iv_action_bar_back)
     void onBackClicked() {
@@ -124,13 +76,10 @@ public class FormalReviewListActivity extends TranslucentActivity
 
     @Override
     public void initListener() {
-        recyclerView.setOnPullRefreshListener(this);
-        recyclerView.setHasMore(false);
 
     }
     private void closeLoadingDialog(){
         closeDataDialog();
-        recyclerView.refreshOrLoadComplete();
     }
     private void getObjStanAppls() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
@@ -144,9 +93,6 @@ public class FormalReviewListActivity extends TranslucentActivity
                 if (objStanAppl == null || objStanAppl.dataSource == null) {
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                } else if (objStanAppl.dataSource.size() == 0) {
-                    closeDataDialog();
-                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
                 getOrgName();
             }
@@ -164,6 +110,11 @@ public class FormalReviewListActivity extends TranslucentActivity
         iSucessCount = 0;
         iFailedCount = 0;
         final int size = objStanAppl.dataSource.size();
+        if(size == 0){
+            closeDataDialog();
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+            refreshUI();
+        }
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String, String> params = new HashMap<>();
@@ -198,7 +149,6 @@ public class FormalReviewListActivity extends TranslucentActivity
 
     }
     private void refreshUI(){
-
         for(ObjStanAppl item : objStanAppl.dataSource){
             result.add(item);
         }
@@ -215,7 +165,7 @@ public class FormalReviewListActivity extends TranslucentActivity
             finish();
             return;
         }
-        showDataLoadingDialog();
+       showDataLoadingDialog();
         getObjStanAppls();
 
     }
@@ -226,26 +176,59 @@ public class FormalReviewListActivity extends TranslucentActivity
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new ListAdapter(this,
-                R.layout.activity_formal_review_list_item);
+                R.layout.activity_scene_review_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
+        tv_review.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemClick(int position) {
 
     }
+    private void go2Form(){
+        final Dialog repetitionDialog = new Dialog(this);
+        View v1 = LayoutInflater.from(this).inflate(
+                R.layout.dialog_formal_review, null);
+        final CustomEdit customEdit = (CustomEdit) v1.findViewById(R.id.et_content);
+        repetitionDialog.setContentView(v1);
+        Window dialogWindow = repetitionDialog.getWindow();
+        WindowManager.LayoutParams lp1 = dialogWindow.getAttributes();
 
-    @Override
-    public void onRefresh() {
-        if(result !=null) result.clear();
-        getObjStanAppls();
+        lp1.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp1.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp1.gravity = Gravity.CENTER;
+        repetitionDialog.setCancelable(true);
+        dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
+        dialogWindow.setAttributes(lp1);
+        Button bt_cancel = v1.findViewById(R.id.btn_cancel);
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repetitionDialog.dismiss();
+                commit(1,customEdit.getText().toString());
+            }
+        });
 
-    }
+        Button btn_center = (Button)v1.findViewById(R.id.btn_center);
+        btn_center.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repetitionDialog.dismiss();
+                commit(2,customEdit.getText().toString());
+            }
+        });
 
-    @Override
-    public void onLoadMore() {
+        Button btn_confirm = (Button)v1.findViewById(R.id.btn_confirm);
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repetitionDialog.dismiss();
+                commit(0,customEdit.getText().toString());
+            }
+        });
 
+        repetitionDialog.show();
     }
 
     private class ListAdapter extends CommonAdapter<ObjStanAppl> {
@@ -262,22 +245,30 @@ public class FormalReviewListActivity extends TranslucentActivity
             background.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checkBox.setChecked(!checkBox.isChecked());
+                    selectedReviewItemInformationList.clear();
+                    selectedReviewItemInformationList.add(information);
+                    go2Form();
                 }
             });
-
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(buttonView.isShown()) {
-                        if (isChecked) {
-                            selectedReviewItemInformationList.add(information);
-                        } else {
-                            selectedReviewItemInformationList.remove(information);
-                        }
-                    }
-                }
-            });
+//            background.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    checkBox.setChecked(!checkBox.isChecked());
+//                }
+//            });
+//
+//            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    if(buttonView.isShown()) {
+//                        if (isChecked) {
+//                            selectedReviewItemInformationList.add(information);
+//                        } else {
+//                            selectedReviewItemInformationList.remove(information);
+//                        }
+//                    }
+//                }
+//            });
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(
                     information.getApplOrgName());
@@ -285,45 +276,78 @@ public class FormalReviewListActivity extends TranslucentActivity
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
             // 申请等级
-            ((TextView) (holder.getView(R.id.tv_level))).setText(information.getApplGrade());
-
+            String grade = GlobleConstants.stanGradeMap.get(information.getApplGrade());
+            ((TextView) (holder.getView(R.id.tv_level))).setText(grade == null ?"":grade);
         }
     }
 
     /**
-     * 形式初审表 只有审核没有审批
+     * 形式初审表 只有审批没有审核 水利部用户和主管单位用户均可完成该操作
      */
     private void commit(int result,String opinion){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevi/";
+        showLoadingDialog("数据提交...");
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/from/firsttria/bisFromFirsttria/";
         HashMap <String,String>params= new HashMap<>();
-        int size = selectedReviewItemInformationList.size();
         for(ObjStanAppl item : selectedReviewItemInformationList){
-            params.put("guid",item.getGuid());
-            params.put("veriConc",String.valueOf(result));
+            params.put("applGuid",item.getGuid());
+            params.put("veriResu",String.valueOf(result));
             params.put("veriOpin",opinion);
-            String param = "?veriConc="+String.valueOf(result)+"&veriOpin="+opinion;
-            url += item.getGuid();
-            url += "/";
-            url += param;
+            params.put("fromFirsttriaCode",item.getStanApplCode());
+            params.put("collTime", CommonUtils.getCurrentDate());
             LocalCacheEntity localCacheEntity = new LocalCacheEntity();
             localCacheEntity.url = url;
             localCacheEntity.params = params;
-            localCacheEntity.type = 1;
+            localCacheEntity.type = 0;
             localCacheEntity.seriesKey = UUID.randomUUID().toString();
-            localCacheEntity.commitType = 1;
+            localCacheEntity.commitType = 0;
 
             ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
             SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    ToastUtils.show("提交成功");
-                    finish();
+                    updateState();
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
+                }
+            });
+        }
+    }
+    private void updateState(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
+        HashMap<String,String> params= new HashMap<>();
+        params.put("stat","2");
+        for(ObjStanAppl item : selectedReviewItemInformationList){
+            url += item.getGuid() +"/"+"?";
+            for(String key :params.keySet()){
+                url += key;
+                url +="=";
+                url += params.get(key);
+                url += "&";
+            }
+            url = url.substring(0,url.length() -1);
+            LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+            localCacheEntity.url = url;
+            ArrayList<AttachMentInfoEntity>attachMentInfoEntities = new ArrayList<>();
+            localCacheEntity.params = params;
+            localCacheEntity.type = 1;
+            localCacheEntity.commitType = 1;
+            localCacheEntity.seriesKey = UUID.randomUUID().toString();
+            SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    closeDataDialog();
+                    ToastUtils.show("提交成功");
+                    initData();
+                }
 
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    closeDataDialog();
+                    ToastUtils.show(errorInfo.getMessage());
                 }
             });
         }
