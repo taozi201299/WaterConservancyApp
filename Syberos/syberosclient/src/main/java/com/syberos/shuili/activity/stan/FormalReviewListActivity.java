@@ -39,7 +39,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 形式初审  --- 评审对象表
+ * 待形式初审  --- 达标申请对象表
  */
 public class FormalReviewListActivity extends TranslucentActivity
         implements CommonAdapter.OnItemClickListener ,PullRecyclerView.OnPullRefreshListener {

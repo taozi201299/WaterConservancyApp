@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioButton;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
@@ -13,6 +14,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ReviewItemInformation;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
 
 public class ReviewAndApprovalDetailActivity extends BaseActivity implements BaseActivity.IDialogInterface{
 
-    private BisStanReviRec reviewItemInformation = null;
+    private ObjStanAppl reviewItemInformation = null;
     private int currentLevel = ReviewItemInformation.LEVEL_3;
 
     @BindView(R.id.ae_describe_audio)
@@ -54,6 +56,11 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
 
     @BindView(R.id.cb_level_3)
     CheckableButton cb_level_3;
+
+    @BindView(R.id.rb_appr_yes)
+    RadioButton rb_appr_yes;
+    @BindView(R.id.rb_appr_no)
+    RadioButton rb_appr_no;
 
     @OnClick(R.id.iv_action_bar_back)
     void onBackClicked() {
@@ -121,7 +128,7 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
     public void initView() {
         setFinishOnBackKeyDown(false);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        reviewItemInformation = (BisStanReviRec) bundle.getSerializable("data");
+        reviewItemInformation = (ObjStanAppl) bundle.getSerializable("data");
         if (null != reviewItemInformation) {
             currentLevel = Integer.valueOf(reviewItemInformation.getApplGrade());
             switch (currentLevel) {
@@ -177,22 +184,18 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
         return super.onKeyDown(keyCode, event);
     }
     /**
-     * 提交到标准化评审记录表
+     * 提交到现场检查审批表（水利部）
      */
     private void  commitForm(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/conf/examappr/bisConfExamappr";
         HashMap<String,String> params= new HashMap<>();
-        params.put("reviType","4");
-        if(currentLevel == ReviewItemInformation.LEVEL_3)
-            params.put("ifAgree","2");
-        else {
-            params.put("ifAgree","1");
+        params.put("apprOpin",ae_describe_audio.getEditText());
+        if(rb_appr_yes.isChecked()){
+            params.put("apprStat","0");
+        }else if(rb_appr_no.isChecked()){
+            params.put("apprStat","1");
         }
-        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("stanReviGuid",reviewItemInformation.getStanReviGuid());
-        params.put("reviGrade",String.valueOf(currentLevel));
-        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        url += reviewItemInformation.getGuid() +"/"+"?";
+        url += reviewItemInformation.getBisScheReviGuid() +"/"+"?";
         for(String key :params.keySet()){
             url += key;
             url +="=";

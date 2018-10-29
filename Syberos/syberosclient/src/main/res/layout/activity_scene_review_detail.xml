@@ -59,6 +59,7 @@
                     android:id="@+id/ll_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -159,11 +160,55 @@
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb" />
+                <RelativeLayout
+                    android:id="@+id/rl_accident_phone_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingEnd="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp">
+
+                    <TextView
+                        android:id="@+id/tv_appr_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        style="@style/text_detail_14sp_title0"
+                        android:text="审批意见" />
+
+
+                    <RadioGroup
+                        android:id="@+id/rg_appr_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        >
+
+                        <RadioButton
+                            android:id="@+id/rb_appr_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_detail_14sp_title0"
+                            android:checked="true"
+                            android:text="通过"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rb_appr_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_detail_14sp_title0"
+                            android:text="不通过"
+                            />
+                    </RadioGroup>
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/ll_attachment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:paddingEnd="@dimen/_5dp"
                     android:paddingStart="@dimen/_5dp">
 

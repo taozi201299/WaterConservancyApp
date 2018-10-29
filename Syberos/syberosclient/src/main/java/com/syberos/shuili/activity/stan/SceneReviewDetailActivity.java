@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
@@ -15,6 +17,7 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ReviewItemInformation;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
 
 public class SceneReviewDetailActivity extends BaseActivity implements BaseActivity.IDialogInterface{
 
-    private BisStanReviRec reviewItemInformation = null;
+    private ObjStanAppl reviewItemInformation = null;
     private int currentLevel = ReviewItemInformation.LEVEL_3;
 
     @BindView(R.id.ae_describe_audio)
@@ -57,6 +60,10 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
 
     @BindView(R.id.cb_level_3)
     CheckableButton cb_level_3;
+    @BindView(R.id.rb_appr_yes)
+    RadioButton rb_appr_yes;
+    @BindView(R.id.rb_appr_no)
+    RadioButton rb_appr_no;
 
     @OnClick(R.id.iv_action_bar_back)
     void onBackClicked() {
@@ -124,7 +131,7 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
     public void initView() {
         setFinishOnBackKeyDown(false);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
-        reviewItemInformation = (BisStanReviRec) bundle.getSerializable(
+        reviewItemInformation = (ObjStanAppl) bundle.getSerializable(
                 SceneReviewListActivity.SEND_BUNDLE_KEY);
 
         if (null != reviewItemInformation) {
@@ -182,23 +189,18 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
         return super.onKeyDown(keyCode, event);
     }
     /**
-     * 提交到标准化评审记录表
+     * 提交到现场复核BIS_SCEN_REVI表 修改接口
      */
     private void  commitForm(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/scen/revi/bisScenRevi";
         HashMap<String,String> params= new HashMap<>();
-        params.put("reviType","3");
-        if(currentLevel == ReviewItemInformation.LEVEL_3)
-        params.put("ifAgree","2");
-        else {
-            params.put("ifAgree","1");
+        params.put("apprOpin",ae_describe_audio.getEditText());
+        if(rb_appr_yes.isChecked()){
+            params.put("apprStat","0");
+        }else if(rb_appr_no.isChecked()){
+            params.put("apprStat","1");
         }
-        params.put("recomLevel",String.valueOf(currentLevel)); // 现场审核评定等级
-        params.put("siteReviNote",ae_describe_audio.getEditText()); // 现场复审备注
-        params.put("recPers","");
-        params.put("reviWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("stanReviGuid",reviewItemInformation.getStanReviGuid());
-        url += reviewItemInformation.getGuid() +"/"+"?";
+        url += reviewItemInformation.getBisScheReviGuid() +"/"+"?";
         for(String key :params.keySet()){
             url += key;
             url +="=";

@@ -16,11 +16,14 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
+import com.syberos.shuili.entity.standardization.BisScheRevi;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -38,7 +41,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
     PullRecyclerView recyclerView;
 
     ListAdapter listAdapter = null;
-    private BisStanReviRec bisStanReviRec = null;
+    private ObjStanAppl objStanAppl = null;
 
     private int iSucessCount = 0;
     private int iFailedCount = 0;
@@ -64,52 +67,60 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
         closeDataDialog();
         recyclerView.refreshOrLoadComplete();
     }
-    private void getobjStanRevisList() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRecs/";
-        HashMap<String,String> param = new HashMap<>();
-        param.put("reviType","2");
-        param.put("ifSiteRevi","1");
-        param.put("ifAgre","1");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+    private void getObjStanAppls(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("stat","3");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec != null && bisStanReviRec.dataSource != null
-                        && bisStanReviRec.dataSource.size() > 0){
-                    getApplOrgId();
-                }else {
-                    closeLoadingDialog();
+                objStanAppl = gson.fromJson(result,ObjStanAppl.class);
+                if(objStanAppl == null || objStanAppl.dataSource == null){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }
+                else if(objStanAppl.dataSource.size() == 0){
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
+                getBisScheRevi();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeLoadingDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                closeDataDialog();
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
 
             }
         });
     }
-    private void getApplOrgId(){
-        final int size = bisStanReviRec.dataSource.size();
-        for(int i = 0 ; i< size;i++) {
-            final BisStanReviRec item = bisStanReviRec.dataSource.get(i);
-            String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("guid", item.getStanReviGuid());
+    private void getBisScheRevi(){
+        final int size = objStanAppl.dataSource.size();
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/scen/revi/bisScenRevis/";
+        HashMap<String,String> params = new HashMap<>();
+        ObjStanAppl item = null;
+        for(int i = 0 ; i < size ; i++){
+            item = objStanAppl.dataSource.get(i);
+            params.put("applGuid",item.getGuid());
+            final ObjStanAppl finalItem = item;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     iSucessCount ++;
                     Gson gson = new Gson();
-                    ObjStanRevis objStanRevis =  gson.fromJson(result,ObjStanRevis.class);
-                    if(objStanRevis != null  && objStanRevis.dataSource != null &&
-                            objStanRevis.dataSource.size() > 0){
-                        item.setApplOrgId(objStanRevis.dataSource.get(0).getApplOrgGuid());
-                        item.setApplGrade(objStanRevis.dataSource.get(0).getApplGrade());
-                        item.setApplTime(objStanRevis.dataSource.get(0).getApplTime());
+                    BisScheRevi bisScheRevi = gson.fromJson(result,BisScheRevi.class);
+                    if(bisScheRevi!= null || bisScheRevi.dataSource != null){
+                        if(bisScheRevi.dataSource.size() == 0){
+                            finalItem.setVerify(false);
+                        }else {
+                            BisScheRevi obj = bisScheRevi.dataSource.get(0);
+                            if((obj.getVeriOpin() != null && !obj.getVeriOpin().isEmpty())
+                                    || obj.getScenReviOpin() != null && !obj.getScenReviOpin().isEmpty()){
+                                finalItem.setVerify(true);
+                                finalItem.setBisScheReviGuid(obj.getGuid());
+                            }
+                        }
                     }
                     if(iSucessCount + iFailedCount == size){
                         getOrgName();
@@ -125,16 +136,19 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
 
                 }
             });
+
         }
+
     }
+
     public void getOrgName() {
         iSucessCount = 0;
         iFailedCount = 0;
-        final int size = bisStanReviRec.dataSource.size();
+        final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String, String> params = new HashMap<>();
-            params.put("guid", bisStanReviRec.dataSource.get(i).getApplOrgId());
+            params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -143,7 +157,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
                     Gson gson = new Gson();
                     AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
                     if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
-                        bisStanReviRec.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                        objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
                         closeLoadingDialog();
@@ -165,7 +179,13 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
 
     }
     private void refreshUI(){
-        listAdapter.setData(bisStanReviRec.dataSource);
+        ArrayList<ObjStanAppl>datas = new ArrayList<>();
+        for(ObjStanAppl item : objStanAppl.dataSource){
+            if(item.isVerify()){
+                datas.add(item);
+            }
+        }
+        listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
     @Override
@@ -173,7 +193,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
         iSucessCount = 0;
         iFailedCount = 0;
         showDataLoadingDialog();
-      getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -188,7 +208,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
 
     @Override
     public void onRefresh() {
-        getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -196,13 +216,13 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
 
     }
 
-    private class ListAdapter extends CommonAdapter<BisStanReviRec> {
+    private class ListAdapter extends CommonAdapter<ObjStanAppl> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(final ViewHolder holder, final BisStanReviRec information) {
+        public void convert(final ViewHolder holder, final ObjStanAppl information) {
 
             LinearLayout background = (LinearLayout) holder.getView(R.id.ll_background);
             background.setOnClickListener(new View.OnClickListener() {

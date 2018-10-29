@@ -16,7 +16,10 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
+import com.syberos.shuili.entity.standardization.BisConfExamappr;
+import com.syberos.shuili.entity.standardization.BisScheRevi;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.PullRecyclerView;
@@ -27,9 +30,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-// 现场复核 从审核记录表中获取 ifagree = 1 && REVI_TYPE = 1 IF_SITE_REVI = 1
-
-// 从标准化评审记录表中获取
+//  从达标申请表中查找状态为4的记录，并从会议审定表中查到该记录的审核情况
+//0:补充材料 1:形式初审 2:资料审查3.现场复核4.会议审定 5.公示 6.发证公告 7.拒绝达标 8.已发证
 
 public class ReviewAndApprovalListActivity extends TranslucentActivity implements PullRecyclerView.OnPullRefreshListener {
 
@@ -39,7 +41,8 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
     PullRecyclerView recyclerView;
 
     ListAdapter listAdapter = null;
-    private BisStanReviRec bisStanReviRec = null;
+
+    private ObjStanAppl objStanAppl = null;
     private int iSucessCount = 0;
     private int iFailedCount = 0;
 
@@ -64,51 +67,64 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
         closeDataDialog();
         recyclerView.refreshOrLoadComplete();
     }
-    private void getobjStanRevisList() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRecs/";
-        HashMap<String,String> param = new HashMap<>();
-        param.put("reviType","3");
-        param.put("ifAgre","1");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+    private void getObjStanAppls(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("stat","4");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec != null && bisStanReviRec.dataSource != null &&
-                        bisStanReviRec.dataSource.size() > 0){
-                    getApplOrgId();
-                }else {
-                    closeLoadingDialog();
-                    ToastUtils.show(SyberosManagerImpl.ErrorCode.valueOf(-7).getMessage());
+                objStanAppl = gson.fromJson(result,ObjStanAppl.class);
+                if(objStanAppl == null || objStanAppl.dataSource == null){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }
+                else if(objStanAppl.dataSource.size() == 0){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                }
+             getBisConfExamappr();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeLoadingDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                closeDataDialog();
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
 
             }
         });
     }
-    private void getApplOrgId(){
-        final int size = bisStanReviRec.dataSource.size();
-        for(int i = 0 ; i< size;i++) {
-            final BisStanReviRec item = bisStanReviRec.dataSource.get(i);
-            String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("guid", item.getStanReviGuid());
+
+    /**
+     * 从会议审定表中获取数据
+     */
+    private void getBisConfExamappr(){
+        final int size = objStanAppl.dataSource.size();
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/conf/examappr/bisConfExamapprs/";
+        HashMap<String,String> params = new HashMap<>();
+        ObjStanAppl item = null;
+        for(int i = 0 ; i < size ; i++){
+            item = objStanAppl.dataSource.get(i);
+            params.put("applGuid",item.getGuid());
+            final ObjStanAppl finalItem = item;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     iSucessCount ++;
                     Gson gson = new Gson();
-                    ObjStanRevis objStanRevis =  gson.fromJson(result,ObjStanRevis.class);
-                    if(objStanRevis != null  && objStanRevis.dataSource != null &&
-                            objStanRevis.dataSource.size() > 0){
-                        item.setApplOrgId(objStanRevis.dataSource.get(0).getApplOrgGuid());
-                        item.setApplGrade(objStanRevis.dataSource.get(0).getApplGrade());
-                        item.setApplTime(objStanRevis.dataSource.get(0).getApplTime());
+                    BisConfExamappr bisConfExamappr = gson.fromJson(result,BisConfExamappr.class);
+                    if(bisConfExamappr!= null || bisConfExamappr.dataSource != null){
+                        if(bisConfExamappr.dataSource.size() == 0){
+                            finalItem.setVerify(false);
+                        }else {
+                            BisConfExamappr obj = bisConfExamappr.dataSource.get(0);
+                            if((obj.getExamapprExpert() != null && !obj.getExamapprExpert().isEmpty())
+                                    || obj.getExamapprOpin() != null && !obj.getExamapprOpin().isEmpty()
+                                    || obj.getVeriOpin() != null && !obj.getVeriOpin().isEmpty()){
+                                finalItem.setVerify(true);
+                            }
+                        }
                     }
                     if(iSucessCount + iFailedCount == size){
                         getOrgName();
@@ -124,16 +140,19 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
                 }
             });
+
         }
+
     }
+
     public void getOrgName() {
         iSucessCount = 0;
         iFailedCount = 0;
-        final int size = bisStanReviRec.dataSource.size();
+        final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String, String> params = new HashMap<>();
-            params.put("guid", bisStanReviRec.dataSource.get(i).getApplOrgId());
+            params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -142,7 +161,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
                     Gson gson = new Gson();
                     AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
                     if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
-                        bisStanReviRec.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                        objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
                         closeLoadingDialog();
@@ -164,7 +183,13 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
     private void refreshUI(){
-        listAdapter.setData(bisStanReviRec.dataSource);
+        ArrayList<ObjStanAppl>datas = new ArrayList<>();
+        for(ObjStanAppl item : objStanAppl.dataSource){
+            if(item.isVerify()){
+                datas.add(item);
+            }
+        }
+        listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
     @Override
@@ -172,7 +197,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
          iSucessCount = 0;
          iFailedCount = 0;
         showDataLoadingDialog();
-        getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -187,7 +212,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     @Override
     public void onRefresh() {
-        getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -195,13 +220,13 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     }
 
-    private class ListAdapter extends CommonAdapter<BisStanReviRec> {
+    private class ListAdapter extends CommonAdapter<ObjStanAppl> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(final ViewHolder holder, final BisStanReviRec information) {
+        public void convert(final ViewHolder holder, final ObjStanAppl information) {
             LinearLayout background = (LinearLayout) holder.getView(R.id.ll_background);
             background.setOnClickListener(new View.OnClickListener() {
                 @Override
