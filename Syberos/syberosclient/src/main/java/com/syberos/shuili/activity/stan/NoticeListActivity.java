@@ -24,6 +24,7 @@ import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.BisStanReviRec;
+import com.syberos.shuili.entity.standardization.ObjStanAppl;
 import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
@@ -47,8 +48,8 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     PullRecyclerView recyclerView;
 
     ListAdapter listAdapter = null;
-    ArrayList<BisStanReviRec> selectedReviewItemInformationList = new ArrayList<>();
-    private BisStanReviRec bisStanReviRec = null;
+    ArrayList<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
+    private ObjStanAppl objStanAppl = null;
     private  int iSucessCount = 0;
     private int iFailedCount = 0;
 
@@ -76,7 +77,6 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("TODO: 取消，后续处理逻辑");
                 repetitionDialog.dismiss();
             }
         });
@@ -85,7 +85,6 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show("TODO: 确定，后续处理逻辑");
                 repetitionDialog.dismiss();
                 commit();
             }
@@ -114,36 +113,36 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         closeDataDialog();
         recyclerView.refreshOrLoadComplete();
     }
-    private void getobjStanRevisList() {
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/selectObjPuno/" ;
-        HashMap<String,String> param = new HashMap<>();
-        param.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        param.put("valiTime","5");
-        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+    private void getObjStanAppls(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("stat","6");
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeLoadingDialog();
                 Gson gson = new Gson();
-                bisStanReviRec = gson.fromJson(result,BisStanReviRec.class);
-                if(bisStanReviRec != null && bisStanReviRec.dataSource != null &&
-                        bisStanReviRec.dataSource.size() > 0){
-                    getApplOrgId();
-                }else {
-                    closeLoadingDialog();
+                objStanAppl = gson.fromJson(result,ObjStanAppl.class);
+                if(objStanAppl == null || objStanAppl.dataSource == null){
+                    closeDataDialog();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }
+                else if(objStanAppl.dataSource.size() == 0){
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                 }
+                getOrgName();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeLoadingDialog();
-                ToastUtils.show(errorInfo.getMessage());
+                closeDataDialog();
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
 
             }
         });
     }
     private void refreshUI(){
-        listAdapter.setData(bisStanReviRec.dataSource);
+        listAdapter.setData(objStanAppl.dataSource);
         listAdapter.notifyDataSetChanged();
     }
     @Override
@@ -151,7 +150,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
         iSucessCount = 0;
         iFailedCount = 0;
         showDataLoadingDialog();
-        getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -166,7 +165,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
 
     @Override
     public void onRefresh() {
-        getobjStanRevisList();
+        getObjStanAppls();
     }
 
     @Override
@@ -174,13 +173,13 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
 
     }
 
-    private class ListAdapter extends CommonAdapter<BisStanReviRec> {
+    private class ListAdapter extends CommonAdapter<ObjStanAppl> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
         }
 
         @Override
-        public void convert(final ViewHolder holder, final BisStanReviRec information) {
+        public void convert(final ViewHolder holder, final ObjStanAppl information) {
 
             final CheckBox checkBox = (CheckBox) holder.getView(R.id.cb_select);
 
@@ -219,24 +218,11 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
      * 提交到公示公告表
      */
     private void  commit(){
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/objPuno/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
-        params.put("titl","");    // 标题
-        params.put("cont","");  //内容
-        params.put("punoType","3"); //公示公告类型 2 公示 3 公告
-        params.put("releTime",""); //发布时间
-        params.put("endTime",""); //截止时间
-        params.put("relePers",""); // 发布人
-        params.put("releOrgGuid",""); // 发布单位
-        params.put("valiTime",""); // 公示期
-        params.put("stat",""); // 状态
-        params.put("note","移动端测试"); // 备注
-        params.put("collTime", CommonUtils.getCurrentDate()); // 采集时间
-        params.put("updTime",""); // 更新时间
-        params.put("recPers",""); // 记录人员
+        params.put("stat","6");
         int size = selectedReviewItemInformationList.size();
-        for(BisStanReviRec item : selectedReviewItemInformationList){
-            params.put("stanReviGuid",item.getGuid());//标准化评审GUID
+        for(ObjStanAppl item : selectedReviewItemInformationList){
             url += item.getGuid() +"/"+"?";
             for(String key :params.keySet()){
                 url += key;
@@ -266,49 +252,14 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
             });
         }
     }
-    private void getApplOrgId(){
-        final int size = bisStanReviRec.dataSource.size();
-        for(int i = 0 ; i< size;i++) {
-            final BisStanReviRec item = bisStanReviRec.dataSource.get(i);
-            String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/objStanRevis/";
-            HashMap<String, String> params = new HashMap<>();
-            params.put("guid", item.getStanReviGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    iSucessCount ++;
-                    Gson gson = new Gson();
-                    ObjStanRevis objStanRevis =  gson.fromJson(result,ObjStanRevis.class);
-                    if(objStanRevis != null  && objStanRevis.dataSource != null &&
-                            objStanRevis.dataSource.size() > 0){
-                        item.setApplOrgId(objStanRevis.dataSource.get(0).getApplOrgGuid());
-                        item.setApplGrade(objStanRevis.dataSource.get(0).getApplGrade());
-                        item.setApplTime(objStanRevis.dataSource.get(0).getApplTime());
-                    }
-                    if(iSucessCount + iFailedCount == size){
-                        getOrgName();
-                    }
-                }
-
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    iFailedCount ++;
-                    if(iSucessCount + iFailedCount == size){
-                        getOrgName();
-                    }
-
-                }
-            });
-        }
-    }
     public void getOrgName() {
         iSucessCount = 0;
         iFailedCount = 0;
-        final int size = bisStanReviRec.dataSource.size();
+        final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
             HashMap<String, String> params = new HashMap<>();
-            params.put("guid", bisStanReviRec.dataSource.get(i).getApplOrgId());
+            params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
@@ -317,7 +268,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
                     Gson gson = new Gson();
                     AttOrgBase attOrgBase = gson.fromJson(result, AttOrgBase.class);
                     if (attOrgBase != null && attOrgBase.dataSource != null && attOrgBase.dataSource.size() > 0) {
-                        bisStanReviRec.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
+                        objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
                         closeLoadingDialog();
