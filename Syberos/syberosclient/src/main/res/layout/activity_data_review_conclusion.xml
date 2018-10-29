@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -11,18 +13,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginBottom="@dimen/_10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <com.syberos.shuili.view.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginBottom="@dimen/padding_5"
             android:layout_marginLeft="@dimen/_10dp"
             android:layout_marginRight="@dimen/_10dp"
             android:layout_marginTop="@dimen/padding_5"
+            android:layout_weight="1"
             android:fillViewport="true">
 
             <LinearLayout
@@ -35,7 +37,6 @@
                     android:id="@+id/ll_type"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"
-                    android:visibility="gone"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -69,13 +70,12 @@
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
                     android:background="@color/gray_bb"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/ll_department"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -90,29 +90,27 @@
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
                         android:id="@+id/tv_area"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/padding_10"
                         android:layout_marginStart="@dimen/padding_10"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
                         android:gravity="center_vertical"
-                        android:minHeight="@dimen/_40dp"
                         android:hint="@string/please_input"
-                        android:background="@color/transparent" />
+                        android:minHeight="@dimen/_40dp" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
-                    android:visibility="gone"
                     android:background="@color/gray_bb" />
 
                 <LinearLayout
                     android:id="@+id/ll_severity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -127,23 +125,24 @@
                     <com.syberos.shuili.view.ClearableEditText.ClearableEditText
                         android:id="@+id/tv_person"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/padding_10"
                         android:layout_marginStart="@dimen/padding_10"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
                         android:gravity="center_vertical"
-                        android:minHeight="@dimen/_40dp"
                         android:hint="@string/please_input"
-                        android:background="@color/transparent"/>
+                        android:minHeight="@dimen/_40dp" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="@dimen/_1dp"
                     android:layout_marginTop="@dimen/_2dp"
-                    android:background="@color/gray_bb" />
+                    android:background="@color/gray_bb"
+                    android:visibility="gone" />
+
                 <RelativeLayout
                     android:id="@+id/rl_if_site_revi"
                     android:layout_width="match_parent"
@@ -156,8 +155,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/black"
-                        android:text="审批结果" />
+                        android:text="审批结果"
+                        android:textColor="@color/black" />
 
 
                     <RadioGroup
@@ -180,6 +179,7 @@
                             android:layout_height="wrap_content"
                             android:checked="true"
                             android:text="现场复核" />
+
                         <RadioButton
                             android:id="@+id/rb_revi_no_1"
                             android:layout_width="wrap_content"
@@ -188,6 +188,7 @@
                             android:text="拒绝达标" />
                     </RadioGroup>
                 </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
@@ -197,14 +198,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:minHeight="@dimen/_40dp"
-                    android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/_40dp"
                     android:text="评审意见"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_16sp" />
+                    android:textSize="@dimen/_16sp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -215,15 +216,186 @@
                     <com.syberos.shuili.view.CustomEdit
                         android:id="@+id/et_content"
                         android:layout_width="match_parent"
-                        android:minHeight="@dimen/_160dp"
-                        android:maxHeight="@dimen/_260dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_10dp"
                         android:background="@null"
                         android:gravity="start|top"
-                        android:hint="请输入审批意见" />
+                        android:hint="请输入审批意见"
+                        android:minHeight="@dimen/_50dp" />
 
                 </LinearLayout>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/fl_appr_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/_10dp"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="评审单位"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_16sp" />
+
+                            <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                                android:id="@+id/tv_appr_unit"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="@dimen/padding_10"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:gravity="center_vertical"
+                                android:hint="@string/please_input"
+                                android:minHeight="@dimen/_40dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_appr_start"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="评审开始时间"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_appr_startTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10dp"
+                                android:layout_toLeftOf="@+id/iv_appr_startTimeRight"
+                                android:text="2018-01-01 00:00:00" />
+
+                            <ImageView
+                                android:id="@+id/iv_appr_startTimeRight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/_10dp"
+                                android:src="@mipmap/right"></ImageView>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_appr_endTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="评审结束时间"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_appr_endTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10dp"
+                                android:layout_toLeftOf="@+id/iv_appr_endTimeRight"
+                                android:text="2018-01-01 00:00:00" />
+
+                            <ImageView
+                                android:id="@+id/iv_appr_endTimeRight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/_10dp"
+                                android:src="@mipmap/right"></ImageView>
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="评审组长"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_16sp" />
+
+                            <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                                android:id="@+id/tv_appr_leader"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="@dimen/padding_10"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:gravity="center_vertical"
+                                android:hint="@string/please_input"
+                                android:minHeight="@dimen/_40dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="评审副组长"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_16sp" />
+
+                            <com.syberos.shuili.view.ClearableEditText.ClearableEditText
+                                android:id="@+id/tv_appr_leader_1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="@dimen/padding_10"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_weight="1"
+                                android:background="@color/transparent"
+                                android:gravity="center_vertical"
+                                android:hint="@string/please_input"
+                                android:minHeight="@dimen/_40dp" />
+                        </LinearLayout>
+
+                        <com.syberos.shuili.view.AudioEditView
+                            android:id="@+id/ae_arrp_pers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/_50dp"
+                            android:paddingTop="@dimen/_15dp"
+                            app:view_label="评审组员"
+                            app:view_labelWidth="@dimen/_60dp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
 

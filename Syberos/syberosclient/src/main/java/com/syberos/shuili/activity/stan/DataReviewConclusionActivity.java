@@ -1,6 +1,7 @@
 package com.syberos.shuili.activity.stan;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,12 +20,12 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.standardization.ObjStanAppl;
-import com.syberos.shuili.entity.standardization.ObjStanRevis;
 import com.syberos.shuili.service.AttachMentInfoEntity;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
 import com.syberos.shuili.view.CustomEdit;
 
@@ -55,9 +56,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
     CustomEdit et_content;
     @BindView(R.id.ll_type)
     RelativeLayout ll_type;
-    @BindView(R.id.rg_if_site_revi)
-    RadioGroup rg_if_site_revi;
-    ArrayList<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
+    ObjStanAppl selectedReviewItemInformationList = null;
     @BindView(R.id.iv_action_bar2_right_search)
     ImageView ivActionBar2RightSearch;
     @BindView(R.id.tv_quitSearch)
@@ -72,29 +71,38 @@ public class DataReviewConclusionActivity extends BaseActivity {
     RadioButton rbReviNo;
     @BindView(R.id.rb_revi_no_1)
     RadioButton rbReviNo1;
-    @BindView(R.id.rg_site_revi)
-    RadioGroup rgSiteRevi;
     @BindView(R.id.rl_if_site_revi)
     RelativeLayout rlIfSiteRevi;
     @BindView(R.id.tv_commit)
     TextView tvCommit;
     @BindView(R.id.ll_commit)
     LinearLayout llCommit;
+    @BindView(R.id.tv_appr_unit)
+    ClearableEditText tvApprUnit;
+    @BindView(R.id.tv_appr_leader)
+    ClearableEditText tvApprLeader;
+    @BindView(R.id.tv_appr_leader_1)
+    ClearableEditText tvApprLeader1;
+    @BindView(R.id.tv_appr_startTime)
+    TextView tvApprStartTime;
+    @BindView(R.id.rl_appr_start)
+    RelativeLayout rlApprStart;
+    @BindView(R.id.rl_appr_endTime)
+    RelativeLayout rl_appr_endTime;
+    @BindView(R.id.tv_appr_endTime)
+    TextView tvApprEndTime;
+    @BindView(R.id.fl_appr_info)
+    CardView fl_appr_info;
+    @BindView(R.id.rg_site_revi)
+    RadioGroup rg_site_revi;
+    @BindView(R.id.ae_arrp_pers)
+    AudioEditView ae_arrp_pers;
+    @BindView(R.id.tv_ok)
+    TextView tvOk;
 
-    @OnClick(R.id.tv_no)
-    void onRejectedClicked() {
-        ToastUtils.show("TODO: 不同意，后续逻辑处理");
-        commit(0);
-        activityFinish();
-    }
-
-    @OnClick(R.id.tv_ok)
+    @OnClick(R.id.tv_commit)
     void onAcceptedClicked() {
-        ToastUtils.show("TODO: 同意，后续逻辑处理");
-        if (selectedReviewItemInformationList != null) {
-            commit(1);
-        }
-        activityFinish();
+        commit(1);
     }
 
     @Override
@@ -107,7 +115,28 @@ public class DataReviewConclusionActivity extends BaseActivity {
         ll_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTimeClicked();
+                setTimeClicked(tv_time);
+            }
+        });
+        rl_appr_endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTimeClicked(tvApprStartTime);
+            }
+        });
+        rl_appr_endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTimeClicked(tvApprEndTime);
+            }
+        });
+        rg_site_revi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                fl_appr_info.setVisibility(View.GONE);
+                if(checkedId == R.id.rb_revi_no){
+                    fl_appr_info.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -116,11 +145,14 @@ public class DataReviewConclusionActivity extends BaseActivity {
     @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
-        selectedReviewItemInformationList = (ArrayList<ObjStanAppl>) bundle.getSerializable("data");
+        selectedReviewItemInformationList = (ObjStanAppl) bundle.getSerializable("data");
         if (selectedReviewItemInformationList == null) {
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
             finish();
         }
+        tv_time.setText(selectedReviewItemInformationList.getStartTime());
+        tv_area.setText(selectedReviewItemInformationList.getConfLoc());
+        tv_person.setText(selectedReviewItemInformationList.getPartPers());
 
 
     }
@@ -137,50 +169,57 @@ public class DataReviewConclusionActivity extends BaseActivity {
      * 提交到标准化评审记录表
      */
     private void commit(int result) {
-        String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/revi/bisStanReviRec/";
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/informa/revi/bisInformaRevi/";
         HashMap<String, String> params = new HashMap<>();
-        int size = selectedReviewItemInformationList.size();
-        params.put("apprOpin",et_content.getEditableText().toString());
-        if(rbReviYes.isChecked()) {
+        params.put("apprOpin", et_content.getEditableText().toString());
+        params.put("startTime", tv_time.getText().toString());
+        params.put("compTime", "");
+        params.put("confLoc", tv_area.getText().toString());
+        params.put("partPers", tv_person.getText().toString());
+        if (rbReviYes.isChecked()) {
             params.put("arrpStat", "0");
-        }else if(rbReviNo.isChecked()) {
-            params.put("arrpStat","1");
-        }else if(rbReviNo1.isChecked()){
-            params.put("arrpStat","2");
+        } else if (rbReviNo.isChecked()) {
+            params.put("arrpStat", "1");
+            params.put("scenReviOrg",tvApprUnit.getText().toString());
+            params.put("scenReviSttime",tvApprStartTime.getText().toString());
+            params.put("scenReviEngtime",tvApprEndTime.getText().toString());
+            params.put("scenReviLeader",tvApprLeader.getText().toString());
+            params.put("scenReviDepul",tvApprLeader1.getText().toString());
+            params.put("scenReviMem",ae_arrp_pers.getEditText());
+        } else if (rbReviNo1.isChecked()) {
+            params.put("arrpStat", "2");
         }
-        for (ObjStanAppl item : selectedReviewItemInformationList) {
-            url += item.getBisScheReviGuid() +"/"+"?";
-            for(String key :params.keySet()){
-                url += key;
-                url +="=";
-                url += params.get(key);
-                url += "&";
+        url += selectedReviewItemInformationList.getBisScheReviGuid() + "/" + "?";
+        for (String key : params.keySet()) {
+            url += key;
+            url += "=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0, url.length() - 1);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 1;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                ToastUtils.show("提交成功");
+                activityFinish();
             }
-            url = url.substring(0,url.length() -1);
-            LocalCacheEntity localCacheEntity = new LocalCacheEntity();
-            localCacheEntity.url = url;
-            ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
-            localCacheEntity.params = params;
-            localCacheEntity.type = 1;
-            localCacheEntity.commitType = 1;
-            localCacheEntity.seriesKey = UUID.randomUUID().toString();
-            SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
-                @Override
-                public void onResponse(String result) {
-                    ToastUtils.show("提交成功");
-                    activityFinish();
-                }
 
-                @Override
-                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    ToastUtils.show(errorInfo.getMessage());
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                ToastUtils.show(errorInfo.getMessage());
 
-                }
-            });
-        }
+            }
+        });
     }
 
-    void setTimeClicked() {
+    void setTimeClicked(final TextView view) {
         //时间选择器
         boolean[] type = {true, true, true, true, true, true};
 
@@ -191,7 +230,7 @@ public class DataReviewConclusionActivity extends BaseActivity {
                     ToastUtils.show("提示：所选时间不应大于系统当前时间");
                     return;
                 }
-                tv_time.setText(Strings.formatDatetime(date));
+                view.setText(Strings.formatDatetime(date));
             }
         })
                 .isDialog(true)

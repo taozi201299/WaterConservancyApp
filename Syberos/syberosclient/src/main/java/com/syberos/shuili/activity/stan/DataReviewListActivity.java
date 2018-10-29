@@ -41,6 +41,8 @@ public class DataReviewListActivity extends TranslucentActivity
 
     @BindView(R.id.recyclerView_list)
     PullRecyclerView recyclerView;
+    @BindView(R.id.tv_review)
+    TextView tv_review;
 
     ListAdapter listAdapter = null;
     ArrayList<ObjStanAppl> selectedReviewItemInformationList = new ArrayList<>();
@@ -139,6 +141,10 @@ public class DataReviewListActivity extends TranslucentActivity
                                     || obj.getInformaReviResu() != null && !obj.getInformaReviResu().isEmpty()){
                                 finalItem.setVerify(true);
                                 finalItem.setBisScheReviGuid(obj.getGuid());
+                                finalItem.setStartTime(obj.getStartTime());
+                                finalItem.setCompTime(obj.getCompTime());
+                                finalItem.setConfLoc(obj.getConfLoc());
+                                finalItem.setPartPers(obj.getPartPers());
                             }
                         }
                     }
@@ -200,6 +206,9 @@ public class DataReviewListActivity extends TranslucentActivity
     }
     private void refreshUI(){
         for(ObjStanAppl item: objStanAppl.dataSource){
+            if(item.isVerify()){
+                result.add(item);
+            }
         }
         listAdapter.setData(result);
         listAdapter.notifyDataSetChanged();
@@ -219,9 +228,10 @@ public class DataReviewListActivity extends TranslucentActivity
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new ListAdapter(this,
-                R.layout.activity_data_review_list_item);
+                R.layout.activity_scene_review_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
+        tv_review.setVisibility(View.GONE);
     }
 
     @Override
@@ -243,28 +253,38 @@ public class DataReviewListActivity extends TranslucentActivity
         @Override
         public void convert(final ViewHolder holder, final ObjStanAppl information) {
 
-            final CheckBox checkBox = (CheckBox) holder.getView(R.id.cb_select);
+//            final CheckBox checkBox = (CheckBox) holder.getView(R.id.cb_select);
+//            checkBox.setVisibility(View.GONE);
 
             LinearLayout background = (LinearLayout) holder.getView(R.id.ll_background);
             background.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checkBox.setChecked(!checkBox.isChecked());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("data",information);
+                    intentActivity(DataReviewListActivity.this, DataReviewConclusionActivity.class, false, bundle);
                 }
             });
+//            background.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    checkBox.setChecked(!checkBox.isChecked());
+//                }
+//            });
 
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(buttonView.isShown()) {
-                        if (isChecked) {
-                            selectedReviewItemInformationList.add(information);
-                        } else {
-                            selectedReviewItemInformationList.remove(information);
-                        }
-                    }
-                }
-            });
+//            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    if(buttonView.isShown()) {
+//                        if (isChecked) {
+//                            selectedReviewItemInformationList.add(information);
+//                        } else {
+//                            selectedReviewItemInformationList.remove(information);
+//                        }
+//                    }
+//                }
+//            });
+
 
             // 申请单位名称
             ((TextView) (holder.getView(R.id.tv_title))).setText(

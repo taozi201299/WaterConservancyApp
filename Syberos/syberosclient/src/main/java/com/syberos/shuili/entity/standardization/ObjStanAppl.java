@@ -34,6 +34,46 @@ public class ObjStanAppl extends HttpBaseResponse<ObjStanAppl> {
     private String collTime;
     private String updTime;
     private String recPers;
+    /**
+     * 资料审查
+     */
+    private String startTime;
+    private String compTime;
+    private String confLoc;
+
+    public String getStartTime() {
+        return startTime == null ? "" : startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getCompTime() {
+        return compTime == null ? "" : compTime;
+    }
+
+    public void setCompTime(String compTime) {
+        this.compTime = compTime;
+    }
+
+    public String getConfLoc() {
+        return confLoc == null ? "" : confLoc;
+    }
+
+    public void setConfLoc(String confLoc) {
+        this.confLoc = confLoc;
+    }
+
+    public String getPartPers() {
+        return partPers == null ? "" : partPers;
+    }
+
+    public void setPartPers(String partPers) {
+        this.partPers = partPers;
+    }
+
+    private String partPers;
 
     public String getBisScheReviGuid() {
         return bisScheReviGuid == null ? "" : bisScheReviGuid;
