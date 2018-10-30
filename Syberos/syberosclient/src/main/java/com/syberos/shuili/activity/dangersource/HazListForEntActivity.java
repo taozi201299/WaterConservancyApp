@@ -20,10 +20,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
-import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
-import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
-import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.ToastUtils;
@@ -224,9 +221,9 @@ public class HazListForEntActivity extends BaseActivity
             LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
             RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.VISIBLE);
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
-            ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
-            Button btn = (Button)(holder.getView(R.id.btn_text));
+            (holder.getView(R.id.tv_time)).setVisibility(View.GONE);
+            (holder.getView(R.id.ll_content)).setVisibility(View.GONE);
+            Button btn = (holder.getView(R.id.btn_text));
             btn.setText("巡查");
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override

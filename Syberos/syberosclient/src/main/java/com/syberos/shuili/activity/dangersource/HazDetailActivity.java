@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -17,8 +16,6 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.utils.ToastUtils;
-import com.syberos.shuili.view.AudioEditView;
-import com.syberos.shuili.view.MultimediaView;
 
 import java.util.HashMap;
 

@@ -20,13 +20,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.basicbusiness.AttOrgExt;
-import com.syberos.shuili.entity.basicbusiness.OrgInfo;
-import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -174,7 +170,7 @@ public class WriteOffVerificationListActivity extends BaseActivity
             ((TextView) (holder.getView(R.id.tv_name))).setText(
                     dangerousInformation.getEngName());
             ((TextView)(holder.getView(R.id.tv_content))).setText(dangerousInformation.getWiunName());
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
+            (holder.getView(R.id.tv_time)).setVisibility(View.GONE);
         }
     }
 }

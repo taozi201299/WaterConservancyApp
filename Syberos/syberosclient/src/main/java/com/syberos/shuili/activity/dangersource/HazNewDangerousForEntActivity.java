@@ -10,8 +10,6 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
-import com.syberos.shuili.activity.accident.AccidentNewFormForEntActivity;
-import com.syberos.shuili.activity.reports.AcciReportActivity;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.ObjHaz;

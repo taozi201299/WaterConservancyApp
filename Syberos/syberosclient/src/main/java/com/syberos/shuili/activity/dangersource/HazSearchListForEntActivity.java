@@ -278,11 +278,11 @@ public class HazSearchListForEntActivity extends BaseActivity
         @Override
         public void convert(ViewHolder holder, ObjHaz dangerousInformation) {
             int type = Integer.valueOf(dangerousInformation.getHiddGrad());
-            LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
-            RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
+            LinearLayout ll_type =  (holder.getView(R.id.ll_type));
+            RelativeLayout ll_report_after = (holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.GONE);
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
-            ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
+            (holder.getView(R.id.tv_time)).setVisibility(View.GONE);
+            (holder.getView(R.id.ll_content)).setVisibility(View.GONE);
 
             switch (type) {
                 case  GlobleConstants.HAZ_HTYPE_NORMAL: {

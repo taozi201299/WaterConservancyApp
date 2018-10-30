@@ -20,13 +20,9 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
-import com.syberos.shuili.entity.basicbusiness.AttOrgExt;
-import com.syberos.shuili.entity.basicbusiness.OrgInfo;
-import com.syberos.shuili.entity.dangersource.BisHazMajRegWrit;
 import com.syberos.shuili.entity.dangersource.BisHazReg;
 import com.syberos.shuili.utils.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -34,7 +30,6 @@ import butterknife.BindView;
 import static com.syberos.shuili.config.GlobleConstants.HAZ_HTYPE_NORMAL;
 import static com.syberos.shuili.config.GlobleConstants.HAZ_TYPE_BIGER;
 import static com.syberos.shuili.config.GlobleConstants.hazGradeMap;
-import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
  * 行政版危险源备案审核 重大危险源备案核销表
@@ -136,10 +131,10 @@ public class RecordReviewListActivity extends BaseActivity
         @Override
         public void convert(ViewHolder holder, final BisHazReg dangerousInformation) {
             int type =  GlobleConstants.HAZ_HTYPE_NORMAL;
-            LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
-            RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
+            LinearLayout ll_type =  (holder.getView(R.id.ll_type));
+            RelativeLayout ll_report_after = (holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.VISIBLE);
-            Button btn = (Button)(holder.getView(R.id.btn_text));
+            Button btn = (holder.getView(R.id.btn_text));
             btn.setText("审核");
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -175,7 +170,7 @@ public class RecordReviewListActivity extends BaseActivity
             ((TextView) (holder.getView(R.id.tv_name))).setText(
                     dangerousInformation.getEngName());
             ((TextView)(holder.getView(R.id.tv_content))).setText(dangerousInformation.getWiunName());
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
+            (holder.getView(R.id.tv_time)).setVisibility(View.GONE);
         }
     }
 }

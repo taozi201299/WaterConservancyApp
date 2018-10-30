@@ -3,7 +3,6 @@ package com.syberos.shuili.activity.dangersource;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,10 +20,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
-import com.syberos.shuili.entity.objCase.ObjLayer;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
-import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
-import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.CommonUtils;
@@ -331,11 +327,11 @@ public class HazSearchListForFRActivity extends BaseActivity
         @Override
         public void convert(ViewHolder holder, ObjHaz dangerousInformation) {
             int type = Integer.valueOf(dangerousInformation.getHiddGrad());
-            LinearLayout ll_type = (LinearLayout) (holder.getView(R.id.ll_type));
-            RelativeLayout ll_report_after = (RelativeLayout)(holder.getView(R.id.ll_report_after));
+            LinearLayout ll_type =  (holder.getView(R.id.ll_type));
+            RelativeLayout ll_report_after = (holder.getView(R.id.ll_report_after));
             ll_report_after.setVisibility(View.GONE);
-            ((TextView)holder.getView(R.id.tv_time)).setVisibility(View.GONE);
-            ((LinearLayout)holder.getView(R.id.ll_content)).setVisibility(View.GONE);
+            (holder.getView(R.id.tv_time)).setVisibility(View.GONE);
+            (holder.getView(R.id.ll_content)).setVisibility(View.GONE);
 
             switch (type) {
                 case  GlobleConstants.HAZ_HTYPE_NORMAL: {
