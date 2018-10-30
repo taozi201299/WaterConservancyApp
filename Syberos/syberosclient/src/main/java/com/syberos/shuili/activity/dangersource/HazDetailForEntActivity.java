@@ -145,7 +145,7 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     private void refreshUI(){
         BisHazRegDetail item = bisHazRegDetail.dataSource.get(0);
         String strUnit = item.wiunName;
-        tv_unit.setText(strUnit == null ? "":strUnit);
+        tv_unit.setText(strUnit == null ? SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName():strUnit);
         String strEngName = item.engName;
         tv_project.setText(strEngName == null ?"":strEngName);
         int grad = Integer.valueOf(item.hiddGrad) == null? 1:Integer.valueOf(item.hiddGrad);

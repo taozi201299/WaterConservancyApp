@@ -40,6 +40,8 @@ import butterknife.OnClick;
 
 /**
  * 企事业危险源查询
+ * 法人和监理使用该文件
+ * 查询当前用户关联的施工单位
  */
 public class HazSearchListForFRActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
@@ -60,7 +62,11 @@ public class HazSearchListForFRActivity extends BaseActivity
     EnumView ll_unit_level;
     @BindView(R.id.tv_quit_search)
     TextView tv_quit_search;
+    @BindView(R.id.ll_search)
+    LinearLayout ll_search;
     private List<ObjHaz> searchResultList = new ArrayList<>();
+    ArrayList<String>unitGuids = new ArrayList<>() ;
+    ArrayList<String>unitNames = new ArrayList<>();
     DangerousListAdapter listAdapter;
     ObjHaz inspectionList  = null;
     private DicInfo hazsGrade = null;
@@ -148,7 +154,7 @@ public class HazSearchListForFRActivity extends BaseActivity
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
-        params.put("orgGuid",info.getOrgId());
+        params.put("orgGuid",unitGuids.get(ll_unit_level.getCurrentIndex()));
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -188,6 +194,7 @@ public class HazSearchListForFRActivity extends BaseActivity
                         item.setHazName(bisHazRegDetail.dataSource.get(0).getHazName());
                         item.setEngineName(bisHazRegDetail.dataSource.get(0).getEngName());
                         item.setHazStat(bisHazRegDetail.dataSource.get(0).getHazStat());
+
                     }
                     if(iSucessCount +iFailedCount == inspectionList.dataSource.size()){
                         refreshUI();
@@ -225,6 +232,11 @@ public class HazSearchListForFRActivity extends BaseActivity
         iSucessCount = 0;
         iFailedCount = 0;
         bSearch = false;
+        unitNames.add("好热啊");
+        unitGuids.add("1ddfed3f979847bfaba5779d620b9bb1");
+        ll_unit_level.setEntries(unitNames);
+        ll_unit_level.setCurrentIndex(0);
+        ll_unit_level.setCurrentDetailText(unitNames.get(0));
         getHazsDic();
 
     }
@@ -235,6 +247,7 @@ public class HazSearchListForFRActivity extends BaseActivity
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
         ll_unit.setVisibility(View.VISIBLE);
+        ll_search.setVisibility(View.VISIBLE);
         showDataLoadingDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局

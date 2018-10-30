@@ -460,8 +460,6 @@ public class AcciReportActivity extends TranslucentActivity  {
         params.put("revocDesc",content);
         params.put("orgName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
         params.put("orgCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgCode());
-        params.put("collTime",CommonUtils.getCurrentDate());
-
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
