@@ -31,6 +31,16 @@ public class EnumView extends LinearLayout{
     private List<String> optionsItems = null;
     private OptionsPickerView pvOptions;
     private int currentIndex = INDEX_NONE;
+    private IEnumClick iEnumClick;
+
+    public  interface IEnumClick{
+        void onEnumClick();
+
+    }
+    public void setListener(IEnumClick enumClick){
+        this.iEnumClick = enumClick;
+
+    }
 
     public EnumView(Context context) {
         this(context, null);
@@ -117,6 +127,10 @@ public class EnumView extends LinearLayout{
                 String tx = optionsItems.get(options1);
                 currentIndex = options1;
                 tv_enum_detail.setText(tx);
+                if(iEnumClick != null){
+                    iEnumClick.onEnumClick();
+                }
+
             }
         })
                 .isDialog(true)

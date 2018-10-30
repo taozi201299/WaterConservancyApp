@@ -45,7 +45,7 @@ import butterknife.OnClick;
  * 查询当前用户关联的施工单位
  */
 public class HazSearchListForFRActivity extends BaseActivity
-        implements CommonAdapter.OnItemClickListener {
+        implements CommonAdapter.OnItemClickListener,EnumView.IEnumClick {
 
     private final String TAG = HazSearchListForEntActivity.class.getSimpleName();
 
@@ -74,6 +74,8 @@ public class HazSearchListForFRActivity extends BaseActivity
     private int iSucessCount = 0;
     private int iFailedCount = 0;
     private boolean bSearch = false;
+
+    private int currentIndex = 0;
     @OnClick(R.id.tv_quit_search)
     void onCancelSearchClicked() {
         searchClearEditText.clearFocus();
@@ -96,6 +98,7 @@ public class HazSearchListForFRActivity extends BaseActivity
 
     @Override
     public void initListener() {
+        ll_unit_level.setListener(this);
 
     }
     private void getHazsDic(){
@@ -304,6 +307,21 @@ public class HazSearchListForFRActivity extends BaseActivity
         }
         refreshUI();
     }
+
+    @Override
+    public void onEnumClick() {
+        int index = ll_unit_level.getCurrentIndex();
+        if(currentIndex != index){
+            showDataLoadingDialog();
+            iSucessCount = 0;
+            iFailedCount = 0;
+            bSearch = false;
+            getHazsList();
+            currentIndex = index;
+        }
+
+    }
+
     private class DangerousListAdapter extends CommonAdapter<ObjHaz> {
         public DangerousListAdapter(Context context, int layoutId) {
             super(context, layoutId);
