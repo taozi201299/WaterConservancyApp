@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,12 +26,17 @@ import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.entity.dangersource.ObjHaz;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
 import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.indexListView.ClearEditText;
+
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,6 +82,7 @@ public class HazSearchListForFRActivity extends BaseActivity
     void onCancelSearchClicked() {
         searchClearEditText.clearFocus();
         bSearch = false;
+        searchClearEditText.setText("");
         refreshUI();
     }
 
@@ -112,7 +119,7 @@ public class HazSearchListForFRActivity extends BaseActivity
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                getHazsList();
+                getUnitNames();
             }
 
             @Override
@@ -141,14 +148,57 @@ public class HazSearchListForFRActivity extends BaseActivity
         SyberosManagerImpl.getInstance().getAllOrgInfo(params, methodName, new RequestCallback<Object>() {
             @Override
             public void onResponse(Object result) {
+                if(result == null)return;
+                Log.d("1111",String.valueOf(result));
+                parseResult(result);
+                if(unitNames.size() > 0) {
+                    getHazsList();
+                }else {
+                    closeDataDialog();
+                    ToastUtils.show("未查询到相关内容");
+                }
 
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                closeDataDialog();
+                ToastUtils.show("未查询到相关内容");
             }
         });
+    }
+    private void parseResult(Object result){
+        ArrayList<HashMap<String,String>>datas = new ArrayList<>();
+        int size = ((Vector) result).size();
+        for(int i = 0 ; i < size ; i ++){
+            HashMap<String,String>values = new HashMap<>();
+            String orgType = (((SoapObject)((java.util.Vector)result).get(i)).getProperty("orgType")).toString();
+            if("1".equals(orgType)) {
+                values.put("adminOrgId", (((SoapObject) ((java.util.Vector) result).get(i)).getProperty("adminOrgId")).toString());
+                values.put("id", (((SoapObject) ((java.util.Vector) result).get(i)).getProperty("id")).toString());
+                values.put("orgCode", (((SoapObject) ((java.util.Vector) result).get(i)).getProperty("orgCode")).toString());
+                values.put("orgId", (((SoapObject) ((java.util.Vector) result).get(i)).getProperty("orgId")).toString());
+                values.put("orgType",(((SoapObject)((java.util.Vector)result).get(i)).getProperty("orgType")).toString());
+                values.put("wiunCode",(((SoapObject)((java.util.Vector)result).get(i)).getProperty("wiunCode")).toString());
+                values.put("wiunName",(((SoapObject)((java.util.Vector)result).get(i)).getProperty("wiunName")).toString());
+                values.put("wiunProp",(((SoapObject)((java.util.Vector)result).get(i)).getProperty("wiunProp")).toString());
+                datas.add(values);
+            }else {
+                continue;
+            }
+        }
+        int count = datas.size();
+        for(int index = 0 ; index < count; index ++){
+            HashMap<String,String>item = datas.get(index);
+            unitGuids.add(item.get("orgId"));
+            unitNames.add(item.get("wiunName"));
+        }
+        if(unitNames.size() > 0) {
+            ll_unit_level.setEntries(unitNames);
+            ll_unit_level.setCurrentIndex(0);
+            ll_unit_level.setCurrentDetailText(unitNames.get(0));
+        }
+
     }
     private void getHazsList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
@@ -197,6 +247,7 @@ public class HazSearchListForFRActivity extends BaseActivity
 
                     }
                     if(iSucessCount +iFailedCount == inspectionList.dataSource.size()){
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
@@ -205,7 +256,8 @@ public class HazSearchListForFRActivity extends BaseActivity
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     iFailedCount ++;
                     if(iSucessCount +iFailedCount == inspectionList.dataSource.size()){
-                        refreshUI();
+                       closeDataDialog();
+                       refreshUI();
                     }
                 }
             });
@@ -232,11 +284,9 @@ public class HazSearchListForFRActivity extends BaseActivity
         iSucessCount = 0;
         iFailedCount = 0;
         bSearch = false;
-        unitNames.add("好热啊");
-        unitGuids.add("1ddfed3f979847bfaba5779d620b9bb1");
-        ll_unit_level.setEntries(unitNames);
-        ll_unit_level.setCurrentIndex(0);
-        ll_unit_level.setCurrentDetailText(unitNames.get(0));
+        searchClearEditText.setText("");
+        unitNames.clear();
+        unitGuids.clear();
         getHazsDic();
 
     }
