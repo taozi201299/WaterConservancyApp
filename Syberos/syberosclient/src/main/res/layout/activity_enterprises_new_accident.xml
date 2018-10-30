@@ -67,6 +67,20 @@
                     android:visibility="gone"/>
 
                 <RelativeLayout
+                    android:id="@+id/ll_engine"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40dp"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingRight="@dimen/_5dp">
+                    <com.syberos.shuili.view.EnumView
+                        android:id="@+id/ll_engine_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50dp"
+                        app:enum_title="事故所属工程">
+                    </com.syberos.shuili.view.EnumView>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/rl_accident_name"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40dp"

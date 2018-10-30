@@ -347,8 +347,8 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
         Bundle bundle = new Bundle();
         bundle.putSerializable(DIC_UNIT_KEY,m_unitTypeDic);
         bundle.putSerializable(DIC_ACCIDENT_KEY,m_accidentTypeDic);
-        bundle.putString("type",String.valueOf(GlobleConstants.NEW_ACCI));
-        intentActivity(this, InvestigationEngineForEntActivity.class,false,bundle);
+        bundle.putInt("type",GlobleConstants.NEW_ACCI);
+        intentActivity(this, AccidentNewFormForEntActivity.class,false,bundle);
     }
 
     @Override

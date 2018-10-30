@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
@@ -32,10 +34,12 @@ import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.io.File;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -63,6 +67,10 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
 
     @BindView(R.id.ll_enum_level)
     EnumView ll_enum_level;
+    @BindView(R.id.ll_engine)
+    RelativeLayout ll_engine;
+    @BindView(R.id.ll_engine_name)
+    EnumView ll_engine_name;
     @BindView(R.id.ce_accident_unit)
     ClearableEditText ce_accident_unit;
 
@@ -97,7 +105,31 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
     ArrayList<String>m_acciGradMapList = new ArrayList<>();
     private ObjAcci objAcci = null;
     private int type ;
-    MvEngColl item;
+    /**
+     * 工程对象
+     */
+    private MvEngColl mvEngColl = null;
+    private ArrayList<MvEngColl>mvEngColls = new ArrayList<>();
+    private ArrayList<String>engNames = new ArrayList<>();
+    private ArrayList<String>engIds = new ArrayList<>();
+
+
+    private HashMap<String,String> map = new HashMap(){
+        {
+            put("01","水库");
+            put("02","水闸");
+            put("03","泵站");
+            put("04","水电站");
+            put("05","堤防");
+            put("06","灌区");
+            put("07","引调水");
+            put("08","淤地坝");
+            put("09","农村供水");
+            put("10","其他");
+
+
+        }
+    };
 
     @OnClick(R.id.tv_accident_report_quick)
     void onAccidentReportQuickClicked() {
@@ -154,12 +186,13 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
             m_dicAccidentType = (DicInfo) bundle.getSerializable(DIC_ACCIDENT_KEY);
             tv_time.setText(CommonUtils.getCurrentDate());
             type = bundle.getInt("type");
-            item = (MvEngColl) bundle.getSerializable("engColls");
+//            item = (MvEngColl) bundle.getSerializable("engColls");
             initViewData();
             switch (type) {
                 case GlobleConstants.reportAcci_0:
                 case GlobleConstants.reportAcci_1:
                 case GlobleConstants.reportAcci_2:
+                    ll_engine.setVisibility(View.GONE);
                     objAcci = (ObjAcci) bundle.getSerializable(SEND_BUNDLE_KEY);
                     if(objAcci == null){
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
@@ -200,7 +233,8 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
                     }
                     break;
                 case GlobleConstants.NEW_ACCI:
-                    ce_accident_name.setText(item.getName());
+                    //ce_accident_name.setText(item.getName());
+                    getEngineList();
                     break;
                 default:
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-6).getMessage());
@@ -211,6 +245,61 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
         setActionBarTitle(strTitleName);
         setActionBarRightVisible(View.INVISIBLE);
         setFinishOnBackKeyDown(false);
+    }
+    private void getEngineList(){
+        showDataLoadingDialog();
+        String url =  GlobleConstants.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("orgguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                mvEngColl = gson.fromJson(result,MvEngColl.class);
+                if(mvEngColl == null || mvEngColl.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(mvEngColl.dataSource.size() == 0){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                }else {
+                    processResult();
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+
+    }
+    private void processResult(){
+        mvEngColls.clear();
+        for(MvEngColl item : mvEngColl.dataSource){
+            String typeName = map.get(item.getEngtype());
+            item.setEngTypeName(typeName == null ?"未知":typeName);
+            if("CJFR".equalsIgnoreCase(App.sCode) || "CJJL".equalsIgnoreCase(App.sCode) ||"CJSG".equalsIgnoreCase(App.sCode)){
+                // 在建工程 1
+                if(!"1".equals(item.getStat())){
+                    // continue;
+                }
+            }else {
+                // 已建工程 2
+                if(!"2".equals(item.getStat())){
+                    // continue;
+                }
+            }
+            mvEngColls.add(item);
+            engIds.add(item.getEngId());
+            engNames.add(item.getName());
+        }
+
+        ll_engine_name.setEntries(engNames);
+        ll_engine_name.setCurrentDetailText(engNames.get(0));
+        ll_engine_name.setCurrentIndex(0);
+
     }
     private void initViewData(){
         ce_accident_unit.setText(SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName());
