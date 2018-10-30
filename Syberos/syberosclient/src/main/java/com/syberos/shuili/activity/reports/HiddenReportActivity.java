@@ -127,7 +127,6 @@ public class HiddenReportActivity extends BaseActivity {
         String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
         HashMap<String,String>params = new HashMap<>();
         params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        //   params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");
         params.put("repTime",tv_current_month.getText().toString());
         params.put("repType","0");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -212,9 +211,9 @@ public class HiddenReportActivity extends BaseActivity {
         reasonDialog = new Dialog(this);
         View v = LayoutInflater.from(this).inflate(
                 R.layout.dialog_hidden_danger_report_refunded_reason, null);
-        tv_reasonDialog_title = (TextView) v.findViewById(R.id.tv_title);
-        tv_reasonDialog_message = (TextView) v.findViewById(R.id.tv_content);
-        sv_reasonDialog_message_view = (ScrollView) v.findViewById(R.id.message_view);
+        tv_reasonDialog_title =  v.findViewById(R.id.tv_title);
+        tv_reasonDialog_message =  v.findViewById(R.id.tv_content);
+        sv_reasonDialog_message_view =  v.findViewById(R.id.message_view);
         reasonDialog.setContentView(v);
         Window dialogWindow = reasonDialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -225,11 +224,10 @@ public class HiddenReportActivity extends BaseActivity {
         reasonDialog.setCancelable(false);
         dialogWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.dialog_bg_shape));
         dialogWindow.setAttributes(lp);
-        Button bt_cancel = (Button)v.findViewById(R.id.btn_cancel);
+        Button bt_cancel = v.findViewById(R.id.btn_cancel);
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sv_reasonDialog_message_view.setFocusable(false);
                 sv_reasonDialog_message_view.fullScroll(View.FOCUS_UP);
                 reasonDialog.dismiss();
             }
@@ -253,8 +251,6 @@ public class HiddenReportActivity extends BaseActivity {
             tv_report.setVisibility(View.GONE);
             tv_refunded.setVisibility(View.GONE);
             final int linkStatus = Integer.valueOf(hiddenDangerReport.getRepAct());
-
-
             // 2  未上报 本单位可以退回  1 已上报 2 被退回 3 已撤销
             switch (linkStatus) {
                 case HiddenDangerReport.LINK_YES:
@@ -443,7 +439,7 @@ public class HiddenReportActivity extends BaseActivity {
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {

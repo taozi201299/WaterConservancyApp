@@ -58,7 +58,6 @@ public class AdressListSynchronizer extends SynchronizerBase {
             values.put(DBDefinition.orgCode,info.orgCode);
             values.put(DBDefinition.orgId,info.orgId);
             values.put(DBDefinition.orgName,info.orgName);
-            values.put(DBDefinition.password,info.password);
             values.put(DBDefinition.persId,info.persId);
             values.put(DBDefinition.persName ,info.persName);
             values.put(DBDefinition.persType,info.persType);

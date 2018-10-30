@@ -18,7 +18,6 @@ public class UserInformationEntity implements Parcelable {
     public String orgCode;
     public String orgId;
     public String orgName;
-    public String password;
     public String persId;
     public String persName;
     public String persType;
@@ -46,7 +45,6 @@ public class UserInformationEntity implements Parcelable {
         dest.writeString(orgCode);
         dest.writeString(orgId);
         dest.writeString(orgName);
-        dest.writeString(password);
         dest.writeString(persId);
         dest.writeString(persName);
         dest.writeString(persType);
@@ -58,7 +56,7 @@ public class UserInformationEntity implements Parcelable {
         dest.writeString(userType);
     }
     public UserInformationEntity(String admDutyLevel,String depCode,String depId,String depName,String id,String modifier,
-                                 String note,String orgCode,String orgId,String orgName,String password,
+                                 String note,String orgCode,String orgId,String orgName,
                                  String persId,String persName,String persType,String phone,String status,String ts,
                                  String userCode,String userName,String userType) {
          this.admDutyLevel = admDutyLevel;
@@ -71,7 +69,6 @@ public class UserInformationEntity implements Parcelable {
          this.orgCode = orgCode;
          this.orgId = orgId;
          this.orgName = orgName;
-         this.password = password;
          this.persId = persId;
          this.persName = persName;
          this.persType = persType;
@@ -94,7 +91,6 @@ public class UserInformationEntity implements Parcelable {
         this.orgCode = in.readString();
         this.orgId = in.readString();
         this.orgName = in.readString();
-        this.password = in.readString();
         this.persId = in.readString();
         this.persName = in.readString();
         this.persType = in.readString();
