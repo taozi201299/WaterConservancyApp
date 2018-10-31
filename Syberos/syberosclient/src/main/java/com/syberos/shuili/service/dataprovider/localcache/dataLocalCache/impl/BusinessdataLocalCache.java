@@ -26,6 +26,7 @@ import com.syberos.shuili.service.entity.WoasDeucReturnEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.NetworkUtil;
 import com.syberos.shuili.utils.ToastUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -189,24 +191,51 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             HashMap<String,String>params = gson.fromJson(strJson, HashMap.class);
             final String url = entity.url;
             if(entity.commitType  == 0) {
-                HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
-                    @Override
-                    public void onResponse(String result) {
-                        iSuccessCount++;
-                        // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
-                        if (entity.LocalStatus.equals("0")) {
-                            updateLocalCache(url,entity.ID,result);
+                if(entity.url.equals(GlobleConstants.strZJIP +"/pprty/WSRest/service/notice"))
+                {
+                    String json = gson.toJson(params);
+                    OkHttpUtils.postString()
+                            .url(url)
+                            .content(json)
+                            .mediaType(MediaType.parse("application/json"))
+                            .build().execute(new com.zhy.http.okhttp.callback.StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            iFailedCount++;
+                            resultProcess();
                         }
-                        deleteFormCache(entity.ID);
-                        resultProcess();
-                    }
 
-                    @Override
-                    public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                        iFailedCount++;
-                        resultProcess();
-                    }
-                });
+                        @Override
+                        public void onResponse(String response, int id) {
+                            iSuccessCount++;
+                            // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
+                            if (entity.LocalStatus.equals("0")) {
+                                updateLocalCache(url, entity.ID, response);
+                            }
+                            deleteFormCache(entity.ID);
+                            resultProcess();
+                        }
+                    });
+                }else {
+                    HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
+                        @Override
+                        public void onResponse(String result) {
+                            iSuccessCount++;
+                            // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
+                            if (entity.LocalStatus.equals("0")) {
+                                updateLocalCache(url, entity.ID, result);
+                            }
+                            deleteFormCache(entity.ID);
+                            resultProcess();
+                        }
+
+                        @Override
+                        public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                            iFailedCount++;
+                            resultProcess();
+                        }
+                    });
+                }
             }else if(entity.commitType == 1) {
                 HttpUtils.getInstance().requestNet_put(url, params, entity.ID, new RequestCallback<String>() {
                     @Override

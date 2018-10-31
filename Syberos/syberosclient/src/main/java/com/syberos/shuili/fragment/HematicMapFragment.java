@@ -267,6 +267,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             params.put("type", "PROVINCE");
         }
       //  params.put("type", "XZBAS");
+        if(code.length() <6)return;
         code = code.substring(0, 6);
         params.put("guid", code);
         params.put("name", "");

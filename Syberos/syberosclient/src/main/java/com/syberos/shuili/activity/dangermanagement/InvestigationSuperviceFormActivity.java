@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
@@ -28,6 +29,8 @@ import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomDialog;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +39,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import butterknife.BindView;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
@@ -170,7 +176,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
 
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
-        localCacheEntity.type = 1;
+        localCacheEntity.type = 0;
         localCacheEntity.params = params;
         localCacheEntity.commitType = 0;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
@@ -227,13 +233,18 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         params.put("noticeTitle",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName() + "隐患督办信息");
         params.put("noticeContent",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgName() + "隐患督办信息");
         params.put("appCode", App.sCodes.get(0));
-        params.put("fromDate",CommonUtils.getCurrentDate());
+        params.put("fromDate",CommonUtils.getCurrentDateYMD());
+        params.put("userGuid","");
+        params.put("toDate",CommonUtils.getCurrentDateYMD());
+        params.put("roleCode","");
+        params.put("orgGuid",hiddenInvestigationTaskInfo.getOrgGuid());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.type = 0;
         localCacheEntity.params = params;
         localCacheEntity.commitType = 0;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity,attachMentInfoEntities, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

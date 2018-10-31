@@ -258,6 +258,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
      * 提交到公示公告表  提交内容
      */
     private void  commit(){
+        showDataLoadingDialog("数据提交中...");
         iSucessCount = 0;
         iFailedCount = 0;
         showLoadingDialog("数据提交中...");
@@ -288,6 +289,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    closeDataDialog();
                     ToastUtils.show(errorInfo.getMessage());
 
                 }

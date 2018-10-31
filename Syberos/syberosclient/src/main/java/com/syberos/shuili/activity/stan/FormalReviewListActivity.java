@@ -78,9 +78,6 @@ public class FormalReviewListActivity extends TranslucentActivity
     public void initListener() {
 
     }
-    private void closeLoadingDialog(){
-        closeDataDialog();
-    }
     private void getObjStanAppls() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
         HashMap<String, String> params = new HashMap<>();
@@ -130,7 +127,7 @@ public class FormalReviewListActivity extends TranslucentActivity
                         objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
-                        closeLoadingDialog();
+                        closeDataDialog();
                         refreshUI();
                     }
 
@@ -140,7 +137,7 @@ public class FormalReviewListActivity extends TranslucentActivity
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     iFailedCount ++;
                     if(iSucessCount +iFailedCount == size) {
-                        closeLoadingDialog();
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
@@ -165,7 +162,8 @@ public class FormalReviewListActivity extends TranslucentActivity
             finish();
             return;
         }
-       showDataLoadingDialog();
+
+        showDataLoadingDialog();
         getObjStanAppls();
 
     }
@@ -285,7 +283,7 @@ public class FormalReviewListActivity extends TranslucentActivity
      * 形式初审表 只有审批没有审核 水利部用户和主管单位用户均可完成该操作
      */
     private void commit(int result,String opinion){
-        showLoadingDialog("数据提交...");
+        showDataLoadingDialog("数据提交...");
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/from/firsttria/bisFromFirsttria/";
         HashMap <String,String>params= new HashMap<>();
         for(ObjStanAppl item : selectedReviewItemInformationList){

@@ -50,6 +50,9 @@ import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.ClearableEditText.ClearableEditText;
 import com.syberos.shuili.view.RelativePopupWindow.RelativePopupWindow;
 
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -365,33 +368,76 @@ public class LoginActivity extends BaseActivity {
 
     private UserExtendInformation parseLoginResult(Object result) throws ParseException {
         HashMap<String, String> info = new HashMap<>();
+        if(((SoapObject) result).getProperty("userPassword") == null){
+            return  null;
+        }
+        info.put("admDuty",(((SoapObject) result).getPropertySafelyAsString("admDuty").toString()));
+        info.put("depId", (((SoapObject) result).getPropertySafelyAsString("depId").toString()));
+        info.put("depName", (((SoapObject) result).getPropertySafelyAsString("depName").toString()));
+        info.put("id", (((SoapObject) result).getPropertySafelyAsString("id").toString()));
+        info.put("isValidUser", (((SoapObject) result).getPropertySafelyAsString("isValidUser").toString()));
+        info.put("isWaterIndustry", (((SoapObject) result).getPropertySafelyAsString("isWaterIndustry").toString()));
+        info.put("jurdAreaType", (((SoapObject) result).getPropertySafelyAsString("jurdAreaType").toString()));
+        info.put("orgJurd",(((SoapObject) result).getPropertySafelyAsString("orgJurd").toString()));
+        info.put("mobilenumb",(((SoapObject) result).getPropertySafelyAsString("mobilenumb").toString()));
+        info.put("modifier", (((SoapObject) result).getPropertySafelyAsString("modifier").toString()));
+        info.put("orgCode",(((SoapObject) result).getPropertySafelyAsString("orgCode").toString()));
+        info.put("orgId", (((SoapObject) result).getPropertySafelyAsString("orgId").toString()));
+        info.put("orgLevel", (((SoapObject) result).getPropertySafelyAsString("orgLevel").toString()));
+        info.put("orgName", (((SoapObject) result).getPropertySafelyAsString("orgName").toString()));
+        info.put("persId",(((SoapObject) result).getPropertySafelyAsString("persId").toString()));
+        info.put("persName", (((SoapObject) result).getPropertySafelyAsString("persName").toString()));
+        info.put("status", (((SoapObject) result).getPropertySafelyAsString("status").toString()));
+        info.put("ts", (((SoapObject) result).getPropertySafelyAsString("ts").toString()));
+        info.put("userCode",(((SoapObject) result).getPropertySafelyAsString("userCode").toString()));
+        info.put("userName", (((SoapObject) result).getPropertySafelyAsString("userName").toString()));
+        info.put("userPassword",(((SoapObject) result).getPropertySafelyAsString("userPassword").toString()));
         List<HashMap<String, String>> infoList = new ArrayList<>();
-        String reponse = result.toString();
-        reponse = reponse.replace(" ", "");
-        reponse = reponse.replace("\n", "");
-        if (!reponse.contains("userPassword")) return null;
-        String[] array = reponse.split("roleInfoList=anyType");
-        String[] childArray = {"0"};
-        int size = array.length;
-        for (int i = 0; i < size; i++) {
-            if (array[i].contains("}")) {
-                childArray = array[i].split("\\}");
-            } else childArray[0] = array[i];
-            if (childArray.length == 1) {
-                info.putAll(setUserInfo(childArray[0].replace("anyType{", "")));
-            } else if (childArray.length == 2) {
-                HashMap<String, String> map = setUserInfo(childArray[0].replace("{", ""));
-                infoList.add(map);
-                if (childArray[1].length() > 1) {
-                    info.putAll(setUserInfo(childArray[1]));
-                }
+
+        int count = ((SoapObject) result).getPropertyCount();
+        for(int index = 0; index < count ; index ++){
+            if(((SoapObject) result).getProperty(index).toString().contains("scode")){
+                HashMap<String,String>roleMap = new HashMap<>();
+                roleMap.put("jurdAreaType", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("jurdAreaType").toString());
+                roleMap.put("orgCode", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("orgCode").toString());
+                roleMap.put("orgName", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("orgName").toString());
+                roleMap.put("orgName", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("orgName").toString());
+                roleMap.put("roleCode", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("roleCode").toString());
+                roleMap.put("roleId", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("roleId").toString());
+                roleMap.put("roleName", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("roleName").toString());
+                roleMap.put("roleType", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("roleType").toString());
+                roleMap.put("scode", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("scode").toString());
+                roleMap.put("sname", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("sname").toString());
+                roleMap.put("status", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("status").toString());
+                roleMap.put("ts", ((SoapObject) ((SoapObject) result).getProperty(index)).getPropertySafelyAsString("ts").toString());
+                infoList.add(roleMap);
             }
         }
+//        String reponse = result.toString();
+//        reponse = reponse.replace(" ", "");
+//        reponse = reponse.replace("\n", "");
+//        if (!reponse.contains("userPassword")) return null;
+//        String[] array = reponse.split("roleInfoList=anyType");
+//        String[] childArray = {"0"};
+//        int size = array.length;
+//        for (int i = 0; i < size; i++) {
+//            if (array[i].contains("}")) {
+//                childArray = array[i].split("\\}");
+//            } else childArray[0] = array[i];
+//            if (childArray.length == 1) {
+//                info.putAll(setUserInfo(childArray[0].replace("anyType{", "")));
+//            } else if (childArray.length == 2) {
+//                HashMap<String, String> map = setUserInfo(childArray[0].replace("{", ""));
+//                infoList.add(map);
+//                if (childArray[1].length() > 1) {
+//                    info.putAll(setUserInfo(childArray[1]));
+//                }
+//            }
+//        }
         ArrayList<RoleBaseInfo> roleList = setRoleList(infoList);
         UserExtendInformation userExtendInformation = setUserExtendInfo(info);
         userExtendInformation.setRoleExtInfoList(roleList);
         App.setUserType(Integer.valueOf(info.get("isWaterIndustry")));
-        LoginUtil.setRoleList(roleList);
         return userExtendInformation;
 
     }
@@ -420,7 +466,6 @@ public class LoginActivity extends BaseActivity {
     private ArrayList setRoleList(List<HashMap<String, String>> infoList) {
         ArrayList<RoleBaseInfo> roleList = new ArrayList<>();
         for (HashMap map : infoList) {
-            RoleBaseInfo roleBaseInfo = new RoleBaseInfo();
             String roleId = map.get("roleId") == null ? "" : map.get("roleId").toString();
             String roleCode = map.get("roleCode") == null ? "" : map.get("roleCode").toString();
             String orgCode = map.get("orgCode") == null ? "" : map.get("orgCode").toString();

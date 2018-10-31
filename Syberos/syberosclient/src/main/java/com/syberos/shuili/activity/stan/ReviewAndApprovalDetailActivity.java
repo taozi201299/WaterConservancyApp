@@ -187,6 +187,7 @@ public class ReviewAndApprovalDetailActivity extends BaseActivity implements Bas
      * 提交到现场检查审批表（水利部）
      */
     private void  commitForm(){
+        showDataLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/conf/examappr/bisConfExamappr";
         HashMap<String,String> params= new HashMap<>();
         params.put("apprOpin",ae_describe_audio.getEditText());
