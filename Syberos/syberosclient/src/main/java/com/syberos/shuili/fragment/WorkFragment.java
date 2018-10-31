@@ -243,12 +243,12 @@ public class WorkFragment extends BaseFragment {
                    if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_gongzuo))){
                         continue;
                     }
-                    if(!modules.contains(GlobleConstants.hidd)){
+                    if(!App.sCodes.contains(GlobleConstants.hidd)){
                         if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))){
                             continue;
                         }
                     }
-                    if(!modules.contains(GlobleConstants.acci)){
+                    if(!App.sCodes.contains(GlobleConstants.acci)){
                         if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))){
                             continue;
                         }
