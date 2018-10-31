@@ -330,16 +330,16 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
             for (final ObjHidden item : objHidden.dataSource) {
                 if (!item.isbExist()) continue;
                 View view = LayoutInflater.from(mContext).inflate(R.layout.activity_investigation_task_item, null);
-                TextView tv_type = (TextView) view.findViewById(R.id.tv_type);
-                TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
-                TextView tv_time = (TextView) view.findViewById(R.id.tv_time);
-                TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-                TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
-                LinearLayout ll_type = (LinearLayout) view.findViewById(R.id.ll_type);
-                if (item.getHiddGrad().equals("0")) {
+                TextView tv_type =  view.findViewById(R.id.tv_type);
+                TextView tv_title =  view.findViewById(R.id.tv_title);
+                TextView tv_time =  view.findViewById(R.id.tv_time);
+                TextView tv_name =  view.findViewById(R.id.tv_name);
+                TextView tv_content =  view.findViewById(R.id.tv_content);
+                LinearLayout ll_type =  view.findViewById(R.id.ll_type);
+                if ("0".equals(item.getHiddGrad())) {
                     tv_type.setText(getResources().getString(R.string.normal));
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
-                } else if (item.getHiddGrad().equals("1")) {
+                } else if ("1".equals(item.getHiddGrad())) {
                     tv_type.setText(getResources().getString(R.string.danger));
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
                 }

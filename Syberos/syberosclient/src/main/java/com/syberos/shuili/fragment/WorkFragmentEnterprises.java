@@ -224,11 +224,12 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 /**
                  * 技术服务 施工 监理单位 只有现场检查模块，项目法人和水利工程管理单位有元素检查
                  */
-                if(GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) ||GlobleConstants.CJJL.equalsIgnoreCase(App.sCode)){
+                if(GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) ||GlobleConstants.CJJL.equalsIgnoreCase(App.sCode)
+                        ||GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)){
                     if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_jianchayuansu))){
                         continue;
                     }
-                }else if(GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)|| GlobleConstants.CJFR.equalsIgnoreCase(App.sCode)){
+                }else if( GlobleConstants.CJFR.equalsIgnoreCase(App.sCode)){
                     if(childNames[j].equals(getResources().getString(R.string.module_child_anquan_xianchangjiancha))){
                         continue;
                     }

@@ -413,6 +413,14 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
         scrollView.setVisibility(View.VISIBLE);
         // 工程基本信息
         tv_projectName.setText(investigationInfo.getEngName());
+        if(investigationInfo.getHiddGradName() == null || investigationInfo.getHiddGradName().isEmpty()){
+            if ("0".equals(investigationInfo.getHiddGrad())) {
+                investigationInfo.setHiddGradName("一般隐患");
+
+            } else if ("1".equals(investigationInfo.getHiddGrad())) {
+                investigationInfo.setHiddGradName("重大隐患");
+            }
+        }
         tv_level.setText(investigationInfo.getHiddGradName());
         tv_type.setText(investigationInfo.getHiddClassName());
         tv_location.setText(investigationInfo.getProPart());

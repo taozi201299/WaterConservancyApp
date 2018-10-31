@@ -107,7 +107,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         String url = strIP +"/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String > params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("inspRecGuid",bisSinsRec.sinsGuid);
+        params.put("inspRecGuid",bisSinsRec.guid);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {

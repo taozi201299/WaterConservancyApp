@@ -225,7 +225,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         if("element".equals(type)) {
             params.put("seCheckItemGuid", information.getGuid());
         }else if("check".equals(type)){
-            params.put("inspRecGuid",bisSinsRec.sinsGuid);
+            params.put("inspRecGuid",bisSinsRec.guid);
         }
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别

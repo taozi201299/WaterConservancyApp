@@ -126,10 +126,10 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
                     }
                     for(ObjHidden obj: objHidden.dataSource) {
                         obj.setEngName(item.getObjName());
-                        if ("1".equals(obj.getHiddGrad())) {
+                        if ("0".equals(obj.getHiddGrad())) {
                             obj.setHiddGradName("一般隐患");
 
-                        } else if ("2".equals(obj.getHiddGrad())) {
+                        } else if ("1".equals(obj.getHiddGrad())) {
                             obj.setHiddGradName("重大隐患");
                         }
                     }

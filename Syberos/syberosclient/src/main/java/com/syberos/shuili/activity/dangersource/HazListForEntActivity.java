@@ -52,11 +52,12 @@ public class HazListForEntActivity extends BaseActivity
     ObjHaz inspectionList  = null;
     private int iSucessCount = 0;
     private int iFailedCount = 0;
+    ArrayList<ObjHaz> datas = new ArrayList<>();
 
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        ObjHaz information = inspectionList.dataSource.get(position);
+        ObjHaz information = datas.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, information);
         intentActivity(this, HazDetailForEntActivity.class, false, bundle);
     }
@@ -170,7 +171,6 @@ public class HazListForEntActivity extends BaseActivity
     }
     private void refreshUI(){
         closeDataDialog();
-        ArrayList<ObjHaz> datas = new ArrayList<>();
         if(inspectionList != null){
             for(ObjHaz item: inspectionList.dataSource){
                 item.setHiddGradName(GlobleConstants.hazGradeMap.get(item.getHazCode()));
@@ -188,6 +188,7 @@ public class HazListForEntActivity extends BaseActivity
     public void initData() {
         iFailedCount = 0;
         iSucessCount = 0;
+        datas.clear();
         showDataLoadingDialog();
         getHazsList();
     }

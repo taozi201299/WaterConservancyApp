@@ -368,7 +368,7 @@ public class LoginActivity extends BaseActivity {
 
     private UserExtendInformation parseLoginResult(Object result) throws ParseException {
         HashMap<String, String> info = new HashMap<>();
-        if(((SoapObject) result).getProperty("userPassword") == null){
+        if(((SoapObject) result).getPropertySafelyAsString("userPassword") == null){
             return  null;
         }
         info.put("admDuty",(((SoapObject) result).getPropertySafelyAsString("admDuty").toString()));
