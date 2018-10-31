@@ -26,7 +26,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 稽查项目选择
+ * 稽察项目选择
  */
 public class InspectProjectSelectActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {

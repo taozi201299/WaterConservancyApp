@@ -36,11 +36,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 水利稽查考核扣分
+ * 水利稽察考核扣分
  */
 public class InspectAssessNewDeductMarksActivity extends BaseActivity implements BaseActivity.IDialogInterface{
 
-    private final String Title = "水利稽查考核";
+    private final String Title = "水利稽察考核";
     /**
      * 考核组对象
      */

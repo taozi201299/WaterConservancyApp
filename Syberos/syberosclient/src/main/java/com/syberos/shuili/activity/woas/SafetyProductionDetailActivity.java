@@ -29,7 +29,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 考核组详情  水利稽查
+ * 考核组详情  水利稽察
  */
 public class SafetyProductionDetailActivity extends BaseActivity implements View.OnClickListener {
     public static final String SEND_BUNDLE_KEY_0 = "InspectAssessPlanInfo";
@@ -110,7 +110,7 @@ public class SafetyProductionDetailActivity extends BaseActivity implements View
     }
 
     /**
-     * 根据方案guid获取稽查组对应方案的信息
+     * 根据方案guid获取稽察组对应方案的信息
      */
     private void getWoasGroupInfo(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/woas/prog/selectSingleAssessmentPlan/";

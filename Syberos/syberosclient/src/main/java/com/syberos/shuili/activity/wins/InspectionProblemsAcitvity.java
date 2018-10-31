@@ -32,8 +32,8 @@ import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018/4/30.
- * 获取某稽查组下的稽查问题
- * 分组显示 每个工程下的稽查问题
+ * 获取某稽察组下的稽察问题
+ * 分组显示 每个工程下的稽察问题
  */
 
 public class InspectionProblemsAcitvity extends BaseActivity {
@@ -60,7 +60,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         groupedWinsProbListAdapter.setOnChildClickListener(new GroupedRecyclerViewAdapter.OnChildClickListener() {
             @Override
             public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition, int childPosition) {
-                // 显示稽查问题详情
+                // 显示稽察问题详情
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("prob",groups.get(groupPosition).getChildren().get(childPosition));
                 bundle.putString("projName",groups.get(groupPosition).getHeader());
@@ -98,7 +98,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
     }
 
     /**
-     * 从稽查项目表中获取稽查对象 根据稽查组ID
+     * 从稽察项目表中获取稽察对象 根据稽察组ID
      */
     private void getInspectionProject(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs/";
@@ -114,7 +114,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
                 if(bisWinsProjAll == null || bisWinsProjAll.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                 }else if(bisWinsProjAll.dataSource.size() == 0){
-                    ToastUtils.show("没有稽查项目");
+                    ToastUtils.show("没有稽察项目");
                 }else {
                     getWinsProblems();
                 }

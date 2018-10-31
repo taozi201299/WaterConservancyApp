@@ -30,7 +30,7 @@ import java.util.UUID;
 import butterknife.BindView;
 
 /**
- * 新建稽查问题
+ * 新建稽察问题
  */
 public class InspectNewProblemActivity extends BaseActivity implements BaseActivity.IDialogInterface,View.OnClickListener {
 
@@ -123,7 +123,7 @@ public class InspectNewProblemActivity extends BaseActivity implements BaseActiv
 
     }
     private void submit(){
-        showCommitDialog("确认提交稽查问题?",0);
+        showCommitDialog("确认提交稽察问题?",0);
     }
 
     private boolean checkParam(){

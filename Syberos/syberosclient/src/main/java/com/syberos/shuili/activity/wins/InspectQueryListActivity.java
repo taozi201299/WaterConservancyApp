@@ -29,8 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 稽查查询列表
- * OBJ_WINS_PLAN 表中获取单位的稽查计划，从稽查方案表中找到稽查方案详情
+ * 稽察查询列表
+ * OBJ_WINS_PLAN 表中获取单位的稽察计划，从稽察方案表中找到稽察方案详情
  */
 public class InspectQueryListActivity extends BaseActivity {
 

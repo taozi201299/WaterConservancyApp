@@ -81,7 +81,7 @@ public class ThematicDetailActivity extends BActivity {
     ThematicDetailSinsFragment thematicDetailSinsFragment = new ThematicDetailSinsFragment();
     //    工作考核
     ThematicDetailWoasFragment thematicDetailWoasFragment = new ThematicDetailWoasFragment();
-    //    水利稽查
+    //    水利稽察
     ThematicDetailWinsFragment thematicDetailWinsFragment = new ThematicDetailWinsFragment();
     //    安检执法
     ThematicDetailSuenFragment thematicDetailSuenFragment = new ThematicDetailSuenFragment();

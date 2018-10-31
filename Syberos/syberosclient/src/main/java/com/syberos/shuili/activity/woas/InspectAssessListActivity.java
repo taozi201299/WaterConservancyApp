@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 工作考核 水利稽查
+ * 工作考核 水利稽察
  *  1 BIS_WOAS_GROP 考核组表
  *  2 8.2.1.16	工作考核对象表（OBJ_WOAS）中获取详情
  */
@@ -100,7 +100,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
         HashMap<String,String>params = new HashMap<>();
         params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
    //     params.put("leadOrgGuid","B694018733574C1398AF1064371BF5C6");
-        // 1 水利稽查工作考核 2 安全生产工作考核
+        // 1 水利稽察工作考核 2 安全生产工作考核
         params.put("woasType","1");
         params.put("sendStat","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -115,7 +115,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
                 }
                 if(bisWoasGrop.dataSource.size() == 0){
                     closeDataDialog();
-                    ToastUtils.show("没有相关水利稽查考核信息");
+                    ToastUtils.show("没有相关水利稽察考核信息");
                 }
                 getObjWoasInfoByID();
             }

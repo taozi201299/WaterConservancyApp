@@ -27,7 +27,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 稽查问题详情
+ * 稽察问题详情
  */
 public class InspectProblemDetailActivity extends BaseActivity {
 

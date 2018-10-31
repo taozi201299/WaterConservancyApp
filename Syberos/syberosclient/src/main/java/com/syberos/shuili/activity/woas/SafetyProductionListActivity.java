@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 工作考核 水利稽查
+ * 工作考核 水利稽察
  *  1 BIS_WOAS_GROP 考核组表
  *  2 8.2.1.16	工作考核对象表（OBJ_WOAS）中获取详情
  */
@@ -101,7 +101,7 @@ public class SafetyProductionListActivity extends BaseActivity implements Common
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/grop/selectCheckGroupList/";
         HashMap<String,String>params = new HashMap<>();
         params.put("leadOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        // 1 水利稽查工作考核 2 安全生产工作考核
+        // 1 水利稽察工作考核 2 安全生产工作考核
           params.put("woasType","2");
           params.put("sendStat","1");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 稽查查询详情
+ * 稽察查询详情
  */
 public class InspectQueryDetailActivity extends TranslucentActivity {
 
@@ -88,7 +88,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
     }
 
     /**
-     * 根据稽查方案GUID 获取稽查组信息
+     * 根据稽察方案GUID 获取稽察组信息
      */
     private void getWinsGroupByWinsProgGuid() {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";

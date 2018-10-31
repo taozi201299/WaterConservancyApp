@@ -28,30 +28,30 @@ import static com.syberos.shuili.config.GlobleConstants.winsProjType;
 import static com.syberos.shuili.config.GlobleConstants.winsTypeMap;
 
 /**
- * 稽查详情
+ * 稽察详情
  */
 public class InspectQueryGroupDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_BUNDLE_KEY = "InspectProblemInformation";
     private final String Title = "稽察组信息";
     /**
-     * 稽查组
+     * 稽察组
      */
     private BisWinsGroupAll bisWinsGroupAll = null;
 
     /**
-     * 稽查方案
+     * 稽察方案
      */
     private BisWinsProg bisWinsProg = null;
 
     @BindView(R.id.tv_batch)
-    TextView tv_batch;              // 稽查批次
+    TextView tv_batch;              // 稽察批次
 
     @BindView(R.id.tv_time)
-    TextView tv_time;               // 稽查时间
+    TextView tv_time;               // 稽察时间
 
     @BindView(R.id.tv_projType)
-    TextView tv_projType;               // 稽查地区
+    TextView tv_projType;               // 稽察地区
 
     @BindView(R.id.tv_special)
     TextView tv_special;            // 特派员
@@ -60,10 +60,10 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     TextView tv_assistant;          // 特派员助理
 
     @BindView(R.id.tv_winsType)
-    TextView tv_winsType;            // 稽查专家
+    TextView tv_winsType;            // 稽察专家
 
     /**
-     * 稽查组发现的问题数量
+     * 稽察组发现的问题数量
      */
     @BindView(R.id.tv_problem_count)
     TextView tv_problem_count;

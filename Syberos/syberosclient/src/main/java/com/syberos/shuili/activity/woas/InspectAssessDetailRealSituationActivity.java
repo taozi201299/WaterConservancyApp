@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 安全检查对象 考前摸底 水利稽查
+ * 安全检查对象 考前摸底 水利稽察
  */
 public class InspectAssessDetailRealSituationActivity extends BaseActivity {
 

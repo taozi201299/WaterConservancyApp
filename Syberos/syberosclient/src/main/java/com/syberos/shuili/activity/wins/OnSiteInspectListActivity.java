@@ -32,13 +32,13 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 现场稽查列表 行政版  该接口暂时没有提供
- * 水利稽查
- * BIS_WINS_STAFF 表中获取该用户所在的稽查组
- * 根据稽查组ID获取组信息
+ * 现场稽察列表 行政版  该接口暂时没有提供
+ * 水利稽察
+ * BIS_WINS_STAFF 表中获取该用户所在的稽察组
+ * 根据稽察组ID获取组信息
  *
  * 8.2.2.83	水利稽察组（BIS_WINS_GROUP）
- * 从水利稽查组中获取所在的稽查组
+ * 从水利稽察组中获取所在的稽察组
  */
 public class OnSiteInspectListActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
@@ -57,7 +57,7 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     ListAdapter listAdapter;
     /**
-     * 稽查组对象
+     * 稽察组对象
      */
     private BisWinsGroupAll bisWinsGroupAll = null;
     private BisWinsGroupAll bisWinsGroupAll1 = null;

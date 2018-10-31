@@ -30,20 +30,20 @@ import static com.syberos.shuili.config.GlobleConstants.winsTypeMap;
 
 /**
  * Created by Administrator on 2018/8/15.
- * 1 根据稽查组获取稽查方案
- * 2 根据稽查组获取稽查人员信息
+ * 1 根据稽察组获取稽察方案
+ * 2 根据稽察组获取稽察人员信息
  */
 
 public class InspectionDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_batch)
-    TextView tv_batch;              // 稽查批次
+    TextView tv_batch;              // 稽察批次
 
     @BindView(R.id.tv_time)
-    TextView tv_time;               // 稽查时间
+    TextView tv_time;               // 稽察时间
 
     @BindView(R.id.tv_projType)
-    TextView tv_projType;               // 稽查地区
+    TextView tv_projType;               // 稽察地区
 
     @BindView(R.id.tv_special)
     TextView tv_special;            // 特派员
@@ -52,10 +52,10 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     TextView tv_assistant;          // 特派员助理
 
     @BindView(R.id.tv_winsType)
-    TextView tv_winsType;            // 稽查专家
+    TextView tv_winsType;            // 稽察专家
 
     /**
-     * 稽查组发现的问题数量
+     * 稽察组发现的问题数量
      */
     @BindView(R.id.tv_problem_count)
     TextView tv_problem_count;
@@ -67,7 +67,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
      */
     private BisWinsGroupAll bisWinsGroupAll = null;
     /**
-     * 稽查方案详情对象
+     * 稽察方案详情对象
      */
     private BisWinsProgAll bisWinsProgAll = null;
     private BisWinsStaff bisWinsStaff = null;
