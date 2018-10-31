@@ -370,8 +370,14 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         // 1 隐患核实信息
         if(hiddenProjectInfo != null && this.hiddenProjectInfo.totalCount.equals("1")) {
             hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
-            tv_projectName.setText(hiddenProjectInfo.getEngGuid());
-            tv_level.setText(hiddenProjectInfo.getHiddGrad());
+            tv_projectName.setText(investigationInfo.getEngName());
+            if("0".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
+                tv_level.setText(R.string.normal);
+            }else if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())){
+                tv_level.setText(R.string.danger);
+            }else {
+                tv_level.setText(R.string.normal);
+            }
             tv_type.setText(hiddenProjectInfo.getHiddClas());
             tv_location.setText(hiddenProjectInfo.getProPart());
             tv_measure_info.setText("");
@@ -410,23 +416,26 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
 
         }
         }
-        if(hiddenAcceptInfo != null) {
-            int acceptCount = Integer.valueOf(hiddenAcceptInfo.totalCount);
-            // 验收信息
-            if (acceptCount > 0) {
-                for (int i = 0; i < acceptCount; i++) {
-                    View rectifyView = View.inflate(mContext, R.layout.activity_investigation_rectify_item, null);
-                    initElements(rectifyView, 0);
-                    int index = i + 1;
-                    tv_rectify_label.setText(index + "次验收");
-                    tv_accept_member.setText("");
-                    ev_rectify_opinion_audio.setEditText(hiddenAcceptInfo.dataSource.get(i).getNote());
-                }
-            }
-            if (Integer.valueOf(this.hiddenSupserviceInfo.totalCount) > 0) {
-
-            }
-        }
+        /**
+         * 不显示验收信息
+         */
+//        if(hiddenAcceptInfo != null) {
+//            int acceptCount = Integer.valueOf(hiddenAcceptInfo.totalCount);
+//            // 验收信息
+//            if (acceptCount > 0) {
+//                for (int i = 0; i < acceptCount; i++) {
+//                    View rectifyView = View.inflate(mContext, R.layout.activity_investigation_rectify_item, null);
+//                    initElements(rectifyView, 0);
+//                    int index = i + 1;
+//                    tv_rectify_label.setText(index + "次验收");
+//                    tv_accept_member.setText("");
+//                    ev_rectify_opinion_audio.setEditText(hiddenAcceptInfo.dataSource.get(i).getNote());
+//                }
+//            }
+//            if (Integer.valueOf(this.hiddenSupserviceInfo.totalCount) > 0) {
+//
+//            }
+//        }
 
 
     }
