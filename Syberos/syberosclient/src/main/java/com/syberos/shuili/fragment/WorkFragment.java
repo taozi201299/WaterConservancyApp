@@ -177,15 +177,18 @@ public class WorkFragment extends BaseFragment {
 //
 //        modules.add(getResources().getString(R.string.module_anjian));
 //        modules.add(getResources().getString(R.string.module_shuilijicha));
-        modules.add(getResources().getString(R.string.module_baobiao));
         // 工作考核
         if(App.sCodes.contains(GlobleConstants.wins)){
             modules.add(getResources().getString(R.string.module_gongzuo));
         }
         if(App.sCodes.contains(GlobleConstants.hidd)){
             modules.add(getResources().getString(R.string.module_yinhuan));
+            modules.add(getResources().getString(R.string.module_baobiao));
         }
         if(App.sCodes.contains(GlobleConstants.acci)){
+            if(!modules.contains(getResources().getString(R.string.module_baobiao))){
+                modules.add(getResources().getString(R.string.module_baobiao));
+            }
             modules.add(getResources().getString(R.string.module_shigu));
         }
         if(App.sCodes.contains(GlobleConstants.maha)){
@@ -239,6 +242,16 @@ public class WorkFragment extends BaseFragment {
                 }else {
                    if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_gongzuo))){
                         continue;
+                    }
+                    if(!modules.contains(GlobleConstants.hidd)){
+                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))){
+                            continue;
+                        }
+                    }
+                    if(!modules.contains(GlobleConstants.acci)){
+                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))){
+                            continue;
+                        }
                     }
                 }
                 if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))){

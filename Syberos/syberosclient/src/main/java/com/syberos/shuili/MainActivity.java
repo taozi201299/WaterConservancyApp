@@ -1,11 +1,10 @@
 package com.syberos.shuili;
 
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,10 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.lzy.okhttputils.callback.FileCallback;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
-import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.activity.login.LoginActivity;
 import com.syberos.shuili.activity.personalcenter.ChangePasswordActivity;
 import com.syberos.shuili.activity.personalcenter.MapManActitity;
@@ -47,14 +44,10 @@ import com.syberos.shuili.utils.Singleton;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
+import butterknife.ButterKnife;
 
 /**
  * Created by jidan on 18-3-10.
@@ -93,6 +86,16 @@ public class MainActivity extends TranslucentActivity
     RadioButton btn_workFragment_enterprises;
 
     private final static String TAG = MainActivity.class.getSimpleName();
+    @BindView(R.id.btn_workFragment)
+    RadioButton btnWorkFragment;
+    @BindView(R.id.btn_securityCloudFragment)
+    RadioButton btnSecurityCloudFragment;
+    @BindView(R.id.btn_hematicMapFragment)
+    RadioButton btnHematicMapFragment;
+    @BindView(R.id.btn_addressListFragment)
+    RadioButton btnAddressListFragment;
+    @BindView(R.id.btn_gateWayFragment)
+    RadioButton btnGateWayFragment;
 
     private int checkId = R.id.btn_workFragment;
 
@@ -100,7 +103,6 @@ public class MainActivity extends TranslucentActivity
             securityCloudFragment, hematicMapFragment,
             addressListFragment,
             gateWayFragment;
-
 
 
     private OpenDrawerListener openDrawerListener = null;
@@ -128,10 +130,10 @@ public class MainActivity extends TranslucentActivity
         cb_screenshot_ring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SPUtils.put(Allow_ScreenShot,isChecked);
-                if(isChecked) {
-                   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-                }else {
+                SPUtils.put(Allow_ScreenShot, isChecked);
+                if (isChecked) {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+                } else {
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 }
             }
@@ -172,10 +174,16 @@ public class MainActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+        if (App.sCodes.size() == 1) {
+            if (App.sCodes.contains(GlobleConstants.desu)) {
+                checkId = R.id.btn_hematicMapFragment;
+
+            }
+        }
 //        securityCloudFragment = new SecurityCloudFragment();
-        if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {
+        if (Boolean.valueOf(SPUtils.get(Allow_ScreenShot, false).toString())) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }else {
+        } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
         btn_addressListFragment_enterprises.setVisibility(View.GONE);
@@ -193,17 +201,17 @@ public class MainActivity extends TranslucentActivity
         switchFragment(checkId);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_setting_layout, null);
-        rl_me_password = (RelativeLayout) view.findViewById(R.id.rl_me_password);
-        cb_me_switcher_ring = (CheckBox) view.findViewById(R.id.cb_me_switcher_ring);
-        cb_screenshot_ring = (CheckBox)view.findViewById(R.id.cb_screenshot_ring);
-        rl_me_update = (RelativeLayout) view.findViewById(R.id.rl_me_update);
-        rl_me_clear = (RelativeLayout) view.findViewById(R.id.rl_me_clear);
-        rl_me_logout = (RelativeLayout) view.findViewById(R.id.rl_me_logout);
-        rl_map_down = (RelativeLayout)view.findViewById(R.id.rl_map_down);
-        rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
-        rl_allow_screenshot = (RelativeLayout)view.findViewById(R.id.rl_allow_screenshot);
-        cl_me_myself = (ConstraintLayout) view.findViewById(R.id.cl_me_myself);
-        iv_me_red_pot = (ImageView)view.findViewById(R.id.iv_me_red_pot);
+        rl_me_password =  view.findViewById(R.id.rl_me_password);
+        cb_me_switcher_ring =  view.findViewById(R.id.cb_me_switcher_ring);
+        cb_screenshot_ring =  view.findViewById(R.id.cb_screenshot_ring);
+        rl_me_update =  view.findViewById(R.id.rl_me_update);
+        rl_me_clear =  view.findViewById(R.id.rl_me_clear);
+        rl_me_logout =  view.findViewById(R.id.rl_me_logout);
+        rl_map_down =  view.findViewById(R.id.rl_map_down);
+        rl_me_message_ring =  view.findViewById(R.id.rl_me_message_ring);
+        rl_allow_screenshot =  view.findViewById(R.id.rl_allow_screenshot);
+        cl_me_myself =  view.findViewById(R.id.cl_me_myself);
+        iv_me_red_pot =  view.findViewById(R.id.iv_me_red_pot);
         tv_person_name = view.findViewById(R.id.tv_person_name);
         tv_person_name.setText(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
         tv_person_address = view.findViewById(R.id.tv_person_address);
@@ -213,7 +221,7 @@ public class MainActivity extends TranslucentActivity
         } else {
             cb_me_switcher_ring.setChecked(false);
         }
-        cb_screenshot_ring.setChecked(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString()));
+        cb_screenshot_ring.setChecked(Boolean.valueOf(SPUtils.get(Allow_ScreenShot, false).toString()));
         setting_menu.addView(view);
 
     }
@@ -324,24 +332,27 @@ public class MainActivity extends TranslucentActivity
 
     }
 
-    private void mapDownLoad(){
-        intentActivity(MainActivity.this,MapManActitity.class,false,true);
+    private void mapDownLoad() {
+        intentActivity(MainActivity.this, MapManActitity.class, false, true);
     }
-    private void updatePwd(){
+
+    private void updatePwd() {
         intentActivity(MainActivity.this, ChangePasswordActivity.class,
                 false, true);
     }
-    private void appUpdate(){
-        if(iv_me_red_pot.getVisibility() != View.VISIBLE){
+
+    private void appUpdate() {
+        if (iv_me_red_pot.getVisibility() != View.VISIBLE) {
             ToastUtils.show("当前为最新版本");
             return;
         }
-        if(UpdateManager.isServiceRunning(this)){
+        if (UpdateManager.isServiceRunning(this)) {
             ToastUtils.show("正在下载新版本");
         }
-        UpdateManager.showDialog(this,iv_me_red_pot);
+        UpdateManager.showDialog(this, iv_me_red_pot);
     }
-    private void clearCache(){
+
+    private void clearCache() {
         final CustomDialog customDialog = new CustomDialog(this);
         customDialog.setDialogMessage("缓存管理", null, null);
         customDialog.setMessage("确认清空缓存数据？");
@@ -350,7 +361,7 @@ public class MainActivity extends TranslucentActivity
             public void onClick(View v) {
                 SyberosManagerImpl.getInstance().clearCache();
                 App.userType = "-1";
-                SPUtils.put(GlobleConstants.Pwd,"");
+                SPUtils.put(GlobleConstants.Pwd, "");
                 LoginUtil.setLastUserAccount("");
                 LoginUtil.clearCache();
                 customDialog.dismiss();
@@ -358,12 +369,13 @@ public class MainActivity extends TranslucentActivity
         });
         customDialog.show();
     }
-    private void logout(final boolean bExist){
+
+    private void logout(final boolean bExist) {
         final CustomDialog customDialog = new CustomDialog(this);
         customDialog.setDialogMessage("登录管理", null, null);
-        if(bExist) {
+        if (bExist) {
             customDialog.setMessage("确认要退出登录吗？");
-        }else {
+        } else {
             customDialog.setMessage("确认要退出应用吗？");
         }
         customDialog.setOnConfirmClickListener(new View.OnClickListener() {
@@ -371,11 +383,11 @@ public class MainActivity extends TranslucentActivity
             public void onClick(View v) {
                 activityFinish();
                 ScreenManager.getScreenManager().popAll();
-                if(bExist){
+                if (bExist) {
                     App.userType = "-1";
                     App.sCodes.clear();
                     App.sCode = "";
-                    SPUtils.put(GlobleConstants.Pwd,"");
+                    SPUtils.put(GlobleConstants.Pwd, "");
                     intentActivity(MainActivity.this, LoginActivity.class,
                             true, true);
                 }
@@ -384,6 +396,7 @@ public class MainActivity extends TranslucentActivity
         });
         customDialog.show();
     }
+
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -397,14 +410,14 @@ public class MainActivity extends TranslucentActivity
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     AppUpdateEntity updateEntity = gson.fromJson(response, AppUpdateEntity.class);
-                    if(updateEntity.isSuccess()){
-                        ArrayList<AppUpdateEntity> datas =  (ArrayList<AppUpdateEntity>)updateEntity.dataSource.Tables.get(0).Datas;
+                    if (updateEntity.isSuccess()) {
+                        ArrayList<AppUpdateEntity> datas = (ArrayList<AppUpdateEntity>) updateEntity.dataSource.Tables.get(0).Datas;
                         String appinfo = datas.get(0).getAppinfo();
-                        if(appinfo.equals("1")){
+                        if (appinfo.equals("1")) {
                             iv_me_red_pot.setVisibility(View.GONE);
                             UpdateManager.bUpdate = false;
 
-                        }else {
+                        } else {
                             iv_me_red_pot.setVisibility(View.VISIBLE);
                             UpdateManager.appUrl = appinfo;
                             UpdateManager.bUpdate = true;
@@ -414,7 +427,7 @@ public class MainActivity extends TranslucentActivity
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                   // ToastUtils.show(errorInfo.getMessage());
+                    // ToastUtils.show(errorInfo.getMessage());
 
                 }
             });
@@ -436,10 +449,17 @@ public class MainActivity extends TranslucentActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             logout(false);
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

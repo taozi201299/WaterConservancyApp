@@ -309,12 +309,6 @@ public class LoginActivity extends BaseActivity {
 
                 } else {
                     closeDialog();
-                    if(accountEdit.getText().toString().equalsIgnoreCase("desutest1")){
-                        App.sCodes.add(GlobleConstants.acci);
-                        go2Activity();
-                        syncAddressList();
-                        return;
-                    }
                     ToastUtils.show("该用户无权限使用本系统");
                     closeDialog();
                 }
@@ -348,7 +342,8 @@ public class LoginActivity extends BaseActivity {
                     App.sCode = roleInfo.getScode();
                     bRet = true;
                 }
-            } else if (GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())) {
+            } else if (GlobleConstants.acci.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.sins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.stan.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.maha.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.woas.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.suen.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.wins.equalsIgnoreCase(roleInfo.getScode()) || GlobleConstants.hidd.equalsIgnoreCase(roleInfo.getScode())
+                    || GlobleConstants.desu.equalsIgnoreCase(roleInfo.getScode())) {
                 App.sCodes.add(roleInfo.getScode());
                 bRet = true;
             }
@@ -554,7 +549,8 @@ public class LoginActivity extends BaseActivity {
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
             App.userType = "0";
-        } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)) {
+        } else if (App.sCodes.contains(GlobleConstants.acci) || App.sCodes.contains(GlobleConstants.sins) || App.sCodes.contains(GlobleConstants.stan) || App.sCodes.contains(GlobleConstants.maha) || App.sCodes.contains(GlobleConstants.woas) || App.sCodes.contains(GlobleConstants.suen) || App.sCodes.contains(GlobleConstants.wins) || App.sCodes.contains(GlobleConstants.hidd)
+                || App.sCodes.contains(GlobleConstants.desu)) {
             intentActivity(LoginActivity.this, MainActivity.class, false, true);
             App.userType = "1";
         }
