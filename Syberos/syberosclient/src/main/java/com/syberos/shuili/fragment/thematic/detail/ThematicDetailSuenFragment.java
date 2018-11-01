@@ -123,7 +123,7 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
         if(suenEntry == null) return;
         String time = CommonUtils.getCurrentDateYMD();
         String[] arrayTime = time.split("-");
-        tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"安监执法情况");
+        tvViewTitle.setText(arrayTime[0]+"年"+"监督执法情况");
         if(suenEntry.getData().getCountOrgList().size() > 0) {
             tvData1.setText(suenEntry.getData().getCountOrgList().get(0).getCOUNT() + "");
         }
@@ -146,7 +146,7 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
-        tvListTitle.setText("安监执法统计");
+        tvListTitle.setText("监督执法统计");
         ivMarkPot1.setVisibility(View.GONE);
         tvChartValue1.setVisibility(View.GONE);
         tvChartValueTitle1.setVisibility(View.GONE);

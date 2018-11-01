@@ -109,6 +109,8 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
     TextView tvListTitle;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_chat_label)
+            TextView tv_chat_label;
     Unbinder unbinder;
     private String[] mTitles = {"流域", "直管", "监管"};
     private RankViewPagerAdapter pagerAdapter;
@@ -198,6 +200,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
     private void resetData() {
         setSinsEntry(sinsEntry);
+        tv_chat_label.setText("安全检查完成情况");
         tvViewTitle.setText("最近一次安全检查情况");
         tvData1.setText("");
         tvDataTitle1.setText("检查次数");

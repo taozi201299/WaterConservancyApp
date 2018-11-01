@@ -227,7 +227,7 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
                     intent.putExtra("every", stanSuperviseEntry.getData().getEveryOrgList().get(position));
                     intent.putExtra("type", "1");
                 }
-                startActivity(intent);
+               // startActivity(intent);
             }
         });
 

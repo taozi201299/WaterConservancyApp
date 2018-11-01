@@ -61,7 +61,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
     public static final String Sins = "安全检查";
     public static final String Woas = "工作考核";
     public static final String Wins = "水利稽察";
-    public static final String Suen = "安监执法";
+    public static final String Suen = "监督执法";
     @BindView(R.id.tl_tab)
     TabLayout tl_tab;
 

@@ -146,9 +146,9 @@ public class ThematicStansItemActivity extends BaseActivity {
         int zCCount;  //  证书正常
         int cQCount ; // 证书超期
         if("1".equals(type)){
-            yJCount = Integer.valueOf(countOrg.getYJ());
-            eRCount = Integer.valueOf(countOrg.getER());
-            sJCount = Integer.valueOf(countOrg.getSJ());
+            yJCount = Integer.valueOf(everyOrgBean1.getYJ());
+            eRCount = Integer.valueOf(everyOrgBean1.getEJ());
+            sJCount = Integer.valueOf(everyOrgBean1.getSJ());
             cXCount = Integer.valueOf(bookOrg.getCX());
             zCCount = Integer.valueOf(bookOrg.getZC());
             cQCount = Integer.valueOf(bookOrg.getCQ());
