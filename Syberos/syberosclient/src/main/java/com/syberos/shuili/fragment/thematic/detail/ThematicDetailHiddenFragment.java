@@ -20,6 +20,7 @@ import com.syberos.shuili.entity.thematic.hidden.HiddenEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -176,7 +177,9 @@ public class ThematicDetailHiddenFragment extends BaseLazyFragment {
 
     public void onHiddenData(final HiddenEntry hiddenEntry) {
 //        ToastUtils.show("also had get Data");
-        tvViewTitle.setText("");
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"隐患情况");
         tvData1.setText(hiddenEntry.getData().getHIDDTOTALQUA() - hiddenEntry.getData().getHIDDRECTQUA() + "");
         tvDataTitle1.setText("未整改数量");
 

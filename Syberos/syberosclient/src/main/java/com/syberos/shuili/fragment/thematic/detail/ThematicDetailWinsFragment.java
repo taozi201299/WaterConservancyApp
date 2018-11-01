@@ -22,6 +22,7 @@ import com.syberos.shuili.entity.thematic.wins.WinsEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.thematic.detail.detailproj.RankListFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -126,6 +127,9 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
         if(winsEntry == null)return;
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"稽察情况");
         tvData1.setText(winsEntry.getData().getWINSQUA());
         tvDataTitle1.setText("稽查次数");
         tvData2.setText(winsEntry.getData().getWINSPROJQUA());

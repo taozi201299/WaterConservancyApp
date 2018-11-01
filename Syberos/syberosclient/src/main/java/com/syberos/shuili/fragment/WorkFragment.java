@@ -19,6 +19,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
+import com.syberos.shuili.BuildConfig;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.TestActivity1;
@@ -57,6 +58,7 @@ import com.syberos.shuili.activity.work.TodoWorkActivity;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -183,11 +185,15 @@ public class WorkFragment extends BaseFragment {
         }
         if(App.sCodes.contains(GlobleConstants.hidd)){
             modules.add(getResources().getString(R.string.module_yinhuan));
-            modules.add(getResources().getString(R.string.module_baobiao));
+            if(BusinessConfig.getOrgLevel() != 1){
+                modules.add(getResources().getString(R.string.module_baobiao));
+            }
         }
         if(App.sCodes.contains(GlobleConstants.acci)){
             if(!modules.contains(getResources().getString(R.string.module_baobiao))){
-                modules.add(getResources().getString(R.string.module_baobiao));
+                if(BusinessConfig.getOrgLevel() != 1){
+                    modules.add(getResources().getString(R.string.module_baobiao));
+                }
             }
             modules.add(getResources().getString(R.string.module_shigu));
         }

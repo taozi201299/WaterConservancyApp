@@ -20,6 +20,7 @@ import com.syberos.shuili.entity.thematic.acci.AcciEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.fragment.HematicMapFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -131,6 +132,9 @@ public class ThematicDetailAcciFragment extends BaseLazyFragment {
     @Override
     protected void initData() {
         if(acciEntry == null)return;
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+"事故情况");
         tvData1.setText(acciEntry.getData().getACCITOTALNUM());
         tvDataTitle1.setText("事故数量");
         tvData2.setText(acciEntry.getData().getACCITOTALCASNUM());

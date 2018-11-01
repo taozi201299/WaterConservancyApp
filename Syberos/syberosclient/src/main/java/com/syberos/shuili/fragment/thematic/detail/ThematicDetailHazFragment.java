@@ -17,6 +17,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.haz.HazEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -138,7 +139,9 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"危险源情况");
         ArrayList<HazEntry.CountBean> list  = (ArrayList<HazEntry.CountBean>) hazEntry.getData().getCountEngList();
         HazEntry.CountBean bean = list.get(0);
         tvData1.setText(bean.getYGK()+"");

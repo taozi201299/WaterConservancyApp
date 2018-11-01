@@ -26,6 +26,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.publicentry.LineChartEntry;
 import com.syberos.shuili.entity.thematic.woas.WoasEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.view.DialPlateView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -91,6 +92,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onWoasData(WoasEntry woasEntry) {
+        tvTitle.setText("最近一次安全检查情况");
         if (woasEntry != null) {
             setWoasEntry(woasEntry);
             viewDialPlate.updateData(woasEntry.getData().getAVGSCORE().getTOTALSCOR() / woasEntry.getData().getAVGSCORE().getUNUM());

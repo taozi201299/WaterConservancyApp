@@ -96,7 +96,7 @@ public class GlobleConstants {
     public static final String wins = "wins"; // 安监-水利稽察
     public static final String hidd = "hidd"; // 安监-隐患监管
 
-    public static final String desu ="desu" ;// 安监-决策
+    public static final String desu ="dest"  ;// 安监-决策
 
 
     /**

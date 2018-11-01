@@ -22,6 +22,7 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.sins.SinsEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -139,9 +140,10 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onSinsData(final SinsEntry sinsEntry) {
+        tvViewTitle.setText("最近一次安全检查情况");
         if (sinsEntry != null) {
             setSinsEntry(sinsEntry);
-            tvViewTitle.setText("");
+            tvViewTitle.setText("最近一次安全检查情况");
             tvData1.setText(sinsEntry.getData().getSINSQUA() + "");
             tvDataTitle1.setText("检查次数");
             tvData2.setText(sinsEntry.getData().getSINSOBJQUA() + "");
@@ -196,7 +198,7 @@ public class ThematicDetailSinsFragment extends BaseLazyFragment {
 
     private void resetData() {
         setSinsEntry(sinsEntry);
-        tvViewTitle.setText("");
+        tvViewTitle.setText("最近一次安全检查情况");
         tvData1.setText("");
         tvDataTitle1.setText("检查次数");
         tvData2.setText("");

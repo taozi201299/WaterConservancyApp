@@ -143,11 +143,11 @@ public class ThematicDetailActivity extends BActivity {
                 break;
             case Suen:
                 tvTitle.setText("安监执法");
-                Bundle bundle = new Bundle();
-                bundle.putInt("statusKey", SuenChartFragment.getStatus1());
-                fragments[7].setArguments(bundle);
-                SuenEntry suenEntry = (SuenEntry)(getIntent().getBundleExtra("suenData").getSerializable("suenData"));
-                ((ThematicDetailSuenFragment)fragments[7]).setData(suenEntry);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("statusKey", SuenChartFragment.getStatus1());
+//                fragments[7].setArguments(bundle);
+//                SuenEntry suenEntry = (SuenEntry)(getIntent().getBundleExtra("suenData").getSerializable("suenData"));
+//                ((ThematicDetailSuenFragment)fragments[7]).setData(suenEntry);
                 switchFragment(fragments[7]);
                 break;
             default:

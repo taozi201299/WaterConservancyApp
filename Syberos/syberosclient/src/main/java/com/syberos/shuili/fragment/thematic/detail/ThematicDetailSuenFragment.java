@@ -17,6 +17,11 @@ import com.syberos.shuili.base.BaseLazyFragment;
 import com.syberos.shuili.entity.thematic.suen.SuenEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,18 +102,40 @@ public class ThematicDetailSuenFragment extends BaseLazyFragment {
     protected void initListener() {
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onSuenData(final SuenEntry suenEntry) {
+        setData(suenEntry);
+        initData();
+    }
+    @Override
     protected void initData() {
-
-        tvData1.setText(suenEntry.getData().getCountOrgList().get(0).getCOUNT() + "");
+        if(suenEntry == null) return;
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"安监执法情况");
+        if(suenEntry.getData().getCountOrgList().size() > 0) {
+            tvData1.setText(suenEntry.getData().getCountOrgList().get(0).getCOUNT() + "");
+        }
         tvDataTitle1.setText("执法数量");
-        tvData2.setText(suenEntry.getData().getCountOrgList().get(0).getVALUE() + "");
+        if(suenEntry.getData().getCountOrgList().size() > 0) {
+            tvData2.setText(suenEntry.getData().getCountOrgList().get(0).getVALUE() + "");
+        }
         tvDataTitle2.setText("整改数量");
 
 
         List<ProjectEntry> list = new ArrayList<>();
-        for(SuenEntry.EveryOrgBean bean:suenEntry.getData().getEveryOrgList()) {
+        for(SuenEntry.DataBean.EveryOrgBean bean:suenEntry.getData().getEveryOrgList()) {
             list.add(new ProjectEntry(bean.getJURD(), bean.getORG_NAME(), String.valueOf(bean.getZGL())));
         }
         RecyclerAdapterGeneral adapter = new RecyclerAdapterGeneral(list,"%");

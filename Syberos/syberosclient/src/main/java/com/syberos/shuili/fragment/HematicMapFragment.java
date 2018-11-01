@@ -151,9 +151,9 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
                 intent.putExtra("winsData",winsBundle);
                 break;
             case Suen:
-                Bundle suenBundle = new Bundle();
-                suenBundle.putSerializable("suenData",((SuenChartFragment)fragments.get(currentItem)).getData());
-                intent.putExtra("suenData",suenBundle);
+//                Bundle suenBundle = new Bundle();
+//                suenBundle.putSerializable("suenData",((SuenChartFragment)fragments.get(currentItem)).getData());
+//                intent.putExtra("suenData",suenBundle);
                 break;
         }
         startActivity(intent);
@@ -267,7 +267,10 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
             params.put("type", "PROVINCE");
         }
       //  params.put("type", "XZBAS");
-        if(code.length() <6)return;
+        if(code.length() <6){
+            closeDialog();
+            return;
+        }
         code = code.substring(0, 6);
         params.put("guid", code);
         params.put("name", "");
@@ -299,7 +302,6 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDialog();
                 ToastUtils.show(errorInfo.getMessage());
             }
         }, CacheMode.DEFAULT);

@@ -294,7 +294,7 @@ public class SuenChartFragment extends BaseLazyFragment {
                     closeDataDialog();
                     return;
                 }
-                for(SuenEntry.EveryOrgBean bean :suenEntry.getData().getEveryOrgList()){
+                for(SuenEntry.DataBean.EveryOrgBean bean :suenEntry.getData().getEveryOrgList()){
                     list.add(new Point(String.valueOf(bean.getX()),String.valueOf(bean.getY()),String.valueOf(bean.getCOUNT()),bean.getJURD()));
                 }
                 addMarkInfo(list);

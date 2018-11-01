@@ -21,6 +21,7 @@ import com.syberos.shuili.entity.thematic.stans.StanDirectEntry;
 import com.syberos.shuili.entity.thematic.stans.StanSuperviseEntry;
 import com.syberos.shuili.entity.thematicchart.ProjectEntry;
 import com.syberos.shuili.listener.OnItemClickListener;
+import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
 
 import java.util.ArrayList;
@@ -138,6 +139,9 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
+        String time = CommonUtils.getCurrentDateYMD();
+        String[] arrayTime = time.split("-");
+        tvViewTitle.setText(arrayTime[0]+"年"+"标准化情况");
         int yJCount = 0; // 一级达标数量
         int eRCount = 0;  // 二级达标数量
         int sJCount = 0; // 三级达标数量
