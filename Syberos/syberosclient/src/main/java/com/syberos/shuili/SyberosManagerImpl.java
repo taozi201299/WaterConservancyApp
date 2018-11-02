@@ -346,6 +346,9 @@ public class SyberosManagerImpl {
         syberosAidlClient.clearCache();
 
     }
+    public void commitCache(){
+        syberosAidlClient.commitCache();
+    }
     /**
      * 获取事故单位类型
      */

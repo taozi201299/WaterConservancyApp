@@ -82,6 +82,7 @@
     <string name="me_message_vibration">消息震动提醒</string>
     <string name="me_update">检查更新</string>
     <string name="me_logout">退出登录</string>
+    <string name ="me_info_submit">提交本地数据</string>
     <string name="me_swipe_data">清除缓存</string>
     <string name = "me_map_down">离线地图</string>
 

@@ -66,6 +66,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
     RelativeLayout rl_me_update;
     RelativeLayout rl_me_clear;
     RelativeLayout rl_me_logout;
+    RelativeLayout rl_me_commit;
     RelativeLayout rl_map_down;
     RelativeLayout rl_me_message_ring;
     RelativeLayout rl_allow_screenshot;
@@ -129,6 +130,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
         });
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
+        rl_me_commit.setOnClickListener(this);
         rl_me_logout.setOnClickListener(this);
         rl_map_down.setOnClickListener(this);
         rl_me_message_ring.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +191,7 @@ public class MainEnterpriseActivity extends TranslucentActivity
         cb_screenshot_ring = (CheckBox)view.findViewById(R.id.cb_screenshot_ring);
         rl_me_update = (RelativeLayout) view.findViewById(R.id.rl_me_update);
         rl_me_clear = (RelativeLayout) view.findViewById(R.id.rl_me_clear);
+        rl_me_commit = view.findViewById(R.id.rl_me_commit);
         rl_me_logout = (RelativeLayout) view.findViewById(R.id.rl_me_logout);
         rl_map_down = (RelativeLayout)view.findViewById(R.id.rl_map_down);
         rl_me_message_ring = (RelativeLayout) view.findViewById(R.id.rl_me_message_ring);
@@ -282,6 +285,9 @@ public class MainEnterpriseActivity extends TranslucentActivity
             case R.id.rl_me_clear:
                 clearCache();
                 break;
+            case R.id.rl_me_commit:
+                commitCache();
+                break;
             case R.id.rl_me_logout:
                 logout(true);
                 break;
@@ -321,6 +327,20 @@ public class MainEnterpriseActivity extends TranslucentActivity
                 SPUtils.put(GlobleConstants.Pwd,"");
                 LoginUtil.setLastUserAccount("");
                 LoginUtil.clearCache();
+                customDialog.dismiss();
+            }
+        });
+        customDialog.show();
+    }
+
+    private void  commitCache(){
+        final CustomDialog customDialog = new CustomDialog(this);
+        customDialog.setDialogMessage("缓存管理", null, null);
+        customDialog.setMessage("确认提交本地数据？");
+        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SyberosManagerImpl.getInstance().commitCache();
                 customDialog.dismiss();
             }
         });

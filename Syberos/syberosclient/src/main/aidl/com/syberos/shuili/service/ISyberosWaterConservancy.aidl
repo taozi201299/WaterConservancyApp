@@ -31,6 +31,7 @@ import com.syberos.shuili.service.IAccidentListCallback;
    void syncMapInfo(in Map params);
    String getMapUrl(String url,String serviceId);
    void clearCache();
+   void commitCache();
 
 
 }

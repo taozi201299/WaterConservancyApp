@@ -132,6 +132,9 @@ public class SyberosService extends Service {
         public void clearCache(){
             dataProvider.clearCache();
         }
+        public void commitCache(){
+            dataProvider.commitCache();
+        }
 
     };
   public   interface  StringCallBack{

@@ -264,6 +264,13 @@ public class SyberosAidlClient {
            e.printStackTrace();
        }
    }
+   public void commitCache(){
+        try {
+            syberosAidlClient.ILibInterface.commitCache();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
    private List<UserExtendInformation> convertInfo(List<UserInformationEntity> infos){
        if(infos == null)return null;
        List<UserExtendInformation> informations = new ArrayList<>();

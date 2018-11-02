@@ -64,6 +64,7 @@ public class MainActivity extends TranslucentActivity
     @BindView(R.id.setting_menu)
     LinearLayout setting_menu;
     RelativeLayout rl_me_password;
+    RelativeLayout rl_me_commit;
     CheckBox cb_me_switcher_ring;
     CheckBox cb_screenshot_ring;
 
@@ -141,6 +142,7 @@ public class MainActivity extends TranslucentActivity
         });
         rl_me_update.setOnClickListener(this);
         rl_me_clear.setOnClickListener(this);
+        rl_me_commit.setOnClickListener(this);
         rl_me_logout.setOnClickListener(this);
         rl_map_down.setOnClickListener(this);
         rl_me_message_ring.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +207,7 @@ public class MainActivity extends TranslucentActivity
         cb_me_switcher_ring =  view.findViewById(R.id.cb_me_switcher_ring);
         cb_screenshot_ring =  view.findViewById(R.id.cb_screenshot_ring);
         rl_me_update =  view.findViewById(R.id.rl_me_update);
+        rl_me_commit = view.findViewById(R.id.rl_me_commit);
         rl_me_clear =  view.findViewById(R.id.rl_me_clear);
         rl_me_logout =  view.findViewById(R.id.rl_me_logout);
         rl_map_down =  view.findViewById(R.id.rl_map_down);
@@ -321,6 +324,9 @@ public class MainActivity extends TranslucentActivity
             case R.id.rl_me_clear:
                 clearCache();
                 break;
+            case R.id.rl_me_commit:
+                commitCache();
+                break;
             case R.id.rl_me_logout:
                 logout(true);
                 break;
@@ -370,6 +376,19 @@ public class MainActivity extends TranslucentActivity
         customDialog.show();
     }
 
+    private void  commitCache(){
+        final CustomDialog customDialog = new CustomDialog(this);
+        customDialog.setDialogMessage("缓存管理", null, null);
+        customDialog.setMessage("确认提交本地数据？");
+        customDialog.setOnConfirmClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SyberosManagerImpl.getInstance().commitCache();
+                customDialog.dismiss();
+            }
+        });
+        customDialog.show();
+    }
     private void logout(final boolean bExist) {
         final CustomDialog customDialog = new CustomDialog(this);
         customDialog.setDialogMessage("登录管理", null, null);
@@ -410,7 +429,8 @@ public class MainActivity extends TranslucentActivity
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     AppUpdateEntity updateEntity = gson.fromJson(response, AppUpdateEntity.class);
-                    if (updateEntity.isSuccess()) {
+                    if (updateEntity != null && updateEntity.isSuccess() && updateEntity.dataSource != null && updateEntity.dataSource.Tables != null &&
+                            updateEntity.dataSource.Tables.size() > 0) {
                         ArrayList<AppUpdateEntity> datas = (ArrayList<AppUpdateEntity>) updateEntity.dataSource.Tables.get(0).Datas;
                         String appinfo = datas.get(0).getAppinfo();
                         if (appinfo.equals("1")) {

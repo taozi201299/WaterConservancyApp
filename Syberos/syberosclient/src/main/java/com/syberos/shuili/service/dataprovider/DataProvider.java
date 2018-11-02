@@ -179,16 +179,7 @@ public class DataProvider {
         initHandler();
 
     }
-    /**
-     * 提交本地缓存
-     */
-    public void submitCache() {
-        localCacheManager.submitLocalCacheAll();
 
-
-
-
-    }
    public void  addLocalCache(String url, Map params, Map files, IResultCallback callback){
         localCacheManager.addCache(url,params,files,callback);
    }
@@ -252,6 +243,13 @@ public class DataProvider {
        dbHelper.deleteAllTables();
    }
 
+    /**
+     * 提交本地缓存
+     */
+    public void commitCache() {
+        localCacheManager.submitLocalCacheAll();
+
+    }
    public void getLocalAccidentList(Map params, IAccidentListCallback callback){
        hanlerManager.offLineRequest(params,callback);
    }
