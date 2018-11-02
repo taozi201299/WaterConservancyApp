@@ -578,7 +578,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        todo 直管工程的 管理
         StraightTubeManageEntry straightTubeManageEntry = new StraightTubeManageEntry();
 //        straightTubeManageEntry.set
-        initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
+     //   initStraightTubeManage(securityCloudEntry.getStraightTubeManageEntry());
         List<SecurityCloudOrgEntry.DataBean.AqpgMonthBean> list = securityCloudOrgEntry.getData().getAqpgMonth();
         lineChart = viewGradeTrend.findViewById(R.id.line_chart);
         tvDate.setOnClickListener(new View.OnClickListener() {
