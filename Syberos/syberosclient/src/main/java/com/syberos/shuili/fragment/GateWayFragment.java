@@ -26,6 +26,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -154,8 +155,21 @@ public class GateWayFragment extends BaseFragment {
                     return true;
                 }
             });
-            webview.loadUrl("http://192.168.1.11:9080/eutr/moni/stan");
-
+            int index = type;
+            switch (index){
+                // 三类人员
+                case 1:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/moni/public/ttsa");
+                    break;
+                // 标准化
+                case 2:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/moni/public/stan");
+                    break;
+                // 教育培训
+                case 3:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/eutr/public/publicstudy ");
+                    break;
+            }
         }
     }
     public class GateWayAdatper extends CommonAdapter<String> {

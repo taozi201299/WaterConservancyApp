@@ -185,15 +185,11 @@ public class WorkFragment extends BaseFragment {
         }
         if(App.sCodes.contains(GlobleConstants.hidd)){
             modules.add(getResources().getString(R.string.module_yinhuan));
-            if(BusinessConfig.getOrgLevel() != 1){
-                modules.add(getResources().getString(R.string.module_baobiao));
-            }
+            modules.add(getResources().getString(R.string.module_baobiao));
         }
         if(App.sCodes.contains(GlobleConstants.acci)){
             if(!modules.contains(getResources().getString(R.string.module_baobiao))){
-                if(BusinessConfig.getOrgLevel() != 1){
-                    modules.add(getResources().getString(R.string.module_baobiao));
-                }
+                modules.add(getResources().getString(R.string.module_baobiao));
             }
             modules.add(getResources().getString(R.string.module_shigu));
         }
