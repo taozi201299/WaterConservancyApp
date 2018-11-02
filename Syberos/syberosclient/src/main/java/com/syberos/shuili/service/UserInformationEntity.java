@@ -59,25 +59,25 @@ public class UserInformationEntity implements Parcelable {
                                  String note,String orgCode,String orgId,String orgName,
                                  String persId,String persName,String persType,String phone,String status,String ts,
                                  String userCode,String userName,String userType) {
-         this.admDutyLevel = admDutyLevel;
-         this.depCode = depCode;
-         this.depId = depId;
-         this.depName = depName;
-         this.id = id;
-         this.modifier = modifier;
-         this.note = note;
-         this.orgCode = orgCode;
-         this.orgId = orgId;
-         this.orgName = orgName;
-         this.persId = persId;
-         this.persName = persName;
-         this.persType = persType;
-         this.phone = phone;
-         this.status = status;
-         this.ts = ts;
-         this.userCode = userCode;
-         this.userName = userName;
-         this.userType = userType;
+         this.admDutyLevel = admDutyLevel == null ? "":admDutyLevel;
+         this.depCode = depCode == null ? "":depCode;
+         this.depId = depId == null ?"":depId;
+         this.depName = depName == null ?"":depName;
+         this.id = id == null ?"" :id;
+         this.modifier = modifier == null ? "":modifier;
+         this.note = note == null ? "":note;
+         this.orgCode = orgCode == null ?"":orgCode;
+         this.orgId = orgId  == null  ?"":orgId;
+         this.orgName = orgName == null ?"":orgName;
+         this.persId = persId == null ? "":persId;
+         this.persName = persName == null ? "":persName;
+         this.persType = persType == null ?"":persType;
+         this.phone = phone == null ? "":phone;
+         this.status = status == null ? "":status;
+         this.ts = ts == null ? "":ts;
+         this.userCode = userCode == null ? "":userCode;
+         this.userName = userName == null ? "": userName;
+         this.userType = userType == null ? "":userType;
 
     }
     protected UserInformationEntity(Parcel in){

@@ -102,7 +102,6 @@ public class DataProvider {
                     syncManager.syncUserInfo(bundle);
                     break;
                 case message_what_sync_userInfo_failed:
-                    LogUtils.d("djksjdkjfkjsd","jfkjdkjf");
                     bSyncSucess = false;
                     break;
                 case message_what_sync_messageInfo:

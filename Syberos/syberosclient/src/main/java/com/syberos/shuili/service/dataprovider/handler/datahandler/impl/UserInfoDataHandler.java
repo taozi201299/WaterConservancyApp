@@ -19,10 +19,13 @@ import com.syberos.shuili.service.dataprovider.DataProvider;
 import com.syberos.shuili.service.dataprovider.dbconfig.def.DBDefinition;
 import com.syberos.shuili.service.dataprovider.handler.datahandler.DataHandlerBase;
 
+import org.ksoap2.serialization.SoapObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import okhttp3.Call;
 
@@ -88,7 +91,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
         SoapUtils.getInstance().callWebService((HashMap<String,Object>)params, method, new RequestCallback() {
             @Override
             public void onResponse(Object result) {
-                ArrayList<UserInformationEntity> infos = (ArrayList<UserInformationEntity>) string2UserInforEntity(result.toString());
+                ArrayList<UserInformationEntity> infos = (ArrayList<UserInformationEntity>) string2UserInforEntity(result);
                 if(infos == null) {
                     try {
                         callback.onError(-4, ErrorInfo.ErrorCode.valueOf(-4).getMessage());
@@ -126,37 +129,39 @@ public class UserInfoDataHandler extends DataHandlerBase {
             }
         }, SoapUtils.SoapType.WSDL_BASE);
     }
-    private List<UserInformationEntity> string2UserInforEntity(String response){
-        response = response.replace("\n","");
-        response = response.replace(" ","");
-        response = response.replace("anyType","");
-        response = response.replace("[","");
-        response = response.replace("]","");
-        String[] array = response.split(",");
+    private List<UserInformationEntity> string2UserInforEntity(Object response){
+        int size = ((Vector)response).size();
         List<UserInformationEntity> infos = new ArrayList<>();
-        int size = array.length;
-        for(int i = 0; i< size ;i++){
-            String item  = array[i].replace("{","");
-            item  = item.replace("}","");
-            String[]itemArray = item.split(";");
-            int count = itemArray.length;
-            HashMap<String,String> map = new HashMap<>();
-            for(int j = 0; j < count ;j++){
-             String[]childItemArray = itemArray[j].split("=");
-             if(childItemArray.length == 2){
-                 map.put(childItemArray[0],childItemArray[1]);
-             }
-            }
+        for(int i = 0 ; i < size ; i ++) {
+            HashMap<String,String>info = new HashMap<>();
+            info.put("admDuty",(((SoapObject)((Vector) response).get(i)).getPropertySafelyAsString("admDuty").toString()));
+            info.put("depId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depId").toString()));
+            info.put("depName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depName").toString()));
+            info.put("id", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("id").toString()));
+            info.put("isValidUser", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isValidUser").toString()));
+            info.put("isWaterIndustry", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isWaterIndustry").toString()));
+            info.put("jurdAreaType", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("jurdAreaType").toString()));
+            info.put("orgJurd",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgJurd").toString()));
+            info.put("mobilenumb",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("mobilenumb").toString()));
+            info.put("modifier", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("modifier").toString()));
+            info.put("orgCode",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgCode").toString()));
+            info.put("orgId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgId").toString()));
+            info.put("orgLevel", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgLevel").toString()));
+            info.put("orgName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgName").toString()));
+            info.put("persId",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persId").toString()));
+            info.put("persName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persName").toString()));
+            info.put("status", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("status").toString()));
+            info.put("ts", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("ts").toString()));
+            info.put("userCode",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userCode").toString()));
+            info.put("userName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userName").toString()));
+            info.put("userPassword",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userPassword").toString()));
             UserInformationEntity informationEntity = new UserInformationEntity("","","",
-                    map.get(DBDefinition.depName),
-                    map.get(DBDefinition.id),"","","","",map.get(DBDefinition.orgName),
-                    "",map.get(DBDefinition.persName),"",map.get("mobilenumb"),"","","",
+                    info.get(DBDefinition.depName),
+                    info.get(DBDefinition.id),"","","","",info.get(DBDefinition.orgName),
+                    "",info.get(DBDefinition.persName),"",info.get("mobilenumb"),"","","",
                     "","");
             infos.add(informationEntity);
         }
-
-
-
 
         return infos;
 
