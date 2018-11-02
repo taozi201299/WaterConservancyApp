@@ -92,11 +92,12 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onWoasData(WoasEntry woasEntry) {
-        tvTitle.setText("最近一次安全检查情况");
         if (woasEntry != null) {
             setWoasEntry(woasEntry);
-            viewDialPlate.updateData(woasEntry.getData().getAVGSCORE().getTOTALSCOR() / woasEntry.getData().getAVGSCORE().getUNUM());
-            tvScore.setText(woasEntry.getData().getAVGSCORE().getTOTALSCOR() / woasEntry.getData().getAVGSCORE().getUNUM() + "");
+            Double value = CommonUtils.div(woasEntry.getData().getAVGSCORE().getTOTALSCOR(),woasEntry.getData().getAVGSCORE().getUNUM(),2);
+            viewDialPlate.updateData(value);
+
+            tvScore.setText(value + "");
             tvScoreTitle.setText("平均得分");
             tvTitle.setText(woasEntry.getData().getWOAS().getWoasThem());
 
@@ -112,7 +113,8 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
             recyclerView.setAdapter(adapter);
             List<LineChartEntry> lineChartEntries = new ArrayList<>();
             for (int i = 0; i < woasEntry.getData().getRECAVGSCORE().size(); i++) {
-                lineChartEntries.add(new LineChartEntry(woasEntry.getData().getRECAVGSCORE().get(i).getWOAS_STARTM(), getWoasEntry().getData().getRECAVGSCORE().get(i).getTOTALSCOR() / getWoasEntry().getData().getRECAVGSCORE().get(i).getUNUM() * 1.0f));
+                Double score = CommonUtils.div(getWoasEntry().getData().getRECAVGSCORE().get(i).getTOTALSCOR() , getWoasEntry().getData().getRECAVGSCORE().get(i).getUNUM(),2);
+                lineChartEntries.add(new LineChartEntry(woasEntry.getData().getRECAVGSCORE().get(i).getWOAS_STARTM(), Float.valueOf(score.toString())));
             }
             Collections.reverse(lineChartEntries);
             initLineCharView(lineChart, lineChartEntries);
@@ -258,7 +260,7 @@ public class ThematicDetailWoasFragment extends BaseLazyFragment {
         lineDataSet.setValueFormatter(new IValueFormatter() {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return ((int)value)+"";
+                return value+"";
             }
         });
 //        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company");
