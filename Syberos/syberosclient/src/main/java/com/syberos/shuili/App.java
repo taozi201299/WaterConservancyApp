@@ -96,7 +96,7 @@ public class  App extends Application {
         if(Float.valueOf(newVersionCode) - Float.valueOf(oldVersionCode) > 0){
             context.deleteDatabase("/sdcard/" + DBHelperFactory.DB_NAME);
         }
-        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+     //   CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init();

@@ -172,7 +172,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         //更新时间
         params.put("updTime","");
         //记录人员
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
 
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

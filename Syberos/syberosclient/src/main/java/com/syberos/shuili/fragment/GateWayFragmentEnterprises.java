@@ -9,6 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.adapter.TabAdapter;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.listener.Back2LoginActivityListener;
 import com.syberos.shuili.listener.OpenDrawerListener;
 import com.syberos.shuili.utils.ToastUtils;
@@ -115,7 +118,28 @@ public class GateWayFragmentEnterprises extends BaseFragment {
 
         @Override
         protected void initData() {
-            webview.loadUrl("http://192.168.1.11:9080/eutr/moni/stan");
+            webview.setWebViewClient(new WebViewClient(){
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
+            int index = type;
+            switch (index){
+                // 三类人员
+                case 1:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/moni/public/ttsa");
+                    break;
+                // 标准化
+                case 2:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/moni/public/stan");
+                    break;
+                // 教育培训
+                case 3:
+                    webview.loadUrl(GlobleConstants.str7GeIP +"/eutr/eutr/public/publicstudy ");
+                    break;
+            }
 
         }
     }

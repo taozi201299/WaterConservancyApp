@@ -1147,6 +1147,12 @@ public static boolean isSameImage(String pathUrl) {
                 .format(new Date(newTime));
         return date;
     }
+    public static String StringDateYMD(String time){
+        long newTime =  StringDateToLong(time);
+        String date = new SimpleDateFormat("YYYY-MM-DD")
+                .format(new Date(newTime));
+        return date;
+    }
     /**
      * 将时间转成long
      *

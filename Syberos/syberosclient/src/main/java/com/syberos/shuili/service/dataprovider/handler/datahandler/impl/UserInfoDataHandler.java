@@ -130,39 +130,71 @@ public class UserInfoDataHandler extends DataHandlerBase {
         }, SoapUtils.SoapType.WSDL_BASE);
     }
     private List<UserInformationEntity> string2UserInforEntity(Object response){
-        int size = ((Vector)response).size();
+        int size ;
         List<UserInformationEntity> infos = new ArrayList<>();
-        for(int i = 0 ; i < size ; i ++) {
+        String[]array = response.toString().split("anyType");
+        if(array.length == 2 && array[0].isEmpty()){
             HashMap<String,String>info = new HashMap<>();
-            info.put("admDuty",(((SoapObject)((Vector) response).get(i)).getPropertySafelyAsString("admDuty").toString()));
-            info.put("depId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depId").toString()));
-            info.put("depName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depName").toString()));
-            info.put("id", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("id").toString()));
-            info.put("isValidUser", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isValidUser").toString()));
-            info.put("isWaterIndustry", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isWaterIndustry").toString()));
-            info.put("jurdAreaType", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("jurdAreaType").toString()));
-            info.put("orgJurd",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgJurd").toString()));
-            info.put("mobilenumb",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("mobilenumb").toString()));
-            info.put("modifier", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("modifier").toString()));
-            info.put("orgCode",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgCode").toString()));
-            info.put("orgId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgId").toString()));
-            info.put("orgLevel", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgLevel").toString()));
-            info.put("orgName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgName").toString()));
-            info.put("persId",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persId").toString()));
-            info.put("persName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persName").toString()));
-            info.put("status", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("status").toString()));
-            info.put("ts", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("ts").toString()));
-            info.put("userCode",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userCode").toString()));
-            info.put("userName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userName").toString()));
-            info.put("userPassword",(((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userPassword").toString()));
+            info.put("admDuty",(((SoapObject) response).getPropertySafelyAsString("admDuty").toString()));
+            info.put("depId", (((SoapObject) response).getPropertySafelyAsString("depId").toString()));
+            info.put("depName", (((SoapObject) response).getPropertySafelyAsString("depName").toString()));
+            info.put("id", (((SoapObject) response).getPropertySafelyAsString("id").toString()));
+            info.put("isValidUser", (((SoapObject) response).getPropertySafelyAsString("isValidUser").toString()));
+            info.put("isWaterIndustry", (((SoapObject) response).getPropertySafelyAsString("isWaterIndustry").toString()));
+            info.put("jurdAreaType", (((SoapObject) response).getPropertySafelyAsString("jurdAreaType").toString()));
+            info.put("orgJurd",(((SoapObject) response).getPropertySafelyAsString("orgJurd").toString()));
+            info.put("mobilenumb",(((SoapObject) response).getPropertySafelyAsString("mobilenumb").toString()));
+            info.put("modifier", (((SoapObject) response).getPropertySafelyAsString("modifier").toString()));
+            info.put("orgCode",(((SoapObject) response).getPropertySafelyAsString("orgCode").toString()));
+            info.put("orgId", (((SoapObject) response).getPropertySafelyAsString("orgId").toString()));
+            info.put("orgLevel", (((SoapObject) response).getPropertySafelyAsString("orgLevel").toString()));
+            info.put("orgName", (((SoapObject) response).getPropertySafelyAsString("orgName").toString()));
+            info.put("persId",(((SoapObject) response).getPropertySafelyAsString("persId").toString()));
+            info.put("persName", (((SoapObject) response).getPropertySafelyAsString("persName").toString()));
+            info.put("status", (((SoapObject) response).getPropertySafelyAsString("status").toString()));
+            info.put("ts", (((SoapObject) response).getPropertySafelyAsString("ts").toString()));
+            info.put("userCode",(((SoapObject) response).getPropertySafelyAsString("userCode").toString()));
+            info.put("userName", (((SoapObject) response).getPropertySafelyAsString("userName").toString()));
+            info.put("userPassword",(((SoapObject) response).getPropertySafelyAsString("userPassword").toString()));
             UserInformationEntity informationEntity = new UserInformationEntity("","","",
                     info.get(DBDefinition.depName),
                     info.get(DBDefinition.id),"","","","",info.get(DBDefinition.orgName),
                     "",info.get(DBDefinition.persName),"",info.get("mobilenumb"),"","","",
                     "","");
             infos.add(informationEntity);
+        }else {
+            size = ((Vector) response).size();
+            for (int i = 0; i < size; i++) {
+                HashMap<String, String> info = new HashMap<>();
+                info.put("admDuty", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("admDuty").toString()));
+                info.put("depId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depId").toString()));
+                info.put("depName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("depName").toString()));
+                info.put("id", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("id").toString()));
+                info.put("isValidUser", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isValidUser").toString()));
+                info.put("isWaterIndustry", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("isWaterIndustry").toString()));
+                info.put("jurdAreaType", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("jurdAreaType").toString()));
+                info.put("orgJurd", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgJurd").toString()));
+                info.put("mobilenumb", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("mobilenumb").toString()));
+                info.put("modifier", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("modifier").toString()));
+                info.put("orgCode", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgCode").toString()));
+                info.put("orgId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgId").toString()));
+                info.put("orgLevel", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgLevel").toString()));
+                info.put("orgName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("orgName").toString()));
+                info.put("persId", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persId").toString()));
+                info.put("persName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("persName").toString()));
+                info.put("status", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("status").toString()));
+                info.put("ts", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("ts").toString()));
+                info.put("userCode", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userCode").toString()));
+                info.put("userName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userName").toString()));
+                info.put("userPassword", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userPassword").toString()));
+                UserInformationEntity informationEntity = new UserInformationEntity("", "", "",
+                        info.get(DBDefinition.depName),
+                        info.get(DBDefinition.id), "", "", "", "", info.get(DBDefinition.orgName),
+                        "", info.get(DBDefinition.persName), "", info.get("mobilenumb"), "", "", "",
+                        "", "");
+                infos.add(informationEntity);
+            }
         }
-
         return infos;
 
     }
