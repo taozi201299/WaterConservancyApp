@@ -1,5 +1,6 @@
 package com.syberos.shuili;
 
+import android.app.Activity;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -385,17 +386,16 @@ public class MainEnterpriseActivity extends TranslucentActivity
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     AppUpdateEntity updateEntity = gson.fromJson(response, AppUpdateEntity.class);
-                    if(updateEntity.isSuccess()){
-                        ArrayList<AppUpdateEntity> datas =  (ArrayList<AppUpdateEntity>)updateEntity.dataSource.Tables.get(0).Datas;
-                        String appinfo = datas.get(0).getAppinfo();
-                        if(appinfo.equals("1")){
+                    if (updateEntity != null && updateEntity.getData() != null && updateEntity.getData().getUpdatInfo() != null) {
+                        String versionCode = updateEntity.getData().getUpdatInfo().getVerNumber();
+                        String currentVersion = String.valueOf(MainActivity.packageCode(MainEnterpriseActivity.this));
+                        if(versionCode.compareTo(currentVersion) > 0){
+                            iv_me_red_pot.setVisibility(View.VISIBLE);
+                            UpdateManager.appUrl = updateEntity.getData().getUpdatInfo().getFileUrl();
+                            UpdateManager.bUpdate = true;
+                        }else {
                             iv_me_red_pot.setVisibility(View.GONE);
                             UpdateManager.bUpdate = false;
-
-                        }else {
-                            iv_me_red_pot.setVisibility(View.VISIBLE);
-                            UpdateManager.appUrl = appinfo;
-                            UpdateManager.bUpdate = true;
                         }
                     }
                 }

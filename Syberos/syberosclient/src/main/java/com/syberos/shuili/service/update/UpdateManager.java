@@ -9,6 +9,7 @@ import android.view.View;
 import com.lzy.okhttputils.cache.CacheMode;
 import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
 
@@ -23,7 +24,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class UpdateManager {
 
     private static final String TAG = UpdateManager.class.getSimpleName();
-    public static final String DEFAULT_SERVER = "http://172.16.160.179:8001/";
+    public static final String DEFAULT_SERVER = GlobleConstants.strAppIP;
     private static final String PRODUCT_APP_ID = "5cb345b6-26d3-11e5-9325-68f728009cac";
 
     public static  String appUrl = "";
@@ -33,11 +34,9 @@ public class UpdateManager {
 
     public static void initMenuData(RequestCallback<String> callback){
 
-        String url = DEFAULT_SERVER + "/WebApi/DataExchange/GetData/WebApp_CheckAppVersion";
+        String url = DEFAULT_SERVER + "/mapp/getUpdatedInfo";
         HashMap<String,String> params = new HashMap<>();
-        params.put("dataKey","00-00-00-00");
-        params.put("AppVersion","1");
-        params.put("ApplicationID",PRODUCT_APP_ID);
+        params.put("verType","0");
         HttpUtils.getInstance().requestGet(url,params,"",callback, CacheMode.DEFAULT);
 
     }

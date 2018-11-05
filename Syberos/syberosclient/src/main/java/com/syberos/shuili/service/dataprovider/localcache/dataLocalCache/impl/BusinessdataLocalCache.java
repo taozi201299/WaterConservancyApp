@@ -357,7 +357,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
 
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-              //  ToastUtils.show("failed");
+                ToastUtils.show("failed");
             }
         });
     }

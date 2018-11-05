@@ -528,7 +528,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             }
             if(runningMode == RunningMode.READ_ONLY_MODE){
                 iv_delete.setVisibility(GONE);
-                String url = GlobleConstants.strAppIP + "/mappservice/downloadMedia";
+                String url = GlobleConstants.strAppIP + "/mapp/downloadMedia";
                 HashMap<String,String>params = new HashMap<>();
                 params.put("medUrl",localAttachment.filePath);
 
@@ -536,11 +536,13 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                     @Override
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         if(localAttachment.bExist) {
-                            localAttachment.filePath = GlobleConstants.strIP + "/" +localAttachment.filePath;
-                            iv_attachImage.setEnabled(true);
-                            tv_attachment_text.setVisibility(GONE);
-                            Glide.with(mContext).load(file.getPath()).into(iv_attachImage);
-                            iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
+                            if(file != null) {
+                                localAttachment.filePath = GlobleConstants.strZRIP + "/" + localAttachment.filePath;
+                                iv_attachImage.setEnabled(true);
+                                tv_attachment_text.setVisibility(GONE);
+                                Glide.with(mContext).load(file.getPath()).into(iv_attachImage);
+                                iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
+                            }
 
                         }else {
                             iv_attachImage.setEnabled(false);

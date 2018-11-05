@@ -1,5 +1,9 @@
 package com.syberos.shuili;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +34,7 @@ import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.AppUpdateEntity;
+import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.fragment.AddressListFragment;
 import com.syberos.shuili.fragment.GateWayFragment;
 import com.syberos.shuili.fragment.HematicMapFragment;
@@ -429,18 +434,16 @@ public class MainActivity extends TranslucentActivity
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     AppUpdateEntity updateEntity = gson.fromJson(response, AppUpdateEntity.class);
-                    if (updateEntity != null && updateEntity.isSuccess() && updateEntity.dataSource != null && updateEntity.dataSource.Tables != null &&
-                            updateEntity.dataSource.Tables.size() > 0) {
-                        ArrayList<AppUpdateEntity> datas = (ArrayList<AppUpdateEntity>) updateEntity.dataSource.Tables.get(0).Datas;
-                        String appinfo = datas.get(0).getAppinfo();
-                        if (appinfo.equals("1")) {
+                    if (updateEntity != null && updateEntity.getData() != null && updateEntity.getData().getUpdatInfo() != null) {
+                        String versionCode = updateEntity.getData().getUpdatInfo().getVerNumber();
+                        String currentVersion = String.valueOf(packageCode(MainActivity.this));
+                        if(versionCode.compareTo(currentVersion) > 0){
+                            iv_me_red_pot.setVisibility(View.VISIBLE);
+                            UpdateManager.appUrl = updateEntity.getData().getUpdatInfo().getFileUrl();
+                            UpdateManager.bUpdate = true;
+                        }else {
                             iv_me_red_pot.setVisibility(View.GONE);
                             UpdateManager.bUpdate = false;
-
-                        } else {
-                            iv_me_red_pot.setVisibility(View.VISIBLE);
-                            UpdateManager.appUrl = appinfo;
-                            UpdateManager.bUpdate = true;
                         }
                     }
                 }
@@ -464,7 +467,17 @@ public class MainActivity extends TranslucentActivity
 
         }
     };
-
+    public static String packageCode(Context context) {
+        PackageManager manager = context.getPackageManager();
+        String code = "";
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            code = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return code;
+    }
     //对返回键进行监听
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
