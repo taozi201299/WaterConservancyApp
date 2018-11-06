@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.solver.widgets.ResolutionNode;
@@ -531,16 +532,17 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 String url = GlobleConstants.strAppIP + "/mapp/downloadMedia";
                 HashMap<String,String>params = new HashMap<>();
                 params.put("medUrl",localAttachment.filePath);
-
-                HttpUtils.getInstance().requestNet_download(url, params, url, new FileCallback("/sdcard/app") {
+                String fileName = localAttachment.filePath.replace("/","-");
+                HttpUtils.getInstance().requestNet_download(url, params, url, new FileCallback(fileName) {
                     @Override
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         if(localAttachment.bExist) {
                             if(file != null) {
-                                localAttachment.filePath = GlobleConstants.strZRIP + "/" + localAttachment.filePath;
+                                File file1 = new File("/sdcard/cjyj-BIS_HAZ_PAT_REC-2018-11-05-picture_1539773166103.jpg");
+                                Glide.with(mContext).load(file1).into(iv_attachImage);
+                                localAttachment.filePath =  Environment.getExternalStorageDirectory() + DM_TARGET_FOLDER + file.getName();
                                 iv_attachImage.setEnabled(true);
                                 tv_attachment_text.setVisibility(GONE);
-                                Glide.with(mContext).load(file.getPath()).into(iv_attachImage);
                                 iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
                             }
 

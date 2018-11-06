@@ -31,7 +31,9 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
+import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.entity.userinfo.ModuleBean;
+import com.syberos.shuili.fragment.thematic.HazChartFragment;
 import com.syberos.shuili.utils.LoginUtil;
 import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.Singleton;
@@ -303,8 +305,7 @@ public class LoginActivity extends BaseActivity {
                     if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
                         getSysCode(SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
                     }else {
-                        go2Activity();
-                        syncAddressList();
+                        getAppModel();
                     }
 
                 } else {
@@ -318,6 +319,25 @@ public class LoginActivity extends BaseActivity {
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDialog();
                 ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+    }
+    private void  getAppModel(){
+        String url = GlobleConstants.strAppIP + "/mapp/getAppModData";
+        HashMap<String,String>param = new HashMap<>();
+        SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                App.appModule = gson.fromJson(result, AppModule.class);
+                go2Activity();
+                syncAddressList();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                go2Activity();
+                syncAddressList();
             }
         });
     }
@@ -532,14 +552,12 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 GlobleConstants.moduleBean = gson.fromJson(result, ModuleBean.class);
-                go2Activity();
-                syncAddressList();
+                getAppModel();
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                go2Activity();
-                syncAddressList();
+                getAppModel();
             }
         });
     }

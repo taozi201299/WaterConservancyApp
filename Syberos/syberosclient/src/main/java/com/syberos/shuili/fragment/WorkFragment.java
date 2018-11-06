@@ -60,6 +60,7 @@ import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.ToastUtils;
 
@@ -179,33 +180,66 @@ public class WorkFragment extends BaseFragment {
 //
 //        modules.add(getResources().getString(R.string.module_anjian));
 //        modules.add(getResources().getString(R.string.module_shuilijicha));
+        if(App.appModule != null && App.appModule.getData() != null) {
+            ArrayList<AppModule.DataBean>list = (ArrayList<AppModule.DataBean>) App.appModule.getData();
+            for(AppModule.DataBean item :list){
+                if("1".equals(item.getModActive()) && "水行政用户".equals(item.getUserTypeName())){
+                    modules.add(item.getBisModName());
+                }
+            }
+        }
         // 工作考核
         if(App.sCodes.contains(GlobleConstants.wins)){
+            modules.remove("工作考核（水）");
             modules.add(getResources().getString(R.string.module_gongzuo));
+        }else {
+            modules.remove("工作考核（水）");
         }
         if(App.sCodes.contains(GlobleConstants.hidd)){
+            modules.remove("隐患管理（水）");
             modules.add(getResources().getString(R.string.module_yinhuan));
             modules.add(getResources().getString(R.string.module_baobiao));
+        }else {
+            modules.remove("隐患管理");
         }
         if(App.sCodes.contains(GlobleConstants.acci)){
+            modules.remove("事故管理（水）");
             if(!modules.contains(getResources().getString(R.string.module_baobiao))){
                 modules.add(getResources().getString(R.string.module_baobiao));
             }
             modules.add(getResources().getString(R.string.module_shigu));
+        }else {
+            modules.remove("事故管理（水）");
         }
         if(App.sCodes.contains(GlobleConstants.maha)){
+            modules.remove("危险源（水）");
             modules.add(getResources().getString(R.string.module_weixianyuan));
+        }else {
+            modules.remove("危险源（水）");
         }
         if(App.sCodes.contains(GlobleConstants.stan)){
+            modules.remove("标准化（水）");
             modules.add(getResources().getString(R.string.module_biaozhunhua));
+        }else {
+            modules.remove("标准化（水）");
         }
         if(App.sCodes.contains(GlobleConstants.sins)){
+            modules.remove("安全检查（水）");
             modules.add(getResources().getString(R.string.module_anquan));
+        }else {
+            modules.remove("安全检查（水）");
         }
         if(App.sCodes.contains(GlobleConstants.suen)){
+            modules.remove("监督执法（水）");
             modules.add(getResources().getString(R.string.module_anjian));
-        }if(App.sCodes.contains(GlobleConstants.wins)){
+        }else {
+            modules.remove("监督执法（水）");
+        }
+        if(App.sCodes.contains(GlobleConstants.wins)){
+            modules.remove("水利稽察（水）");
             modules.add(getResources().getString(R.string.module_shuilijicha));
+        }else {
+            modules.remove("水利稽察（水）");
         }
         moduleChildReportNames = getResources().getStringArray(R.array.module_child_baobiao);
         moduleChildSecurityCheckNames = getResources().getStringArray(R.array.module_child_anquan);

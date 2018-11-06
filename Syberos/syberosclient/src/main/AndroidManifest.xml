@@ -99,8 +99,8 @@
         <service android:name=".service.SyberosService"></service>
         <!--android:process=":syberos.shuili.service" />-->
         <service
-            android:name=".service.update.UpdateService"
-            android:process=":update.service" />
+            android:name=".service.update.UpdateService"/>
+            <!--android:process=":update.service" />-->
 
         <activity
             android:name=".activity.login.LoginActivity"

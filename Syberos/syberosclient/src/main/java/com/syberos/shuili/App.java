@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.service.dao.DBHelperFactory;
 import com.syberos.shuili.utils.Arrays2;
@@ -48,6 +49,7 @@ public class  App extends Application {
      * 5 大中型在建工程监理单位 CJJL
      */
     public static String sCode = "";
+    public static AppModule appModule = null;
     /**
      * appCode
      * 002 系统管理员

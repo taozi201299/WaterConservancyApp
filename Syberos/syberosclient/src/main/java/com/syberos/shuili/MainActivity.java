@@ -436,6 +436,7 @@ public class MainActivity extends TranslucentActivity
                     AppUpdateEntity updateEntity = gson.fromJson(response, AppUpdateEntity.class);
                     if (updateEntity != null && updateEntity.getData() != null && updateEntity.getData().getUpdatInfo() != null) {
                         String versionCode = updateEntity.getData().getUpdatInfo().getVerNumber();
+                        versionCode = "2.0";
                         String currentVersion = String.valueOf(packageCode(MainActivity.this));
                         if(versionCode.compareTo(currentVersion) > 0){
                             iv_me_red_pot.setVisibility(View.VISIBLE);

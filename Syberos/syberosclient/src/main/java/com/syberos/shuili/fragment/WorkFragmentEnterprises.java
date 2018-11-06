@@ -44,6 +44,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.entity.userinfo.ModuleBean;
 import com.syberos.shuili.network.SoapUtils;
 import com.syberos.shuili.utils.ToastUtils;
@@ -173,6 +174,27 @@ public class WorkFragmentEnterprises extends BaseFragment {
             if(GlobleConstants.moduleMap.get(guid) != null && !GlobleConstants.moduleMap.get(guid).isEmpty()) {
                 names.add(GlobleConstants.moduleMap.get(guid));
             }
+        }
+        ArrayList<String>modules = new ArrayList<>();
+        if(App.appModule != null && App.appModule.getData() != null) {
+            ArrayList<AppModule.DataBean>list = (ArrayList<AppModule.DataBean>) App.appModule.getData();
+            for(AppModule.DataBean item :list){
+                if("1".equals(item.getModActive()) && "水行政用户".equals(item.getUserTypeName())){
+                    modules.add(item.getBisModName());
+                }
+            }
+        }
+        if(!modules.contains("安全检查（企）")){
+            names.remove("安全检查");
+        }
+        if(!modules.contains("危险源（企）")){
+            names.remove("危险源");
+        }
+        if(!modules.contains("事故（企）")){
+            names.remove("事故");
+        }
+        if(!modules.contains("隐患（企）")){
+            names.remove("隐患");
         }
 
         /**

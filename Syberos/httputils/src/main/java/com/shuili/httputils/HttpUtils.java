@@ -150,6 +150,7 @@ public class HttpUtils {
         }
         OkHttpUtils
                 .get(url)
+                .headers("Accept-Encoding", "identity")
                 .params(httpParams)
                 .tag(tag)
                 .connTimeOut(20000)

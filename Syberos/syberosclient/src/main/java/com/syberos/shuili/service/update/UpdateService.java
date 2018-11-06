@@ -107,9 +107,10 @@ public class UpdateService extends Service {
     }
 
     private void doAppUpdate(String url){
-        String apUrl = UpdateManager.DEFAULT_SERVER +"/"+ url;
+        String apUrl = UpdateManager.DEFAULT_SERVER +"/mapp/"+ "downloadVersion";
         HashMap<String,String> map = new HashMap<>();
         String tag = "downloadVersion";
+        map.put("fileUrl",url);
         File file = new File(appDir  +appName);
         if(file.exists()){
             file.delete();
