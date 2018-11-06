@@ -12,6 +12,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsProb;
 import com.syberos.shuili.entity.wins.BisWinsProg;
@@ -71,6 +72,7 @@ public class InspectQueryListActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Wins);
         setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);

@@ -16,6 +16,7 @@ import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.App;
 import com.syberos.shuili.activity.thematic.ThematicDetailActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.ProvinceJsonBean;
 import com.syberos.shuili.entity.map.CityInfoBean;
@@ -190,6 +191,7 @@ public class HematicMapFragment extends BaseFragment implements EasyPermissions.
 
     @Override
     protected void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Thematic);
         requestMulti();
         fragments = new ArrayList<>();
         BaseLazyFragment fragment = null;

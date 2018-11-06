@@ -16,6 +16,7 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.wins.BisWinsGroup;
 import com.syberos.shuili.entity.wins.BisWinsGroupAll;
@@ -85,6 +86,7 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Wins);
         setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);

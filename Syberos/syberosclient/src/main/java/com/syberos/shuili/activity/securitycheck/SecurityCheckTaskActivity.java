@@ -16,6 +16,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenInvestigationTaskInfo;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
@@ -77,6 +78,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     @Override
     public void initView() {
         showDataLoadingDialog();
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Check);
         showTitle(getResources().getString(R.string.module_child_anquan_xianchangjiancha));
         setActionBarRightVisible(View.INVISIBLE);
         setInitActionBar(true);

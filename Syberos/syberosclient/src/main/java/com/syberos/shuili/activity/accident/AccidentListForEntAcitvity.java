@@ -20,6 +20,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
@@ -106,6 +107,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Acci_Ent);
         setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
         showTitle(Title);

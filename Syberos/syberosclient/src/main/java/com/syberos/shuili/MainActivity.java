@@ -34,6 +34,7 @@ import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.base.TranslucentActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.AppUpdateEntity;
+import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.entity.map.MapBoundBean;
 import com.syberos.shuili.fragment.AddressListFragment;
 import com.syberos.shuili.fragment.GateWayFragment;
@@ -181,6 +182,21 @@ public class MainActivity extends TranslucentActivity
 
     @Override
     public void initView() {
+        ArrayList<String>modules = new ArrayList<>();
+        if(App.appModule != null && App.appModule.getData() != null) {
+            ArrayList<AppModule.DataBean>list = (ArrayList<AppModule.DataBean>) App.appModule.getData();
+            for(AppModule.DataBean item :list){
+                if("1".equals(item.getModActive()) && "水行政用户".equals(item.getUserTypeName())){
+                    modules.add(item.getBisModName());
+                }
+            }
+        }
+        if(!modules.contains("业务专题（水）")){
+            btnHematicMapFragment.setVisibility(View.GONE);
+        }
+        if(!modules.contains("安全评估（水）")){
+            btnSecurityCloudFragment.setVisibility(View.GONE);
+        }
         if (App.sCodes.size() == 1) {
             if (App.sCodes.contains(GlobleConstants.desu)) {
                 checkId = R.id.btn_hematicMapFragment;

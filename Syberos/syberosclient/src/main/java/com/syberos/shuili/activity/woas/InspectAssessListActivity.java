@@ -15,6 +15,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.woas.BisWoasGrop;
 import com.syberos.shuili.entity.woas.ObjWoas;
@@ -70,6 +71,7 @@ public class InspectAssessListActivity extends BaseActivity implements CommonAda
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Woas);
         setInitActionBar(true);
         showTitle("水利稽察考核");
         setActionBarRightVisible(View.INVISIBLE);

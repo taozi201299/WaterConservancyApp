@@ -1,15 +1,21 @@
 package com.syberos.shuili.config;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.App;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.entity.common.AttachMentInfo;
+import com.syberos.shuili.entity.thematic.suen.SuenEntry;
+import com.syberos.shuili.service.AttachMentInfoEntity;
+import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.view.MultimediaView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/8/28.
@@ -79,6 +85,33 @@ public class BusinessConfig {
                     }
                 }
                 multimediaView.setData(attachments);
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+            }
+        });
+    }
+    public static void saveLog2Server(String moduleCode){
+        String url = GlobleConstants.strAppIP +"/mapp/insertLogInfo";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("userGuid", SyberosManagerImpl.getInstance().getCurrentUserId());
+        params.put("acCode" ,App.orgJurd);
+        params.put("acName","");
+        params.put("modDicCode",moduleCode);
+        LocalCacheEntity localCacheEntity = new LocalCacheEntity();
+        localCacheEntity.url = url;
+        ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
+        localCacheEntity.params = params;
+        localCacheEntity.type = 1;
+        localCacheEntity.commitType = 0;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
+        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Log.d("111",result);
+
             }
 
             @Override

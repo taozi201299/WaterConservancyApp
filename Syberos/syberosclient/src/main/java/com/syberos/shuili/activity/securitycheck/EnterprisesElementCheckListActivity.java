@@ -16,6 +16,8 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesElementCheckInfo;
 import com.syberos.shuili.entity.securitycheck.BisSeWiun;
 import com.syberos.shuili.entity.securitycheck.BisSeWiunDeco;
@@ -217,6 +219,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Check_Ent);
         setInitActionBar(true);
         showTitle(getResources().getString(R.string.module_child_anquan_jianchayuansu));
         setActionBarRightVisible(View.INVISIBLE);

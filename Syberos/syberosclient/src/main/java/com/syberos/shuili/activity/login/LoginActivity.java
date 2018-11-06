@@ -29,6 +29,7 @@ import com.syberos.shuili.MainActivity;
 import com.syberos.shuili.MainEnterpriseActivity;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.RoleBaseInfo;
 import com.syberos.shuili.entity.common.AppModule;
@@ -564,6 +565,7 @@ public class LoginActivity extends BaseActivity {
 
     private void go2Activity() {
         closeDialog();
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Login_1001);
         if (GlobleConstants.CJFR.equalsIgnoreCase(App.sCode) || GlobleConstants.CJFW.equalsIgnoreCase(App.sCode) || GlobleConstants.CJJL.equalsIgnoreCase(App.sCode) || GlobleConstants.CJSG.equalsIgnoreCase(App.sCode) || GlobleConstants.CJYJ.equalsIgnoreCase(App.sCode)) {
             intentActivity(LoginActivity.this, MainEnterpriseActivity.class, false, false);
             App.userType = "0";

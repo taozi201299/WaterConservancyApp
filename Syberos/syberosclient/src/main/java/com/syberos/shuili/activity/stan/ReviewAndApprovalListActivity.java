@@ -14,6 +14,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.basicbusiness.AttOrgBase;
 import com.syberos.shuili.entity.standardization.BisConfExamappr;
@@ -203,6 +204,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Stan);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);

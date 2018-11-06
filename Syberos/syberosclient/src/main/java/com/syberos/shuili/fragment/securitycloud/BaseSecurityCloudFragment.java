@@ -43,6 +43,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.BusinessConfig;
+import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudAreaEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudEntry;
 import com.syberos.shuili.entity.securitycloud.SecurityCloudOrgEntry;
@@ -253,6 +254,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     //    @Override
 
     public void initViewData() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Cloud);
         appBarLayout.addOnOffsetChangedListener(this);
         initTitleAndView(type);
     }

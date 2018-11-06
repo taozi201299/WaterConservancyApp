@@ -131,6 +131,25 @@ public class GlobleConstants {
             put("2","三级");
         }
     };
+
+
+    public static interface IConstants {
+        String Login_1001 = "1001";
+        String Hidd_Ent = "2001";
+        String Acci_Ent = "2002";
+        String Haz_Ent = "2003";
+        String Check_Ent = "2004";
+        String Hidd = "3001";
+        String Acci = "3002";
+        String Haz = "3003";
+        String Check = "3004";
+        String Stan = "3005";
+        String Woas = "3006";
+        String Wins = "3007";
+        String Suen = "3008";
+        String Cloud = "3009";
+        String Thematic = "3010";
+    }
     public static ModuleBean moduleBean = null;
     /**
      * 事故快报状态

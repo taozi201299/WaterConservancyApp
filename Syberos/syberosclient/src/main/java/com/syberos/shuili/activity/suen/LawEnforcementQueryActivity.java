@@ -18,6 +18,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.App;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.objCase.ObjLayer;
 import com.syberos.shuili.utils.CommonUtils;
@@ -80,6 +81,7 @@ public class LawEnforcementQueryActivity extends BaseActivity
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Suen);
         setInitActionBar(true);
         showTitle("法律法规");
         setActionBarRightVisible(View.INVISIBLE);

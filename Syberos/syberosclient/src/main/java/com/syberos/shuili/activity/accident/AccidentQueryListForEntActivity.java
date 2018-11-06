@@ -13,6 +13,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.accident.ObjAcci;
 import com.syberos.shuili.entity.accident.AccidentInformationGroup;
@@ -299,6 +300,7 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
     @Override
     public void initView() {
         showDataLoadingDialog();
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Acci_Ent);
         setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);

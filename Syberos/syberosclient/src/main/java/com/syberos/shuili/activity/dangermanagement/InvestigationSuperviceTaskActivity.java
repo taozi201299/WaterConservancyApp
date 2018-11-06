@@ -17,6 +17,7 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.hidden.HiddenSupervice;
 import com.syberos.shuili.entity.publicentry.GroupInformationEntity;
@@ -83,6 +84,7 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
     }
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Acci);
         setInitActionBar(true);
         showTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);

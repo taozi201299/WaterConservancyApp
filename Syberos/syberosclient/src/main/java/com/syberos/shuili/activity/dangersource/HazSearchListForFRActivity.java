@@ -19,6 +19,7 @@ import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.dangersource.BisHazRegDetail;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
@@ -293,6 +294,7 @@ public class HazSearchListForFRActivity extends BaseActivity
 
     @Override
     public void initView() {
+        BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Haz_Ent);
         setInitActionBar(true);
         setActionBarTitle(Title);
         setActionBarRightVisible(View.INVISIBLE);
