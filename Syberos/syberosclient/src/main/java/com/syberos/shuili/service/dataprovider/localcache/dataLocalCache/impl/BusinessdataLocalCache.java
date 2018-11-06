@@ -342,17 +342,18 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
         }
     }
     private void upBinary(final AttachMentInfoEntity attachMentInfoEntity){
-        String url = GlobleConstants.strAppIP + "/mappservice/uploadMedia";
+        String url = GlobleConstants.strAppIP + "/mapp/uploadMedia";
         final HashMap<String,File>binaryFiles = new HashMap<>();
         HashMap<String,String>params = new HashMap<>();
         params.put("medName",attachMentInfoEntity.medName);
-        params.put("medPath",attachMentInfoEntity.medPath);
+        final String path =  attachMentInfoEntity.medPath.replace(attachMentInfoEntity.medName,"");
+        params.put("medPath",path);
         File file = new File(attachMentInfoEntity.localPath);
         binaryFiles.put(attachMentInfoEntity.medName,file);
         HttpUtils.getInstance().requestNet_File(url, params, binaryFiles, url, new StringCallback() {
             @Override
             public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-                deleteBinary(attachMentInfoEntity.medName,attachMentInfoEntity.medPath);
+                deleteBinary(attachMentInfoEntity.medName,attachMentInfoEntity.localPath);
             }
 
             @Override

@@ -333,6 +333,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 LocalAttachment attachment = new LocalAttachment();
                 attachment.localFile = new File(list.get(i));
                 attachment.filePath = list.get(i);
+                attachment.type = LocalAttachmentType.IMAGE;
                 images.add(attachment);
                 if(images.size() >= MEDIA_MAX_SIZE){
                     break;
@@ -538,11 +539,10 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         if(localAttachment.bExist) {
                             if(file != null) {
-                                File file1 = new File("/sdcard/cjyj-BIS_HAZ_PAT_REC-2018-11-05-picture_1539773166103.jpg");
-                                Glide.with(mContext).load(file1).into(iv_attachImage);
                                 localAttachment.filePath =  Environment.getExternalStorageDirectory() + DM_TARGET_FOLDER + file.getName();
                                 iv_attachImage.setEnabled(true);
                                 tv_attachment_text.setVisibility(GONE);
+                                Glide.with(mContext).load(file).into(iv_attachImage);
                                 iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
                             }
 

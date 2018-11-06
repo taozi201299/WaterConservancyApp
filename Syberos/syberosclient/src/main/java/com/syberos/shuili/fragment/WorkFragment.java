@@ -188,6 +188,8 @@ public class WorkFragment extends BaseFragment {
                 }
             }
         }
+        modules.remove("业务专题（水）");
+        modules.remove("安全评估（水）");
         // 工作考核
         if(App.sCodes.contains(GlobleConstants.wins)){
             modules.remove("工作考核（水）");
