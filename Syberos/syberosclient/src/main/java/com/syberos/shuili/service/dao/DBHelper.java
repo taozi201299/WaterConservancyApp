@@ -36,7 +36,7 @@ public class DBHelper {
      */
     SQLiteDatabase database;
 
-    private final String DB_PATH = FileOperate.createFolder(2);
+    private final String DB_PATH = FileOperate.createFolder(1);
 
     /**
      * 构造方法
