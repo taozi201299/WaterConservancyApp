@@ -845,14 +845,6 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
         }
     }
     private void commitRote(){
-        TracingPoint point = new TracingPoint();
-        point.latitude = "30.60709472432";
-        point.longitude = "114.42437474301";
-        lineTracingPoints.add(point);
-        TracingPoint point1 = new TracingPoint();
-        point.latitude = "34.759229070912";
-        point.longitude = "113.77873556293";
-        lineTracingPoints.add(point1);
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < lineTracingPoints.size(); ++i) {
             TracingPoint item = lineTracingPoints.get(i);

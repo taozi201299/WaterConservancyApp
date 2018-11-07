@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -79,9 +80,10 @@ public class EnterpriseSecurityCheckRoteActivity extends BaseActivity implements
         String geo = resultInfoListBean.getGeo();
         String points = geo.split("coordinates")[1].split(":")[1].replace("[", "").replace("]", "");
 
+        points = points.replace("}","");
         String[] array = points.split(",");
         int len = array.length;
-        for (int i = 0; i < len-1; i++) {
+        for (int i = 0; i < len-1;i = i+2) {
             TracingPoint point = new TracingPoint();
             point.latitude = array[i + 1];
             point.longitude = array[i];
@@ -90,6 +92,7 @@ public class EnterpriseSecurityCheckRoteActivity extends BaseActivity implements
                 mLon = array[i];
             }
             lineTracingPoints.add(point);
+
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -135,7 +138,7 @@ public class EnterpriseSecurityCheckRoteActivity extends BaseActivity implements
         webView.getSettings().setGeolocationEnabled(true);//定位
         webView.getSettings().setGeolocationDatabasePath(dir);//数据库
         webView.getSettings().setDomStorageEnabled(true);//缓存 （ 远程web数据的本地化存储）
-        webView.loadUrl("file:///android_asset/mobile_show_nearly_info.html");
+        webView.loadUrl("file:///android_asset/mobile_security_check.html");
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "DEMO");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -147,6 +150,7 @@ public class EnterpriseSecurityCheckRoteActivity extends BaseActivity implements
                 updateView(location);
             }
         });
+        webView.setWebChromeClient(new WebChromeClient());
     }
 
     /**
@@ -217,9 +221,9 @@ public class EnterpriseSecurityCheckRoteActivity extends BaseActivity implements
                 hasShowMap = true;
                 closeDataDialog();
             }
-
-            updateLineAddPoint(mLon, mLan);
             updateCurrentPoint(mLon, mLan);
+            updateLineAddPoint(mLon, mLan);
+
         }
     }
 

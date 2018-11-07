@@ -257,6 +257,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     private void addRoteInfo(final CheckRoteItem.ResultInfoListBean resultInfoListBean){
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.activity_engine_item_layout, null);
+        view.setBackgroundResource(R.color.transparent);
 
         ((TextView) (view.findViewById(R.id.tv_name))).setText(resultInfoListBean.getChecktime());
         ll_check_road_container.addView(view);
