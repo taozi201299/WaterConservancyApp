@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.myapplication.SecurityCheckMapTrailsActivity" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.administrator.myapplication.SecurityCheckMapTrailsActivity">
+    <include layout="@layout/action_bar2_layout"
+        android:id="@+id/action_bar"></include>
+    <RelativeLayout
+        android:id="@+id/ll_engine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:layout_below="@id/action_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/_5dp"
+        android:paddingRight="@dimen/_5dp">
+        <com.syberos.shuili.view.EnumView
+            android:id="@+id/ll_engine_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:enum_title="检查工程名称">
+        </com.syberos.shuili.view.EnumView>
+    </RelativeLayout>
+
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_engine"
+        android:layout_marginTop="@dimen/_10dp">
 
     </WebView>
 
@@ -37,7 +58,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_80dp"
+        android:layout_marginTop="@dimen/_100dp"
         android:visibility="gone"
         >
         <TextView
@@ -87,10 +108,23 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
+        android:layout_toStartOf="@+id/anchors"
         android:background="@drawable/bg_security_check_btn"
         android:text="@string/start_check"
+        />
+
+    <Button
+        android:id="@+id/btn_comit_check"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/anchors"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_security_check_btn"
+        android:visibility="gone"
+        android:text="完成检查"
         />
 
 </RelativeLayout>

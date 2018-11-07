@@ -419,6 +419,8 @@
             android:name=".activity.securitycheck.EnterpriseSecurityCheckMapTrailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.securitycheck.EnterpriseSecurityCheckRoteActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.securitycheck.SecurityCheckProjectSelectActivity"
             android:screenOrientation="portrait"

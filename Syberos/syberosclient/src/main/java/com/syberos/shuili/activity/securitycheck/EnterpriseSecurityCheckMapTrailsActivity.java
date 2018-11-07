@@ -47,11 +47,15 @@ import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.dangermanagement.InvestigationEngineForEntActivity;
 import com.syberos.shuili.amap.AMapToWGS;
 import com.syberos.shuili.base.BaseActivity;
+import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.MvEngColl;
+import com.syberos.shuili.entity.common.CheckRote;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.service.LocalCacheEntity;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
+import com.syberos.shuili.view.EnumView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -62,6 +66,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +77,7 @@ import static com.lzy.okhttputils.callback.FileCallback.DM_TARGET_FOLDER;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 @SuppressLint("MissingPermission")
-public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks ,BaseActivity.IDialogInterface{
 
     private final static String TAG = EnterpriseSecurityCheckMapTrailsActivity.class.getSimpleName();
     private final static boolean USE_GAO_DE_SDK_API = true;
@@ -125,9 +130,16 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
     LinearLayout ll_checkTime;
     @BindView(R.id.tv_time)
     TextView tv_time;
+    @BindView(R.id.ll_engine_name)
+    EnumView ll_engine_name;
+    @BindView(R.id.btn_comit_check)
+    Button btn_comit_check;
 
 
-
+    @OnClick(R.id.btn_comit_check)
+    void onCommitCheckClicked(){
+        commit();
+    }
     @OnClick(R.id.start_check)
     void onStartCheckClicked() {
         mWorking = true;
@@ -138,8 +150,10 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
         mLocationClient.startLocation();
         Log.d(TAG, "==================1");
         btn_stop_check.setVisibility(View.VISIBLE);
+        btn_stop_check.setText("停止检查");
         btn_add_problem.setVisibility(View.VISIBLE);
         btn_start_check.setVisibility(View.GONE);
+        btn_comit_check.setVisibility(View.GONE);
         Log.d(TAG, "==================2");
         startTime = CommonUtils.getCurrentDate();
     }
@@ -152,12 +166,11 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
         mWorking = false;
         currentSecond = 0;
         mLocationClient.stopLocation();
-        // TODO: 2018/5/10 show dialog
         btn_stop_check.setVisibility(View.GONE);
         btn_add_problem.setVisibility(View.GONE);
         btn_start_check.setVisibility(View.VISIBLE);
+        btn_comit_check.setVisibility(View.VISIBLE);
         endTime = CommonUtils.getCurrentDate();
-       // commit();
     }
 
     @BindView(R.id.add_problem)
@@ -188,7 +201,13 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
             webView.loadUrl("javascript:centerOnCurrentPoint()");
         }
     }
+    /**
+     * 工程对象
+     */
+    private MvEngColl mvEngColl = null;
 
+    private ArrayList<String>engineNames = new ArrayList<>();
+    private ArrayList<String>engineIds = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
@@ -201,7 +220,6 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
                     tv_time.setText(time);
                     break;
             }
-
         }
     };
 
@@ -212,6 +230,7 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
 
     @Override
     public void initListener() {
+        setDialogInterface(this);
 
     }
 
@@ -243,7 +262,13 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
     @Override
     public void initView() {
         setFinishOnBackKeyDown(false);
+        setActionBarRightVisible(View.INVISIBLE);
+        setFinishOnBackKeyDown(false);
+        setInitActionBar(true);
+        setTitle("现场检查");
         btn_start_check.setVisibility(View.GONE);
+        btn_comit_check.setVisibility(View.GONE);
+        getEngineList();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestMulti();
         }else{
@@ -252,10 +277,46 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
 
     }
 
+    private void getEngineList(){
+        showDataLoadingDialog();
+        String url =  GlobleConstants.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("orgguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                closeDataDialog();
+                Gson gson = new Gson();
+                mvEngColl = gson.fromJson(result,MvEngColl.class);
+                if(mvEngColl == null || mvEngColl.dataSource == null){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                }else if(mvEngColl.dataSource.size() == 0){
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
+                }else {
+                    processResult();
+                }
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+            }
+        });
+
+    }
+    private void processResult(){
+        for(MvEngColl item :mvEngColl.dataSource){
+            engineIds.add(item.getEngId());
+            engineNames.add(item.getName());
+        }
+        ll_engine_name.setEntries(engineNames);
+        ll_engine_name.setCurrentDetailText(engineNames.get(0));
+        ll_engine_name.setCurrentIndex(0);
+    }
     public void webMap() {//地图定位
-
         webView = (WebView) findViewById(R.id.webview);
-
         webView.getSettings().setDatabaseEnabled(true);//开启数据库
         webView.setFocusable(true);//获取焦点
         webView.requestFocus();
@@ -314,6 +375,20 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
             }
 
         });
+    }
+
+    private void commit() {
+        String message = "确认提交检查结果?";
+        showCommitDialog(message,0);
+    }
+    @Override
+    public void dialogClick() {
+        commitRote();
+    }
+
+    @Override
+    public void dialogCancel() {
+
     }
 
     public class MyJavaScriptInterface {
@@ -708,6 +783,7 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
 //                webView.loadUrl("javascript:updateStartPoint(" + mLon + ',' + mLan + ")");
                         mLocationClient.stopLocation();
                         btn_start_check.setVisibility(View.VISIBLE);
+                        btn_comit_check.setVisibility(View.VISIBLE);
                         center_on_current_point.setVisibility(View.VISIBLE);
                         hasShowMap = true;
                     }
@@ -768,20 +844,56 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
 
         }
     }
-    private void commit(){
-        String url = "";
+    private void commitRote(){
+        TracingPoint point = new TracingPoint();
+        point.latitude = "30.60709472432";
+        point.longitude = "114.42437474301";
+        lineTracingPoints.add(point);
+        TracingPoint point1 = new TracingPoint();
+        point.latitude = "34.759229070912";
+        point.longitude = "113.77873556293";
+        lineTracingPoints.add(point1);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < lineTracingPoints.size(); ++i) {
+            TracingPoint item = lineTracingPoints.get(i);
+            if (i > 0) {
+                stringBuilder.append(",");
+            }
+            if(i == 0){
+                stringBuilder.append("[");
+            }
+            stringBuilder.append("[");
+            stringBuilder.append(item.longitude);
+            stringBuilder.append(",");
+            stringBuilder.append(item.latitude);
+            stringBuilder.append("]");
+            if(i == lineTracingPoints.size() -1){
+                stringBuilder.append("]");
+            }
+        }
+        String url = GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
         HashMap<String,String>params = new HashMap<>();
-        params.put("InspRecGuid",bisSinsRec.sinsGuid); // 安全检查记录GUID
-        params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("startTime",startTime);
-        params.put("endTime",endTime);
         Gson gson =new Gson();
-        String trace =gson.toJson(lineTracingPoints);
-        params.put("tracingPoint",trace);
+        CheckRote.RequestDataBean requestDataBean = new CheckRote.RequestDataBean();
+        requestDataBean.setType("bis");
+        requestDataBean.setTargetId("update.InsertBisSinLogic");
+        ArrayList<CheckRote.RequestDataBean.ObjInfoListBean>listBeans = new ArrayList<>();
+        CheckRote.RequestDataBean.ObjInfoListBean objInfoListBean = new CheckRote.RequestDataBean.ObjInfoListBean();
+        objInfoListBean.setGuid(bisSinsRec.guid);
+        objInfoListBean.setCheckTime(CommonUtils.getCurrentDateYMD());
+        objInfoListBean.setStaTime(startTime);
+        objInfoListBean.setEndTime(endTime);
+        objInfoListBean.setGeo("{\"type\":\"LineString\",\"coordinates\":"+ stringBuilder +"}");
+        objInfoListBean.setGeoType(1);
+        listBeans.add(objInfoListBean);
+        requestDataBean.setObjInfoList(listBeans);
+        params.put("requestData",gson.toJson(requestDataBean));
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.params = params;
-        localCacheEntity.type = 1;
+        localCacheEntity.type =0;
+        localCacheEntity.commitType = 2;
+        localCacheEntity.seriesKey = UUID.randomUUID().toString();
         SyberosManagerImpl.getInstance().submit(localCacheEntity,null, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -803,7 +915,7 @@ public class EnterpriseSecurityCheckMapTrailsActivity extends BaseActivity imple
                     EnterpriseSecurityCheckMapTrailsActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
-            customDialog.setMessage("停止当前检查，确定退出？");
+            customDialog.setMessage("当前检查未提交，确定退出？");
             customDialog.setOnConfirmClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

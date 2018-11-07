@@ -7,12 +7,31 @@
     tools:context=".amap.ShowNearlyInfoActivity">
     <include layout="@layout/action_bar2_layout"
         android:id="@+id/layout_bar"></include>
+    <LinearLayout
+        android:id="@+id/ll_base_info"
+        android:layout_below="@+id/layout_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16sp"/>
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16sp"
+            android:text=""/>
+    </LinearLayout>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_bar">
+        android:layout_below="@+id/ll_base_info">
 
     </WebView>
 

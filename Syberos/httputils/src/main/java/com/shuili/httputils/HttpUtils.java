@@ -143,6 +143,37 @@ public class HttpUtils {
      * @param tag
      * @param callback
      */
+    public void requestNet_postJson(String url, String json, String tag, final RequestCallback<String> callback) {
+        url = processUrl(url, callback);
+        if (url == null) return;
+        OkHttpUtils.getInstance().setConnectTimeout(20000);
+        OkHttpUtils
+                .post(url)//
+                .postJson(json)
+                .tag(tag)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+                        if(callback != null){
+                            callback.sendResult(s);
+                        }
+                    }
+
+                    @Override
+                    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                        if(callback != null){
+                            callback.sendResultFailed(-2);
+                        }
+                    }
+                });
+    }
+    /**
+     * 网络请求
+     *
+     * @param url
+     * @param tag
+     * @param callback
+     */
     public void requestNet_download(String url, HashMap<String, String> params, String tag, FileCallback callback) {
         HttpParams httpParams = new HttpParams();
         for(String key:params.keySet()){

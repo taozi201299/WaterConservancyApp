@@ -94,11 +94,13 @@ public class BusinessConfig {
         });
     }
     public static void saveLog2Server(String moduleCode){
+
         String url = GlobleConstants.strAppIP +"/mapp/insertLogInfo";
         HashMap<String,String>params = new HashMap<>();
         params.put("userGuid", SyberosManagerImpl.getInstance().getCurrentUserId());
-        params.put("acCode" ,App.orgJurd);
-        params.put("acName","");
+        params.put("adCode" ,App.orgJurd);
+        params.put("userName",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("adName","");
         params.put("modDicCode",moduleCode);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
@@ -107,18 +109,18 @@ public class BusinessConfig {
         localCacheEntity.type = 1;
         localCacheEntity.commitType = 0;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
-        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
-            @Override
-            public void onResponse(String result) {
-                Log.d("111",result);
-
-            }
-
-            @Override
-            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
-            }
-        });
+//        SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities, new RequestCallback<String>() {
+//            @Override
+//            public void onResponse(String result) {
+//                Log.d("111",result);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+//
+//            }
+//        });
     }
 }
 

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lzy.okhttputils.OkHttpUtils;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
@@ -17,12 +18,15 @@ import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.an_quan_jian_cha.EnterprisesOnSiteCheckInfo;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
+import com.syberos.shuili.entity.common.CheckRoteItem;
 import com.syberos.shuili.entity.hidden.ObjHidden;
 import com.syberos.shuili.entity.securitycheck.BisSinsRec;
 import com.syberos.shuili.entity.securitycheck.BisSinsSche;
 import com.syberos.shuili.entity.securitycheck.ObjSins;
+import com.syberos.shuili.entity.test.EngineDetailBean;
 import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,6 +67,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     LinearLayout ll_hidden_object_container;
 
     ObjHidden objHidden =null;
+    CheckRoteItem checkRoteItem = null;
 
     int iSucessCount = 0;
     int iFailedCount = 0 ;
@@ -82,6 +87,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         iSucessCount = 0;
         iFailedCount = 0;
         showDataLoadingDialog();
+        getRotes();
         getHiddenInfo();
 
     }
@@ -132,6 +138,34 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
      * 获取轨迹信息
      */
     private void getRotes(){
+      String url =  GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
+      HashMap<String,String>params = new HashMap<>();
+      params.put("guid",bisSinsRec.guid);
+      params.put("type","bis");
+      params.put("targetId","search.SearchObjGeoLogic");
+      SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+          @Override
+          public void onResponse(String result) {
+              ll_check_road_container.removeAllViews();
+              Gson gson = new Gson();
+              checkRoteItem  = gson.fromJson(result, CheckRoteItem.class);
+              if(checkRoteItem != null && checkRoteItem.getResultInfoList() != null && checkRoteItem.getResultInfoList().size() > 0){
+                  ArrayList<CheckRoteItem.ResultInfoListBean> listBeans = (ArrayList<CheckRoteItem.ResultInfoListBean>) checkRoteItem.getResultInfoList();
+                  int size = listBeans.size();
+                  for(int i = 0; i < size; i++){
+                      addRoteInfo(listBeans.get(i));
+                  }
+              }
+
+
+          }
+
+          @Override
+          public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+
+          }
+      });
+
 
     }
     private void addHiddenItems(List<ObjHidden> hiddenItemInfos) {
@@ -216,6 +250,22 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data",hiddenItemInfo);
                 intentActivity(EnterprisesOnSiteCheckDetailActivity.this, InvestigationAccepDetailActivity.class,false,bundle);
+            }
+        });
+    }
+
+    private void addRoteInfo(final CheckRoteItem.ResultInfoListBean resultInfoListBean){
+        View view = LayoutInflater.from(mContext).inflate(
+                R.layout.activity_engine_item_layout, null);
+
+        ((TextView) (view.findViewById(R.id.tv_name))).setText(resultInfoListBean.getChecktime());
+        ll_check_road_container.addView(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data",resultInfoListBean);
+                intentActivity(EnterprisesOnSiteCheckDetailActivity.this, EnterpriseSecurityCheckRoteActivity.class,false,bundle);
             }
         });
     }
