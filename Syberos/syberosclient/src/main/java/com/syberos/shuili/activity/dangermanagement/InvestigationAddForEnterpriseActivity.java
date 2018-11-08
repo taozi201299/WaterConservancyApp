@@ -194,8 +194,8 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         }else {
             params.put("tendGuid","");
         }
-//        params.put("inspOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-//        params.put("goverRespWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("inspOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("goverRespWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex() +1)); // 隐患级别
         params.put("hiddClas","");
@@ -228,7 +228,8 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
                 String time = CommonUtils.getCurrentDateYMD();
                 time = time.replace("-","");
                 info.medPath = App.roleCode + "/OBJ_HIDD/"+time+ "/"+info.medName;
-                File file = new File(info.medPath);
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
                 info.medSize = file.length();
                 info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";

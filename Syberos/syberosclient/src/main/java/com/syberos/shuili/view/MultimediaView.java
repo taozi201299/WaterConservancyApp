@@ -539,6 +539,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         if(localAttachment.bExist) {
                             if(file != null) {
+                                localAttachment.localFile = file;
                                 localAttachment.filePath =  Environment.getExternalStorageDirectory() + DM_TARGET_FOLDER + file.getName();
                                 iv_attachImage.setEnabled(true);
                                 tv_attachment_text.setVisibility(GONE);

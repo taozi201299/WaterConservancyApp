@@ -37,6 +37,9 @@ public class GlobleConstants {
     public static String strCJIP = "http://192.168.1.11:7080";
     public static String strZJIP = "http://192.168.1.11:9080";
     public static String strZRIP = "http://192.168.1.11:6080";
+    public static String strZJIP_Cas = "http://192.168.1.11:8080";
+
+
 
     //专题图 - 地址
     public static final String BASE_URL = "http://192.168.1.11:7080/";
@@ -53,6 +56,7 @@ public class GlobleConstants {
 //    public static String strCJIP = "http://10.1.194.90:7080"; // 采集接口地址
 //    public static String strZJIP = "http://10.1.194.91"; // 总集接口地址
 //    public static String strZRIP = "http://10.1.194.91:7080"; // 5个接口系统
+//    public static String strZJIP_Cas = "http://10.1.194.91";
 //
 //    //专题图 - 地址 决策
 //    public static final String BASE_URL = "http://10.1.194.89/"; // 决策接口地址

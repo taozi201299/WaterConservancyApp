@@ -525,7 +525,7 @@ public class WorkFragment extends BaseFragment {
     private void goShareProject(String url){
         String strUrl = url.replace("","&type=2");
         Bundle bundle = new Bundle();
-        String str = "http://192.168.1.11:8080/cas/login?redirection=true&service=";
+        String str = GlobleConstants.strZJIP_Cas + "/cas/login?redirection=true&service=";
         String result = str + strUrl;
         result += "&"+"usn="+SyberosManagerImpl.getInstance().getCurrentUserId() +"&psd="+SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword();
         bundle.putString("url", result);
