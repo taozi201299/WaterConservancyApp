@@ -161,16 +161,13 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
-        params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
-        params.put("accepDate",tv_time.getText().toString()); // 验收时间
-        params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
-        params.put("note","移动端接口测试");  //备注
+        params.put("cancelState","1");
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
-        localCacheEntity.commitType = 0;
+        localCacheEntity.commitType = 1;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 
@@ -193,7 +190,7 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
                     info.medType = "1";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
-                attachMentInfoEntities.add(info);
+             //   attachMentInfoEntities.add(info);
             }
         }
         SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {

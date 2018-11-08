@@ -113,10 +113,8 @@ public class InvestigationSuperviceTaskActivity extends BaseActivity{
                 if(hiddenSupervice.dataSource.size() > 0) {
                     if(hiddenSupervice.dataSource.size() > 0) {
                         for(HiddenSupervice item: hiddenSupervice.dataSource){
-                            if(item.getSupStat() == null || item.getSupStat().isEmpty()){
-                                if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
-                                    datas.add(item);
-                                }
+                            if(item.getSupStat() == null || item.getSupStat().isEmpty() || "0".equals(item.getSupStat())){
+                                datas.add(item);
                             }
                         }
                         if(datas.size() > 0)

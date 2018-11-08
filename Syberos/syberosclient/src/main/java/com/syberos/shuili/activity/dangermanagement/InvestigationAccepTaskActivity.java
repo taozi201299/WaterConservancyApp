@@ -107,11 +107,12 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
                 }
                 ArrayList<HiddenSupervice>datas = new ArrayList<>();
                 if(hiddenSupervice.dataSource.size() > 0) {
+                    // 2
                         for(HiddenSupervice item: hiddenSupervice.dataSource){
-                            if(item.getAccepDate() == null || item.getAccepDate().isEmpty()){
-                                if(item.getRequCompDate() != null && !item.getRequCompDate().isEmpty()) {
-                                    datas.add(item);
-                                }
+                            if(item.getSupStat() != null && !item.getSupStat().isEmpty() &&
+                                    "2".equals(item.getSupStat()) &&
+                                    (item.getAccepDate() == null || item.getAccepDate().isEmpty())) {
+                                datas.add(item);
                             }else {
                               continue;
                             }

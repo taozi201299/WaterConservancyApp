@@ -193,12 +193,13 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
         params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
         params.put("collTime", CommonUtils.getCurrentDate());
         params.put("note","移动端接口测试");  //备注
+        params.put("cancelState","2");
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
         localCacheEntity.params = params;
         localCacheEntity.type = 1;
-        localCacheEntity.commitType = 0;
+        localCacheEntity.commitType = 1;
         localCacheEntity.seriesKey = UUID.randomUUID().toString();
         ArrayList<MultimediaView.LocalAttachment> list =  ll_multimedia.getBinaryFile();
 

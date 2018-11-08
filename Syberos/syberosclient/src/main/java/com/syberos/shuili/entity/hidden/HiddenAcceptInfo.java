@@ -56,6 +56,16 @@ public class HiddenAcceptInfo extends HttpBaseResponse<HiddenAcceptInfo> {
      */
     String recPers;
 
+    public String getCancelState() {
+        return cancelState == null ? "" : cancelState;
+    }
+
+    public void setCancelState(String cancelState) {
+        this.cancelState = cancelState;
+    }
+
+    String cancelState;
+
 
     public String getUsername() {
         return username == null ? "" : username;

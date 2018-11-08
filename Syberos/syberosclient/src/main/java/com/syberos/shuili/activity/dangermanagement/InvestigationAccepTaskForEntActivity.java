@@ -20,6 +20,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.base.BaseActivity;
 import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.hidden.HiddSupObj;
 import com.syberos.shuili.entity.userinfo.UserExtendInformation;
 import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
 import com.syberos.shuili.entity.common.DicInfo;
@@ -186,41 +187,35 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                         item.setAccept(false);
                     }else {
                         for(HiddenAcceptInfo acceptInfo :hiddenAcceptInfo.dataSource){
-                             if((acceptInfo.getAccepDate() != null && !acceptInfo.getAccepDate().isEmpty()
-                            ||(acceptInfo.getAccepPers() != null && !acceptInfo.getAccepPers().isEmpty())
-                            || (acceptInfo.getAccepOpin() != null && !acceptInfo.getAccepOpin().isEmpty()) )) {
+                            if(acceptInfo.getRequCompDate() == null || acceptInfo.getRequCompDate().isEmpty()){
                                 item.setAccept(true);
-                                break;
                             }else {
-                                if(acceptInfo.getRequCompDate() == null && acceptInfo.getRequCompDate().isEmpty()){
+                                if((acceptInfo.getAccepDate() != null && !acceptInfo.getAccepDate().isEmpty()) ||
+                                        acceptInfo.getRecPers()!= null && !acceptInfo.getRecPers().isEmpty()){
                                     item.setAccept(true);
                                 }else {
-                                    item.setAccept(false);
+                                    if(acceptInfo.getCancelState() != null && !"0".equals(acceptInfo.getCancelState())) {
+                                        item.setAccept(true);
+                                    }else {
+                                        item.setAccept(false);
+                                    }
                                 }
                             }
                         }
                     }
                     if(sucessCount + failedCount == size){
-                        closeDataDialog();
                         processResult();
-                        refreshUI();
                     }
                 }
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     failedCount ++;
                     if(sucessCount + failedCount == size){
-                        closeDataDialog();
                         processResult();
-                        refreshUI();
                     }
                 }
             });
-
-
-
         }
-
     }
     private void processResult(){
         for(ObjHidden item: investigationTaskInfo.dataSource){
@@ -228,6 +223,49 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 results.add(item);
             }
         }
+        getSupStatus();
+
+    }
+    private void getSupStatus(){
+        sucessCount = 0;
+        failedCount = 0;
+        final int size = results.size();
+        final ArrayList<ObjHidden>datas = new ArrayList<>();
+        for(int i = 0 ; i <size; i ++) {
+            String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/selectHiddSupObj/";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid", results.get(i).getGuid());
+            params.put("hiddGuid", results.get(i).getGuid());
+            final int finalI = i;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    sucessCount ++;
+                    Gson gson = new Gson();
+                    HiddSupObj hiddSupObj = gson.fromJson(result,HiddSupObj.class);
+                    if(hiddSupObj == null|| hiddSupObj.getData() == null || hiddSupObj.getData().size() == 0){
+                    }else {
+                        if("1".equals(hiddSupObj.getData().get(0).getIsList())){
+                            datas.add(results.get(finalI));
+                        }
+                    }
+                    if(sucessCount + failedCount == size){
+                        results.clear();
+                        results.addAll(datas);
+                        refreshUI();
+                    }
+                }
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    failedCount ++;
+                    if(sucessCount + failedCount == size){
+                        refreshUI();
+                    }
+
+                }
+            });
+        }
+
     }
     private ObjectEngine getOrgInfo(String orgId){
         for(ObjectEngine item : objectEngines){
@@ -340,6 +378,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         return "";
     }
     private void refreshUI(){
+        closeDataDialog();
         if(results.size() == 0){
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
         }
