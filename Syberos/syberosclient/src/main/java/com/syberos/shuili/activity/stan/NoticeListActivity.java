@@ -146,6 +146,9 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     }
     @Override
     public void initData() {
+        if(!"1".equals(BusinessConfig.getOrgLevel())){
+            return;
+        }
         iSucessCount = 0;
         iFailedCount = 0;
         showDataLoadingDialog();

@@ -214,6 +214,9 @@ public class DataReviewListActivity extends TranslucentActivity
     }
     @Override
     public void initData() {
+        if(BusinessConfig.getOrgLevel()!= 1){
+            return;
+        }
         showDataLoadingDialog();
         if(result != null) result.clear();
         iSucessCount = 0;

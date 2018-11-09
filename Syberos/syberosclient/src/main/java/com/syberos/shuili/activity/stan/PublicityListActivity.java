@@ -190,6 +190,9 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
     }
     @Override
     public void initData() {
+        if(!"1".equals(BusinessConfig.getOrgLevel())){
+            return;
+        }
         showDataLoadingDialog();
         getObjStanAppls();
     }

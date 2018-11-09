@@ -155,6 +155,9 @@ public class FormalReviewListActivity extends TranslucentActivity
     }
     @Override
     public void initData() {
+        if(!"1".equals(BusinessConfig.getOrgLevel())){
+            return;
+        }
         if(result != null) result.clear();
         iSucessCount = 0;
         iFailedCount = 0;
