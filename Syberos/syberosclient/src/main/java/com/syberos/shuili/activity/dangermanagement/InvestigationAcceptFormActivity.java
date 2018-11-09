@@ -186,14 +186,21 @@ public class InvestigationAcceptFormActivity extends BaseActivity implements Vie
      */
     private void submit(int type){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
+        HashMap<String,String>params = new HashMap<>();
         params.put("accepPers",tv_accept_person.getText().toString()); // 验收人
         params.put("accepDate",tv_time.getText().toString()); // 验收时间
         params.put("accepOpin",et_accept_desc.getEditText()); //验收意见
         params.put("collTime", CommonUtils.getCurrentDate());
         params.put("note","移动端接口测试");  //备注
         params.put("cancelState","2");
+        url += investigationInfo.getBisHiddRectAcceID() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

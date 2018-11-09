@@ -36,9 +36,17 @@ public class ObjHidden extends HttpBaseResponse<ObjHidden> {
     String hiddGradName;
     String hiddClassName;
     boolean isAccept;
-
-
     boolean bExist;
+
+    public String getBisRecAccGuid() {
+        return bisRecAccGuid == null ? "" : bisRecAccGuid;
+    }
+
+    public void setBisRecAccGuid(String bisRecAccGuid) {
+        this.bisRecAccGuid = bisRecAccGuid;
+    }
+
+    String bisRecAccGuid;
 
     public String getGuid() {
         return guid == null ? "" : guid;

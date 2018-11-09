@@ -187,6 +187,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                         item.setAccept(false);
                     }else {
                         for(HiddenAcceptInfo acceptInfo :hiddenAcceptInfo.dataSource){
+                            item.setBisRecAccGuid(acceptInfo.getGuid());
                             if(acceptInfo.getRequCompDate() == null || acceptInfo.getRequCompDate().isEmpty()){
                                 item.setAccept(true);
                             }else {
@@ -245,9 +246,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                     HiddSupObj hiddSupObj = gson.fromJson(result,HiddSupObj.class);
                     if(hiddSupObj == null|| hiddSupObj.getData() == null || hiddSupObj.getData().size() == 0){
                     }else {
-                        if("1".equals(hiddSupObj.getData().get(0).getIsList())){
-                            datas.add(results.get(finalI));
-                        }
+                        datas.add(results.get(finalI));
                     }
                     if(sucessCount + failedCount == size){
                         results.clear();

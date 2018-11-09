@@ -38,7 +38,9 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.service.dataprovider.dbconfig.def.DBDefinition.url;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
+import static com.syberos.shuili.utils.Strings.urlDecode;
 
 /**
  * Created by jidan on 18-3-23.
@@ -158,10 +160,17 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
     private void submit(int type){
         if(!checkParam())return;
         showDataLoadingDialog();
-        String url = GlobleConstants.strCJIP +"/cjapi/cj/bis/hidd/rectAcce/addObjHiddRectAcce";
+        String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcce/";
         HashMap<String,String>params = new HashMap<>();
-        params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("cancelState","1");
+        url += investigationInfo.getBisRecAccGuid() +"/"+"?";
+        for(String key :params.keySet()){
+            url += key;
+            url +="=";
+            url += params.get(key);
+            url += "&";
+        }
+        url = url.substring(0,url.length() -1);
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
