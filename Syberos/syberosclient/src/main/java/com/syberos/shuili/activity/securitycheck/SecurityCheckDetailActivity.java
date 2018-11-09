@@ -161,7 +161,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
     private void getExpertInfo(){
         String url = strIP +"/sjjk/v1/obj/expert/objExperts/";
         HashMap<String,String> params = new HashMap<>();
-        params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
+        params.put("guid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -298,7 +298,7 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
         // 组长名称
         tv_group_leader.setText(bisSinsScheGroup.getGroupLeader());
         // 组长单位
-        tv_group_unit.setText(bisSinsScheGroup.getGroupLeaderWiun());
+        tv_group_unit.setText(bisSinsScheGroup.getGroupLeader());
         // 专家姓名
         if(objExpert!= null && objExpert.dataSource != null &&objExpert.dataSource.size() > 0) {
             tv_check_person.setText(objExpert.dataSource.get(0).getPersName());
@@ -322,7 +322,6 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
 //                            false, bundle);
                 }
             });
-            return;
         }
 
         // 隐患类别

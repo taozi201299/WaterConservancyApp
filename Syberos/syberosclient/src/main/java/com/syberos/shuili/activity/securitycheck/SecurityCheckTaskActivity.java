@@ -60,6 +60,9 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     private ArrayList<BisSinsSche> bisSinsSches = new ArrayList<>();  // 安全检查方案信息表
     private RelSinsGroupWiun relSinsGroupWiun;
 
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_recyclerview_laout;
@@ -72,7 +75,11 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
 
     @Override
     public void initData() {
-        getScheGroupIdByUserId();
+        iSucessCount = 0;
+        iFailedCount = 0;
+        bisSinsScheGroups.clear();
+        bisSinsSches.clear();
+        getScheGroupIdsaByOrgGuid();
     }
 
     @Override
@@ -92,6 +99,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
 
     @Override
     public void onItemClick(int position) {
+        if(position >= bisSinsSches.size() || position >= bisSinsSches.get(position).dataSource.size())return;
         Bundle bundle = new Bundle();
         BisSinsScheGroup item = bisSinsScheGroup.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
@@ -160,6 +168,34 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
             }
         });
     }
+    private void getScheGroupIdsaByOrgGuid(){
+        String url = GlobleConstants.strIP + "/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("groupLeaderWiun",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                bisSinsScheGroup = gson.fromJson(result, BisSinsScheGroup.class);
+                if (bisSinsScheGroup != null && bisSinsScheGroup.dataSource != null & bisSinsScheGroup.dataSource.size() > 0){
+                        getPlanInfo();
+                    }
+                    else if(bisSinsScheGroup.dataSource.size() == 0){
+                     getScheGroupIdByUserId();
+                }
+                else {
+                    getScheGroupIdByUserId();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
+
+            }
+        });
+    }
     private void getScheGroupList(){
 /**
  *   2 根据检查分组GUID 获取安全检查方案分组信息  （现场检查任务列表）
@@ -205,26 +241,18 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     private void getPlanInfo(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
         HashMap<String,String>params = new HashMap<>();
-        for(BisSinsScheGroup item : bisSinsScheGroups){
+        for(final BisSinsScheGroup item : bisSinsScheGroup.dataSource){
             params.put("guid",item.getScheGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    closeDataDialog();
+                    iSucessCount++;
                     Gson gson = new Gson();
-                    BisSinsSche bisSinsSche = gson.fromJson(result,BisSinsSche.class);
-                    if(bisSinsSche == null || bisSinsSche.dataSource == null){
-                        closeDataDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
+                    BisSinsSche bisSinsSche = gson.fromJson(result, BisSinsSche.class);
+                    if (bisSinsSche != null || bisSinsSche.dataSource != null && bisSinsSche.dataSource.size() > 0) {
+                        bisSinsSches.add(bisSinsSche);
                     }
-                    if(bisSinsSche.dataSource.size() == 0){
-                        closeDataDialog();
-                        ToastUtils.show("未获取到相关内容");
-                        return;
-                    }
-                    bisSinsSches.add(bisSinsSche);
-                    if(bisSinsSches.size() == bisSinsScheGroups.size()){
+                    if(iSucessCount +iFailedCount == bisSinsScheGroup.dataSource.size()){
                         merageData();
                         refreshUI();
                     }
@@ -232,8 +260,10 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeDataDialog();
-                    ToastUtils.show(errorInfo.getMessage());
+                    if(iSucessCount +iFailedCount == bisSinsScheGroup.dataSource.size()){
+                        merageData();
+                        refreshUI();
+                    }
                 }
             });
         }
@@ -264,6 +294,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
         }
     }
     private void refreshUI(){
+        closeDataDialog();
         adapter.setData(bisSinsScheGroup.dataSource);
         adapter.notifyDataSetChanged();
     }

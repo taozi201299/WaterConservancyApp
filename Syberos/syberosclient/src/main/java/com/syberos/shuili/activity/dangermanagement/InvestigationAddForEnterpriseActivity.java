@@ -197,7 +197,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         params.put("inspOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("goverRespWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex() +1)); // 隐患级别
+        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述

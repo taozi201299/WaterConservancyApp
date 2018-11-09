@@ -110,9 +110,10 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
             final RelSinsGroupWiun  item = relSinsGroupWiun.dataSource.get(i);
             final String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
             HashMap<String,String> params = new HashMap<>();
-            params.put("engGuid",item.getGuid());
+            params.put("engGuid",item.getObjGuid());
             params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
-            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url,new RequestCallback<String>() {
+            params.put("groupGuid",bisSinsScheGroup.getGuid())
+;            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url,new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     iSucessCount ++ ;

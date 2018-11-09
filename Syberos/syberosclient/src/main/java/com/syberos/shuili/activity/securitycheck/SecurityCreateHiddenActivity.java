@@ -159,10 +159,11 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
         String  url = strIP +"/sjjk/v1/bis/obj/objHidd/";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
-        params.put("engGuid",relSinsGroupWiun.getGuid()); // 所属工程
+        params.put("engGuid",relSinsGroupWiun.getObjGuid()); // 所属工程
         params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex()+1)); // 隐患级别
+        params.put("groupGuid",bisSinsScheGroup.getGuid());
+        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
