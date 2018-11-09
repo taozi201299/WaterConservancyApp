@@ -141,8 +141,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setInitActionBar(false);
         super.onCreate(savedInstanceState);
-        SyberosManagerImpl.init(this);
-        SyberosAidlClient.init(this);
+        SyberosManagerImpl.init(getApplicationContext());
+        SyberosAidlClient.init(getApplicationContext());
         if(!SPUtils.get(GlobleConstants.Pwd,"").toString().isEmpty()) {
             new Thread(new Runnable() {
                 @Override
