@@ -424,6 +424,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             SecurityCloudAreaEntry.DataBean.YhxxBean.YHXXBean yhxxBean2 = yhxxBean.getYHXX().get(1);
             if (yhxxBean2 != null) {
 
+                if(yhxxBean.getYHXX().size() > 0)
                 tvCount4.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
                 tvHadRectifiedValue2.setText(yhxxBean2.getYZG() + "");
                 tvNoRectifiedValue2.setText(yhxxBean2.getWZG() + "");
@@ -448,12 +449,17 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             }
         }
         SupervisionMangeEntry supervisionMangeEntry = new SupervisionMangeEntry();
-        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
+        SecurityCloudAreaEntry.DataBean.BzhBean bzhBean = null;
+        if(securityCloudAreaEntry.getData().getBzh() != null &&
+                securityCloudAreaEntry.getData().getBzh().size() > 0)
+        bzhBean = securityCloudAreaEntry.getData().getBzh().get(0);
 //        supervisionMangeEntry.setScore();
         if (bzhBean != null) {
             supervisionMangeEntry.setStandardLevelOneCount(bzhBean.getYJ());
             supervisionMangeEntry.setStandardLevelTwoCount(bzhBean.getEJ());
             supervisionMangeEntry.setStandardLevelThreeCount(bzhBean.getSJ());
+            if(securityCloudAreaEntry.getData().getGzkh() != null &&
+                    securityCloudAreaEntry.getData().getGzkh().size() > 0)
             supervisionMangeEntry.setWorkAssessmentScore(securityCloudAreaEntry.getData().getGzkh().get(0).getAVGSCORE());
             if(sourceType != 1) {
                 initSupervisionManage(supervisionMangeEntry);
@@ -501,7 +507,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        private List<AqpgMonthBean> aqpgMonth;
 //        private List<SgxxBean> sgxx;
 
-        double score = securityCloudOrgEntry.getData().getAqpgScore().getAQPG();
+        if(securityCloudOrgEntry == null || securityCloudOrgEntry.getData() == null)return;
+        double score = 0;
+        if(securityCloudOrgEntry.getData().getAqpgScore() != null)
+            score = securityCloudOrgEntry.getData().getAqpgScore().getAQPG();
         if (title.isEmpty()) {
             titleDetail = new String(new StringBuilder("安全评分·").append(score).append("分"));
         } else {
@@ -514,7 +523,10 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 //        // TODO:   时间
         tvDate.setText("");
         SecurityCloudOrgEntry.DataBean.AqpgScoreBean aqpgScoreBean = securityCloudOrgEntry.getData().getAqpgScore();
-        SecurityCloudOrgEntry.DataBean.SgxxBean sgxxBean = securityCloudOrgEntry.getData().getSgxx().get(0);
+        SecurityCloudOrgEntry.DataBean.SgxxBean sgxxBean = null ;
+        if(securityCloudOrgEntry.getData().getSgxx() != null &&
+                securityCloudOrgEntry.getData().getSgxx().size() > 0)
+        sgxxBean = securityCloudOrgEntry.getData().getSgxx().get(0);
         if (sgxxBean != null) {
             tvCountAcc.setText(sgxxBean.getSGQS() + "");
             tvDeathAccCount.setText(sgxxBean.getSWRS() + "");
@@ -541,7 +553,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         if (yhxxBean != null) {
             tvCount1Hidden.setText(yhxxBean.getWZG() + "");
             tvCount2Hidden.setText(yhxxBean.getYHZS() + "");
-            SecurityCloudOrgEntry.DataBean.YhxxBean.YHXXBean yhxxBean1 = yhxxBean.getYHXX().get(0);
+            SecurityCloudOrgEntry.DataBean.YhxxBean.YHXXBean yhxxBean1 = null;
+            if(yhxxBean.getYHXX() != null && yhxxBean.getYHXX().size() > 0)
+            yhxxBean1 =  yhxxBean.getYHXX().get(0);
             if (yhxxBean1 != null) {
 
                 tvCount3Hidden.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
@@ -553,6 +567,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             SecurityCloudOrgEntry.DataBean.YhxxBean.YHXXBean yhxxBean2 = yhxxBean.getYHXX().get(1);
             if (yhxxBean2 != null) {
 
+                if(yhxxBean.getYHXX() != null && yhxxBean.getYHXX().size() > 0)
                 tvCount4.setText(yhxxBean.getYHXX().get(0).getYHZS() + "");
                 tvHadRectifiedValue2.setText(yhxxBean2.getYZG() + "");
                 tvNoRectifiedValue2.setText(yhxxBean2.getWZG() + "");
@@ -561,7 +576,11 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             }
         }
 
-        SecurityCloudOrgEntry.DataBean.FxyxxBean fxyxxBean = securityCloudOrgEntry.getData().getFxyxx().get(0);
+        SecurityCloudOrgEntry.DataBean.FxyxxBean fxyxxBean = null ;
+        if(securityCloudOrgEntry.getData().getFxyxx() != null &&
+                securityCloudOrgEntry.getData().getFxyxx().size() > 0) {
+            securityCloudOrgEntry.getData().getFxyxx().get(0);
+        }
         if (fxyxxBean != null) {
             tvCountRisk.setText(fxyxxBean.getYGK() + "");
             tvCount2.setText(fxyxxBean.getWGK() + "");
@@ -929,6 +948,9 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
             Entry entry = new Entry(i, (float) beans.get(i).getAQPG());
             entries.add(entry);
+        }
+        if(entries.size() == 0){
+            return  new LineData();
         }
 
         LineDataSet lineDataSet = new LineDataSet(entries, "得分");    //坐标线，LineDataSet(坐标点的集合, 线的描述或名称);
