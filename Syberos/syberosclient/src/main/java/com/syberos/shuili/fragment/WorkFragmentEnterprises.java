@@ -44,6 +44,7 @@ import com.syberos.shuili.adapter.CommonAdapter;
 import com.syberos.shuili.amap.ShowNearlyInfoActivity;
 import com.syberos.shuili.base.BaseFragment;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.AttOrgExt;
 import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.entity.userinfo.ModuleBean;
 import com.syberos.shuili.network.SoapUtils;
@@ -194,6 +195,18 @@ public class WorkFragmentEnterprises extends BaseFragment {
             names.remove("事故");
         }
         if(!modules.contains("隐患（企）")){
+            names.remove("隐患");
+        }
+        if(!App.sCodes.contains("安全检查（企）")){
+            names.remove("安全检查");
+        }
+        if(!App.sCodes.contains("危险源（企）")){
+            names.remove("危险源");
+        }
+        if(!App.sCodes.contains("事故（企）")){
+            names.remove("事故");
+        }
+        if(!App.sCodes.contains("隐患（企）")){
             names.remove("隐患");
         }
 

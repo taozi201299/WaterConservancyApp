@@ -366,9 +366,9 @@ private void getRectifyPerName(){
         scrollView.setVisibility(View.VISIBLE);
         // 工程基本信息
         tv_projectName.setText(investigationInfo.getEngName() == null ?"":investigationInfo.getEngName());
-        if("0".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
+        if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
             tv_level.setText(R.string.normal);
-        }else if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())){
+        }else if("2".equalsIgnoreCase(investigationInfo.getHiddGrad())){
             tv_level.setText(R.string.danger);
         }else {
             tv_level.setText(R.string.normal);

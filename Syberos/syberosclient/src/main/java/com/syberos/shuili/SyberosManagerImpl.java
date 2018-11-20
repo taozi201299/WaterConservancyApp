@@ -19,6 +19,7 @@ import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.utils.NetworkUtil;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class SyberosManagerImpl {
     private SoapUtils soapUtils;
     private HttpUtils httpsUtils;
     private static Handler mHandler;
+
     /**
      * 事故单位类型
      */

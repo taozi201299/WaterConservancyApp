@@ -335,12 +335,17 @@ public class SecurityCheckDetailActivity extends BaseActivity implements View.On
                 TextView tv_name =  view.findViewById(R.id.tv_name);
                 TextView tv_content =  view.findViewById(R.id.tv_content);
                 LinearLayout ll_type =  view.findViewById(R.id.ll_type);
-                if ("0".equals(item.getHiddGrad())) {
+                if ("1".equals(item.getHiddGrad())) {
                     tv_type.setText(getResources().getString(R.string.normal));
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
-                } else if ("1".equals(item.getHiddGrad())) {
+                } else if ("2".equals(item.getHiddGrad())) {
                     tv_type.setText(getResources().getString(R.string.danger));
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
+                }else{
+                    tv_type.setText(getResources().getString(R.string.normal));
+                    ll_type.setBackground(getResources().getDrawable(
+                                R.drawable.bg_enterprises_element_check_level_normal));
+
                 }
                 tv_title.setText(item.getHiddName());
                 tv_time.setText(item.getCollTime());

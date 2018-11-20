@@ -66,7 +66,7 @@ public class RetrofitHttpMethods {
 
     }
 
-    private static RetrofitHttpMethods instance;
+    private volatile static RetrofitHttpMethods instance;
 
     public static RetrofitHttpMethods getInstance() {
         if (instance == null) {

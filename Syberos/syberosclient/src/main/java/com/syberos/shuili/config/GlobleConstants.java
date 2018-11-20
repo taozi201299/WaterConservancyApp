@@ -61,7 +61,7 @@ public class GlobleConstants {
 //    //专题图 - 地址 决策
 //    public static final String BASE_URL = "http://10.1.194.89/"; // 决策接口地址
 // public static String str7GeIP = "http://10.1.194.91:6080"; // 7个接口地址
-
+//    public static final String strAppIP = "http://10.1.194.88";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR

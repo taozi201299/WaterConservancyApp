@@ -2,25 +2,16 @@ package com.syberos.shuili;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.common.AppModule;
-import com.syberos.shuili.service.SyberosAidlClient;
 import com.syberos.shuili.service.dao.DBHelperFactory;
-import com.syberos.shuili.utils.Arrays2;
 import com.syberos.shuili.utils.CommonUtils;
-import com.syberos.shuili.utils.CrashHandler;
 import com.syberos.shuili.utils.SPUtils;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 
 public class  App extends Application {

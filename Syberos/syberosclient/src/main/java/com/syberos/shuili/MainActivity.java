@@ -192,10 +192,10 @@ public class MainActivity extends TranslucentActivity
             }
         }
         if(!modules.contains("业务专题（水）")){
-            btnHematicMapFragment.setVisibility(View.GONE);
+         //   btnHematicMapFragment.setVisibility(View.GONE);
         }
         if(!modules.contains("安全评估（水）")){
-            btnSecurityCloudFragment.setVisibility(View.GONE);
+          //  btnSecurityCloudFragment.setVisibility(View.GONE);
         }
         if (App.sCodes.size() == 1) {
             if (App.sCodes.contains(GlobleConstants.desu)) {

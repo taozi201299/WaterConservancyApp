@@ -290,16 +290,20 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
 
 //        LinearLayout ll_type = (LinearLayout) (view.findViewById(R.id.ll_type));
         switch (level) {
-            case 0: {
+            case 1: {
                 tv_type.setBackground(getResources().getDrawable(
                         R.drawable.bg_enterprises_element_check_level_normal));
             }
             break;
-            case 1: {
+            case 2: {
                 tv_type.setBackground(getResources().getDrawable(
                         R.drawable.bg_enterprises_element_check_level_large));
                 break;
             }
+            default:
+                tv_type.setBackground(getResources().getDrawable(
+                        R.drawable.bg_enterprises_element_check_level_normal));
+                break;
         }
 
         ll_object_container_1.addView(view);

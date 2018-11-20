@@ -163,7 +163,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
         params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("groupGuid",bisSinsScheGroup.getGuid());
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex())); // 隐患级别
+        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex() +1)); // 隐患级别
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述

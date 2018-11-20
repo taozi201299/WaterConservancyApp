@@ -413,10 +413,10 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
         scrollView.setVisibility(View.VISIBLE);
         // 工程基本信息
         tv_projectName.setText(investigationInfo.getEngName());
-        if ("0".equals(investigationInfo.getHiddGrad())) {
+        if ("1".equals(investigationInfo.getHiddGrad())) {
             investigationInfo.setHiddGradName("一般隐患");
 
-        } else if ("1".equals(investigationInfo.getHiddGrad())) {
+        } else if ("2".equals(investigationInfo.getHiddGrad())) {
             investigationInfo.setHiddGradName("重大隐患");
         }else{
             investigationInfo.setHiddGradName("一般隐患");
