@@ -146,7 +146,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     }
     @Override
     public void initData() {
-        if(!"1".equals(BusinessConfig.getOrgLevel())){
+        if(!"1".equals(String.valueOf(BusinessConfig.getOrgLevel()))){
             return;
         }
         iSucessCount = 0;
@@ -327,6 +327,8 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
 
     }
     private void update2ObjPuno(ObjStanAppl item){
+        iSucessCount = 0;
+        iFailedCount = 0;
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/objPuno/";
         HashMap<String,String> params = new HashMap<>();
         params.put("stat","3");
@@ -349,7 +351,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
             @Override
             public void onResponse(String result) {
                 iSucessCount ++ ;
-                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                if(iSucessCount + iFailedCount == selectedReviewItemInformationList.size()){
                     closeDataDialog();
                     ToastUtils.show("提交成功");
                 }
@@ -360,7 +362,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 iFailedCount ++;
-                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                if(iSucessCount + iFailedCount == selectedReviewItemInformationList.size()){
                     closeDataDialog();
                     ToastUtils.show("提交成功");
                 }

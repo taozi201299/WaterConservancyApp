@@ -44,7 +44,8 @@ public class BusinessConfig {
         int count = 0;
         char[] array = src.toCharArray();
         int size = array.length;
-        for(int i = size -1 ; i >0; i--){
+        for(int i = size -1 ; i >=0; i--){
+            if(i < 0)break;
             if(String.valueOf(array[i]).equals("0")){
                 count ++;
             }else {

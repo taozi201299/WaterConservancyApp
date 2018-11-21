@@ -166,7 +166,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
                         objStanAppl.dataSource.get(finalI).setApplOrgName(attOrgBase.dataSource.get(0).getOrgName());
                     }
                     if(iSucessCount +iFailedCount == size) {
-                        closeLoadingDialog();
+                        closeDataDialog();
                         refreshUI();
                     }
 
@@ -176,7 +176,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     iFailedCount ++;
                     if(iSucessCount +iFailedCount == size) {
-                        closeLoadingDialog();
+                        closeDataDialog();
                         refreshUI();
                     }
                 }
@@ -190,7 +190,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
     }
     @Override
     public void initData() {
-        if(!"1".equals(BusinessConfig.getOrgLevel())){
+        if(!"1".equals(String.valueOf(BusinessConfig.getOrgLevel()))){
             return;
         }
         showDataLoadingDialog();
@@ -266,7 +266,6 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         showDataLoadingDialog("数据提交中...");
         iSucessCount = 0;
         iFailedCount = 0;
-        showLoadingDialog("数据提交中...");
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
         params.put("stat","6");
@@ -308,6 +307,8 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         return now.getTime();
     }
     private void insetInfo2ObjPuno(ObjStanAppl item){
+        iSucessCount = 0;
+        iFailedCount = 0;
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/puno/objPuno/";
         HashMap<String,String> params = new HashMap<>();
         params.put("titl",item.getApplOrgName() + "达标申请公示公告中");
@@ -342,7 +343,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
             @Override
             public void onResponse(String result) {
                 iSucessCount ++ ;
-                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                if(iSucessCount + iFailedCount == selectedReviewItemInformationList.size()){
                     closeDataDialog();
                     ToastUtils.show("提交成功");
                 }
@@ -351,7 +352,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 iSucessCount ++ ;
-                if(iSucessCount + iFailedCount == objStanAppl.dataSource.size()){
+                if(iSucessCount + iFailedCount == selectedReviewItemInformationList.size()){
                     closeDataDialog();
                     ToastUtils.show("提交成功");
                 }

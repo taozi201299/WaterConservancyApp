@@ -196,7 +196,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
     }
     @Override
     public void initData() {
-        if(!"1".equals(BusinessConfig.getOrgLevel())){
+        if(!"1".equals(String.valueOf(BusinessConfig.getOrgLevel()))){
             return;
         }
          iSucessCount = 0;
