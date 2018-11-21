@@ -56,9 +56,6 @@ public class RecordReviewConfirmActivity extends BaseActivity {
 
     @OnClick(R.id.tv_passed)
     void onConfirmClicked() {
-
-
-        ToastUtils.show("TODO: 处理备案确认后续工作");
         commit();
     }
 

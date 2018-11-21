@@ -291,7 +291,6 @@ public class WorkFragmentEnterprises extends BaseFragment {
         menuView.setActionsListener(new ImportMenuView.ActionsListener() {
             @Override
             public void itemClicked(int itemIndex) {
-                ToastUtils.show("新建按钮的第 " + (itemIndex + 1) + " 项被点击");
             }
 
             @Override

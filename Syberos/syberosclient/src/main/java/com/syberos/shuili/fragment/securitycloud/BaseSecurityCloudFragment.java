@@ -632,18 +632,18 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerAdapter = new RecyclerAdapter(rankList);
-        recyclerAdapter.setListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                Bundle bundle=new Bundle();
-                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
-////                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
-//                String title = securityCloudEntry.getRankList().get(position).getName();
-//                String id = securityCloudEntry.getRankList().get(position).getId();
-                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
-            }
-
-        });
+//        recyclerAdapter.setListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+////                Bundle bundle=new Bundle();
+//                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
+//////                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
+////                String title = securityCloudEntry.getRankList().get(position).getName();
+////                String id = securityCloudEntry.getRankList().get(position).getId();
+//                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
+//            }
+//
+//        });
         recyclerView.setAdapter(recyclerAdapter);
     }
 
@@ -660,18 +660,18 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         RecyclerView recyclerView = viewRank.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerAdapter = new RecyclerAdapter(rankList);
-        recyclerAdapter.setListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-//                Bundle bundle=new Bundle();
-                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
-//                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
-                String title = securityCloudEntry.getRankList().get(position).getName();
-                String id = securityCloudEntry.getRankList().get(position).getId();
-                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
-            }
-
-        });
+//        recyclerAdapter.setListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+////                Bundle bundle=new Bundle();
+//                Toast.makeText(getActivity(), "Item Clicked", Toast.LENGTH_SHORT).show();
+////                intentActivity(getActivity(), SecurityCloudDetailActivity.class, false, 1100);
+////                String title = securityCloudEntry.getRankList().get(position).getName();
+////                String id = securityCloudEntry.getRankList().get(position).getId();
+//                startActivity(new Intent(getActivity(), SecurityCloudDetailActivity.getInstance().getClass()));
+//            }
+//
+//        });
         recyclerView.setAdapter(recyclerAdapter);
     }
 

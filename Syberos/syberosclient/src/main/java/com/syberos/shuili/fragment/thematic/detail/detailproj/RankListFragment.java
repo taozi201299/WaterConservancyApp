@@ -44,7 +44,6 @@ public class RankListFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        ToastUtils.show("init Data  run too");
         List<ProjectEntry> list = new ArrayList<>();
         list.add(new ProjectEntry("rerw", "北京", "100"));
 
