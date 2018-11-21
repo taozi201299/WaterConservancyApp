@@ -223,7 +223,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     private void  commit(){
         iSucessCount = 0;
         iFailedCount = 0;
-        showDataLoadingDialog("数据提交中...");
+        showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";
         HashMap<String,String> params= new HashMap<>();
         params.put("stat","8");

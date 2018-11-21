@@ -197,7 +197,7 @@ public class SceneReviewDetailActivity extends BaseActivity implements BaseActiv
      * 提交到现场复核BIS_SCEN_REVI表 修改接口
      */
     private void  commitForm(){
-        showDataLoadingDialog("数据提交中...");
+        showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/scen/revi/bisScenRevis/";
         HashMap<String,String> params= new HashMap<>();
         params.put("apprOpin",ae_describe_audio.getEditText());

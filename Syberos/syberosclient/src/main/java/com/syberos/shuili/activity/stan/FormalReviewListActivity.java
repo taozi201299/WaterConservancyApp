@@ -288,7 +288,7 @@ public class FormalReviewListActivity extends TranslucentActivity
      * 形式初审表 只有审批没有审核 水利部用户和主管单位用户均可完成该操作
      */
     private void commit(int result,String opinion){
-        showDataLoadingDialog("数据提交...");
+        showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/from/firsttria/bisFromFirsttria/";
         HashMap <String,String>params= new HashMap<>();
         for(ObjStanAppl item : selectedReviewItemInformationList){

@@ -206,7 +206,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     public void showDataLoadingDialog(){
         LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
-                .setMessage("加载中...")
+                .setMessage("请稍后...")
                 .setCancelable(false)
                 .setCancelOutside(false);
         dataDialog=loadBuilder.create();

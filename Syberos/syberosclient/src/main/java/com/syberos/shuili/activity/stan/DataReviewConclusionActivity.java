@@ -192,7 +192,7 @@ public class DataReviewConclusionActivity extends BaseActivity implements BaseAc
      * 提交到标准化评审记录表
      */
     private void commitForm() {
-        showDataLoadingDialog("数据提交中...");
+        showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/informa/revi/bisInformaRevi/";
         HashMap<String, String> params = new HashMap<>();
         params.put("apprOpin", et_content.getEditableText().toString());

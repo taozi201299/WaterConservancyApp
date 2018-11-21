@@ -263,7 +263,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
      * 提交到公示公告表  提交内容
      */
     private void  commit(){
-        showDataLoadingDialog("数据提交中...");
+        showDataLoadingDialog();
         iSucessCount = 0;
         iFailedCount = 0;
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppl/";

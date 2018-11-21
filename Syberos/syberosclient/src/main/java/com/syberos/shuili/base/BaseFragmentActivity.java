@@ -207,7 +207,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     }
     public void showDataLoadingDialog(){
         LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
-                .setMessage("加载中...")
+                .setMessage("请稍后...")
                 .setCancelable(true)
                 .setCancelOutside(true);
         dataDialog=loadBuilder.create();
