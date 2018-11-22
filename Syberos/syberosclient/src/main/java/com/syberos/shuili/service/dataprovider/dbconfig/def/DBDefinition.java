@@ -35,6 +35,7 @@ public class DBDefinition {
     public static final String orgCode ="orgCode";
     public static final String orgId= "orgId";
     public static final String orgName = "orgName";
+    public static final String passwd = "password";
     public static final String persId = "persId";
     public static final String persName = "persName";
     public static final String persType = "persType";

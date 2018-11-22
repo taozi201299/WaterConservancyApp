@@ -31,23 +31,23 @@ public class GlobleConstants {
     public static final int HIDD_TYPE_NORMAL = 1;
     public static final int HIDD_TYPE_BIGER = 2;
 
-    // 地图服务器地址
-    public static final String mapServer = "http://192.168.1.11:8088";
-    public static String strIP = "http://192.168.1.8:8080";
-    public static String strCJIP = "http://192.168.1.11:7080";
-    public static String strZJIP = "http://192.168.1.11:9080";
-    public static String strZRIP = "http://192.168.1.11:6080";
-    public static String strZJIP_Cas = "http://192.168.1.11:8080";
-
-
-
-    //专题图 - 地址
-    public static final String BASE_URL = "http://192.168.1.11:7080/";
-
-
-    public static String str7GeIP = "http://192.168.1.11:9080";
-
-    public static final String strAppIP = "http://192.168.1.11:6080";
+//    // 地图服务器地址
+//    public static final String mapServer = "http://192.168.1.11:8088";
+//    public static String strIP = "http://192.168.1.8:8080";
+//    public static String strCJIP = "http://192.168.1.11:7080";
+//    public static String strZJIP = "http://192.168.1.11:9080";
+//    public static String strZRIP = "http://192.168.1.11:6080";
+//    public static String strZJIP_Cas = "http://192.168.1.11:8080";
+//
+//
+//
+//    //专题图 - 地址
+//    public static final String BASE_URL = "http://192.168.1.11:7080/";
+//
+//
+//    public static String str7GeIP = "http://192.168.1.11:9080";
+//
+//    public static final String strAppIP = "http://192.168.1.11:6080";
 
 //
 //    // 地图服务器地址
@@ -62,6 +62,23 @@ public class GlobleConstants {
 //    public static final String BASE_URL = "http://10.1.194.89/"; // 决策接口地址
 // public static String str7GeIP = "http://10.1.194.91:6080"; // 7个接口地址
 //    public static final String strAppIP = "http://10.1.194.88";
+
+
+
+
+    //  外网环境服务器地址
+//    // 地图服务器地址
+    public static final String mapServer = "http://211.144.20.142"; // 地图接口地址
+    public static String strIP = "http://jdsjjk.mwr.gov.cn"; // 吉威数据库接口地址
+    public static String strCJIP = "http://jdcj.mwr.gov.cn"; // 采集接口地址
+    public static String strZJIP = "http://jdyw.mwr.gov.cn"; // 总集接口地址
+    public static String strZRIP = "http://jdyw.mwr.gov.cn"; // 5个接口系统
+    public static String strZJIP_Cas = "http://jdyw.mwr.gov.cn";
+
+    //专题图 - 地址 决策
+    public static final String BASE_URL = "http://：jdjc.mwr.gov.cn/"; // 决策接口地址
+ public static String str7GeIP = "http://jdyw.mwr.gov.cn"; // 7个接口地址
+    public static final String strAppIP = "http://jdmapp.mwr.gov.cn";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
      * 2 大中型在建工程项目法人 CJFR

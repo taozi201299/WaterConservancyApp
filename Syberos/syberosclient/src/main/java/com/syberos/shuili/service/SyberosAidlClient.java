@@ -307,7 +307,7 @@ public class SyberosAidlClient {
         information.setOrgCode(informationEntity.orgCode);
         information.setOrgId(informationEntity.orgId);
         information.setOrgName(informationEntity.orgName);
-        information.setPassword("");
+        information.setPassword(informationEntity.password == null ? "" :informationEntity.password);
         information.setPersId(informationEntity.persId);
         information.setPersName(informationEntity.persName);
         information.setPersType(informationEntity.persType);
@@ -322,7 +322,7 @@ public class SyberosAidlClient {
     private UserInformationEntity convert2UserInformationEntity(UserExtendInformation information){
          return  new UserInformationEntity(information.getAdmDutyLevel(),information.getDepCode(),information.getDepId(),
                  information.getDepName(),information.getId(),information.getModifier(),information.getNote(),information.getOrgCode(),
-                 information.getOrgId(),information.getOrgName(),information.getPersId(),information.getPersName(),
+                 information.getOrgId(),information.getOrgName(),information.getPassword(),information.getPersId(),information.getPersName(),
                  information.getPersType(),information.getPhone(),information.getStatus(),information.getTs(),information.getUserCode(),
                  information.getUserName(),information.getUserType());
     }

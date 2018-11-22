@@ -159,7 +159,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
             UserInformationEntity informationEntity = new UserInformationEntity("","","",
                     info.get(DBDefinition.depName),
                     info.get(DBDefinition.id),"","","","",info.get(DBDefinition.orgName),
-                    "",info.get(DBDefinition.persName),"",info.get("mobilenumb"),"","","",
+                    "","",info.get(DBDefinition.persName),"",info.get("mobilenumb"),"","","",
                     "","");
             infos.add(informationEntity);
         }else {
@@ -190,7 +190,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
                 UserInformationEntity informationEntity = new UserInformationEntity("", "", "",
                         info.get(DBDefinition.depName),
                         info.get(DBDefinition.id), "", "", "", "", info.get(DBDefinition.orgName),
-                        "", info.get(DBDefinition.persName), "", info.get("mobilenumb"), "", "", "",
+                        "","", info.get(DBDefinition.persName), "", info.get("mobilenumb"), "", "", "",
                         "", "");
                 infos.add(informationEntity);
             }
@@ -202,7 +202,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
        return new UserInformationEntity(map.get(DBDefinition.admDutyLevel),map.get(DBDefinition.depCode),
                map.get(DBDefinition.depId),map.get(DBDefinition.depName),map.get(DBDefinition.id),map.get(DBDefinition.modifier),
                map.get(DBDefinition.note),map.get(DBDefinition.orgCode),
-               map.get(DBDefinition.orgId),map.get(DBDefinition.orgName),
+               map.get(DBDefinition.orgId),map.get(DBDefinition.orgName),"",
                map.get(DBDefinition.persId),map.get(DBDefinition.persName),map.get(DBDefinition.persType),
                map.get(DBDefinition.phone),map.get(DBDefinition.status),map.get(DBDefinition.ts),
                map.get(DBDefinition.userCode),map.get(DBDefinition.userName),map.get(DBDefinition.userType));

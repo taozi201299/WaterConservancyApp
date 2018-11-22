@@ -87,10 +87,10 @@ public class  App extends Application {
         OkHttpUtils.init(this);
         String oldVersionCode = SPUtils.get("versionCode","1").toString();
         String newVersionCode = String.valueOf(CommonUtils.getVersionCode());
-        if(Float.valueOf(newVersionCode) - Float.valueOf(oldVersionCode) > 0){
-            context.deleteDatabase("/sdcard/" + DBHelperFactory.DB_NAME);
-        }
-        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+//        if(Float.valueOf(newVersionCode) - Float.valueOf(oldVersionCode) > 0){
+//            context.deleteDatabase("/sdcard/" + DBHelperFactory.DB_NAME);
+//        }
+    //    CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init();

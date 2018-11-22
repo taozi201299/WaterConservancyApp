@@ -449,6 +449,11 @@ public class WorkFragmentEnterprises extends BaseFragment {
                         mapValue.put(mapArray[0],mapArray[1]);
                     }
                 }
+                if(mapValue == null || mapValue.size() == 0)
+                {
+                    ToastUtils.show("二维码识别错误");
+                    return;
+                }
                 if ("0".equals(mapValue.get("type"))) {
                     pcLogin(mapValue.get("guid").toString());
                 }

@@ -18,6 +18,7 @@ public class UserInformationEntity implements Parcelable {
     public String orgCode;
     public String orgId;
     public String orgName;
+    public String password;
     public String persId;
     public String persName;
     public String persType;
@@ -45,6 +46,7 @@ public class UserInformationEntity implements Parcelable {
         dest.writeString(orgCode);
         dest.writeString(orgId);
         dest.writeString(orgName);
+        dest.writeString(password);
         dest.writeString(persId);
         dest.writeString(persName);
         dest.writeString(persType);
@@ -56,7 +58,7 @@ public class UserInformationEntity implements Parcelable {
         dest.writeString(userType);
     }
     public UserInformationEntity(String admDutyLevel,String depCode,String depId,String depName,String id,String modifier,
-                                 String note,String orgCode,String orgId,String orgName,
+                                 String note,String orgCode,String orgId,String orgName,String password,
                                  String persId,String persName,String persType,String phone,String status,String ts,
                                  String userCode,String userName,String userType) {
          this.admDutyLevel = admDutyLevel == null ? "":admDutyLevel;
@@ -69,6 +71,7 @@ public class UserInformationEntity implements Parcelable {
          this.orgCode = orgCode == null ?"":orgCode;
          this.orgId = orgId  == null  ?"":orgId;
          this.orgName = orgName == null ?"":orgName;
+         this.password = password == null ?"" :password;
          this.persId = persId == null ? "":persId;
          this.persName = persName == null ? "":persName;
          this.persType = persType == null ?"":persType;
@@ -91,6 +94,7 @@ public class UserInformationEntity implements Parcelable {
         this.orgCode = in.readString();
         this.orgId = in.readString();
         this.orgName = in.readString();
+        this.password = in.readString();
         this.persId = in.readString();
         this.persName = in.readString();
         this.persType = in.readString();
