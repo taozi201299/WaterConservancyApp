@@ -39,7 +39,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Administrator on 2018/6/26.
- * 水利稽查专题图
+ * 水利稽察专题图
  */
 
 public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissions.PermissionCallbacks {
@@ -134,7 +134,7 @@ public class WinsChartFragment extends BaseLazyFragment implements  EasyPermissi
                 // 县  直管
             }
         }else  if(orgType == 2){
-              // 本流域的水利稽查信息
+              // 本流域的水利稽察信息
         }
         webMap();
     }

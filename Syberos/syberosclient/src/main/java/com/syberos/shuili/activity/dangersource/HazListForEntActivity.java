@@ -32,7 +32,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 /**
- * 企事业单位功能 风险源巡视
+ * 企事业单位功能 危险源巡视
  */
 public class HazListForEntActivity extends BaseActivity
         implements CommonAdapter.OnItemClickListener {
@@ -123,7 +123,7 @@ public class HazListForEntActivity extends BaseActivity
                     getHazDetail();
                 }else {
                     closeDataDialog();
-                    ToastUtils.show("没有风险源信息");
+                    ToastUtils.show("没有危险源信息");
                 }
             }
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Package：com.syberos.shuili.entity.thematicchart.sourcerist.
  */
 public class RiskSituationEntry implements Serializable {
-    //    xxxx年直管工程风险源情况
+    //    xxxx年直管工程危险源情况
     private String riskSituationTitle; //标题
     private int hasRegulatoryControlCount;//已管控数量
     private int noRegulatoryControlCount;// 未管控 数量

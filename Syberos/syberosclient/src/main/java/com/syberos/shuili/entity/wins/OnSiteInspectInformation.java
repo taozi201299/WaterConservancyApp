@@ -9,19 +9,19 @@ import java.util.List;
  * @date: 2018/4/11
  * @time: 下午2:39
  * @email: ZhaoDongshuang@syberos.com
- * @description 现场稽查信息
+ * @description 现场稽察信息
  */
 public class OnSiteInspectInformation implements Serializable {
 
-    private String group;       // 稽查组名
-    private String batch;       // 稽查批次
-    private String time;        // 稽查时间
-    private String area;        // 稽查地区
+    private String group;       // 稽察组名
+    private String batch;       // 稽察批次
+    private String time;        // 稽察时间
+    private String area;        // 稽察地区
     private String special;     // 特派员
     private String assistant;   // 特派员助理
-    private String experts;     // 稽查专家
+    private String experts;     // 稽察专家
 
-    private List<String> projects = null; // 稽查项目
+    private List<String> projects = null; // 稽察项目
     private List<InspectProblemInformation> inspectProblems = null; // 稽察问题
 
 

@@ -28,7 +28,7 @@ public class OnSiteInspectionInfo
     // 扣分记录
     private List<DeductMarksInfo> deductMarksInfoList;
 
-    // 水利稽查信息
+    // 水利稽察信息
     private List<InspectAssessInfo> inspectAssessInfoList;
 
 

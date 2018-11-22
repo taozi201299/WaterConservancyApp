@@ -122,7 +122,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
     @BindView(R.id.tv_count_acc)
     TextView tvCountAcc;
 
-    //    风险源
+    //    危险源
     @BindView(R.id.tv_count_risk)
     TextView tvCountRisk;
     @BindView(R.id.tv_count2_risk)
@@ -441,7 +441,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
             List<PieEntry> riskPieEntrys = new ArrayList<>();
 
             if (fxyxxBean.getYBA() + fxyxxBean.getWBA() == 0) {
-                initPieChartNoData(pieCharRisk, "无风险源");
+                initPieChartNoData(pieCharRisk, "无危险源");
             } else {
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getYBA(), "已备案 " + fxyxxBean.getYBA()));
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getWGK(), "未备案 " + fxyxxBean.getWGK()));
@@ -589,7 +589,7 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
 
 //            PieChart pieChart = ((PieChart) viewRiskSource.findViewById(R.id.pie_char_risk));
             if (fxyxxBean.getYBA() + fxyxxBean.getWBA() == 0) {
-                initPieChartNoData(pieCharRisk, "无风险源");
+                initPieChartNoData(pieCharRisk, "无危险源");
             } else {
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getYBA(), "已备案 " + fxyxxBean.getYBA()));
                 riskPieEntrys.add(new PieEntry(fxyxxBean.getWGK(), "未备案 " + fxyxxBean.getWGK()));

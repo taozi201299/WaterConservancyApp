@@ -8,7 +8,7 @@ import com.syberos.shuili.entity.thematicchart.PointEntry;
  * Package：com.syberos.shuili.entity.thematicchart.waterinspe ction.
  */
 public class WaterInspectionInfoEntry extends PointEntry{
-    int inspectionCount;//稽查次数
+    int inspectionCount;//稽察次数
     int projectCount;//项目数
     int problemCount;//问题数
 

@@ -10,11 +10,11 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 public class BisWinsProg extends HttpBaseResponse<BisWinsProg>
 {
     String startTime;
-    String winsProjType; // 稽查项目类型
+    String winsProjType; // 稽察项目类型
     String bwpGuid;
-    String winsType; // 稽查类型
-    String winsGroupNum; // 稽查组数
-    String winsArrayCode; // 稽查批次编码
+    String winsType; // 稽察类型
+    String winsGroupNum; // 稽察组数
+    String winsArrayCode; // 稽察批次编码
     String endTime;
 
     public String getStartTime() {

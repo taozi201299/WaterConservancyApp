@@ -7,13 +7,13 @@ import java.io.Serializable;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.sourcerist.
  */
-//风险源等级占比
+//危险源等级占比
 public class RiskRankRateEntry implements Serializable {
-    //    一般风险源 7个
+    //    一般危险源 7个
 //
-//重大风险源 3个
-    private int normalRiskSource;//一般风险源数
-    private int MajorRiskSource;//重大 风险源数据
+//重大危险源 3个
+    private int normalRiskSource;//一般危险源数
+    private int MajorRiskSource;//重大 危险源数据
 
     public int getNormalRiskSource() {
         return normalRiskSource;

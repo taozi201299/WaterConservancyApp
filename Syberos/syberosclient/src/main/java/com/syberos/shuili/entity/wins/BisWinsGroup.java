@@ -4,7 +4,7 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
- * 水利稽查组 BIS_WINS_GROUP
+ * 水利稽察组 BIS_WINS_GROUP
  */
 
 public class BisWinsGroup extends HttpBaseResponse<BisWinsGroup> {

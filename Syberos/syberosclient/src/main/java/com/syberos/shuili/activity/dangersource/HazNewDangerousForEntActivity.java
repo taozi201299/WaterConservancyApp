@@ -180,7 +180,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
                     HazNewDangerousForEntActivity.this);
             customDialog.setDialogMessage(null, null,
                     null);
-            customDialog.setMessage("当前风险源内容未提交，确定退出？");
+            customDialog.setMessage("当前危险源内容未提交，确定退出？");
             customDialog.setOnConfirmClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

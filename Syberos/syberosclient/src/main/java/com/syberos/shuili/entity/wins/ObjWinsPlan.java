@@ -4,7 +4,7 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/8/15.
- * 水利稽查计划对象表
+ * 水利稽察计划对象表
  */
 
 

@@ -215,7 +215,7 @@ public class HazSearchListForFRActivity extends BaseActivity
                     getHazDetail();
                 }else {
                     closeDataDialog();
-                    ToastUtils.show("没有风险源信息");
+                    ToastUtils.show("没有危险源信息");
                 }
             }
 

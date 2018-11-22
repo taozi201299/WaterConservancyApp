@@ -4,7 +4,7 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
- * 稽查问题
+ * 稽察问题
  */
 
 public class BisWinsProb extends HttpBaseResponse<BisWinsProb> {

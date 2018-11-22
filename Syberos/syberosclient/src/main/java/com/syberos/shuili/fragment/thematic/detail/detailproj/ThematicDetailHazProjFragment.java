@@ -23,7 +23,7 @@ import butterknife.BindView;
  * Project: Syberos.
  * Package：com.syberos.shuili.fragment.thematic.detail.
  * <p>
- * 风险源
+ * 危险源
  */
 public class ThematicDetailHazProjFragment extends BaseLazyFragment {
 

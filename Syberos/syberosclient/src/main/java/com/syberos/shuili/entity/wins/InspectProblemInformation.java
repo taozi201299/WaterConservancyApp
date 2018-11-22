@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @date: 2018/4/11
  * @time: 下午2:52
  * @email: ZhaoDongshuang@syberos.com
- * @description 稽查问题详情
+ * @description 稽察问题详情
  */
 public class InspectProblemInformation implements Serializable {
 

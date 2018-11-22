@@ -13,7 +13,7 @@ import java.util.List;
  * Package：com.syberos.shuili.entity.thematicchart.waterinspection.
  */
 public class WaterInspectionEntry implements Serializable{
-    //    水利稽查
+    //    水利稽察
     List<WaterInspectionPointEntry> pointEntryList;
     //  xxxx年本部门水利稽察情况
     WISituationEntry wiSituationEntry;

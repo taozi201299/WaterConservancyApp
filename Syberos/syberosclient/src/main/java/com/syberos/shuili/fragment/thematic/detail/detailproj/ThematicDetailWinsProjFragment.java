@@ -31,7 +31,7 @@ import butterknife.BindView;
  * Project: Syberos.
  * Package：com.syberos.shuili.fragment.thematic.detail.
  * <p>
- * 水利稽查
+ * 水利稽察
  */
 public class ThematicDetailWinsProjFragment extends BaseLazyFragment {
 

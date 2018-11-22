@@ -10,6 +10,7 @@ import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.service.dao.DBHelperFactory;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.SPUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 
@@ -89,7 +90,7 @@ public class  App extends Application {
         if(Float.valueOf(newVersionCode) - Float.valueOf(oldVersionCode) > 0){
             context.deleteDatabase("/sdcard/" + DBHelperFactory.DB_NAME);
         }
-     //   CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
+        CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init();

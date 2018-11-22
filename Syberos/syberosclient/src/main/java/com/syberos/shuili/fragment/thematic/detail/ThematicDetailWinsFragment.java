@@ -35,7 +35,7 @@ import butterknife.BindView;
  * Project: Syberos.
  * Package：com.syberos.shuili.fragment.thematic.detail.
  * <p>
- * 水利稽查
+ * 水利稽察
  */
 public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
@@ -131,7 +131,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
         String[] arrayTime = time.split("-");
         tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"稽察情况");
         tvData1.setText(winsEntry.getData().getWINSQUA());
-        tvDataTitle1.setText("稽查次数");
+        tvDataTitle1.setText("稽察次数");
         tvData2.setText(winsEntry.getData().getWINSPROJQUA());
         tvDataTitle2.setText("项目数量");
         tvData3.setText(winsEntry.getData().getWINSPROBQUA());
@@ -190,7 +190,7 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initView() {
-        tvListTitle.setText("水利稽查统计");
+        tvListTitle.setText("水利稽察统计");
         ivMarkPot1.setVisibility(View.GONE);
         tvChartValue1.setVisibility(View.GONE);
         tvChartValueTitle1.setVisibility(View.GONE);

@@ -4,7 +4,7 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 
 /**
  * Created by Administrator on 2018/4/30.
- * 稽查地区
+ * 稽察地区
  */
 
 public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
@@ -93,7 +93,7 @@ public class BisWinsRegi extends HttpBaseResponse<BisWinsRegi> {
 
     /**
      * Created by Administrator on 2018/4/30.
-     * 稽查人员表
+     * 稽察人员表
      */
 
     public static class BisWinsStaff extends HttpBaseResponse<BisWinsStaff> {

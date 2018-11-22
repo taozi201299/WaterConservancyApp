@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class RiskSourceInfoEntry implements Serializable {
     private String title;//标题
-    private int riskManageRate;//风险管控率
-    private int riskCount;//风险源数量
+    private int riskManageRate;//危险管控率
+    private int riskCount;//危险源数量
     private String recordRate;//备案率(10%)
 
     public String getTitle() {

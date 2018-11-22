@@ -8,9 +8,9 @@ import com.syberos.shuili.entity.HttpBaseResponse;
  */
 public class InspectAssessPlanBatchInfo extends HttpBaseResponse<InspectAssessPlanBatchInfo> {
 
-    private String batch;               // 稽查批次
+    private String batch;               // 稽察批次
     private String time;                // 稽察时间
-    private String projects;            // 稽查项目
+    private String projects;            // 稽察项目
 
 
     public String getBatch() {

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Project: Syberos.
  * Package：com.syberos.shuili.entity.thematicchart.sourcerist.
  */
-//  重大风险源数据
+//  重大危险源数据
 //  已管控2个，未管控5个 管控率21%
 //  已备案1个    备案率15%
 public class RiskStatisticsEntry implements Serializable {

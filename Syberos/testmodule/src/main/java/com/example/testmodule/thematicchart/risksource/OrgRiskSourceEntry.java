@@ -15,7 +15,7 @@ import java.util.List;
 public class OrgRiskSourceEntry implements Serializable {
     private RiskSituationEntry riskRiskSituationEntry;
     private RiskRankRateEntry riskRankRateEntry;
-    private List<RiskStatisticsEntry> riskSourceEntryList;//一般风险源\重大风险源\危化品危险源
+    private List<RiskStatisticsEntry> riskSourceEntryList;//一般危险源\重大危险源\危化品危险源
 
 
     public RiskSituationEntry getRiskRiskSituationEntry() {

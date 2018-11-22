@@ -9,16 +9,16 @@ import com.syberos.shuili.entity.HttpBaseResponse;
 public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
 
     String guid;
-    String winsGroupNum;// 稽查组编号
+    String winsGroupNum;// 稽察组编号
     String speStafGuid; // 特派员GUID
-    String winsProgGuid; // 稽查方案GUID
+    String winsProgGuid; // 稽察方案GUID
     String note;
     String collTime;
     String updTime;
     String recPers;
     String speStafAssiGuid;
-    String winsPlanCode;  // 稽查计划编码
-    String winsArrayCode;  // 稽查批次编号
+    String winsPlanCode;  // 稽察计划编码
+    String winsArrayCode;  // 稽察批次编号
 
     String specStaffName;
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2018/8/30.
- * 水利稽查
+ * 水利稽察
  */
 
 public class WinsEntry implements Serializable {

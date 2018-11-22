@@ -9,7 +9,7 @@ import java.util.List;
  * @date: 2018/4/15
  * @time: 下午9:20
  * @email: ZhaoDongshuang@syberos.com
- * 稽查方案
+ * 稽察方案
  */
 public class InspectPlan implements Serializable {
 
@@ -19,7 +19,7 @@ public class InspectPlan implements Serializable {
     private List<String> groups;    // 检查分组
     private String special;         // 特派员
     private String assistant;       // 特派员助理
-    private String experts;         // 稽查专家
+    private String experts;         // 稽察专家
     private String project;         // 稽察项目
     private String problemCount;    // 问题数量
 

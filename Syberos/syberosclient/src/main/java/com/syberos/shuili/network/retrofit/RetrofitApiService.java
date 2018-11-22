@@ -51,7 +51,7 @@ public interface RetrofitApiService {
     Observable<StanDirectEntry> getThematicStanDirect(@Query("sourceType") String sourceType,
                                                       @Query("orgGuid") String orgGuid);
 
-    //专题图 --水利稽查
+    //专题图 --水利稽察
     @POST("/desu/serv/v1/wins")
     Observable<WinsEntry> getThematicWins(@Query("sourceType") String sourceType,
                                           @Query("orgGuid") String orgGuid,

@@ -73,7 +73,7 @@ public class ThematicDetailActivity extends BActivity {
     ThematicDetailHiddenFragment thematicDetailHiddenFragment = new ThematicDetailHiddenFragment();
     //    事故
     ThematicDetailAcciFragment thematicDetailAcciFragment = new ThematicDetailAcciFragment();
-    //    风险源
+    //    危险源
     ThematicDetailHazFragment thematicDetailHazFragment = new ThematicDetailHazFragment();
     //    标准化
     ThematicDetailStanFragment thematicDetailStanFragment = new ThematicDetailStanFragment();

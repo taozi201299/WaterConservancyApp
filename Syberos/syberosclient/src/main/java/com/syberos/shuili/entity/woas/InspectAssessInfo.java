@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * created by：toby on 18-4-23 16:45
  * email：zhaodongshuang@syberos.com
- * 工作考核：水利稽查考核:考前摸底信息
+ * 工作考核：水利稽察考核:考前摸底信息
  */
 public class InspectAssessInfo extends HttpBaseResponse<InspectAssessInfo> {
 

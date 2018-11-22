@@ -169,7 +169,7 @@ public class ThematicDetailHazFragment extends BaseLazyFragment {
         tvValue33.setText( "66%");
         tvValue34.setText(10+"");
         tvValue35.setText("80%");
-        tvListTitle.setText("风险源统计");
+        tvListTitle.setText("危险源统计");
 
         List<ProjectEntry> projectEntryArrayList = new ArrayList<>();
         for(HazEntry.EveryEngBean everyEngBean : hazEntry.getData().getEveryEngList()) {

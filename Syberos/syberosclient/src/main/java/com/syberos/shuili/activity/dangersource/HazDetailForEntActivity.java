@@ -116,7 +116,7 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
     @Override
     public void initView() {
         setInitActionBar(true);
-        showTitle("风险源详情");
+        showTitle("危险源详情");
         setActionBarRightVisible(View.INVISIBLE);
 
     }

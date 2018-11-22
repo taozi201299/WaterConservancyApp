@@ -114,7 +114,7 @@ public class RetrofitHttpMethods {
                 .subscribe(observer);
     }
     /**
-     *  获取风险源数据
+     *  获取危险源数据
      */
     public void getThematicHaz(BaseObserver<HazEntry> observer, String sourceType,
                                  String orgGuid) {
@@ -151,7 +151,7 @@ public class RetrofitHttpMethods {
     }
 
     /**
-     * 获取水利稽查数据
+     * 获取水利稽察数据
      */
     public void getThematicWins(BaseObserver<WinsEntry> observer, String sourceType,
                                 String orgGuid,

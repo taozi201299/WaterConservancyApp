@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class WISituationEntry implements Serializable{
-    int inspectionCount;//稽查次数
+    int inspectionCount;//稽察次数
     int projectCount;//项目数量
     int programCount;//问题数量
 

@@ -184,11 +184,11 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "监督执法: " + gsonSerializeNull.toJson(supervisionEnforcementEntry));
     }
 
-    //水利稽查
+    //水利稽察
     private void covertJava2Json_ji_cha() {
         WaterInspectionEntry waterInspectionEntry = new WaterInspectionEntry();
 
-        //    水利稽查
+        //    水利稽察
         List<WaterInspectionPointEntry> pointEntryList = new ArrayList<>();
         WaterInspectionPointEntry waterInspectionPointEntry = new WaterInspectionPointEntry();
         WaterInspectionInfoEntry waterInspectionInfoEntry = new WaterInspectionInfoEntry();
@@ -208,13 +208,13 @@ public class MainActivity extends AppCompatActivity {
         waterInspectionEntry.setWiClassisEntry(wiClassisEntry);
         waterInspectionEntry.setWiProblemEntry(wiProblemEntry);
         waterInspectionEntry.setWiSituationEntry(wiSituationEntry);
-        Log.e(TAG, "水利稽查" + gsonSerializeNull.toJson(waterInspectionEntry));
+        Log.e(TAG, "水利稽察" + gsonSerializeNull.toJson(waterInspectionEntry));
 
         OrgWaterInspectionEntry orgWaterInspectionEntry = new OrgWaterInspectionEntry();
         orgWaterInspectionEntry.setWiClassisEntry(wiClassisEntry);
         orgWaterInspectionEntry.setWiProblemEntry(wiProblemEntry);
         orgWaterInspectionEntry.setWiSituationEntry(wiSituationEntry);
-        Log.e(TAG, "水利稽查-item" + gsonSerializeNull.toJson(orgWaterInspectionEntry));
+        Log.e(TAG, "水利稽察-item" + gsonSerializeNull.toJson(orgWaterInspectionEntry));
 
     }
 
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        private RiskSituationEntry riskRiskSituationEntry;
 //        private RiskRankRateEntry riskRankRateEntry;
-//        private List<RiskStatisticsEntry> riskSourceEntryList;//一般风险源\重大风险源\危化品危险源
+//        private List<RiskStatisticsEntry> riskSourceEntryList;//一般危险源\重大危险源\危化品危险源
         OrgRiskSourceEntry orgRiskSourceEntry = new OrgRiskSourceEntry();
         orgRiskSourceEntry.setRiskRiskSituationEntry(riskRiskSituationEntry);
         orgRiskSourceEntry.setRiskRankRateEntry(riskRankRateEntry);
