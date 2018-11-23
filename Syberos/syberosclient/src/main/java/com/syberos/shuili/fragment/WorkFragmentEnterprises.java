@@ -458,6 +458,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
                     pcLogin(mapValue.get("guid").toString());
                 }
                 if("1".equals(mapValue.get("type").toString())){
+                    goShareProject(intentResult.getContents());
                     // 工程二维码
                 }else if("2".equals(mapValue.get("type").toString())){
                     goShare(intentResult.getContents());
@@ -471,6 +472,16 @@ public class WorkFragmentEnterprises extends BaseFragment {
         String strUrl = url.replace("","&type=2");
         Bundle bundle = new Bundle();
         String result = strUrl += "&ukey=1";
+        bundle.putString("url", result);
+        intentActivity(getActivity(), ProjectInfoActivity.class,
+                false, bundle);
+    }
+    private void goShareProject(String url){
+        String strUrl = url.replace("","&type=1");
+        Bundle bundle = new Bundle();
+        String str = GlobleConstants.strZJIP_Cas + "/cas/login?redirection=true&service=";
+        String result = str + strUrl;
+        result += "&"+"usn="+SyberosManagerImpl.getInstance().getCurrentUserId() +"&psd="+SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword();
         bundle.putString("url", result);
         intentActivity(getActivity(), ProjectInfoActivity.class,
                 false, bundle);

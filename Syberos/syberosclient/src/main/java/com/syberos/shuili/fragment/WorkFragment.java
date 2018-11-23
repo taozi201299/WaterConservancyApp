@@ -556,7 +556,7 @@ public class WorkFragment extends BaseFragment {
                 false, bundle);
     }
     private void goShareProject(String url){
-        String strUrl = url.replace("","&type=2");
+        String strUrl = url.replace("","&type=1");
         Bundle bundle = new Bundle();
         String str = GlobleConstants.strZJIP_Cas + "/cas/login?redirection=true&service=";
         String result = str + strUrl;

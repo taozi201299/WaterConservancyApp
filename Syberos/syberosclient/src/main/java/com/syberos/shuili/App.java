@@ -9,6 +9,7 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.common.AppModule;
 import com.syberos.shuili.service.dao.DBHelperFactory;
 import com.syberos.shuili.utils.CommonUtils;
+import com.syberos.shuili.utils.CrashHandler;
 import com.syberos.shuili.utils.SPUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -92,8 +93,8 @@ public class  App extends Application {
 //        }
     //    CrashReport.initCrashReport(getApplicationContext(), "362b783ee8", true);
 
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init();
 
 
     }

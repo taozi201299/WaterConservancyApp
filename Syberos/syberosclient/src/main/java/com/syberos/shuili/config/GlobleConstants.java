@@ -70,14 +70,14 @@ public class GlobleConstants {
 //    // 地图服务器地址
     public static final String mapServer = "http://211.144.20.142"; // 地图接口地址
     public static String strIP = "http://jdsjjk.mwr.gov.cn"; // 吉威数据库接口地址
-    public static String strCJIP = "http://jdcj.mwr.gov.cn"; // 采集接口地址
+    public static String strCJIP = "http://jdcj.mwr.gov.cn:7080"; // 采集接口地址
     public static String strZJIP = "http://jdyw.mwr.gov.cn"; // 总集接口地址
-    public static String strZRIP = "http://jdyw.mwr.gov.cn"; // 5个接口系统
+    public static String strZRIP = "http://jdyw.mwr.gov.cn:7080"; // 5个接口系统
     public static String strZJIP_Cas = "http://jdyw.mwr.gov.cn";
 
     //专题图 - 地址 决策
     public static final String BASE_URL = "http://：jdjc.mwr.gov.cn/"; // 决策接口地址
- public static String str7GeIP = "http://jdyw.mwr.gov.cn"; // 7个接口地址
+    public static String str7GeIP = "http://jdyw.mwr.gov.cn:6080"; // 7个接口地址
     public static final String strAppIP = "http://jdmapp.mwr.gov.cn";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ
