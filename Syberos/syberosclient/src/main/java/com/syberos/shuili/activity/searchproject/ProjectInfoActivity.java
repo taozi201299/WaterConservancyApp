@@ -43,8 +43,14 @@ public class ProjectInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        showTitle("工程详情");
+        showTitle("详情");
         setActionBarRightVisible(View.INVISIBLE);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true); // 显示放大缩小 controler
+        webView.getSettings().setSupportZoom(true); // 可以缩放
+        webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.CLOSE);// 默认缩放模式
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

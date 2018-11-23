@@ -435,11 +435,12 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 // scanResult 为获取到的字符串
                 String scanResult = intentResult.getContents();
                 if(scanResult.contains("?")){
-                    String[] array  = intentResult.getContents().split("\'?");
+                    String[] array  = intentResult.getContents().split("\\?");
                     if(array.length == 2){
                         scanResult = array[1];
                     }else {
                         ToastUtils.show("二维码格式错误");
+                        return;
                     }
                 }
                 String[]array =  scanResult.split("&");
@@ -457,10 +458,12 @@ public class WorkFragmentEnterprises extends BaseFragment {
                 if ("0".equals(mapValue.get("type"))) {
                     pcLogin(mapValue.get("guid").toString());
                 }
+                // 工程二维码
                 if("1".equals(mapValue.get("type").toString())){
                     goShareProject(intentResult.getContents());
-                    // 工程二维码
-                }else if("2".equals(mapValue.get("type").toString())){
+                }
+                // 分享
+                else if("2".equals(mapValue.get("type").toString())){
                     goShare(intentResult.getContents());
                 }
             }
@@ -468,19 +471,55 @@ public class WorkFragmentEnterprises extends BaseFragment {
             ToastUtils.show("二维码识别错误");
         }
     }
-    private void goShare(String url) {
-        String strUrl = url.replace("","&type=2");
+    private void goShareProject(String url) {
+        String[]array = url.split("\\?");
+        int size = array.length;
+        if(size != 2){
+            ToastUtils.show("二维码格式错误");
+            return;
+        }
+        String tmpUrl = array[0];
+        tmpUrl += "?";
+        String[]params  =  array[1].split("&");
+        for(int i = 0 ;i < params.length;i++){
+            String item = params[i];
+            if(item.equals("type=1")){
+                continue;
+            }
+            if(!tmpUrl.endsWith("?")){
+                tmpUrl += "&";
+            }
+            tmpUrl += item;
+        }
+
         Bundle bundle = new Bundle();
-        String result = strUrl += "&ukey=1";
+        String result = tmpUrl += "&ukey=1";
         bundle.putString("url", result);
         intentActivity(getActivity(), ProjectInfoActivity.class,
                 false, bundle);
     }
-    private void goShareProject(String url){
-        String strUrl = url.replace("","&type=1");
+    private void goShare(String url){
+        String[]array = url.split("\\?");
+        int size = array.length;
+        if(size != 2){
+            ToastUtils.show("二维码格式错误");
+            return;
+        }
+        String tmpUrl = array[0];
+        tmpUrl += "?";
+        String[]params  =  array[1].split("&");
+        for(int i = 0 ;i < params.length;i++){
+            String item = params[i];
+            if(item.equals("type=2")){
+                continue;
+            }
+            if(!tmpUrl.endsWith("?")){
+                tmpUrl += "&";
+            }
+            tmpUrl += item;
+        }
         Bundle bundle = new Bundle();
-        String str = GlobleConstants.strZJIP_Cas + "/cas/login?redirection=true&service=";
-        String result = str + strUrl;
+        String result = tmpUrl;
         result += "&"+"usn="+SyberosManagerImpl.getInstance().getCurrentUserId() +"&psd="+SyberosManagerImpl.getInstance().getCurrentUserInfo().getPassword();
         bundle.putString("url", result);
         intentActivity(getActivity(), ProjectInfoActivity.class,
