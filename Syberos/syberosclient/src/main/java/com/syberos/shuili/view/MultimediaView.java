@@ -534,6 +534,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 HashMap<String,String>params = new HashMap<>();
                 params.put("medUrl",localAttachment.filePath);
                 String fileName = localAttachment.filePath.replace("/","-");
+                iv_attachImage.setEnabled(false);
                 HttpUtils.getInstance().requestNet_download(url, params, url, new FileCallback(fileName) {
                     @Override
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
