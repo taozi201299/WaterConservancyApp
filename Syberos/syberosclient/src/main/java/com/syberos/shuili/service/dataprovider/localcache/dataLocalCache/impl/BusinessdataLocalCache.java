@@ -116,7 +116,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             values.put("medName", info.medName);
             values.put("medType", info.medType);
             values.put("medSize",info.medSize);
-            values.put("medPath", info.medPath);
+            values.put("medPath", "mapp/"+info.medPath);
             values.put("localPath",info.localPath);
             values.put("collTime", CommonUtils.getCurrentDate());
             values.put("bisTableName", info.bisTableName == null ?"":info.bisTableName);
