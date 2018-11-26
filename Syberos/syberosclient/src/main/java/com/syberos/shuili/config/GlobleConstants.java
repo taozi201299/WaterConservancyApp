@@ -78,7 +78,7 @@ public class GlobleConstants {
     //专题图 - 地址 决策
     public static final String BASE_URL = "http://jdjc.mwr.gov.cn/"; // 决策接口地址
     public static String str7GeIP = "http://jdyw.mwr.gov.cn:6080"; // 7个接口地址
-    public static final String getStr7GeIP0 = "http://211.144.20.137:6080";
+    public static final String str7GeIP0 = "http://211.144.20.137:6080";
     public static final String strAppIP = "http://jdmapp.mwr.gov.cn";
     /**
      * 1 大中型已建工程运行管理单位 CJYJ

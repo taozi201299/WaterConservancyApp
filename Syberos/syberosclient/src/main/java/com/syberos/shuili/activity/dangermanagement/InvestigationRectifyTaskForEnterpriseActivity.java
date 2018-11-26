@@ -336,16 +336,20 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
             });
             ShapeDrawable bgShape = null;
             switch (type){
-                case "0": {
+                case "1": {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(R.string.normal);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
                 }
                 break;
-                case "1": {
+                case "2": {
                     ((TextView) (holder.getView(R.id.tv_type))).setText(R.string.danger);
                     ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape_red));
                 }
                 break;
+                default:
+                    ((TextView) (holder.getView(R.id.tv_type))).setText(R.string.normal);
+                    ll_type.setBackground(getResources().getDrawable(R.drawable.btn_investigation_shape));
+                    break;
 
             }
             ( (TextView)(holder.getView(R.id.tv_title))).setText(investigationInfo.getHiddName());

@@ -159,15 +159,15 @@ public class GateWayFragment extends BaseFragment {
             switch (index){
                 // 三类人员
                 case 1:
-                    webview.loadUrl(GlobleConstants.getStr7GeIP0 +"/eutr/moni/public/ttsa");
+                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/moni/public/ttsa");
                     break;
                 // 标准化
                 case 2:
-                    webview.loadUrl(GlobleConstants.getStr7GeIP0 +"/eutr/moni/public/stan");
+                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/moni/public/stan");
                     break;
                 // 教育培训
                 case 3:
-                    webview.loadUrl(GlobleConstants.getStr7GeIP0 +"/eutr/eutr/public/publicstudy ");
+                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy ");
                     break;
             }
         }
