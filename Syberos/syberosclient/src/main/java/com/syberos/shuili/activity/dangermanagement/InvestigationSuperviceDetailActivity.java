@@ -154,6 +154,12 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ll_multimedia.cancel();
+    }
+
+    @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);
         investigationInfo = (HiddenSupervice) bundle.getSerializable("data");

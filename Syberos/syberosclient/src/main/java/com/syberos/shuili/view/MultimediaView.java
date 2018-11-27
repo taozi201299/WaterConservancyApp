@@ -102,6 +102,8 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
     private static final int RC_FLODER_PERM = 125;
 
     private static final int MEDIA_MAX_SIZE = 5;
+    ArrayList<String>urls = new ArrayList<>();
+    private boolean bCancel = false;
 
     public MultimediaView(Context context) {
         this(context, null);
@@ -165,6 +167,22 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 break;
 
         }
+    }
+
+    public void cancel(){
+        bCancel = true;
+        for(String url :urls){
+            OkHttpUtils.getInstance().cancelTag(url);
+        }
+        urls.clear();
+    }
+    public void addTags(List<LocalAttachment> data){
+        if(data != null){
+            for(LocalAttachment localAttachment :data){
+                urls.add(localAttachment.filePath);
+            }
+        }
+
     }
     /**
      * 选择相册图片
@@ -413,6 +431,8 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
         return true;
     }
     private boolean checkAttachSize(){
+        if(this.runningMode == RunningMode.READ_ONLY_MODE)
+            return true;
         if(images.size() >= MEDIA_MAX_SIZE){
             ToastUtils.show("最多支持5个附件");
         }
@@ -535,9 +555,10 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                 params.put("medUrl",localAttachment.filePath);
                 String fileName = localAttachment.filePath.replace("/","-");
                 iv_attachImage.setEnabled(false);
-                HttpUtils.getInstance().requestNet_download(url, params, url, new FileCallback(fileName) {
+                HttpUtils.getInstance().requestNet_download(url, params, localAttachment.filePath, new FileCallback(fileName) {
                     @Override
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
+                        if(bCancel)return;
                         if(localAttachment.bExist) {
                             if(file != null) {
                                 localAttachment.localFile = file;
@@ -549,6 +570,7 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                             }
 
                         }else {
+                            if(bCancel)return;
                             iv_attachImage.setEnabled(false);
                             iv_attachVideo.setVisibility(GONE);
                             tv_attachment_text.setVisibility(VISIBLE);

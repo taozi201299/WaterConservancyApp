@@ -44,6 +44,12 @@ public class RecordedHistoryPatrolDetailActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mv_multimedia.cancel();
+    }
+
+    @Override
     public void initData() {
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         InspectionPartolInfo information

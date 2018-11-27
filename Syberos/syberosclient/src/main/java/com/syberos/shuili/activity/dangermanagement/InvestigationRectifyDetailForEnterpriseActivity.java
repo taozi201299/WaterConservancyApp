@@ -177,6 +177,12 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ll_multimedia.cancel();
+    }
+
+    @Override
     public void initView() {
         setInitActionBar(true);
         scrollView.setVisibility(View.GONE);

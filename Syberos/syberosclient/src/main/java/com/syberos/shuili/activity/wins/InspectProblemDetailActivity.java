@@ -157,4 +157,10 @@ public class InspectProblemDetailActivity extends BaseActivity {
             BusinessConfig.getAttachMents(bisWinsProb.getGuid(),"BIS_WINS_PROB",mv_multimedia);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mv_multimedia.cancel();
+    }
 }

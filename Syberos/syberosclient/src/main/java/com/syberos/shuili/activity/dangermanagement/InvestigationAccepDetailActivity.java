@@ -156,6 +156,12 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ll_multimedia.cancel();
+    }
+
+    @Override
     public void initData() {
         showDataLoadingDialog();
         Bundle bundle = getIntent().getBundleExtra(DEFAULT_BUNDLE_NAME);

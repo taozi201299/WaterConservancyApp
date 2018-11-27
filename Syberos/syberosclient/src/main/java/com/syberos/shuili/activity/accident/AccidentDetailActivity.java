@@ -93,7 +93,11 @@ public class AccidentDetailActivity extends BaseActivity {
     public void initData() {
 
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mv_accident_multimedia.cancel();
+    }
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
@@ -195,6 +199,7 @@ public class AccidentDetailActivity extends BaseActivity {
                         attachments.add(localAttachment);
                     }
                 }
+                mv_accident_multimedia.addTags(attachments);
                 mv_accident_multimedia.setData(attachments);
             }
 

@@ -85,6 +85,7 @@ public class BusinessConfig {
                         attachments.add(localAttachment);
                     }
                 }
+                multimediaView.addTags(attachments);
                 multimediaView.setData(attachments);
             }
 
