@@ -289,7 +289,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
             AccidentFormReturnEntity accidentFormReturnEntity = gson.fromJson(result, AccidentFormReturnEntity.class);
             updateAttachLocalStatus(url, id, accidentFormReturnEntity.getData().getData().getGuid());
         }
-        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidd")
+        if(url.equals(GlobleConstants.strCJIP +"/cjapi/cj/obj/hidd/addObjHidds")
                 || url.equals(GlobleConstants.strCJIP + "/cjapi/cj/obj/hiddAndSe/addObjHidd")){
             HiddenFormReturnEntity hiddenFormReturnEntity = gson.fromJson(result,HiddenFormReturnEntity.class);
             updateAttachLocalStatus(url,id,hiddenFormReturnEntity.getData().getData().getGuid());
