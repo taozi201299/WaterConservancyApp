@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -148,11 +150,33 @@ public class GateWayFragment extends BaseFragment {
 
         @Override
         protected void initData() {
+            webview.getSettings().setUseWideViewPort(true);
+            webview.getSettings().setLoadWithOverviewMode(true);
+            webview.getSettings().setJavaScriptEnabled(true);
+            webview.setWebChromeClient(new WebChromeClient()
+            {
+
+                @Override
+                public boolean onJsAlert(WebView view, String url, String message,
+                                         JsResult result)
+                {
+                    // TODO Auto-generated method stub
+                    return super.onJsAlert(view, url, message, result);
+                }
+
+            });
             webview.setWebViewClient(new WebViewClient(){
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     return true;
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    String viewPort = "var viewPortTag=document.createElement('meta'); viewPortTag.id='viewport'; viewPortTag.name = 'viewport';viewPortTag.content = 'width=1280; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'; document.getElementsByTagName('head')[0].appendChild(viewPortTag);";
+                    webview.loadUrl("javascript:" + viewPort);
                 }
             });
             int index = type;
@@ -170,6 +194,7 @@ public class GateWayFragment extends BaseFragment {
                     webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy ");
                     break;
             }
+
         }
     }
     public class GateWayAdatper extends CommonAdapter<String> {

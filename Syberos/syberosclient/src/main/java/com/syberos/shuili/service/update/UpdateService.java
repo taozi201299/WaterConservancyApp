@@ -181,7 +181,9 @@ public class UpdateService extends Service {
                 notification.contentView.setTextViewText(R.id.down_tv, notification_text_finish);
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 Intent installIntent = new Intent(Intent.ACTION_VIEW);
-
+                /**
+                 * 需要适配7.0的安装
+                 */
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 {
                     installIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
