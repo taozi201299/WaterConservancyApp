@@ -90,7 +90,6 @@ public class GateWayFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-
     }
 
     @Override
@@ -126,6 +125,7 @@ public class GateWayFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     go2LoginActivity();
+                    ((Activity) mContext).finish();
                 }
             });
         }
@@ -168,15 +168,22 @@ public class GateWayFragment extends BaseFragment {
             webview.setWebViewClient(new WebViewClient(){
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
+                    String  ttsa = GlobleConstants.str7GeIP0 +"/eutr/moni/public/ttsa";
+                    String stan = GlobleConstants.str7GeIP0 +"/eutr/moni/public/stan";
+                    String study = GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy";
+                    if(url.equals(ttsa) ||url.equals(stan) || url.equals(study)) {
+                        view.loadUrl(url);
+                        return true;
+                    }else {
+                        return false;
+                    }
                 }
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     String viewPort = "var viewPortTag=document.createElement('meta'); viewPortTag.id='viewport'; viewPortTag.name = 'viewport';viewPortTag.content = 'width=1280; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'; document.getElementsByTagName('head')[0].appendChild(viewPortTag);";
-                    webview.loadUrl("javascript:" + viewPort);
+                    view.loadUrl("javascript:" + viewPort);
                 }
             });
             int index = type;
@@ -191,7 +198,7 @@ public class GateWayFragment extends BaseFragment {
                     break;
                 // 教育培训
                 case 3:
-                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy ");
+                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy");
                     break;
             }
 

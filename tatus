@@ -1,0 +1,278 @@
+[1mdiff --git a/Syberos/syberosclient/src/main/java/com/syberos/shuili/MainEnterpriseActivity.java b/Syberos/syberosclient/src/main/java/com/syberos/shuili/MainEnterpriseActivity.java[m
+[1mindex f8c18c6..3eaf3ba 100644[m
+[1m--- a/Syberos/syberosclient/src/main/java/com/syberos/shuili/MainEnterpriseActivity.java[m
+[1m+++ b/Syberos/syberosclient/src/main/java/com/syberos/shuili/MainEnterpriseActivity.java[m
+[36m@@ -1,10 +1,12 @@[m
+ package com.syberos.shuili;[m
+ [m
+ import android.app.Activity;[m
+[32m+[m[32mimport android.content.Intent;[m
+ import android.support.constraint.ConstraintLayout;[m
+ import android.support.v4.app.FragmentManager;[m
+ import android.support.v4.app.FragmentTransaction;[m
+ import android.support.v4.widget.DrawerLayout;[m
+[32m+[m[32mimport android.util.Log;[m
+ import android.view.Gravity;[m
+ import android.view.KeyEvent;[m
+ import android.view.LayoutInflater;[m
+[36m@@ -162,6 +164,48 @@[m [mpublic class MainEnterpriseActivity extends TranslucentActivity[m
+ [m
+     }[m
+ [m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onResume() {[m
+[32m+[m[32m        super.onResume();[m
+[32m+[m[32m        Log.d(TAG,"================onResume");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onNewIntent(Intent intent) {[m
+[32m+[m[32m        super.onNewIntent(intent);[m
+[32m+[m[32m        Log.d(TAG,"===============onNewIntent");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onRestart() {[m
+[32m+[m[32m        super.onRestart();[m
+[32m+[m[32m        Log.d(TAG,"================onRestart");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onStart() {[m
+[32m+[m[32m        super.onStart();[m
+[32m+[m[32m        Log.d(TAG,"============onStart");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onStop() {[m
+[32m+[m[32m        super.onStop();[m
+[32m+[m[32m        Log.d(TAG,"===========onStop");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onPause() {[m
+[32m+[m[32m        super.onPause();[m
+[32m+[m[32m        Log.d(TAG,"===============onPause");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onDestroy() {[m
+[32m+[m[32m        super.onDestroy();[m
+[32m+[m[32m        Log.d(TAG,"===========onDestroy");[m
+[32m+[m[32m    }[m
+[32m+[m
+     @Override[m
+     public void initView() {[m
+         if(Boolean.valueOf(SPUtils.get(Allow_ScreenShot,false).toString())) {[m
+[1mdiff --git a/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationAccepTaskForEntActivity.java b/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationAccepTaskForEntActivity.java[m
+[1mindex 606db7b..703ba6e 100644[m
+[1m--- a/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationAccepTaskForEntActivity.java[m
+[1m+++ b/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationAccepTaskForEntActivity.java[m
+[36m@@ -79,7 +79,6 @@[m [mpublic class InvestigationAccepTaskForEntActivity extends BaseActivity implement[m
+     @Override[m
+     public void initListener() {[m
+     }[m
+[31m-[m
+     /**[m
+      * 根据隐患状态查询隐患验收对象[m
+      */[m
+[1mdiff --git a/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationRectifyTaskForEnterpriseActivity.java b/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationRectifyTaskForEnterpriseActivity.java[m
+[1mindex 62f093d..be8a8f7 100644[m
+[1m--- a/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationRectifyTaskForEnterpriseActivity.java[m
+[1m+++ b/Syberos/syberosclient/src/main/java/com/syberos/shuili/activity/dangermanagement/InvestigationRectifyTaskForEnterpriseActivity.java[m
+[36m@@ -1,10 +1,12 @@[m
+ package com.syberos.shuili.activity.dangermanagement;[m
+ [m
+ import android.content.Context;[m
+[32m+[m[32mimport android.content.Intent;[m
+ import android.graphics.drawable.ShapeDrawable;[m
+ import android.os.Bundle;[m
+ import android.support.v7.widget.LinearLayoutManager;[m
+ import android.support.v7.widget.RecyclerView;[m
+[32m+[m[32mimport android.util.Log;[m
+ import android.view.View;[m
+ import android.widget.Button;[m
+ import android.widget.LinearLayout;[m
+[36m@@ -75,6 +77,42 @@[m [mpublic class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity[m
+ [m
+ [m
+     }[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onNewIntent(Intent intent) {[m
+[32m+[m[32m        super.onNewIntent(intent);[m
+[32m+[m[32m        Log.d(TAG,"===============onNewIntent");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onRestart() {[m
+[32m+[m[32m        super.onRestart();[m
+[32m+[m[32m        Log.d(TAG,"================onRestart");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onStart() {[m
+[32m+[m[32m        super.onStart();[m
+[32m+[m[32m        Log.d(TAG,"============onStart");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onStop() {[m
+[32m+[m[32m        super.onStop();[m
+[32m+[m[32m        Log.d(TAG,"===========onStop");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onPause() {[m
+[32m+[m[32m        super.onPause();[m
+[32m+[m[32m        Log.d(TAG,"===============onPause");[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    protected void onDestroy() {[m
+[32m+[m[32m        super.onDestroy();[m
+[32m+[m[32m        Log.d(TAG,"===========onDestroy");[m
+[32m+[m[32m    }[m
+[32m+[m
+     private void closeLoadingDialog(){[m
+         closeDataDialog();[m
+     }[m
+[36m@@ -132,7 +170,6 @@[m [mpublic class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity[m
+         urlTags.add(url);[m
+         HashMap<String,String>params = new HashMap<>();[m
+         for(final ObjHidden item : investigationTaskInfo.dataSource){[m
+[31m-            if(iFailedCount != 0) break;[m
+             params.put("guid",item.getEngGuid());[m
+             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {[m
+                 @Override[m
+[36m@@ -141,15 +178,15 @@[m [mpublic class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity[m
+                     objectEngine = gson.fromJson(result,ObjectEngine.class);[m
+                     if(objectEngine == null || objectEngine.dataSource == null || objectEngine.dataSource.size() == 0){[m
+                         iFailedCount ++;[m
+[31m-                        closeLoadingDialog();[m
+[31m-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());[m
+[32m+[m[32m                      //  closeLoadingDialog();[m
+[32m+[m[32m                      //  ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());[m
+                         return;[m
+                     }[m
+                     if(objectEngine != null && objectEngine.dataSource.size() > 0){[m
+                         objectEngines.add(objectEngine.dataSource.get(0));[m
+                     }[m
+                     iSucessCount ++;[m
+[31m-                    if(iSucessCount == investigationTaskInfo.dataSource.size()){[m
+[32m+[m[32m                    if(iSucessCount +iFailedCount == investigationTaskInfo.dataSource.size()){[m
+                         closeLoadingDialog();[m
+                         merageData(1);[m
+                         refreshUI();[m
+[36m@@ -159,9 +196,11 @@[m [mpublic class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity[m
+ [m
+                 @Override[m
+                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {[m
+[31m-                    iFailedCount ++;[m
+[31m-                    closeLoadingDialog();[m
+[31m-                    ToastUtils.show(errorInfo.getMessage());[m
+[32m+[m[32m                    if(iSucessCount +iFailedCount == investigationTaskInfo.dataSource.size()){[m
+[32m+[m[32m                        closeLoadingDialog();[m
+[32m+[m[32m                        merageData(1);[m
+[32m+[m[32m                        refreshUI();[m
+[32m+[m[32m                    }[m
+ [m
+                 }[m
+             });[m
+[1mdiff --git a/Syberos/syberosclient/src/main/java/com/syberos/shuili/config/GlobleConstants.java b/Syberos/syberosclient/src/main/java/com/syberos/shuili/config/GlobleConstants.java[m
+[1mindex 8914d47..c5afe5a 100644[m
+[1m--- a/Syberos/syberosclient/src/main/java/com/syberos/shuili/config/GlobleConstants.java[m
+[1m+++ b/Syberos/syberosclient/src/main/java/com/syberos/shuili/config/GlobleConstants.java[m
+[36m@@ -31,23 +31,25 @@[m [mpublic class GlobleConstants {[m
+     public static final int HIDD_TYPE_NORMAL = 1;[m
+     public static final int HIDD_TYPE_BIGER = 2;[m
+ [m
+[31m-//    // 地图服务器地址[m
+[31m-//    public static final String mapServer = "http://192.168.1.11:8088";[m
+[31m-//    public static String strIP = "http://192.168.1.8:8080";[m
+[31m-//    public static String strCJIP = "http://192.168.1.11:7080";[m
+[31m-//    public static String strZJIP = "http://192.168.1.11:9080";[m
+[31m-//    public static String strZRIP = "http://192.168.1.11:6080";[m
+[31m-//    public static String strZJIP_Cas = "http://192.168.1.11:8080";[m
+[31m-//[m
+[31m-//[m
+[31m-//[m
+[31m-//    //专题图 - 地址[m
+[31m-//    public static final String BASE_URL = "http://192.168.1.11:7080/";[m
+[31m-//[m
+[31m-//[m
+[31m-//    public static String str7GeIP = "http://192.168.1.11:9080";[m
+[31m-//[m
+[31m-//    public static final String strAppIP = "http://192.168.1.11:6080";[m
+[32m+[m[32m    // 地图服务器地址[m
+[32m+[m[32m    public static final String mapServer = "http://192.168.1.11:8088";[m
+[32m+[m[32m    public static String strIP = "http://192.168.1.8:8080";[m
+[32m+[m[32m    public static String strCJIP = "http://192.168.1.11:7080";[m
+[32m+[m[32m    public static String strZJIP = "http://192.168.1.11:9080";[m
+[32m+[m[32m    public static String strZRIP = "http://192.168.1.11:6080";[m
+[32m+[m[32m    public static String strZJIP_Cas = "http://192.168.1.11:8080";[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    //专题图 - 地址[m
+[32m+[m[32m    public static final String BASE_URL = "http://192.168.1.11:7080/";[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    public static String str7GeIP = "http://192.168.1.11:9080";[m
+[32m+[m[32m    public static String str7GeIP0 = "http://192.168.1.11:9080";[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    public static final String strAppIP = "http://192.168.1.11:6080";[m
+ [m
+ //[m
+ //    // 地图服务器地址[m
+[36m@@ -66,20 +68,20 @@[m [mpublic class GlobleConstants {[m
+ [m
+ [m
+ [m
+[31m-    //  外网环境服务器地址[m
+[31m-//    // 地图服务器地址[m
+[31m-    public static final String mapServer = "http://211.144.20.142"; // 地图接口地址[m
+[31m-    public static String strIP = "http://jdsjjk.mwr.gov.cn"; // 吉威数据库接口地址[m
+[31m-    public static String strCJIP = "http://jdcj.mwr.gov.cn:7080"; // 采集接口地址[m
+[31m-    public static String strZJIP = "http://jdyw.mwr.gov.cn"; // 总集接口地址[m
+[31m-    public static String strZRIP = "http://jdyw.mwr.gov.cn:7080"; // 5个接口系统[m
+[31m-    public static String strZJIP_Cas = "http://jdyw.mwr.gov.cn";[m
+[31m-[m
+[31m-    //专题图 - 地址 决策[m
+[31m-    public static final String BASE_URL = "http://jdjc.mwr.gov.cn/"; // 决策接口地址[m
+[31m-    public static String str7GeIP = "http://jdyw.mwr.gov.cn:6080"; // 7个接口地址[m
+[31m-    public static final String str7GeIP0 = "http://211.144.20.137:6080";[m
+[31m-    public static final String strAppIP = "http://jdmapp.mwr.gov.cn";[m
+[32m+[m[32m//    //  外网环境服务器地址[m
+[32m+[m[32m////    // 地图服务器地址[m
+[32m+[m[32m//    public static final String mapServer = "http://211.144.20.142"; // 地图接口地址[m
+[32m+[m[32m//    public static String strIP = "http://jdsjjk.mwr.gov.cn"; // 吉威数据库接口地址[m
+[32m+[m[32m//    public static String strCJIP = "http://jdcj.mwr.gov.cn:7080"; // 采集接口地址[m
+[32m+[m[32m//    public static String strZJIP = "http://jdyw.mwr.gov.cn"; // 总集接口地址[m
+[32m+[m[32m//    public static String strZRIP = "http://jdyw.mwr.gov.cn:7080"; // 5个接口系统[m
+[32m+[m[32m//    public static String strZJIP_Cas = "http://jdyw.mwr.gov.cn";[m
+[32m+[m[32m//[m
+[32m+[m[32m//    //专题图 - 地址 决策[m
+[32m+[m[32m//    public static final String BASE_URL = "http://jdjc.mwr.gov.cn/"; // 决策接口地址[m
+[32m+[m[32m//    public static String str7GeIP = "http://jdyw.mwr.gov.cn:6080"; // 7个接口地址[m
+[32m+[m[32m//    public static final String str7GeIP0 = "http://211.144.20.137:6080";[m
+[32m+[m[32m//    public static final String strAppIP = "http://jdmapp.mwr.gov.cn";[m
+     /**[m
+      * 1 大中型已建工程运行管理单位 CJYJ[m
+      * 2 大中型在建工程项目法人 CJFR[m
+[1mdiff --git a/Syberos/syberosclient/src/main/java/com/syberos/shuili/network/SoapUtils.java b/Syberos/syberosclient/src/main/java/com/syberos/shuili/network/SoapUtils.java[m
+[1mindex de625ba..b65efae 100644[m
+[1m--- a/Syberos/syberosclient/src/main/java/com/syberos/shuili/network/SoapUtils.java[m
+[1m+++ b/Syberos/syberosclient/src/main/java/com/syberos/shuili/network/SoapUtils.java[m
+[36m@@ -25,9 +25,9 @@[m [mimport java.util.HashMap;[m
+ [m
+ public class SoapUtils {[m
+     private final String TAG = SoapUtils.class.getSimpleName();[m
+[31m-  //  private final String strIp = "192.168.1.11:9080";[m
+[32m+[m[32m    private final String strIp = "192.168.1.11:9080";[m
+   // private final String strIp = "10.1.195.18";[m
+[31m-    private final String strIp = "jdiasp.mwr.gov.cn";[m
+[32m+[m[32m  //  private final String strIp = "jdiasp.mwr.gov.cn";[m
+ [m
+     /** 命名空间. */[m
+     private final  String NAME_SPACE = "http://userext.service.uumsext.dhcc.com.cn/";[m
