@@ -127,7 +127,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                closeDialog();
+                closeDataDialog();
                 ToastUtils.show(errorInfo.getMessage());
             }
         });
@@ -137,6 +137,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * 根据工程GUID 获取工程名称
      */
     private void getEngineInfo(){
+        sucessCount = 0;
+        failedCount = 0;
         String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
         urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
@@ -145,12 +147,13 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
+                    sucessCount ++;
                     Gson gson = new Gson();
                     objectEngine = gson.fromJson(result,ObjectEngine.class);
                     if(objectEngine != null && objectEngine.dataSource != null && objectEngine.dataSource.size() > 0){
                         objectEngines.add(objectEngine.dataSource.get(0));
                     }
-                    if(investigationTaskInfo.dataSource.indexOf(item) == Integer.valueOf(investigationTaskInfo.totalCount) - 1){
+                    if(sucessCount + failedCount==  investigationTaskInfo.dataSource.size()){
                         merageData(1);
                         getBisHiddRectAcceInfo();
 
@@ -158,9 +161,12 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 }
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    closeLoadingDialog();
-                    ToastUtils.show(errorInfo.getMessage());
+                    failedCount ++ ;
+                    if(sucessCount + failedCount== investigationTaskInfo.dataSource.size()){
+                        merageData(1);
+                        getBisHiddRectAcceInfo();
 
+                    }
                 }
             });
         }
@@ -171,6 +177,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      * hiddGuid 1对多的关系
      */
     private void getBisHiddRectAcceInfo(){
+        sucessCount = 0;
+        failedCount = 0;
         final int size  = investigationTaskInfo.dataSource.size();
         for(int i = 0; i < size; i++) {
             final ObjHidden item = investigationTaskInfo.dataSource.get(i);
@@ -237,6 +245,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         if(size == 0){
             closeDataDialog();
             refreshUI();
+            return;
         }
         final ArrayList<ObjHidden>datas = new ArrayList<>();
         for(int i = 0 ; i <size; i ++) {
@@ -313,7 +322,6 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     private void getHiddenType() {
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
-        urlTags.add(url);
         urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
