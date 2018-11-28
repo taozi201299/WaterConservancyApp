@@ -234,6 +234,10 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         sucessCount = 0;
         failedCount = 0;
         final int size = results.size();
+        if(size == 0){
+            closeDataDialog();
+            refreshUI();
+        }
         final ArrayList<ObjHidden>datas = new ArrayList<>();
         for(int i = 0 ; i <size; i ++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/selectHiddSupObj/";
