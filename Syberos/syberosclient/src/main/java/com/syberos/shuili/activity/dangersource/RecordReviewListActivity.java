@@ -69,6 +69,7 @@ public class RecordReviewListActivity extends BaseActivity
     }
     private void getHazList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/haz/selectAccidentListDirectUnit/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("hazStat","1");

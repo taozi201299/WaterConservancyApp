@@ -162,6 +162,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
      */
     private void getObjSins() {
         String url = strIP + "/sjjk/v1/obj/sis/objSinss/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         params.put("notIssuGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         if(checkbox.isChecked()) {
@@ -196,6 +197,7 @@ public class SecurityCheckQueryListActivity extends TranslucentActivity {
         // 外键 检查部署guid
         final ArrayList<ObjSins> infos = (ArrayList<ObjSins>) objSins.dataSource;
         String url = strIP + "/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         int size = infos.size();
         for (int i = 0; i < size; i++) {

@@ -100,6 +100,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     }
     private void getWinsProgByGUID(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/prog/bisWinsProgs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWinsGroupAll.getWinsProgGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -124,6 +125,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     }
     private void  getSpecStaffName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWinsGroupAll.getSpeStafGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -148,6 +150,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     }
     private void getSpecStafAssiName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWinsGroupAll.getSpeStafAssiGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -170,6 +173,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
     }
     private void getExportName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

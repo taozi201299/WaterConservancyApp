@@ -106,6 +106,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
 
     private void getBisSinsRec(){
         String url = strIP +"/sjjk/v1/bis/sins/bisSinsRecs/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -175,6 +176,7 @@ public class EnterprisesOnSiteCheckListActivity extends BaseActivity
         // 外键 检查部署guid
         final ArrayList<ObjSins> infos  = (ArrayList<ObjSins>) objSins.dataSource;
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         final int size =infos.size();
         for(int i = 0; i < size ; i ++){

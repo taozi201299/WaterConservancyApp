@@ -88,6 +88,7 @@ public class DataReviewListActivity extends TranslucentActivity
     }
     private void getObjStanAppls(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("stat","2");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -172,6 +173,7 @@ public class DataReviewListActivity extends TranslucentActivity
         final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            urlTags.add(url);
             HashMap<String, String> params = new HashMap<>();
             params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;

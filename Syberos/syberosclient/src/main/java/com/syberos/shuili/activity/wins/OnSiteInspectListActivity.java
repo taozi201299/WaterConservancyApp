@@ -108,6 +108,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     }
     private void getPersonID(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -136,6 +137,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     }
     private void getBisWinsGroupBySepStafGuid(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("speStafGuid",personId);
       //  params.put("speStafGuid","95873d092b294fccb619e3c56dec9dfe");
@@ -163,6 +165,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     }
     private void getBisWinsGroupBySepStafAssiGuid(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("speStafAssiGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
        // params.put("speStafAssiGuid","fbeaf0e2014d43b180246d3419584acd");

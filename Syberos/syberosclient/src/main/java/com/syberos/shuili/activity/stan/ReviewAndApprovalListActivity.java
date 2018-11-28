@@ -70,6 +70,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
     }
     private void getObjStanAppls(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("stat","4");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -104,6 +105,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
     private void getBisConfExamappr(){
         final int size = objStanAppl.dataSource.size();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/conf/examappr/bisConfExamapprs/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         ObjStanAppl item = null;
         for(int i = 0 ; i < size ; i++){
@@ -153,6 +155,7 @@ public class ReviewAndApprovalListActivity extends TranslucentActivity implement
         final int size = objStanAppl.dataSource.size();
         for(int i = 0; i< size; i++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+            urlTags.add(url);
             HashMap<String, String> params = new HashMap<>();
             params.put("guid", objStanAppl.dataSource.get(i).getApplOrgGuid());
             final int finalI = i;

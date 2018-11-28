@@ -107,6 +107,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     }
     private void  getSpecStaffName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",bisWinsGroupAll.getSpeStafGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -131,6 +132,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     }
     private void getSpecStafAssiName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWinsGroupAll.getSpeStafAssiGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -153,6 +155,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
     }
     private void getExportName(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/staff/bisWinsStaffs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

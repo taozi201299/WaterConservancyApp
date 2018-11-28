@@ -92,6 +92,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
     }
     private void getHiddenList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("hiddStat",strHiddState);
@@ -128,6 +129,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      */
     private void getEngineInfo(){
         String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
             if(iFailedCount != 0) break;
@@ -205,6 +207,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      */
     private void getHiddenType() {
         String url  = GlobleConstants.strIP +"/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_CLAS");
@@ -235,6 +238,7 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      */
     private void getHiddenGrade(){
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

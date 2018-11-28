@@ -84,6 +84,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
      */
     private void getBisSeWiunByUserId() {
         String url = strIP + "/sjjk/v1/bis/se/wiun/bisSeWiunDecos/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
          params.put("legPersGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
        // params.put("legPersGuid", "1eb5493bfdb74ecea7337ba73f32c92c");
@@ -115,6 +116,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
 
     private void getSeElementByElementId() {
         String url = strIP + "/sjjk/v1/bis/se/bisSeWiuns/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiunDeco.dataSource.size();
         for (int i = 0; i < count; i++) {
@@ -155,6 +157,7 @@ public class EnterprisesElementCheckListActivity extends BaseActivity implements
      */
     private void getSeElementInfo() {
         String url = strIP +"/sjjk/v1/obj/objSes/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         final int count = bisSeWiuns.size();
         iSucessCount = 0;

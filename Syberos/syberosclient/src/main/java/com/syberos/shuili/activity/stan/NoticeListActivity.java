@@ -114,6 +114,7 @@ public class NoticeListActivity extends TranslucentActivity implements PullRecyc
     }
     private void getObjStanAppls(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("stat","6");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

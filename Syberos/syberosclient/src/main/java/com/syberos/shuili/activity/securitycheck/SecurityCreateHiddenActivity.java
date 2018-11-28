@@ -102,6 +102,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
     }
     private void getHiddenDic(){
         String url  = strIP +"/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

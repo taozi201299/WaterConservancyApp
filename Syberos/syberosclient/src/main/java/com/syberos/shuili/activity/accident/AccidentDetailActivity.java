@@ -172,6 +172,7 @@ public class AccidentDetailActivity extends BaseActivity {
     private void getAttachMents(){
         final ArrayList<MultimediaView.LocalAttachment> attachments = new ArrayList<>();
         String url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBases/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("bisGuid",accidentInformation.getId());
         params.put("bisTableName","OBJ_ACCI");

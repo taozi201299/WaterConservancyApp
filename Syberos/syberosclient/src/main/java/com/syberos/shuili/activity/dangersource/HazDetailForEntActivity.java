@@ -87,6 +87,7 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
 
     private void getBisHazRegDetail(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        urlTags.add(url);
         HashMap<String,String> param = new HashMap<>();
         param.put("guid",information.getGuid());
         param.put("hazGuid",information.getGuid());

@@ -111,6 +111,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
      */
     private void getCheckObject(){
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/relSinsGroupWiuns/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         // 检查小组GUID
         params.put("groupGuid",information.getGuid());
@@ -140,6 +141,7 @@ public class SecurityCheckProjectSelectActivity extends BaseActivity
                 break;
             }
             String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            urlTags.add(url);
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",item.getObjGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

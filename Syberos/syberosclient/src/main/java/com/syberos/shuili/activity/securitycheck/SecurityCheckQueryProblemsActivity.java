@@ -98,6 +98,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
      */
     private void getExpertGuid(){
         String url = strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("groupGuid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -119,6 +120,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
     }
     private void getExpertInfo(){
         String url = strIP +"/sjjk/v1/obj/expert/objExperts/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("persGuid",relSinsGroupExpert.dataSource.get(0).getExpeGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -144,6 +146,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
      */
     private void getCheckObject(){
         String url = strIP +"/sjjk/v1/rel/sins/group/wiun/selectCheckOnline/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisSinsScheGroup.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -165,6 +168,7 @@ public class SecurityCheckQueryProblemsActivity extends BaseActivity  {
     }
     private void getAllhiddenByPlanId(){
         String url = strIP +"/sjjk/v1/bis/obj/selectCheckPlansHiddInfo/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("sinsGuid",bisSinsScheGroup.getScheGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

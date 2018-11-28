@@ -219,6 +219,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
     private void getHiddenCheckDetail(){
 
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/bisHiddVeris/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -249,6 +250,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
     private void getInvestigationDetail(){
 
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/bisHiddInves/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -280,6 +282,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      */
     private void getUnitNameByOrgID(String id){
         String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",id);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -309,6 +312,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      */
     private void getRectifyProgress(){
         String url =  GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -338,6 +342,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      */
     private void getSupserviceInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSups/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -365,6 +370,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      */
     private void getRectifyInfo(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectImpls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -390,6 +396,7 @@ public class InvestigationAccepDetailActivity extends BaseActivity implements Vi
      */
     private void getRectifyAcceptInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

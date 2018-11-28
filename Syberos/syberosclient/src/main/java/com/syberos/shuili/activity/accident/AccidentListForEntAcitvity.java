@@ -150,6 +150,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
      */
     private void getAccidentUnitType(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_WIUN_TYPE");
@@ -182,6 +183,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
      */
     private void getAcciCate(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_CATE");
@@ -215,6 +217,7 @@ public class AccidentListForEntAcitvity extends BaseActivity implements View.OnC
      */
     private void getAccidentList(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
+        urlTags.add(url);
         HashMap<String,String>param = new HashMap<>();
         param.put("acciWiunGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {

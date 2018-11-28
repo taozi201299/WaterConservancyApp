@@ -28,6 +28,7 @@ import com.github.jorgecastillo.State;
 import com.github.jorgecastillo.clippingtransforms.WavesClippingTransform;
 import com.github.jorgecastillo.listener.OnStateChangeListener;
 
+import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.config.Paths;
@@ -38,6 +39,8 @@ import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
 import com.syberos.shuili.view.CustomDialog;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
@@ -58,6 +61,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean useStatusBarColor = true;//是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
 
     private IDialogInterface iDialogInterface ;
+
+    protected  boolean bCancel = false;
+    protected ArrayList<String>urlTags = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setInitActionBar(false);
@@ -112,6 +118,13 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public abstract void initData() ;
     public abstract void initView();
+    private  void cancel(){
+        for(String url: urlTags){
+            OkHttpUtils.getInstance().cancelTag(url);
+        }
+        urlTags.clear();
+        bCancel = true;
+    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -151,10 +164,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         closeDialog();
+        bCancel = true;
+        cancel();
         ScreenManager.getScreenManager().popActivity(this);
         super.onDestroy();
     }
-
 
     protected void setStatusBar(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上

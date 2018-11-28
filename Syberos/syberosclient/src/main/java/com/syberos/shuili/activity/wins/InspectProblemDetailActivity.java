@@ -75,6 +75,7 @@ public class InspectProblemDetailActivity extends BaseActivity {
     public void initData() {
         showDataLoadingDialog();
         String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWinsProb.getProbDep());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

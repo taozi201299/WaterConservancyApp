@@ -63,6 +63,7 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
 
     private void getObjCaseList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/case/objCases/";
+        urlTags.add(url);
         HashMap<String,String>param = new HashMap<>();
         param.put("suneOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, param, url, new RequestCallback<String>() {

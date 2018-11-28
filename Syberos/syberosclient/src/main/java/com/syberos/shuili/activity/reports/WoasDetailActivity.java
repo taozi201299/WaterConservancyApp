@@ -102,6 +102,7 @@ public class WoasDetailActivity extends BaseActivity {
     }
     private void getWoasNoti(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/noti/selectIncomingDispatchesUnitList/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("woasGuid",objWoas.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -123,6 +124,7 @@ public class WoasDetailActivity extends BaseActivity {
     }
     private void getWoasNotiSelf(){
             String url = GlobleConstants.strIP + "/sjjk/v1/bis/woas/noti/selectIncomingDispatchesUnitList/";
+        urlTags.add(url);
             HashMap<String,String>params = new HashMap<>();
             params.put("woasGuid",objWoas.getGuid());
             params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());

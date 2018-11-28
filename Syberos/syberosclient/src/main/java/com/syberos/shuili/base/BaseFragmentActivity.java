@@ -25,6 +25,7 @@ import com.github.jorgecastillo.State;
 import com.github.jorgecastillo.clippingtransforms.WavesClippingTransform;
 import com.github.jorgecastillo.listener.OnStateChangeListener;
 
+import com.lzy.okhttputils.OkHttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.config.Paths;
@@ -32,6 +33,8 @@ import com.syberos.shuili.utils.SPUtils;
 import com.syberos.shuili.utils.ScreenManager;
 import com.syberos.shuili.utils.Strings;
 import com.syberos.shuili.utils.ToastUtils;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
@@ -46,6 +49,8 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     protected boolean useThemestatusBarColor = true;//是否使用特殊的标题栏背景颜色，android5.0以上可以设置状态栏背景色，如果不使用则使用透明色值
     protected boolean useStatusBarColor = true;//是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
+    protected ArrayList<String> urlTags = new ArrayList<>();
+    protected  boolean bCancel = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,10 +106,17 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         closeDialog();
+        cancel();
         ScreenManager.getScreenManager().popActivity(this);
         super.onDestroy();
     }
-
+    private  void cancel(){
+        for(String url: urlTags){
+            OkHttpUtils.getInstance().cancelTag(url);
+        }
+        urlTags.clear();
+        bCancel = true;
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

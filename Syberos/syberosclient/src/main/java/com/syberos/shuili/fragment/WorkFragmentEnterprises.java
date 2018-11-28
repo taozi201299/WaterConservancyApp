@@ -196,6 +196,7 @@ public class WorkFragmentEnterprises extends BaseFragment {
         }
         if(!modules.contains("隐患（企）")){
             names.remove("隐患");
+            names.remove("报表管理");
         }
         if(!App.sCodes.contains("安全检查（企）")){
             names.remove("安全检查");

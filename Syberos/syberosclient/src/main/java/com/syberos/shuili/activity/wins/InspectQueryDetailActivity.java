@@ -92,6 +92,7 @@ public class InspectQueryDetailActivity extends TranslucentActivity {
      */
     private void getWinsGroupByWinsProgGuid() {
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         params.put("winsProgGuid", bisWinsProg.getBwpGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

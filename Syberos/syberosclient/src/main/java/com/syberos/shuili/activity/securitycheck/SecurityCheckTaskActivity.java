@@ -114,6 +114,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
      */
     private void getScheGroupIdByUserId(){
         String url = strIP +"/sjjk/v1/rel/sins/group/pers/relSinsGroupPerss/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("persGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
       //  params.put("persGuid","2A3FD75CBB154627AFF2745F09584B6B");
@@ -143,6 +144,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     }
     private  void getScheGroupIdByExpertID(){
         String url = GlobleConstants.strIP +"/sjjk/v1/rel/sins/group/expe/relSinsGroupExpes/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("expeGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -170,6 +172,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
     }
     private void getScheGroupIdsaByOrgGuid(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("groupLeaderWiun",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -202,6 +205,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
  */
        for(final RelSinsGroupPers item :relSinsGroupPers.dataSource) {
            String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+           urlTags.add(url);
            HashMap<String, String> params = new HashMap<>();
            params.put("guid",item.getGroupGuid());
            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -240,6 +244,7 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
      */
     private void getPlanInfo(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/bisSinsSches/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         for(final BisSinsScheGroup item : bisSinsScheGroup.dataSource){
             params.put("guid",item.getScheGuid());

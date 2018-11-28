@@ -122,6 +122,7 @@ public class HiddenReportForEntActivity extends TranslucentActivity {
      */
     private void getReortList(){
         String url= GlobleConstants.strIP + "/sjjk/v1/bis/org/mon/rep/hazy-bisOrgMonRepPeris/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("repOrgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
      //   params.put("repOrgGuid","F83199FDD35E49FF9643A6C394DBBF45");

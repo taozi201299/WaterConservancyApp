@@ -93,6 +93,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
     }
     private void getDirectUnit(){
         String url = GlobleConstants.strIP +"/sjjk/v1/obj/hidd/selectDirectUnit/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("adminWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -133,6 +134,7 @@ public class InvestigationAccepTaskActivity extends BaseActivity  {
     }
     private void  getLowerWaterList(){
         String url = GlobleConstants.strIP +"/sjjk/v1/obj/hidd/selectLowerWater/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

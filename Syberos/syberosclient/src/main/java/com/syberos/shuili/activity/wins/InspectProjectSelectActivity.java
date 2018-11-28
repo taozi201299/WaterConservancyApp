@@ -77,6 +77,7 @@ public class InspectProjectSelectActivity extends BaseActivity
     }
     private void getInspectionProject(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/selectInspectionTeamAllProjectNames/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("bwgGuid",bisWinsGroupAll.getGuid());
        // params.put("bwgGuid","600fa3a0453640bc8212983a30cffa6b");

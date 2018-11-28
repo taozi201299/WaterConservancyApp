@@ -97,6 +97,7 @@ public class SecurityCheckQueryDetailActivity extends BaseActivity {
      */
     private void getGroupByPlanId(){
         String url = strIP +"/sjjk/v1/bis/sins/sche/grop/bisSinsScheGrops/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         params.put("scheGuid",bisSinsSche.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

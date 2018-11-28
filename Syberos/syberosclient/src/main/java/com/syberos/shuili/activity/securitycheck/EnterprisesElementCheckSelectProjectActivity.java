@@ -94,6 +94,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
     private void getEngineIDSByOrgGUID(){
         String orgGuid = SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId();
         String url = strIP +"/sjjk/v1/jck/obj/selectOrgEngInfoByOrgGuid/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
          params.put("orgGuid",orgGuid);
         //params.put("orgGuid","B2D68C74986E40C2B91DC2E73C39BD29");
@@ -155,6 +156,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
      * 工程对象表
      */
     private void getObjStatus(final ObjectEngine item,String url){
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("engGuid",item.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -251,6 +253,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
     }
     private void getTendInfo(final ObjectEngine item){
         String url = strIP +"/sjjk/v1/jck/obj/objTends/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("engGuid",item.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -283,6 +286,7 @@ public class EnterprisesElementCheckSelectProjectActivity extends BaseActivity i
     }
     private void getObjectEngineTypeDic(){
         String url  = strIP +"/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ENG");
         params.put("attColCode","ENG_TYPE");

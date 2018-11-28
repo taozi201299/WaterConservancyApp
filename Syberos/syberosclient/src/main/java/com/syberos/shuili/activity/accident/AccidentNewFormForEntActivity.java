@@ -249,6 +249,7 @@ public class AccidentNewFormForEntActivity extends BaseActivity implements BaseA
     private void getEngineList(){
         showDataLoadingDialog();
         String url =  GlobleConstants.strIP +"/sjjk/v1/mv/eng/coll/mvEngColls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("orgguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

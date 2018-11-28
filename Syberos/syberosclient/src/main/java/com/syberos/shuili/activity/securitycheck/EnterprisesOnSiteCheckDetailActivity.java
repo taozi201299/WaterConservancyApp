@@ -111,6 +111,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
     }
     private void getHiddenInfo(){
         String url = strIP +"/sjjk/v1/bis/obj/objHidds/";
+        urlTags.add(url);
         HashMap<String ,String > params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("inspRecGuid",bisSinsRec.guid);
@@ -139,6 +140,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
      */
     private void getRotes(){
       String url =  GlobleConstants.mapServer + "/WEGIS-00-WEB_SERVICE/WSWebService";
+        urlTags.add(url);
       HashMap<String,String>params = new HashMap<>();
       params.put("guid",bisSinsRec.guid);
       params.put("type","bis");
@@ -186,6 +188,7 @@ public class EnterprisesOnSiteCheckDetailActivity extends BaseActivity {
         final int count = objHidden.dataSource.size();
         for (final ObjHidden hiddenItemInfo : objHidden.dataSource) {
             String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+            urlTags.add(url);
             HashMap<String,String>params = new HashMap<>();
             params.put("guid",hiddenItemInfo.getEngGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

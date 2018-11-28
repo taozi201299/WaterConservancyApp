@@ -113,6 +113,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
     private void getTendInfo(final MvEngColl item){
             // 包含标段
             String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objTends/";
+            urlTags.add(url);
             HashMap<String,String> params = new HashMap<>();
             params.put("engGuid",item.getId());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

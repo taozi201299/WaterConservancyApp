@@ -68,6 +68,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
     }
     private void getObjStanAppls(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/stan/appl/objStanAppls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("stat","3");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -98,6 +99,7 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
     private void getBisScheRevi(){
         final int size = objStanAppl.dataSource.size();
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/scen/revi/bisScenRevis/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         ObjStanAppl item = null;
         for(int i = 0 ; i < size ; i++){

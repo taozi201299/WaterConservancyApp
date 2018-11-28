@@ -101,6 +101,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     private void getHiddenList(){
         final String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
@@ -137,6 +138,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     private void getEngineInfo(){
         String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
             params.put("guid",item.getEngGuid());
@@ -173,6 +175,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         for(int i = 0; i < size; i++) {
             final ObjHidden item = investigationTaskInfo.dataSource.get(i);
             String url = GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
+            urlTags.add(url);
             HashMap<String, String> params = new HashMap<>();
             params.put("hiddGuid", item.getGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -234,6 +237,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
         final ArrayList<ObjHidden>datas = new ArrayList<>();
         for(int i = 0 ; i <size; i ++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/bis/maj/selectHiddSupObj/";
+            urlTags.add(url);
             HashMap<String, String> params = new HashMap<>();
             params.put("guid", results.get(i).getGuid());
             params.put("hiddGuid", results.get(i).getGuid());
@@ -305,6 +309,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     private void getHiddenType() {
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_CLAS");
@@ -335,6 +341,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
      */
     private void getHiddenGrade(){
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_HIDD");
         params.put("attColCode","HIDD_GRAD");

@@ -101,6 +101,7 @@ public class AccidentQueryListActivity extends BaseActivity {
      */
     private void getAccidentUnitType() {
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_WIUN_TYPE");
@@ -131,6 +132,7 @@ public class AccidentQueryListActivity extends BaseActivity {
      */
     private void getAcciCate(){
         String url  = GlobleConstants.strIP + "/sjjk/v1/jck/dic/dicDpc/dicRelDpcAtt/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("attTabCode","OBJ_ACCI");
         params.put("attColCode","ACCI_CATE");
@@ -157,6 +159,7 @@ public class AccidentQueryListActivity extends BaseActivity {
 
     private void getAccidentUnit(){
         String url = GlobleConstants.strIP +"/sjjk/v1/att/org/base/attOrgBases/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("pguid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
        // params.put("pguid","32C76583D3D84B1CA8C336829C15CAE2");
@@ -191,6 +194,7 @@ public class AccidentQueryListActivity extends BaseActivity {
         final int count = attOrgBaseForAcci.dataSource.size();
         for(int index = 0; index < count; index++) {
             String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/getAccidentManagements/";
+            urlTags.add(url);
             HashMap<String, String> param = new HashMap<>();
             param.put("acciWinuGuid", attOrgBaseForAcci.dataSource.get(index).getGuid());
             final int finalIndex = index;

@@ -94,6 +94,7 @@ public class WoasReportActivity extends BaseActivity {
 
     private void getWoasReportList() {
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/woas/selectDeployInformByMultiTable/";
+        urlTags.add(url);
         HashMap<String, String> params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("woasType","2");

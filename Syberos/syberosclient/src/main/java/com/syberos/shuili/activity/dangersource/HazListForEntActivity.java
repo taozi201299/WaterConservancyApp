@@ -111,6 +111,7 @@ public class HazListForEntActivity extends BaseActivity
     }
     private void getHazsList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHazs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         final UserExtendInformation info = SyberosManagerImpl.getInstance().getCurrentUserInfo();
         params.put("orgGuid",info.getOrgId());
@@ -137,6 +138,7 @@ public class HazListForEntActivity extends BaseActivity
 
     private void getHazDetail(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/obj/selectHazInfoDetails/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHaz item: inspectionList.dataSource){
             params.put("guid",item.getGuid());

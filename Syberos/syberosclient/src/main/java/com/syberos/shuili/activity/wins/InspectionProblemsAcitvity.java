@@ -102,6 +102,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
      */
     private void getInspectionProject(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/proj/bisWinsProjs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("winsGroupGuid",bisWinsGroupAll.getGuid());
      //   params.put("winsGroupGuid","600fa3a0453640bc8212983a30cffa6b");
@@ -134,6 +135,7 @@ public class InspectionProblemsAcitvity extends BaseActivity {
      */
     private void getWinsProblems(){
         String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prob/bisWinsProbs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override

@@ -224,6 +224,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      */
     private void getInvestigationDetail(){
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddInves/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -277,6 +278,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      */
     private void getRectifyProgress(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -315,6 +317,7 @@ private void getRectifyPerName(){
      */
     private void getSupserviceInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSups/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -344,6 +347,7 @@ private void getRectifyPerName(){
      */
     private void getRectifyInfo(){
         String url =  GlobleConstants.strIP +"/sjjk/v1/bis/hidd/rect/selectBisHiddRectImplWithAttOrgBase/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

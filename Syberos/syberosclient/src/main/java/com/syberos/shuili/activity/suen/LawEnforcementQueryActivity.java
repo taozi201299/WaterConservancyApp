@@ -144,6 +144,7 @@ public class LawEnforcementQueryActivity extends BaseActivity
 
     private void getObjLayerList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/lare/objLares/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
       //  params.put("orgGuid","5E554BC50F634822AE1308CB85947B8A");

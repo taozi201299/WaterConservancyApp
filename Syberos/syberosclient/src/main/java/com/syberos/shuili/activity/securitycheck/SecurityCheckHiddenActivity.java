@@ -109,6 +109,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
         for(int i =0 ; i < size ; i++){
             final RelSinsGroupWiun  item = relSinsGroupWiun.dataSource.get(i);
             final String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
+            urlTags.add(url);
             HashMap<String,String> params = new HashMap<>();
             params.put("engGuid",item.getObjGuid());
             params.put("sinsScheGuid",bisSinsScheGroup.getScheGuid());

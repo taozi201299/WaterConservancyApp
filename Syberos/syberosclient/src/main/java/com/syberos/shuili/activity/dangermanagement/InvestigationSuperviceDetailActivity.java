@@ -222,6 +222,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getProjectDetail(){
 
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
+        urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
         params.put("guid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -248,6 +249,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     private void getInvestigationDetail(){
 
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddInves/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -273,6 +275,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getRectifyProgress(){
        String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectProgs/";
+        urlTags.add(url);
        HashMap<String,String>params = new HashMap<>();
        params.put("hiddGuid",investigationInfo.getGuid());
        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -298,6 +301,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getSupserviceInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/maj/bisMajHiddSups/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -323,6 +327,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getRectifyInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectImpls/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
@@ -347,6 +352,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     }
     private void getRectifyAcceptInfo(){
         String url =  GlobleConstants.strIP + "/sjjk/v1/bis/hidd/rect/bisHiddRectAcces/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {

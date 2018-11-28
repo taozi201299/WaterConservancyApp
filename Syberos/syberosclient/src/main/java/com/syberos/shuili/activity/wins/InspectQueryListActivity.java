@@ -108,6 +108,7 @@ public class InspectQueryListActivity extends BaseActivity {
 
     private void getObjWinsPlan(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/wins/plan/selectAllCheckPlanInfo/";
+        urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         params.put("planOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
      //   params.put("planOrgGuid","D7862390F88443AE87FA9DD1FE45A8B6");
@@ -139,6 +140,7 @@ public class InspectQueryListActivity extends BaseActivity {
             final ObjWinsPlan item ;
             item = objWinsPlan.dataSource.get(i);
             String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/selectCheckProgramDetailsByAuditPlan/";
+            urlTags.add(url);
             HashMap<String,String> params = new HashMap<>();
             params.put("owpGuid",item.getOwpGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
