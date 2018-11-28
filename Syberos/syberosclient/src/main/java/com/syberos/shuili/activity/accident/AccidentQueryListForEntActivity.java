@@ -83,6 +83,7 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        showDataLoadingDialog();
         iSucessCount = 0;
         iFailedCount = 0;
         groupMap.clear();
@@ -303,7 +304,6 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
     }
     @Override
     public void initView() {
-        showDataLoadingDialog();
         BusinessConfig.saveLog2Server(GlobleConstants.IConstants.Acci_Ent);
         setInitActionBar(true);
         setActionBarTitle(Title);

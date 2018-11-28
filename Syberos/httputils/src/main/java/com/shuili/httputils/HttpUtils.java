@@ -46,6 +46,7 @@ public class HttpUtils {
         for(String key:params.keySet()){
             httpParams.put(key,params.get(key));
         }
+        OkHttpUtils.getInstance().setConnectTimeout(15000);
         OkHttpUtils.get(url)     // 请求方式和请求url
                 .tag(tag)                       // 请求的 tag, 主要用于取消对应的请求
                 .cacheKey(url)            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
