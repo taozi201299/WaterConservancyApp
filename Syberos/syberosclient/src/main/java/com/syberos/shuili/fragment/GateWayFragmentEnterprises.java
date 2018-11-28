@@ -168,7 +168,7 @@ public class GateWayFragmentEnterprises extends BaseFragment {
                     break;
                 // 教育培训
                 case 3:
-                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy ");
+                    webview.loadUrl(GlobleConstants.str7GeIP0 +"/eutr/eutr/public/publicstudy");
                     break;
             }
 
