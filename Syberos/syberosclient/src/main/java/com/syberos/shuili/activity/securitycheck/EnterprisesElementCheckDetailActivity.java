@@ -103,6 +103,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     @Override
     public void initView() {
         bFirst = true;
+        setInitActionBar(true);
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         information = (ObjSe) bundle.getSerializable(
                 EnterprisesElementCheckListActivity.SEND_BUNDLE_KEY);
