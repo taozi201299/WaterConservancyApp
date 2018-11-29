@@ -126,6 +126,9 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
                         ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                         return;
                     }
+                    if(objectTend.dataSource.size() == 0){
+                      //  onItemClick(-1);
+                    }
                     refreshUI();
                 }
 
@@ -159,9 +162,16 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("data",objectEngine);
-        bundle.putSerializable("tend", objectTend.dataSource.get(position));
+        if(position == -1)
+        {
+            bundle.putSerializable("tend", "");
+            bundle.putBoolean("hasTend",false);
+        }else {
+            bundle.putSerializable("tend", objectTend.dataSource.get(position));
+            bundle.putBoolean("hasTend",true);
+        }
         bundle.putString("type",type);
-        bundle.putBoolean("hasTend",true);
+
         if(type.equals("element")) {
             bundle.putSerializable("element", information);
         }if(type.equals("check")) {
@@ -172,6 +182,7 @@ public class InvestigationEngineTendForEntActivity extends BaseActivity implemen
         }else {
             intentActivity(InvestigationEngineTendForEntActivity.this, EnterprisesElementCheckCreateHiddenActivity.class,false,bundle);
         }
+        activityFinish();
 
     }
     private void refreshUI(){

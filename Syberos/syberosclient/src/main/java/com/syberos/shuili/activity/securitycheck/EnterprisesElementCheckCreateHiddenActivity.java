@@ -217,7 +217,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
     // TODO: 2018/4/26 安全检查隐患接口 根据engGuid 和 安全检查方案GUID 获取当前组的隐患
     private void commitForm(){
         if(!checkParam())return;
-        String url = GlobleConstants.strCJIP + "/cjapi/cj/obj/hiddAndSe/addObjHidd";
+        String url = GlobleConstants.strCJIP + "/cjapi/cj/obj/hidd/addObjHidds";
         HashMap<String,String>params = new HashMap<>();
         params.put("hiddName",tv_hidden_name.getText().toString()); // 隐患名称
         params.put("engGuid",objectEngine.getId()); // 所属工程
