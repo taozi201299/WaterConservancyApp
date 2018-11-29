@@ -297,6 +297,7 @@ public class SyberosAidlClient {
     private UserExtendInformation convert2UserExtendInfo(UserInformationEntity informationEntity){
         if(informationEntity == null) return null;
         UserExtendInformation information = new UserExtendInformation();
+        information.setIsValidUser(informationEntity.isValidUser == null ?"":informationEntity.isValidUser);
         information.setAdmDutyLevel(informationEntity.admDutyLevel == null ?"":informationEntity.admDutyLevel);
         information.setDepCode(informationEntity.depCode);
         information.setDepId(informationEntity.depId);
@@ -320,7 +321,7 @@ public class SyberosAidlClient {
         return information;
     }
     private UserInformationEntity convert2UserInformationEntity(UserExtendInformation information){
-         return  new UserInformationEntity(information.getAdmDutyLevel(),information.getDepCode(),information.getDepId(),
+         return  new UserInformationEntity(information.getIsValidUser(),information.getAdmDutyLevel(),information.getDepCode(),information.getDepId(),
                  information.getDepName(),information.getId(),information.getModifier(),information.getNote(),information.getOrgCode(),
                  information.getOrgId(),information.getOrgName(),information.getPassword(),information.getPersId(),information.getPersName(),
                  information.getPersType(),information.getPhone(),information.getStatus(),information.getTs(),information.getUserCode(),

@@ -34,14 +34,25 @@ public class UserExtendInformation implements Serializable{
      String userType;
      String sex;
      String iconUrl;
+
+    public String getIsValidUser() {
+        return isValidUser == null ? "" : isValidUser;
+    }
+
+    public void setIsValidUser(String isValidUser) {
+        this.isValidUser = isValidUser;
+    }
+
+    String isValidUser;
     private String sortLetter = "";
     public UserExtendInformation(){
 
     }
-    public UserExtendInformation(String admDutyLevel, String depCode, String depId, String depName, String id, String modifier, String note, String orgCode,
+    public UserExtendInformation(String isValidUser,String admDutyLevel, String depCode, String depId, String depName, String id, String modifier, String note, String orgCode,
                                  String orgId, String orgName, String password, String persId, String persName, String persType,
                                  String phone, ArrayList roleExtInfoList, String status, String ts, String userCode, String userName,
                                  String userType){
+        this.isValidUser = isValidUser;
         this.admDutyLevel = admDutyLevel;
         this.depCode = depCode;
         this.depId = depId;

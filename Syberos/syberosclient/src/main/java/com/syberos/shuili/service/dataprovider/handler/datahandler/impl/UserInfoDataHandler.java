@@ -156,7 +156,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
             info.put("userCode",(((SoapObject) response).getPropertySafelyAsString("userCode").toString()));
             info.put("userName", (((SoapObject) response).getPropertySafelyAsString("userName").toString()));
             info.put("userPassword",(((SoapObject) response).getPropertySafelyAsString("userPassword").toString()));
-            UserInformationEntity informationEntity = new UserInformationEntity("","","",
+            UserInformationEntity informationEntity = new UserInformationEntity("","","","",
                     info.get(DBDefinition.depName),
                     info.get(DBDefinition.id),"","","","",info.get(DBDefinition.orgName),
                     "","",info.get(DBDefinition.persName),"",info.get("mobilenumb"),"","","",
@@ -187,7 +187,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
                 info.put("userCode", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userCode").toString()));
                 info.put("userName", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userName").toString()));
                 info.put("userPassword", (((SoapObject) ((Vector) response).get(i)).getPropertySafelyAsString("userPassword").toString()));
-                UserInformationEntity informationEntity = new UserInformationEntity("", "", "",
+                UserInformationEntity informationEntity = new UserInformationEntity("", "","", "",
                         info.get(DBDefinition.depName),
                         info.get(DBDefinition.id), "", "", "", "", info.get(DBDefinition.orgName),
                         "","", info.get(DBDefinition.persName), "", info.get("mobilenumb"), "", "", "",
@@ -199,7 +199,7 @@ public class UserInfoDataHandler extends DataHandlerBase {
 
     }
     private UserInformationEntity map2UserInfo(HashMap<String,String> map){
-       return new UserInformationEntity(map.get(DBDefinition.admDutyLevel),map.get(DBDefinition.depCode),
+       return new UserInformationEntity("",map.get(DBDefinition.admDutyLevel),map.get(DBDefinition.depCode),
                map.get(DBDefinition.depId),map.get(DBDefinition.depName),map.get(DBDefinition.id),map.get(DBDefinition.modifier),
                map.get(DBDefinition.note),map.get(DBDefinition.orgCode),
                map.get(DBDefinition.orgId),map.get(DBDefinition.orgName),"",

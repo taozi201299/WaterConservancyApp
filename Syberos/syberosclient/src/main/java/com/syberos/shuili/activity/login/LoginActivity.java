@@ -311,8 +311,20 @@ public class LoginActivity extends BaseActivity {
 
                 } else {
                     closeDialog();
-                    ToastUtils.show("该用户无权限使用本系统");
-                    closeDialog();
+                    String value = SyberosManagerImpl.getInstance().getCurrentUserInfo().getIsValidUser();
+                    String errStr ;
+                    if(value.isEmpty() ){
+                       errStr = "该用户无权限使用本系统";
+                    }else if("0".equals(value)){
+                       errStr = "密码不正确";
+                    }else if("1".equals(value) || "3".equals(value)){
+                       errStr = "该用户无权限使用本系统";
+                    }else if("2".equals(value)){
+                        errStr = "不存在该用户";
+                    }else {
+                        errStr = "该用户无权限使用本系统";
+                    }
+                    ToastUtils.show(errStr);
                 }
             }
 
@@ -459,6 +471,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private UserExtendInformation setUserExtendInfo(HashMap<String, String> info) {
+        String isValidUser = info.get("isValidUser") == null ?"":info.get("isValidUser").toString();
         String depId = info.get("depId") == null ? "" : info.get("depId").toString();
         String depName = info.get("depName") == null ? "" : info.get("depName").toString();
         String id = info.get("id") == null ? "" : info.get("id").toString();
@@ -475,7 +488,7 @@ public class LoginActivity extends BaseActivity {
         App.jurdAreaType = info.get("jurdAreaType") == null ? "" : info.get("jurdAreaType");
         App.orgJurd = info.get("orgJurd") == null ? "" : info.get("orgJurd");
 
-        UserExtendInformation userExtendInformation = new UserExtendInformation("", "", depId, depName, id, "", "", orgCode, orgId, orgName, userPassword, persId, persName, "", mobilenumb, null, status, "", userCode, userName, "");
+        UserExtendInformation userExtendInformation = new UserExtendInformation(isValidUser,"", "", depId, depName, id, "", "", orgCode, orgId, orgName, userPassword, persId, persName, "", mobilenumb, null, status, "", userCode, userName, "");
         return userExtendInformation;
     }
 

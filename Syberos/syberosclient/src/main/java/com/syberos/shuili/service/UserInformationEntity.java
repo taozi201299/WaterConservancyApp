@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 
 public class UserInformationEntity implements Parcelable {
+    public String isValidUser;
     public String admDutyLevel;
     public String depCode;
     public String depId;
@@ -36,6 +37,7 @@ public class UserInformationEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(isValidUser);
         dest.writeString(admDutyLevel);
         dest.writeString(depCode);
         dest.writeString(depId);
@@ -57,11 +59,12 @@ public class UserInformationEntity implements Parcelable {
         dest.writeString(userName);
         dest.writeString(userType);
     }
-    public UserInformationEntity(String admDutyLevel,String depCode,String depId,String depName,String id,String modifier,
+    public UserInformationEntity(String isValidUser,String admDutyLevel,String depCode,String depId,String depName,String id,String modifier,
                                  String note,String orgCode,String orgId,String orgName,String password,
                                  String persId,String persName,String persType,String phone,String status,String ts,
                                  String userCode,String userName,String userType) {
-         this.admDutyLevel = admDutyLevel == null ? "":admDutyLevel;
+        this.isValidUser = isValidUser == null ? "":isValidUser;
+        this.admDutyLevel = admDutyLevel == null ? "":admDutyLevel;
          this.depCode = depCode == null ? "":depCode;
          this.depId = depId == null ?"":depId;
          this.depName = depName == null ?"":depName;
@@ -84,6 +87,7 @@ public class UserInformationEntity implements Parcelable {
 
     }
     protected UserInformationEntity(Parcel in){
+        this.isValidUser = in.readString();
         this.admDutyLevel = in.readString();
         this.depCode = in.readString();
         this.depId = in.readString();
