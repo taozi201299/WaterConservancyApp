@@ -46,6 +46,7 @@ public class GlobleConstants {
 //
 //
 //    public static String str7GeIP = "http://192.168.1.11:9080";
+//    public static String str7GeIP0 = "http://192.168.1.11:9080";
 //
 //    public static final String strAppIP = "http://192.168.1.11:6080";
 

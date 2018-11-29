@@ -1,6 +1,7 @@
 package com.syberos.shuili.service.update;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -50,6 +52,11 @@ public class UpdateService extends Service {
     private static String appDir = "/sdcard/";
     private static String appName = "shuli.apk";
     private int mProcess = 0;
+
+    private  final String id = "channel_1";
+    private  final String name = "channel_name_1";
+    NotificationChannel channel = null;
+
 
 
     /**
@@ -106,6 +113,23 @@ public class UpdateService extends Service {
         HttpUtils.getInstance().cancleHttp("doAppUndate");
     }
 
+    public Notification.Builder getChannelNotification(String title, String content) {
+            return new Notification.Builder(getApplicationContext(), id)
+                    .setContentTitle(title)
+                    .setChannelId(id)
+                    .setContentText(content)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setCustomContentView(new RemoteViews(getPackageName(), R.layout.notification_custom_view))
+                    .setAutoCancel(false);
+    }
+    public NotificationCompat.Builder getNotification_25(String title, String content) {
+        return new NotificationCompat.Builder(getApplicationContext())
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setCustomContentView(new RemoteViews(getPackageName(), R.layout.notification_custom_view))
+                .setAutoCancel(true);
+    }
     private void doAppUpdate(String url){
         String apUrl = UpdateManager.DEFAULT_SERVER +"/mapp/"+ "downloadVersion";
         HashMap<String,String> map = new HashMap<>();
@@ -125,8 +149,6 @@ public class UpdateService extends Service {
             @Override
             public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                 iFileLength = totalSize;
-                Log.d("11122",String.valueOf((float)(progress *totalSize)));
-                Log.d("111111",String.valueOf(progress));
                 if((int)(progress *100) > mProcess) {
                     setNotification(processType.PROCESS_LOADING, appDir + appName, progress);
                     mProcess ++ ;
@@ -140,6 +162,7 @@ public class UpdateService extends Service {
         });
 
     }
+
     /**
      * 设置notification
      *
@@ -148,21 +171,32 @@ public class UpdateService extends Service {
      * @param downloaded 下载进度大小
      */
     private void setNotification(processType type, String filename, float downloaded) {
-
+        if(channel == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                channel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
+            }
+        }
         switch (type) {
             case PROCESS_BEGIN: {
-                nm = (NotificationManager)getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+                nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    nm.createNotificationChannel(channel);
+                }
                 String notification_text_loading = "下载中";
                 if (notification == null) {
-                    notification = new Notification(R.mipmap.ic_launcher, notification_text_loading, System.currentTimeMillis());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        notification = getChannelNotification("水利安监", notification_text_loading).build();
+                    } else {
+                       notification = getNotification_25("水利安监",notification_text_loading).build();
+                    }
+                    if (notification.contentView == null) {
+                        notification.contentView = new RemoteViews(getPackageName(), R.layout.notification_custom_view);
+                    }
+                    notification.flags = Notification.FLAG_ONGOING_EVENT;
+                    notification.contentView.setTextViewText(R.id.down_tv, notification_text_loading);
+                    notification.contentView.setProgressBar(R.id.pb, 100, 0, false);
+                    break;
                 }
-                if (notification.contentView == null) {
-                    notification.contentView = new RemoteViews(getPackageName(), R.layout.notification_custom_view);
-                }
-                notification.flags = Notification.FLAG_ONGOING_EVENT;
-                notification.contentView.setTextViewText(R.id.down_tv, notification_text_loading);
-                notification.contentView.setProgressBar(R.id.pb, 100, 0, false);
-                break;
             }
             case PROCESS_LOADING: {
                 notification.contentView.setTextViewText(R.id.process, (Integer.toString((int) (downloaded * 100)) + "%"));

@@ -79,7 +79,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="@dimen/padding_10"
                 android:text="0%"
-                android:textColor="#333"
+                android:textColor="#333333"
                 android:textSize="14sp" />
         </RelativeLayout>
 
