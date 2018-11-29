@@ -291,6 +291,7 @@ public class FormalReviewListActivity extends TranslucentActivity
      */
     private void commit(int result,String opinion){
         showDataLoadingDialog();
+        final int value = result;
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/from/firsttria/bisFromFirsttria/";
         HashMap <String,String>params= new HashMap<>();
         for(ObjStanAppl item : selectedReviewItemInformationList){
@@ -310,7 +311,9 @@ public class FormalReviewListActivity extends TranslucentActivity
             SyberosManagerImpl.getInstance().submit(localCacheEntity, attachMentInfoEntities,new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    updateState();
+                    if(value == 0) {
+                        updateState();
+                    }
                 }
 
                 @Override

@@ -74,6 +74,8 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
     private int iSucessCount = 0;
     private int iFailedCount = 0;
 
+    private boolean bFirst = true;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_enterprises_element_check_detail;
@@ -100,6 +102,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
 
     @Override
     public void initView() {
+        bFirst = true;
         Bundle bundle = getIntent().getBundleExtra(Strings.DEFAULT_BUNDLE_NAME);
         information = (ObjSe) bundle.getSerializable(
                 EnterprisesElementCheckListActivity.SEND_BUNDLE_KEY);
@@ -163,8 +166,12 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         });
     }
     private void refreshUI(){
-        addCheckItems((ArrayList<BisSeChit>) bisSeChit.dataSource);
+        if(bFirst) {
+            addCheckItems((ArrayList<BisSeChit>) bisSeChit.dataSource);
+            bFirst = false;
+        }
         addHiddenItems(objHidden.dataSource);
+
 
     }
     private void getEngName(){
@@ -208,6 +215,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         if (checkItemInfos.size() <= 0) {
             return;
         }
+        ll_object_container_0.removeAllViews();
         for (BisSeChit checkItemInfo : checkItemInfos) {
             addCheckItem(checkItemInfo);
         }
@@ -250,9 +258,10 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
                     if (isChecked) {
                         ce_count.setEnabled(true);
                         ce_count.setText("1");
+                        go2HiddenReport(checkItemInfo);
                     }
                 }
-                go2HiddenReport(checkItemInfo);
+
             }
         });
         ll_object_container_0.addView(view);
@@ -270,6 +279,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         if (hiddenItemInfos.size() <= 0) {
             return;
         }
+        ll_object_container_1.removeAllViews();
         for (ObjHidden hiddenItemInfo : hiddenItemInfos) {
             addHiddenItem(hiddenItemInfo);
         }
