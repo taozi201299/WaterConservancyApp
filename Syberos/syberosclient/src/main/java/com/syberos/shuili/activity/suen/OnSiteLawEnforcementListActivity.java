@@ -140,13 +140,15 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
                     });
 
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.caseName);
+                    information.getCaseName());
+            ((TextView) (holder.getView(R.id.ll_case_code_value))).setText(
+                    information.getCaseNum());
             ((TextView) (holder.getView(R.id.tv_time))).setText(
-                    information.filiTime);
+                    information.getFiliTime());
             ((TextView) (holder.getView(R.id.tv_name))).setText(
-                    information.caseLitiName);
+                    information.getCaseLitiName());
             ((TextView) (holder.getView(R.id.tv_content))).setText(
-                    information.caseSitu);
+                    information.getCaseSitu());
 
         }
     }

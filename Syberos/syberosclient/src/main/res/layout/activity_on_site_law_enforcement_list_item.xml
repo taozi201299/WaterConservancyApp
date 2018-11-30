@@ -39,8 +39,32 @@
                     />
             </RelativeLayout>
             <LinearLayout
-                android:id="@+id/ll_name"
+                android:id="@+id/ll_case_code"
                 android:layout_below="@+id/rl_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_4">
+                <TextView
+                    android:id="@+id/ll_case_code_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_bb"
+                    android:text="卷宗号:"
+                    />
+                <TextView
+                    android:id="@+id/ll_case_code_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_bb"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_name"
+                android:layout_below="@+id/ll_case_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
