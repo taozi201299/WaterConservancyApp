@@ -146,7 +146,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
         String url = strIP + "/sjjk/v1/bis/obj/objHidds/";
         HashMap<String ,String >params = new HashMap<>();
         params.put("orgGuid", SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("seCheckItemGuid",bisSeChit.getGuid());
+        params.put("seCheckItemGuid",information.getGuid());
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
