@@ -15,6 +15,26 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_5dp"
         >
+        <LinearLayout
+            android:id="@+id/ll_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_4">
+            <TextView
+                android:id="@+id/tv_plan_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="稽察计划名称:"
+                />
+            <TextView
+                android:id="@+id/tv_plan_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text=""/>
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -22,7 +42,9 @@
             android:padding="@dimen/padding_4"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="易燃易爆物品"
+            android:textColor="@color/gray_bb"
+            android:layout_below="@+id/ll_plan"
+            android:text="稽察组:"
             />
             <LinearLayout
                 android:id="@+id/ll_name_label"

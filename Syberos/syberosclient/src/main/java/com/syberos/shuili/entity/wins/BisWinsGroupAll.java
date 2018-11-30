@@ -22,6 +22,16 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
 
     String specStaffName;
 
+    public String getWinsPlanName() {
+        return winsPlanName == null ? "" : winsPlanName;
+    }
+
+    public void setWinsPlanName(String winsPlanName) {
+        this.winsPlanName = winsPlanName;
+    }
+
+    String winsPlanName ;
+
     public String getSpecStaffName() {
         return specStaffName == null ? "" : specStaffName;
     }

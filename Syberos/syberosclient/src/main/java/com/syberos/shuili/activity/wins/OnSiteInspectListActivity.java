@@ -66,6 +66,9 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     private String personId;
 
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
+
 
     @Override
     public int getLayoutId() {
@@ -80,6 +83,8 @@ public class OnSiteInspectListActivity extends BaseActivity
     @Override
     public void initData() {
         datas.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
         showDataLoadingDialog();
         getPersonID();
     }
@@ -117,9 +122,11 @@ public class OnSiteInspectListActivity extends BaseActivity
                 Gson gson = new Gson();
                 BisWinsStaff bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
                 if(bisWinsStaff == null || bisWinsStaff.dataSource == null ){
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }if(bisWinsStaff.dataSource.size() == 0){
+                    closeDataDialog();
                     return;
                 }
                personId =  bisWinsStaff.dataSource.get(0).getGuid();
@@ -144,10 +151,10 @@ public class OnSiteInspectListActivity extends BaseActivity
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDataDialog();
                 Gson gson = new Gson();
                 bisWinsGroupAll = gson.fromJson(result, BisWinsGroupAll.class);
                 if(bisWinsGroupAll == null || bisWinsGroupAll.dataSource == null){
+                    closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }else {
@@ -172,18 +179,14 @@ public class OnSiteInspectListActivity extends BaseActivity
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
-                closeDataDialog();
                 Gson gson = new Gson();
                 bisWinsGroupAll1 = gson.fromJson(result, BisWinsGroupAll.class);
                 if(bisWinsGroupAll1 == null || bisWinsGroupAll1.dataSource == null){
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                datas.addAll(bisWinsGroupAll1.dataSource);
-                if(datas.size() == 0){
-                    ToastUtils.show("未获取到稽察任务");
-                }
-                refreshUI();
+                datas.addAll(bisWinsGroupAll.dataSource);
+              getWinsArrayCode();
             }
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
@@ -193,8 +196,98 @@ public class OnSiteInspectListActivity extends BaseActivity
             }
         });
     }
+    //稽察计划编码	WINS_PLAN_CODE
+   // 稽察批次编号	WINS_ARRAY_CODE
+
+    private void getWinsArrayCode(){
+        final int size = datas.size();
+        BisWinsGroupAll item;
+        for(int i = 0; i < size; i++) {
+            item = datas.get(i);
+            String url = GlobleConstants.strIP +"/sjjk/v1/bis/wins/prog/bisWinsProgs/";
+            urlTags.add(url);
+            HashMap<String, String> params = new HashMap<>();
+            params.put("guid",item.getWinsProgGuid());
+            final BisWinsGroupAll finalItem = item;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++;
+                    BisWinsProgAll bisWinsProgAll;
+                    Gson gson = new Gson();
+                    bisWinsProgAll = gson.fromJson(result, BisWinsProgAll.class);
+                    if (bisWinsProgAll == null || bisWinsProgAll.dataSource == null || bisWinsProgAll.dataSource.size() == 0) {
+                    } else {
+                        finalItem.setWinsArrayCode(bisWinsProgAll.dataSource.get(0).getWinsArrayCode());
+                        finalItem.setWinsPlanCode(bisWinsProgAll.dataSource.get(0).getWinsPlanGuid());
+                    }
+                    if(iSucessCount +iFailedCount == size){
+                        getWinsPlanName();
+                    }
+                }
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount +iFailedCount == size){
+                        getWinsPlanName();
+                    }
+
+                }
+            });
+        }
+
+
+    }
+    private void getWinsPlanName(){
+        iSucessCount = 0;
+        iFailedCount = 0;
+        final int size = datas.size();
+        BisWinsGroupAll item ;
+        for(int i = 0; i < size; i++) {
+            item = datas.get(i);
+            if(item.getWinsPlanCode() == null || item.getWinsPlanCode().isEmpty())continue;
+            String url = GlobleConstants.strIP  + "/sjjk/v1/obj/wins/plan/objWinsPlans/";
+            urlTags.add(url);
+            HashMap<String,String>params = new HashMap<>();
+            params.put("guid",item.getWinsPlanCode());
+            final BisWinsGroupAll finalItem = item;
+            SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+                @Override
+                public void onResponse(String result) {
+                    iSucessCount ++ ;
+                    Gson gson = new Gson();
+                    ObjWinsPlan objWinsPlan ;
+                    objWinsPlan = gson.fromJson(result,ObjWinsPlan.class);
+                    if(objWinsPlan != null && objWinsPlan.dataSource != null
+                            || objWinsPlan.dataSource.size() > 0){
+                        finalItem.setWinsPlanName(objWinsPlan.dataSource.get(0).getWinsPlanName());
+
+                    }
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                    iFailedCount ++;
+                    if(iSucessCount + iFailedCount == size){
+                        refreshUI();
+                    }
+
+                }
+            });
+
+        }
+
+    }
 
     private void refreshUI(){
+        closeDataDialog();
+        if(datas.size() == 0){
+            ToastUtils.show("未获取到稽察任务");
+        }
         listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
@@ -217,8 +310,10 @@ public class OnSiteInspectListActivity extends BaseActivity
                 }
             });
 
+            String text = ((TextView)(holder.getView(R.id.tv_title))).getText().toString();
+            ((TextView) (holder.getView(R.id.tv_plan_value))).setText(information.getWinsPlanName());
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                    information.getWinsGroupNum());
+                   text +  information.getWinsGroupNum());
             ((TextView) (holder.getView(R.id.tv_batch))).setText(
                     information.getWinsArrayCode());
             ((TextView) (holder.getView(R.id.tv_time))).setText(information.getCollTime());
