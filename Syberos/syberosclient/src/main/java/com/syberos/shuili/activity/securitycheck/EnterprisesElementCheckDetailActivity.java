@@ -39,6 +39,7 @@ import java.util.UUID;
 
 import butterknife.BindView;
 
+import static com.syberos.shuili.config.GlobleConstants.maha;
 import static com.syberos.shuili.config.GlobleConstants.strIP;
 
 /**
@@ -171,13 +172,16 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             addCheckItems((ArrayList<BisSeChit>) bisSeChit.dataSource);
             bFirst = false;
         }
-        addHiddenItems(objHidden.dataSource);
+        if(objHidden.dataSource != null ) {
+            addHiddenItems(objHidden.dataSource);
+        }
 
 
     }
     private void getEngName(){
         if (objHidden.dataSource.size() <= 0) {
             closeDataDialog();
+            refreshUI();
             return;
         }
         final int count = objHidden.dataSource.size();
