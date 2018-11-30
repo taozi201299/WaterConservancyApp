@@ -169,9 +169,9 @@ public class InspectionProblemsAcitvity extends BaseActivity {
         for(BisWinsProb item : bisWinsProb.dataSource){
             ArrayList list = mapValues.get(item.getWinsProjGuid());
             if(list == null ){
-                list = new ArrayList();
-                list.add(item);
-                mapValues.put(item.getWinsProjGuid(),list);
+//                list = new ArrayList();
+//                list.add(item);
+//                mapValues.put(item.getWinsProjGuid(),list);
                 continue;
             }
             list.add(item);
