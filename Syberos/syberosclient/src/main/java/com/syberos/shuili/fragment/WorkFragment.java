@@ -301,25 +301,26 @@ public class WorkFragment extends BaseFragment {
                     continue;
                 }
                 if(modules.contains(getResources().getString(R.string.module_gongzuo))){
-                    if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))
-                            || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))
-                            || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))) {
-                          continue;
-                    }
+
+//                    if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))
+//                            || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))
+//                            || childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))) {
+//                          continue;
+//                    }
                 }else {
-                   if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_gongzuo))){
-                        continue;
-                    }
-                    if(!App.sCodes.contains(GlobleConstants.hidd)){
-                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))){
-                            continue;
-                        }
-                    }
-                    if(!App.sCodes.contains(GlobleConstants.acci)){
-                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))){
-                            continue;
-                        }
-                    }
+//                   if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_gongzuo))){
+//                        continue;
+//                    }
+//                    if(!App.sCodes.contains(GlobleConstants.hidd)){
+//                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_yinhuan))){
+//                            continue;
+//                        }
+//                    }
+//                    if(!App.sCodes.contains(GlobleConstants.acci)){
+//                        if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_shigu))){
+//                            continue;
+//                        }
+//                    }
                 }
                 if(childNames[j].equals(getResources().getString(R.string.module_child_baobiao_anquan))){
                     continue;
