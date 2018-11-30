@@ -22,6 +22,7 @@ import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.entity.objCase.ObjCase;
 import com.syberos.shuili.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -43,6 +44,7 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
 
     private ListAdapter listAdapter = null;
     ObjCase objCase = null;
+    ArrayList<ObjCase>datas = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -117,7 +119,9 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
     }
 
     private void refreshUI(){
-        listAdapter.setData(objCase.dataSource);
+        datas.clear();
+        datas.addAll(objCase.dataSource);
+        listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
     private class ListAdapter extends CommonAdapter<ObjCase> {

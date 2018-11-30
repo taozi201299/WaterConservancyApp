@@ -63,6 +63,12 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        llMultimedia.cancel();
+        super.onDestroy();
+    }
+
+    @Override
     public void initView() {
         setInitActionBar(true);
         setActionBarRightVisible(View.INVISIBLE);
@@ -72,24 +78,24 @@ public class OnSiteLawEnforcementDetailActivity extends BaseActivity {
                 OnSiteLawEnforcementListActivity.SEND_BUNDLE_KEY);
 
         if (null != lawEnforcementInformation) {
-            String caseName = lawEnforcementInformation.caseName;
-            String caseLitiName = lawEnforcementInformation.caseLitiName;
-            String filiTime = lawEnforcementInformation.filiTime;
-            String coltra1 = lawEnforcementInformation.contra1;
-            String coltra2 = lawEnforcementInformation.contra2;
+            String caseName = lawEnforcementInformation.getCaseName();
+            String caseLitiName = lawEnforcementInformation.getCaseLitiName();
+            String filiTime = lawEnforcementInformation.getFiliTime();
+            String coltra1 = lawEnforcementInformation.getContra1();
+            String coltra2 = lawEnforcementInformation.getContra2();
             setActionBarTitle(caseName == null ? "未知" : caseName);
-            tv_name.setText(lawEnforcementInformation.caseName);
+            tv_name.setText(lawEnforcementInformation.getCaseName());
             tv_litigant.setText(caseLitiName == null ? "" : caseLitiName);
             tv_time.setText(filiTime == null ? "" : filiTime);
             if (coltra1 == null) coltra1 = "";
             if (coltra2 == null) coltra2 = "";
-            tv_undertaker.setText(lawEnforcementInformation.contra1 + "、" + lawEnforcementInformation.contra2);
+            tv_undertaker.setText(lawEnforcementInformation.getContra1() + "、" + lawEnforcementInformation.getContra2());
 
             ae_describe_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
             ae_describe_audio.setLabelText("案件基本情况");
-            ae_describe_audio.setEditText(lawEnforcementInformation.caseSitu);
+            ae_describe_audio.setEditText(lawEnforcementInformation.getCaseSitu());
             llMultimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
-            BusinessConfig.getAttachMents(lawEnforcementInformation.guid,"OBJ_CASE",llMultimedia);
+            BusinessConfig.getAttachMents(lawEnforcementInformation.getGuid(),"OBJ_CASE",llMultimedia);
 
         }
     }
