@@ -34,6 +34,7 @@ import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.MultimediaView;
 import com.syberos.shuili.view.indexListView.ClearEditText;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -230,7 +231,11 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         params.put("inspOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("goverRespWiunGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
-        params.put("hiddGrad",String.valueOf(ll_enum_level.getCurrentIndex() +1)); // 隐患级别
+        if(ll_enum_level.getCurrentDetailText().equals("一般隐患")) {
+            params.put("hiddGrad", "1"); // 隐患级别
+        }else {
+            params.put("hiddGrad","2");
+        }
         params.put("hiddClas","");
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
@@ -250,14 +255,19 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
                 String time = CommonUtils.getCurrentDateYMD();
                 time = time.replace("-","");
                 info.medPath = App.roleCode + "/OBJ_HIDD/"+time+ "/"+info.medName;
-                info.url = GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
+                File file = new File(item.localFile.getPath());
+                info.localPath = item.localFile.getPath();
+                info.medSize = file.length();
+                info.url =  GlobleConstants.strIP + "/sjjk/v1/jck/attMedBase/";
                 info.bisTableName = "OBJ_HIDD";
                 info.bisGuid = "";
                 info.localStatus = "0";
                 if(item.type == MultimediaView.LocalAttachmentType.IMAGE){
-                    info.medType = "0";
-                }else {
-                    info.medType = "1";
+                    info.medType = "2"; // 图片
+                }else if(item.type == MultimediaView.LocalAttachmentType.AUDIO) {
+                    info.medType = "3"; // 音频
+                }else if(item.type == MultimediaView.LocalAttachmentType.VIDEO){
+                    info.medType = "4";
                 }
                 info.seriesKey = localCacheEntity.seriesKey;
                 attachMentInfoEntities.add(info);
