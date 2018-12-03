@@ -13,7 +13,10 @@ import com.shuili.callback.RequestCallback;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.base.TranslucentActivity;
+import com.syberos.shuili.config.BusinessConfig;
 import com.syberos.shuili.config.GlobleConstants;
+import com.syberos.shuili.entity.basicbusiness.ObjectEngine;
+import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.hidden.HiddenAcceptInfo;
 import com.syberos.shuili.entity.hidden.HiddenInvesInfo;
 import com.syberos.shuili.entity.hidden.HiddenProjectInfo;
@@ -166,6 +169,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         if(investigationInfo == null){
             return;
         }
+        BusinessConfig.getAttachMents(investigationInfo.getGuid(),"OBJ_HIDD",ll_multimedia);
         getProjectDetail();
 
     }
@@ -220,7 +224,6 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         }
     }
     private void getProjectDetail(){
-
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/obj/objHidds/";
         urlTags.add(url);
         HashMap<String,String> params = new HashMap<>();
@@ -229,13 +232,16 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             @Override
             public void onResponse(String result) {
                 Gson gson = new Gson();
-                hiddenProjectInfo = (HiddenProjectInfo)gson.fromJson(result,HiddenProjectInfo.class);
-                if(hiddenProjectInfo == null || hiddenProjectInfo.dataSource == null){
+                hiddenProjectInfo = gson.fromJson(result,HiddenProjectInfo.class);
+                if(hiddenProjectInfo == null || hiddenProjectInfo.dataSource == null
+                        || hiddenProjectInfo.dataSource.size() == 0){
                     closeDataDialog();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                getInvestigationDetail();
+                getHiddClassName(hiddenProjectInfo.dataSource.get(0));
+                getEngName(hiddenProjectInfo.dataSource.get(0));
+
             }
 
             @Override
@@ -246,6 +252,60 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             }
         });
     }
+    private void getHiddClassName(final HiddenProjectInfo info){
+        String className = GlobleConstants.hiddClassMap.get(info.getHiddClas());
+        info.setHiddClasName(className == null ?"":className);
+
+
+    }
+    private void getEngName(final HiddenProjectInfo info){
+        String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
+        urlTags.add(url);
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",info.getEngGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                ObjectEngine objectEngine  = null;
+                objectEngine = gson.fromJson(result,ObjectEngine.class);
+                if(objectEngine == null || objectEngine.dataSource == null ||
+                        objectEngine.dataSource.size() == 0){
+
+                }else {
+                  info.setEngName(objectEngine.dataSource.get(0).getEngName());
+                }
+                getInvestigationDetail();
+            }
+
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                getInvestigationDetail();
+            }
+        });
+    }
+    private void getOrgName(HiddenInvesInfo info){
+        String url = GlobleConstants.strIP + "/sjjk/v1/att/org/base/attOrgBases/";
+        HashMap<String,String>params = new HashMap<>();
+        params.put("guid",info.getInspOrgGuid());
+        SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new Gson();
+                OrgInfo orgInfo = gson.fromJson(result,OrgInfo.class);
+                if(orgInfo != null && orgInfo.dataSource != null && orgInfo.dataSource.size() > 0){
+                    hiddenInvesInfo.dataSource.get(0).setUnitName(orgInfo.dataSource.get(0).getOrgName());
+                }
+                getRectifyProgress();
+            }
+            @Override
+            public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                getRectifyProgress();
+            }
+        });
+
+    }
+
     private void getInvestigationDetail(){
 
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/hidd/bisHiddInves/";
@@ -262,7 +322,11 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                getRectifyProgress();
+                if(hiddenInvesInfo.dataSource.size() > 0){
+                    getOrgName(hiddenInvesInfo.dataSource.get(0));
+                }else {
+                    getRectifyProgress();
+                }
             }
 
             @Override
@@ -382,7 +446,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         // 1 隐患核实信息
         if(hiddenProjectInfo != null && this.hiddenProjectInfo.totalCount.equals("1")) {
             hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
-            tv_projectName.setText(investigationInfo.getEngName());
+            tv_projectName.setText(hiddenProjectInfo.getEngName());
             if("0".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
                 tv_level.setText(R.string.normal);
             }else if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())){
@@ -390,17 +454,18 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
             }else {
                 tv_level.setText(R.string.normal);
             }
-            tv_type.setText(hiddenProjectInfo.getHiddClas());
+            tv_type.setText(hiddenProjectInfo.getHiddClasName());
             tv_location.setText(hiddenProjectInfo.getProPart());
             tv_measure_info.setText("");
             ev_des_audio.setEditText(hiddenProjectInfo.getHiddDesc());
+
         }
         // 隐患排查
         if(hiddenInvesInfo != null && this.hiddenInvesInfo.totalCount.equals("1")) {
             hiddenInvesInfo = this.hiddenInvesInfo.dataSource.get(0);
             tv_other.setText(hiddenInvesInfo.getInspLeader());
             tv_other2.setText(hiddenInvesInfo.getInspMem());
-            tv_other3.setText(hiddenInvesInfo.getInspOrgGuid());
+            tv_other3.setText(hiddenInvesInfo.getUnitName());
             tv_other4.setText(hiddenInvesInfo.getRecPers());
             tv_other5.setText(hiddenInvesInfo.getCollTime());
         }
@@ -424,6 +489,8 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
                 tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
                 tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
                 ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
+                BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
+
             }
 
         }

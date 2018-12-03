@@ -24,6 +24,16 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
      * 所属工程
      */
     String engGuid;
+
+    public String getEngName() {
+        return engName == null ? "" : engName;
+    }
+
+    public void setEngName(String engName) {
+        this.engName = engName;
+    }
+
+    String engName;
     /**
      * 所属标段
      */
@@ -48,6 +58,16 @@ public class HiddenProjectInfo extends HttpBaseResponse<HiddenProjectInfo> {
      * 隐患分类
      */
     String hiddClas;
+
+    public String getHiddClasName() {
+        return hiddClasName == null ? "" : hiddClasName;
+    }
+
+    public void setHiddClasName(String hiddClasName) {
+        this.hiddClasName = hiddClasName;
+    }
+
+    String hiddClasName;
     /**
      * 是否已经被发现
      */

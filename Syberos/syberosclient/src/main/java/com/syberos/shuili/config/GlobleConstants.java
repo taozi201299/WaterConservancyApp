@@ -154,6 +154,37 @@ public class GlobleConstants {
             put("2","三级");
         }
     };
+    public static HashMap<String,String>hiddClassMap = new HashMap<String,String>(){
+        {
+            put("01","水库建设");
+            put("02","水库运行");
+            put("03","农村水电站及配套电网建设");
+            put("04","农村水电站及配套电网运行");
+            put("05","河道采砂");
+            put("06","水文测验");
+            put("07","水利工程勘测设计");
+            put("08","水利科学研究实验与检验");
+            put("09","后勤服务");
+            put("10","综合经营");
+            put("11","其他");
+            put("12","水电站建设");
+            put("13","水电站运行");
+            put("14","水闸建设");
+            put("15","水闸运行");
+            put("16","泵站建设");
+            put("17","泵站运行");
+            put("18","堤防建设");
+            put("19","堤防运行");
+            put("20","引调水建设");
+            put("21","引调水运行");
+            put("22","灌溉工程建设");
+            put("23","灌溉工程运行");
+            put("24","淤地坝建设");
+            put("25","淤地坝运行");
+
+        }
+
+    };
 
 
     public static interface IConstants {
