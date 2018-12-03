@@ -50,7 +50,7 @@ public class AccidentListActivity extends BaseActivity {
      * 事故快报列表信息
      */
     private ObjAcci accidentInformation;
-    private final String Title = "事故查询";
+    private final String Title = "快报事故查询";
 
     public static final String SEND_BUNDLE_KEY = "ObjAcci";
     /**

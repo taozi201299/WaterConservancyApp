@@ -1,7 +1,9 @@
 package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,8 +47,9 @@ import static com.syberos.shuili.utils.Strings.urlDecode;
 /**
  * Created by jidan on 18-3-23.
  */
-
+;
 public class InvestigationAcceptFormForEntActivity extends BaseActivity implements View.OnClickListener{
+   private final String Tag= InvestigationAcceptFormForEntActivity.class.getSimpleName();
     @BindView(R.id.ll_multimedia)
     MultimediaView ll_multimedia;
     @BindView(R.id.tv_accept_person)
@@ -237,11 +240,13 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                Log.d(Tag,"=====update sucess");
 
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                Log.d(Tag,"==========update onFailed");
 
             }
         });
@@ -263,12 +268,13 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         HttpUtils.getInstance().requestNet_post(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
+                Log.d(Tag,"========create sucess");
 
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+               Log.d(Tag,"============create failed");
             }
         });
 
@@ -293,6 +299,7 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                Log.d(Tag,"==========query failed");
               //  ToastUtils.show("创建代办任务失败");
 
             }

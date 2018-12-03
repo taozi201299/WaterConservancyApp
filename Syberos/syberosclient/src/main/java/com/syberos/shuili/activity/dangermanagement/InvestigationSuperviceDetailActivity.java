@@ -29,6 +29,7 @@ import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomScrollView;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.microedition.khronos.opengles.GL;
@@ -143,6 +144,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
      * 隐患督办信息
      */
     private HiddenSupserviceInfo hiddenSupserviceInfo;
+    private ArrayList<MultimediaView> multimediaViews = new ArrayList<>();
 
 
     @Override
@@ -160,6 +162,9 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
     protected void onDestroy() {
         super.onDestroy();
         ll_multimedia.cancel();
+        for(MultimediaView view : multimediaViews){
+            view.cancel();
+        }
     }
 
     @Override
@@ -169,6 +174,7 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         if(investigationInfo == null){
             return;
         }
+        multimediaViews.clear();
         BusinessConfig.getAttachMents(investigationInfo.getGuid(),"OBJ_HIDD",ll_multimedia);
         getProjectDetail();
 
@@ -539,9 +545,11 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         ll_rectify_opinion_multimedia = rectifyView.findViewById(R.id.ll_rectify_opinion_multimedia);
         ev_rectify_des_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_rectify_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+        multimediaViews.add(ll_rectify_multimedia);
         tv_rectify_result = rectifyView.findViewById(R.id.tv_rectify_result) ;
         ev_rectify_opinion_audio.setModel(MultimediaView.RunningMode.READ_ONLY_MODE);
         ll_rectify_opinion_multimedia.setRunningMode(MultimediaView.RunningMode.READ_ONLY_MODE);
+        multimediaViews.add(ll_rectify_opinion_multimedia);
         ev_rectify_opinion_audio.setLabelText("验收意见");
         ev_rectify_opinion_audio.setEditText("核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述核实描述");
         ll_rectify_container.addView(rectifyView);

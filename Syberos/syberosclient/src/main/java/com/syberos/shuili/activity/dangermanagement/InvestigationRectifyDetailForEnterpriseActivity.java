@@ -28,6 +28,7 @@ import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomScrollView;
 import com.syberos.shuili.view.MultimediaView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -151,6 +152,8 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
      */
     private HiddenSupserviceInfo hiddenSupserviceInfo;
 
+    private ArrayList<MultimediaView> multimediaViews = new ArrayList<>();
+
 
     @Override
     public int getLayoutId() {
@@ -171,6 +174,7 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
         if(investigationInfo == null){
             return;
         }
+        multimediaViews.clear();
         BusinessConfig.getAttachMents(investigationInfo.getGuid(),"OBJ_HIDD",ll_multimedia);
         getInvestigationDetail();
 
@@ -180,6 +184,9 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
     protected void onDestroy() {
         super.onDestroy();
         ll_multimedia.cancel();
+        for(MultimediaView view:multimediaViews) {
+            view.cancel();
+        }
     }
 
     @Override
@@ -422,6 +429,7 @@ private void getRectifyPerName(){
                 tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
                 ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
                 BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
+                multimediaViews.add(ll_rectify_multimedia);
             }
 
 
