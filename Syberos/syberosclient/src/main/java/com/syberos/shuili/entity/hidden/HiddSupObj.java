@@ -71,129 +71,130 @@ public class HiddSupObj implements Serializable {
          */
 
         private String isList;
-        private Object recPers;
-        private Object supWiunCode;
+        private String recPers;
+        private String supWiunCode;
         private String collTime;
-        private Object orgName;
-        private Object supLegPers;
+        private String orgName;
+        private String supLegPers;
         private String guid;
-        private Object updTime;
-        private Object supOpin;
+        private String updTime;
+        private String supOpin;
         private String hiddGuid;
-        private Object supLareId;
+        private String supLareId;
         private String rectPeri;
-        private Object supDate;
-        private Object note;
+        private String supDate;
+        private String note;
+
 
         public String getIsList() {
-            return isList;
+            return isList == null ? "" : isList;
         }
 
         public void setIsList(String isList) {
             this.isList = isList;
         }
 
-        public Object getRecPers() {
-            return recPers;
+        public String getRecPers() {
+            return recPers == null ? "" : recPers;
         }
 
-        public void setRecPers(Object recPers) {
+        public void setRecPers(String recPers) {
             this.recPers = recPers;
         }
 
-        public Object getSupWiunCode() {
-            return supWiunCode;
+        public String getSupWiunCode() {
+            return supWiunCode == null ? "" : supWiunCode;
         }
 
-        public void setSupWiunCode(Object supWiunCode) {
+        public void setSupWiunCode(String supWiunCode) {
             this.supWiunCode = supWiunCode;
         }
 
         public String getCollTime() {
-            return collTime;
+            return collTime == null ? "" : collTime;
         }
 
         public void setCollTime(String collTime) {
             this.collTime = collTime;
         }
 
-        public Object getOrgName() {
-            return orgName;
+        public String getOrgName() {
+            return orgName == null ? "" : orgName;
         }
 
-        public void setOrgName(Object orgName) {
+        public void setOrgName(String orgName) {
             this.orgName = orgName;
         }
 
-        public Object getSupLegPers() {
-            return supLegPers;
+        public String getSupLegPers() {
+            return supLegPers == null ? "" : supLegPers;
         }
 
-        public void setSupLegPers(Object supLegPers) {
+        public void setSupLegPers(String supLegPers) {
             this.supLegPers = supLegPers;
         }
 
         public String getGuid() {
-            return guid;
+            return guid == null ? "" : guid;
         }
 
         public void setGuid(String guid) {
             this.guid = guid;
         }
 
-        public Object getUpdTime() {
-            return updTime;
+        public String getUpdTime() {
+            return updTime == null ? "" : updTime;
         }
 
-        public void setUpdTime(Object updTime) {
+        public void setUpdTime(String updTime) {
             this.updTime = updTime;
         }
 
-        public Object getSupOpin() {
-            return supOpin;
+        public String getSupOpin() {
+            return supOpin == null ? "" : supOpin;
         }
 
-        public void setSupOpin(Object supOpin) {
+        public void setSupOpin(String supOpin) {
             this.supOpin = supOpin;
         }
 
         public String getHiddGuid() {
-            return hiddGuid;
+            return hiddGuid == null ? "" : hiddGuid;
         }
 
         public void setHiddGuid(String hiddGuid) {
             this.hiddGuid = hiddGuid;
         }
 
-        public Object getSupLareId() {
-            return supLareId;
+        public String getSupLareId() {
+            return supLareId == null ? "" : supLareId;
         }
 
-        public void setSupLareId(Object supLareId) {
+        public void setSupLareId(String supLareId) {
             this.supLareId = supLareId;
         }
 
         public String getRectPeri() {
-            return rectPeri;
+            return rectPeri == null ? "" : rectPeri;
         }
 
         public void setRectPeri(String rectPeri) {
             this.rectPeri = rectPeri;
         }
 
-        public Object getSupDate() {
-            return supDate;
+        public String getSupDate() {
+            return supDate == null ? "" : supDate;
         }
 
-        public void setSupDate(Object supDate) {
+        public void setSupDate(String supDate) {
             this.supDate = supDate;
         }
 
-        public Object getNote() {
-            return note;
+        public String getNote() {
+            return note == null ? "" : note;
         }
 
-        public void setNote(Object note) {
+        public void setNote(String note) {
             this.note = note;
         }
     }

@@ -2,9 +2,11 @@ package com.syberos.shuili.activity.dangermanagement;
 
 import android.content.Context;
 import android.graphics.drawable.ShapeDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -195,7 +197,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                     hiddenAcceptInfo = gson.fromJson(result,HiddenAcceptInfo.class);
                     if(hiddenAcceptInfo == null || hiddenAcceptInfo.dataSource == null){
                     }else if(hiddenAcceptInfo.dataSource.size() == 0){
-                        item.setAccept(false);
+                        item.setAccept(true);
                     }else {
                         for(HiddenAcceptInfo acceptInfo :hiddenAcceptInfo.dataSource){
                             item.setBisRecAccGuid(acceptInfo.getGuid());
@@ -206,7 +208,7 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                                         acceptInfo.getRecPers()!= null && !acceptInfo.getRecPers().isEmpty()){
                                     item.setAccept(true);
                                 }else {
-                                    if(acceptInfo.getCancelState() != null && !"0".equals(acceptInfo.getCancelState())) {
+                                    if(acceptInfo.getCancelState() != null && !acceptInfo.getCancelState().isEmpty() &&  !"0".equals(acceptInfo.getCancelState())) {
                                         item.setAccept(true);
                                     }else {
                                         item.setAccept(false);
@@ -263,6 +265,12 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                     HiddSupObj hiddSupObj = gson.fromJson(result,HiddSupObj.class);
                     if(hiddSupObj == null|| hiddSupObj.getData() == null || hiddSupObj.getData().size() == 0){
                     }else {
+//                        Log.d("InvestigationAcceptTask","======="+ hiddSupObj.getData().get(0).getSupDate().toString()
+//                        +"==="+ hiddSupObj.getData().get(0).getSupLareId() + "==="+
+//                        hiddSupObj.getData().get(0).getSupLegPers());
+                        if(hiddSupObj.getData().get(0).getSupDate() != null
+                                && !hiddSupObj.getData().get(0).getSupDate().toString().isEmpty()
+                                )
                         datas.add(results.get(finalI));
                     }
                     if(sucessCount + failedCount == size){
@@ -275,6 +283,8 @@ public class InvestigationAccepTaskForEntActivity extends BaseActivity implement
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     failedCount ++;
                     if(sucessCount + failedCount == size){
+                        results.clear();
+                        results.addAll(datas);
                         refreshUI();
                     }
 
