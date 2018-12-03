@@ -107,7 +107,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bisWinsGroupAll", bisWinsGroupAll.dataSource.get(position));
+        bundle.putSerializable("bisWinsGroupAll", datas.get(position));
         intentActivity(OnSiteInspectListActivity.this,
                 InspectionDetailActivity.class, false, bundle);
     }
