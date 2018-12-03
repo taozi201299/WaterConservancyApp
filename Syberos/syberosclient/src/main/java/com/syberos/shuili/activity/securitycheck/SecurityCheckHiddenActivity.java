@@ -274,7 +274,6 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
             int type = objHidden.getHiddGrad() == null ? 1: Integer.valueOf(objHidden.getHiddGrad());
 
             LinearLayout ll_type =  holder.get(R.id.ll_type);
-            holder.get(R.id.tv_name).setVisibility(View.GONE);
             RelativeLayout rl_supervice = holder.get(R.id.ll_supervise);
             rl_supervice.setVisibility(View.GONE);
             ShapeDrawable bgShape = null;
@@ -297,7 +296,7 @@ public class SecurityCheckHiddenActivity extends BaseActivity {
             }
             ( (TextView)(holder.get(R.id.tv_title))).setText(objHidden.getHiddName());
             ( (TextView)(holder.get(R.id.tv_time))).setText(objHidden.getCollTime());
-            holder.get(R.id.tv_name).setVisibility(View.GONE);
+            ((TextView)(holder.get(R.id.tv_name))).setText(objHidden.getEngName());
             ( (TextView)(holder.get(R.id.tv_content))).setText(objHidden.getHiddDesc());
 
 
