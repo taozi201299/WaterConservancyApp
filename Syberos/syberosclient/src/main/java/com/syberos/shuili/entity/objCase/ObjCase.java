@@ -39,6 +39,16 @@ public class ObjCase extends HttpBaseResponse<ObjCase> {
     public String contra1;
     public String contra2;
 
+    public String getIfArch() {
+        return ifArch == null ? "" : ifArch;
+    }
+
+    public void setIfArch(String ifArch) {
+        this.ifArch = ifArch;
+    }
+
+    String ifArch;
+
     public String getGuid() {
         return guid == null ? "" : guid;
     }

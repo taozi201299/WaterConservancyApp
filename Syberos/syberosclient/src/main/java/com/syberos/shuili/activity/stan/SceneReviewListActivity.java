@@ -249,7 +249,8 @@ public class SceneReviewListActivity extends TranslucentActivity implements Pull
             ((TextView) (holder.getView(R.id.tv_time))).setText(
                     information.getApplTime());
             // 申请等级
-            ((TextView) (holder.getView(R.id.tv_level))).setText(information.getApplGrade());
+            String grade = GlobleConstants.stanGradeMap.get(information.getApplGrade());
+            ((TextView) (holder.getView(R.id.tv_level))).setText(grade == null ?"":grade);
 
         }
     }

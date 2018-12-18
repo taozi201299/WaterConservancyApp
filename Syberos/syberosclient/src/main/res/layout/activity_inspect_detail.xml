@@ -51,7 +51,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/padding_10"
-                            android:text="稽查批次"
+                            android:text="稽察批次"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp" />
 
@@ -79,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/padding_10"
-                            android:text="稽查时间"
+                            android:text="稽察时间"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp" />
 
@@ -247,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/padding_10"
                             android:layout_centerVertical="true"
-                            android:text="稽查问题汇总"
+                            android:text="稽察问题汇总"
                             android:textColor="@color/title_1"
                             android:textSize="@dimen/_14sp"/>
 

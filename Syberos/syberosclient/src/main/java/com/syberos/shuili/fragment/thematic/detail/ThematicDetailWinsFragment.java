@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
+import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.R;
+import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.activity.thematic.ThematicWinsItemActivity;
 import com.syberos.shuili.adapter.RecyclerAdapterGeneral;
 import com.syberos.shuili.base.BaseLazyFragment;
@@ -24,6 +26,7 @@ import com.syberos.shuili.fragment.thematic.detail.detailproj.RankListFragment;
 import com.syberos.shuili.listener.OnItemClickListener;
 import com.syberos.shuili.utils.CommonUtils;
 import com.syberos.shuili.utils.MPChartUtil;
+import com.syberos.shuili.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +129,10 @@ public class ThematicDetailWinsFragment extends BaseLazyFragment {
 
     @Override
     protected void initData() {
-        if(winsEntry == null)return;
+        if(winsEntry == null){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).toString());
+            return;
+        }
         String time = CommonUtils.getCurrentDateYMD();
         String[] arrayTime = time.split("-");
         tvViewTitle.setText(arrayTime[0]+"年"+arrayTime[1]+"月"+"稽察情况");

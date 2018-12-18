@@ -17,7 +17,7 @@
             android:layout_marginTop="@dimen/_10dp"
             android:drawableLeft="@mipmap/icon_blue_short_vertical_div"
             android:drawablePadding="@dimen/_12dp"
-            android:text="稽查问题分类统计占比图"
+            android:text="稽察问题分类统计占比图"
             android:textColor="@color/text_black_color" />
 
         <com.github.mikephil.charting.charts.PieChart

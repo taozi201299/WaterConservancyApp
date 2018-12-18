@@ -60,9 +60,7 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
     public void initData() {
         showDataLoadingDialog();
         getObjCaseList();
-
     }
-
     private void getObjCaseList(){
         String url = GlobleConstants.strIP + "/sjjk/v1/obj/case/objCases/";
         urlTags.add(url);
@@ -120,7 +118,13 @@ public class OnSiteLawEnforcementListActivity extends BaseActivity
 
     private void refreshUI(){
         datas.clear();
-        datas.addAll(objCase.dataSource);
+        for(ObjCase item: objCase.dataSource){
+            if(item.getIfArch().equals("1")){
+                continue;
+            }else {
+                datas.add(item);
+            }
+        }
         listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
