@@ -98,6 +98,9 @@ public class WriteOffVerificationListActivity extends BaseActivity
     }
     private void refreshUI(){
         closeDataDialog();
+        if(bisHazReg.dataSource.size() == 0){
+            ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).toString());
+        }
         listAdapter.setData(bisHazReg.dataSource);
         listAdapter.notifyDataSetChanged();
     }

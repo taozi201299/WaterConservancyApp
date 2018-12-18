@@ -124,7 +124,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                getSpecStafAssiName();
             }
         });
 
@@ -149,7 +149,7 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                getExportName();
             }
         });
     }
@@ -180,12 +180,13 @@ public class InspectQueryGroupDetailActivity extends BaseActivity implements Vie
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                refreshUI();
             }
         });
 
     }
     private void refreshUI(){
+        closeDataDialog();
         tv_batch.setText(bisWinsProg.getWinsArrayCode());
         tv_time.setText(bisWinsProg.getStartTime() +"--"+bisWinsProg.getEndTime());
         tv_projType.setText(winsProjType.get(bisWinsProg.getWinsProjType()));

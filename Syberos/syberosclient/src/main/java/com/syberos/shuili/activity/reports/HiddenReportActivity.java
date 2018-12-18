@@ -460,6 +460,10 @@ public class HiddenReportActivity extends BaseActivity {
         });
     }
     private void cancelReport(BisOrgMonRepPeri bisOrgMonRepPeri,String content){
+        if(content == null || content.isEmpty()){
+            ToastUtils.show("退回原因不能为空");
+            return;
+        }
         showDataLoadingDialog();
         String url = GlobleConstants.str7GeIP + "/hidd/hidd/hiddMonth/mobile/saveRevoc";
         HashMap<String,String>params = new HashMap<>();

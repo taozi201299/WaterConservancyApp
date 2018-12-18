@@ -147,6 +147,11 @@ public class HazDetailForEntActivity extends BaseActivity  implements CommonAdap
         String strEngName = item.engName;
         tv_project.setText(strEngName == null ?"":strEngName);
         int grad = Integer.valueOf(item.hiddGrad) == null? 1:Integer.valueOf(item.hiddGrad);
+        if(grad < 1){
+            tv_danger_grade.setText(hazGradeMap.get(0));
+        }else {
+            tv_danger_grade.setText(hazGradeMap.get(grad - 1));
+        }
         tv_danger_grade.setText(hazGradeMap.get(grad));
         String hazStatus = GlobleConstants.hazStatusMap.get(item.getHazStat());
         if(hazStatus != null){

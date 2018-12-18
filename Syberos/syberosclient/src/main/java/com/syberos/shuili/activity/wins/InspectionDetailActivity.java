@@ -96,6 +96,7 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
             ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
             activityFinish();
         }
+        showDataLoadingDialog();
         getWinsProgByGUID();
     }
     private void getWinsProgByGUID(){

@@ -95,6 +95,8 @@ public class ThematicSinsItemActivity extends BaseActivity {
     View line;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_chat_label)
+            TextView tv_chat_label;
 
     SinsEntry.DataBean.SUBSINSDATABean  subsinsdataBean ;
 
@@ -122,7 +124,7 @@ public class ThematicSinsItemActivity extends BaseActivity {
         tvDataTitle2.setText("检查工程数量");
         tvData3.setText(subsinsdataBean.getSINSHIDDQUA() + "");
         tvDataTitle3.setText("隐患数量");
-
+        tv_chat_label.setText("安全检查完成情况");
         tvData4.setVisibility(View.GONE);
         tvDataTitle4.setVisibility(View.GONE);
         tvListTitle.setText("安全检查统计");

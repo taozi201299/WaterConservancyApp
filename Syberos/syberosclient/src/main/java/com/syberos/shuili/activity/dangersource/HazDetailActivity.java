@@ -147,7 +147,11 @@ public class HazDetailActivity extends BaseActivity
         tv_unit.setText(item.wiunName);
         tv_project.setText(item.engName);
         int grad = Integer.valueOf(item.hiddGrad) == null? 1:Integer.valueOf(item.hiddGrad);
-        tv_danger_grade.setText(hazGradeMap.get(grad));
+        if(grad < 1){
+            tv_danger_grade.setText(hazGradeMap.get(0));
+        }else {
+            tv_danger_grade.setText(hazGradeMap.get(grad - 1));
+        }
         String strLiceNoti = item.ifLiceNoti;
         if("1".equals(strLiceNoti)){
             tv_line_note.setText("是");

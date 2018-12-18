@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.shuili.callback.ErrorInfo;
 import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
@@ -313,6 +314,7 @@ public class WoasChartFragment extends BaseLazyFragment {
             @Override
             public void onError(Throwable e) {
                 closeDataDialog();
+                ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).toString());
 
             }
 

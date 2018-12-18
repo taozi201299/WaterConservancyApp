@@ -453,9 +453,9 @@ public class InvestigationSuperviceDetailActivity extends TranslucentActivity im
         if(hiddenProjectInfo != null && this.hiddenProjectInfo.totalCount.equals("1")) {
             hiddenProjectInfo = this.hiddenProjectInfo.dataSource.get(0);
             tv_projectName.setText(hiddenProjectInfo.getEngName());
-            if("0".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
+            if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())) {
                 tv_level.setText(R.string.normal);
-            }else if("1".equalsIgnoreCase(investigationInfo.getHiddGrad())){
+            }else if("2".equalsIgnoreCase(investigationInfo.getHiddGrad())){
                 tv_level.setText(R.string.danger);
             }else {
                 tv_level.setText(R.string.normal);

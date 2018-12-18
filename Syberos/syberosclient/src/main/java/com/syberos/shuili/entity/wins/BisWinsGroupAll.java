@@ -22,6 +22,25 @@ public class BisWinsGroupAll extends HttpBaseResponse<BisWinsGroupAll>{
 
     String specStaffName;
 
+    String startTime;
+
+    public String getStartTime() {
+        return startTime == null ? "" : startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime == null ? "" : endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    String endTime;
     public String getWinsPlanName() {
         return winsPlanName == null ? "" : winsPlanName;
     }

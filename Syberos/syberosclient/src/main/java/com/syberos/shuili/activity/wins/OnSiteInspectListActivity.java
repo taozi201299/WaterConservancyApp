@@ -82,11 +82,11 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     @Override
     public void initData() {
-        datas.clear();
-        iSucessCount = 0;
-        iFailedCount = 0;
-        showDataLoadingDialog();
-        getPersonID();
+//        datas.clear();
+//        iSucessCount = 0;
+//        iFailedCount = 0;
+//        showDataLoadingDialog();
+//        getPersonID();
     }
 
     @Override
@@ -102,6 +102,11 @@ public class OnSiteInspectListActivity extends BaseActivity
                 R.layout.activity_on_site_inspect_list_item);
         recyclerView.setAdapter(listAdapter);
         listAdapter.setOnItemClickListener(this);
+        datas.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
+        showDataLoadingDialog();
+        getPersonID();
     }
 
     @Override
@@ -130,8 +135,8 @@ public class OnSiteInspectListActivity extends BaseActivity
                     return;
                 }
                personId =  bisWinsStaff.dataSource.get(0).getGuid();
-                getBisWinsGroupBySepStafGuid();
-
+               /// getBisWinsGroupBySepStafGuid();
+                getBisWinsGroupBySepStafAssiGuid();
             }
 
             @Override
@@ -174,8 +179,7 @@ public class OnSiteInspectListActivity extends BaseActivity
         String url = GlobleConstants.strIP + "/sjjk/v1/bis/wins/group/bisWinsGroups/";
         urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
-        params.put("speStafAssiGuid",SyberosManagerImpl.getInstance().getCurrentUserId());
-       // params.put("speStafAssiGuid","fbeaf0e2014d43b180246d3419584acd");
+        params.put("speStafAssiGuid",personId);
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
@@ -185,7 +189,7 @@ public class OnSiteInspectListActivity extends BaseActivity
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                datas.addAll(bisWinsGroupAll.dataSource);
+                datas.addAll(bisWinsGroupAll1.dataSource);
               getWinsArrayCode();
             }
             @Override
@@ -220,6 +224,8 @@ public class OnSiteInspectListActivity extends BaseActivity
                     } else {
                         finalItem.setWinsArrayCode(bisWinsProgAll.dataSource.get(0).getWinsArrayCode());
                         finalItem.setWinsPlanCode(bisWinsProgAll.dataSource.get(0).getWinsPlanGuid());
+                        finalItem.setStartTime(bisWinsProgAll.dataSource.get(0).getStartTime());
+                        finalItem.setEndTime(bisWinsProgAll.dataSource.get(0).getEndTime());
                     }
                     if(iSucessCount +iFailedCount == size){
                         getWinsPlanName();
@@ -231,7 +237,6 @@ public class OnSiteInspectListActivity extends BaseActivity
                     if(iSucessCount +iFailedCount == size){
                         getWinsPlanName();
                     }
-
                 }
             });
         }
@@ -309,11 +314,9 @@ public class OnSiteInspectListActivity extends BaseActivity
                             InspectProjectSelectActivity.class, false, bundle);
                 }
             });
-
-            String text = ((TextView)(holder.getView(R.id.tv_title))).getText().toString();
             ((TextView) (holder.getView(R.id.tv_plan_value))).setText(information.getWinsPlanName());
             ((TextView) (holder.getView(R.id.tv_title))).setText(
-                   text +  information.getWinsGroupNum());
+                   "稽查组:" +  information.getWinsGroupNum());
             ((TextView) (holder.getView(R.id.tv_batch))).setText(
                     information.getWinsArrayCode());
             ((TextView) (holder.getView(R.id.tv_time))).setText(information.getCollTime());

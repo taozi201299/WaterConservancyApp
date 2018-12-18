@@ -99,7 +99,10 @@ public class SecurityCheckTaskActivity extends BaseActivity implements CommonAda
 
     @Override
     public void onItemClick(int position) {
-        if(position >= bisSinsSches.size() || position >= bisSinsSches.get(position).dataSource.size())return;
+        if(position >= bisSinsSches.size() || position >= bisSinsSches.get(position).dataSource.size()) {
+           ToastUtils.show("数据错误");
+            return;
+        }
         Bundle bundle = new Bundle();
         BisSinsScheGroup item = bisSinsScheGroup.dataSource.get(position);
         bundle.putSerializable(SEND_BUNDLE_KEY, item);
