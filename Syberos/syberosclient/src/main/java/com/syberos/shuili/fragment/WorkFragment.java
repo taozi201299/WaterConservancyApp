@@ -27,6 +27,7 @@ import com.syberos.shuili.activity.accident.AccidentListActivity;
 import com.syberos.shuili.activity.accident.AccidentListForEntAcitvity;
 import com.syberos.shuili.activity.accident.AccidentQueryListActivity;
 import com.syberos.shuili.activity.accident.AccidentQueryListForEntActivity;
+import com.syberos.shuili.activity.accident.AccidentReportListActivity;
 import com.syberos.shuili.activity.searchproject.ProjectInfoActivity;
 import com.syberos.shuili.activity.stan.DataReviewListActivity;
 import com.syberos.shuili.activity.stan.NoticeListActivity;
@@ -444,7 +445,7 @@ public class WorkFragment extends BaseFragment {
                 intentActivity((Activity)mContext,InvestigationSuperviceTaskActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_yinhuan_chaxun))){
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_kuaibao))){
-                intentActivity((Activity)mContext,AccidentListActivity.class,false,true);
+                intentActivity((Activity)mContext,AccidentReportListActivity.class,false,true);
             }else if(itemTag.equals(strResource.getString(R.string.module_child_shigu_chaxun))){
                 intentActivity((Activity)mContext,AccidentQueryListActivity.class,false,true);
             }

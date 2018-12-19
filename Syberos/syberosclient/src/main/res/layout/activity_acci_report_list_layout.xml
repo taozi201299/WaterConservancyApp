@@ -49,24 +49,66 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
-
     </RelativeLayout>
-
-
-    <com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout
-        android:id="@+id/sticky_layout"
-        android:layout_below="@+id/layout_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RadioGroup
+        android:id="@+id/rg_accident"
+        android:layout_below="@id/action_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/_10dp"
         >
 
-        <android.support.v7.widget.RecyclerView
+        <RadioButton
+            android:id="@+id/rb_accident_zhiguan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_detail_14sp_title0"
+            android:checked="true"
+            android:text="直管单位"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_accident_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_detail_14sp_title0"
+            android:text="下级水行政"
+            />
+        <RadioButton
+            android:id="@+id/rb_accident_liuyu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_detail_14sp_title0"
+            android:text="流域"
+            />
+    </RadioGroup>
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_below="@id/action_bar"
+        android:layout_marginTop="@dimen/_2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_10dp"
+        android:orientation="horizontal"
+        >
+
+    <TextView
+        android:id="@+id/tv_rejected"
+        android:layout_width="@dimen/_80dp"
+        android:layout_height="@dimen/_30dp"
+        android:background="@drawable/button_login_normal"
+        android:gravity="center"
+        android:text="查询"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sp" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView_express_accident"
+            android:layout_below="@+id/rg_accident"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-
         </android.support.v7.widget.RecyclerView>
-
-    </com.syberos.shuili.view.grouped_adapter.widget.StickyHeaderLayout>
 </RelativeLayout>

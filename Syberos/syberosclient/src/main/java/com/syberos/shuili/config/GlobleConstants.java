@@ -185,7 +185,32 @@ public class GlobleConstants {
         }
 
     };
+    public static HashMap<String,String>acciClassMap = new HashMap<String,String>(){
+        {
 
+            put("01","物体打击");
+            put("02","提升、车辆伤害");
+            put("03","机械伤害");
+            put("04","起重伤害");
+            put("05","触电");
+            put("06","淹溺");
+            put("07","灼烫");
+            put("08","火灾");
+            put("09","高处坠落");
+            put("10","坍塌");
+            put("11","冒顶片帮");
+            put("12","透水");
+            put("13","放炮");
+            put("14","火药爆炸");
+            put("15","瓦斯煤层爆炸");
+            put("16","其它爆炸");
+            put("17","容器爆炸");
+            put("18","煤与瓦斯突出");
+            put("19","中毒和窒息");
+            put("20","其他伤害");
+        }
+
+    };
 
     public static interface IConstants {
         String Login_1001 = "1001";

@@ -219,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/text_detail_14sp_title0"
-                        android:text="元" />
+                        android:text="万元" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/rl_time"

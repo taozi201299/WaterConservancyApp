@@ -143,7 +143,8 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
             }
         });
 
@@ -168,7 +169,8 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
             }
         });
     }
@@ -199,12 +201,14 @@ public class InspectionDetailActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-
+                closeDataDialog();
+                ToastUtils.show(errorInfo.getMessage());
             }
         });
 
     }
     private void refreshUI(){
+        closeDataDialog();
         tv_batch.setText(bisWinsGroupAll.getWinsArrayCode());
         tv_time.setText(bisWinsProgAll.dataSource.get(0).getStartTime() +"--"+bisWinsProgAll.dataSource.get(0).getEndTime());
         tv_projType.setText("");

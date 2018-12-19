@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="划拨维修经费5万元，对堤坝进行修整，确保水库安全运行，对损坏的堤坝进行修复，加固。"
+            android:text=""
             android:textColor="@color/gray_bb" />
     </LinearLayout>
     <!--<RelativeLayout-->

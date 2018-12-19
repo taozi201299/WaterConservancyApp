@@ -26,6 +26,7 @@ import com.syberos.shuili.entity.wins.BisWinsProjAll;
 import com.syberos.shuili.entity.wins.BisWinsStaff;
 import com.syberos.shuili.entity.wins.ObjWinsPlan;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.PullRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ import butterknife.BindView;
  * 从水利稽察组中获取所在的稽察组
  */
 public class OnSiteInspectListActivity extends BaseActivity
-        implements CommonAdapter.OnItemClickListener {
+        implements CommonAdapter.OnItemClickListener,PullRecyclerView.OnPullRefreshListener {
 
     private final String TAG = OnSiteInspectListActivity.class.getSimpleName();
 
@@ -51,7 +52,7 @@ public class OnSiteInspectListActivity extends BaseActivity
     public static final String SEND_BUNDLE_KEY = "OnSiteInspectInformation";
 
     @BindView(R.id.recyclerView_record_review)
-    RecyclerView recyclerView;
+    PullRecyclerView recyclerView;
 
     @BindView(R.id.tv_action_bar2_title)
     TextView tv_action_bar2_title;
@@ -77,6 +78,8 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     @Override
     public void initListener() {
+        recyclerView.setOnPullRefreshListener(this);
+        recyclerView.setHasMore(false);
 
     }
 
@@ -128,10 +131,12 @@ public class OnSiteInspectListActivity extends BaseActivity
                 BisWinsStaff bisWinsStaff = gson.fromJson(result,BisWinsStaff.class);
                 if(bisWinsStaff == null || bisWinsStaff.dataSource == null ){
                     closeDataDialog();
+                    recyclerView.refreshOrLoadComplete();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }if(bisWinsStaff.dataSource.size() == 0){
                     closeDataDialog();
+                    recyclerView.refreshOrLoadComplete();
                     return;
                 }
                personId =  bisWinsStaff.dataSource.get(0).getGuid();
@@ -142,6 +147,7 @@ public class OnSiteInspectListActivity extends BaseActivity
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
+                recyclerView.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -160,6 +166,7 @@ public class OnSiteInspectListActivity extends BaseActivity
                 bisWinsGroupAll = gson.fromJson(result, BisWinsGroupAll.class);
                 if(bisWinsGroupAll == null || bisWinsGroupAll.dataSource == null){
                     closeDataDialog();
+                    recyclerView.refreshOrLoadComplete();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }else {
@@ -170,6 +177,7 @@ public class OnSiteInspectListActivity extends BaseActivity
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
+                recyclerView.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -186,7 +194,15 @@ public class OnSiteInspectListActivity extends BaseActivity
                 Gson gson = new Gson();
                 bisWinsGroupAll1 = gson.fromJson(result, BisWinsGroupAll.class);
                 if(bisWinsGroupAll1 == null || bisWinsGroupAll1.dataSource == null){
+                    closeDataDialog();
+                    recyclerView.refreshOrLoadComplete();
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
+                }
+                if(bisWinsGroupAll1.dataSource.size() == 0){
+                    closeDataDialog();
+                    recyclerView.refreshOrLoadComplete();
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-7).getMessage());
                     return;
                 }
                 datas.addAll(bisWinsGroupAll1.dataSource);
@@ -195,6 +211,7 @@ public class OnSiteInspectListActivity extends BaseActivity
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
+                recyclerView.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
 
             }
@@ -204,6 +221,8 @@ public class OnSiteInspectListActivity extends BaseActivity
    // 稽察批次编号	WINS_ARRAY_CODE
 
     private void getWinsArrayCode(){
+        iSucessCount = 0;
+        iFailedCount = 0;
         final int size = datas.size();
         BisWinsGroupAll item;
         for(int i = 0; i < size; i++) {
@@ -290,12 +309,28 @@ public class OnSiteInspectListActivity extends BaseActivity
 
     private void refreshUI(){
         closeDataDialog();
+        recyclerView.refreshOrLoadComplete();
         if(datas.size() == 0){
             ToastUtils.show("未获取到稽察任务");
         }
         listAdapter.setData(datas);
         listAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onRefresh() {
+        datas.clear();
+        iSucessCount = 0;
+        iFailedCount = 0;
+        showDataLoadingDialog();
+        getPersonID();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
     private class ListAdapter extends CommonAdapter<BisWinsGroupAll> {
         public ListAdapter(Context context, int layoutId) {
             super(context, layoutId);
