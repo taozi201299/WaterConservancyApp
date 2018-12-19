@@ -20,6 +20,7 @@ import com.syberos.shuili.entity.accident.AccidentInformationGroup;
 import com.syberos.shuili.entity.basicbusiness.OrgInfo;
 import com.syberos.shuili.entity.common.DicInfo;
 import com.syberos.shuili.utils.ToastUtils;
+import com.syberos.shuili.view.EnumView;
 import com.syberos.shuili.view.grouped_adapter.adapter.GroupedRecyclerViewAdapter;
 import com.syberos.shuili.view.grouped_adapter.holder.BaseViewHolder;
 
@@ -65,6 +66,8 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
     OrgInfo orgInfo;
     @BindView(R.id.recyclerView_express_accident)
     RecyclerView recyclerView;
+    @BindView(R.id.ev_unit)
+    EnumView ev_unit;
     GroupedEnterprisesExpressAccidentListAdapter accidentInformationListAdapter;
     ArrayList<AccidentInformationGroup> accidentInformationGroups = null;
 
@@ -311,6 +314,8 @@ public class AccidentQueryListForEntActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置RecyclerView 布局
         recyclerView.setLayoutManager(layoutManager);
+        ev_unit.setVisibility(View.GONE);
+
         accidentInformationListAdapter = new GroupedEnterprisesExpressAccidentListAdapter(mContext,new ArrayList<AccidentInformationGroup>());
         accidentInformationListAdapter.setOnChildClickListener(
                 new GroupedRecyclerViewAdapter.OnChildClickListener() {
