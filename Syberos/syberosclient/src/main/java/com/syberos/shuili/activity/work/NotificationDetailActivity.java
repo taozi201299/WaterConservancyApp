@@ -77,7 +77,7 @@ public class NotificationDetailActivity extends BaseActivity {
             detail_time.setText(noticeInfo.getFromDate());
             detail_content.setText(noticeInfo.getNoticeContent());
         }
-        updateMsgStatus();
+       // updateMsgStatus();
     }
 
     @Override
@@ -136,18 +136,19 @@ public class NotificationDetailActivity extends BaseActivity {
         });
     }
     private void  updateMsgStatus(){
-        String url = strZJIP + "/pprty/WSRest/service/notice/isread";
+        String url = strZJIP + "/pprty/WSRest/service/notice/";
         HashMap<String,String>param = new HashMap<>();
         param.put("guid",noticeInfo.getGuid());
-      HttpUtils.getInstance().requestNet_put(url, param, url, new RequestCallback<String>() {
+        param.put("isread","1");
+       HttpUtils.getInstance().requestNet_put(url, param, url, new RequestCallback<String>() {
           @Override
           public void onResponse(String result) {
-            //  ToastUtils.show("消息状态修改成功");
+             //ToastUtils.show("消息状态修改成功");
           }
 
           @Override
           public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-              ToastUtils.show(errorInfo.getMessage());
+            //  ToastUtils.show(errorInfo.getMessage());
 
           }
       });

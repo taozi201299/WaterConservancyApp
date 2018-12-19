@@ -57,7 +57,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
 
     @Override
     public void initListener() {
-
+        pullRecyclerView.setOnPullRefreshListener(this);
     }
 
     @Override
@@ -70,24 +70,26 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
     }
 
     private void getData(){
-        final int size = 1;
-        ArrayList<RoleBaseInfo>roleBaseInfos = LoginUtil.getRoleList();
-        if(size == 0)closeDataDialog();
-        for(int i = 0; i<1; i++) {
             String url = strZJIP + "/pprty/WSRest/service/backlog";
             HashMap<String, String> params = new HashMap<>();
-           // params.put("roleCode", roleBaseInfos.get(i).getRoleCode());
-              params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+           params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+            params.put("pageNum",String.valueOf(pageIndex));
+            params.put("size","10");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
                     iSucessCount ++;
+                    closeDataDialog();
                     pullRecyclerView.refreshOrLoadComplete();
                     pageIndex++;
                     Gson gson = new Gson();
                     TodoWorkInfo todoWorkInfo = gson.fromJson(result, TodoWorkInfo.class);
                     boolean bExist = false;
                     if (todoWorkInfo.dataSource.list != null) {
+                        if(todoWorkInfo.dataSource.list.size() == 0){
+                            pullRecyclerView.setHasMore(false);
+                            ToastUtils.show("没有更多内容了");
+                        }
                         for(TodoWorkInfo info : todoWorkInfo.dataSource.list){
                             for(TodoWorkInfo item: datas){
                                 if(item.getGuid().equals(info.getGuid())) {
@@ -113,22 +115,17 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
                             }
                         }
                     }
-                    if(iSucessCount + iFailedCount == size) {
                         refreshUI();
-                        pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore == "true");
-                    }
+                        pullRecyclerView.setHasMore(true);
 
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    if(iSucessCount + iFailedCount == size) {
                         refreshUI();
-                    }
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
-        }
     }
     @Override
     public void initView() {
@@ -149,6 +146,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
      */
     private void refreshUI(){
         closeDataDialog();
+        pullRecyclerView.refreshOrLoadComplete();
         adapter.setData(datas);
         adapter.notifyDataSetChanged();
     }

@@ -57,37 +57,34 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
 
     @Override
     public void initListener() {
+        pullRecyclerView.setOnPullRefreshListener(this);
 
     }
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
-        iSucessCount = 0;
-        iFailedCount = 0;
-        datas.clear();
-        getData();
     }
 
     private void getData(){
-        final int size = 1;
-        ArrayList<RoleBaseInfo>roleBaseInfos = LoginUtil.getRoleList();
-        if(size == 0)closeDataDialog();
-        for(int i = 0; i<1; i++) {
             String url = strZJIP + "/pprty/WSRest/service/backlog";
             HashMap<String, String> params = new HashMap<>();
-            // params.put("roleCode", roleBaseInfos.get(i).getRoleCode());
             params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+            params.put("pageNum",String.valueOf(pageIndex));
+            params.put("size","10");
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    iSucessCount ++;
+                    closeDataDialog();
                     pullRecyclerView.refreshOrLoadComplete();
                     pageIndex++;
                     Gson gson = new Gson();
                     TodoWorkInfo todoWorkInfo = gson.fromJson(result, TodoWorkInfo.class);
                     boolean bExist = false;
                     if (todoWorkInfo.dataSource.list != null) {
+                        if(todoWorkInfo.dataSource.list.size() == 0){
+                            pullRecyclerView.setHasMore(false);
+                            ToastUtils.show("没有更多内容了");
+                        }
                         for(TodoWorkInfo info : todoWorkInfo.dataSource.list){
                             for(TodoWorkInfo item: datas){
                                 if(item.getGuid().equals(info.getGuid())) {
@@ -108,27 +105,58 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
                                     if(!App.moduleName.contains("事故")){
                                         continue;
                                     }
+                                }else if(info.getAppCode() != null){
+                                    if(!info.getAppCode().equals("sins") &&
+                                            !"woas".equals(info.getAppCode())
+                                            && !"acci".equals(info.getAppCode())
+                                            && !"stan".equals(info.getAppCode())
+                                            &&!"maha".equals(info.getAppCode())
+                                            && !"suen".equals(info.getAppCode())
+                                            && !"hidd".equals(info.getAppCode())
+                                            && !"wins".equals(info.getAppCode())){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("sins") && !App.sCodes.contains("sins")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("woas") && !App.sCodes.contains("woas")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("acci") && !App.sCodes.contains("acci")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("stan") && !App.sCodes.contains("stan")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("maha") && !App.sCodes.contains("maha")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("suen") && !App.sCodes.contains("suen")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("hidd") && !App.sCodes.contains("hidd")){
+                                        continue;
+                                    }
+                                    if(info.getAppCode().equals("wins") && !App.sCodes.contains("wins")){
+                                        continue;
+                                    }
                                 }
                                 datas.add(info);
                             }
+
                         }
                     }
-                    if(iSucessCount + iFailedCount == size) {
-                        refreshUI();
-                        pullRecyclerView.setHasMore(todoWorkInfo.dataSource.hasMore == "true");
-                    }
+                    refreshUI();
+                    pullRecyclerView.setHasMore(true);
 
                 }
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                    if(iSucessCount + iFailedCount == size) {
-                        refreshUI();
-                    }
+                    refreshUI();
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
-        }
     }
     @Override
     public void initView() {
@@ -141,6 +169,11 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
         pullRecyclerView.setAdapter(adapter);
         pullRecyclerView.setOnPullRefreshListener(this);
         adapter.setOnItemClickListener(this);
+        showDataLoadingDialog();
+        iSucessCount = 0;
+        iFailedCount = 0;
+        datas.clear();
+        getData();
 
     }
 
@@ -149,6 +182,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
      */
     private void refreshUI(){
         closeDataDialog();
+        pullRecyclerView.refreshOrLoadComplete();
         adapter.setData(datas);
         adapter.notifyDataSetChanged();
     }

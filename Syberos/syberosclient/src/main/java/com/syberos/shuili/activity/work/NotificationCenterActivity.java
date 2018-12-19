@@ -2,8 +2,6 @@ package com.syberos.shuili.activity.work;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,16 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.google.gson.Gson;
 import com.shuili.callback.ErrorInfo;
 import com.shuili.callback.RequestCallback;
+import com.syberos.shuili.App;
 import com.syberos.shuili.R;
 import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.adapter.CommonAdapter;
@@ -45,10 +40,10 @@ import okhttp3.RequestBody;
 
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ALL;
 import static com.syberos.shuili.activity.work.NotificationCenterActivity.DeleteType.DELETE_ONE;
-import static com.syberos.shuili.config.GlobleConstants.strCJIP;
 import static com.syberos.shuili.config.GlobleConstants.strZJIP;
 
-public class NotificationCenterActivity extends BaseActivity implements CommonAdapter.OnItemClickListener {
+public class NotificationCenterActivity extends BaseActivity implements CommonAdapter.OnItemClickListener
+,PullRecyclerView.OnPullRefreshListener{
 
     private static final String TAG = NotificationCenterActivity.class.getSimpleName();
 
@@ -58,11 +53,11 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
     private void clearData(){
         datas.clear();
     }
+    private int pageIndex = 1;
 
     @Override
     protected void onStop() {
         super.onStop();
-        clearData();
     }
 
     @Override
@@ -72,12 +67,24 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         intentActivity(NotificationCenterActivity.this,NotificationDetailActivity.class,false,bundle);
     }
 
+    @Override
+    public void onRefresh() {
+        pageIndex = 0;
+        datas.clear();
+        getNotices();
+    }
+
+    @Override
+    public void onLoadMore() {
+        getNotices();
+    }
+
     enum DeleteType{
         DELETE_ONE,DELETE_ALL
     }
 
     @BindView(R.id.lv_all_notifications)
-    RecyclerView lv_all_notifications;
+    PullRecyclerView pullRecyclerView;
 
     @BindView(R.id.tv_action_bar_title)
     TextView tv_action_bar_title;
@@ -97,13 +104,11 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
 
     @Override
     public void initListener() {
-
+        pullRecyclerView.setOnPullRefreshListener(this);
     }
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
-        getNotices();
     }
 
     @Override
@@ -136,9 +141,10 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         });
         tv_action_bar_title.setGravity(Gravity.LEFT);
         notificationsListAdapter = new NotificationsListAdapter(this,R.layout.layout_notification_center_item,datas);
-        lv_all_notifications.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        lv_all_notifications.setLayoutManager(new LinearLayoutManager(mContext));
-        lv_all_notifications.setAdapter(notificationsListAdapter);
+        pullRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
+        pullRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        pullRecyclerView.setAdapter(notificationsListAdapter);
+        pullRecyclerView.setOnPullRefreshListener(this);
         dataSetObserver = new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -148,6 +154,7 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
         };
         notificationsListAdapter.registerAdapterDataObserver(dataSetObserver);
         notificationsListAdapter.setOnItemClickListener(this);
+        getNotices();
     }
     private void deleteNotice(DeleteType type,List<String> noticeIds){
         showDataLoadingDialog();
@@ -172,37 +179,87 @@ public class NotificationCenterActivity extends BaseActivity implements CommonAd
             public void onResponse(String response, int id) {
                 closeDataDialog();
                 ToastUtils.show("消息删除成功");
+                pageIndex = 0;
+                datas.clear();
             }
         });
     }
     private void getNotices(){
-        String url = strZJIP+"/pprty/WSRest/service/notice/pagelist";
+        showDataLoadingDialog();
+        String url = strZJIP+"/pprty/WSRest/service/notice";
         HashMap<String,String> params = new HashMap<>();
         params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
+        params.put("pageNum",String.valueOf(pageIndex));
+        params.put("size","30");
         SyberosManagerImpl.getInstance().requestGet_Default(url, params, TAG, new RequestCallback<String>() {
             @Override
             public void onResponse(String result) {
                 closeDataDialog();
+                pullRecyclerView.refreshOrLoadComplete();
+                pageIndex++;
                 Gson gson = new Gson();
                 NoticeInfo noticeInfo = gson.fromJson(result, NoticeInfo.class);
-                if(noticeInfo.dataSource.list!=null) {
-                    datas = noticeInfo.dataSource.list;
+                if(noticeInfo.dataSource.list == null) {
+                    ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
+                    return;
                 }
-                if(datas.size() == 0){
+                if(noticeInfo.dataSource.list.size() == 0){
                     ToastUtils.show("没有更多消息了");
+                    pullRecyclerView.setHasMore(false);
+                }
+                for(NoticeInfo info :noticeInfo.dataSource.list){
+                    if(info.getAppCode() != null) {
+                        if(!info.getAppCode().equals("sins") &&
+                                !"woas".equals(info.getAppCode())
+                                && !"acci".equals(info.getAppCode())
+                                && !"stan".equals(info.getAppCode())
+                                &&!"maha".equals(info.getAppCode())
+                                && !"suen".equals(info.getAppCode())
+                                && !"hidd".equals(info.getAppCode())
+                                && !"wins".equals(info.getAppCode())){
+                            continue;
+                        }
+                        if (info.getAppCode().equals("sins") && !App.sCodes.contains("sins")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("woas") && !App.sCodes.contains("woas")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("acci") && !App.sCodes.contains("acci")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("stan") && !App.sCodes.contains("stan")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("maha") && !App.sCodes.contains("maha")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("suen") && !App.sCodes.contains("suen")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("hidd") && !App.sCodes.contains("hidd")) {
+                            continue;
+                        }
+                        if (info.getAppCode().equals("wins") && !App.sCodes.contains("wins")) {
+                            continue;
+                        }
+                    }
+                    datas.add(info);
                 }
                 refreshUI();
+                pullRecyclerView.setHasMore(true);
             }
 
             @Override
             public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                 closeDataDialog();
+                pullRecyclerView.refreshOrLoadComplete();
                 ToastUtils.show(errorInfo.getMessage());
-
             }
         });
     }
     private void refreshUI(){
+        closeDataDialog();
         notificationsListAdapter.setData(datas);
         notificationsListAdapter.notifyDataSetChanged();
     }
