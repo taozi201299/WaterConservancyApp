@@ -797,12 +797,13 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         for (int i = 0; i < beans.size(); i++) {
             dateList.add(beans.get(i).getCOUNTDATE());
         }
-
         xAxis.setLabelCount(dateList.size() - 1);
 //      X轴专用
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+                int index = (int)(value + 0.5);
+                if(index >= dateList.size())return "0";
                 return dateList.get((int) ((value + 0.5)));//[(int) value];
             }
         });
@@ -897,6 +898,8 @@ public class BaseSecurityCloudFragment extends BaseFragment implements AppBarLay
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+                int index = (int)(value + 0.5);
+                if(index >= dateList.size())return "0";
                 return dateList.get((int) ((value + 0.5)));//[(int) value];
             }
         });
