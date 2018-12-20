@@ -372,7 +372,7 @@ public class EnterprisesElementCheckDetailActivity extends BaseActivity implemen
             params.put("note", "客户端提交测试");
             params.put("updDate", "");
             params.put("collDate", CommonUtils.getCurrentDate());
-            params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+            params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
             results.add(params);
         }
         String url = GlobleConstants.strCJIP + "/cjapi/cj/bis/se/wiuncheck/addBisSeWiunCheck";

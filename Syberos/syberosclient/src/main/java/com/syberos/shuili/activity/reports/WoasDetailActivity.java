@@ -221,7 +221,7 @@ public class WoasDetailActivity extends BaseActivity {
         HashMap<String,String>params = new HashMap<>();
         params.put("guid",bisWoasNoti.getGuid());
         params.put("operType",String.valueOf(type));
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

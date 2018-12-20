@@ -333,7 +333,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         params.put("valiTime","5天");
         params.put("stat","1");
         params.put("collTime",CommonUtils.getCurrentDate());
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         params.put("stanReviGuid",item.getGuid());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
