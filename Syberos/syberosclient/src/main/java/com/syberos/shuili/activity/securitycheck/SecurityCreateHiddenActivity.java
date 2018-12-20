@@ -170,7 +170,7 @@ public class SecurityCreateHiddenActivity extends BaseActivity implements View.O
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
         params.put("note","移动端测试");
         params.put("collTime", CommonUtils.getCurrentDate());
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
 
 
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();

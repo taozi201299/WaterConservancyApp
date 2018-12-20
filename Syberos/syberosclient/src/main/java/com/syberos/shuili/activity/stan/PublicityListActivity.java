@@ -328,7 +328,7 @@ public class PublicityListActivity extends TranslucentActivity implements PullRe
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         endTime = formatter.format(getDateAfter(date,5));
         params.put("endTime",endTime);
-        params.put("relePers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("relePers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         params.put("releOrgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         params.put("valiTime","5天");
         params.put("stat","1");

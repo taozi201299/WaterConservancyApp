@@ -134,7 +134,7 @@ public class InvestigationRectifyCreateActivity extends BaseActivity implements 
         HashMap<String,String> params = new HashMap<>();
         params.put("hiddGuid",investigationInfo.getGuid());//隐患GUID
         params.put("rectProg",ev_rectify_des.getEditText()); //整改进度情况
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());// 上报人
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());// 上报人
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

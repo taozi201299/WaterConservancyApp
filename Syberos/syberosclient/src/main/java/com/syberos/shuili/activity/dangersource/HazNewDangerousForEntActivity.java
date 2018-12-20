@@ -115,7 +115,7 @@ public class HazNewDangerousForEntActivity extends BaseActivity  implements Base
         params.put("probFound", ae_describe_problem_audio.getEditText());
         params.put("treaMeas", ae_describe_controls_audio.getEditText());
         params.put("note", "移动端测试");
-        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.type = 1;

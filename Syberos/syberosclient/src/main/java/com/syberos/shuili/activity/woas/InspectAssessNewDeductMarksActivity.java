@@ -143,7 +143,7 @@ public class InspectAssessNewDeductMarksActivity extends BaseActivity implements
         params.put("fianDeuc", ce_score.getText().toString()); //最终扣分
         params.put("deucNote",ae_describe_audio.getEditText());  //扣分说明
         params.put("woasType","1");// 考核类型
-        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName()); // 记录人员
+        params.put("recPers", SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId()); // 记录人员
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();

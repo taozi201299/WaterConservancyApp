@@ -203,7 +203,7 @@ public class InvestigationAddForEnterpriseActivity extends BaseActivity implemen
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
         params.put("hiddStat","0");
         params.put("note","移动端测试");
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         localCacheEntity.params = params;

@@ -162,7 +162,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         //督办单位
         params.put("supWiunCode",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
         //督办负责人
-        params.put("supLegPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("supLegPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         //督办意见
         params.put("supOpin",et_supervise_desc.getEditText());
         //备注
@@ -172,7 +172,7 @@ public class InvestigationSuperviceFormActivity extends BaseActivity implements 
         //更新时间
         params.put("updTime","");
         //记录人员
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
 
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;

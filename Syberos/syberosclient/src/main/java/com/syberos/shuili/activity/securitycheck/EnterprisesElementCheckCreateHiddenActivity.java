@@ -240,7 +240,7 @@ public class EnterprisesElementCheckCreateHiddenActivity extends BaseActivity im
         params.put("proPart",tv_hidden_part.getText().toString()); // 隐患部位
         params.put("hiddDesc",ev_des_audio.getEditText()); // 隐患描述
         params.put("note","移动端测试安全检查记录隐患");
-        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersName());
+        params.put("recPers",SyberosManagerImpl.getInstance().getCurrentUserInfo().getPersId());
         LocalCacheEntity localCacheEntity = new LocalCacheEntity();
         localCacheEntity.url = url;
         ArrayList<AttachMentInfoEntity> attachMentInfoEntities = new ArrayList<>();
