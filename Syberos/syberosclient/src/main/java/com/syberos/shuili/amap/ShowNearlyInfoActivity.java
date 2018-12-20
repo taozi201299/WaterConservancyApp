@@ -92,6 +92,9 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
     @BindView(R.id.center_on_current_point)
     LinearLayout center_on_current_point;
 
+    @BindView(R.id.ll_base_info)
+    LinearLayout ll_base_info;
+
     @OnClick(R.id.center_on_current_point)
     void onCenterOnCurrentPointClicked() {
         if (null != webView) {
@@ -138,6 +141,7 @@ public class ShowNearlyInfoActivity extends BaseActivity implements EasyPermissi
     @Override
     public void initView() {
         setInitActionBar(true);
+        ll_base_info.setVisibility(View.GONE);
         showDataLoadingDialog();
         showTitle("查附近");
         setActionBarRightVisible(View.INVISIBLE);
