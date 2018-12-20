@@ -255,7 +255,7 @@ public class ThematicDetailStanFragment extends BaseLazyFragment {
 
         llData3.setVisibility(View.GONE);
         llData4.setVisibility(View.GONE);
-
+        tvListTitle.setText("标准化统计");
     }
 
     public void setData_Direct(StanDirectEntry stanDirectEntry) {
