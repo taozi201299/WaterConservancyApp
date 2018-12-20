@@ -7,14 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.solver.widgets.ResolutionNode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
@@ -41,12 +38,9 @@ import com.imnjh.imagepicker.SImagePicker;
 import com.imnjh.imagepicker.activity.PhotoPickerActivity;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.FileCallback;
-import com.shuili.callback.ErrorInfo;
-import com.shuili.callback.RequestCallback;
 import com.shuili.httputils.HttpUtils;
 import com.syberos.shuili.R;
 import com.syberos.shuili.App;
-import com.syberos.shuili.SyberosManagerImpl;
 import com.syberos.shuili.config.GlobleConstants;
 import com.syberos.shuili.media.GlideImageLoader;
 import com.syberos.shuili.media.PreviewActivity;
@@ -64,7 +58,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -538,8 +531,10 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             final ImageView iv_attachVideo = holder.getView(R.id.attachment_video);
             ImageView iv_delete = holder.getView(R.id.attachment_image_delete);
             final TextView tv_attachment_text = holder.getView(R.id.attachment_text);
-            TextView tv_attach_time = holder.getView(R.id.tv_attach_time);
-            TextView tv_attach_desc = holder.getView(R.id.tv_attach_desc);
+            final TextView tv_attach_time = holder.getView(R.id.tv_attach_time);
+            final TextView tv_attach_time_label = holder.getView(R.id.tv_attach_time_label);
+            final TextView tv_attach_desc = holder.getView(R.id.tv_attach_desc);
+            final TextView tv_attach_desc_label = holder.getView(R.id.tv_attach_desc_label);
 
             if(runningMode == RunningMode.ADD_EDIT_MODE) {
                 Glide.with(mContext).load(localAttachment.localFile).into(iv_attachImage);
@@ -550,6 +545,8 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
             }
             if(runningMode == RunningMode.READ_ONLY_MODE){
                 iv_delete.setVisibility(GONE);
+                tv_attach_desc_label.setVisibility(GONE);
+                tv_attach_time_label.setVisibility(GONE);
                 String url = GlobleConstants.strAppIP + "/mapp/downloadMedia";
                 HashMap<String,String>params = new HashMap<>();
                 params.put("medUrl",localAttachment.filePath);
@@ -567,6 +564,18 @@ public class MultimediaView extends LinearLayout implements View.OnClickListener
                                 tv_attachment_text.setVisibility(GONE);
                                 Glide.with(mContext).load(file).into(iv_attachImage);
                                 iv_attachVideo.setVisibility(localAttachment.localFile.getName().contains("mp4") ? View.VISIBLE : View.GONE);
+                                tv_attach_desc_label.setVisibility(VISIBLE);
+                                tv_attach_time_label.setVisibility(VISIBLE);
+                                tv_attach_time_label.setText("附件类型:");
+                                tv_attach_desc_label.setText("附件大小:");
+                                if(localAttachment.type == LocalAttachmentType.IMAGE) {
+                                    tv_attach_time.setText("图片");
+                                }
+                                else if(localAttachment.type == LocalAttachmentType.AUDIO)
+                                    tv_attach_time.setText("音频");
+                                else if(localAttachment.type == LocalAttachmentType.VIDEO)
+                                    tv_attach_time.setText("视频");
+                                tv_attach_desc.setText(String.valueOf(file.length()));
                             }
 
                         }else {
