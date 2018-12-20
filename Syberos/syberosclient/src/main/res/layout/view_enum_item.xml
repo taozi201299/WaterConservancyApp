@@ -15,12 +15,14 @@
     <TextView
         android:id="@+id/tv_enum_detail"
         style="@style/text_detail"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_enum_title"
         android:layout_toStartOf="@+id/iv_enum_arrow"
-        android:gravity="end" />
-
+        android:gravity="end"
+        android:ellipsize="end"
+        />
     <ImageView
         android:id="@+id/iv_enum_arrow"
         style="@style/arrow_right"
