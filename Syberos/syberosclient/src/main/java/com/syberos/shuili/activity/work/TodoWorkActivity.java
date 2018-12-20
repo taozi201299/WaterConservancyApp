@@ -46,8 +46,6 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     PullRecyclerView pullRecyclerView;
     private TodoWorkAdapter adapter;
     List<TodoWorkInfo> datas = new ArrayList<>();
-    private int iSucessCount = 0;
-    private int iFailedCount = 0;
     private int pageIndex = 1;
 
     @Override
@@ -66,6 +64,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     }
 
     private void getData(){
+        showDataLoadingDialog();
             String url = strZJIP + "/pprty/WSRest/service/backlog";
             HashMap<String, String> params = new HashMap<>();
             params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
@@ -169,9 +168,6 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
         pullRecyclerView.setAdapter(adapter);
         pullRecyclerView.setOnPullRefreshListener(this);
         adapter.setOnItemClickListener(this);
-        showDataLoadingDialog();
-        iSucessCount = 0;
-        iFailedCount = 0;
         datas.clear();
         getData();
 
@@ -224,6 +220,7 @@ public class TodoWorkActivity extends BaseActivity implements PullRecyclerView.O
     @Override
     public void onRefresh() {
         pageIndex = 0;
+        datas.clear();
         getData();
 
 

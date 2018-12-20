@@ -46,8 +46,6 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
     PullRecyclerView pullRecyclerView;
     private TodoWorkAdapter adapter;
     List<TodoWorkInfo> datas = new ArrayList<>();
-    private int iSucessCount = 0;
-    private int iFailedCount = 0;
     private int pageIndex = 1;
 
     @Override
@@ -62,14 +60,10 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
 
     @Override
     public void initData() {
-        showDataLoadingDialog();
-        iSucessCount = 0;
-        iFailedCount = 0;
-        datas.clear();
-        getData();
     }
 
     private void getData(){
+        showDataLoadingDialog();
             String url = strZJIP + "/pprty/WSRest/service/backlog";
             HashMap<String, String> params = new HashMap<>();
            params.put("orgGuid",SyberosManagerImpl.getInstance().getCurrentUserInfo().getOrgId());
@@ -78,7 +72,6 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
-                    iSucessCount ++;
                     closeDataDialog();
                     pullRecyclerView.refreshOrLoadComplete();
                     pageIndex++;
@@ -122,7 +115,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
-                        refreshUI();
+                    refreshUI();
                     ToastUtils.show(errorInfo.getMessage());
                 }
             });
@@ -138,6 +131,9 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
         pullRecyclerView.setAdapter(adapter);
         pullRecyclerView.setOnPullRefreshListener(this);
         adapter.setOnItemClickListener(this);
+        pageIndex = 0;
+        datas.clear();
+        getData();
 
     }
 
@@ -188,6 +184,7 @@ public class TodoWorkForEntActivity extends BaseActivity implements PullRecycler
     @Override
     public void onRefresh() {
         pageIndex = 0;
+        datas.clear();
         getData();
 
 
