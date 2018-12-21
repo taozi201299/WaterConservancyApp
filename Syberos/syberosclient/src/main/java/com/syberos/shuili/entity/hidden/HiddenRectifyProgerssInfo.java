@@ -40,6 +40,16 @@ public class HiddenRectifyProgerssInfo extends HttpBaseResponse<HiddenRectifyPro
      */
     String recPers;
 
+    public String getRecPersName() {
+        return recPersName == null ? "" : recPersName;
+    }
+
+    public void setRecPersName(String recPersName) {
+        this.recPersName = recPersName;
+    }
+
+    String recPersName ;
+
 
     public String getUsername() {
         return username == null ? "" : username;

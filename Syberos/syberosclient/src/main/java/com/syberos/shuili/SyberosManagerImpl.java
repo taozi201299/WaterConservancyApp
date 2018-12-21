@@ -196,6 +196,18 @@ public class SyberosManagerImpl {
             }
         });
     }
+    public void getPerName( final String personId,final RequestCallback<Object> callback){
+        final String methodName = "getPersInfoByPersId";
+        final HashMap<String,Object>params = new HashMap<>();
+        params.put("arg0",personId);
+        final HashMap<String,Object>paramValue = params;
+        mWorkHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                soapUtils.callWebService(paramValue,methodName,callback,SoapUtils.SoapType.WSDL_BASE_FOR_WATER);
+            }
+        });
+    }
     public void getAllOrgInfo(final  HashMap<String,Object> params,final  String methodName,final RequestCallback<Object> callback){
         mWorkHandler.post(new Runnable() {
             @Override

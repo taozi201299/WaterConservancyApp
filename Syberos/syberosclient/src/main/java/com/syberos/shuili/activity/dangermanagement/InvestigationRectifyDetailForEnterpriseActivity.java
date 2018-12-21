@@ -28,6 +28,8 @@ import com.syberos.shuili.view.AudioEditView;
 import com.syberos.shuili.view.CustomScrollView;
 import com.syberos.shuili.view.MultimediaView;
 
+import org.ksoap2.serialization.SoapObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -154,6 +156,8 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
 
     private ArrayList<MultimediaView> multimediaViews = new ArrayList<>();
 
+    private int iSucessCount = 0;
+    private int iFailedCount = 0;
 
     @Override
     public int getLayoutId() {
@@ -298,10 +302,8 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
                     ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
                     return;
                 }
-                if(hiddenRectifyProgerssInfo.dataSource.size() > 0){
-                    getRectifyPerName();
-                }
-                getRectifyInfo();
+
+                getPersonName();
             }
 
             @Override
@@ -312,13 +314,39 @@ public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivit
             }
         });
     }
-private void getRectifyPerName(){
-        int size = hiddenRectifyProgerssInfo.dataSource.size();
-        for(int i = 0; i<size ; i++){
+    private void getPersonName(){
+        final int size = hiddenRectifyProgerssInfo.dataSource.size();
+        if(size == 0){
+            getRectifyInfo();
+        }else {
+            for(final HiddenRectifyProgerssInfo item : hiddenRectifyProgerssInfo.dataSource){
+                SyberosManagerImpl.getInstance().getPerName(item.getRecPers(), new RequestCallback<Object>() {
+                    @Override
+                    public void onResponse(Object result) {
+                        iSucessCount ++;
+                        if(result!= null) {
+                            if (((SoapObject) result).getPropertySafelyAsString("persName").toString() != null) {
+                                item.setRecPersName(((SoapObject) result).getPropertySafelyAsString("persName").toString());
+                            }
+                        }
+                        if(iSucessCount + iFailedCount == size){
+                            getRectifyInfo();
+                        }
 
+                    }
+
+                    @Override
+                    public void onFailure(ErrorInfo.ErrorCode errorInfo) {
+                        iFailedCount ++;
+                        if(iSucessCount + iFailedCount == size){
+                            getRectifyInfo();
+                        }
+
+                    }
+                });
+            }
         }
-
-}
+    }
     /**
      * 隐患督办信息
      */
@@ -426,7 +454,7 @@ private void getRectifyPerName(){
                 int index = i + 1;
                 tv_rectify_label.setText(index +"次整改");
                 tv_rectify_time.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getCollTime());
-                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPers());
+                tv_rectify_member.setText(hiddenRectifyProgerssInfo.dataSource.get(i).getRecPersName());
                 ev_rectify_des_audio.setEditText(hiddenRectifyProgerssInfo.dataSource.get(i).getRectProg());
                 BusinessConfig.getAttachMents(hiddenRectifyProgerssInfo.dataSource.get(i).getHiddGuid(),"BIS_HIDD_RECT_PROG",ll_rectify_multimedia);
                 multimediaViews.add(ll_rectify_multimedia);
