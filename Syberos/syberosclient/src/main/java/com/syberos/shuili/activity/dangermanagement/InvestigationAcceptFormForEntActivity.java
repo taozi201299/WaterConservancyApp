@@ -64,6 +64,8 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
     RelativeLayout rl_time;
     @BindView(R.id.et_accept_desc)
     AudioEditView et_accept_desc;
+    @BindView(R.id.line)
+            View line;
     ObjHidden investigationInfo;
     TodoWorkInfo todoWorkInfo;
     String type ;  // 0 生成代办 1 修改代办
@@ -101,7 +103,9 @@ public class InvestigationAcceptFormForEntActivity extends BaseActivity implemen
         showTitle(InvestigationAccepTaskActivity.Title);
         setActionBarRightVisible(View.INVISIBLE);
         tv_time.setText(CommonUtils.getCurrentDate());
-
+        et_accept_desc.setVisibility(View.GONE);
+        ll_multimedia.setVisibility(View.GONE);
+        line.setVisibility(View.GONE);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

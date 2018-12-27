@@ -134,6 +134,7 @@
         </com.syberos.shuili.view.AudioEditView>
 
         <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1dp"
             android:layout_marginLeft="@dimen/_10dp"
