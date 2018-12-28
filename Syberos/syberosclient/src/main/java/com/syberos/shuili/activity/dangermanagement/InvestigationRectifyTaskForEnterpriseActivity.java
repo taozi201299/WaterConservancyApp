@@ -128,28 +128,24 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
      * 根据工程GUID 获取工程名称
      */
     private void getEngineInfo(){
+        iSucessCount = 0;
+        iFailedCount = 0;
         String url = GlobleConstants.strIP + "/sjjk/v1/jck/obj/objEngs/";
         urlTags.add(url);
         HashMap<String,String>params = new HashMap<>();
         for(final ObjHidden item : investigationTaskInfo.dataSource){
-            if(iFailedCount != 0) break;
+          //  if(iFailedCount != 0) break;
             params.put("guid",item.getEngGuid());
             SyberosManagerImpl.getInstance().requestGet_Default(url, params, url, new RequestCallback<String>() {
                 @Override
                 public void onResponse(String result) {
+                    iSucessCount ++;
                     Gson gson = new Gson();
                     objectEngine = gson.fromJson(result,ObjectEngine.class);
-                    if(objectEngine == null || objectEngine.dataSource == null || objectEngine.dataSource.size() == 0){
-                        iFailedCount ++;
-                        closeLoadingDialog();
-                        ToastUtils.show(ErrorInfo.ErrorCode.valueOf(-5).getMessage());
-                        return;
-                    }
                     if(objectEngine != null && objectEngine.dataSource.size() > 0){
                         objectEngines.add(objectEngine.dataSource.get(0));
                     }
-                    iSucessCount ++;
-                    if(iSucessCount == investigationTaskInfo.dataSource.size()){
+                    if(iSucessCount +iFailedCount == investigationTaskInfo.dataSource.size()){
                         closeLoadingDialog();
                         merageData(1);
                         refreshUI();
@@ -160,8 +156,11 @@ public class InvestigationRectifyTaskForEnterpriseActivity extends BaseActivity 
                 @Override
                 public void onFailure(ErrorInfo.ErrorCode errorInfo) {
                     iFailedCount ++;
-                    closeLoadingDialog();
-                    ToastUtils.show(errorInfo.getMessage());
+                    if(iSucessCount +iFailedCount == investigationTaskInfo.dataSource.size()){
+                        closeLoadingDialog();
+                        merageData(1);
+                        refreshUI();
+                    }
 
                 }
             });
