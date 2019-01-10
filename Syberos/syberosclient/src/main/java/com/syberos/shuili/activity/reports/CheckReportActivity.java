@@ -36,7 +36,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 安全检查报表
+ * 行政版安全检查报表
  */
 public class CheckReportActivity extends TranslucentActivity implements CommonAdapter.OnItemClickListener{
 

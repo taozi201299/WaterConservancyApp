@@ -35,6 +35,7 @@ import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/6/27.
+ * 该文件暂不使用，测试超图离线功能
  */
 
 public class MapManActitity extends BaseActivity {

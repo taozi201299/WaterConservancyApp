@@ -37,7 +37,7 @@ import butterknife.BindView;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
- * 工作考核报表 上报和退回 没有其他操作
+ * 行政版本工作考核报表 上报和退回 没有其他操作
  * 分级显示
  */
 public class WoasDetailActivity extends BaseActivity {

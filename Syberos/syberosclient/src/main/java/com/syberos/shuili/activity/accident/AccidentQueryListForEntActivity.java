@@ -29,6 +29,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
+/**
+ * 企事业版本事故查询activity
+ */
 public class AccidentQueryListForEntActivity extends BaseActivity {
     private final String TAG = AccidentQueryListForEntActivity.class.getSimpleName();
     /**

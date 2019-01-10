@@ -32,7 +32,7 @@ import butterknife.OnClick;
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
- * 新建巡视问题
+ *  企事业版本新建巡视问题
  */
 public class HazNewDangerousForEntActivity extends BaseActivity  implements BaseActivity.IDialogInterface{
 

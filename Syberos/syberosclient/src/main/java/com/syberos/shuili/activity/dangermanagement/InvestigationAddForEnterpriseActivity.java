@@ -42,7 +42,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by jidan on 18-3-27.
- * 新建隐患  隐患排查
+ * 隐患模块新增隐患功能 （通过隐患排查方式新增隐患）
  */
 
 public class InvestigationAddForEnterpriseActivity extends BaseActivity implements BaseActivity.IDialogInterface{

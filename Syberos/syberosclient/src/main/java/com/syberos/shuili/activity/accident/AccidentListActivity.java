@@ -30,6 +30,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
+/**
+ * 行政版本快报事故查询Activity
+ */
 public class AccidentListActivity extends BaseActivity {
     private final String TAG = AccidentListActivity.class.getSimpleName();
     /**

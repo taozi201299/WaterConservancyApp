@@ -41,6 +41,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by jidan on 18-3-23.
+ * 隐患详情activity
  */
 
 public class InvestigationAccepDetailActivity extends BaseActivity implements View.OnClickListener {

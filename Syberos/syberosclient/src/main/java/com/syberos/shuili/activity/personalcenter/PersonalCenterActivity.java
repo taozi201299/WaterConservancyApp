@@ -32,6 +32,9 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 个人中心 不支持修改
+ */
 public class PersonalCenterActivity extends BaseActivity {
 
     private boolean editing = false;

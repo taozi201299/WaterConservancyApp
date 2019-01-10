@@ -39,6 +39,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by jidan on 18-3-23.
+ * 企事业版隐患详情
  */
 
 public class InvestigationRectifyDetailForEnterpriseActivity extends BaseActivity implements View.OnClickListener {

@@ -41,6 +41,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 /**
  * Created by jidan on 18-3-23.
  * 隐患详情信息，包含隐患核实信息 排查信息 整改方案 督办记录 整改记录 验收记录
+ * 由隐患督办列表查询隐患详情
  */
 
 public class InvestigationSuperviceDetailActivity extends TranslucentActivity implements View.OnClickListener {

@@ -32,6 +32,7 @@ import butterknife.BindView;
 
 /**
  * Created by songting on 16-3-17.
+ * 各人信息activity
  */
 public class MyImformationActivity extends BaseActivity {
 

@@ -45,6 +45,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by Administrator on 2018/9/6.
+ * 行政版本 隐患销号activity
  */
 
 public class InvestigationAcceptFormActivity extends BaseActivity implements View.OnClickListener,BaseActivity.IDialogInterface {

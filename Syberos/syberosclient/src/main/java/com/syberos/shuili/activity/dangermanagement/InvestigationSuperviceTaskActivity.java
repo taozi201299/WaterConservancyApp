@@ -33,7 +33,7 @@ import butterknife.BindView;
 
 /**
  * Created by jidan on 18-3-23.
- * todo 待修改 需要和7个子系统确定 行政版
+ * 行政版本 隐患督办功能
  * 重大隐患和逾期的一般隐患  督办 -- 直属 水行政
  *
  * 获取下一级水行政的列表 （接口报错）

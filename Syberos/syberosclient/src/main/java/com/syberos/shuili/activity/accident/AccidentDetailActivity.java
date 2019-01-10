@@ -31,7 +31,9 @@ import butterknife.OnClick;
 
 import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.SEND_BUNDLE_KEY;
 
-
+/**
+ * 事故详情activity
+ */
 public class AccidentDetailActivity extends BaseActivity {
 
     private final String TAG = AccidentDetailActivity.class.getSimpleName();

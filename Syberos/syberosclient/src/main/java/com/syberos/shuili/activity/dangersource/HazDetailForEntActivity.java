@@ -26,6 +26,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by Administrator on 2018/7/30.
+ * 企事业版本 危险源详情
  */
 
 public class HazDetailForEntActivity extends BaseActivity  implements CommonAdapter.OnItemClickListener,View.OnClickListener {

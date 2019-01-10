@@ -12,6 +12,9 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.syberos.shuili.R;
 import com.syberos.shuili.base.BaseActivity;
 
+/**
+ * 提供二维码扫描功能
+ */
 public class CustomScannerActivity extends BaseActivity implements DecoratedBarcodeView.TorchListener {
 
     DecoratedBarcodeView mDecoratedBarcodeView;

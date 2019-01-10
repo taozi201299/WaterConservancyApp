@@ -49,6 +49,10 @@ import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.SE
 import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_ACCIDENT_KEY;
 import static com.syberos.shuili.activity.accident.AccidentListForEntAcitvity.DIC_UNIT_KEY;
 
+/**
+ * 企事业版本新增、快报 、补报activity
+ */
+
 public class AccidentNewFormForEntActivity extends BaseActivity implements BaseActivity.IDialogInterface {
 
     private final String TAG = AccidentNewFormForEntActivity.class.getSimpleName();

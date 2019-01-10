@@ -32,6 +32,9 @@ import butterknife.OnClick;
 
 import static com.syberos.shuili.utils.CommonUtils.encrypt;
 
+/**
+ * 提供修改密码
+ */
 public class ChangePasswordActivity extends BaseActivity {
 
     @BindView(R.id.et_input_original_password)

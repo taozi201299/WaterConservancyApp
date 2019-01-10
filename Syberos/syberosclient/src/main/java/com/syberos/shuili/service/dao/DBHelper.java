@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * Created by jidan on 18-3-7.
+ * 提供数据库基本操作
  */
 
 public class DBHelper {

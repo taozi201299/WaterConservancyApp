@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by toby on 18-2-27.
+ * 提供二维码扫描view
  */
 
 public class CustomScannerView extends ViewfinderView {

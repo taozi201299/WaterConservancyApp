@@ -34,6 +34,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by songting on 16-3-17.
+ * 通讯录信息activity
  */
 public class OtherImformationActivity extends BaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 

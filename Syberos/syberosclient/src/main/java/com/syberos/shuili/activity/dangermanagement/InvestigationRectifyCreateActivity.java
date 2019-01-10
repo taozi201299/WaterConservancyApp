@@ -34,6 +34,7 @@ import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
 /**
  * Created by jidan on 18-3-31.
+ * 企事业版本隐患整改提交activity
  */
 
 public class InvestigationRectifyCreateActivity extends BaseActivity implements View.OnClickListener ,BaseActivity.IDialogInterface {

@@ -31,6 +31,9 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 行政版本事故查询activity
+ */
 public class AccidentQueryListActivity extends BaseActivity implements EnumView.IEnumClick {
     private final String TAG = AccidentListActivity.class.getSimpleName();
     @BindView(R.id.ev_unit)

@@ -25,6 +25,9 @@ import butterknife.BindView;
 
 import static com.syberos.shuili.utils.Strings.DEFAULT_BUNDLE_NAME;
 
+/**
+ * 行政版安全检查上报和上报结果查询
+ */
 public class CheckDetailActivity extends TranslucentActivity {
 
     private ObjSins objSins = null;

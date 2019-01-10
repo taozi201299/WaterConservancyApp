@@ -46,6 +46,7 @@ import static com.syberos.shuili.utils.Strings.urlDecode;
 
 /**
  * Created by jidan on 18-3-23.
+ * 企事业版本隐患销号activity 修改cancelState字段的值
  */
 ;
 public class InvestigationAcceptFormForEntActivity extends BaseActivity implements View.OnClickListener{

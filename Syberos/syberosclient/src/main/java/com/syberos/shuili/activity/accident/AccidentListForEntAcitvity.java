@@ -38,6 +38,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by jidan on 18-5-22.
+ * 企事业版本快报事故activity
  */
 
 public class AccidentListForEntAcitvity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{

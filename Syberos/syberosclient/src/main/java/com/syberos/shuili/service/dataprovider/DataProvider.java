@@ -53,6 +53,7 @@ import static com.syberos.shuili.service.dao.DBHelperFactory.DB_NAME;
 
 /**
  * Created by jidan on 18-3-7.
+ * 提供数据处理 包含通讯录的同步 通讯录信息查询 表单的提交
  */
 
 public class DataProvider {

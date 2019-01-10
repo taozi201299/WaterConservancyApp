@@ -46,8 +46,7 @@ import butterknife.OnClick;
 /**
  * BIS_ORG_MON_REP_PERI 月报表上报期间表
  * 按照时间查找报表列表
- * todo 未找到数据表
- * 需要修改
+ * 暂不支持该功能模块
  */
 public class WoasReportForEntActivity extends TranslucentActivity {
 
