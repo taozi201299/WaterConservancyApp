@@ -221,7 +221,7 @@ public class BusinessdataLocalCache extends DataLocalCacheBase {
                         @Override
                         public void onResponse(String result) {
                             iSuccessCount++;
-                            // TODO: 2018/4/16 如果是新增事件 需要将附件localStatus 修改为1
+                            // 如果是新增事件 需要将附件localStatus 修改为1
                             if (entity.LocalStatus.equals("0")) {
                                 updateLocalCache(url, entity.ID, result);
                             }
